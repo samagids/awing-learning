@@ -5319,9 +5319,35 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kəʼlə̂', english: 'reasoned', category: 'general', difficulty: 2),
 ];
 
-
 // ============================================================
 // HELPER FUNCTIONS
 // ============================================================
 
-/// Al
+/// All vocabulary combined for easy access across the app.
+/// Order matters for quiz/exam logic — keeps curated entries first.
+List<AwingWord> get allVocabulary => [
+  ...pronouns,
+  ...timeWords,
+  ...pdfVerifiedExtras,
+  ...bodyParts,
+  ...animalsNature,
+  ...foodDrink,
+  ...actions,
+  ...thingsObjects,
+  ...familyPeople,
+  ...numbers,
+  ...moreActions,
+  ...moreThings,
+  ...descriptiveWords,
+  ...dictionaryEntries,
+];
+
+/// Get vocabulary by category name (matches AwingWord.category strings).
+List<AwingWord> getVocabularyByCategory(String category) {
+  return allVocabulary.where((w) => w.category == category).toList();
+}
+
+/// Get vocabulary by difficulty (returns all entries with difficulty <= level).
+List<AwingWord> getVocabularyByDifficulty(int level) {
+  return allVocabulary.where((w) => w.difficulty <= level).toList();
+}
