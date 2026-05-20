@@ -6393,6 +6393,222 @@ feedback→fix→ship pipeline is now demonstrated, not just promised.
 
 If 2+ items unchecked: hold for another week of engagement.
 
+### Re-application SUBMITTED 2026-05-20 at 3:17 PM
+
+**Status:** Google Dashboard showed all 3 prerequisites checked off
+(testing + 12 testers + 14 days). Production access form opened
+and was submitted today. Confirmation banner:
+
+> "We have your application for production access. We're reviewing
+> your application form. We'll email the account owner with an
+> update. This usually takes 7 days or less, but may occasionally
+> take longer. Applied today, 3:17 PM."
+
+**Important Google form change since Session 59:** The form is now
+**4 steps**, not 3. New Step 4 is "Additional testing — What did
+you do differently this time?" This is Google explicitly asking
+how the second testing window differed from the first. Critical
+question to answer concretely.
+
+**Answers submitted (matches the CLAUDE.md kit above with minor
+trimming for char limits):**
+
+- Step 1 Q1 (recruitment, 263/300): friends/family + WhatsApp
+  public link
+- Step 1 Q2 (ease): Neither difficult or easy
+- Step 1 Q3 (engagement, 260/300): 14 Android testers + 1 external
+  iOS tester (TestFlight), Firestore + TestFlight session logs,
+  tester sent screenshots flagging 3 wrong meanings
+- Step 1 Q4 (feedback summary, 269/300): tester screenshots →
+  nkɔ̂ŋə/kwa'ɔ́/pəgə → verified → shipped v1.11.4+54
+- Step 2 (audience/value/installs): unchanged from Session 59
+- Step 3 Q1 (changes, 296/300): 4 items in v1.11.4+54 (3 gloss
+  fixes, 75 duplicate removals, fabricated Conversations replaced
+  with "coming soon", Android 15 fix)
+- Step 3 Q2 (why ready, 293/300): feedback→fix→ship pipeline
+  demonstrated in real time
+- **Step 4 (NEW — what was different, 294/300):** "Three key
+  differences: (1) Added external public-link tester via TestFlight
+  (5 sessions logged). (2) Ran a content audit, removed 75
+  duplicate vocab entries. (3) Real-time feedback loop: tester
+  sent screenshots, I shipped v1.11.4+54 same day."
+
+**ETA for Google decision:** ~7 days (email to samagidshop@gmail.com)
+
+**If APPROVED next steps:**
+1. Open Play Console → Test and release > Closed testing >
+   v1.11.4+54 release → Promote release → Production
+2. Paste Option 1 welcome message release notes (CLAUDE.md
+   Session 51)
+3. Set staged rollout to 20%
+4. Review release → Start rollout to Production
+5. Google then does production-listing review (typically longer
+   than Beta App Review — could be days to a week)
+6. Once live, app is publicly listed on Play Store
+
+**If REJECTED:**
+- Read the email carefully — Google specifies exact reasons
+- Each rejection typically adds another 14-day testing requirement
+- Address the specific concern (more engagement? more concrete
+  feedback citations? more updates?)
+- Don't re-apply for at least 14 days after rejection
+
+**While waiting, productive work:**
+- Tester recruitment + engagement continues (Version C, Version G)
+- The v1.11.4+54 build IS in closed testing — testers can give
+  more feedback
+- If new tester reports come in, fix them and ship v1.11.5+55 etc.
+- Each shipped update strengthens any future re-application
+
+### Session 60 wrap-up
+
+This session compressed multiple workflows into one day:
+1. Tester reports 3 wrong glosses → fixed → shipped (v1.11.2/3/4)
+2. Build cascade resolved (5 separate Android build failures, all
+   real latent bugs surfaced: missing allVocabulary getter, JVM
+   target mismatch, KGP DSL migration, Gradle ordering, plugin
+   compileOptions override)
+3. iOS already on TestFlight from earlier green build (duplicate
+   bundle on later builds is cosmetic)
+4. Re-application submitted with substantially stronger narrative
+5. Total CLAUDE.md updates: full Session 60 RE-APPLICATION KIT
+   + 5 build-failure incident records for future reference
+
+**Tag-build vs main-build trap recurrence:** Session 60 ALSO hit
+the tag/main mismatch problem multiple times. After every commit
+that fixes a build, the tag may need to be retagged at the new
+HEAD. Pattern: commit → push main → wait for main CI to confirm
+green → delete tag locally + remotely → retag at HEAD → push tag.
+The user owns the tag retag — Claude can give the commands but
+cannot directly retag.
+
+### Session 60 LESSON: Bible-extraction pipeline truncated allVocabulary getter
+
+When pushing v1.11.4+54, Build Android #75 failed with Dart errors:
+```
+expert_quiz_screen.dart:133: Error: The getter 'allVocabulary' isn't defined
+expert_quiz_screen.dart:183: Error: The getter 'allVocabulary' isn't defined
+games/expert_tone_hunt.dart:93: Error: The getter 'allVocabulary' isn't defined
+```
+
+**Root cause:** An older "Bible-extraction pipeline" commit (referenced
+in commit `86e0528: Restore 5 files truncated by Bible-extraction
+pipeline`) had truncated the `allVocabulary` getter + helper functions
+from the end of `lib/data/awing_vocabulary.dart`. The file ended at
+`/// Al` (start of the doc-comment for `allVocabulary`).
+
+This was silently broken before today's session — 11 screens depend
+on `allVocabulary`. Earlier builds (v1.11.3+53) compiled because the
+specific files referencing it might have been added LATER than the
+truncation, OR Dart's deferred compilation didn't hit the path until
+something else changed.
+
+**Fix:** Appended a complete helper functions block to
+`awing_vocabulary.dart`:
+```dart
+List<AwingWord> get allVocabulary => [
+  ...pronouns, ...timeWords, ...pdfVerifiedExtras, ...bodyParts,
+  ...animalsNature, ...foodDrink, ...actions, ...thingsObjects,
+  ...familyPeople, ...numbers, ...moreActions, ...moreThings,
+  ...descriptiveWords, ...dictionaryEntries,
+];
+
+List<AwingWord> getVocabularyByCategory(String category) { ... }
+List<AwingWord> getVocabularyByDifficulty(int level) { ... }
+```
+
+Note: removed `dictionaryEntriesRecovered` and `advancedVocabulary`
+references from the older backup version (those lists were dropped
+in subsequent commits), added `pdfVerifiedExtras` which is a new
+list.
+
+### Session 60 LESSON: tflite_flutter JVM 11/17 mismatch
+
+After fixing the `allVocabulary` truncation, the next build failed
+with:
+```
+Inconsistent JVM-target compatibility detected for tasks
+'compileReleaseJavaWithJavac' (11) and 'compileReleaseKotlin' (17).
+```
+
+**Root cause:** The `tflite_flutter` plugin's own Gradle config
+defaults Java compilation to JVM target 11, but the project sets
+Kotlin to JVM target 17. AGP 8+ requires both targets to match.
+
+The existing `subprojects` block in `android/build.gradle.kts` tried
+to force `JavaCompile` source/target to 17, but it ran at
+configuration time — BEFORE `tflite_flutter`'s own plugin config
+applied its JVM 11 override.
+
+**Fix:** Wrap the override in `afterEvaluate { ... }` so it runs
+AFTER each plugin's own config, plus add explicit Kotlin task
+override:
+
+```kotlin
+subprojects {
+    afterEvaluate {
+        tasks.withType<JavaCompile>().configureEach {
+            sourceCompatibility = JavaVersion.VERSION_17.toString()
+            targetCompatibility = JavaVersion.VERSION_17.toString()
+        }
+        tasks.withType<
+            org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+        >().configureEach {
+            kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+        }
+    }
+}
+```
+
+**Generic rule for future Flutter plugin compatibility issues:**
+Whenever a Flutter plugin overrides project-level Gradle settings,
+wrap the override in `afterEvaluate { ... }` to run after the plugin.
+Use `tasks.withType<KotlinCompile>().configureEach` for Kotlin
+overrides (not just JavaCompile) since AGP enforces both must match.
+
+**Important DSL migration note:** Newer Kotlin Gradle Plugin
+(KGP 2.0+) made `kotlinOptions { jvmTarget = "..." }` on
+`KotlinCompile` tasks a HARD ERROR. Must use the new
+`compilerOptions` DSL:
+
+```kotlin
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>()
+    .configureEach {
+    compilerOptions {
+        jvmTarget.set(
+            org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        )
+    }
+}
+```
+
+Note: this is for the KGP TASK-LEVEL DSL. The AGP wrapper inside
+`android { kotlinOptions { jvmTarget = "17" } }` in app-level
+`build.gradle.kts` is DIFFERENT and still supported — leave that
+alone.
+
+**CRITICAL Gradle ordering rule:** `subprojects { afterEvaluate {
+... } }` MUST be registered BEFORE any `subprojects {
+project.evaluationDependsOn(":otherProj") }`. The
+`evaluationDependsOn` forces synchronous evaluation of the target
+project. Once `:app` (or whatever target) is evaluated, registering
+afterEvaluate on it throws:
+
+```
+Cannot run Project.afterEvaluate(Action) when the project is
+already evaluated.
+```
+
+In `android/build.gradle.kts`, the correct order is:
+1. `allprojects { repositories { ... } }`
+2. `subprojects { layout.buildDirectory.value(...) }`
+3. `subprojects { afterEvaluate { ... JVM target overrides ... } }`
+4. `subprojects { project.evaluationDependsOn(":app") }`
+5. `tasks.register<Delete>("clean") { ... }`
+
+If you flip steps 3 and 4, build fails with the
+"already-evaluated" error.
+
 **Next steps in priority order:**
 1. Send Version C to existing testers (re-engagement, Task #7)
 2. Send Version G to new recruits (Task #10)
