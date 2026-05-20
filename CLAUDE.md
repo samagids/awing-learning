@@ -5912,6 +5912,344 @@ bytes after any Edit/Write that shrinks file size by more than
 past EOF" or "unexpected token line N+1," check NUL bytes FIRST
 before debugging anything else.
 
+**9. The REAL root cause of the build failures: stuck
+`.git/index.lock`.** After the NUL byte fix, the build still
+failed three times in a row (#64, #65, #66) all at commit
+`4e8835e` with "Version code 51 has already been used." Each
+retry, Dr. Sama would `git tag -d v1.11.2+52`, retag, and push,
+but the tag kept landing on the OLD commit. Diagnosis was that
+`git commit` was being skipped — but actually `git commit` WAS
+running, it was just **silently failing with exit code 128**:
+
+```
+fatal: Unable to create '.../Awing/.git/index.lock': File exists.
+Another git process seems to be running in this repository...
+```
+
+Earlier in this session bash had also reported:
+`warning: unable to unlink '/sessions/.../mnt/Awing/.git/index
+.lock': Operation not permitted`. Some prior tool/process had
+left the lock file behind. **PowerShell's git was hitting the
+same lock,** but the user's eye glossed over the error message
+because it scrolled past with the "another git process is
+running" boilerplate.
+
+**Fix:**
+```powershell
+Remove-Item .git\index.lock -Force
+```
+
+After that, `git add` + `git commit` ran normally. The new
+commit `ac0c230` landed, and CI built from the right commit.
+
+**Generic detection rule:**
+- If `git status` keeps showing the SAME modified files even
+  after a "successful" `git commit`, suspect index.lock.
+- If `git log -1 --oneline` shows the SAME hash even after
+  `git commit` reports success, suspect index.lock.
+- The lock file is a ZERO-byte file at `.git/index.lock`. Just
+  delete it.
+
+**Tag-mismatch trap recurrence:** Sessions 58 and 60 both hit
+the "tag pushed before commit landed" trap. Established that
+`build_and_run.sh` should automate this whole sequence atomically:
+commit -> verify HEAD changed -> tag at HEAD -> push main -> push
+tag. Then there's no opportunity for the tag to drift onto the
+wrong commit.
+
+**Final state at end of Session 60:**
+- v1.11.2+52 built and pushed at commit `ac0c230` (CI #67 ✓ green)
+- v1.11.3+53 (Android 15 edge-to-edge fix) at commit `80aaa2a`
+  (CI #72 building) — silences Play Console "Edge-to-edge may not
+  display" + "deprecated APIs for edge-to-edge" warnings
+- Closed testing track receives the new build automatically
+- Engagement window starts when testers update to v1.11.2+52 / +53
+- Re-apply for production access on/after 2026-05-18
+
+### Session 60 LESSON: FlutterActivity ≠ ComponentActivity
+
+When applying the Android 15 edge-to-edge fix, first attempt failed
+to compile with:
+
+```
+MainActivity.kt:21:9 Unresolved reference. None of the following
+candidates is applicable because of a receiver type mismatch:
+fun ComponentActivity.enableEdgeToEdge(...)
+```
+
+**Root cause:** `enableEdgeToEdge()` is an AndroidX Kotlin extension
+defined ONLY on `androidx.activity.ComponentActivity`. Flutter's
+default `FlutterActivity` extends `android.app.Activity` directly —
+NOT ComponentActivity. So the extension's receiver doesn't match.
+
+**Fix:** Switch `MainActivity` to extend
+`io.flutter.embedding.android.FlutterFragmentActivity` instead.
+That class chain is:
+
+```
+FlutterFragmentActivity
+  → androidx.fragment.app.FragmentActivity
+    → androidx.activity.ComponentActivity
+      → android.app.Activity
+```
+
+So `MainActivity` becomes a `ComponentActivity` and
+`enableEdgeToEdge()` resolves correctly. AndroidManifest.xml needs
+NO changes — `android:name=".MainActivity"` is class-agnostic.
+
+**Generic rule for future Flutter+AndroidX work:** Whenever you
+need to call ANY AndroidX activity-side API (`enableEdgeToEdge`,
+`activityResultRegistry`, `viewModelStore`, `onBackPressedDispatcher`,
+etc.), `FlutterFragmentActivity` is the parent class to use, not
+`FlutterActivity`. The default Flutter project template uses
+`FlutterActivity` for portability, but switching is a one-line
+change with no manifest implications and no plugin compatibility
+issues for normal apps.
+
+### Session 60 LESSON: TestFlight rejects duplicate bundle versions
+
+When the v1.11.3+53 cycle re-built at commit `80aaa2a` (the
+FlutterFragmentActivity fix), Build iOS #72 failed with:
+
+```
+[altool.6000003E04C0] The provided entity includes an attribute with
+a value that has already been used (-19232) The bundle version must
+be higher than the previously uploaded version: '53'.
+```
+
+**Why:** TestFlight tracks bundle versions across ALL uploads, not
+just successful releases. The earlier Build iOS #70 (at commit
+`0647a7c`, the broken-Android commit) had successfully uploaded
+bundle 53 to TestFlight before the iOS upload step. So when Build
+iOS #72 tried to upload bundle 53 again from the new commit, Apple
+rejected as duplicate.
+
+**Important: this is NOT an actual problem when only the Kotlin
+side changed.** iOS bytecode is identical between the two commits,
+so the iOS build from `0647a7c` is functionally equivalent to what
+`80aaa2a` would produce. TestFlight testers receive the correct
+iOS build.
+
+**Generic rule for cross-platform Flutter rebuilds:** If you
+re-tag the SAME version+build to fix an Android-only or iOS-only
+issue, the unaffected platform's CI step will fail with "duplicate
+bundle" because both stores enforce uniqueness. Two ways to
+handle:
+1. Ignore — the unaffected platform already has the correct
+   build from the earlier successful upload (this case).
+2. Bump build number (+1) — clean retag with new build number,
+   both stores accept the upload, but you generate a duplicate
+   build entry on the side that was already correct.
+
+Option 1 is fine for tester-facing TestFlight/closed-testing tracks.
+Option 2 might be preferable for production-track rollouts where
+matching commits across stores aids debugging.
+
+**Play Store does NOT have this issue when retagging the same
+version code with new content** — it accepts the upload because
+the version code's bundle hash differs. Only TestFlight is strict
+about "you may not upload the same build number twice." Apple is
+treating the build number as a globally-unique identifier across
+all uploads forever, even rejected/dropped ones. Plan for it.
+
+### Session 60 LESSON: TestFlight redeem-code dialog when users open the app first
+
+iPhone testers reported that after installing TestFlight from the
+recruitment message, they got a **"Redeem Code"** dialog asking
+for an invitation code instead of seeing the Awing app. This
+breaks recruitment.
+
+**Why it happens:** TestFlight has TWO entry points:
+1. **Public link** (`https://testflight.apple.com/join/<id>`) — one-tap
+   join, no code needed.
+2. **Redeem code** — short alphanumeric code Apple Developer
+   Connect can issue per-tester. Different mechanism.
+
+If the user installs TestFlight first, then opens TestFlight
+directly looking for the app, TestFlight shows an empty state
+with a "Redeem Code" prompt — because they haven't joined any
+beta yet. They mistakenly try to type a code, but we never gave
+them one.
+
+**Correct flow for public link recruitment:**
+1. User installs TestFlight from App Store (don't open it)
+2. User taps the public link IN SAFARI on iPhone
+3. Safari shows a TestFlight join page → "View in TestFlight"
+4. TestFlight opens with the Awing app pre-added
+5. User taps Accept → Install
+
+**Fix instructions to send to confused iPhone testers:**
+
+```
+Don't open TestFlight first. Tap this link on your iPhone (Safari):
+https://testflight.apple.com/join/BbUa64rv
+
+The link will open Safari → tap "View in TestFlight" →
+TestFlight opens with the Awing app already added →
+tap Accept → Install.
+
+If you got the "Redeem Code" screen: tap Cancel, go back to my
+message, and tap the link above instead. The public invite link
+doesn't use a code.
+```
+
+**Improved iPhone install instructions for FUTURE recruitment
+messages** (Version G should be updated to use these explicit
+ordered steps):
+
+```
+🍎 HOW TO INSTALL ON IPHONE:
+
+Step 1 — Install TestFlight from the App Store (free)
+   Search "TestFlight" → Get → Install
+   DON'T OPEN TestFlight yet.
+
+Step 2 — Tap THIS LINK on your iPhone (use Safari):
+   https://testflight.apple.com/join/BbUa64rv
+
+Step 3 — On the page that opens, tap "View in TestFlight"
+   (TestFlight opens automatically with the app)
+
+Step 4 — Tap "Accept" then "Install"
+   The app appears on your home screen.
+
+⚠️ If TestFlight asks for a "Redeem Code", you skipped Step 2.
+   Tap Cancel, go to my message, and tap the link there.
+```
+
+**Generic rule for future iOS recruitment messages:** Always
+emphasize "tap the link, don't open TestFlight first" — the
+ordering of these two actions matters and most non-technical users
+will get them backwards. Visiting TestFlight first creates the
+empty-state confusion that surfaced Session 60.
+
+**Possible browser issue:** The TestFlight deep link
+(`testflight.apple.com/join/...`) requires Safari to invoke the
+TestFlight app. Chrome on iOS sometimes mishandles the redirect.
+If a user reports the link "just opens a webpage" with no
+TestFlight prompt, tell them to copy the link and open it in
+Safari specifically.
+
+### Session 60 LESSON: Apple Beta App Review for external builds
+
+When investigating why iPhone testers were stuck on the OLD
+v1.11.1+51 build (and seeing the redeem-code dialog), discovered
+the deeper problem: **Apple TestFlight requires Beta App Review
+approval for every new build before it reaches external testers.**
+
+**Build statuses observed in External Testers group:**
+
+```
+1.11.3 (53)  Waiting for Review    submitted, awaiting Apple
+1.11.2 (52)  Ready to Submit       UPLOADED but never submitted
+1.11.1 (51)  Testing               approved, available externally
+1.11.1 (50)  Ready to Submit       UPLOADED but never submitted
+1.11.0 (46)  Testing               approved, available externally
+1.11.0 (44)  Ready to Submit       UPLOADED but never submitted
+...
+```
+
+**The pattern:** App Store Connect auto-submits the LATEST build
+in a sequence of rapid uploads, skipping the in-between ones.
+When v1.11.3+53 was uploaded right after v1.11.2+52, Apple's
+auto-submit process picked 53 and skipped 52. Build 52 became
+orphaned in "Ready to Submit" forever.
+
+**Implications:**
+- External testers can ONLY install builds in "Testing" status.
+- Builds in "Ready to Submit" or "Waiting for Review" are NOT
+  available to external testers — they'll see whatever the most
+  recent "Testing" build is.
+- Internal testers see all uploaded builds immediately, no review
+  needed.
+
+**No surfaceable workaround for orphaned builds:** The Build
+Detail page for an orphaned build does NOT show a "Submit for
+Review" button when a newer build is already in the review queue.
+App Store Connect treats the newer build as authoritative.
+
+**Practical rule for the engagement window:**
+- Internal testers (developer team Apple IDs) get every uploaded
+  build immediately. Use them for fast iteration.
+- External testers (public-link users) lag 1-2 days behind because
+  of Beta App Review. Plan content cleanups + bug fixes to land
+  on the LATEST build, not intermediate ones.
+- If you upload v1.11.2+52, then immediately upload v1.11.3+53,
+  expect external testers to skip 52 entirely — they go from 51
+  directly to 53. Don't fight it.
+
+**Public link tester progress (Session 60 end):**
+- 1 anonymous public-link tester via
+  `https://testflight.apple.com/join/BbUa64rv`
+- Installed 1.11.1 (51) on May 6
+- 5 sessions logged (active engagement signal!)
+- Will be auto-prompted to update once Build 53 is approved
+
+### Session 60 INCIDENT: 3 tester-reported wrong glosses + safe audit
+
+A tester sent screenshots of beginner Quiz 1 questions with wrong
+Awing→English meanings. Three specific entries flagged:
+
+1. **`nkɔ̂ŋə`** = "throat" — FABRICATED (the verified word for
+   throat is `tôgndě` at line 1349, with Session 56 audit comment).
+   Removed.
+2. **`kwa'ɔ́`** = "plate" — TYPO of `kwa'ə` (means "play" per
+   Session 56 audit). Removed; correct entry preserved at line 458.
+3. **`pəgə`** = "we exclusive, that is, excluding others" —
+   technically correct linguistic terminology but unreadable for
+   a kids' quiz. Simplified gloss to "we (not including you)" and
+   moved category from 'things' → 'pronouns'.
+
+**Root cause of all three:** entries had NO `difficulty:` field
+set, which defaults to 1 (Beginner). This means Session 57's
+auto-glossed entries and other unverified Session 29 OCR entries
+could appear in Beginner Quiz 1 even though they were never
+reviewed for accuracy. Future auto-glossed entries should default
+to `difficulty: 3` (Expert) to avoid surfacing unverified content
+to beginners.
+
+**Then ran conservative audit (`/tmp/apply_safe_audit.py`):**
+- Parsed 3,302 single-line AwingWord entries
+- Found 75 EXACT-DUPLICATE entries (same Awing word, same English
+  gloss) — kept the verified/lowest-line copy, removed others.
+- Found 41 conflict cases (same Awing, different glosses) — LEFT
+  ALONE because Awing has tonal homonyms (real linguistic feature).
+- Found 134 entries with no Bible-corpus evidence — LEFT ALONE
+  because they could be real Awing words not present in the NT.
+- Vocabulary went from 3,958 → 3,883 AwingWord entries.
+
+**Per user directive: "audit and fix, not audit and remove":**
+removal limited to EXACT duplicates which are by definition
+information-preserving (the kept copy has identical content).
+Backup of original vocab at
+`lib/data/awing_vocabulary.dart.bak_session60_audit`.
+
+**Why we couldn't do more without quality reference data:**
+- The 2007 Awing English Dictionary PDF was OCR'd in Session 29
+  but the Awing column got mangled (special characters became
+  `$`, `0`, `1`, `5` etc.). Cannot be used as reference table.
+- Bible NT corpus has Awing tokens but no glosses — useful for
+  "is this a real word" check but not "what does it mean."
+- Only 247 of 3,958 entries (6%) have Session 56 audit verification.
+- A proper "fix all" pass requires either (a) clean OCR of the
+  dictionary using better tools, or (b) native-speaker review via
+  the reviewer.html built earlier in this session.
+
+**All v1.11.4+54 changes consolidated:**
+1. Empty `_conversations` list (Session 30 fabs) — earlier in Session 60
+2. Android 15 edge-to-edge fix (enableEdgeToEdge + FlutterFragmentActivity)
+3. Three tester-reported wrong glosses fixed
+4. 75 exact duplicates removed
+
+**Why this might still be insufficient for the engagement window:**
+Many vocab entries have unverified glosses that could trigger more
+tester complaints. The pattern (Quiz 1 surfacing wrong content)
+will keep happening for beginner-difficulty entries with
+no `difficulty:` field set, until they're individually reviewed.
+Adding default `difficulty: 3` to auto-glossed Session 57 entries
+would prevent this surface-area entirely — high-leverage fix for
+a future session.
+
 **Next steps in priority order:**
 1. Send Version C to existing testers (re-engagement, Task #7)
 2. Send Version G to new recruits (Task #10)
