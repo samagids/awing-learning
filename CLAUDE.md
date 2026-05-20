@@ -6250,6 +6250,149 @@ Adding default `difficulty: 3` to auto-glossed Session 57 entries
 would prevent this surface-area entirely — high-leverage fix for
 a future session.
 
+**INVESTIGATION RESULT (Session 60 follow-up to Task #23):** Bumping
+Session 57 entries to difficulty:3 turned out to be unnecessary —
+those entries already have `difficulty: 2` set during the Session 50
+merge. The 714 default-difficulty entries (the ones that DO surface
+in beginner Quiz 1) are mostly basic vocabulary like hand, head,
+nose, numbers — content that SHOULD be in beginner quizzes.
+Wholesale bumping would hide real Awing content from beginners. The
+3 tester-reported wrongs are specific outliers, not systemic. Relying
+on tester feedback loop + future native-speaker review for individual
+fixes instead.
+
+---
+
+## SESSION 60 RE-APPLICATION KIT (for production access on/after 2026-05-18)
+
+When the 14-day re-engagement window completes, paste these UPDATED
+answers into the Play Console production access application form
+(Dashboard → "Apply for production"). Only Step 1 Q3/Q4 and Step 3
+Q1/Q2 are changed from the Session 59 originals; Step 1 Q1/Q2, Step
+2 all questions, kept the same.
+
+### Step 1 — About your closed test
+
+**Q1 — How did you recruit users for your closed test?** (300 chars)
+
+```
+I recruited friends and family from the Awing community by sharing
+the closed testing opt-in link directly with people I know
+personally. I also shared a public opt-in link via WhatsApp to
+broaden the audience to Awing diaspora and language preservation
+contacts.
+```
+
+**Q2 — How easy was it to recruit testers?** (radio)
+
+`Neither difficult or easy`
+
+**Q3 — Describe the engagement you received from testers** (300
+chars; UPDATED to reference specifics)
+
+```
+Testers actively used the app — sessions and progress visible
+through Firestore cloud sync and TestFlight session logs. New
+public-link testers joined via opt-in URLs (Android Play Store +
+iOS TestFlight). Testers explored alphabet, words, and quiz lessons.
+One tester sent screenshots reporting wrong word meanings — direct
+feedback loop working.
+```
+
+**Q4 — Provide a summary of the feedback you received** (300 chars;
+UPDATED with specific tester reports + the fixes we shipped)
+
+```
+A tester sent screenshots from beginner Quiz 1 showing three Awing
+words with incorrect English meanings (nkɔ̂ŋə, kwa'ɔ́, pəgə). I
+verified each against my reference dictionary, removed two
+fabricated entries, simplified one technical gloss for kids, and
+shipped v1.11.4+54 within hours. Other feedback came via phone
+calls and in-person conversations.
+```
+
+### Step 2 — About your app (unchanged from Session 59)
+
+**Q1 — Intended audience** (279/300)
+
+```
+Children and beginners learning Awing, a Grassfields Bantu
+language spoken by about 19,000 people in Cameroon's North West
+Region. Also serves Awing-diaspora families wanting to preserve
+their heritage language with their children, and anyone interested
+in language preservation.
+```
+
+**Q2 — How your app provides value** (284/300)
+
+```
+The app teaches Awing through interactive lessons across three
+levels (Beginner, Medium, Expert) with native speaker
+pronunciation, six character voices, 4,000+ vocabulary words,
+quizzes, stories, conversations, and a teacher-led exam mode.
+Free, offline-first, and designed for kids.
+```
+
+**Q3 — Expected first-year installs** (radio)
+
+`10K - 100K`
+
+### Step 3 — Your production readiness (UPDATED)
+
+**Q1 — What changes did you make based on what you learned?**
+(300 chars; UPDATED with specific v1.11.4+54 changes)
+
+```
+v1.11.4+54 ships four direct responses to tester feedback and
+content audit: (1) fixed 3 wrong quiz glosses reported by a
+tester, (2) removed 75 exact-duplicate vocabulary entries,
+(3) replaced fabricated Conversations content with a 'coming
+soon' placeholder, (4) added Android 15 edge-to-edge fix.
+```
+
+**Q2 — How did you decide your app is ready for production?**
+(300 chars; UPDATED to reference the feedback→fix loop)
+
+```
+After 14+ more days of closed testing with active engagement, the
+content audit + tester reports loop produced concrete improvements
+in v1.11.4+54. Content is reviewed and corrected by a native
+Awing speaker (Dr. Guidion Sama). App runs offline reliably. The
+feedback→fix→ship pipeline is now demonstrated, not just promised.
+```
+
+### Re-application reference data (to have ready when applying)
+
+**Latest version**: v1.11.4+54
+**Commit hash**: (look up `git log -1 --oneline` before applying)
+**Closed testing tester counts**:
+- Android: 14 email-list testers + N public-link joiners
+- iOS: 10 internal + N external (public link)
+**Engagement signals** (look up day-of):
+- Play Console > Statistics > Active devices (last 7/30 days)
+- Firestore writes per user
+- TestFlight session counts
+**Specific feedback received**:
+- Quiz 1 wrong glosses (May 6, 2026 — tester screenshots)
+- (any other reports between now and re-application)
+
+### Re-application gating checklist (review BEFORE clicking Apply)
+
+1. ☐ At least 14 days since v1.11.4+54 went live (earliest re-apply
+   date: ~2026-05-21 if pushed today)
+2. ☐ 8+ of 12 testers showing 3+ distinct active days during the
+   last week
+3. ☐ At least 3 visible Play Store reviews (or TestFlight feedback
+   submissions on iOS)
+4. ☐ Latest version is v1.11.4+54 (or later) with the conversation
+   cleanup + 3 gloss fixes + edge-to-edge fix
+5. ☐ Build status in Play Console closed testing = "Active"
+6. ☐ At least one tester has interacted with the in-app feedback
+   form OR sent a report we can cite in Step 1 Q4
+7. ☐ No new critical bugs reported in the past 7 days
+
+If 2+ items unchecked: hold for another week of engagement.
+
 **Next steps in priority order:**
 1. Send Version C to existing testers (re-engagement, Task #7)
 2. Send Version G to new recruits (Task #10)
