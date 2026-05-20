@@ -25,6 +25,10 @@ subprojects {
 // JVM 11 from plugins like tflite_flutter) and Kotlin (JVM 17 from
 // project). Uses afterEvaluate so this runs AFTER each plugin's own
 // configuration overrides.
+//
+// Note: uses the new `compilerOptions` DSL on KotlinCompile tasks —
+// the older `kotlinOptions { jvmTarget = ... }` form is a hard error
+// in newer Kotlin Gradle Plugin versions.
 subprojects {
     afterEvaluate {
         tasks.withType<JavaCompile>().configureEach {
@@ -34,7 +38,11 @@ subprojects {
         tasks.withType<
             org.jetbrains.kotlin.gradle.tasks.KotlinCompile
         >().configureEach {
-            kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+            compilerOptions {
+                jvmTarget.set(
+                    org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+                )
+            }
         }
     }
 }
