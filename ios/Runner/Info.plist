@@ -24,6 +24,13 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<!-- Export compliance: app uses only Apple's built-in HTTPS/TLS (via
+	     Firestore SDK) and no custom or proprietary encryption. Setting
+	     this to false tells Apple no further export-compliance answer is
+	     needed for any future build, so TestFlight never blocks releases
+	     with "Missing Compliance" status. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>
@@ -58,6 +65,12 @@
 	     and student devices can discover and join via mDNS. -->
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Awing AI Learning uses your local Wi-Fi network so teachers can host classroom exam sessions and students can discover and join nearby sessions.</string>
+	<!-- Location purpose string: iOS conflates Wi-Fi SSID detection with
+	     location permission, so network_info_plus references CoreLocation
+	     APIs even though the app never reads GPS coordinates. Apple's
+	     warning 90683 requires this key when ANY referenced API needs it. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Awing AI Learning does not track your location. This permission is required only because the Wi-Fi network library (used by the classroom exam mode) references location APIs on iOS.</string>
 	<!-- Photo library + camera purpose strings — required by Apple even though
 	     the app does not directly use these APIs. file_picker / share_plus /
 	     image_picker pull in iOS frameworks that reference PhotoKit; Apple's
