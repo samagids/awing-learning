@@ -48,7 +48,9 @@ final List<_SentenceTemplate> _allSentences = [
     blankIndex: 1,
   ),
   _SentenceTemplate(
-    fullSentence: 'Mo\u0301onə a tə nonnɔ\u0301 a əkwunɔ\u0301.',
+    // Dr. Sama (native speaker) corrected the natural spoken form:
+    // Awing drops "a tə" progressive aux and the locative "a".
+    fullSentence: 'Mo\u0301onə nonnɔ\u0301 əkwunɔ\u0301.',
     english: 'The baby is lying on the bed.',
     blankWord: 'Mo\u0301onə',
     blankIndex: 0,
@@ -245,10 +247,12 @@ final List<_SentenceTemplate> _allSentences = [
     blankIndex: 2,
   ),
   _SentenceTemplate(
-    fullSentence: 'Fwa\u0301 a tə nonnɔ\u0301 a əkwunɔ\u0301.',
+    // Dr. Sama (native speaker) corrected the natural spoken form:
+    // Awing drops "a tə" progressive aux and the locative "a".
+    fullSentence: 'Fwa\u0301 nonnɔ\u0301 əkwunɔ\u0301.',
     english: 'The chief is lying on the bed.',
     blankWord: 'əkwunɔ\u0301.',
-    blankIndex: 4,
+    blankIndex: 2,
   ),
   _SentenceTemplate(
     fullSentence: 'Po kə zo nchi\u0301ə a nde\u0301.',

@@ -6,6 +6,7 @@ import 'package:awing_ai_learning/screens/expert/conversation_screen.dart';
 import 'package:awing_ai_learning/screens/expert/expert_quiz_screen.dart';
 import 'package:awing_ai_learning/screens/expert/numbers_expert_screen.dart';
 import 'package:awing_ai_learning/screens/games/expert_tone_hunt.dart';
+import 'package:awing_ai_learning/screens/beginner/vocabulary_screen.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 
 class ExpertHome extends StatefulWidget {
@@ -126,6 +127,28 @@ class _ExpertHomeState extends State<ExpertHome> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const ConversationScreen()),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Advanced Words',
+              subtitle: 'Abstract concepts, proper nouns & rare vocabulary',
+              icon: Icons.menu_book,
+              color: Colors.red.shade500,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  // Expert "Advanced Words" shows ONLY difficulty-3 words.
+                  // Beginner (1) and Medium (2) words are excluded — the
+                  // user has already encountered those in earlier tiles.
+                  // Contents: abstract/religious vocabulary, proper nouns
+                  // (Bible names, places), occupations (priest, scribe,
+                  // centurion…), and some mature/historical concepts.
+                  builder: (_) => const VocabularyScreen(
+                    difficultyFilter: 3,
+                    lessonId: 'expert_advanced_words',
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 12),

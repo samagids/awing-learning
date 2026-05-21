@@ -38,16 +38,15 @@ const List<AwingSentence> awingSentences = [
   // (orthography pages 9, 11, 12) and stay.
   //
   // PDF-verified sentences from AwingOrthography2005.pdf:
-  // Page 11: "Móonə a tə nonnɔ́ a əkwunɔ́."
+  // Page 11: "Móonə a tə nonnɔ́ a əkwunɔ́." (formal PDF form)
+  // Corrected by Dr. Sama (native speaker) to the natural spoken form:
+  // Awing drops "a tə" progressive auxiliary and the locative "a".
   AwingSentence(
-    awing: "Móonə a tə nonnɔ́ a əkwunɔ́.",
+    awing: "Móonə nonnɔ́ əkwunɔ́.",
     english: 'The baby is lying on the bed.',
     words: [
       AwingWord('Móonə', 'Baby'),
-      AwingWord('a', '(subject)'),
-      AwingWord('tə', '(progressive)'),
       AwingWord('nonnɔ́', 'lying'),
-      AwingWord('a', 'on'),
       AwingWord('əkwunɔ́', 'bed'),
     ],
   ),
@@ -106,6 +105,107 @@ const List<AwingSentence> awingSentences = [
     words: [
       AwingWord('Lɛ̌', 'This is'),
       AwingWord("nəpɔ'ɔ́", 'pumpkin'),
+    ],
+  ),
+
+  // ====================================================================
+  // BIBLE NT UNIVERSAL SENTENCES — extracted from CABTAL Awing NT.
+  // Verses where the English itself is a universal proverb or
+  // imperative (no religious narrative context). Added Session 60.
+  // ====================================================================
+  // JHN.7.53 — extracted from Bible NT (universal proverb/imperative)
+  AwingSentence(
+    awing: 'Ŋwu ntsəmə a fɛ́d ńtíʼ ńkwə̂ á ngyaʼə́ yə́.',
+    english: 'Everyone went to his own house.',
+    words: [
+      AwingWord('Ŋwu', 'person'),
+      AwingWord('ntsəmə', 'every'),
+      AwingWord('a', '(subject)'),
+      AwingWord('fɛ́d', 'left'),
+      AwingWord('ńtíʼ', 'and'),
+      AwingWord('ńkwə̂', 'went'),
+      AwingWord('á', 'to'),
+      AwingWord('ngyaʼə́', 'house'),
+      AwingWord('yə́', 'his'),
+    ],
+  ),
+  // ACT.8.8 — extracted from Bible NT (universal proverb/imperative)
+  AwingSentence(
+    awing: 'Ńdaŋ ə́lɨ́d mbɨ ngaŋ tə́kɔʼ tɔ̂ŋ yi wɨ́.',
+    english: 'There was great joy in that city.',
+    words: [
+      AwingWord('Ńdaŋ', 'then'),
+      AwingWord('ə́lɨ́d', 'there'),
+      AwingWord('mbɨ', 'was'),
+      AwingWord('ngaŋ', 'great'),
+      AwingWord('tə́kɔʼ', 'joy'),
+      AwingWord('tɔ̂ŋ', 'city'),
+      AwingWord('yi', 'in'),
+      AwingWord('wɨ́', 'that'),
+    ],
+  ),
+  // PHP.2.14 — extracted from Bible NT (universal proverb/imperative)
+  AwingSentence(
+    awing: 'Faʼə̂ anuə atsəm tsɔʼə tə ŋwuntə̂.',
+    english: 'Do all things without complaining.',
+    words: [
+      AwingWord('Faʼə̂', 'do'),
+      AwingWord('anuə', 'things'),
+      AwingWord('atsəm', 'all'),
+      AwingWord('tsɔʼə', 'without'),
+      AwingWord('tə', 'to'),
+      AwingWord('ŋwuntə̂', 'complain'),
+    ],
+  ),
+  // 1TH.5.21 — extracted from Bible NT (universal proverb/imperative)
+  AwingSentence(
+    awing: 'Jwə́ʼ nə́ mənu mətsəm.',
+    english: 'Test all things.',
+    words: [
+      AwingWord('Jwə́ʼ', 'test'),
+      AwingWord('nə́', 'of'),
+      AwingWord('mənu', 'things'),
+      AwingWord('mətsəm', 'all'),
+    ],
+  ),
+  // ROM.12.21 — extracted from Bible NT (universal proverb/imperative)
+  AwingSentence(
+    awing: 'Kɔ gho pí təpɔŋə á tsɛɛlə̂ gho.',
+    english: "Don't let bad things defeat you.",
+    words: [
+      AwingWord('Kɔ', 'do not'),
+      AwingWord('gho', 'you'),
+      AwingWord('pí', 'let'),
+      AwingWord('təpɔŋə', 'bad'),
+      AwingWord('á', 'to'),
+      AwingWord('tsɛɛlə̂', 'defeat'),
+      AwingWord('gho', 'you'),
+    ],
+  ),
+  // 1TH.5.22 — extracted from Bible NT (universal proverb/imperative)
+  AwingSentence(
+    awing: 'Lə́ʼ nə́ ndzaŋ təpɔŋ ntsəmə.',
+    english: 'Stay away from every kind of bad thing.',
+    words: [
+      AwingWord('Lə́ʼ', 'stay away'),
+      AwingWord('nə́', 'from'),
+      AwingWord('ndzaŋ', 'kind'),
+      AwingWord('təpɔŋ', 'bad'),
+      AwingWord('ntsəmə', 'every'),
+    ],
+  ),
+  // COL.3.21 — extracted from Bible NT (universal proverb/imperative)
+  AwingSentence(
+    awing: 'Pətǎ, kɔ nə́ tə́ ńjwaʼə̂ pɔ́ pə́ənə́.',
+    english: "Fathers, don't anger your children.",
+    words: [
+      AwingWord('Pətǎ', 'fathers'),
+      AwingWord('kɔ', 'do not'),
+      AwingWord('nə́', 'to'),
+      AwingWord('tə́', 'be'),
+      AwingWord('ńjwaʼə̂', 'angering'),
+      AwingWord('pɔ́', 'children'),
+      AwingWord('pə́ənə́', 'your'),
     ],
   ),
 ];

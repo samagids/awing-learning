@@ -105,7 +105,16 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               color: Colors.green.shade400,
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const VocabularyScreen()),
+                MaterialPageRoute(
+                  // Beginner shows ONLY difficulty-1 words. Difficulty 2/3
+                  // entries are reserved for Medium "Difficult Words" and
+                  // future Expert vocabulary respectively, so kids never
+                  // see advanced words mixed into the beginner flashcards.
+                  builder: (_) => const VocabularyScreen(
+                    difficultyFilter: 1,
+                    lessonId: 'beginner_vocabulary',
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 12),

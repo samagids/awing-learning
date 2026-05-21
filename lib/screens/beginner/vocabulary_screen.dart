@@ -6,7 +6,25 @@ import 'package:awing_ai_learning/components/pack_image.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 
 class VocabularyScreen extends StatefulWidget {
-  const VocabularyScreen({Key? key}) : super(key: key);
+  /// If set, restrict the word pool to words at this exact difficulty.
+  /// Beginner mode passes 1 → only "easy" words. Medium passes 2 → only
+  /// "difficult" words (NOT also showing Beginner words). Expert passes 3.
+  /// When null (legacy callers), shows all vocabulary regardless of
+  /// difficulty — kept for backward compatibility with the old "all words"
+  /// flashcard entry point.
+  final int? difficultyFilter;
+
+  /// Lesson-completion ID. Passed through to AuthService.completeLesson so
+  /// the progress-tracking system can distinguish "user opened beginner
+  /// vocab" from "user opened medium difficult-words" from "user opened
+  /// expert vocab". Defaults to 'beginner_vocabulary' when null.
+  final String? lessonId;
+
+  const VocabularyScreen({
+    Key? key,
+    this.difficultyFilter,
+    this.lessonId,
+  }) : super(key: key);
 
   @override
   State<VocabularyScreen> createState() => _VocabularyScreenState();
@@ -29,6 +47,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     'family': 'Family & Places',
     'descriptive': 'Descriptive',
     'numbers': 'Numbers',
+    'pronouns': 'Pronouns',
   };
 
   @override
@@ -36,15 +55,29 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     super.initState();
     _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthService>().completeLesson('beginner_vocabulary');
+      context.read<AuthService>().completeLesson(
+            widget.lessonId ?? 'beginner_vocabulary',
+          );
     });
   }
 
+  /// Returns the vocabulary pool the user can browse here.
+  ///
+  /// Difficulty-filtered modes (Beginner=1, Medium=2, Expert=3) show ONLY
+  /// words at exactly that difficulty. That guarantees the Medium
+  /// "Difficult Words" screen never shows words the user already learned
+  /// in Beginner, and the Expert screen never shows words from Medium/
+  /// Beginner. Words without an explicit `difficulty:` field default to 1
+  /// in the data layer, so they appear in Beginner only.
   List<AwingWord> get _words {
-    if (_selectedCategory == 'all') return allVocabulary;
-    return allVocabulary
-        .where((w) => w.category == _selectedCategory)
-        .toList();
+    Iterable<AwingWord> pool = allVocabulary;
+    if (widget.difficultyFilter != null) {
+      pool = pool.where((w) => w.difficulty == widget.difficultyFilter);
+    }
+    if (_selectedCategory != 'all') {
+      pool = pool.where((w) => w.category == _selectedCategory);
+    }
+    return pool.toList();
   }
 
   void _nextCard() {

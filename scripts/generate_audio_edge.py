@@ -724,21 +724,25 @@ async def _find_available_voice(preferred, gender="male"):
 
 
 async def _edge_tts_save_with_retry(text, voice_name, rate, pitch, temp_path,
-                                     max_attempts=3):
+                                     max_attempts=6):
     """Call edge_tts.Communicate + save with retry on transient errors.
 
     Microsoft's Edge TTS endpoint regularly returns transient WebSocket 503s
     ("Invalid response status") due to rate limiting and backend jitter.
-    These are not bugs in our code — they're public-API noise. A single
-    retry with backoff recovers nearly all of them.
+    Windows clients also occasionally see DNS/TLS handshake failures
+    ("The specified network name is no longer available") when the local
+    network briefly drops or the system rotates a connection. These are
+    not bugs in our code — they're public-API + transport noise.
 
-    Backoff schedule: 2s, 5s, 10s between attempts. Three attempts total.
-    Returns True iff the final saved file is >500 bytes. On per-attempt
-    failure, only the first retry is logged to avoid spamming the batch
-    output; the final exception (if all attempts fail) is printed.
+    Backoff schedule: 2s, 5s, 10s, 20s, 40s between 6 attempts (total
+    potential delay ~77s). Six attempts catches most multi-minute network
+    blips, not just brief jitter. The first retry is logged so the
+    operator notices flakiness; later retries are silent unless they
+    actually fail. The final exception (if all 6 attempts fail) is
+    printed with the text key for easier post-run resume.
     """
     import edge_tts
-    delays = [2.0, 5.0, 10.0]  # seconds — used between attempts
+    delays = [2.0, 5.0, 10.0, 20.0, 40.0]  # 5 inter-attempt delays for 6 attempts
 
     TEMP_DIR.mkdir(parents=True, exist_ok=True)
     last_error = None
@@ -764,9 +768,23 @@ async def _edge_tts_save_with_retry(text, voice_name, rate, pitch, temp_path,
             if attempt == 0:
                 # Only log on first retry so a flaky network doesn't spam
                 print(f"    [retry] Edge TTS jitter, waiting {delay}s...")
+            elif attempt == 2:
+                # Mid-attempt notice — operator should know we're working hard
+                print(f"    [retry {attempt+1}/{max_attempts}] still jittery, "
+                      f"waiting {delay}s...")
             await asyncio.sleep(delay)
 
+    # All attempts failed — log to a resume file so the operator can
+    # re-run targeting only the failed entries instead of regenerating
+    # every clip.
     print(f"    Error: {last_error}")
+    try:
+        resume_log = TEMP_DIR / "edge_tts_failed.log"
+        resume_log.parent.mkdir(parents=True, exist_ok=True)
+        with open(resume_log, "a", encoding="utf-8") as f:
+            f.write(f"{voice_name}\t{text}\t{temp_path}\t{last_error}\n")
+    except Exception:
+        pass
     return False
 
 

@@ -198,3 +198,44 @@ contributions/vocabulary_not_in_dictionary.txt
 contributions/audit_session56/
 contributions/bible_vocab/
 contributions/dictionary_extract/
+
+# Session 60 scratch JSONs — candidate data from Bible mining runs.
+# These are working files, not authoritative content.
+contributions/bible_*.json
+contributions/dict_phrase_candidates.json
+contributions/dictionary_gaps.json
+contributions/matched.json
+contributions/low_match.json
+contributions/target_sentences.json
+
+# Vocabulary backup files — created automatically by data-mutation scripts
+# (Session 51/56/60 audits). Keep them out of the repo.
+lib/data/awing_vocabulary.dart.bak_*
+
+# Local asset pack archives — built artifacts, not source
+pad-assets.tar.gz
+*.aab.tar.gz
+
+# Claude session metadata / worktrees — local-only
+.claude/worktrees/
+
+# Session 60 scratch JSONs — Bible mining candidate data (working files)
+contributions/bible_*.json
+contributions/dict_phrase_candidates.json
+contributions/dictionary_gaps.json
+contributions/matched.json
+contributions/low_match.json
+contributions/target_sentences.json
+
+# Vocabulary backup files — auto-created by data-mutation scripts
+lib/data/awing_vocabulary.dart.bak_*
+
+# Local asset pack archives — built artifacts
+pad-assets.tar.gz
+*.aab.tar.gz
+
+# Claude session metadata
+.claude/worktrees/
+
+# pad-assets.tar.gz absolute path (root-anchored)
+/pad-assets.tar.gz

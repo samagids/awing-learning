@@ -148,7 +148,17 @@ class _MediumHomeState extends State<MediumHome> {
               color: const Color(0xFFE65100),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const VocabularyScreen()),
+                MaterialPageRoute(
+                  // Medium "Difficult Words" shows ONLY difficulty-2 words.
+                  // Beginner words (difficulty 1) are excluded — kids using
+                  // Medium have already learned those in the Beginner mode
+                  // "Words" tile and shouldn't see them mixed in here.
+                  // Expert words (difficulty 3) are also excluded.
+                  builder: (_) => const VocabularyScreen(
+                    difficultyFilter: 2,
+                    lessonId: 'medium_difficult_words',
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 12),

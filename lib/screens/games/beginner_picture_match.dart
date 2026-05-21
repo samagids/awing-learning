@@ -223,12 +223,46 @@ class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: 0.95,
-                      children: round.map((w) => _buildImageTarget(w)).toList(),
+                    // LayoutBuilder + dynamic childAspectRatio: makes all 4
+                    // cards always fit in a 2×2 grid that fills the available
+                    // height. Previously this used a fixed
+                    // `childAspectRatio: 0.95` which on wider tablet screens
+                    // made each cell proportionally taller, pushing row 2
+                    // below the fold. A tester on Android tablet reported
+                    // having to scroll to see images 3 and 4.
+                    //
+                    // By computing the ratio from constraints.maxWidth /
+                    // maxHeight we guarantee the 2×2 grid exactly fills the
+                    // visible area on every screen size + orientation.
+                    // NeverScrollableScrollPhysics prevents an accidental
+                    // drag-scroll while the kid is dragging word chips.
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        const cols = 2;
+                        const rows = 2;
+                        const spacing = 12.0;
+                        final cellW =
+                            (constraints.maxWidth - spacing * (cols - 1)) /
+                                cols;
+                        final cellH =
+                            (constraints.maxHeight - spacing * (rows - 1)) /
+                                rows;
+                        // Clamp to a sensible range so a degenerate constraint
+                        // (e.g. a folding-phone half-state) never produces a
+                        // 0 or NaN ratio. 0.5..2.5 covers portrait phone to
+                        // landscape tablet comfortably.
+                        final ratio = (cellW / cellH).clamp(0.5, 2.5);
+                        return GridView.count(
+                          crossAxisCount: cols,
+                          crossAxisSpacing: spacing,
+                          mainAxisSpacing: spacing,
+                          childAspectRatio: ratio,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: round
+                              .map((w) => _buildImageTarget(w))
+                              .toList(),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -311,7 +345,13 @@ class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
                     child: PackImage(
                       awingWord: word.awing,
                       english: word.english,
-                      fit: BoxFit.cover,
+                      // BoxFit.contain — show the WHOLE picture on every screen
+                      // size. With BoxFit.cover the card was wider than tall on
+                      // tablets (Android tablet, iPad), and ~30% of the image
+                      // got cropped off. contain may leave thin grey bars on the
+                      // sides but the kid always sees the full illustration,
+                      // which is what makes the match-the-word game playable.
+                      fit: BoxFit.contain,
                       errorWidget: Container(
                         color: Colors.green.shade50,
                         child: Icon(Icons.image, color: Colors.green.shade300, size: 48),

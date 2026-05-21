@@ -123,16 +123,16 @@ final List<AwingStory> awingStories = [
     titleAwing: 'Móonə',
     illustration: '👶',
     sentences: [
-      // Orthography PDF p.11, exact quote
+      // Orthography PDF p.11, corrected by Dr. Sama (native speaker)
+      // to the natural spoken form — Awing drops "a tə" progressive aux
+      // and locative "a".
       StorySentence(
-        awing: 'Móonə a tə nonnɔ́ a əkwunɔ́.',
+        awing: 'Móonə nonnɔ́ əkwunɔ́.',
         english: 'The baby is lying on the bed.',
       ),
     ],
     vocabulary: [
       StoryVocabulary(awing: 'móonə', english: 'baby, child'),
-      StoryVocabulary(awing: 'a', english: 'subject marker'),
-      StoryVocabulary(awing: 'tə', english: 'progressive marker'),
       StoryVocabulary(awing: 'nonnɔ́', english: 'lying'),
       StoryVocabulary(awing: 'əkwunɔ́', english: 'bed'),
     ],
