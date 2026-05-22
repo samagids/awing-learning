@@ -1,0 +1,17 @@
+{
+  "before": 3660,
+  "after": 7517,
+  "added": 3857,
+  "categories": {
+    "things": 2434,
+    "body": 142,
+    "descriptive": 294,
+    "actions": 312,
+    "food": 97,
+    "family": 158,
+    "nature": 236,
+    "animals": 132,
+    "numbers": 52
+  },
+  "skipped": 175
+}

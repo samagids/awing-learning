@@ -1,0 +1,693 @@
+{
+  "summary": {
+    "before": 8374,
+    "after": 8203,
+    "removed": 171
+  },
+  "removed": [
+    {
+      "line": 173,
+      "reason": "polyseme-dup: 'he-goat' subset of 'he-goat, billy goat' (L3887)"
+    },
+    {
+      "line": 175,
+      "reason": "polyseme-dup: 'chicken' subset of 'chicken, fowl' (L2620)"
+    },
+    {
+      "line": 199,
+      "reason": "polyseme-dup: 'forest' subset of 'forest, bush' (L2643)"
+    },
+    {
+      "line": 205,
+      "reason": "polyseme-dup: 'fire' subset of 'sound that describes something snuffing out eg fire or breath' (L2772)"
+    },
+    {
+      "line": 207,
+      "reason": "polyseme-dup: 'cloud' subset of 'cloud, fog' (L2660)"
+    },
+    {
+      "line": 208,
+      "reason": "polyseme-dup: 'pool' subset of 'deep pool of water' (L2659)"
+    },
+    {
+      "line": 231,
+      "reason": "polyseme-dup: 'peace plant' subset of 'Traditional peace plant, planted in places of worship and used in ceremonies of peace' (L2757)"
+    },
+    {
+      "line": 260,
+      "reason": "polyseme-dup: 'jackal' subset of 'jackal. From: English' (L4507)"
+    },
+    {
+      "line": 287,
+      "reason": "polyseme-dup: 'guava' subset of 'guava. From: English' (L2848)"
+    },
+    {
+      "line": 327,
+      "reason": "polyseme-dup: 'hear' subset of 'hear; feel' (L3516)"
+    },
+    {
+      "line": 331,
+      "reason": "polyseme-dup: 'greet' subset of 'greet. A polite man greets everybody he/she meets along the way' (L2881)"
+    },
+    {
+      "line": 345,
+      "reason": "polyseme-dup: 'pay (for goods)' subset of 'pay (for goods, services, etc.)' (L3417)"
+    },
+    {
+      "line": 347,
+      "reason": "polyseme-dup: 'breathe' subset of 'breathe; open the window to let air in' (L3079)"
+    },
+    {
+      "line": 350,
+      "reason": "polyseme-dup: 'look at' subset of 'look at; look for' (L3254)"
+    },
+    {
+      "line": 354,
+      "reason": "polyseme-dup: 'buy' subset of 'buy; corrupt' (L3072)"
+    },
+    {
+      "line": 358,
+      "reason": "polyseme-dup: 'take a walk' subset of 'take a walk, stroll' (L3276)"
+    },
+    {
+      "line": 368,
+      "reason": "polyseme-dup: 'say goodbye' subset of 'say goodbye, take leave of' (L3322)"
+    },
+    {
+      "line": 369,
+      "reason": "polyseme-dup: 'wash' subset of 'wash (tr)' (L3354)"
+    },
+    {
+      "line": 373,
+      "reason": "polyseme-dup: 'remember' subset of 'remember, remind' (L3482)"
+    },
+    {
+      "line": 375,
+      "reason": "polyseme-dup: 'forget' subset of 'forgive; forget' (L3201)"
+    },
+    {
+      "line": 377,
+      "reason": "polyseme-dup: 'heal' subset of 'heal (tr), cure' (L3451)"
+    },
+    {
+      "line": 380,
+      "reason": "polyseme-dup: 'open' subset of 'open (tr)' (L3278)"
+    },
+    {
+      "line": 382,
+      "reason": "polyseme-dup: 'cut open' subset of 'saw , cut open' (L3340)"
+    },
+    {
+      "line": 383,
+      "reason": "polyseme-dup: 'talk' subset of 'speak, talk' (L3435)"
+    },
+    {
+      "line": 405,
+      "reason": "polyseme-dup: 'build' subset of 'be hefty, huge in build; important' (L2939)"
+    },
+    {
+      "line": 411,
+      "reason": "polyseme-dup: 'pour' subset of 'pour something on ground or container (solid or liquid)' (L2725)"
+    },
+    {
+      "line": 419,
+      "reason": "polyseme-dup: 'cook' subset of 'cook, boil food' (L3256)"
+    },
+    {
+      "line": 424,
+      "reason": "polyseme-dup: 'ask' subset of 'invite, ask or demand that somebody should help one, often to do jobs that cannot be done by the individual' (L3485)"
+    },
+    {
+      "line": 430,
+      "reason": "polyseme-dup: 'die' subset of 'be dead; die' (L3160)"
+    },
+    {
+      "line": 432,
+      "reason": "polyseme-dup: 'descend' subset of 'descend, go down' (L3458)"
+    },
+    {
+      "line": 436,
+      "reason": "polyseme-dup: 'help' subset of 'help a little' (L3142)"
+    },
+    {
+      "line": 437,
+      "reason": "polyseme-dup: 'imitate' subset of 'imitate. People who work out of envy can be dangerous' (L3006)"
+    },
+    {
+      "line": 438,
+      "reason": "polyseme-dup: 'join' subset of 'meet, catch up with; join' (L3386)"
+    },
+    {
+      "line": 439,
+      "reason": "polyseme-dup: 'judge' subset of 'order, of someone to do something; judge' (L3333)"
+    },
+    {
+      "line": 440,
+      "reason": "polyseme-dup: 'jump' subset of 'jump, leap' (L3211)"
+    },
+    {
+      "line": 441,
+      "reason": "polyseme-dup: 'keep' subset of 'keep; bury (euphemism)' (L3218)"
+    },
+    {
+      "line": 443,
+      "reason": "polyseme-dup: 'lack' subset of 'be poor; lack' (L3320)"
+    },
+    {
+      "line": 446,
+      "reason": "polyseme-dup: 'lock' subset of 'imprison; lock or key eg a door' (L3018)"
+    },
+    {
+      "line": 448,
+      "reason": "polyseme-dup: 'make' subset of 'make many knots, tie knots' (L3454)"
+    },
+    {
+      "line": 455,
+      "reason": "polyseme-dup: 'pay' subset of 'pay (for goods, services, etc.)' (L3417)"
+    },
+    {
+      "line": 456,
+      "reason": "polyseme-dup: 'play' subset of 'play, make jokes' (L3143)"
+    },
+    {
+      "line": 459,
+      "reason": "polyseme-dup: 'quarrel' subset of 'rebuke; quarrel' (L3025)"
+    },
+    {
+      "line": 460,
+      "reason": "polyseme-dup: 'remember' subset of 'remember, remind' (L3164)"
+    },
+    {
+      "line": 464,
+      "reason": "polyseme-dup: 'refuse' subset of '(of babies) have the habit of refusing strangers; refuse, of many people' (L3608)"
+    },
+    {
+      "line": 465,
+      "reason": "polyseme-dup: 'save' subset of 'save, deliver from danger' (L2961)"
+    },
+    {
+      "line": 467,
+      "reason": "polyseme-dup: 'separate' subset of 'divide, separate, share (intr). They have shared their property' (L3033)"
+    },
+    {
+      "line": 468,
+      "reason": "polyseme-dup: 'serve' subset of 'work; serve' (L2979)"
+    },
+    {
+      "line": 469,
+      "reason": "polyseme-dup: 'sew' subset of 'sew using a needle' (L3402)"
+    },
+    {
+      "line": 470,
+      "reason": "polyseme-dup: 'share' subset of 'divide, separate, share (intr). They have shared their property' (L3033)"
+    },
+    {
+      "line": 472,
+      "reason": "polyseme-dup: 'shoot' subset of 'kick, shoot' (L3400)"
+    },
+    {
+      "line": 475,
+      "reason": "polyseme-dup: 'grind' subset of 'crush (transitively), grind' (L3055)"
+    },
+    {
+      "line": 480,
+      "reason": "polyseme-dup: 'thank' subset of 'thank or give thanks' (L3188)"
+    },
+    {
+      "line": 504,
+      "reason": "polyseme-dup: 'chair' subset of 'chair; throne; high office; position' (L3747)"
+    },
+    {
+      "line": 506,
+      "reason": "polyseme-dup: 'razor' subset of 'razor blade. If you give a razor blade to a child he will wound himself with' (L4645)"
+    },
+    {
+      "line": 539,
+      "reason": "polyseme-dup: 'horn' subset of 'horn (musical instrument)' (L4558)"
+    },
+    {
+      "line": 546,
+      "reason": "polyseme-dup: 'bamboo' subset of 'an open bamboo cupboard attached to the wall of the house used for putting kitchen utensils' (L3556)"
+    },
+    {
+      "line": 547,
+      "reason": "polyseme-dup: 'tax' subset of 'tax. From: English' (L4651)"
+    },
+    {
+      "line": 551,
+      "reason": "polyseme-dup: 'dream' subset of 'dream; vision (supernatural)' (L4367)"
+    },
+    {
+      "line": 565,
+      "reason": "polyseme-dup: 'hoe' subset of 'cultivate, hoe (v)' (L3210)"
+    },
+    {
+      "line": 583,
+      "reason": "polyseme-dup: 'language' subset of 'language; word' (L3958)"
+    },
+    {
+      "line": 584,
+      "reason": "polyseme-dup: 'law' subset of 'law, practice' (L4555)"
+    },
+    {
+      "line": 585,
+      "reason": "polyseme-dup: 'life' subset of 'life, living' (L4338)"
+    },
+    {
+      "line": 586,
+      "reason": "polyseme-dup: 'light' subset of 'light; electricity' (L3634)"
+    },
+    {
+      "line": 588,
+      "reason": "polyseme-dup: 'corn' subset of 'corn, maize' (L2847)"
+    },
+    {
+      "line": 589,
+      "reason": "polyseme-dup: 'message' subset of 'news, message' (L4526)"
+    },
+    {
+      "line": 595,
+      "reason": "polyseme-dup: 'hardship' subset of 'hardship, distress' (L4484)"
+    },
+    {
+      "line": 596,
+      "reason": "polyseme-dup: 'idea' subset of 'idea; thought; pensiveness (especially negative)' (L3763)"
+    },
+    {
+      "line": 597,
+      "reason": "polyseme-dup: 'illness' subset of 'illness, disease, malady' (L3700)"
+    },
+    {
+      "line": 598,
+      "reason": "polyseme-dup: 'journey' subset of 'journey; movement, travel' (L4425)"
+    },
+    {
+      "line": 599,
+      "reason": "polyseme-dup: 'kindness' subset of '1) goodness, kindness' (L4146)"
+    },
+    {
+      "line": 605,
+      "reason": "polyseme-dup: 'path' subset of 'path; road; destiny' (L2648)"
+    },
+    {
+      "line": 608,
+      "reason": "polyseme-dup: 'peace' subset of 'Traditional peace plant, planted in places of worship and used in ceremonies of peace' (L2757)"
+    },
+    {
+      "line": 611,
+      "reason": "polyseme-dup: 'shoe' subset of 'shoe; hide of any animal' (L4499)"
+    },
+    {
+      "line": 617,
+      "reason": "polyseme-dup: 'wealth' subset of 'wealth, property' (L3804)"
+    },
+    {
+      "line": 641,
+      "reason": "polyseme-dup: 'reader' subset of 'reader or somebody who reads' (L4077)"
+    },
+    {
+      "line": 643,
+      "reason": "polyseme-dup: 'nephew' subset of 'nephew; niece' (L2551)"
+    },
+    {
+      "line": 644,
+      "reason": "polyseme-dup: 'mother-in-law' subset of 'mother-in-law to the husband or groom; mother-in-law, daughter-in-law' (L2560)"
+    },
+    {
+      "line": 657,
+      "reason": "polyseme-dup: 'servant' subset of 'servant. Am not your servant' (L4472)"
+    },
+    {
+      "line": 688,
+      "reason": "polyseme-dup: 'chief' subset of 'name used only for the fon or village chief' (L2730)"
+    },
+    {
+      "line": 701,
+      "reason": "polyseme-dup: 'two' subset of 'two (alternate form)' (L4728)"
+    },
+    {
+      "line": 702,
+      "reason": "polyseme-dup: 'three' subset of 'demonstrtive adj 'that' used to modify nouns of classes one and three. That pig is whose own' (L4689)"
+    },
+    {
+      "line": 703,
+      "reason": "polyseme-dup: 'four' subset of 'four (see nəkwa)' (L4713)"
+    },
+    {
+      "line": 704,
+      "reason": "polyseme-dup: 'five' subset of 'five (alternate form)' (L4730)"
+    },
+    {
+      "line": 709,
+      "reason": "polyseme-dup: 'ten' subset of 'ten (alternate form)' (L4722)"
+    },
+    {
+      "line": 743,
+      "reason": "polyseme-dup: 'thousand' subset of 'thousand (1000). From: English' (L4731)"
+    },
+    {
+      "line": 755,
+      "reason": "polyseme-dup: 'blow' subset of 'blow (with fan or breath)' (L2997)"
+    },
+    {
+      "line": 757,
+      "reason": "polyseme-dup: 'turn round' subset of 'turn round (intr)' (L3343)"
+    },
+    {
+      "line": 760,
+      "reason": "polyseme-dup: 'sweat' subset of 'perspire, sweat' (L3194)"
+    },
+    {
+      "line": 764,
+      "reason": "polyseme-dup: 'exchange' subset of 'equivalence; something to exchange or replace with; replacement' (L3776)"
+    },
+    {
+      "line": 765,
+      "reason": "polyseme-dup: 'fill' subset of 'fill, of solids' (L3212)"
+    },
+    {
+      "line": 796,
+      "reason": "polyseme-dup: 'odour' subset of 'odour, smell' (L3994)"
+    },
+    {
+      "line": 804,
+      "reason": "polyseme-dup: 'red' subset of 'be red' (L3294)"
+    },
+    {
+      "line": 810,
+      "reason": "polyseme-dup: 'short' subset of 'be short; short' (L3601)"
+    },
+    {
+      "line": 816,
+      "reason": "polyseme-dup: 'beautiful' subset of 'be good; beautiful' (L3325)"
+    },
+    {
+      "line": 817,
+      "reason": "polyseme-dup: 'hot' subset of 'be hot' (L3414)"
+    },
+    {
+      "line": 828,
+      "reason": "polyseme-dup: 'ugly' subset of 'be dirty; be ugly' (L2976)"
+    },
+    {
+      "line": 833,
+      "reason": "polyseme-dup: 'light (not heavy)' subset of 'be light (not heavy)' (L3506)"
+    },
+    {
+      "line": 838,
+      "reason": "polyseme-dup: 'broken' subset of 'get broken' (L3145)"
+    },
+    {
+      "line": 867,
+      "reason": "polyseme-dup: 'dirty' subset of 'be dirty; be ugly' (L2976)"
+    },
+    {
+      "line": 870,
+      "reason": "polyseme-dup: 'important' subset of 'be hefty, huge in build; important; powerful; great' (L2864)"
+    },
+    {
+      "line": 871,
+      "reason": "polyseme-dup: 'lazy' subset of 'be lazy' (L3219)"
+    },
+    {
+      "line": 872,
+      "reason": "polyseme-dup: 'long' subset of 'far; be long' (L3643)"
+    },
+    {
+      "line": 874,
+      "reason": "polyseme-dup: 'mad' subset of 'loose the mind; be mad (used colloquially)' (L3494)"
+    },
+    {
+      "line": 878,
+      "reason": "polyseme-dup: 'poor' subset of 'be poor; lack' (L3320)"
+    },
+    {
+      "line": 881,
+      "reason": "polyseme-dup: 'sick' subset of 'be sick, be ill' (L3052)"
+    },
+    {
+      "line": 882,
+      "reason": "polyseme-dup: 'light' subset of 'be light (not heavy)' (L3506)"
+    },
+    {
+      "line": 885,
+      "reason": "polyseme-dup: 'second' subset of 'second, second place' (L4712)"
+    },
+    {
+      "line": 2522,
+      "reason": "NT-exclusive gloss: High Priest"
+    },
+    {
+      "line": 2554,
+      "reason": "NT-exclusive gloss: disciple of Jesus"
+    },
+    {
+      "line": 2555,
+      "reason": "NT-exclusive gloss: disciple, follower"
+    },
+    {
+      "line": 2557,
+      "reason": "NT-exclusive gloss: disciple, follower"
+    },
+    {
+      "line": 2565,
+      "reason": "NT-exclusive gloss: spirit of a dead person (invisible)"
+    },
+    {
+      "line": 2571,
+      "reason": "NT-exclusive gloss: priest; pastor"
+    },
+    {
+      "line": 5668,
+      "reason": "polyseme-dup: 'tell' subset of 'tell' (L4746)"
+    },
+    {
+      "line": 5854,
+      "reason": "polyseme-dup: 'brothers' subset of 'brothers' (L4846)"
+    },
+    {
+      "line": 11242,
+      "reason": "NT-exclusive gloss: scribes"
+    },
+    {
+      "line": 11282,
+      "reason": "NT-exclusive gloss: scribes"
+    },
+    {
+      "line": 11294,
+      "reason": "NT-exclusive gloss: scribes"
+    },
+    {
+      "line": 11562,
+      "reason": "NT-exclusive gloss: scribes"
+    },
+    {
+      "line": 11654,
+      "reason": "proper-noun transliteration: Plisila→aquila"
+    },
+    {
+      "line": 11708,
+      "reason": "proper-noun transliteration: Akwila→aquila"
+    },
+    {
+      "line": 11766,
+      "reason": "proper-noun transliteration: Apolos→apollos"
+    },
+    {
+      "line": 12040,
+      "reason": "proper-noun transliteration: Tesalonika→silvanus"
+    },
+    {
+      "line": 12324,
+      "reason": "proper-noun transliteration: Stefana→stephanas"
+    },
+    {
+      "line": 12737,
+      "reason": "polyseme-dup: 'all' subset of 'all' (L12683)"
+    },
+    {
+      "line": 12749,
+      "reason": "polyseme-dup: 'man' subset of 'man' (L12697)"
+    },
+    {
+      "line": 12765,
+      "reason": "polyseme-dup: 'all' subset of 'all' (L12687)"
+    },
+    {
+      "line": 12773,
+      "reason": "polyseme-dup: 'all' subset of 'all' (L12679)"
+    },
+    {
+      "line": 12861,
+      "reason": "polyseme-dup: 'all' subset of 'all' (L12747)"
+    },
+    {
+      "line": 12885,
+      "reason": "polyseme-dup: 'father' subset of 'father' (L12767)"
+    },
+    {
+      "line": 13155,
+      "reason": "polyseme-dup: 'all' subset of 'all' (L12739)"
+    },
+    {
+      "line": 13193,
+      "reason": "polyseme-dup: 'day' subset of 'day' (L12837)"
+    },
+    {
+      "line": 13313,
+      "reason": "polyseme-dup: 'all' subset of 'all' (L12775)"
+    },
+    {
+      "line": 13357,
+      "reason": "polyseme-dup: 'all' subset of 'all' (L12713)"
+    },
+    {
+      "line": 13389,
+      "reason": "polyseme-dup: 'days' subset of 'days' (L12887)"
+    },
+    {
+      "line": 13399,
+      "reason": "polyseme-dup: 'remember' subset of 'remember' (L13043)"
+    },
+    {
+      "line": 13401,
+      "reason": "polyseme-dup: 'word' subset of 'word' (L12791)"
+    },
+    {
+      "line": 13409,
+      "reason": "polyseme-dup: 'multitude' subset of 'multitude' (L13077)"
+    },
+    {
+      "line": 13505,
+      "reason": "polyseme-dup: 'mother' subset of 'mother' (L12955)"
+    },
+    {
+      "line": 13517,
+      "reason": "polyseme-dup: 'faith' subset of 'faith' (L12771)"
+    },
+    {
+      "line": 13555,
+      "reason": "polyseme-dup: 'body' subset of 'body' (L12721)"
+    },
+    {
+      "line": 13569,
+      "reason": "polyseme-dup: 'servants' subset of 'servants' (L12973)"
+    },
+    {
+      "line": 13627,
+      "reason": "polyseme-dup: 'hungry' subset of 'hungry' (L13047)"
+    },
+    {
+      "line": 13639,
+      "reason": "polyseme-dup: 'blood' subset of 'blood' (L12975)"
+    },
+    {
+      "line": 13711,
+      "reason": "NT-exclusive gloss: scribes"
+    },
+    {
+      "line": 13843,
+      "reason": "polyseme-dup: 'commandment' subset of 'commandment' (L13189)"
+    },
+    {
+      "line": 13913,
+      "reason": "polyseme-dup: 'day' subset of 'day' (L13341)"
+    },
+    {
+      "line": 13919,
+      "reason": "polyseme-dup: 'light' subset of 'light' (L12951)"
+    },
+    {
+      "line": 14027,
+      "reason": "polyseme-dup: 'before' subset of 'before' (L12969)"
+    },
+    {
+      "line": 14035,
+      "reason": "polyseme-dup: 'heads' subset of 'heads' (L13257)"
+    },
+    {
+      "line": 14085,
+      "reason": "polyseme-dup: 'tongue' subset of 'tongue' (L13539)"
+    },
+    {
+      "line": 14107,
+      "reason": "polyseme-dup: 'ask' subset of 'ask' (L12801)"
+    },
+    {
+      "line": 14111,
+      "reason": "polyseme-dup: 'tree' subset of 'tree' (L12871)"
+    },
+    {
+      "line": 14181,
+      "reason": "polyseme-dup: 'blind' subset of 'blind' (L13311)"
+    },
+    {
+      "line": 14199,
+      "reason": "polyseme-dup: 'simon' subset of 'simon' (L12795)"
+    },
+    {
+      "line": 14543,
+      "reason": "NT-exclusive gloss: scribes"
+    },
+    {
+      "line": 14575,
+      "reason": "NT-exclusive gloss: scribes"
+    },
+    {
+      "line": 14677,
+      "reason": "polyseme-dup: 'immediately' subset of 'immediately' (L14675)"
+    },
+    {
+      "line": 15009,
+      "reason": "NT-exclusive gloss: scribes"
+    },
+    {
+      "line": 15115,
+      "reason": "polyseme-dup: 'threw' subset of 'threw' (L15111)"
+    },
+    {
+      "line": 15437,
+      "reason": "proper-noun transliteration: Lusya→lucius"
+    },
+    {
+      "line": 15743,
+      "reason": "proper-noun transliteration: Ulbanus→urbanus"
+    },
+    {
+      "line": 15745,
+      "reason": "proper-noun transliteration: Stakus→urbanus"
+    },
+    {
+      "line": 15753,
+      "reason": "proper-noun transliteration: Pelsis→tryphosa"
+    },
+    {
+      "line": 15761,
+      "reason": "proper-noun transliteration: Elmes→patrobas"
+    },
+    {
+      "line": 15763,
+      "reason": "proper-noun transliteration: Elmas→patrobas"
+    },
+    {
+      "line": 15765,
+      "reason": "proper-noun transliteration: Asynklitus→patrobas"
+    },
+    {
+      "line": 15767,
+      "reason": "proper-noun transliteration: Flegon→patrobas"
+    },
+    {
+      "line": 15769,
+      "reason": "proper-noun transliteration: Patlobas→patrobas"
+    },
+    {
+      "line": 16047,
+      "reason": "proper-noun transliteration: Taakikus→tychicus"
+    },
+    {
+      "line": 16049,
+      "reason": "proper-noun transliteration: Efi→tychicus"
+    }
+  ]
+}

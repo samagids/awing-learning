@@ -10,8 +10,8 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
-  static const String appVersion = '1.12.0';
-  static const String buildNumber = '56';
+  static const String appVersion = '1.12.1';
+  static const String buildNumber = '57';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
   static const String appDescription =
@@ -216,6 +216,65 @@ class _AboutScreenState extends State<AboutScreen> {
                   _CreditRow(
                     title: 'A Phonological Sketch of Awing (2009)',
                     author: 'Bianca van den Berg, SIL Cameroon',
+                    isDark: isDark,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Community supporters section
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF252525) : Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isDark ? Colors.grey.shade700 : Colors.grey.shade200,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.diversity_3,
+                        size: 20,
+                        color: isDark ? AboutScreen._awingGold : AboutScreen._awingDarkGreen,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'With Support From',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.grey.shade200 : AboutScreen._awingDarkGreen,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'This project is made possible by the generous support '
+                    'of the Awing community:',
+                    style: TextStyle(
+                      fontSize: 13,
+                      height: 1.4,
+                      color: isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  _CreditRow(
+                    title: 'Ndong Awing Cultural and Development Association (NACDA)',
+                    author: 'NACDA-DMV',
+                    isDark: isDark,
+                  ),
+                  const SizedBox(height: 8),
+                  _CreditRow(
+                    title: 'Virginia NACDA Group',
+                    author: 'NACDA-DMV-Virginia',
                     isDark: isDark,
                   ),
                 ],

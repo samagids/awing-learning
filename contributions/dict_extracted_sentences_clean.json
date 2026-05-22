@@ -1,0 +1,161 @@
+{
+  "source": "Awing English Dictionary 2007, embedded example sentences",
+  "filter_pass": "Manually reviewed for kid-appropriateness",
+  "dropped": [
+    "Peter is my enemy (negative)",
+    "A fortune-teller lies (about lying)",
+    "Quiet in a grave yard / dead being celebrated (death/burial)",
+    "Dirty quarters like pig sties (dirty content)",
+    "Thief runs as the wind (thieves)",
+    "Evil omen when heron cries (superstition)",
+    "Children very greedy and hardens the hand (negative behavior)",
+    "Got into problems (vague)",
+    "Titled feathers given to great people (culturally complex)"
+  ],
+  "sentences": [
+    {
+      "awing": "Mənumə á tə́ ńtê.",
+      "english": "The sun is shining.",
+      "category": "nature",
+      "difficulty": 1
+    },
+    {
+      "awing": "Mənətalásə á pwódnə tə́ ńga tâb.",
+      "english": "The mattress is so soft.",
+      "category": "everyday",
+      "difficulty": 1
+    },
+    {
+      "awing": "Ayonə á toonô atsa'á ma.",
+      "english": "The iron has burned my dress.",
+      "category": "everyday",
+      "difficulty": 2
+    },
+    {
+      "awing": "A tô akoolə ajîə.",
+      "english": "He has stubbed his foot.",
+      "category": "body",
+      "difficulty": 1
+    },
+    {
+      "awing": "A tə́ ńgenə afoonə.",
+      "english": "He is going to the farm.",
+      "category": "everyday",
+      "difficulty": 1
+    },
+    {
+      "awing": "A kə soŋ ńga tə ghenə.",
+      "english": "He told us to go.",
+      "category": "everyday",
+      "difficulty": 1
+    },
+    {
+      "awing": "Á mé məsanə á aghá alu apú atsəm nwâ lə́ ńga tsóg.",
+      "english": "Early morning in the dry season everything is so cold.",
+      "category": "nature",
+      "difficulty": 2
+    },
+    {
+      "awing": "Á kè poŋə mə́ túg ná wélə á ńi tóshú pô.",
+      "english": "It is not good to carry a lot of weight.",
+      "category": "advice",
+      "difficulty": 2
+    },
+    {
+      "awing": "Á tati məgha o laŋə ali'á atsəm o zó'ə ándó məŋki mə́ zəd ná ńgá wûu.",
+      "english": "In the heart of the rainy season one hears the streams rumbling.",
+      "category": "nature",
+      "difficulty": 3
+    },
+    {
+      "awing": "Mənə mə́ záənə sáambaŋ lə́ mə́ shamnə̂ ńgá yêe.",
+      "english": "When cattle see a lion, they scatter away.",
+      "category": "nature-animals",
+      "difficulty": 2
+    },
+    {
+      "awing": "Ŋwu yî lə tä mə.",
+      "english": "That man is my father.",
+      "category": "family",
+      "difficulty": 1
+    },
+    {
+      "awing": "Maŋ yî ghenə̂.",
+      "english": "I will go.",
+      "category": "everyday",
+      "difficulty": 1
+    },
+    {
+      "awing": "Maŋ yó ghenə̂.",
+      "english": "I shall go.",
+      "category": "everyday",
+      "difficulty": 1
+    },
+    {
+      "awing": "Ajú zə̂ á pəgə.",
+      "english": "That thing is spoilt.",
+      "category": "everyday",
+      "difficulty": 1
+    },
+    {
+      "awing": "O kə pe' pə́ səŋ ná maŋ zá'ə a poŋə yîə.",
+      "english": "You were supposed to tell me before he comes.",
+      "category": "everyday",
+      "difficulty": 2
+    },
+    {
+      "awing": "Pi pə́ wiŋ pó chîə á Ndəwálə̌ náənə.",
+      "english": "There are many great people in Douala.",
+      "category": "everyday",
+      "difficulty": 2
+    },
+    {
+      "awing": "Tséeba á ndəŋndəŋɔ́.",
+      "english": "Speak the truth.",
+      "category": "advice",
+      "difficulty": 1
+    },
+    {
+      "awing": "Ngǎn Ndawálé tséeba lɔ́ Flénchə.",
+      "english": "People from Douala speak French.",
+      "category": "everyday",
+      "difficulty": 2
+    },
+    {
+      "awing": "Yîə á ndzəŋ mənumə.",
+      "english": "Come in the afternoon.",
+      "category": "everyday",
+      "difficulty": 1
+    },
+    {
+      "awing": "A tsɔ́ ntso ndê nə́ kíə.",
+      "english": "He has opened the door with a key.",
+      "category": "everyday",
+      "difficulty": 2
+    },
+    {
+      "awing": "Nətó' zô ná əfó.",
+      "english": "Where is your potato?",
+      "category": "everyday",
+      "difficulty": 1
+    },
+    {
+      "awing": "Ngaŋnaghéenə a yî yîə.",
+      "english": "A guest will come.",
+      "category": "family",
+      "difficulty": 1
+    },
+    {
+      "awing": "Ngəsáŋ yi njúbtə á pɔŋə á mɔ́ káŋ nə̀.",
+      "english": "Dry corn is good for popping.",
+      "category": "food",
+      "difficulty": 2
+    },
+    {
+      "awing": "Mənə mə́ akəb mə́ tə́ ńkwa'ə á ndu kəŋ ńdzaənə ŋwu lə́ mə́ méla akəb ńga tsô.",
+      "english": "Wild animals disappear into the bush when they see human beings.",
+      "category": "nature-animals",
+      "difficulty": 3
+    }
+  ]
+}

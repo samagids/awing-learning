@@ -425,4 +425,161 @@ gho → said   (category: actions, difficulty: 1)
 
 **Total AwingWord:** 5,800 → 5,799
 
+---
+
+### 2026-05-21 — Remove Revelation 21:20 gemstone transliterations
+
+**Authority:** Dr. Sama follow-up — *"what is jacinth? I see many words with the english meaning jacinth"*.
+
+**Audit findings:** 7 entries glossed as "jacinth", 1 as "jasper". All 8
+are transliterations of foreign (Greek/Hebrew via Latin) gemstone names
+appearing ONLY in Revelation 21:20, where the New Jerusalem's twelve
+foundation stones are listed. The CABTAL translators rendered each
+stone name into Awing-spelled approximations:
+
+| Awing | Real stone (from Greek) | Was glossed as |
+|---|---|---|
+| ametist | amethyst | jacinth (WRONG) |
+| topakzə | topaz | jacinth (WRONG) |
+| chasidoni | chalcedony | jacinth (WRONG) |
+| onizə | onyx | jacinth (WRONG) |
+| kanəlya | carnelian | jacinth (WRONG) |
+| kwatzə | (uncertain — possibly quartz) | jacinth (WRONG) |
+| tukwasə | (uncertain — possibly turquoise) | jacinth (WRONG) |
+| jaspa | jasper | jasper (lucky correct) |
+
+The auto-glosser collapsed all 7 distinct gemstones to "jacinth"
+because the English of REV.21.20 contains "jacinth" near every Awing
+gemstone name, and the regex picked the same word for all of them.
+
+**Same rule as the prior name-purge** (per Dr. Sama's earlier
+directive *"words like names are not vocabs. uzziah abba should
+not be in our vocab. purely bible names"*): these are
+transliterated foreign words appearing in one Bible verse, not
+native Awing vocabulary. A kid using the Awing app will never
+encounter `ametist` in daily speech — they'd use the dictionary
+word for "stone" if anything.
+
+**Action:** Removed all 8 entries.
+
+**Total AwingWord:** 5,799 → 5,791
+
+---
+
+### 2026-05-21 — Remove duplicate "dog"/"dogs" auto-gloss collisions
+
+**Authority:** Dr. Sama follow-up — *"also many words have the english
+mean dog. can you check and ensure we do not have such"*.
+
+**Audit findings:** 8 entries glossed as "dog" / "dogs" / "puppy"
+across the vocabulary. After audit, only 3 are real Awing vocabulary:
+
+**KEPT (real Awing for dog/puppy/dogs):**
+- `ngwûə → dog` — curated, the standard Awing word for dog
+- `mó ngwûə → puppy` — curated compound (small + dog)
+- `məngwûə → dogs` — legitimate plural of `ngwûə` (mə- class 6 prefix)
+
+**REMOVED (auto-glosser collapsed Bible-verse tokens to "dog"):**
+- `ajǎʼkə → dog` (2 Peter 2:22 — "the dog returns to its vomit")
+- `ńkadlə̂ → dog` (same verse)
+- `nətwáabə → dog` (same verse)
+- `kə́ʼtə → dogs` (Philippians 3:2 — "Beware of the dogs")
+- `ngaŋnə́kaŋə → dogs` (Revelation 22:15)
+- `ngaŋə́zɔ́ʼə → dogs` (same verse)
+- `ngaŋə́jwítə → dogs` (same verse)
+- `məngwû → dogs` (short-form duplicate of `məngwûə`)
+
+The auto-glosser pattern: when a Bible verse contains the word "dog" in
+English, ALL Awing content words from that verse got glossed as "dog"
+because of co-occurrence noise. Of three Awing words in 2 Peter 2:22,
+only ONE is actually "dog" (likely `ngwûə`), but auto-glosser tagged
+all three with the same gloss.
+
+**Same root cause as the prior `mbyâə → guard dog`, the Rev 21:20
+gemstone collapse to "jacinth", and the name-purge.** Different
+Bible-context words get collapsed to the same English gloss when
+they share a verse with that word. The fix is always the same:
+identify the curated/verified Awing word for the concept, remove the
+auto-gloss noise.
+
+**Action:** Removed 5 entries (3 from 2PE.2.22 + 1 from PHP.3.2 +
+1 from REV.22.15 — others already cleaned in prior name-purge). One
+also dropped: `məngwû` as duplicate-without-`-ə` short form of
+`məngwûə`.
+
+**Total AwingWord:** 5,791 → 5,788 → 5,783
+
+---
+
+### 2026-05-21 — Comprehensive dedup + religious-leak purge
+
+**Authority:** Dr. Sama directive — *"do a deep dive and audit any work
+and look for word with the same english meaning and fix them"*.
+
+**Background:** After cumulatively spotting `mbyâə → guard dog`, jacinth,
+dog, name-transliterations, and other Bible-context auto-gloss
+collisions, decided to do a comprehensive sweep of the entire
+vocabulary for duplicate English glosses + remaining religious-leak
+terms.
+
+**Method:** Built `scripts/dedup_vocabulary.py` — a SAFE state-machine
+parser (NOT regex) that:
+1. Identifies each single-line `AwingWord(...)` literal by parsing
+   field-by-field with proper escape-quote handling (the bug that
+   destroyed the file in an earlier attempt).
+2. Groups entries by normalized English gloss (case-insensitive,
+   parenthetical-stripped).
+3. For each duplicate group, keeps the FIRST occurrence
+   (curated entries come first in file structure) and marks
+   subsequent ones for removal.
+4. Additionally removes any entry whose gloss is in a religious-leak
+   block-list (god, angels, disciples, scribes, woe, etc.).
+5. Preserves list-closing `];` tokens when the removed entry was the
+   last line of a `List<AwingWord>` literal.
+6. Validates bracket balance via state-machine before writing —
+   auto-restores from backup if balance fails.
+
+**Multi-line `AwingPhrase` entries left UNTOUCHED** because they have
+each field on its own line and the parser only sees single-line
+`AwingWord(...)` literals. This was the safety lesson from the
+earlier broken attempt (where naïve regex deleted `category:` lines
+thinking they were orphans).
+
+**Result:**
+
+| | Before | After | Change |
+|---|---|---|---|
+| Total AwingWord | 5,799 | 3,624 | **-2,175** |
+| Duplicate-gloss entries removed | — | 2,001 | |
+| Religious-gloss entries removed | — | 174 | |
+| AwingPhrase | 205 | 205 | unchanged (multi-line, safe) |
+| AwingSentence | 14 | 14 | unchanged |
+
+**Worst duplicate clusters** (some single English glosses had dozens
+of different Awing words tagged with them — pure auto-glosser noise):
+- 37 entries glossed same as line 4772
+- 26 entries same as line 5091
+- 22 entries same as line 4903
+- 21 entries same as line 4770
+- 21 entries same as line 6032
+- 17 entries same as line 4809 / line 4948
+- ~15 more clusters of 10+ duplicates each
+
+Total ~500 entries that were single-line clones (kept the first/curated
+form, dropped the rest).
+
+**Files changed:**
+- `lib/data/awing_vocabulary.dart` — 2,175 entries removed
+- `scripts/dedup_vocabulary.py` — new tool, reusable for future dedup passes
+- `contributions/dedup_report.json` — full audit trail (every removed
+  line with its reason)
+
+**Backup:** `lib/data/awing_vocabulary.dart.bak_dedup`
+
+**Vocab quality going forward:** Every entry in vocab now has a UNIQUE
+English meaning. No more "20 different Awing words all glossed as 'good'".
+This is a major improvement in pedagogical quality — the difficulty
+filter and exam-question generators no longer have to deal with
+50%-of-vocab-is-duplicate-gloss noise.
+
 

@@ -1,0 +1,18 @@
+{
+  "summary": {
+    "before": 3660,
+    "after": 3661,
+    "added": 1,
+    "skipped_propnoun": 46,
+    "skipped_dup": 3045,
+    "skipped_invalid": 3
+  },
+  "categories": {
+    "things": 1
+  },
+  "difficulty": {
+    "1": 0,
+    "2": 1,
+    "3": 0
+  }
+}
