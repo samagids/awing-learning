@@ -32,6 +32,25 @@ echo  Awing AI Learning - Build and Run (Windows)
 echo ============================================
 echo.
 
+REM ============================================================
+REM   FAST PATH — Skip content gen when only Dart code changed
+REM ============================================================
+REM If the user sets AWING_FAST=1 (env var) or passes --fast as arg 1,
+REM we skip steps 0-4 entirely and go straight to flutter pub get +
+REM build. Use this when you've only edited Dart files (UI, refactor,
+REM bugfix) and no vocabulary/sentences/images need regen.
+REM Total time: ~30-60 seconds instead of hours.
+set "FAST_MODE="
+if /I "%~1"=="--fast" set "FAST_MODE=1"
+if /I "%AWING_FAST%"=="1" set "FAST_MODE=1"
+if defined FAST_MODE (
+    echo *** FAST MODE: skipping webhook deploy, contributions,
+    echo *** audio gen, and image gen. Going straight to flutter build.
+    echo *** Use this only when no vocabulary/sentences/images changed.
+    echo.
+    goto :step5
+)
+
 REM ---- Step 0: Deploy Apps Script Webhooks ----
 REM Pushes scripts\contributions_webapp.gs + scripts\analytics_webapp.gs to
 REM Google Apps Script via clasp and updates the EXISTING deployment in
@@ -114,10 +133,17 @@ REM pronunciation IS the point of the app — if this fails silently, the
 REM APK ships with broken/stale audio and kids hear the wrong thing. The
 REM flutter_tts fallback in the app is a crash guard, not a substitute.
 REM So: abort the build if generation fails.
-echo [2/7] Generating Edge TTS character voice clips...
+echo [2/7] Generating Edge TTS character voice clips (incremental)...
 echo        6 voices: boy/girl (Beginner) + young_man/young_woman (Medium) + man/woman (Expert)
 echo        Output: %PAD_ASSETS%\audio\
-call :clean_tts_audio
+echo        Existing clips are SKIPPED. Pass --force-audio to regenerate everything.
+REM Only do the destructive pre-clean if explicitly asked. The default is
+REM incremental: generate_audio_edge.py skips files that already exist on
+REM disk. This turns audio gen from a 1-2 hour full regen into a few
+REM minutes for incremental changes (and ~10-15 min for full regen with
+REM concurrency=8 inside the script).
+if /I "%~1"=="--force-audio" call :clean_tts_audio
+if /I "%~2"=="--force-audio" call :clean_tts_audio
 pip install edge-tts --quiet 2>nul
 python scripts\generate_audio_edge.py --output-dir "%PAD_ASSETS%\audio" generate
 if !ERRORLEVEL! neq 0 (
@@ -188,6 +214,7 @@ echo.
 REM ---- Step 5: Flutter Deps ----
 REM pub get MUST succeed before build. Abort otherwise — there's no
 REM useful downstream work without resolved dependencies.
+:step5
 echo [5/7] Installing Flutter dependencies...
 call flutter pub get
 if !ERRORLEVEL! neq 0 (

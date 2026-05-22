@@ -788,16 +788,40 @@ async def _edge_tts_save_with_retry(text, voice_name, rate, pitch, temp_path,
     return False
 
 
-async def _generate_clip_simple(voice_name, text, output_path, rate="-20%", pitch="+0Hz"):
-    """Generate a single audio clip using Edge TTS (flat pitch, no tonal variation)."""
-    speakable = awing_to_speakable(text)
-    temp_mp3 = TEMP_DIR / "temp_edge.mp3"
+async def _generate_clip_simple(voice_name, text, output_path, rate="-20%", pitch="+0Hz",
+                                  force=False):
+    """Generate a single audio clip using Edge TTS (flat pitch, no tonal variation).
 
-    if await _edge_tts_save_with_retry(speakable, voice_name, rate, pitch, temp_mp3):
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(temp_mp3, output_path)
+    Skip-if-exists: when force=False (default), an existing non-empty file
+    at output_path is taken as already-done and returned as success without
+    a network call. Set force=True to overwrite (used by `regenerate`).
+    """
+    # Incremental: skip if a non-empty clip already exists at output_path.
+    # This makes the whole audio pipeline incremental — re-running the
+    # build for a vocab/sentence-only change touches only the new entries.
+    if not force and output_path.exists() and output_path.stat().st_size > 0:
         return True
-    return False
+
+    speakable = awing_to_speakable(text)
+    # Use a per-task temp file so concurrent calls don't stomp on each
+    # other (previously a single TEMP_DIR/temp_edge.mp3 was shared, which
+    # broke any kind of parallel generation).
+    import uuid
+    temp_mp3 = TEMP_DIR / f"temp_edge_{uuid.uuid4().hex}.mp3"
+
+    try:
+        if await _edge_tts_save_with_retry(speakable, voice_name, rate, pitch, temp_mp3):
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(temp_mp3, output_path)
+            return True
+        return False
+    finally:
+        # Always clean up the per-task temp file
+        try:
+            if temp_mp3.exists():
+                temp_mp3.unlink()
+        except Exception:
+            pass
 
 
 async def _generate_clip_tonal(voice_name, text, output_path, rate="-20%", pitch="+0Hz"):
@@ -838,14 +862,47 @@ async def _generate_clip_tonal(voice_name, text, output_path, rate="-20%", pitch
     return await _generate_clip_simple(voice_name, text, output_path, rate=rate, pitch=word_pitch)
 
 
-async def _generate_clip(voice_name, text, output_path, rate="-20%", pitch="+0Hz", tonal=True):
+async def _generate_clip(voice_name, text, output_path, rate="-20%", pitch="+0Hz", tonal=True,
+                           force=False):
     """Generate an audio clip — always uses simple flat-pitch generation.
 
     Note: Tonal per-syllable synthesis was tried (v4.0) and whole-word dominant
     tone (v4.1) but both degraded quality. The Swahili neural voice already
     produces natural-sounding Bantu prosody without pitch manipulation.
+
+    `force=True` overwrites existing files (used by the `regenerate` command);
+    default is incremental (skip-if-exists).
     """
-    return await _generate_clip_simple(voice_name, text, output_path, rate=rate, pitch=pitch)
+    return await _generate_clip_simple(voice_name, text, output_path,
+                                         rate=rate, pitch=pitch, force=force)
+
+
+# Concurrency limit for Edge TTS — Microsoft's public API tolerates this
+# well in practice. Single-request mode took 1-2 hours for a full vocabulary
+# regen; with concurrency=8 it lands in 10-15 minutes.
+_TTS_CONCURRENCY = 8
+_tts_semaphore = None  # initialised lazily inside async context
+
+
+def _get_tts_semaphore():
+    global _tts_semaphore
+    if _tts_semaphore is None:
+        _tts_semaphore = asyncio.Semaphore(_TTS_CONCURRENCY)
+    return _tts_semaphore
+
+
+async def _generate_clip_throttled(voice_name, text, output_path, rate="-20%", pitch="+0Hz",
+                                     tonal=True, force=False, key_label=None):
+    """Concurrent-safe wrapper around _generate_clip.
+
+    Acquires the global TTS semaphore so we never exceed _TTS_CONCURRENCY
+    simultaneous Edge TTS connections. Returns (key_label, success).
+    """
+    sem = _get_tts_semaphore()
+    async with sem:
+        ok = await _generate_clip(voice_name, text, output_path,
+                                    rate=rate, pitch=pitch, tonal=tonal, force=force)
+        return (key_label, ok)
 
 
 async def _generate_character_clips(char_name, char_config, vocab_override=None,
@@ -891,61 +948,61 @@ async def _generate_character_clips(char_name, char_config, vocab_override=None,
     success = 0
     failed = []
 
-    # Alphabet — all levels (used as reference across all modules)
-    print(f"\n  --- Alphabet ({len(ALPHABET_SOUNDS)} sounds) ---")
-    for key, text in ALPHABET_SOUNDS.items():
-        total += 1
-        output = char_dir / "alphabet" / f"{key}.mp3"
-        # Slower rate for alphabet (isolated sounds), no tonal for single sounds
-        alpha_rate = rate.replace("-15%", "-30%").replace("-25%", "-40%").replace("-35%", "-45%")
-        if await _generate_clip(actual_voice, text, output, rate=alpha_rate, pitch=pitch):
-            success += 1
-            print(f"    ✓ {key}")
-        else:
-            failed.append(f"{key}")
-            print(f"    ✗ {key} FAILED")
+    # Helper: run a batch of clip-generations concurrently (up to
+    # _TTS_CONCURRENCY in flight at once) and tally results.
+    async def _run_batch(label, items, output_subdir, rate_used):
+        nonlocal total, success
+        if not items:
+            return
+        print(f"\n  --- {label} ({len(items)} clips, concurrency={_TTS_CONCURRENCY}) ---")
+        outdir = char_dir / output_subdir
+        outdir.mkdir(parents=True, exist_ok=True)
+        # Pre-filter: skip items that already exist on disk to reduce
+        # the visible work-set and make incremental progress obvious.
+        pending = []
+        for key, text in items.items():
+            total += 1
+            out = outdir / f"{key}.mp3"
+            if out.exists() and out.stat().st_size > 0:
+                # Already done — count as success without dispatching
+                success += 1
+                continue
+            pending.append((key, text, out))
+        if not pending:
+            print(f"    All {len(items)} already present — skipped.")
+            return
+        print(f"    {len(pending)} new clips to generate ({len(items) - len(pending)} already cached)")
+        tasks = [
+            _generate_clip_throttled(actual_voice, text, out,
+                                       rate=rate_used, pitch=pitch, key_label=key)
+            for (key, text, out) in pending
+        ]
+        results = await asyncio.gather(*tasks)
+        for key, ok in results:
+            if ok:
+                success += 1
+            else:
+                failed.append(key)
+                print(f"    ✗ {key} FAILED")
+
+    # Alphabet — all levels (slower rate for isolated sounds)
+    alpha_rate = rate.replace("-15%", "-30%").replace("-25%", "-40%").replace("-35%", "-45%")
+    await _run_batch("Alphabet", ALPHABET_SOUNDS, "alphabet", alpha_rate)
 
     # Vocabulary — filtered by level (beginner=1 only, medium=1+2, expert=NONE)
     if level == "expert":
         print(f"\n  --- Vocabulary: SKIPPED (expert mode has no vocabulary) ---")
     else:
-        print(f"\n  --- Vocabulary ({len(vocab)} words for {level}) ---")
-        for key, text in vocab.items():
-            total += 1
-            output = char_dir / "vocabulary" / f"{key}.mp3"
-            if await _generate_clip(actual_voice, text, output, rate=rate, pitch=pitch):
-                success += 1
-                print(f"    ✓ {key}")
-            else:
-                failed.append(f"{key}")
-                print(f"    ✗ {key} FAILED")
+        await _run_batch(f"Vocabulary (for {level})", vocab, "vocabulary", rate)
 
-    # Sentences/Phrases — all levels (beginner uses phrases, medium/expert use sentences)
-    print(f"\n  --- Sentences ({len(sentences)} clips) ---")
-    for key, text in sentences.items():
-        total += 1
-        output = char_dir / "sentences" / f"{key}.mp3"
-        sent_rate = rate.replace("-15%", "-10%").replace("-25%", "-15%").replace("-35%", "-20%")
-        if await _generate_clip(actual_voice, text, output, rate=sent_rate, pitch=pitch):
-            success += 1
-            print(f"    ✓ {key}")
-        else:
-            failed.append(f"{key}")
-            print(f"    ✗ {key} FAILED")
+    # Sentences/Phrases — all levels (slightly faster rate)
+    sent_rate = rate.replace("-15%", "-10%").replace("-25%", "-15%").replace("-35%", "-20%")
+    await _run_batch("Sentences", sentences, "sentences", sent_rate)
 
-    # Stories — Expert only (advanced reading comprehension)
+    # Stories — Expert only
     if level == "expert":
-        print(f"\n  --- Stories ({len(STORIES)} clips) ---")
-        for key, text in STORIES.items():
-            total += 1
-            output = char_dir / "stories" / f"{key}.mp3"
-            story_rate = rate.replace("-15%", "-10%").replace("-25%", "-15%").replace("-35%", "-20%")
-            if await _generate_clip(actual_voice, text, output, rate=story_rate, pitch=pitch):
-                success += 1
-                print(f"    ✓ {key}")
-            else:
-                failed.append(f"{key}")
-                print(f"    ✗ {key} FAILED")
+        story_rate = rate.replace("-15%", "-10%").replace("-25%", "-15%").replace("-35%", "-20%")
+        await _run_batch("Stories", STORIES, "stories", story_rate)
     else:
         print(f"\n  --- Stories: SKIPPED (not in {level} level) ---")
 

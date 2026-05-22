@@ -2,6 +2,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
+// Imported with prefix `sent` because sentences_screen.dart defines its own
+// `AwingWord` class (with fields word/english) that would collide with the
+// `AwingWord` from awing_vocabulary.dart (fields awing/english/category/...).
+import 'package:awing_ai_learning/screens/medium/sentences_screen.dart' as sent;
 import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
@@ -406,6 +410,57 @@ final List<_SentenceTemplate> _allSentences = [
   ),
 ];
 
+/// Derive additional fill-in-the-blank templates from the live
+/// `awingSentences` list in sentences_screen.dart. For each curated
+/// sentence we automatically pick a content-word position as the blank.
+///
+/// Result: every sentence added to sentences_screen.dart automatically
+/// becomes a new Writing Quiz question without manual template editing.
+///
+/// We skip sentences where:
+///   - The token count in the full Awing sentence doesn't match the
+///     `words` breakdown length (likely punctuation/spacing issue).
+///   - No word has a usable content gloss (all are function words like
+///     'is', 'to', 'the', '(subject)', '(past)', or '—' for unknown).
+List<_SentenceTemplate> _templatesFromAwingSentences() {
+  // Glosses that are function words / placeholders — don't blank these
+  const skipGlosses = {
+    '(subject)', '(past)', '(plural)', '(they)', '(softness)',
+    '(coldness)', '(scattering)', '(disappear)', '(rumble)',
+    'is', 'to', 'and', 'a', 'an', 'the', 'in', 'of', 'with', 'on',
+    'so', 'as', 'for', 'are', 'be', 'will', 'shall', 'do not',
+    '—', '',
+  };
+  final result = <_SentenceTemplate>[];
+  for (final s in sent.awingSentences) {
+    final tokens = s.awing.split(RegExp(r'\s+'));
+    if (tokens.length != s.words.length) continue; // mismatch — skip
+
+    // Pick the word with the longest gloss that's not a function word
+    int bestIdx = -1;
+    int bestLen = 0;
+    for (int i = 0; i < s.words.length; i++) {
+      final gloss = s.words[i].english.trim().toLowerCase();
+      if (skipGlosses.contains(gloss)) continue;
+      // Also skip 1-character Awing tokens (particles like A, á, etc.)
+      if (tokens[i].length < 2) continue;
+      if (gloss.length > bestLen) {
+        bestLen = gloss.length;
+        bestIdx = i;
+      }
+    }
+    if (bestIdx < 0) continue; // no usable content word
+
+    result.add(_SentenceTemplate(
+      fullSentence: s.awing,
+      english: s.english,
+      blankWord: tokens[bestIdx],
+      blankIndex: bestIdx,
+    ));
+  }
+  return result;
+}
+
 class WritingQuizScreen extends StatefulWidget {
   const WritingQuizScreen({Key? key}) : super(key: key);
 
@@ -432,14 +487,26 @@ class _WritingQuizScreenState extends State<WritingQuizScreen> {
   }
 
   void _generateQuiz() {
-    final pool = List<_SentenceTemplate>.from(_allSentences)..shuffle(_random);
+    // Combine hardcoded templates with templates derived live from the
+    // curated `awingSentences` list in sentences_screen.dart. This means
+    // every sentence added to sentences_screen.dart automatically becomes
+    // a new Writing Quiz question without needing to edit this file.
+    final derived = _templatesFromAwingSentences();
+    final pool = <_SentenceTemplate>[..._allSentences, ...derived]
+      ..shuffle(_random);
     _quizSentences = pool.take(10).toList();
     _allChoices = _quizSentences.map((s) => _generateChoices(s)).toList();
   }
 
   List<String> _generateChoices(_SentenceTemplate sentence) {
-    // Get 3 wrong answers from other sentences' blank words
-    final otherBlanks = _allSentences
+    // Wrong-answer pool: blank words from hardcoded templates +
+    // blank words from awingSentences-derived templates. Both grow
+    // automatically as new sentences are added.
+    final allTemplates = <_SentenceTemplate>[
+      ..._allSentences,
+      ..._templatesFromAwingSentences(),
+    ];
+    final otherBlanks = allTemplates
         .where((s) => s.blankWord != sentence.blankWord)
         .map((s) => s.blankWord)
         .toSet()
