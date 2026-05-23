@@ -100,7 +100,7 @@ const List<AwingWord> bodyParts = [
   AwingWord(awing: 'ndě', english: 'neck (body part)', category: 'body', pluralForm: 'məndě', difficulty: 1),
   AwingWord(awing: 'nkadtə', english: 'back', category: 'body'),
   AwingWord(awing: "mbe'ta", english: 'shoulder', category: 'body'),  // Session 56 audit: was "mbe'tə" — dict says "mbe'ta"
-  AwingWord(awing: 'achîə', english: 'blood', category: 'body'),
+  AwingWord(awing: 'achîə', english: 'blood', category: 'body', difficulty: 3),
   AwingWord(awing: 'akoolə', english: 'leg', category: 'body'),
   AwingWord(awing: 'aləəmə', english: 'tongue', category: 'body'),  // Session 56 audit: was "alɔ́əmə" — dict says "aləəmə"
   AwingWord(awing: 'ŋgɔ́ɔmə', english: 'body', category: 'body', difficulty: 1),
@@ -340,7 +340,7 @@ const List<AwingWord> actions = [
   AwingWord(awing: 'kóolə', english: 'catch/harvest', category: 'actions', difficulty: 1),
   AwingWord(awing: 'ghɛdtɔ́', english: 'do a little', category: 'actions'),
   AwingWord(awing: 'nyinɔ́', english: 'walk/travel', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'tómə', english: 'kick/shoot', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'tómə', english: 'kick/shoot', category: 'actions', difficulty: 3),
   AwingWord(awing: 'sóŋə', english: 'say/speak', category: 'actions', difficulty: 1),
   AwingWord(awing: 'wiŋə', english: 'laugh', category: 'actions'),  // Session 56 audit: was "wiŋɔ́" — dict says "wiŋə"
   AwingWord(awing: 'weŋô', english: 'smile', category: 'actions'),  // Session 56 audit: was "weŋɔ́" — dict says "weŋô"
@@ -396,7 +396,7 @@ const List<AwingWord> actions = [
   AwingWord(awing: 'ŋwàŋə', english: 'return', category: 'actions'),
   AwingWord(awing: 'pá\'tə', english: 'share/divide', category: 'actions', difficulty: 1),
   // Session 52 gloss audit: CRITICAL FIX — was "praise", dict says "1) curse. 2) destroy. 3) spoil" (OPPOSITE meaning)
-  AwingWord(awing: 'tsə́ŋə', english: 'curse; destroy; spoil', category: 'actions', difficulty: 2),
+  AwingWord(awing: 'tsə́ŋə', english: 'curse; destroy; spoil', category: 'actions', difficulty: 3),
   AwingWord(awing: 'shwɔ́ŋə', english: 'pray', category: 'actions', difficulty: 1),
   // === NEW: PDF-verified entries (Session 37) ===
   AwingWord(awing: 'tóŋə', english: 'dig', category: 'actions', difficulty: 1),  // Session 56 audit: was "fóŋɔ" — dict says "tóŋə"
@@ -417,7 +417,7 @@ const List<AwingWord> actions = [
   AwingWord(awing: "nə'â", english: 'press', category: 'actions', difficulty: 2),  // Session 56 audit: was "no'a" — dict says "nə'â"
   // Session 52 gloss audit: was "remove" — dict says "fellow-wife (co-wife in polygamous marriage)"
   AwingWord(awing: 'fóga', english: 'fellow-wife', category: 'family', difficulty: 1),
-  AwingWord(awing: 'kwúblə', english: 'repent', category: 'actions', difficulty: 1),  // Session 56 audit: was "kwúbla" — dict says "kwúblə"
+  AwingWord(awing: 'kwúblə', english: 'repent', category: 'actions', difficulty: 3),  // Session 56 audit: was "kwúbla" — dict says "kwúblə"
   AwingWord(awing: 'sóŋə', english: 'say', category: 'actions', difficulty: 1),  // Session 56 audit: was "sóŋa" — dict says "sóŋə"
   AwingWord(awing: "ŋwa'ô", english: 'shine', category: 'actions', difficulty: 1),  // Session 56 audit: was "gwa'a" — dict says "ŋwa'ô"
   AwingWord(awing: 'naasla', english: 'show', category: 'actions', difficulty: 1),
@@ -451,7 +451,7 @@ const List<AwingWord> thingsObjects = [
   AwingWord(awing: 'mbê', english: 'knife', category: 'things'),
   AwingWord(awing: 'lɛ̀ərə', english: 'hat', category: 'things', difficulty: 1),
   AwingWord(awing: 'alóŋə', english: 'dance group', category: 'things'),  // Session 56 audit: was "əlɔ́ŋə" — dict says "alóŋə"
-  AwingWord(awing: 'ŋgɛ̀ərə', english: 'gun', category: 'things'),
+  AwingWord(awing: 'ŋgɛ̀ərə', english: 'gun', category: 'things', difficulty: 3),
   AwingWord(awing: 'akwâalə', english: 'support', category: 'things', difficulty: 1),
   AwingWord(awing: 'əpéenə', english: 'bread', category: 'things'),
   AwingWord(awing: "nətó'ə", english: 'potato', category: 'things'),
@@ -934,60 +934,6 @@ const List<AwingPhrase> awingPhrases = [
   // mǎ = mother (p.9 orthography noun class table)
 
   // Auto-extracted from Bible NT (non-biblical-feeling)
-  // JHN.10.30
-  AwingPhrase(awing: 'Pəg Tǎ lə́ táʼə.”', english: 'I and the Father are one.”'),
-  // 1TH.5.16
-  AwingPhrase(awing: 'Tə́ nə́ ńkɔŋtə̂ əghâ ətsəmə,', english: 'Rejoice always.'),
-  // JHN.6.48
-  AwingPhrase(awing: 'Maŋ lə́ apéenə məkálə́ nchîmbîə.', english: 'I am the bread of life.'),
-  // 1CO.1.19
-  AwingPhrase(awing: 'ə́sɛdkə̂ ajíənuə ngaŋə́ŋwaʼlə a pə́ ənukə́taŋə.”', english: 'For it is written,\n“I will destroy the wisdom of the wise,\nI will bring the discernment of the discerning to nothing.”'),
-  // 1CO.16.14
-  AwingPhrase(awing: 'Faʼ nə́ afaʼə atsəm nə́ akɔŋnə.', english: 'Let all that you do be done in love.'),
-  // MAT.5.4
-  AwingPhrase(awing: 'Mbɔŋə́ yə pɨ pö kyéŋ nə́,', english: 'Blessed are those who mourn,\nfor they shall be comforted.'),
-  // MRK.15.13
-  AwingPhrase(awing: 'Pó tɔ́ŋnə ə́sóŋ ńgə́, “Kwumtə̂ yə́!”', english: 'They cried out again, “Crucify him!”'),
-  // 1CO.4.16
-  AwingPhrase(awing: 'Ńdaŋ ə́lɨ́d, zoŋ nə́ ntag məkoolə mə.', english: 'I beg you therefore, be imitators of me.'),
-  // ACT.14.7
-  AwingPhrase(awing: 'ńtíʼə ńnáŋkə nkɨ yi əshîʼnə wə́ ə́wə́.', english: 'There they preached the Good News.'),
-  // EPH.5.30
-  AwingPhrase(awing: 'ńté ńgə́ pɛn lə́ əlam mbɨ píə.', english: 'because we are members of his body, of his flesh and bones.'),
-  // JHN.6.4
-  AwingPhrase(awing: 'Akɔŋtə ndzáʼkə Pəjusə a kə tə́ ḿbáatə.', english: 'Now the Passover, the feast of the Jews, was at hand.'),
-  // JHN.12.15
-  AwingPhrase(awing: 'Jɨ́ nə́, əfo əwəənə́ a tə́ ńgyǐəə,', english: '“Don’t be afraid, daughter of Zion. Behold, your King comes, sitting on a donkey’s colt.”'),
-  // LUK.1.40
-  AwingPhrase(awing: 'ńtíʼ ńkwúnə á ndɛ̂ Zakalya ńchaʼtə̂ Elisabɛlə.', english: 'and entered into the house of Zacharias and greeted Elizabeth.'),
-  // LUK.23.24
-  AwingPhrase(awing: 'Payilɛlə a kwéʼnə ḿbí ńdzoŋ ndzəm əzoobə́.', english: 'Pilate decreed that what they asked for should be done.'),
-  // LUK.24.43
-  AwingPhrase(awing: 'a kwá ńkɔ́d tsɔʼə á mbi pó.', english: 'He took them, and ate in front of them.'),
-  // MAT.2.18
-  AwingPhrase(awing: 'Pə́ tə́ ńdzóʼ ngye yitsə̌ á Lama,', english: '“A voice was heard in Ramah,\nlamentation, weeping and great mourning,\nRachel weeping for her children;\nshe wouldn’t be comforted,\nbecause they are no more.”'),
-  // MAT.4.20
-  AwingPhrase(awing: 'Pó tɔ́g ḿmɛdtə̂ məŋkɛd mɔ́b ńdzoŋə̂ yə́.', english: 'They immediately left their nets and followed him.'),
-  // MAT.22.38
-  AwingPhrase(awing: 'Lɛ̌ ntsɛɛmbi ntəgə́ ńkə́ ḿbə́ yi ngweŋə́.', english: 'This is the first and great commandment.'),
-  // MRK.4.14
-  AwingPhrase(awing: 'Mbipú wə̂ a pǐ lə́ atséebə Əsê.', english: 'The farmer sows the word.'),
-  // MRK.6.42
-  AwingPhrase(awing: 'Ŋwu ntsəmə a nə ńjî tə ńdzɛ́lə.', english: 'They all ate, and were filled.'),
-  // 1JN.5.21
-  AwingPhrase(awing: 'Póonə mə, lə́ʼ nə́ wɨ́ məsê mə́ məfɨgə.', english: 'Little children, keep yourselves from idols.'),
-  // ACT.19.7
-  AwingPhrase(awing: 'Pó pətsəm kə pə́ lə́ ándó ntsɔb pɛ̌.', english: 'They were about twelve men in all.'),
-  // ACT.19.41
-  AwingPhrase(awing: 'A sóŋ ə́lɨ́d lə́, ńtíʼ ə́shamkə̂ nkyeetə zə̂.', english: 'When he had thus spoken, he dismissed the assembly.'),
-  // HEB.1.12
-  AwingPhrase(awing: 'Pɨ yǒ píʼtə pə́ələ́ ándó tə́sɛ atsəʼə́ əfə́gə,', english: 'You will roll them up like a mantle,\nand they will be changed;\nbut you are the same.\nYour years will not fail.”'),
-  // HEB.2.12
-  AwingPhrase(awing: 'maŋ yǐ ŋáŋkə gho á mə́m nkyeetə əzoobə́.”', english: 'saying,\n“I will declare your name to my brothers.\nAmong of the congregation I will sing your praise.”'),
-  // HEB.10.37
-  AwingPhrase(awing: '“Lə́ tsɔʼə mɔ́ akəmtə ndɛlə́ á pɛ́d nə́,', english: '“In a very little while,\nhe who comes will come, and will not wait.'),
-  // JHN.12.40
-  AwingPhrase(awing: 'ńtíʼ ńgyǐəə á mbô maŋ, maŋ tsóʼə ághóobə́.”', english: '“He has blinded their eyes and he hardened their heart,\nlest they should see with their eyes,\nand perceive with their heart,\nand would turn,\nand I would heal them.”'),
 
   // ====================================================================
   // DICTIONARY-MINED PHRASES — multi-word entries from the 2007
@@ -1306,13 +1252,6 @@ const List<AwingPhrase> awingPhrases = [
   ),
   // dict:p.
   AwingPhrase(
-    awing: "mbaŋ mbenə",
-    english: "testicle",
-    category: "daily",
-    clipKey: "daily_mbang_mbene",
-  ),
-  // dict:p.
-  AwingPhrase(
     awing: "mbi təŋkə̂'ə",
     english: "elephant's trunk",
     category: "daily",
@@ -1387,13 +1326,6 @@ const List<AwingPhrase> awingPhrases = [
     english: "once, one time",
     category: "daily",
     clipKey: "daily_nga_mee",
-  ),
-  // dict:p.
-  AwingPhrase(
-    awing: "nji' nəságə",
-    english: "clitoris",
-    category: "daily",
-    clipKey: "daily_nji_nesage",
   ),
   // dict:p.
   AwingPhrase(
@@ -1649,13 +1581,6 @@ const List<AwingPhrase> awingPhrases = [
   ),
   // dict:p.
   AwingPhrase(
-    awing: "wu'nə nkwumə",
-    english: "1) close a box. 2) close a coffin",
-    category: "daily",
-    clipKey: "daily_wune_nkwume",
-  ),
-  // dict:p.
-  AwingPhrase(
     awing: "wê atsə'á",
     english: "wear clothes",
     category: "daily",
@@ -1674,13 +1599,6 @@ const List<AwingPhrase> awingPhrases = [
     english: "swim",
     category: "daily",
     clipKey: "daily_zo_nkie",
-  ),
-  // dict:p.
-  AwingPhrase(
-    awing: "ŋwu mbyâŋnə",
-    english: "1) man 2) male (sex)",
-    category: "daily",
-    clipKey: "daily_ngwu_mbyangne",
   ),
   // dict:p.
   AwingPhrase(
@@ -1884,13 +1802,6 @@ const List<AwingPhrase> awingPhrases = [
     english: "fertile soil",
     category: "daily",
     clipKey: "daily_ndese_yi_eshine",
-  ),
-  // dict:p.
-  AwingPhrase(
-    awing: "nkǐ yi əshî'nə",
-    english: "gospel, good news",
-    category: "daily",
-    clipKey: "daily_nki_yi_eshine",
   ),
   // dict:p.
   AwingPhrase(
@@ -2269,8 +2180,8 @@ const List<NounClass> nounClasses = [
 // ============================================================
 const List<AwingWord> dictionaryEntries = [
   // body (121)
-  AwingWord(awing: 'achí yə əshi\'nə', english: 'good sign when blood twitches near the eye', category: 'body', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'achiə təpəŋə', english: 'bad sign when blood twitches', category: 'body', difficulty: 2),
+  AwingWord(awing: 'achí yə əshi\'nə', english: 'good sign when blood twitches near the eye', category: 'body', tonePattern: 'high', difficulty: 3),
+  AwingWord(awing: 'achiə təpəŋə', english: 'bad sign when blood twitches', category: 'body', difficulty: 3),
   AwingWord(awing: 'achwinə', english: 'act of provocation by twitching fingers at each other', category: 'body', difficulty: 2),
   AwingWord(awing: 'afeelókwú\'ó', english: 'small of the back', category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'afúə azánə', english: 'leaf of palm, palm needle', category: 'body', tonePattern: 'high', difficulty: 2),
@@ -2307,7 +2218,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'azelándé', english: 'fold skin of neck, especially in fleshy people', category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'cha\'âz', english: 'of the eyes, bear a white substance especially early in the morning from bed', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'châ\'lə', english: 'A sort of white substance from the eye that comes out usually after sleep', category: 'body', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'chî nó əlimá', english: 'Have many blood relations who are caring', category: 'body', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'chî nó əlimá', english: 'Have many blood relations who are caring', category: 'body', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chwá\'tə', english: 'shave one\'s hair improperly', category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'chwí mbó', english: 'twitch fingers as a sign of agreement to contest a fight', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'əfeŋ fiə apô', english: 'ring of finger', category: 'body', tonePattern: 'falling', difficulty: 2),
@@ -2361,7 +2272,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nyíŋkə', english: 'express excitement by laughing and exposing one\'s teeth; be excited', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ŋwaŋkô móga', english: 'blink eyes', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'pe\'ə atûə', english: 'carry on head', category: 'body', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'péŋə achíə', english: 'bleed or lose blood. Heavy work makes people lose blood', category: 'body', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'péŋə achíə', english: 'bleed or lose blood. Heavy work makes people lose blood', category: 'body', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'pipá', english: 'associative marker used for head nouns of class 2, meaning \'of\'', category: 'body', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'pwə\'ə', english: 'spit in an unpleasant manner', category: 'body', difficulty: 1),
   AwingWord(awing: 'seelô', english: 'tear (tr)', category: 'body', tonePattern: 'falling', difficulty: 1),
@@ -2379,7 +2290,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'afəmólá\'ə', english: 'land where forefathers settled within the Awing clan; quarter name', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ajiəmógó', english: 'all-knowing person, proud and boastful person', category: 'family', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'akəmóntsoolə', english: 'greedy person, powerful person', category: 'family', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'akəghə', english: 'stupid person, imbecile; stupidity', category: 'family', difficulty: 1),
+  AwingWord(awing: 'akəghə', english: 'stupid person, imbecile; stupidity', category: 'family', difficulty: 3),
   AwingWord(awing: 'akəmótógiə', english: 'deaf person', category: 'family', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'akǒ\'nə məŋgyě', english: 'young woman', category: 'family', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'akwu\'ó', english: 'travelling people (mystical, cause floods in enemy villages)', category: 'family', tonePattern: 'high', difficulty: 2),
@@ -2464,7 +2375,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'təlénja', english: 'stranger. From: English', category: 'family', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'təwélakámə', english: 'A sharp flute used for rallying people for emergenncies (example war, serious development projects etc)', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'tóondzəmə', english: 'somebody who plays a limited role in another person\'s struggles; supporter, ally', category: 'family', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'twá nəpəmə', english: 'conceive a child, become pregnant', category: 'family', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'twá nəpəmə', english: 'conceive a child, become pregnant', category: 'family', tonePattern: 'high', difficulty: 3),
 
   // animals (57)
   AwingWord(awing: 'atəənə akóolə əshûə', english: 'fish trap. Afish trap is found where there is water', category: 'animals', tonePattern: 'falling', difficulty: 2),
@@ -2648,7 +2559,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nkya\' nəfaŋə́', english: 'lightning', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nkya\' sáŋə́', english: 'moonlight', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nkyakəpeŋə', english: 'dawn', category: 'nature', difficulty: 1),
-  AwingWord(awing: 'nô ndəpa\'ə', english: 'smoke tobacco', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'nô ndəpa\'ə', english: 'smoke tobacco', category: 'nature', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'ntîtú\'ə', english: 'mid-night', category: 'nature', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'ntínumnə', english: 'noon, mid-day', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'nwí\'ə', english: 'plant (of seeds) too close to each other', category: 'nature', tonePattern: 'high', difficulty: 1),
@@ -2661,17 +2572,17 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'sáŋ yi fîə', english: 'new moon', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'sáŋ yi ńdwénkə nó', english: 'full moon', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'shí\'nə', english: 'use one\'s labour in exchange for farm products', category: 'nature', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'shǔəə', english: 'break wind, fart', category: 'nature', tonePattern: 'rising', difficulty: 1),
+  AwingWord(awing: 'shǔəə', english: 'break wind, fart', category: 'nature', tonePattern: 'rising', difficulty: 3),
   AwingWord(awing: 'tasa\' móga', english: 'spark of fire', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'tú nkǐə', english: 'cross river', category: 'nature', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'túmkə', english: 'make or help someone or something cross through a difficult place eg river', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'wəg ŋgênə', english: 'carry away by the force of wind', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'wəg ńkwelə', english: 'pour down something using the force of wind', category: 'nature', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'yagə', english: 'scare away by shouting eg of animals or birds in a farm; yell out curses eg to a thief', category: 'nature', difficulty: 2),
+  AwingWord(awing: 'yagə', english: 'scare away by shouting eg of animals or birds in a farm; yell out curses eg to a thief', category: 'nature', difficulty: 3),
 
   // food (89)
-  AwingWord(awing: 'achiba', english: 'food or drinks given to console somebody (death)', category: 'food', difficulty: 1),
-  AwingWord(awing: 'achibənáwûə', english: 'food or drinks given to a house of mourning', category: 'food', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'achiba', english: 'food or drinks given to console somebody (death)', category: 'food', difficulty: 3),
+  AwingWord(awing: 'achibənáwûə', english: 'food or drinks given to a house of mourning', category: 'food', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'achú\'ə', english: 'cocoyams pounded and eaten with red soup, meat and vegetables', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'afúə ŋgəsáŋə', english: 'corn husk', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'akəká', english: 'ground corn fufu, softened with water and steamed', category: 'food', tonePattern: 'high', difficulty: 1),
@@ -2698,7 +2609,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'básko', english: 'sort of short stemmed banana bearing a large stem', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'bóyó', english: 'a sort of short stemmed banana bearing a large stem', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'chî tə məjiə', english: 'be without food', category: 'food', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'chib nəwûə', english: 'give food or drinks to a house of mourning', category: 'food', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'chib nəwûə', english: 'give food or drinks to a house of mourning', category: 'food', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'ənɔ̌ púmə', english: 'food offered by relatives of the diseased during a dead celebration', category: 'food', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'gəlumáŋ', english: 'a sort of coffee branch usually cut and thrown for soaking all the water that the coffee stem needs', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ghed məjîə', english: 'prepare food (mid-day meal)', category: 'food', tonePattern: 'falling', difficulty: 2),
@@ -2776,8 +2687,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'chî nó ajúmə', english: 'be rich, be wealthy, have money', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chî nó apógə', english: 'be in fear. He who lives in fear cannot do any great thing', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chî nó əpo\'ə', english: 'be innocent. It is a grievous evil for a man to be imprisoned innocently', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'chî nó móonə', english: 'be pregnant, be with child. In the olden days it was terrible for an unmarried girl to be pregnant', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'chî nó nəpəmə', english: 'be pregnant, be with child', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'chî nó móonə', english: 'be pregnant, be with child. In the olden days it was terrible for an unmarried girl to be pregnant', category: 'actions', tonePattern: 'falling', difficulty: 3),
+  AwingWord(awing: 'chî nó nəpəmə', english: 'be pregnant, be with child', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chî nó ŋgə́\'ə', english: 'be in difficulty, live in hardship', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chî nó njiə', english: 'be hungry. A slave is he who has enough, yet remains hungry', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chî ŋgǎ mə́\'á', english: 'be forever, be everlasting', category: 'actions', tonePattern: 'rising', difficulty: 2),
@@ -2842,7 +2753,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'chwaalâ afa\'ə', english: 'look for a job', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chwaalâ ape\'ə', english: 'accumulate wealth', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chwaalâ ndúmə', english: 'of a pig, present signs that it is ready for crossing/mating', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'chwáalə nəwûə', english: 'survive death', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'chwáalə nəwûə', english: 'survive death', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chwádkə', english: 'save, deliver from danger', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'chwántə', english: 'cut many spots or many things', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'chwaŋkə̂', english: 'grow lankily, of plants and people (tall, lacking in freshness and flesh)', category: 'actions', tonePattern: 'falling', difficulty: 2),
@@ -2929,7 +2840,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ghenkə̂', english: 'make go', category: 'actions', tonePattern: 'falling'),
   AwingWord(awing: 'ghə\'ə̂', english: 'frugal, be greedy', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'ghəəkə̂', english: 'disturb, stupify', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'ghəənə̂', english: 'be stupid', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'ghəənə̂', english: 'be stupid', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'ghəətə̂', english: 'fumble, do something wrongly', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'ghághlə', english: 'hasten up, hurry, be fast', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ghó\'kə', english: 'respect, honour, praise; worship', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -2967,7 +2878,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'jwitô', english: 'rest, take a rest', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'káatə', english: 'threaten', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kádtə', english: 'coil rope, rap many things', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'ká\'ə', english: 'clot (as blood)', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'ká\'ə', english: 'clot (as blood)', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'káglə', english: 'sweep imperfectly', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kagnə̂', english: 'threaten each other', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kagtə̂', english: 'threaten many times', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -3005,7 +2916,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kookâ', english: 'peel off in bits; fall off by itself', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kóokə', english: 'shift blame (when a thief is caught he shifts the blame to hunger)', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'koolâ', english: 'harvest fruits with impunity', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'kóoma', english: 'shave (as if one is mourning)', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'kóoma', english: 'shave (as if one is mourning)', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'kóomə', english: 'scratch eg an itching part of the body, scratch the surface of a wall to remove paint or dirt', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'kóomálənə', english: 'pity, show sympathy', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'koonâ', english: 'fall or peel off in large quantities (usually by itself)', category: 'actions', tonePattern: 'falling', difficulty: 2),
@@ -3149,7 +3060,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'naŋê', english: 'step on, stamp (with feet)', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'nəntə̂', english: 'trample', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'nid ńgə́', english: 'imply that, mean that', category: 'actions', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'nkogə́', english: 'widow (used neutrally for both man and woman)', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'nkogə́', english: 'widow (used neutrally for both man and woman)', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nô ngoolə', english: 'swear, oath, make a statement that is considered as the truth', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'noŋnô', english: 'lie down; be level', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'nóŋə', english: 'suckle (intr)', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -3181,7 +3092,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'pèe', english: 'sharpen', category: 'actions', tonePattern: 'low', difficulty: 1),
   AwingWord(awing: 'péebə', english: 'bake (in ashes)', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'peelô', english: 'carry on the bavk (sic: back)', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'peenə', english: 'hate', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'peenə', english: 'hate', category: 'actions', difficulty: 3),
   AwingWord(awing: 'pegə', english: 'enlarge; widen', category: 'actions', difficulty: 1),
   AwingWord(awing: 'péŋkə', english: 'misplace', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'péelə', english: 'be mad. Rather than stay alive and be mad, one be dead rather', category: 'actions', tonePattern: 'high', difficulty: 2),
@@ -3233,7 +3144,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'səəkə', english: 'be slippery', category: 'actions', difficulty: 1),
   AwingWord(awing: 'səələ', english: 'slice', category: 'actions', difficulty: 1),
   AwingWord(awing: 'səənô', english: 'slip', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'sôətə', english: 'slice in many things, castrate many things', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'sôətə', english: 'slice in many things, castrate many things', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'səŋə', english: 'sifter', category: 'actions', difficulty: 1),
   AwingWord(awing: 'sô', english: 'weed', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'sogə', english: 'wash (tr)', category: 'actions', difficulty: 1),
@@ -3251,7 +3162,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'shígə', english: 'wipe', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'shikô', english: 'deepen', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'shitô', english: 'straighten', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'shúmə', english: 'whip, beat up', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'shúmə', english: 'whip, beat up', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'shwaalô', english: 'be odd; be ugly', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'shwánta', english: 'persuade. If you persuade somebody with good words he listens to you', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'shwee', english: 'miss, fail to get. If one misses something it is good to try again', category: 'actions', difficulty: 2),
@@ -3273,7 +3184,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'tégə', english: 'meet, catch up with; join', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'tegnə', english: 'already left (gone), just left (gone)', category: 'actions', difficulty: 1),
   AwingWord(awing: 'tê', english: 'hot, of pepper', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'tê ndê', english: 'leave the house very early in the mourning hours, especially at mourning twilight (colloquial usage)', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'tê ndê', english: 'leave the house very early in the mourning hours, especially at mourning twilight (colloquial usage)', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'teŋkə', english: 'push', category: 'actions', difficulty: 1),
   AwingWord(awing: 'tó', english: 'functions as one of the two forms of the verb \'to be\'. He is going to the farm', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'tə shîəə', english: 'be shallow', category: 'actions', tonePattern: 'falling', difficulty: 2),
@@ -3282,7 +3193,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'tógə atûə', english: 'be eager, (be) zealous', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'tágtə', english: 'put many things', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'tám əsóomə atûə', english: 'accuse falsely', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'támə', english: 'kick, shoot', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'támə', english: 'kick, shoot', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'taŋnô', english: 'tether (sheep, goats)', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'tímə', english: 'sew using a needle', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'tí ndəŋdəŋə́', english: 'be level, be straight', category: 'actions', tonePattern: 'high', difficulty: 2),
@@ -3357,7 +3268,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'wê', english: 'weigh. From: English', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'wednô', english: 'mix', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'wedtô', english: 'mix (many things)', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'wé\'ə', english: 'curse away, purge something', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'wé\'ə', english: 'curse away, purge something', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'welô', english: 'weight', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'wénə', english: 'draw pictures; make incisions', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'wénnə', english: 'be worried, be impatient', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -3368,7 +3279,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'wǔəə', english: 'fall; fail', category: 'actions', tonePattern: 'rising', difficulty: 1),
   AwingWord(awing: 'wukə̂', english: 'fall many times; fall, of many people', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'wúnə', english: 'invite, ask or demand that somebody should help one, often to do jobs that cannot be done by the individual', category: 'actions', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'wu\'nə nkwumə', english: 'close a box; close a coffin', category: 'actions', difficulty: 2),
+  AwingWord(awing: 'wu\'nə nkwumə', english: 'close a box; close a coffin', category: 'actions', difficulty: 3),
   AwingWord(awing: 'wúnta', english: 'invite, of many people', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'yaalô', english: 'carry, of heavy load (colloquial usage)', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'yáŋə', english: 'be wise', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -3440,7 +3351,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'apa\'ə', english: 'a flat covering (of door, window, hut etc.)', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'apáŋə', english: 'an open bamboo cupboard attached to the wall of the house used for putting kitchen utensils', category: 'descriptive', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'apuməŋkwúnə', english: 'small pox', category: 'descriptive', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'asəələ', english: 'castrated', category: 'descriptive', difficulty: 1),
+  AwingWord(awing: 'asəələ', english: 'castrated', category: 'descriptive', difficulty: 3),
   AwingWord(awing: 'asagá', english: 'A place that is open and exposed', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'asəglə', english: 'important, great, powerful, influential', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'asəŋə', english: 'a kind of weaved basin', category: 'descriptive', difficulty: 1),
@@ -3504,7 +3415,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'mətsəŋkeela', english: 'be globe shaped, be spherical; be round', category: 'descriptive', difficulty: 2),
   AwingWord(awing: 'mó kányaŋə', english: 'little; small', category: 'descriptive', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'mó nkeelə', english: 'small drum', category: 'descriptive', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'môkamə', english: 'A dance group in Njom. Only young men participate', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'môkamə', english: 'A dance group in Njom. Only young men participate', category: 'descriptive', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'ndɔ́', english: 'real, true', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ndǎndɔ́', english: 'real, true', category: 'descriptive', tonePattern: 'rising', difficulty: 1),
   AwingWord(awing: 'nə', english: 'marker of past tense for an event that took place a few days ago', category: 'descriptive', difficulty: 3),
@@ -3513,7 +3424,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nəsog nó akwubə', english: 'bath room or any shade for bathing', category: 'descriptive', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nəténə', english: 'bottom; below', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ngaŋkéebə', english: 'rich person', category: 'descriptive', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'ngoŋə', english: 'sharp wail, ululation at funeral(n)', category: 'descriptive', difficulty: 1),
+  AwingWord(awing: 'ngoŋə', english: 'sharp wail, ululation at funeral(n)', category: 'descriptive', difficulty: 3),
   AwingWord(awing: 'ngwəshíə', english: 'loincloth of some sort worn in the olden days, especially old women', category: 'descriptive', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'njúbtə', english: 'dry. Dry corn is good for popping', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'nkya\'ə', english: 'light; electricity', category: 'descriptive', difficulty: 1),
@@ -3580,7 +3491,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'agha\'ó', english: 'cave', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'aghəŋə nəságə', english: 'pudenda', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'aghognə', english: 'shock, trembling; fear', category: 'things', difficulty: 1),
-  AwingWord(awing: 'aghóoba', english: 'fear, trembling on hearing of death', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'aghóoba', english: 'fear, trembling on hearing of death', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'aghoolá atûa', english: 'dowry', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'aghoonó', english: 'illness, disease, malady', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'aghoonó móghaba', english: 'sexually transmissible disease', category: 'things', tonePattern: 'high', difficulty: 2),
@@ -3614,7 +3525,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'akóbka', english: 'covering (of door, cupboard, car, hut, blanket etc.)', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'akəghoolə', english: 'intestinal worm', category: 'things', difficulty: 1),
   AwingWord(awing: 'akəghoolámagə', english: 'conjunctivitis', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'akəkógó', english: 'fool', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'akəkógó', english: 'fool', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'akəmə', english: 'piece, half (of liquids, objects etc.)', category: 'things', difficulty: 1),
   AwingWord(awing: 'akəmə ajúmə', english: 'splinter, sliver', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'akəmə aŋwa\'lə', english: 'note(n), piece of writing', category: 'things', difficulty: 2),
@@ -3638,8 +3549,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'akoŋŋəshîə', english: 'romantic love', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'akoŋtə', english: 'rejoicing; festival; feast', category: 'things', difficulty: 2),
   AwingWord(awing: 'akwáakə', english: 'inflammables; something that keeps fire burning', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'akwáalónkǐə', english: 'baptism', category: 'things', tonePattern: 'rising', difficulty: 1),
-  AwingWord(awing: 'akwagə', english: 'phlegm', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akwáalónkǐə', english: 'baptism', category: 'things', tonePattern: 'rising', difficulty: 3),
+  AwingWord(awing: 'akwagə', english: 'phlegm', category: 'things', difficulty: 3),
   AwingWord(awing: 'akwagəntəəmə', english: 'asthmatic cough', category: 'things', difficulty: 1),
   AwingWord(awing: 'akwagətəəmə', english: 'whooping cough', category: 'things', difficulty: 1),
   AwingWord(awing: 'akwagətəfélə', english: 'whooping cough', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -3677,7 +3588,6 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'alaŋəpópó\'ə', english: 'public toilet', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'alě atsəmə', english: 'everyday', category: 'things', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'alě tsə', english: 'someday', category: 'things', tonePattern: 'rising', difficulty: 2),
-  AwingWord(awing: 'alě Yésojúmnə nə nəwûə', english: 'Easter Sunday', category: 'things', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'aleelá', english: 'trouble', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'aleemə', english: 'smithing', category: 'things', difficulty: 1),
   AwingWord(awing: 'aleeməmósóŋó', english: 'birdlime (adhesive to catch birds)', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -3719,7 +3629,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ali\'átsəmə', english: 'Everywhere; anywhere', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'alóobə', english: 'cunning; deceit', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'alóbtə', english: 'plan; estimation', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'alo\'ə', english: 'deformity; curse', category: 'things', difficulty: 1),
+  AwingWord(awing: 'alo\'ə', english: 'deformity; curse', category: 'things', difficulty: 3),
   AwingWord(awing: 'alónə', english: 'begging', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'alubə', english: 'drasina', category: 'things', difficulty: 1),
   AwingWord(awing: 'alúə', english: 'goose', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -3744,7 +3654,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'anuə nəfoonə', english: 'kingdom of', category: 'things', difficulty: 2),
   AwingWord(awing: 'anuə ŋwu ntsəmə', english: 'event that involves everybody', category: 'things', difficulty: 2),
   AwingWord(awing: 'anüəngi\'tə', english: 'something urgent', category: 'things', difficulty: 1),
-  AwingWord(awing: 'anuəsê', english: 'christianity; religion', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'anuəsê', english: 'christianity; religion', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'anuətájiə', english: 'mystery', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'anuətámə', english: 'habit', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'anuyəfíə', english: 'fashion', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -3757,7 +3667,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'aŋkəŋâ', english: 'dove', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'aŋo\'tə', english: 'frugality', category: 'things', difficulty: 1),
   AwingWord(awing: 'aŋwa\'lə', english: 'book; knowledge', category: 'things', difficulty: 1),
-  AwingWord(awing: 'aŋwa\'lósê', english: 'scripture; bible', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'aŋwa\'lósê', english: 'scripture; bible', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'apádnə', english: 'acquaintance', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'apadtəmóonə', english: 'baby sling', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'apa\'ándê', english: 'door', category: 'things', tonePattern: 'falling', difficulty: 1),
@@ -3772,7 +3682,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'apəabə', english: 'he-goat, billy goat', category: 'things', difficulty: 1),
   AwingWord(awing: 'apəəmə', english: 'hunt', category: 'things', difficulty: 1),
   AwingWord(awing: 'apimnə', english: 'agreement', category: 'things', difficulty: 1),
-  AwingWord(awing: 'apinə', english: 'curse', category: 'things', difficulty: 1),
+  AwingWord(awing: 'apinə', english: 'curse', category: 'things', difficulty: 3),
   AwingWord(awing: 'apitə', english: 'request, question', category: 'things', difficulty: 1),
   AwingWord(awing: 'apitə atsêebə', english: 'question', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'apó\'ámbó', english: 'supplication, plea', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -3793,7 +3703,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'aseemə', english: 'a site where mushrooms grow', category: 'things', difficulty: 1),
   AwingWord(awing: 'asədkátsêebə', english: 'translation. It is good to know how to translate', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'asêkátsə\'ó', english: 'rag. A rag is used to clean a cemented floor', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'asəələkwúneemə', english: 'a castrated pig', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'asəələkwúneemə', english: 'a castrated pig', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'asəkə', english: 'exageration, giving of false value', category: 'things', difficulty: 1),
   AwingWord(awing: 'asəmə', english: 'swarm', category: 'things', difficulty: 1),
   AwingWord(awing: 'asogəmáyéŋ', english: 'wild beast (used as an insult)', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -3834,7 +3744,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'atúəfa\'ə', english: 'occupation, job', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'atúəndê', english: 'roof of a house. The most important thing for the roof of a house is the zinc', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'atúənápe', english: 'side pain. Side pain is an illness of elderly people', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'atúənósénə', english: 'frontal headache. frontal headache causes blood to flow from one\'s nose', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'atúənósénə', english: 'frontal headache. frontal headache causes blood to flow from one\'s nose', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'atsa\'ə amú\'á', english: 'regime (of banana). A regime of banana is much cheaper in Awing than in all other places', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'atsa\'ənákəŋə', english: 'clay. Clay is sticky', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'atsámnə', english: 'sigh', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -3845,9 +3755,9 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'atséebámənŋeemə', english: 'joke, play talk', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'atséebándzəmándzəmə', english: 'gossip', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'atséebánákwa\'ə', english: 'joke, humour', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'atséebánámú\'á', english: 'parable; proverb', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'atséebánámú\'á', english: 'parable; proverb', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'atséebápəfipámbô', english: 'sign language', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'atséebásê', english: 'gospel; word of God', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'atséebásê', english: 'gospel; word of God', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'atseŋə', english: 'bladder', category: 'things', difficulty: 1),
   AwingWord(awing: 'atselə', english: 'peg', category: 'things', difficulty: 1),
   AwingWord(awing: 'atsa\'á mako\'ná', english: 'shirt. Shirts are usually worn by men', category: 'things', tonePattern: 'high', difficulty: 2),
@@ -3862,7 +3772,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'awágə', english: 'a belittling; mockery', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'awágnə', english: 'carelessness, neglect', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'awakántəəmə', english: 'loose and shameless behaviour', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'awé\'ə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'awé\'ə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'awelə', english: 'mixture', category: 'things', difficulty: 1),
   AwingWord(awing: 'awelówelə', english: 'assorted, variety', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'awěnkɨə', english: 'A women dance group in Akuhle quarter, based in Tata Mofolo\'s compound', category: 'things', tonePattern: 'rising', difficulty: 2),
@@ -3883,17 +3793,16 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'azénə', english: 'possessive pronoun \'ours\' used for nouns of class 7', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'azə́ənə', english: 'possessive plural pronoun \'yours\' used for class 7 nouns', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'azú\'kə', english: 'surty, guarantee', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'azəŋtə', english: 'imbecile, fool, stupid person', category: 'things', difficulty: 1),
+  AwingWord(awing: 'azəŋtə', english: 'imbecile, fool, stupid person', category: 'things', difficulty: 3),
   AwingWord(awing: 'azó', english: 'possessive singular pronoun \'yours\' used for class 7 nouns', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'azó\'ámakálá', english: 'mbecile, fool, stupid person. A sort of yam that originated from Ibo land in Nigeria', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'azó\'ámakálá', english: 'mbecile, fool, stupid person. A sort of yam that originated from Ibo land in Nigeria', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'azoŋə', english: 'junior', category: 'things', difficulty: 1),
   AwingWord(awing: 'azoobə', english: 'song, singing', category: 'things', difficulty: 1),
   AwingWord(awing: 'azoomə', english: 'plum', category: 'things', difficulty: 1),
   AwingWord(awing: 'azəgə', english: 'Lie that is told with a lot of passion and without remorse', category: 'things', difficulty: 2),
   AwingWord(awing: 'azəŋə', english: 'argument, disunity', category: 'things', difficulty: 1),
   AwingWord(awing: 'bâ', english: 'bar. Some people stay in the bar for the whole day', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'báabəələ', english: 'Bible or the word of God. The word of God is called a Bible', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'bǎbtísə', english: 'baptist, refering to a christian denomination and also to those who belong to it', category: 'things', tonePattern: 'rising', difficulty: 2),
+  AwingWord(awing: 'bǎbtísə', english: 'baptist, refering to a christian denomination and also to those who belong to it', category: 'things', tonePattern: 'rising', difficulty: 3),
   AwingWord(awing: 'bándéchə', english: 'bandage', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'báŋə', english: 'bank. A bank is a place where we keep money', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'bəláibə', english: 'bribe', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -3982,11 +3891,11 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'əghə̂', english: 'reflexive pronoun ours (exclusive). Used specifically for class 3 nouns', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əjîə', english: 'possessive pronoun his/hers (used for nouns of class 9)', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əkeelə', english: 'frugality, stinginess, a desire not to share', category: 'things', difficulty: 1),
-  AwingWord(awing: 'əkeenə', english: 'oath; covenant', category: 'things', difficulty: 1),
+  AwingWord(awing: 'əkeenə', english: 'oath; covenant', category: 'things', difficulty: 3),
   AwingWord(awing: 'əkəəbə', english: 'indian bamboo ropes', category: 'things', difficulty: 1),
   AwingWord(awing: 'əkəkə́\'lápúmə', english: 'trash; scrap', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'əkəmə́', english: 'nobleship', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'əkogə́', english: 'widowhood', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'əkogə́', english: 'widowhood', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'əkwubə', english: 'frugality', category: 'things', difficulty: 1),
   AwingWord(awing: 'ə́lá ndê', english: 'wall of a house', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'ólé', english: 'how? (interrogative)', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -4017,7 +3926,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'əpûngɔŋə', english: 'common property; public property', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'əpûntéelə', english: 'Lord\'s Supper article', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'əpûtsəmə', english: 'everything', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'əsa\'ə', english: 'shoot', category: 'things', difficulty: 1),
+  AwingWord(awing: 'əsa\'ə', english: 'shoot', category: 'things', difficulty: 3),
   AwingWord(awing: 'əsá\'mánumə', english: 'east; sunrise', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'əsəpó\'á', english: 'something that is cheap or free of charge', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'əsê', english: 'god; fetish (spirit)', category: 'things', tonePattern: 'falling', difficulty: 3),
@@ -4088,7 +3997,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kíghálágháalə', english: 'butterfly', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kíghidghaabə', english: 'cartilage', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kíkəm ŋwunə', english: 'dwarf', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'kíkəmə ajîə', english: 'shortsightedness (a shortsighted person is not different from a fool)', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'kíkəmə ajîə', english: 'shortsightedness (a shortsighted person is not different from a fool)', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'kílelónkaŋə̂', english: 'spider', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kíláglakəmósaŋə', english: 'gecko', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kimbó\'nkonə', english: 'zebra', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -4168,11 +4077,11 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'məghám mém mbê nə tá\'ə', english: 'twenty-one (21)', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'məghó\'kənə', english: 'worship; worshipping', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'məkálé', english: 'English language', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'məkeemə̂', english: 'gun powder', category: 'things', tonePattern: 'falling'),
+  AwingWord(awing: 'məkeemə̂', english: 'gun powder', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'məko\'nə̂', english: 'north', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'məkwú má akokíə', english: 'cowpies', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'mókwúbla', english: 'shelter', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'məkwúblənə', english: 'repentance; repenting', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'məkwúblənə', english: 'repentance; repenting', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'məkwumə́', english: 'masquerader, dance group uniquely made up of men and totally veiled', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'məleemə', english: 'deception, deceit', category: 'things', difficulty: 1),
   AwingWord(awing: 'məláŋə', english: 'sorrow, pity', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -4202,14 +4111,14 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'mətoŋə̂', english: 'down, south', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'mətoŋŋə̂', english: 'down, South', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'mótwe\'á', english: 'caterpillar', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'mətwâŋnə', english: 'burial, burying', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'mətwâŋnə', english: 'burial, burying', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'mətsá', english: 'attribute \'certain\', modifying nouns of class 6; attribute \'some\', modifying nouns of class 6', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'mîa', english: 'demonstrative adj \'those\', modifies nouns of class six', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'mó kwúneemə', english: 'piglet', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'mó mangyè', english: 'bride; girl, little girl', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'mó natûə', english: 'firstborn', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'mó ngába', english: 'chick', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'mó ntîə', english: 'orphan', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'mó ntîə', english: 'orphan', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'mó ŋwíŋə', english: 'knife', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'mo\'ə̂', english: '(not given)', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'na mbǎəmə', english: 'human flesh, \'meat of body\'', category: 'things', tonePattern: 'rising', difficulty: 2),
@@ -4219,9 +4128,9 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nátíbə', english: 'native', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ncha\'tə əsê', english: 'spiritual healer, somebody who heals through prayers', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nchîə', english: 'soot', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'nchílə', english: 'Women dance group in Njom, no longer active, but still have their drums and other things', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'nchílə', english: 'Women dance group in Njom, no longer active, but still have their drums and other things', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nchîmbîə', english: 'life, living', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'nchwadkə̂', english: 'salvation', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'nchwadkə̂', english: 'salvation', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'nchwá\'ə', english: 'subscription, tontine', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'nchwiga', english: 'spy', category: 'things', difficulty: 1),
   AwingWord(awing: 'ndadkándadka', english: 'continously, non-stop', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -4238,11 +4147,11 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ndámə', english: 'wire', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ndaŋə', english: 'bamboo', category: 'things', difficulty: 1),
   AwingWord(awing: 'ndəŋndəŋə', english: 'truth. Speak the truth', category: 'things', difficulty: 1),
-  AwingWord(awing: 'ndəpa\'ə', english: 'tobacco; cigarette', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndəpa\'ə', english: 'tobacco; cigarette', category: 'things', difficulty: 3),
   AwingWord(awing: 'ndəsê təpəŋə', english: 'barren land', category: 'things', tonePattern: 'falling', difficulty: 2),
 
   AwingWord(awing: 'ndəzəəmə', english: 'moth', category: 'things', difficulty: 1),
-  AwingWord(awing: 'ndoonə', english: 'curse', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndoonə', english: 'curse', category: 'things', difficulty: 3),
   AwingWord(awing: 'ndotíə', english: 'dirt, rubbish', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ndú atsəmə', english: 'everywhere', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ndzaŋə', english: 'color, kind, pattern', category: 'things', difficulty: 1),
@@ -4266,7 +4175,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nəfed nó ngo\'ə́', english: 'titled feather. Titled feathers are given to people who do great things', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nəfelə', english: 'feather', category: 'things'),
   AwingWord(awing: 'nəfemə̂', english: 'a secret place, especially in the fon\'s palace', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'nəfaŋ nó móənə', english: 'ulcer', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'nəfaŋ nó móənə', english: 'ulcer', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nəfo nə́ Əsê', english: 'kingdom of', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nəfyânə', english: 'spanking', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'nəgheebə', english: 'the manner of sharing or distributing', category: 'things', difficulty: 1),
@@ -4278,20 +4187,20 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nəkaŋə', english: 'magic', category: 'things', difficulty: 1),
   AwingWord(awing: 'nəkéelə', english: 'headpad', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'nəkəŋ nó atsa\'ə́', english: 'cooking pot (earthenware)', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'nəkəŋ nó ndəpa\'ə́', english: 'tobacco pipe', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'nəkəŋ nó ndəpa\'ə́', english: 'tobacco pipe', category: 'things', tonePattern: 'high', difficulty: 3),
   // Session 52: was 'nəkəŋ nó nkíə' — nkíə (high tone) does not exist. Per dict, water = nkǐə (rising).
   AwingWord(awing: 'nəkəŋ nó nkǐə', english: 'pot (for water)', category: 'things', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'nəkəŋ nó séləbə', english: 'metal pot', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'nəkəŋə́', english: 'tobacco pipe', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'nəkəŋə́', english: 'tobacco pipe', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nəkó\'ə', english: 'growth (of plants)', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'nəkoŋ nó nkyílə', english: 'arrow', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'nəkoŋə́', english: 'lance, spear', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'nəkoŋə́', english: 'lance, spear', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nəkwedná əpúmə', english: 'garbage dump', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nəkwinə', english: 'beam; rafter', category: 'things', difficulty: 1),
   AwingWord(awing: 'nəkwíŋə', english: 'manner of prospering, manner of growing (of plants), manner of climbing', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nəkwu nó ndê', english: 'doorway', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nəkwu\'ə́', english: 'mortar', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'nəkyéŋə', english: 'mourning, crying', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'nəkyéŋə', english: 'mourning, crying', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nəkyéŋə mbi Əsê', english: 'confession', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nəkye nó nûə', english: 'beewax; bee-bread', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nəkyéelə', english: 'debt', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -4325,7 +4234,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nəpo\' nó kéenə', english: 'melon', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nəpɔŋə', english: 'beauty', category: 'things', difficulty: 1),
   AwingWord(awing: 'nəsáŋə', english: 'broom', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'nəse', english: 'grave', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nəse', english: 'grave', category: 'things', difficulty: 3),
   AwingWord(awing: 'nəsednə', english: 'bend, curve, corner', category: 'things', difficulty: 1),
   AwingWord(awing: 'nəsô', english: 'the manner of weeding', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'nəsóŋə', english: 'the manner of saying', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -4338,12 +4247,12 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nətu nó ndúmə', english: 'crossroads, intersection', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nətu nó nəkoŋə́', english: 'shaft of arrow', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nətûə', english: 'summit, highest point, tip, chief, headman', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'nətwéŋ nó pəkwûə', english: 'cemetery', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'nətwéŋ nó pəkwûə', english: 'cemetery', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'nətsa\'ə́', english: 'marsh', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'nətsê nó neemə', english: 'heifer', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nətsə́', english: 'attribute "certain", modifying nouns of class 5; attribute "some", modifying nouns of class 5', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nəwaŋə́', english: 'sales point, place for business transaction', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'nəwû nó nkǐ mógə', english: 'funeral', category: 'things', tonePattern: 'rising', difficulty: 2),
+  AwingWord(awing: 'nəwû nó nkǐ mógə', english: 'funeral', category: 'things', tonePattern: 'rising', difficulty: 3),
   AwingWord(awing: 'nəwuə', english: 'the manner of falling', category: 'things', difficulty: 1),
   AwingWord(awing: 'nəyeŋə yi səbtə nó', english: 'weeds', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nəzéemə', english: 'possessive pronoun "mine" used for class 5 nouns', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -4363,8 +4272,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ngaŋnchindê', english: 'host, owner of the compound', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'ngaŋnənyinə', english: 'traveller, very mobile person', category: 'things', difficulty: 2),
   AwingWord(awing: 'ngaŋtsoolə', english: 'army officer, soldier', category: 'things', difficulty: 1),
-  AwingWord(awing: 'ngéelə', english: 'gun', category: 'things', tonePattern: 'high'),
-  AwingWord(awing: 'ngedtəpəŋə', english: 'sinner, evil doer', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ngéelə', english: 'gun', category: 'things', tonePattern: 'high', difficulty: 3),
+  AwingWord(awing: 'ngedtəpəŋə', english: 'sinner, evil doer', category: 'things', difficulty: 3),
   AwingWord(awing: 'ńgə́', english: 'verb complement, occurs only after verbs', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ngá\'ə', english: 'hardship, distress', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ngi yi mbyâŋnə', english: 'boyfriend', category: 'things', tonePattern: 'falling', difficulty: 2),
@@ -4373,13 +4282,13 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ngóobə', english: 'cunning; deceit', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ngoolə', english: 'swear, a statement that is considered as the truth, oath', category: 'things', difficulty: 2),
   AwingWord(awing: 'ngólə', english: 'hole', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'ngonə', english: 'dance group in Njom, no longer active', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ngonə', english: 'dance group in Njom, no longer active', category: 'things', difficulty: 3),
   AwingWord(awing: 'ngwâ', english: 'sheath', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'ngwâ nəkoŋ nó nkyílə', english: 'quiver', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'ngwaamə', english: 'accuser', category: 'things', difficulty: 1),
   AwingWord(awing: 'ngwágə', english: 'someone who despises', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ngwě əsê', english: 'fetish priestess', category: 'things', tonePattern: 'rising', difficulty: 3),
-  AwingWord(awing: 'ngwəpá\'ə', english: 'biggest dance group in Awing based in Njom', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'ngwəpá\'ə', english: 'biggest dance group in Awing based in Njom', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'ngwub neemə', english: 'hide of cattle', category: 'things', difficulty: 2),
   AwingWord(awing: 'ngwubə', english: 'shoe; hide of any animal', category: 'things', difficulty: 1),
   AwingWord(awing: 'ngwubə akoolə', english: 'shoe', category: 'things', difficulty: 2),
@@ -4400,7 +4309,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nká\' məneemə', english: 'cattle pen', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nká\' nəpumə́', english: 'eggshell', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nka sáŋə́', english: 'nest', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'nka\'ə', english: 'leprosy', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nka\'ə', english: 'leprosy', category: 'things', difficulty: 3),
   AwingWord(awing: 'nkaŋə', english: 'age-group', category: 'things', difficulty: 1),
   AwingWord(awing: 'nkeenə́ akyamə', english: 'gall bladder', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nkeenə́ atətsələ', english: 'cocoon', category: 'things', tonePattern: 'high', difficulty: 2),
@@ -4412,10 +4321,10 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nkəm əsê', english: 'fetish priestess', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'nkəmə́', english: 'title of sub-chief; sub-chief', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'nkǐ nəko\'nó', english: 'national anthem', category: 'things', tonePattern: 'rising', difficulty: 2),
-  AwingWord(awing: 'nkǐ yi əshî\'nə', english: 'gospel, good news', category: 'things', tonePattern: 'rising', difficulty: 2),
-  AwingWord(awing: 'nkog məngyè', english: 'widow', category: 'things', tonePattern: 'low', difficulty: 2),
+  AwingWord(awing: 'nkǐ yi əshî\'nə', english: 'gospel, good news', category: 'things', tonePattern: 'rising', difficulty: 3),
+  AwingWord(awing: 'nkog məngyè', english: 'widow', category: 'things', tonePattern: 'low', difficulty: 3),
   AwingWord(awing: 'nkog ngábə', english: 'hen', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'nkog ŋwu mbyâŋnə', english: 'widower', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'nkog ŋwu mbyâŋnə', english: 'widower', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'nkoolə', english: 'bruise', category: 'things', difficulty: 1),
   AwingWord(awing: 'nkóomə atûə', english: 'barber', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nkɔ\'ə', english: 'bucket', category: 'things', difficulty: 1),
@@ -4447,7 +4356,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ntəənə acha\'tésê', english: 'fasting', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'ntəmə', english: 'a skirt-like dress worn by men', category: 'things', difficulty: 1),
   AwingWord(awing: 'ntóoma', english: 'pillar, wedge, esp. for a house', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'ntú əsê', english: 'prophet', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'ntú əsê', english: 'prophet', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'ntyâ əpúmə', english: 'somebody who finds it difficult to make a choice', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'ntsa\'ə', english: 'hoof', category: 'things', difficulty: 1),
   AwingWord(awing: 'ntseŋ ndê Əsê', english: 'angel', category: 'things', tonePattern: 'falling', difficulty: 2),
@@ -4644,63 +4553,63 @@ const List<AwingWord> dictionaryEntries = [
 
   // ---- From 2007 Awing English Dictionary ----
   // dict:p.18
-  AwingWord(awing: 'agheemə', english: 'sorcery, fortune telling, spiritism', category: 'things', difficulty: 1),
+  AwingWord(awing: 'agheemə', english: 'sorcery, fortune telling, spiritism', category: 'things', difficulty: 3),
   // dict:p.19
-  AwingWord(awing: 'aghoonó tapəŋə', english: 'diseases contracted through sex', category: 'things', difficulty: 2),
+  AwingWord(awing: 'aghoonó tapəŋə', english: 'diseases contracted through sex', category: 'things', difficulty: 3),
   // dict:p.19
-  AwingWord(awing: "aghô'ka", english: 'vomit (noun)', category: 'things', difficulty: 2),
+  AwingWord(awing: "aghô'ka", english: 'vomit (noun)', category: 'things', difficulty: 3),
   // dict:p.19
-  AwingWord(awing: "ajá'ka", english: 'vomit (noun)', category: 'things', difficulty: 2),
+  AwingWord(awing: "ajá'ka", english: 'vomit (noun)', category: 'things', difficulty: 3),
   // dict:p.29
   AwingWord(awing: 'aléjúmə', english: 'lust (noun); strong desire', category: 'descriptive', difficulty: 1),
   // dict:p.30
   AwingWord(awing: 'aləŋəmóonə', english: 'womb', category: 'body', difficulty: 1),
   // dict:p.32
-  AwingWord(awing: 'ambeenə', english: 'abscess', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ambeenə', english: 'abscess', category: 'things', difficulty: 3),
   // dict:p.33
-  AwingWord(awing: 'anuəməghabə', english: 'adultery', category: 'things', difficulty: 1),
+  AwingWord(awing: 'anuəməghabə', english: 'adultery', category: 'things', difficulty: 3),
   // dict:p.34
-  AwingWord(awing: 'aŋkódtə', english: 'prostitute', category: 'things', difficulty: 1),
+  AwingWord(awing: 'aŋkódtə', english: 'prostitute', category: 'things', difficulty: 3),
   // dict:p.34
-  AwingWord(awing: 'aŋkwə', english: 'semen, sperm, male fertilisation fluid', category: 'things', difficulty: 1),
+  AwingWord(awing: 'aŋkwə', english: 'semen, sperm, male fertilisation fluid', category: 'things', difficulty: 3),
   // dict:p.38
-  AwingWord(awing: 'atenə', english: '1) abdomen 2) buttock', category: 'things', difficulty: 1),
+  AwingWord(awing: 'atenə', english: '1) abdomen 2) buttock', category: 'things', difficulty: 3),
   // dict:p.38
-  AwingWord(awing: 'atəəməndólə', english: 'prostitute', category: 'things', difficulty: 1),
+  AwingWord(awing: 'atəəməndólə', english: 'prostitute', category: 'things', difficulty: 3),
   // dict:p.39
-  AwingWord(awing: 'atátəŋə', english: 'white fluid that flows from the vagina as a sign of labour (birth production)', category: 'descriptive', difficulty: 2),
+  AwingWord(awing: 'atátəŋə', english: 'white fluid that flows from the vagina as a sign of labour (birth production)', category: 'descriptive', difficulty: 3),
   // dict:p.40
-  AwingWord(awing: 'atogá', english: "A certain substance in a witch's stomach that influences him/her to kill in order to gratify it", category: 'actions', difficulty: 2),
+  AwingWord(awing: 'atogá', english: "A certain substance in a witch's stomach that influences him/her to kill in order to gratify it", category: 'actions', difficulty: 3),
   // dict:p.42
   AwingWord(awing: "atúəsá'ó", english: 'The first menstrual flow of a girl. girls see their first menstrual flow in their teens', category: 'actions', difficulty: 2),
   // dict:p.50
-  AwingWord(awing: 'chî ntəblə', english: 'be naked. The earlymen were naked because they lacked dresses', category: 'pronouns', difficulty: 2),
+  AwingWord(awing: 'chî ntəblə', english: 'be naked. The earlymen were naked because they lacked dresses', category: 'pronouns', difficulty: 3),
   // dict:p.51
-  AwingWord(awing: "chî tə zə' ndzə'ə", english: 'abstain from sex, stay away from sex. An Awing man can never go without drinking palm wine becaus...', category: 'actions', difficulty: 2),
+  AwingWord(awing: "chî tə zə' ndzə'ə", english: 'abstain from sex, stay away from sex. An Awing man can never go without drinking palm wine becaus...', category: 'actions', difficulty: 3),
   // dict:p.60
-  AwingWord(awing: 'əfúkéelə', english: 'anus', category: 'things', difficulty: 1),
+  AwingWord(awing: 'əfúkéelə', english: 'anus', category: 'things', difficulty: 3),
   // dict:p.61
   AwingWord(awing: 'əkiə', english: 'gizzard, considered to belong to elders or the head of the family whenever a fowl is killed for a...', category: 'actions', difficulty: 2),
   // dict:p.70
-  AwingWord(awing: 'fulâ', english: 'uncover, expose, open. A prostitute exposes his/her nakedness just anywhere', category: 'actions', difficulty: 2),
+  AwingWord(awing: 'fulâ', english: 'uncover, expose, open. A prostitute exposes his/her nakedness just anywhere', category: 'actions', difficulty: 3),
   // dict:p.72
-  AwingWord(awing: 'ghánə', english: 'stagger (intr). A drunk walks staggering because of the wine he has taken', category: 'food', difficulty: 2),
+  AwingWord(awing: 'ghánə', english: 'stagger (intr). A drunk walks staggering because of the wine he has taken', category: 'food', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: "já'kə", english: 'vomit', category: 'things', difficulty: 2),
+  AwingWord(awing: "já'kə", english: 'vomit', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'Klísto', english: 'Christ (from English)', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'kwúbkə', english: 'take in liquid medicine via the anus', category: 'things', difficulty: 1),
+  AwingWord(awing: 'kwúbkə', english: 'take in liquid medicine via the anus', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'kwum əfeemó', english: 'punish by brutal killing, usually by driving a very big nail into the forehead', category: 'actions', difficulty: 2),
+  AwingWord(awing: 'kwum əfeemó', english: 'punish by brutal killing, usually by driving a very big nail into the forehead', category: 'actions', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'mbaŋ mbenə', english: 'testicle', category: 'things', difficulty: 2),
+  AwingWord(awing: 'mbaŋ mbenə', english: 'testicle', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'mbenə', english: 'penis', category: 'things', difficulty: 1),
+  AwingWord(awing: 'mbenə', english: 'penis', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'mbənə', english: 'a word used at the beginning of an expression (phrase, sentence, etc) to mark surprise (exclamation)', category: 'things', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: "mbó'nəsága", english: 'buttock', category: 'things', difficulty: 2),
+  AwingWord(awing: "mbó'nəsága", english: 'buttock', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'mbula', english: '(numeral) 6', category: 'things', difficulty: 1),
   // dict:p.?
@@ -4710,63 +4619,59 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'məghám mém mbê nə pén tênə', english: 'twenty-five (25)', category: 'numbers', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: 'məlwîə', english: 'nasal mucus, snot, catarrh', category: 'things', difficulty: 1),
+  AwingWord(awing: 'məlwîə', english: 'nasal mucus, snot, catarrh', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: "məpêna məlo'á", english: 'be drunk', category: 'things', difficulty: 2),
+  AwingWord(awing: "məpêna məlo'á", english: 'be drunk', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'máp ə́ŋə̂', english: '1) an unformed animal in the womb (eg foetus). 2) a young unformed plant in the bud', category: 'actions', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: 'məse', english: 'witchcraft', category: 'things', difficulty: 1),
+  AwingWord(awing: 'məse', english: 'witchcraft', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'mətsenə', english: 'urine', category: 'things', difficulty: 1),
+  AwingWord(awing: 'mətsenə', english: 'urine', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'mó apeemə', english: '1) pocket. 2) witchcraft (used colloquially)', category: 'things', difficulty: 2),
+  AwingWord(awing: 'mó apeemə', english: '1) pocket. 2) witchcraft (used colloquially)', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'Mó Ŋwunə', english: 'Son of Man', category: 'family', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: 'náŋə anuə', english: 'consult a sorcerer, find out the cause of something', category: 'actions', difficulty: 2),
+  AwingWord(awing: 'náŋə anuə', english: 'consult a sorcerer, find out the cause of something', category: 'actions', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'ndəəmə', english: 'female witch', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndəəmə', english: 'female witch', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'Ndawálé', english: 'Douala. Ngǎn Ndawálé tséeba lɔ́ Flénchə. People from Douala speak French', category: 'actions', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: "ndzɔ́'ə", english: '1) modern wedding ceremony. 2) sexual intercourse. 3) marriage of any sort, example is a case of ...', category: 'descriptive', difficulty: 2),
+  AwingWord(awing: "ndzɔ́'ə", english: '1) modern wedding ceremony. 2) sexual intercourse. 3) marriage of any sort, example is a case of ...', category: 'descriptive', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: "nèe ndzɔ́'ə", english: 'rape or have sex with somebody by dint of force', category: 'things', difficulty: 2),
+  AwingWord(awing: "nèe ndzɔ́'ə", english: 'rape or have sex with somebody by dint of force', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'nəkəələ', english: 'penis (colloquial usage)', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nəkəələ', english: 'penis (colloquial usage)', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'nəntoolá', english: 'hernia (a disease)', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nəntoolá', english: 'hernia (a disease)', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'nəpélə', english: 'excrement', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nəpélə', english: 'excrement', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'nəságə', english: 'vagina', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nəságə', english: 'vagina', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'ngaŋnəkaŋə', english: '1) sorcerer. 2) magic practitioner', category: 'things', difficulty: 2),
+  AwingWord(awing: 'ngaŋnəkaŋə', english: '1) sorcerer. 2) magic practitioner', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'ngaŋtê', english: 'sorcerer (male)', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ngaŋtê', english: 'sorcerer (male)', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: "nji' nəságə", english: 'clitoris', category: 'things', difficulty: 2),
+  AwingWord(awing: "nji' nəságə", english: 'clitoris', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'nyīəə', english: 'defecate, excrete', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nyīəə', english: 'defecate, excrete', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'ŋwu mbyâŋnə', english: '1) man 2) male (sex)', category: 'things', difficulty: 2),
+  AwingWord(awing: 'ŋwu mbyâŋnə', english: '1) man 2) male (sex)', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'poolá', english: 'breast wear', category: 'body', difficulty: 1),
+  AwingWord(awing: 'poolá', english: 'breast wear', category: 'body', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'soobô', english: 'stab, pierce', category: 'things', difficulty: 1),
+  AwingWord(awing: 'soobô', english: 'stab, pierce', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'səbtô', english: 'stab, pierce continuously', category: 'things', difficulty: 1),
+  AwingWord(awing: 'səbtô', english: 'stab, pierce continuously', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'tâlətaalə', english: 'sound (word) that describes how a drunk person moves', category: 'pronouns', difficulty: 2),
+  AwingWord(awing: 'tâlətaalə', english: 'sound (word) that describes how a drunk person moves', category: 'pronouns', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'tseŋə', english: 'urinate. V.s: ńtseŋ', category: 'things', difficulty: 1),
+  AwingWord(awing: 'tseŋə', english: 'urinate. V.s: ńtseŋ', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'waalô', english: '1) slaughter animals. 2) butcher animals. 3) murder (used only colloquially). V.s: ńgwad', category: 'things', difficulty: 2),
-  // dict:p.?
-  AwingWord(awing: 'Yéso', english: 'Jesus. From: English', category: 'things', difficulty: 1),
-  // dict:p.?
-  AwingWord(awing: 'Yéso Klisto', english: 'Jesus Christ. From: English', category: 'things', difficulty: 2),
+  AwingWord(awing: 'waalô', english: '1) slaughter animals. 2) butcher animals. 3) murder (used only colloquially). V.s: ńgwad', category: 'things', difficulty: 3),
 
   // ---- From Bible NT corpus (freq≥2, auto-glossed, needs review) ----
 
@@ -4779,7 +4684,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.13
   AwingWord(awing: 'á', english: 'at (preposition - point in time)', category: 'things', difficulty: 1),
   // dict:p.14
-  AwingWord(awing: 'achiə', english: 'blood', category: 'things', difficulty: 1),
+  AwingWord(awing: 'achiə', english: 'blood', category: 'things', difficulty: 3),
   // dict:p.16
   AwingWord(awing: 'afúə', english: 'curative of any sort; medicines, drugs; protective charm; magical power', category: 'things', difficulty: 2),
   // dict:p.18
@@ -4793,13 +4698,13 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.25
   AwingWord(awing: 'akwáalə', english: 'donations; handouts; support', category: 'things', difficulty: 2),
   // dict:p.25
-  AwingWord(awing: 'akwáalónkîə', english: 'baptism', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akwáalónkîə', english: 'baptism', category: 'things', difficulty: 3),
   // dict:p.26
   AwingWord(awing: 'akwe', english: 'response, answer', category: 'actions', difficulty: 1),
   // dict:p.26
   AwingWord(awing: 'akwê', english: 'terrible lie; lie (colloquial, pejorative)', category: 'things', difficulty: 1),
   // dict:p.27
-  AwingWord(awing: 'akwûə', english: 'corpse, carcass', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akwûə', english: 'corpse, carcass', category: 'things', difficulty: 3),
   // dict:p.27
   AwingWord(awing: "ala'ə", english: 'illness that attacks the skin, itches and blackens the spot', category: 'body', difficulty: 2),
   // dict:p.28
@@ -4829,7 +4734,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.46
   AwingWord(awing: 'azóobə', english: "possessive pronoun 'theirs' used for class 7 nouns", category: 'pronouns', difficulty: 2),
   // dict:p.46
-  AwingWord(awing: 'azóŋə', english: 'Half horn of a cow used for drilling blood or pus from the body. It is used as a traditional medi...', category: 'animals', difficulty: 2),
+  AwingWord(awing: 'azóŋə', english: 'Half horn of a cow used for drilling blood or pus from the body. It is used as a traditional medi...', category: 'animals', difficulty: 3),
   // dict:p.52
   AwingWord(awing: 'chígə́', english: 'truly, really', category: 'things', difficulty: 1),
   // dict:p.56
@@ -4871,7 +4776,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'jîə', english: 'eat', category: 'actions', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'jwítə', english: 'kill, murder', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'jwítə', english: 'kill, murder', category: 'actions', difficulty: 3),
   // dict:p.?
   AwingWord(awing: "ka'ə̂", english: '1) appear. 2) show a sign. 3) threaten, especially with a spank', category: 'actions', difficulty: 2),
   // dict:p.?
@@ -4897,7 +4802,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'ko', english: '1) take. 2) listen', category: 'actions', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'koŋə̂', english: 'yell with hate', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'koŋə̂', english: 'yell with hate', category: 'actions', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'kónə', english: '1) be swept away by water current. 2) flow', category: 'nature', difficulty: 1),
   // dict:p.?
@@ -4937,13 +4842,13 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'leelə', english: 'hat', category: 'things', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'léelô', english: 'a Njom dance group which is no longer active. It used to drum, sing and dance during christmas pe...', category: 'actions', difficulty: 2),
+  AwingWord(awing: 'léelô', english: 'a Njom dance group which is no longer active. It used to drum, sing and dance during christmas pe...', category: 'actions', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'lə̂', english: 'be rotten', category: 'things', difficulty: 1),
   // dict:p.?
   AwingWord(awing: 'lumə', english: '1) be hot. 2) be passionate', category: 'descriptive', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'mbaŋə̂', english: 'tumor', category: 'things', difficulty: 1),
+  AwingWord(awing: 'mbaŋə̂', english: 'tumor', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'mbáŋə', english: 'large maggot-like insect that grows in rotting raffia palm', category: 'actions', difficulty: 2),
   // dict:p.?
@@ -4953,7 +4858,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'mândzô', english: 'groundnut', category: 'things', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'mətwê', english: 'saliva', category: 'things', difficulty: 1),
+  AwingWord(awing: 'mətwê', english: 'saliva', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'mə̄', english: 'small, young (See móonə)', category: 'actions', difficulty: 1),
   // dict:p.?
@@ -4969,7 +4874,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'ndwigtə', english: 'end', category: 'things', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'nəfèŋə', english: 'inhygenic behaviour that is exagerated eg cooking and eating with excrement lying in', category: 'pronouns', difficulty: 2),
+  AwingWord(awing: 'nəfèŋə', english: 'inhygenic behaviour that is exagerated eg cooking and eating with excrement lying in', category: 'pronouns', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'nəféŋə', english: 'the act of being unhygenic', category: 'things', difficulty: 1),
   // dict:p.?
@@ -4981,11 +4886,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'nəlwíə', english: 'nose', category: 'body', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'nəpəənə', english: 'breast', category: 'body', difficulty: 1),
+  AwingWord(awing: 'nəpəənə', english: 'breast', category: 'body', difficulty: 3),
   // dict:p.?
   AwingWord(awing: "nəpó'ə", english: 'playing stick. Used for hitting drums, xylophones, etc', category: 'things', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: 'nəwûə', english: 'death', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nəwûə', english: 'death', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: "ngo'ə́", english: '1) a sort of bird with red feathers. Its feathers are used to crown people and it is hard to be c...', category: 'animals', difficulty: 2),
   // dict:p.?
@@ -4993,7 +4898,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'ngóŋə', english: 'shy dog', category: 'animals', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'ngwaalə', english: 'somebody who slaughters', category: 'pronouns', difficulty: 1),
+  AwingWord(awing: 'ngwaalə', english: 'somebody who slaughters', category: 'pronouns', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'ngwaŋə', english: "1) part. Pɔ́ pə́ yîə ali'ə́ nó, lə́ ngwaŋ yi ńgenə. People have come here but a greater part of t...", category: 'pronouns', difficulty: 2),
   // dict:p.?
@@ -5019,7 +4924,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'pêntə', english: 'paint', category: 'things', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'pêsê', english: '1) demon 2) evil spirit', category: 'things', difficulty: 1),
+  AwingWord(awing: 'pêsê', english: '1) demon 2) evil spirit', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'pəənə', english: "demoontrative (proximal) adj 'these' used to modify nouns of classes two and eight. This demonstr...", category: 'numbers', difficulty: 2),
   // dict:p.?
@@ -5027,7 +4932,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'pǐə', english: '1) sow 2) plant', category: 'actions', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'pikə', english: 'give birth, by many pregnant women or many children by one pregnant woman', category: 'actions', difficulty: 2),
+  AwingWord(awing: 'pikə', english: 'give birth, by many pregnant women or many children by one pregnant woman', category: 'actions', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'pó', english: '1) and 2) with', category: 'things', difficulty: 1),
   // dict:p.?
@@ -5051,11 +4956,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: "tó' nkîə", english: 'draw water', category: 'nature', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: "tô'", english: 'sound that describes the sound of a gun (modern made). Pə́ tə ńkəmb nəwû lə̀ məŋgád mə́ ŋgáŋnkáb ...', category: 'descriptive', difficulty: 2),
+  AwingWord(awing: "tô'", english: 'sound that describes the sound of a gun (modern made). Pə́ tə ńkəmb nəwû lə̀ məŋgád mə́ ŋgáŋnkáb ...', category: 'descriptive', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'tú nkîə', english: 'cross river', category: 'nature', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: 'tsəŋə', english: '1) curse. 2) destroy. 3) spoil. V.s: ńtsəŋ', category: 'things', difficulty: 1),
+  AwingWord(awing: 'tsəŋə', english: '1) curse. 2) destroy. 3) spoil. V.s: ńtsəŋ', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'yə', english: 'associative marker used for head nouns that are of class 3, 9 and 7. S.: yi', category: 'body', difficulty: 3),
   // dict:p.?
@@ -5102,7 +5007,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.16
   AwingWord(awing: 'afúə', english: 'leaf of plants', category: 'nature', tonePattern: 'high', difficulty: 1),
   // dict:p.17
-  AwingWord(awing: 'afúə', english: 'traditional juju (blesses farm during planting season)', category: 'nature', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'afúə', english: 'traditional juju (blesses farm during planting season)', category: 'nature', tonePattern: 'high', difficulty: 3),
   // dict:p.17
   AwingWord(awing: 'afúə ŋgəsáŋə', english: 'corn stalk leaf', category: 'nature', tonePattern: 'high', difficulty: 2),
   // dict:p.19
@@ -5136,11 +5041,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.25
   AwingWord(awing: 'akwaŋə', english: 'suspicion', category: 'things', difficulty: 1),
   // dict:p.26
-  AwingWord(awing: 'akwelə', english: 'prostitute, whore', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akwelə', english: 'prostitute, whore', category: 'things', difficulty: 3),
   // dict:p.26
   AwingWord(awing: 'akwelə', english: 'herd (of cattle, sheep); heap, pile', category: 'animals', difficulty: 1),
   // dict:p.27
-  AwingWord(awing: 'akwúblə', english: 'repentance', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'akwúblə', english: 'repentance', category: 'things', tonePattern: 'high', difficulty: 3),
   // dict:p.27
   AwingWord(awing: 'akwu\'ló', english: 'log, eg of wood', category: 'nature', tonePattern: 'high', difficulty: 1),
   // dict:p.27
@@ -5176,7 +5081,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.35
   AwingWord(awing: 'apéenə', english: 'flour, fufu corn', category: 'food', tonePattern: 'high', difficulty: 1),
   // dict:p.35
-  AwingWord(awing: 'apélə', english: 'mad person, madness', category: 'family', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'apélə', english: 'mad person, madness', category: 'family', tonePattern: 'high', difficulty: 3),
   // dict:p.35
   AwingWord(awing: 'apénə', english: 'music; dance', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.36
@@ -5204,7 +5109,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.38
   AwingWord(awing: 'atáŋkə mbəəmə', english: '1) wrinkle (on skin) 2) wrinkled skin', category: 'body', tonePattern: 'high', difficulty: 2),
   // dict:p.38
-  AwingWord(awing: 'atenə', english: 'abdomen; buttock', category: 'things', difficulty: 1),
+  AwingWord(awing: 'atenə', english: 'abdomen; buttock', category: 'things', difficulty: 3),
   // dict:p.38
   AwingWord(awing: 'atəənə', english: 'iron; trap of any sort', category: 'things', difficulty: 1),
   // dict:p.39
@@ -5238,7 +5143,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.43
   AwingWord(awing: 'atsáŋə', english: 'prison; penalty, punishment', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.43
-  AwingWord(awing: 'atséebánámú\'á', english: 'parable. Not anybody understands parables; proverb', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'atséebánámú\'á', english: 'parable. Not anybody understands parables; proverb', category: 'things', tonePattern: 'high', difficulty: 3),
   // dict:p.44
   AwingWord(awing: 'atsəmə', english: 'whole, complete; total', category: 'things', difficulty: 1),
   // dict:p.44
@@ -5256,7 +5161,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.46
   AwingWord(awing: 'azoŋə', english: 'junior (eg brother, sister)', category: 'family', difficulty: 1),
   // dict:p.46
-  AwingWord(awing: 'azóŋə', english: 'Half horn of a cow used for drilling blood or pus from the body', category: 'body', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'azóŋə', english: 'Half horn of a cow used for drilling blood or pus from the body', category: 'body', tonePattern: 'high', difficulty: 3),
   // dict:p.47
   AwingWord(awing: 'bílɨ', english: 'sound of movement by a group (eg people) or herd of cattle', category: 'family', tonePattern: 'high', difficulty: 2),
   // dict:p.47
@@ -5272,7 +5177,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.50
   AwingWord(awing: 'chǐ mə́\'á', english: '1) be alone. It is not good for a man (human being) to be alone. 2) be single, be without companion', category: 'family', tonePattern: 'rising', difficulty: 2),
   // dict:p.51
-  AwingWord(awing: 'chî tə zə\' ndzə\'ə', english: 'abstain from sex, stay away from sex', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'chî tə zə\' ndzə\'ə', english: 'abstain from sex, stay away from sex', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.51
   AwingWord(awing: 'chibâ', english: 'apply oil on, lubricate', category: 'food', tonePattern: 'falling', difficulty: 1),
   // dict:p.51
@@ -5356,7 +5261,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.62
   AwingWord(awing: 'ólé', english: 'of price of goods, how much?', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // dict:p.62
-  AwingWord(awing: 'ələəmə', english: 'witch, the practices of a witch', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ələəmə', english: 'witch, the practices of a witch', category: 'things', difficulty: 3),
   // dict:p.63
   AwingWord(awing: 'əpô', english: '1) possessive singular pronoun yours, used for nouns of class 8 2) possessive singular adjective yours, used for nouns of class 8', category: 'things', tonePattern: 'falling', difficulty: 2),
   // dict:p.63
@@ -5404,7 +5309,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.67
   AwingWord(awing: 'fəmá', english: 'ferment. Food items ferment quickly when there is a lot of heat', category: 'nature', tonePattern: 'high', difficulty: 2),
   // dict:p.68
-  AwingWord(awing: 'fi\'â', english: 'unearth. Baminyam people unearth a corpse for fear of witchcraft', category: 'body', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'fi\'â', english: 'unearth. Baminyam people unearth a corpse for fear of witchcraft', category: 'body', tonePattern: 'falling', difficulty: 3),
   // dict:p.68
   AwingWord(awing: 'fi\'â', english: 'try, attempt (used as a warning not to try a dangerous thing or test sb\'s patience). Try and see', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
   // dict:p.68
@@ -5434,7 +5339,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.70
   AwingWord(awing: 'fwontə̂', english: '1) lock (many doors)', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
   // dict:p.70
-  AwingWord(awing: 'fwoolâ', english: 'shave, as with a blade. Shave as if one is mourning; peel off', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'fwoolâ', english: 'shave, as with a blade. Shave as if one is mourning; peel off', category: 'numbers', tonePattern: 'falling', difficulty: 3),
   // dict:p.70
   AwingWord(awing: 'fyaabə̂', english: 'control embers using a piece of stick or iron, also to handle other things that are harmful or difficult to be handled with hands', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
   // dict:p.70
@@ -5460,7 +5365,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.73-79
   AwingWord(awing: 'ghó\'kə', english: 'worship', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.73-79
-  AwingWord(awing: 'ghó\'kə', english: 'vomit (as a pregnant woman)', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'ghó\'kə', english: 'vomit (as a pregnant woman)', category: 'actions', tonePattern: 'high', difficulty: 3),
   // dict:p.73-79
   AwingWord(awing: 'jáabə', english: 'reduce (eg something that is overful or much)', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // dict:p.73-79
@@ -5510,7 +5415,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.73-79
   AwingWord(awing: 'kəmə̂', english: 'cancel a set rendezvous or an arranged public ceremony', category: 'things', tonePattern: 'falling', difficulty: 2),
   // dict:p.73-79
-  AwingWord(awing: 'kəmə̂', english: 'celebrate a death, during which there is gun firing, eating, drinking and dancing', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'kəmə̂', english: 'celebrate a death, during which there is gun firing, eating, drinking and dancing', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.80-86
   AwingWord(awing: 'kəmú\'ntəŋə', english: 'goiter (a condition that grows at the neck)', category: 'body', tonePattern: 'high', difficulty: 1),
   // dict:p.80-86
@@ -5588,7 +5493,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.80-86
   AwingWord(awing: 'kwénkə', english: 'Help somebody or something go in, eg a child through a threshold', category: 'actions', tonePattern: 'high', difficulty: 2),
   // dict:p.80-86
-  AwingWord(awing: 'kwə\'ə̂', english: 'traditional juju, something secret', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'kwə\'ə̂', english: 'traditional juju, something secret', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.80-86
   AwingWord(awing: 'kwígə', english: 'revive eg one\'s body after a long illness', category: 'numbers', tonePattern: 'high', difficulty: 1),
   // dict:p.80-86
@@ -5638,7 +5543,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.87-93
   AwingWord(awing: 'léelə', english: 'be slow; be delay', category: 'actions', tonePattern: 'high', difficulty: 1),
   // dict:p.87-93
-  AwingWord(awing: 'léelô', english: 'a Njom dance group which is no longer active', category: 'family', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'léelô', english: 'a Njom dance group which is no longer active', category: 'family', tonePattern: 'falling', difficulty: 3),
   // dict:p.87-93
   AwingWord(awing: 'lə̂', english: 'that way, that direction', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.87-93
@@ -5704,11 +5609,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.94-100
   AwingWord(awing: 'məmía', english: '1) possessive pronoun \'his\' used for class 6 nouns', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.94-100
-  AwingWord(awing: 'mangyè', english: '1) female (sex), woman, wife', category: 'family', tonePattern: 'low', difficulty: 1),
+  AwingWord(awing: 'mangyè', english: '1) female (sex), woman, wife', category: 'family', tonePattern: 'low', difficulty: 3),
   // dict:p.94-100
   AwingWord(awing: 'mətsá', english: '1) attribute \'certain\', modifying nouns of class 6', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.94-100
-  AwingWord(awing: 'móona', english: 'have an extremely low mental level that renders one to behave as a fool or as if (\'slightly mad\')', category: 'numbers', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'móona', english: 'have an extremely low mental level that renders one to behave as a fool or as if (\'slightly mad\')', category: 'numbers', tonePattern: 'high', difficulty: 3),
   // dict:p.94-100
   AwingWord(awing: 'ná\'ə', english: 'soup, sauce', category: 'food', tonePattern: 'high', difficulty: 1),
   // dict:p.94-100
@@ -5740,7 +5645,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.101-107
   AwingWord(awing: 'ndo', english: 'deep valley, often containing many trees, a palm bush and mostly a flowing stream', category: 'body', difficulty: 2),
   // dict:p.101-107
-  AwingWord(awing: 'ndoonə', english: '1) curse', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndoonə', english: '1) curse', category: 'things', difficulty: 3),
   // dict:p.101-107
   AwingWord(awing: 'ndóonə', english: 'slime (inorganic)', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.101-107
@@ -5764,7 +5669,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.101-107
   AwingWord(awing: 'ndzɔ', english: 'trouble (colloquial usage). He has got into problems', category: 'things', difficulty: 2),
   // dict:p.101-107
-  AwingWord(awing: 'ndzɔ́\'ə', english: 'modern wedding ceremony; sexual intercourse', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'ndzɔ́\'ə', english: 'modern wedding ceremony; sexual intercourse', category: 'things', tonePattern: 'high', difficulty: 3),
   // dict:p.101-107
   AwingWord(awing: 'ndzɔ́\'ə alá\'ə', english: 'traditional marriage', category: 'things', tonePattern: 'high', difficulty: 2),
   // dict:p.101-107
@@ -5824,7 +5729,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.108-114
   AwingWord(awing: 'ngaŋnaghéenə', english: 'guest, visitor. A guest will come; stranger', category: 'family', tonePattern: 'high', difficulty: 2),
   // dict:p.108-114
-  AwingWord(awing: 'ngaŋnəkaŋə', english: 'sorcerer; magic practitioner', category: 'things', difficulty: 2),
+  AwingWord(awing: 'ngaŋnəkaŋə', english: 'sorcerer; magic practitioner', category: 'things', difficulty: 3),
   // dict:p.108-114
   AwingWord(awing: 'ngaŋtsoolə', english: 'person who speaks a lot. Peter speaks a lot', category: 'family', difficulty: 1),
   // dict:p.108-114
@@ -5878,11 +5783,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.115-121
   AwingWord(awing: 'nkwû əsê', english: 'ghost (visible apparition)', category: 'things', tonePattern: 'falling', difficulty: 2),
   // dict:p.115-121
-  AwingWord(awing: 'nkwumə', english: 'coffin', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nkwumə', english: 'coffin', category: 'things', difficulty: 3),
   // dict:p.115-121
   AwingWord(awing: 'nô', english: 'smoke', category: 'nature', tonePattern: 'falling', difficulty: 1),
   // dict:p.115-121
-  AwingWord(awing: 'noŋnô', english: 'have sexual relations with', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'noŋnô', english: 'have sexual relations with', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.115-121
   AwingWord(awing: 'nóŋkə', english: 'suckle, nurse, suckle (baby) (tr)', category: 'family', tonePattern: 'high', difficulty: 1),
   // dict:p.115-121
@@ -5930,7 +5835,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.122-128
   AwingWord(awing: 'pě', english: 'two (2)', category: 'numbers', tonePattern: 'rising', difficulty: 2),
   // dict:p.122-128
-  AwingWord(awing: 'pêsê', english: 'demon; evil spirit', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'pêsê', english: 'demon; evil spirit', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.122-128
   AwingWord(awing: 'pə', english: 'then. Gho ná fi\'tó á yí ló a pó són ngó akó? = You told him, what then did he say?', category: 'things', difficulty: 2),
   // dict:p.122-128
@@ -5944,7 +5849,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.122-128
   AwingWord(awing: 'pəgə', english: 'we exclusive, that is, excluding others', category: 'things', difficulty: 1),
   // dict:p.122-128
-  AwingWord(awing: 'págə', english: 'belch', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'págə', english: 'belch', category: 'things', tonePattern: 'high', difficulty: 3),
   // dict:p.122-128
   AwingWord(awing: 'págə', english: 'raw or not ripe', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.122-128
@@ -5958,7 +5863,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.122-128
   AwingWord(awing: 'pîə', english: 'bear, of child; give birth', category: 'animals', tonePattern: 'falling', difficulty: 1),
   // dict:p.122-128
-  AwingWord(awing: 'pîə', english: '1) be ready to be served, of food 2) (of a boil) to be ready to be pressed so that pus can come out', category: 'food', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'pîə', english: '1) be ready to be served, of food 2) (of a boil) to be ready to be pressed so that pus can come out', category: 'food', tonePattern: 'falling', difficulty: 3),
   // dict:p.122-128
   AwingWord(awing: 'pîə', english: 'demonstrative adj \'those\', modifies classes 2 and 8 nouns. Occurs after the noun', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.122-128
@@ -6050,7 +5955,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.129-135
   AwingWord(awing: 'tê', english: 'sew, of dresses', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.129-135
-  AwingWord(awing: 'tê', english: 'have sex with, (colloquial usage)', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'tê', english: 'have sex with, (colloquial usage)', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.129-135
   AwingWord(awing: 'téembogla', english: 'a very big snake', category: 'animals', tonePattern: 'high', difficulty: 1),
   // dict:p.129-135
@@ -6076,13 +5981,13 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.129-135
   AwingWord(awing: 'tô', english: 'Toe or hit with the leg. He has toed his foot', category: 'body', tonePattern: 'falling', difficulty: 1),
   // dict:p.129-135
-  AwingWord(awing: 'to\'ə', english: 'touch lightly, of breasts', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'to\'ə', english: 'touch lightly, of breasts', category: 'actions', difficulty: 3),
   // dict:p.129-135
   AwingWord(awing: 'tóŋə', english: 'harvest, of plants with creeping stems (usually dug from the ground)', category: 'nature', tonePattern: 'high', difficulty: 2),
   // dict:p.129-135
   AwingWord(awing: 'toonô', english: 'singe. The iron has singed my dress; roast', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.129-135
-  AwingWord(awing: 'tô\'', english: 'sound that describes the sound of a gun (modern made)', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'tô\'', english: 'sound that describes the sound of a gun (modern made)', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.129-135
   AwingWord(awing: 'tôgndě', english: 'greed', category: 'things', tonePattern: 'rising', difficulty: 1),
   // dict:p.129-135
@@ -6106,7 +6011,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.129-135
   AwingWord(awing: 'twîə', english: 'be absent', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // dict:p.129-135
-  AwingWord(awing: 'tseŋə', english: 'urinate', category: 'things', difficulty: 1),
+  AwingWord(awing: 'tseŋə', english: 'urinate', category: 'things', difficulty: 3),
   // dict:p.129-135
   AwingWord(awing: 'tséla', english: 'pass (tr), leak', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.129-135
@@ -6116,7 +6021,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.129-135
   AwingWord(awing: 'tsóga', english: 'be wicked; be fierce', category: 'actions', tonePattern: 'high', difficulty: 1),
   // dict:p.129-135
-  AwingWord(awing: 'tsəŋə', english: 'curse; destroy', category: 'things', difficulty: 1),
+  AwingWord(awing: 'tsəŋə', english: 'curse; destroy', category: 'things', difficulty: 3),
   // dict:p.129-135
   AwingWord(awing: 'tsóga', english: 'peck (tr)', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.129-135
@@ -6132,13 +6037,13 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.129-135
   AwingWord(awing: 'vâinə', english: 'vain', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.129-135
-  AwingWord(awing: 'waalô', english: 'slaughter animals; butcher animals', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'waalô', english: 'slaughter animals; butcher animals', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.129-135
   AwingWord(awing: 'wê', english: 'weigh', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.129-135
   AwingWord(awing: 'welə', english: 'weight. It is not good to carry a lot of weight', category: 'descriptive', difficulty: 1),
   // dict:p.129-135
-  AwingWord(awing: 'wénə', english: 'slash or whip, beat up', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'wénə', english: 'slash or whip, beat up', category: 'descriptive', tonePattern: 'high', difficulty: 3),
   // dict:p.129-135
   AwingWord(awing: 'wáələ', english: 'demonstrative pronoun \'it\' used to modify nouns of classes one and three', category: 'numbers', tonePattern: 'high', difficulty: 3),
   // dict:p.136-139
@@ -6212,11 +6117,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.136-139
   AwingWord(awing: 'zó\'ə', english: 'apply ointment; besmear', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.136-139
-  AwingWord(awing: 'zó\'ə', english: '1) have sexual intercourse (of one person on the other especially without the accord or full participation of the victim', category: 'numbers', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'zó\'ə', english: '1) have sexual intercourse (of one person on the other especially without the accord or full participation of the victim', category: 'numbers', tonePattern: 'high', difficulty: 3),
   // dict:p.136-139
   AwingWord(awing: 'zó\'kə', english: 'marry, of many people eg young girls', category: 'family', tonePattern: 'high', difficulty: 1),
   // dict:p.136-139
-  AwingWord(awing: 'zó\'nə', english: 'Have sexual intercourse with (usually with each other\'s accord and full participation)', category: 'descriptive', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'zó\'nə', english: 'Have sexual intercourse with (usually with each other\'s accord and full participation)', category: 'descriptive', tonePattern: 'high', difficulty: 3),
 
   // ============================================================
   // English-Awing index visual extraction (3,857 entries)
@@ -6301,7 +6206,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.143
   AwingWord(awing: 'tákɔ\' nwunə', english: 'adult', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.143
-  AwingWord(awing: 'anuəməghaba', english: 'adultery', category: 'things', difficulty: 1),
+  AwingWord(awing: 'anuəməghaba', english: 'adultery', category: 'things', difficulty: 3),
   // index:p.143
   AwingWord(awing: 'məghaba', english: 'adultry', category: 'things', difficulty: 1),
   // index:p.143
@@ -6461,7 +6366,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.144
   AwingWord(awing: 'fágəndi\'ə', english: 'anti-poison', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.144
-  AwingWord(awing: 'afʉkéelə', english: 'anus', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'afʉkéelə', english: 'anus', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.144
   AwingWord(awing: 'ali\'ətsamə', english: 'anywhere', category: 'things', difficulty: 1),
   // index:p.144
@@ -6607,9 +6512,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.145
   AwingWord(awing: 'kwáaŋkla', english: 'baptise', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.145
-  AwingWord(awing: 'akwáaŋkla', english: 'baptism', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'akwáaŋkla', english: 'baptism', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.145
-  AwingWord(awing: 'bə̂btísa', english: 'baptist, believer in', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'bə̂btísa', english: 'baptist, believer in', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.145
   AwingWord(awing: 'bà', english: 'bar', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.145
@@ -6679,7 +6584,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   AwingWord(awing: 'kwíŋə', english: 'become great', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.146
-  AwingWord(awing: 'twá nəpomə', english: 'become pregnant', category: 'actions', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'twá nəpomə', english: 'become pregnant', category: 'actions', tonePattern: 'high', difficulty: 3),
   // index:p.146
   AwingWord(awing: 'okwunə', english: 'bed', category: 'things', difficulty: 1),
   // index:p.146
@@ -6739,7 +6644,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   AwingWord(awing: 'ŋwunə', english: 'being, human', category: 'things', difficulty: 1),
   // index:p.146
-  AwingWord(awing: 'pəgə', english: 'belch', category: 'things', difficulty: 1),
+  AwingWord(awing: 'pəgə', english: 'belch', category: 'things', difficulty: 3),
   // index:p.146
   AwingWord(awing: 'mbímə', english: 'believe in', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.146
@@ -6771,7 +6676,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   AwingWord(awing: 'nan nə afə̂a', english: 'bewitch', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.146
-  AwingWord(awing: 'apwa\'lîsé', english: 'bible', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'apwa\'lîsé', english: 'bible', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.146
   AwingWord(awing: 'atséebəsé', english: 'bicycle', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.146
@@ -6843,9 +6748,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'séekə', english: 'blaze, of light', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'peŋə achíə', english: 'bleed', category: 'actions', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'peŋə achíə', english: 'bleed', category: 'actions', tonePattern: 'high', difficulty: 3),
   // index:p.147
-  AwingWord(awing: 'fê mbwódnə', english: 'bleed', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'fê mbwódnə', english: 'bleed', category: 'actions', tonePattern: 'falling', difficulty: 3),
   // index:p.147
   AwingWord(awing: 'aloonə', english: 'blessing, sort of', category: 'actions', difficulty: 1),
   // index:p.147
@@ -6863,7 +6768,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'atsa\'ə', english: 'blocks for construction', category: 'things', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'achíə', english: 'blood', category: 'body', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'achíə', english: 'blood', category: 'body', tonePattern: 'high', difficulty: 3),
   // index:p.147
   AwingWord(awing: 'fágta', english: 'blow', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.147
@@ -6969,9 +6874,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'alóganátwê', english: 'breakfast', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // index:p.148
-  AwingWord(awing: 'napóəmə', english: 'breast', category: 'body', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'napóəmə', english: 'breast', category: 'body', tonePattern: 'high', difficulty: 3),
   // index:p.148
-  AwingWord(awing: 'poələ', english: 'breast wear', category: 'body', difficulty: 1),
+  AwingWord(awing: 'poələ', english: 'breast wear', category: 'body', difficulty: 3),
   // index:p.148
   AwingWord(awing: 'ajwiə', english: 'breath', category: 'things', difficulty: 1),
   // index:p.148
@@ -7035,7 +6940,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'ape\'ə', english: 'burden', category: 'things', difficulty: 1),
   // index:p.148
-  AwingWord(awing: 'matwáŋnə', english: 'burial', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'matwáŋnə', english: 'burial', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.148
   AwingWord(awing: 'mógə', english: 'burn', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.148
@@ -7067,9 +6972,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'kîghálaghála', english: 'butterfly', category: 'animals', tonePattern: 'falling', difficulty: 1),
   // index:p.149
-  AwingWord(awing: 'mbô\' nəságə', english: 'buttock', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'mbô\' nəságə', english: 'buttock', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.149
-  AwingWord(awing: 'atena', english: 'buttock', category: 'things', difficulty: 1),
+  AwingWord(awing: 'atena', english: 'buttock', category: 'things', difficulty: 3),
   // index:p.149
   AwingWord(awing: 'júnə', english: 'buy', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.149
@@ -7149,11 +7054,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.149
   AwingWord(awing: 'aŋkasàlə', english: 'cassava', category: 'food', tonePattern: 'low', difficulty: 1),
   // index:p.149
-  AwingWord(awing: 'sáətə', english: 'castrate many things', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'sáətə', english: 'castrate many things', category: 'descriptive', tonePattern: 'high', difficulty: 3),
   // index:p.149
-  AwingWord(awing: 'asóəla', english: 'castrated', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'asóəla', english: 'castrated', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.149
-  AwingWord(awing: 'asóəlakwùneemə', english: 'castrated pig', category: 'animals', tonePattern: 'high-low', difficulty: 1),
+  AwingWord(awing: 'asóəlakwùneemə', english: 'castrated pig', category: 'animals', tonePattern: 'high-low', difficulty: 3),
   // index:p.149
   AwingWord(awing: 'púshîə', english: 'cat', category: 'animals', tonePattern: 'falling', difficulty: 1),
   // index:p.149
@@ -7187,15 +7092,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.149
   AwingWord(awing: 'zeeba', english: 'ceiling of bamboo-made', category: 'things', difficulty: 1),
   // index:p.149
-  AwingWord(awing: 'kamə', english: 'Celebrate a death', category: 'things', difficulty: 1),
+  AwingWord(awing: 'kamə', english: 'Celebrate a death', category: 'things', difficulty: 3),
   // index:p.149
   AwingWord(awing: 'machina tazə\'ə', english: 'celibacy', category: 'things', difficulty: 2),
   // index:p.149
   AwingWord(awing: 'achiatazə\'ə', english: 'celibate', category: 'things', difficulty: 1),
   // index:p.149
-  AwingWord(awing: 'chitázə\'ə', english: 'cemetery', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'chitázə\'ə', english: 'cemetery', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.149
-  AwingWord(awing: 'ali\'ɔnâ nə pəkwûə', english: 'cemetery', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'ali\'ɔnâ nə pəkwûə', english: 'cemetery', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.149
   AwingWord(awing: 'natsə', english: 'certain', category: 'things', difficulty: 1),
   // index:p.149
@@ -7279,13 +7184,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.150
   AwingWord(awing: 'kaŋə', english: 'choose', category: 'things', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'Klístó', english: 'Christ', category: 'things', tonePattern: 'high', difficulty: 3),
-  // index:p.150
-  AwingWord(awing: 'anûsə', english: 'christianity', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'anûsə', english: 'christianity', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.150
   AwingWord(awing: 'chîsə', english: 'church', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'ndapa\'ə', english: 'cigarette', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndapa\'ə', english: 'cigarette', category: 'things', difficulty: 3),
   // index:p.150
   AwingWord(awing: 'pɔ́\'ə', english: 'circumcise', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.150
@@ -7343,13 +7246,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.150
   AwingWord(awing: 'kə́\'na', english: 'Climb, of many things', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'ŋjì\' naságə', english: 'clitoris', category: 'things', tonePattern: 'high-low', difficulty: 2),
+  AwingWord(awing: 'ŋjì\' naságə', english: 'clitoris', category: 'things', tonePattern: 'high-low', difficulty: 3),
   // index:p.150
   AwingWord(awing: 'akablənôəsé', english: 'clod', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.150
   AwingWord(awing: 'wu\'nə nkwumə', english: 'close a box', category: 'actions', difficulty: 2),
   // index:p.150
-  AwingWord(awing: 'wu\'nə nkwumə', english: 'close a coffin', category: 'actions', difficulty: 2),
+  AwingWord(awing: 'wu\'nə nkwumə', english: 'close a coffin', category: 'actions', difficulty: 3),
   // index:p.151
   AwingWord(awing: 'chwí\'ka', english: 'close together', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.151
@@ -7501,7 +7404,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'chibə', english: 'console by giving present', category: 'things', difficulty: 1),
   // index:p.152
-  AwingWord(awing: 'nâŋa anuə', english: 'consult a sorcerer', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'nâŋa anuə', english: 'consult a sorcerer', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.152
   AwingWord(awing: 'awa\'ə', english: 'container for achu soup', category: 'food', difficulty: 1),
   // index:p.152
@@ -7551,7 +7454,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'nəsednə', english: 'corner', category: 'things', difficulty: 1),
   // index:p.152
-  AwingWord(awing: 'akwùə', english: 'corpse', category: 'body', tonePattern: 'low', difficulty: 1),
+  AwingWord(awing: 'akwùə', english: 'corpse', category: 'body', tonePattern: 'low', difficulty: 3),
   // index:p.152
   AwingWord(awing: 'ko\'nə', english: 'correct', category: 'descriptive', difficulty: 1),
   // index:p.152
@@ -7587,7 +7490,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'atálə', english: 'courtyard in the palace', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.152
-  AwingWord(awing: 'akeena', english: 'covenant', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akeena', english: 'covenant', category: 'things', difficulty: 3),
   // index:p.152
   AwingWord(awing: 'kə̂bka', english: 'cover', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.152
@@ -7699,17 +7602,17 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.153
   AwingWord(awing: 'mati má nklə', english: 'current, of water', category: 'nature', tonePattern: 'high', difficulty: 2),
   // index:p.153
-  AwingWord(awing: 'alə̂\'ə', english: 'curse', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'alə̂\'ə', english: 'curse', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.153
-  AwingWord(awing: 'apínə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'apínə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.153
-  AwingWord(awing: 'awê\'ə', english: 'curse', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'awê\'ə', english: 'curse', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.153
-  AwingWord(awing: 'ndóonə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'ndóonə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.153
-  AwingWord(awing: 'tsaŋə', english: 'curse', category: 'things', difficulty: 1),
+  AwingWord(awing: 'tsaŋə', english: 'curse', category: 'things', difficulty: 3),
   // index:p.153
-  AwingWord(awing: 'wê\'ə', english: 'curse away', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'wê\'ə', english: 'curse away', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.153
   AwingWord(awing: 'nəsednə', english: 'curve', category: 'things', difficulty: 1),
   // index:p.153
@@ -7849,9 +7752,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.154
   AwingWord(awing: 'akə̌mátóglə', english: 'deaf person', category: 'family', tonePattern: 'rising', difficulty: 1),
   // index:p.154
-  AwingWord(awing: 'nəwùə', english: 'death', category: 'things', tonePattern: 'low', difficulty: 1),
+  AwingWord(awing: 'nəwùə', english: 'death', category: 'things', tonePattern: 'low', difficulty: 3),
   // index:p.154
-  AwingWord(awing: 'chwáala nəwùə', english: 'death, survive', category: 'things', tonePattern: 'high-low', difficulty: 2),
+  AwingWord(awing: 'chwáala nəwùə', english: 'death, survive', category: 'things', tonePattern: 'high-low', difficulty: 3),
   // index:p.154
   AwingWord(awing: 'chibkə', english: 'debase', category: 'things', difficulty: 1),
   // index:p.154
@@ -7895,7 +7798,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.154
   AwingWord(awing: 'tselə', english: 'defeat', category: 'things', difficulty: 1),
   // index:p.154
-  AwingWord(awing: 'nyîəə', english: 'defecate', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'nyîəə', english: 'defecate', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.154
   AwingWord(awing: 'kí\'tə', english: 'defend', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.154
@@ -7917,7 +7820,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.154
   AwingWord(awing: 'wúnta', english: 'demand many people to help', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.154
-  AwingWord(awing: 'pə̂sé', english: 'demon', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'pə̂sé', english: 'demon', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.154
   AwingWord(awing: 'nəaalə', english: 'demonstrate', category: 'things', difficulty: 1),
   // index:p.154
@@ -8037,11 +7940,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.155
   AwingWord(awing: 'ajwá\'álì\'ə', english: 'disappointment', category: 'things', tonePattern: 'high-low', difficulty: 1),
   // index:p.155
-  AwingWord(awing: 'ndzogndzəmə', english: 'disciple', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndzogndzəmə', english: 'disciple', category: 'things', difficulty: 3),
   // index:p.155
-  AwingWord(awing: 'ngagndzəmə', english: 'disciple', category: 'things', difficulty: 1),
-  // index:p.155
-  AwingWord(awing: 'ndzogndzəmə Yésə', english: 'disciple of Jesus', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'ngagndzəmə', english: 'disciple', category: 'things', difficulty: 3),
   // index:p.155
   AwingWord(awing: 'tógə', english: 'discipline', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.155
@@ -8049,7 +7950,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.155
   AwingWord(awing: 'aghoonə', english: 'disease', category: 'things', difficulty: 1),
   // index:p.155
-  AwingWord(awing: 'aghoonə̂ məghaba', english: 'disease, contracted via sex', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'aghoonə̂ məghaba', english: 'disease, contracted via sex', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.155
   AwingWord(awing: 'ataŋəmoonə', english: 'disease, malnutrition-like', category: 'things', difficulty: 2),
   // index:p.155
@@ -8201,7 +8102,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.156
   AwingWord(awing: 'atóəmə', english: 'drum, long in nature', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.156
-  AwingWord(awing: 'məpéna məlo\'ə', english: 'drunk', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'məpéna məlo\'ə', english: 'drunk', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.156
   AwingWord(awing: 'njùbtə', english: 'dry', category: 'descriptive', tonePattern: 'low', difficulty: 1),
   // index:p.156
@@ -8238,8 +8139,6 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'njî\' natóglə', english: 'earwax', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.157
   AwingWord(awing: 'sá\'mənumə', english: 'east', category: 'things', tonePattern: 'high', difficulty: 1),
-  // index:p.157
-  AwingWord(awing: 'alə̌ Yésojùmnə nə nawùə', english: 'Easter Sunday', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.157
   AwingWord(awing: 'kódtə', english: 'eat a little thing', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.157
@@ -8419,7 +8318,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.158
   AwingWord(awing: 'ayêlə', english: 'exclamation', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.158
-  AwingWord(awing: 'napélə', english: 'excrement', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'napélə', english: 'excrement', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.158
   AwingWord(awing: 'azáŋkəmbəəmə', english: 'exercise, physical', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.158
@@ -8517,7 +8416,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.159
   AwingWord(awing: 'akɔtə', english: 'farming land', category: 'things', difficulty: 1),
   // index:p.159
-  AwingWord(awing: 'shûəə', english: 'fart', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'shûəə', english: 'fart', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.159
   AwingWord(awing: 'anuyəfìə', english: 'fashion', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.159
@@ -8579,7 +8478,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.159
   AwingWord(awing: 'afóəlanə̂ neemə', english: 'female pig, sort of', category: 'animals', tonePattern: 'falling', difficulty: 2),
   // index:p.159
-  AwingWord(awing: 'maŋgyé', english: 'female (sex) in', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'maŋgyé', english: 'female (sex) in', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.159
   AwingWord(awing: 'akə̂nə', english: 'fence', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.159
@@ -8803,7 +8702,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.161
   AwingWord(awing: 'akəkógə', english: 'food, sort of', category: 'food', tonePattern: 'high', difficulty: 1),
   // index:p.161
-  AwingWord(awing: 'akəkógə', english: 'fool', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'akəkógə', english: 'fool', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.161
   AwingWord(awing: 'akəkógə atséeba', english: 'foolish, of talk or words', category: 'descriptive', tonePattern: 'high', difficulty: 2),
   // index:p.161
@@ -8927,7 +8826,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.162
   AwingWord(awing: 'kwamtə', english: 'fundle', category: 'things', difficulty: 1),
   // index:p.162
-  AwingWord(awing: 'nə̂ nawú nə nkî mága', english: 'funeral', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'nə̂ nawú nə nkî mága', english: 'funeral', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.162
   AwingWord(awing: 'n. chî\'tóglə', english: 'fungi, eaten as food', category: 'food', tonePattern: 'falling', difficulty: 2),
   // index:p.162
@@ -9067,8 +8966,6 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.163
   AwingWord(awing: 'pɔŋə', english: 'good', category: 'descriptive', difficulty: 1),
   // index:p.163
-  AwingWord(awing: 'alə̌ nəwùə Yésə', english: 'good friday', category: 'descriptive', tonePattern: 'rising', difficulty: 2),
-  // index:p.163
   AwingWord(awing: 'nki yi əshî\'na', english: 'good news', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
   // index:p.163
   AwingWord(awing: 'akwaŋ ya əshî\'na', english: 'good thoughts', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
@@ -9081,9 +8978,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.163
   AwingWord(awing: 'alú\'ə', english: 'goose', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.163
-  AwingWord(awing: 'atséebəsé', english: 'gospel', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'atséebəsé', english: 'gospel', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.163
-  AwingWord(awing: 'nki yi əshî\'na', english: 'gospel', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'nki yi əshî\'na', english: 'gospel', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.163
   AwingWord(awing: 'atséebə̂ndzəməndzəma', english: 'gossip', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.163
@@ -9129,7 +9026,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.163
   AwingWord(awing: 'n. kɔŋ nayeŋə', english: 'grassland', category: 'things', difficulty: 2),
   // index:p.163
-  AwingWord(awing: 'n. nawùə', english: 'grave', category: 'things', tonePattern: 'low', difficulty: 2),
+  AwingWord(awing: 'n. nawùə', english: 'grave', category: 'things', tonePattern: 'low', difficulty: 3),
   // index:p.163
   AwingWord(awing: 'kə̂kə̂ mongə\'ə', english: 'gravel', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.163
@@ -9233,7 +9130,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.164
   AwingWord(awing: 'gɔmə', english: 'gum', category: 'things', difficulty: 1),
   // index:p.164
-  AwingWord(awing: 'makeemə', english: 'gun powder', category: 'things', difficulty: 1),
+  AwingWord(awing: 'makeemə', english: 'gun powder', category: 'things', difficulty: 3),
   // index:p.164
   AwingWord(awing: 'sá\'ə', english: 'gush out, of a spring', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.164
@@ -9325,11 +9222,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.165
   AwingWord(awing: 'kyáglə', english: 'have dirty marks', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.165
-  AwingWord(awing: 'tê', english: 'have sex with, (colloq)', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'tê', english: 'have sex with, (colloq)', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.165
-  AwingWord(awing: 'pa\'ə', english: 'have sexual intercourse', category: 'things', difficulty: 1),
+  AwingWord(awing: 'pa\'ə', english: 'have sexual intercourse', category: 'things', difficulty: 3),
   // index:p.165
-  AwingWord(awing: 'zɔ̌\'na', english: 'have sexual intercourse with', category: 'things', tonePattern: 'rising', difficulty: 1),
+  AwingWord(awing: 'zɔ̌\'na', english: 'have sexual intercourse with', category: 'things', tonePattern: 'rising', difficulty: 3),
   // index:p.165
   AwingWord(awing: 'máwùmə', english: 'hawk', category: 'animals', tonePattern: 'high-low', difficulty: 1),
   // index:p.165
@@ -9407,7 +9304,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.165
   AwingWord(awing: 'əfê', english: 'here', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.165
-  AwingWord(awing: 'nantoolə', english: 'hernia', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nantoolə', english: 'hernia', category: 'things', difficulty: 3),
   // index:p.165
   AwingWord(awing: 'ngwùdləŋə', english: 'heron', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.165
@@ -9847,12 +9744,6 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.169
   AwingWord(awing: 'ŋvéeta', english: 'jealous', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'Yésə', english: 'Jesus', category: 'things', tonePattern: 'high', difficulty: 1),
-  // index:p.169
-  AwingWord(awing: 'Yésə Klistə', english: 'Jesus Christ', category: 'things', tonePattern: 'high', difficulty: 2),
-  // index:p.169
-  AwingWord(awing: 'ndzəgndzəm Yésə', english: 'Jesus\' follower', category: 'things', tonePattern: 'high', difficulty: 2),
-  // index:p.169
   AwingWord(awing: 'láalə', english: 'jigger', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.169
   AwingWord(awing: 'chwaalə afa\'ə', english: 'job, look for a', category: 'things', difficulty: 2),
@@ -9879,7 +9770,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.169
   AwingWord(awing: 'sá\'ə', english: 'judge', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'afʉə', english: 'juju, traditional', category: 'things', difficulty: 1),
+  AwingWord(awing: 'afʉə', english: 'juju, traditional', category: 'things', difficulty: 3),
   // index:p.169
   AwingWord(awing: 'lîə', english: 'jump', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.169
@@ -9903,7 +9794,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.169
   AwingWord(awing: 'mbî\'ə', english: 'kidney', category: 'body', tonePattern: 'falling', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'ndzaŋə', english: 'kill', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndzaŋə', english: 'kill', category: 'things', difficulty: 3),
   // index:p.169
   AwingWord(awing: 'pwə̂dnə', english: 'kind', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
   // index:p.169
@@ -10037,7 +9928,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.170
   AwingWord(awing: 'afunə', english: 'leopard', category: 'animals', difficulty: 1),
   // index:p.170
-  AwingWord(awing: 'nka\'ə', english: 'leprosy', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nka\'ə', english: 'leprosy', category: 'things', difficulty: 3),
   // index:p.170
   AwingWord(awing: 'chibə', english: 'less expensive', category: 'descriptive', difficulty: 1),
   // index:p.170
@@ -10217,7 +10108,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.171
   AwingWord(awing: 'yéelə', english: 'mad', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.171
-  AwingWord(awing: 'apélə', english: 'mad person', category: 'family', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'apélə', english: 'mad person', category: 'family', tonePattern: 'high', difficulty: 3),
   // index:p.171
   AwingWord(awing: 'apélə', english: 'madness', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.171
@@ -10279,7 +10170,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.172
   AwingWord(awing: 'ndúmə', english: 'male of animal', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.172
-  AwingWord(awing: 'ŋwu mbyâŋnə', english: 'male (sex)', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'ŋwu mbyâŋnə', english: 'male (sex)', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.172
   AwingWord(awing: 'ŋwu mbyâŋnə', english: 'man', category: 'family', tonePattern: 'falling', difficulty: 2),
   // index:p.172
@@ -10507,7 +10398,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.173
   AwingWord(awing: 'nkwama', english: 'mountain', category: 'nature', difficulty: 1),
   // index:p.173
-  AwingWord(awing: 'nakyéŋa', english: 'mourning', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'nakyéŋa', english: 'mourning', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.174
   AwingWord(awing: 'mɔ́ fóolə', english: 'mouse', category: 'animals', tonePattern: 'high', difficulty: 2),
   // index:p.174
@@ -10525,7 +10416,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.174
   AwingWord(awing: 'cháŋta', english: 'much, many', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.174
-  AwingWord(awing: 'malwíə', english: 'mucus, of the nose', category: 'body', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'malwíə', english: 'mucus, of the nose', category: 'body', tonePattern: 'high', difficulty: 3),
   // index:p.174
   AwingWord(awing: 'atatsá\'ə', english: 'mud', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.174
@@ -10539,9 +10430,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.174
   AwingWord(awing: 'fwəətə', english: 'mumble', category: 'things', difficulty: 1),
   // index:p.174
-  AwingWord(awing: 'jwitə', english: 'murder', category: 'things', difficulty: 1),
+  AwingWord(awing: 'jwitə', english: 'murder', category: 'things', difficulty: 3),
   // index:p.174
-  AwingWord(awing: 'waalə', english: 'murder (colloq. usage)', category: 'things', difficulty: 1),
+  AwingWord(awing: 'waalə', english: 'murder (colloq. usage)', category: 'things', difficulty: 3),
   // index:p.174
   AwingWord(awing: 'atsa\'əmbəəmə', english: 'muscle', category: 'body', difficulty: 1),
   // index:p.174
@@ -10569,7 +10460,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.174
   AwingWord(awing: 'kwumtə', english: 'nail', category: 'body', difficulty: 1),
   // index:p.174
-  AwingWord(awing: 'chî ntəbla', english: 'naked', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'chî ntəbla', english: 'naked', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.174
   AwingWord(awing: 'əlena', english: 'name', category: 'things', difficulty: 1),
   // index:p.174
@@ -10597,7 +10488,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.174
   AwingWord(awing: 'páata', english: 'narrow, make', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.174
-  AwingWord(awing: 'malwíə', english: 'nasal mucus', category: 'body', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'malwíə', english: 'nasal mucus', category: 'body', tonePattern: 'high', difficulty: 3),
   // index:p.174
   AwingWord(awing: 'ndê yi mbwódta nə̌', english: 'nausea', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.174
@@ -10813,7 +10704,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.176
   AwingWord(awing: 'sá\'ə', english: 'order', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.176
-  AwingWord(awing: 'ŋ nə̂ tíə', english: 'orphan', category: 'family', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'ŋ nə̂ tíə', english: 'orphan', category: 'family', tonePattern: 'falling', difficulty: 3),
   // index:p.176
   AwingWord(awing: 'pə̂ mê saŋə', english: 'ostrich', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.176
@@ -10875,7 +10766,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.176
   AwingWord(awing: 'məgkalə', english: 'pap', category: 'things', difficulty: 1),
   // index:p.176
-  AwingWord(awing: 'atséebə̂nə̂mələ\'ə', english: 'parable', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'atséebə̂nə̂mələ\'ə', english: 'parable', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.176
   AwingWord(awing: 'alì\'ə nafoona Əsê', english: 'paradise', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.176
@@ -10953,7 +10844,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'atsaŋə', english: 'penalty', category: 'things', difficulty: 1),
   // index:p.177
-  AwingWord(awing: 'nakəələ', english: 'penis (colloquial)', category: 'body', difficulty: 1),
+  AwingWord(awing: 'nakəələ', english: 'penis (colloquial)', category: 'body', difficulty: 3),
   // index:p.177
   AwingWord(awing: 'akwaŋə', english: 'pensiveness, esp. negative', category: 'things', difficulty: 1),
   // index:p.177
@@ -11055,7 +10946,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.178
   AwingWord(awing: 'panápáala', english: 'pineapple', category: 'food', tonePattern: 'high', difficulty: 1),
   // index:p.178
-  AwingWord(awing: 'nəkaŋə', english: 'pipe, of tobacco', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nəkaŋə', english: 'pipe, of tobacco', category: 'things', difficulty: 3),
   // index:p.178
   AwingWord(awing: 'atéəmə', english: 'pit (deadly and dangerous)', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.178
@@ -11311,9 +11202,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.179
   AwingWord(awing: 'mama', english: 'prefix used for old women', category: 'descriptive', difficulty: 1),
   // index:p.179
-  AwingWord(awing: 'chî nə̌ móona', english: 'pregnant', category: 'things', tonePattern: 'rising', difficulty: 2),
+  AwingWord(awing: 'chî nə̌ móona', english: 'pregnant', category: 'things', tonePattern: 'rising', difficulty: 3),
   // index:p.179
-  AwingWord(awing: 'chî nə napomə', english: 'pregnant', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'chî nə napomə', english: 'pregnant', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.179
   AwingWord(awing: 'ghed majìə', english: 'prepare food', category: 'food', tonePattern: 'low', difficulty: 2),
   // index:p.179
@@ -11365,15 +11256,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.180
   AwingWord(awing: 'atə̂\'na', english: 'prophecy', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.180
-  AwingWord(awing: 'ŋwu nti əsê', english: 'prophet', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'ŋwu nti əsê', english: 'prophet', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.180
   AwingWord(awing: 'kwiŋə', english: 'prosper', category: 'things', difficulty: 1),
   // index:p.180
-  AwingWord(awing: 'aŋkə̂dtə', english: 'prostitute', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'aŋkə̂dtə', english: 'prostitute', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.180
-  AwingWord(awing: 'atóəmandə̌lə', english: 'prostitute', category: 'things', tonePattern: 'rising', difficulty: 1),
+  AwingWord(awing: 'atóəmandə̌lə', english: 'prostitute', category: 'things', tonePattern: 'rising', difficulty: 3),
   // index:p.180
-  AwingWord(awing: 'akwelə', english: 'prostitute (n)', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akwelə', english: 'prostitute (n)', category: 'things', difficulty: 3),
   // index:p.180
   AwingWord(awing: 'pyáaba', english: 'protect', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.180
@@ -11409,7 +11300,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.180
   AwingWord(awing: 'fê atsaŋə', english: 'punish', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.180
-  AwingWord(awing: 'kwum afeemə', english: 'punish by brutal killing', category: 'things', difficulty: 2),
+  AwingWord(awing: 'kwum afeemə', english: 'punish by brutal killing', category: 'things', difficulty: 3),
   // index:p.180
   AwingWord(awing: 'atsaŋə', english: 'punishment', category: 'things', difficulty: 1),
   // index:p.180
@@ -11419,7 +11310,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.180
   AwingWord(awing: 'wê\'ə', english: 'purge something', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.180
-  AwingWord(awing: 'ntoolə', english: 'pus', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ntoolə', english: 'pus', category: 'things', difficulty: 3),
   // index:p.180
   AwingWord(awing: 'chìə', english: 'push', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.180
@@ -11513,7 +11404,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.181
   AwingWord(awing: 'kúdtə', english: 'rap many things', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.181
-  AwingWord(awing: 'ŋ nêe ndzə\'ə', english: 'rape', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'ŋ nêe ndzə\'ə', english: 'rape', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.181
   AwingWord(awing: 'fóolə', english: 'rat', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.181
@@ -11641,11 +11532,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.182
   AwingWord(awing: 'tsoŋkə', english: 'repair', category: 'things', difficulty: 1),
   // index:p.182
-  AwingWord(awing: 'kwùblə', english: 'repent', category: 'things', tonePattern: 'low', difficulty: 1),
+  AwingWord(awing: 'kwùblə', english: 'repent', category: 'things', tonePattern: 'low', difficulty: 3),
   // index:p.182
-  AwingWord(awing: 'akwùblə', english: 'repentance', category: 'things', tonePattern: 'low', difficulty: 1),
+  AwingWord(awing: 'akwùblə', english: 'repentance', category: 'things', tonePattern: 'low', difficulty: 3),
   // index:p.182
-  AwingWord(awing: 'makwùblana', english: 'repenting', category: 'things', tonePattern: 'low', difficulty: 1),
+  AwingWord(awing: 'makwùblana', english: 'repenting', category: 'things', tonePattern: 'low', difficulty: 3),
   // index:p.182
   AwingWord(awing: 'chiga', english: 'replica', category: 'things', difficulty: 1),
   // index:p.182
@@ -11867,11 +11758,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.183
   AwingWord(awing: 'nawagə', english: 'sales point', category: 'things', difficulty: 1),
   // index:p.183
-  AwingWord(awing: 'matwê', english: 'saliva', category: 'body', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'matwê', english: 'saliva', category: 'body', tonePattern: 'falling', difficulty: 3),
   // index:p.183
   AwingWord(awing: 'ngwagə', english: 'salt', category: 'food', difficulty: 1),
   // index:p.183
-  AwingWord(awing: 'nchwadkə', english: 'salvation', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nchwadkə', english: 'salvation', category: 'things', difficulty: 3),
   // index:p.183
   AwingWord(awing: 'alaglə', english: 'same', category: 'things', difficulty: 1),
   // index:p.183
@@ -11903,7 +11794,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'lə̂\'kə', english: 'save something somewhere', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.184
-  AwingWord(awing: 'nchwádkə', english: 'saviour', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'nchwádkə', english: 'saviour', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.184
   AwingWord(awing: 'sə̌', english: 'saw', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.184
@@ -11965,7 +11856,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'kaŋə', english: 'screen sth from view', category: 'things', difficulty: 1),
   // index:p.184
-  AwingWord(awing: 'aŋwa\'lə̂sé', english: 'scripture', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'aŋwa\'lə̂sé', english: 'scripture', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.184
   AwingWord(awing: 'zoŋkə', english: 'scrub accidentally', category: 'things', difficulty: 1),
   // index:p.184
@@ -12015,7 +11906,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'afîna', english: 'seller', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.184
-  AwingWord(awing: 'atúmə', english: 'semen', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'atúmə', english: 'semen', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.184
   AwingWord(awing: 'túməə', english: 'send', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.184
@@ -12065,11 +11956,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.185
   AwingWord(awing: 'tîma', english: 'sew using a needle', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.185
-  AwingWord(awing: 'chî to zɔ́\' ndzə\'ə', english: 'sex, abstain from', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'chî to zɔ́\' ndzə\'ə', english: 'sex, abstain from', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.185
-  AwingWord(awing: 'ndzə\'ə', english: 'sexual intercourse', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndzə\'ə', english: 'sexual intercourse', category: 'things', difficulty: 3),
   // index:p.185
-  AwingWord(awing: 'noŋtə', english: 'sexual relations, have', category: 'things', difficulty: 1),
+  AwingWord(awing: 'noŋtə', english: 'sexual relations, have', category: 'things', difficulty: 3),
   // index:p.185
   AwingWord(awing: 'kaŋtə', english: 'Shadow many things', category: 'nature', difficulty: 1),
   // index:p.185
@@ -12155,9 +12046,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.185
   AwingWord(awing: 'ngwùba', english: 'shoe', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.185
-  AwingWord(awing: 'asa\'ə', english: 'shoot', category: 'things', difficulty: 1),
+  AwingWord(awing: 'asa\'ə', english: 'shoot', category: 'things', difficulty: 3),
   // index:p.185
-  AwingWord(awing: 'tóma', english: 'shoot', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'tóma', english: 'shoot', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.185
   AwingWord(awing: 'alì\'əmáteenə', english: 'shop', category: 'things', tonePattern: 'high-low', difficulty: 1),
   // index:p.185
@@ -12253,7 +12144,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.186
   AwingWord(awing: 'ghə', english: 'singular pronoun \'you\'', category: 'things', difficulty: 1),
   // index:p.186
-  AwingWord(awing: 'ngedtapɔŋə', english: 'sinner', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ngedtapɔŋə', english: 'sinner', category: 'things', difficulty: 3),
   // index:p.186
   AwingWord(awing: 'ngəmə', english: 'sister-in-law', category: 'family', difficulty: 1),
   // index:p.186
@@ -12297,11 +12188,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.186
   AwingWord(awing: 'labə', english: 'slap', category: 'things', difficulty: 1),
   // index:p.186
-  AwingWord(awing: 'wênə', english: 'slash or whip', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'wênə', english: 'slash or whip', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.186
-  AwingWord(awing: 'waalə', english: 'slaughter animals', category: 'things', difficulty: 1),
+  AwingWord(awing: 'waalə', english: 'slaughter animals', category: 'things', difficulty: 3),
   // index:p.186
-  AwingWord(awing: 'ŋgwaalə', english: 'slaughterer', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ŋgwaalə', english: 'slaughterer', category: 'things', difficulty: 3),
   // index:p.186
   AwingWord(awing: 'apo\'ə', english: 'slave', category: 'things', difficulty: 1),
   // index:p.186
@@ -12373,7 +12264,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.187
   AwingWord(awing: 'nóə', english: 'smoke', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.187
-  AwingWord(awing: 'nə̂ ndapa\'ə', english: 'smoke tobacco', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'nə̂ ndapa\'ə', english: 'smoke tobacco', category: 'nature', tonePattern: 'falling', difficulty: 3),
   // index:p.187
   AwingWord(awing: 'jwí\'kə á ndî\' mógə', english: 'smoked', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.187
@@ -12465,11 +12356,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.187
   AwingWord(awing: 'nchìə', english: 'soot', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.188
-  AwingWord(awing: 'ngaŋnakaŋə', english: 'sorcerer', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ngaŋnakaŋə', english: 'sorcerer', category: 'things', difficulty: 3),
   // index:p.188
-  AwingWord(awing: 'n. ŋgantê', english: 'sorcerer (male)', category: 'things', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'n. ŋgantê', english: 'sorcerer (male)', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.188
-  AwingWord(awing: 'agheemə', english: 'sorcery', category: 'things', difficulty: 1),
+  AwingWord(awing: 'agheemə', english: 'sorcery', category: 'things', difficulty: 3),
   // index:p.188
   AwingWord(awing: 'nafaŋə', english: 'sore', category: 'things', difficulty: 1),
   // index:p.188
@@ -12521,7 +12412,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.188
   AwingWord(awing: 'n.p. tséebə ndaŋdaŋə', english: 'speak the truth', category: 'actions', tonePattern: 'high', difficulty: 2),
   // index:p.188
-  AwingWord(awing: 'nakəŋə', english: 'spear', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nakəŋə', english: 'spear', category: 'things', difficulty: 3),
   // index:p.188
   AwingWord(awing: 'chiga', english: 'special', category: 'things', difficulty: 1),
   // index:p.188
@@ -12603,9 +12494,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.188
   AwingWord(awing: 'tə\'lə', english: 'squirrel', category: 'animals', difficulty: 1),
   // index:p.188
-  AwingWord(awing: 'soobə', english: 'stab', category: 'things', difficulty: 1),
+  AwingWord(awing: 'soobə', english: 'stab', category: 'things', difficulty: 3),
   // index:p.188
-  AwingWord(awing: 'səbtə', english: 'stab', category: 'things', difficulty: 1),
+  AwingWord(awing: 'səbtə', english: 'stab', category: 'things', difficulty: 3),
   // index:p.188
   AwingWord(awing: 'akamtə', english: 'stage', category: 'things', difficulty: 1),
   // index:p.188
@@ -12683,7 +12574,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'n.p. məm napəmə', english: 'stomach (internal)', category: 'body', difficulty: 2),
   // index:p.189
-  AwingWord(awing: 'atogə', english: 'stomach of a witch', category: 'body', difficulty: 1),
+  AwingWord(awing: 'atogə', english: 'stomach of a witch', category: 'body', difficulty: 3),
   // index:p.189
   AwingWord(awing: 'n.p. napəm nə̌ lùm nə̌', english: 'ston achache', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.189
@@ -12755,11 +12646,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'akwù\'lá atìə', english: 'stump', category: 'things', tonePattern: 'high-low', difficulty: 2),
   // index:p.189
-  AwingWord(awing: 'ghoanə', english: 'stupid', category: 'descriptive', difficulty: 1),
+  AwingWord(awing: 'ghoanə', english: 'stupid', category: 'descriptive', difficulty: 3),
   // index:p.189
-  AwingWord(awing: 'akoghə', english: 'stupid person', category: 'family', difficulty: 1),
+  AwingWord(awing: 'akoghə', english: 'stupid person', category: 'family', difficulty: 3),
   // index:p.189
-  AwingWord(awing: 'shîəə', english: 'stupid person', category: 'family', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'shîəə', english: 'stupid person', category: 'family', tonePattern: 'falling', difficulty: 3),
   // index:p.189
   AwingWord(awing: 'ghoakə', english: 'stupidity', category: 'things', difficulty: 1),
   // index:p.189
@@ -12889,7 +12780,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'nyinta', english: 'take a walk', category: 'actions', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'kwùbkə', english: 'take curative via the anus', category: 'actions', tonePattern: 'low', difficulty: 1),
+  AwingWord(awing: 'kwùbkə', english: 'take curative via the anus', category: 'actions', tonePattern: 'low', difficulty: 3),
   // index:p.190
   AwingWord(awing: 'pyádnə', english: 'take good care of', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.190
@@ -13155,9 +13046,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   AwingWord(awing: 'lóolə', english: 'toad', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.192
-  AwingWord(awing: 'ndapa\'ə', english: 'tobacco', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndapa\'ə', english: 'tobacco', category: 'things', difficulty: 3),
   // index:p.192
-  AwingWord(awing: 'nəkaŋ ndapa\'ə', english: 'tobacco pipe', category: 'things', difficulty: 2),
+  AwingWord(awing: 'nəkaŋ ndapa\'ə', english: 'tobacco pipe', category: 'things', difficulty: 3),
   // index:p.192
   AwingWord(awing: 'alə̌ mbîə senə̌', english: 'today', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.192
@@ -13221,7 +13112,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.193
   AwingWord(awing: 'tə́sə', english: 'touch lamp', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.193
-  AwingWord(awing: 'tô\'ə', english: 'touch lightly, of breasts', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'tô\'ə', english: 'touch lightly, of breasts', category: 'actions', tonePattern: 'falling', difficulty: 3),
   // index:p.193
   AwingWord(awing: 'ndúmə', english: 'towards', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.193
@@ -13241,7 +13132,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.193
   AwingWord(awing: 'alì\'əfʉə', english: 'traditional hospital', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.193
-  AwingWord(awing: 'kwa\'ə', english: 'traditional juju', category: 'things', difficulty: 1),
+  AwingWord(awing: 'kwa\'ə', english: 'traditional juju', category: 'things', difficulty: 3),
   // index:p.193
   AwingWord(awing: 'ndzə\'ə alá\'ə', english: 'traditional marriage', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.193
@@ -13353,7 +13244,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.194
   AwingWord(awing: 'moomə', english: 'try', category: 'things', difficulty: 1),
   // index:p.194
-  AwingWord(awing: 'mbaŋə', english: 'tumor', category: 'things', difficulty: 1),
+  AwingWord(awing: 'mbaŋə', english: 'tumor', category: 'things', difficulty: 3),
   // index:p.194
   AwingWord(awing: 'achi\'lə', english: 'turf', category: 'things', difficulty: 1),
   // index:p.194
@@ -13399,7 +13290,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.194
   AwingWord(awing: 'chibkə', english: 'ugly, make sth appear', category: 'descriptive', difficulty: 1),
   // index:p.194
-  AwingWord(awing: 'n.p. nəfaŋ nə́ məmə', english: 'ulcer', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'n.p. nəfaŋ nə́ məmə', english: 'ulcer', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.194
   AwingWord(awing: 'chútáŋoŋə', english: 'ululate', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.194
@@ -13475,7 +13366,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'atoŋátoŋə', english: 'upside down', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.195
-  AwingWord(awing: 'matseŋnə', english: 'urine', category: 'body', difficulty: 1),
+  AwingWord(awing: 'matseŋnə', english: 'urine', category: 'body', difficulty: 3),
   // index:p.195
   AwingWord(awing: 'pénə', english: 'us', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.195
@@ -13491,9 +13382,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'ê', english: 'utterance of regret', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.195
-  AwingWord(awing: 'naságə', english: 'vagina', category: 'body', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'naságə', english: 'vagina', category: 'body', tonePattern: 'high', difficulty: 3),
   // index:p.195
-  AwingWord(awing: 'atataŋə', english: 'vagina fluid', category: 'body', difficulty: 1),
+  AwingWord(awing: 'atataŋə', english: 'vagina fluid', category: 'body', difficulty: 3),
   // index:p.195
   AwingWord(awing: 'váina', english: 'vain', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.195
@@ -13545,13 +13436,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'ŋgye', english: 'voice', category: 'things', difficulty: 1),
   // index:p.195
-  AwingWord(awing: 'ghô\'kə', english: 'vomit', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'ghô\'kə', english: 'vomit', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.195
-  AwingWord(awing: 'já\'kə', english: 'vomit', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'já\'kə', english: 'vomit', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.195
-  AwingWord(awing: 'aghô\'kə', english: 'vomit (n)', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'aghô\'kə', english: 'vomit (n)', category: 'actions', tonePattern: 'falling', difficulty: 3),
   // index:p.195
-  AwingWord(awing: 'ajá\'kə', english: 'vomit (n)', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'ajá\'kə', english: 'vomit (n)', category: 'actions', tonePattern: 'high', difficulty: 3),
   // index:p.195
   AwingWord(awing: 'zooma', english: 'vow', category: 'things', difficulty: 1),
   // index:p.195
@@ -13563,7 +13454,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'chwitə̂ ŋoŋə', english: 'wail, sharp', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
   // index:p.195
-  AwingWord(awing: 'pó\' ŋoŋə', english: 'wail, sign of death', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'pó\' ŋoŋə', english: 'wail, sign of death', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.195
   AwingWord(awing: 'pyáaba', english: 'wait', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.195
@@ -13711,7 +13602,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.196
   AwingWord(awing: 'atsama', english: 'whichever', category: 'things', difficulty: 1),
   // index:p.196
-  AwingWord(awing: 'shûmə', english: 'whip', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'shûmə', english: 'whip', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.196
   AwingWord(awing: 'asama', english: 'whirlwind', category: 'things', difficulty: 1),
   // index:p.196
@@ -13753,13 +13644,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'pegə', english: 'widen', category: 'things', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'nkoŋ mongyé', english: 'widow', category: 'family', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'nkoŋ mongyé', english: 'widow', category: 'family', tonePattern: 'high', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'nkogə', english: 'widow', category: 'family', difficulty: 1),
+  AwingWord(awing: 'nkogə', english: 'widow', category: 'family', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'nkoŋ ŋwu mbyâŋnə', english: 'widower', category: 'family', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'nkoŋ ŋwu mbyâŋnə', english: 'widower', category: 'family', tonePattern: 'falling', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'akogə', english: 'widowhood', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akogə', english: 'widowhood', category: 'things', difficulty: 3),
   // index:p.197
   AwingWord(awing: 'kaŋə', english: 'wild cat, preys on fowls', category: 'animals', difficulty: 1),
   // index:p.197
@@ -13793,13 +13684,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'mbálá\'ə', english: 'wise saying', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'aləəma', english: 'witch', category: 'things', difficulty: 1),
+  AwingWord(awing: 'aləəma', english: 'witch', category: 'things', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'ndəəma', english: 'witch (female)', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ndəəma', english: 'witch (female)', category: 'things', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'məsê', english: 'witchcraft', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'məsê', english: 'witchcraft', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'mɔ́ apəena', english: 'witchcraft (used colloquially)', category: 'things', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'mɔ́ apəena', english: 'witchcraft (used colloquially)', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.197
   AwingWord(awing: 'pó', english: 'with', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.197
@@ -13823,7 +13714,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'atséebə', english: 'word', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'atséebásê', english: 'word of God', category: 'things', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'atséebásê', english: 'word of God', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.197
   AwingWord(awing: 'ghà', english: 'word that marks excl', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.197
@@ -13905,9 +13796,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.198
   AwingWord(awing: 'alúə', english: 'yeast', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.198
-  AwingWord(awing: 'yagə', english: 'yell out curses', category: 'things', difficulty: 1),
+  AwingWord(awing: 'yagə', english: 'yell out curses', category: 'things', difficulty: 3),
   // index:p.198
-  AwingWord(awing: 'koŋə', english: 'yell with hate', category: 'things', difficulty: 1),
+  AwingWord(awing: 'koŋə', english: 'yell with hate', category: 'things', difficulty: 3),
   // index:p.198
   AwingWord(awing: 'ə́lə̌lə̌', english: 'yes', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.198

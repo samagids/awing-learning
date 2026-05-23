@@ -1667,12 +1667,15 @@ def parse_phrases() -> dict:
         content = f.read()
 
     # AwingPhrase(awing: '...', english: '...', ...category: '...'...)
-    # The category field comes later in the literal — capture it separately
-    # with a non-greedy lookahead so we don't overrun into the next literal.
+    # The category field is optional. The trailing-comma requirement after
+    # `english:` previously excluded 27 compact entries that have only
+    # (awing, english) — most of them Bible-mined phrases added in
+    # Session 57+. Accept either `,` (more fields follow) or the closing `)`
+    # so both compact and full forms parse.
     pattern = (
         r"AwingPhrase\(\s*"
         r"awing:\s*" + _DART_STR + r"\s*,\s*"
-        r"english:\s*" + _DART_STR + r"\s*,"
+        r"english:\s*" + _DART_STR + r"\s*[,)]"
         r"(?:[^)]*?category:\s*" + _DART_STR + r")?"
     )
 

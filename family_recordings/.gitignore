@@ -1,0 +1,7 @@
+*.webm
+*.mp3
+*.wav
+*.m4a
+*.ogg
+!.gitignore
+!README.md
