@@ -1,0 +1,97 @@
+name: Promote Alpha → Production
+
+# ============================================================================
+# Time-delayed auto-promote of soaked closed-testing releases to production.
+#
+# Daily cron at 09:00 UTC walks the v*+N git tags, finds ones older than
+# ALPHA_SOAK_DAYS (default 7), and promotes their corresponding alpha-track
+# release to production at PROMOTE_ROLLOUT (default 20%) staged rollout.
+#
+# Manual override:
+#   GitHub → Actions → "Promote Alpha → Production" → "Run workflow"
+#   Inputs:
+#     soak_days     override the default soak time (e.g. '2' for a faster
+#                   promote of v1.13.0+60 specifically)
+#     rollout       override staged rollout fraction (e.g. '0.5' for 50%)
+#     dry_run       'true' to log decisions without touching Play
+#
+# Safety knobs already in place:
+#   1. Won't promote tags younger than the soak threshold
+#   2. Won't promote a version already in production
+#   3. Won't promote alpha releases that aren't 'completed'
+#   4. Staged rollout (20% default) limits blast radius
+#   5. Google review queue still moderates (managed publishing is off, so
+#      the upload becomes live the moment Google approves; if you want a
+#      manual gate, turn on managed publishing in Play Console)
+#
+# When you want to STOP an auto-promote that's in flight:
+#   - If still in Google's review queue: Play Console → Test and release
+#     → Production → Releases → click the "in review" release → Remove
+#     changes (you have ~7 days)
+#   - If already published to users: Play Console → halt rollout, then
+#     bump rollout to 0%, then push a fix
+# ============================================================================
+
+on:
+  schedule:
+    # Daily at 09:00 UTC (10:00 BST / 04:00 EST / 02:00 PST). Cron picks
+    # up any soaked tag once per day. Adjust if you want morning-of-day-
+    # in-your-timezone behavior.
+    - cron: '0 9 * * *'
+
+  workflow_dispatch:
+    inputs:
+      soak_days:
+        description: 'Minimum age in days before a tag is eligible (default 7)'
+        required: false
+        default: '7'
+      rollout:
+        description: 'Staged rollout fraction 0-1 (default 0.2 = 20%)'
+        required: false
+        default: '0.2'
+      dry_run:
+        description: 'Log decisions without touching Play track'
+        required: false
+        type: boolean
+        default: false
+
+# Cancel any in-flight promotion run when a new one starts. Avoids two
+# crons or a manual+cron racing on the same Play API edit (which would
+# fail at commit time anyway, but cleaner to short-circuit).
+concurrency:
+  group: promote-alpha-to-production
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository (with tags)
+        uses: actions/checkout@v4
+        with:
+          # Need full tag history for the git-tag-age scan
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Play Developer API client
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-api-python-client google-auth
+
+      - name: Run promotion script
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          ALPHA_SOAK_DAYS: ${{ inputs.soak_days || '7' }}
+          PROMOTE_ROLLOUT: ${{ inputs.rollout || '0.2' }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: |
+          if [ -z "$PLAY_SERVICE_ACCOUNT_JSON" ]; then
+            echo "::error::PLAY_SERVICE_ACCOUNT_JSON secret is not set"
+            exit 1
+          fi
+          python scripts/promote_alpha_to_production.py
