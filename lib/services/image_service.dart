@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:awing_ai_learning/services/asset_pack_service.dart';
 
 /// Service for loading vocabulary illustration images from the asset pack.
@@ -9,12 +12,90 @@ import 'package:awing_ai_learning/services/asset_pack_service.dart';
 class ImageService {
   static final ImageService _instance = ImageService._();
   factory ImageService() => _instance;
+  /// Static convenience so callers can write `ImageService.instance.x`
+  /// without the factory parens. Both forms resolve to the same singleton.
+  static ImageService get instance => _instance;
   ImageService._();
 
   final AssetPackService _assetPack = AssetPackService();
 
   /// Cache of loaded image bytes.
   final Map<String, Uint8List?> _bytesCache = {};
+
+  /// Set of image keys (filename stems without .png) confirmed present in
+  /// the bundled PAD asset pack. Populated from
+  /// `assets/image_manifest.json` by [initialize] at app startup.
+  ///
+  /// Used by the SYNCHRONOUS [hasImageSync] check so games / quizzes /
+  /// exams can filter their vocab selection at round-build time without
+  /// awaiting the async PAD-channel `assetExists` round-trip per item.
+  ///
+  /// Empty set means "manifest not loaded yet OR no images bundled" —
+  /// callers must treat the empty case as "don't filter" to avoid
+  /// surfacing zero matches when the manifest hasn't loaded.
+  final Set<String> _manifestKeys = <String>{};
+  bool _manifestLoaded = false;
+
+  /// True once the image manifest JSON has been loaded into [_manifestKeys].
+  /// Until this is true, [hasImageSync] returns true for everything (so the
+  /// app degrades to "show everything" rather than "show nothing").
+  bool get manifestLoaded => _manifestLoaded;
+  int get manifestSize => _manifestKeys.length;
+
+  /// Load the image manifest bundled at `assets/image_manifest.json`.
+  /// Called once from main() before runApp(). Cheap — the manifest is a
+  /// flat list of ~7,000 short strings, total ~200 KB JSON.
+  Future<void> initialize() async {
+    if (_manifestLoaded) return;
+    try {
+      final raw = await rootBundle.loadString('assets/image_manifest.json');
+      final data = jsonDecode(raw) as Map<String, dynamic>;
+      final keys = data['keys'];
+      if (keys is List) {
+        for (final k in keys) {
+          if (k is String && k.isNotEmpty) {
+            _manifestKeys.add(k);
+          }
+        }
+      }
+      _manifestLoaded = true;
+      if (kDebugMode) {
+        print('ImageService: loaded ${_manifestKeys.length} image keys '
+            'from manifest');
+      }
+    } catch (e) {
+      // Missing manifest is non-fatal — games degrade to "no filtering"
+      // and PackImage's existing async fallback (green placeholder) still
+      // protects the UI from crashes.
+      if (kDebugMode) {
+        print('ImageService: image_manifest.json not found ($e) — '
+            'sync hasImage checks will return true for all words');
+      }
+    }
+  }
+
+  /// Synchronous "does this image exist in the bundled PAD pack?" check.
+  /// Uses the manifest loaded by [initialize]. Returns true if the manifest
+  /// hasn't loaded yet (safer default — show all words rather than none).
+  ///
+  /// Use this in game/quiz/exam vocab filters to avoid surfacing entries
+  /// whose illustration tile would render as the green-placeholder fallback.
+  bool hasImageSync(String awingWord, String english) {
+    if (!_manifestLoaded || _manifestKeys.isEmpty) {
+      // Manifest not available — degrade gracefully to "yes, looks ok".
+      // PackImage's runtime fallback still covers the actual gap.
+      return true;
+    }
+    return _manifestKeys.contains(imageKey(awingWord, english));
+  }
+
+  /// Same as [hasImageSync] but for already-computed image keys (phrases,
+  /// sentences, stories where the key is built by a different namespace
+  /// function — phraseImageKey etc.).
+  bool hasImageKeySync(String key) {
+    if (!_manifestLoaded || _manifestKeys.isEmpty) return true;
+    return _manifestKeys.contains(key);
+  }
 
   /// Maximum chars of the english slug appended to image filenames.
   /// MUST match `ENGLISH_SLUG_MAX` in scripts/generate_images.py.

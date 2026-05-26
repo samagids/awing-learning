@@ -4,6 +4,7 @@ import 'package:confetti/confetti.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
+import 'package:awing_ai_learning/services/image_service.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
@@ -285,8 +286,16 @@ class _QuizPlayState extends State<_QuizPlay> {
     // 20 words drawn from the beginner pool, with fresh answer choices.
     _random = Random();
 
-    // Only use beginner-level vocabulary (difficulty == 1)
-    final beginnerWords = allVocabulary.where((w) => w.difficulty == 1).toList();
+    // Session 61c — quiz cards display a PackImage thumbnail. Filter to
+    // vocab with a bundled illustration so we never quiz on a word that
+    // would render as a green placeholder. Distractor choices in
+    // _generateChoices are filtered the same way for visual consistency.
+    final imageService = ImageService.instance;
+    final beginnerWords = allVocabulary
+        .where((w) =>
+            w.difficulty == 1 &&
+            imageService.hasImageSync(w.awing, w.english))
+        .toList();
     beginnerWords.shuffle(_random);
 
     // Fresh random slice of 20 words — different set every attempt.
@@ -295,7 +304,12 @@ class _QuizPlayState extends State<_QuizPlay> {
   }
 
   List<String> _generateChoices(AwingWord correct) {
-    final beginnerWords = allVocabulary.where((w) => w.difficulty == 1).toList();
+    final imageService = ImageService.instance;
+    final beginnerWords = allVocabulary
+        .where((w) =>
+            w.difficulty == 1 &&
+            imageService.hasImageSync(w.awing, w.english))
+        .toList();
     final others = beginnerWords
         .where((w) => w.english != correct.english)
         .toList()

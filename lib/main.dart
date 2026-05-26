@@ -15,6 +15,7 @@ import 'package:awing_ai_learning/services/parent_notification_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
 import 'package:awing_ai_learning/services/recordings_service.dart';
+import 'package:awing_ai_learning/services/image_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 void main() async {
@@ -114,6 +115,20 @@ void main() async {
     );
   } catch (e) {
     debugPrint('Analytics init failed: $e');
+  }
+
+  // Session 61c — load the image manifest so games / quizzes / exams can
+  // synchronously filter their vocab selection to entries with a
+  // bundled illustration. Without this, rounds occasionally surface
+  // words whose tile renders as the green "missing image" placeholder.
+  // The manifest is ~200 KB JSON, loads in ~50ms from the main bundle.
+  try {
+    await ImageService.instance.initialize().timeout(
+      const Duration(seconds: 3),
+      onTimeout: () => debugPrint('ImageService manifest init timed out'),
+    );
+  } catch (e) {
+    debugPrint('ImageService manifest init failed: $e');
   }
 
   runApp(const AwingApp());

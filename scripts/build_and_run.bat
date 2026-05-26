@@ -122,6 +122,21 @@ if !ERRORLEVEL! neq 0 (
 echo        Contributions applied successfully.
 echo.
 
+REM ---- Step 1a: Build image manifest ----
+REM Scans the PAD assets/images/vocabulary/ directory and writes
+REM assets/image_manifest.json, which the Flutter app loads at startup
+REM so games / quizzes / exams can synchronously filter their vocab
+REM selection to entries with a bundled illustration (no green
+REM placeholder fallback at runtime). Cheap, always safe to re-run.
+echo [1a/7] Building image manifest...
+python scripts\build_image_manifest.py
+if !ERRORLEVEL! neq 0 (
+    echo        WARNING: build_image_manifest.py failed.
+    echo        The app will fall back to "show all words" which means
+    echo        some game rounds may show empty image placeholders.
+)
+echo.
+
 REM ---- Step 1b: Sync native recordings from webhook ----
 REM Pulls every "Native recording" tagged audio uploaded via the new Dev
 REM Mode Record tab (Session 61b family-recorder-style UI) into

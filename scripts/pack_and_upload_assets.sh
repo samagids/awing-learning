@@ -57,6 +57,22 @@ if [ "$ASSET_BYTES" -lt 100000000 ]; then
   exit 1
 fi
 
+# Session 61c — refresh the image manifest so the bundled Flutter app
+# knows exactly which images are inside this PAD tarball. Without this,
+# games/quizzes filter against a stale manifest from a previous build.
+echo "Refreshing assets/image_manifest.json from current image set ..."
+if command -v python >/dev/null 2>&1; then
+  python scripts/build_image_manifest.py || {
+    echo "WARNING: image manifest refresh failed — games may show empty placeholders"
+  }
+elif command -v python3 >/dev/null 2>&1; then
+  python3 scripts/build_image_manifest.py || {
+    echo "WARNING: image manifest refresh failed — games may show empty placeholders"
+  }
+else
+  echo "WARNING: no python on PATH — skipping manifest refresh"
+fi
+
 if [ "$DRY_RUN" -eq 0 ]; then
   if ! command -v gh >/dev/null 2>&1; then
     echo "ERROR: gh CLI not found. Install:" >&2
