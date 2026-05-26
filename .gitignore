@@ -186,6 +186,10 @@ models/
 
 # Backup files left over from in-place edits
 *.bak_session*
+*.bak_before*
+*.bak_cleanup*
+*.bak_was_truncated*
+*.bak_audit*
 
 # Temp directories created by scripts
 scripts/_*/

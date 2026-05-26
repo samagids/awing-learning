@@ -353,6 +353,11 @@ class PronunciationService {
     return false;
   }
 
+  /// Public alias of [_audioKey] — used by RecordingsService and the
+  /// Dev Mode Record tab to compute the canonical audio filename
+  /// stem for each Awing item.
+  static String audioKey(String awingWord) => _audioKey(awingWord);
+
   /// Convert an Awing word to a safe filename key.
   static String _audioKey(String awingWord) {
     String key = awingWord.toLowerCase();

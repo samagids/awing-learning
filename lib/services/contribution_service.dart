@@ -409,7 +409,9 @@ class ContributionService extends ChangeNotifier {
 
   // ==================== User Submission ====================
 
-  /// Submit a new contribution. Saves locally.
+  /// Submit a new contribution. Saves locally + uploads audio to Drive
+  /// via the contributions webhook (so the desktop sync script can pull
+  /// it later via apply_contributions.py --refetch-audio).
   Future<String?> submit({
     required String deviceId,
     required String profileName,
@@ -442,6 +444,33 @@ class ContributionService extends ChangeNotifier {
     _saveContributions();
     notifyListeners();
 
+    // Session 61b — include base64 audio in the webhook payload when an
+    // audio file is present. The webhook (contributions_webapp.gs) decodes
+    // it, stores in Drive, and writes the Drive URL to the Submissions
+    // sheet. The audio cap on the server side is 2 MB post-decode, which
+    // is plenty for a 10-second m4a clip (~50–100 KB).
+    String? audioBase64;
+    if (audioPath != null) {
+      try {
+        final file = File(audioPath);
+        if (await file.exists()) {
+          final bytes = await file.readAsBytes();
+          if (bytes.length < 1500 * 1024) {
+            // 1.5 MB pre-encode cap — base64 inflates ~33%, stays under
+            // the 2 MB server limit.
+            audioBase64 = base64Encode(bytes);
+          } else if (kDebugMode) {
+            print('ContributionService.submit: audio too large to inline '
+                '(${bytes.length} bytes), skipping upload');
+          }
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('ContributionService.submit: audio read failed: $e');
+        }
+      }
+    }
+
     // Also push to webhook (non-blocking, best-effort)
     _postToWebhook({
       'action': 'submit',
@@ -454,6 +483,7 @@ class ContributionService extends ChangeNotifier {
       'category': category ?? '',
       'pronunciationGuide': pronunciationGuide ?? '',
       'notes': notes ?? '',
+      if (audioBase64 != null) 'audioBase64': audioBase64,
     });
 
     return id;

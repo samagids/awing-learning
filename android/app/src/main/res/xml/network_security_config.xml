@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Session 61 — G4 security hardening.
+
+  Network Security Config: enforce HTTPS-only for ALL outbound traffic and
+  trust ONLY system-installed CAs (rejects user-installed CAs).
+
+  Rejecting user-installed CAs is the critical defense. Without it, a parent
+  or school IT admin who installs a custom root CA on the kid's device can
+  silently MITM all our HTTPS traffic — Firebase Firestore, Apps Script
+  webhooks, the Google Sign-In token exchange, everything. With this config
+  in place, the TLS handshake fails closed on those interception attempts.
+
+  The `cleartextTrafficPermitted="false"` flag is belt-and-suspenders: the
+  app already only talks to https:// endpoints, but this enforces it at the
+  OS layer. If anyone ever sneaks in a `http://` URL (analytics, dev tools,
+  third-party plugin), the request fails before any bytes hit the network.
+
+  Debug overrides: the <debug-overrides> block applies ONLY to builds with
+  android:debuggable="true" (i.e. `flutter run` debug builds, never release).
+  This lets devs use Charles / mitmproxy locally without disabling the
+  policy in release.
+
+  AndroidManifest must reference this file via
+    android:networkSecurityConfig="@xml/network_security_config"
+  AND set
+    android:usesCleartextTraffic="false"
+  for defense-in-depth on devices that ignore the config XML.
+
+  NOTE: We intentionally do NOT certificate-pin specific leaf or
+  intermediate certs for Google endpoints. Google rotates intermediates
+  every ~90 days and SPKI-pinning the leaf would brick the app on each
+  rotation. The cybersecurity-doctorate-grade approach for Google-hosted
+  endpoints is to rely on Google's well-maintained CA chain validation
+  via the system trust store + reject user CAs (which is what this config
+  does), rather than fragile leaf pinning.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+            <!-- user CAs intentionally absent -->
+        </trust-anchors>
+    </base-config>
+
+    <!-- Debug-only override: allow user CAs (mitmproxy / Charles) in debug
+         builds. This block is automatically ignored for any non-debuggable
+         APK / AAB, so production stays locked down. -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="user" />
+            <certificates src="system" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

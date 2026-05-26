@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,12 +13,17 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
 import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
+import 'package:awing_ai_learning/services/recordings_service.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
 import 'package:awing_ai_learning/data/awing_alphabet.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/data/awing_tones.dart' hide awingVowels;
 import 'package:awing_ai_learning/screens/admin/review_screen.dart';
 import 'package:awing_ai_learning/screens/about_screen.dart';
+import 'package:awing_ai_learning/screens/medium/sentences_screen.dart'
+    show awingSentences;
+import 'package:awing_ai_learning/screens/stories_screen.dart'
+    show awingStories;
 import 'package:awing_ai_learning/components/parental_gate.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:record/record.dart';
@@ -415,28 +421,94 @@ class _ReviewTabState extends State<_ReviewTab> {
 }
 
 // =====================================================================
-//  RECORD TAB — re-record audio for any word, phrase, or letter
+//  RECORD TAB — family-recorder-style native-speaker capture
 // =====================================================================
+//
+// Session 61b rewrite. Behaviour change vs the previous Autocomplete +
+// single-item dropdown:
+//   • Browse the WHOLE catalog as a scrollable list — words, phrases,
+//     letters, sentences, and story lines — like the family recorder
+//     HTML page. Filter chips and a search box narrow it down.
+//   • Each row has a status badge sourced from the /recordings Firestore
+//     collection (RecordingsService). Any device signed in as the same
+//     Google account (or any tester contributor) sees the same inventory
+//     in real time. No more "wait, did I already record that?".
+//   • Three filter axes: source (Words/Phrases/...), status (Not recorded
+//     / Recorded by me / Recorded by others), recorder (filter to one
+//     contributor's email).
+//   • Recording is inline per row — tap the mic on the card you want.
+//   • Submit is auto-apply: the audio is uploaded to Drive via the
+//     existing contributions webhook AND a row is written to the
+//     /recordings Firestore collection. The desktop build pipeline pulls
+//     them with scripts/sync_recordings.py and lands them in
+//     training_data/recordings/. No Review tab step required.
 
 /// Represents a single content item that can be recorded.
 class _RecordableItem {
   final String awing;
   final String english;
-  final String source; // 'word', 'phrase', 'letter'
+  final String source; // word | phrase | letter | sentence | story
   final String? category;
+  final String audioKey;
 
-  const _RecordableItem({
+  _RecordableItem({
     required this.awing,
     required this.english,
     required this.source,
     this.category,
-  });
+  }) : audioKey = PronunciationService.audioKey(awing);
 
   String get displayLabel => '$awing — $english';
+
   String get sourceLabel {
-    if (source == 'word') return 'Word (${category ?? "?"})';
-    if (source == 'phrase') return 'Phrase';
-    return 'Letter';
+    switch (source) {
+      case 'word':
+        return category == null ? 'Word' : 'Word ($category)';
+      case 'phrase':
+        return 'Phrase';
+      case 'letter':
+        return 'Letter';
+      case 'sentence':
+        return 'Sentence';
+      case 'story':
+        return category == null ? 'Story' : 'Story · $category';
+      default:
+        return source;
+    }
+  }
+
+  Color get sourceColor {
+    switch (source) {
+      case 'word':
+        return Colors.blue;
+      case 'phrase':
+        return Colors.teal;
+      case 'letter':
+        return Colors.orange;
+      case 'sentence':
+        return Colors.purple;
+      case 'story':
+        return Colors.deepPurple;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  IconData get sourceIcon {
+    switch (source) {
+      case 'word':
+        return Icons.abc;
+      case 'phrase':
+        return Icons.chat_bubble_outline;
+      case 'letter':
+        return Icons.text_fields;
+      case 'sentence':
+        return Icons.format_quote;
+      case 'story':
+        return Icons.menu_book;
+      default:
+        return Icons.fiber_manual_record;
+    }
   }
 }
 
@@ -448,16 +520,17 @@ class _RecordTab extends StatefulWidget {
 }
 
 class _RecordTabState extends State<_RecordTab> {
-  // All recordable items
+  // Full catalog (built once)
   late List<_RecordableItem> _allItems;
-  List<_RecordableItem> _filtered = [];
 
-  // Selection
-  _RecordableItem? _selected;
+  // Filters
   String _filterSource = 'All';
+  String _filterStatus = 'All';
+  String _filterRecorder = 'Anyone';
   final _searchController = TextEditingController();
 
-  // Recording
+  // Inline recording state
+  String? _recordingForKey; // audioKey of the item being recorded
   final AudioRecorder _recorder = AudioRecorder();
   final AudioPlayer _player = AudioPlayer();
   bool _isRecording = false;
@@ -474,19 +547,18 @@ class _RecordTabState extends State<_RecordTab> {
   void initState() {
     super.initState();
     _buildItemList();
-    _applyFilter();
-    _searchController.addListener(_applyFilter);
+    _searchController.addListener(() => setState(() {}));
     _player.onPlayerComplete.listen((_) {
       if (mounted) setState(() => _isPlaying = false);
     });
   }
 
   void _buildItemList() {
-    _allItems = [];
+    final items = <_RecordableItem>[];
 
     // Letters (alphabet)
     for (final letter in awingAlphabet) {
-      _allItems.add(_RecordableItem(
+      items.add(_RecordableItem(
         awing: letter.letter,
         english: '${letter.phoneme} (${letter.type})',
         source: 'letter',
@@ -495,7 +567,7 @@ class _RecordTabState extends State<_RecordTab> {
 
     // Vocabulary words
     for (final word in allVocabulary) {
-      _allItems.add(_RecordableItem(
+      items.add(_RecordableItem(
         awing: word.awing,
         english: word.english,
         source: 'word',
@@ -505,34 +577,97 @@ class _RecordTabState extends State<_RecordTab> {
 
     // Phrases
     for (final phrase in awingPhrases) {
-      _allItems.add(_RecordableItem(
+      items.add(_RecordableItem(
         awing: phrase.awing,
         english: phrase.english,
         source: 'phrase',
         category: phrase.category,
       ));
     }
+
+    // Sentences from medium module
+    for (final sent in awingSentences) {
+      items.add(_RecordableItem(
+        awing: sent.awing,
+        english: sent.english,
+        source: 'sentence',
+      ));
+    }
+
+    // Story lines from stories screen
+    for (final story in awingStories) {
+      for (final s in story.sentences) {
+        items.add(_RecordableItem(
+          awing: s.awing,
+          english: s.english,
+          source: 'story',
+          category: story.titleEnglish,
+        ));
+      }
+    }
+
+    // Dedup by audio_key (a sentence and a story line might collide).
+    // Keep the first occurrence — letters/words come before sentences/
+    // stories so the more specific source label wins.
+    final seen = <String>{};
+    _allItems = items.where((item) => seen.add(item.audioKey)).toList();
   }
 
-  void _applyFilter() {
-    final query = _searchController.text.toLowerCase().trim();
-    setState(() {
-      _filtered = _allItems.where((item) {
-        // Source filter
-        if (_filterSource != 'All') {
-          if (_filterSource == 'Words' && item.source != 'word') return false;
-          if (_filterSource == 'Phrases' && item.source != 'phrase') return false;
-          if (_filterSource == 'Letters' && item.source != 'letter') return false;
+  List<_RecordableItem> _applyFilters(RecordingsService recordings) {
+    final q = _searchController.text.toLowerCase().trim();
+    final currentEmail = FirebaseAuth.instance.currentUser?.email;
+
+    return _allItems.where((item) {
+      // Source
+      if (_filterSource != 'All') {
+        final wanted = _filterSource == 'Words'
+            ? 'word'
+            : _filterSource == 'Phrases'
+                ? 'phrase'
+                : _filterSource == 'Letters'
+                    ? 'letter'
+                    : _filterSource == 'Sentences'
+                        ? 'sentence'
+                        : _filterSource == 'Stories'
+                            ? 'story'
+                            : _filterSource;
+        if (item.source != wanted) return false;
+      }
+
+      final recs = recordings.recordingsFor(item.audioKey);
+      final byMe =
+          recs.any((r) => r.recordedByEmail == currentEmail);
+
+      // Status
+      switch (_filterStatus) {
+        case 'NotRecorded':
+          if (recs.isNotEmpty) return false;
+          break;
+        case 'ByMe':
+          if (!byMe) return false;
+          break;
+        case 'ByOthers':
+          if (recs.isEmpty) return false;
+          if (recs.length == 1 && byMe) return false;
+          break;
+      }
+
+      // Recorder
+      if (_filterRecorder != 'Anyone') {
+        if (!recs.any((r) => r.recordedByEmail == _filterRecorder)) {
+          return false;
         }
-        // Text search
-        if (query.isNotEmpty) {
-          return item.awing.toLowerCase().contains(query) ||
-              item.english.toLowerCase().contains(query) ||
-              (item.category?.toLowerCase().contains(query) ?? false);
-        }
-        return true;
-      }).toList();
-    });
+      }
+
+      // Search
+      if (q.isNotEmpty) {
+        return item.awing.toLowerCase().contains(q) ||
+            item.english.toLowerCase().contains(q) ||
+            (item.category?.toLowerCase().contains(q) ?? false);
+      }
+
+      return true;
+    }).toList();
   }
 
   @override
@@ -546,7 +681,7 @@ class _RecordTabState extends State<_RecordTab> {
 
   // ==================== Recording ====================
 
-  Future<void> _startRecording() async {
+  Future<void> _startRecording(_RecordableItem item) async {
     if (!await _recorder.hasPermission()) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -555,16 +690,14 @@ class _RecordTabState extends State<_RecordTab> {
       }
       return;
     }
-
     final contribService = context.read<ContributionService>();
-    final tempId = DateTime.now().millisecondsSinceEpoch.toString();
+    final tempId =
+        '${item.audioKey}_${DateTime.now().millisecondsSinceEpoch}';
     _recordingPath = await contribService.getRecordingPath(tempId);
-
     await _recorder.start(
       const RecordConfig(encoder: AudioEncoder.aacLc),
       path: _recordingPath!,
     );
-
     _recordingDuration = Duration.zero;
     _recordingTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (_recordingDuration.inSeconds >= _maxRecordSeconds) {
@@ -575,8 +708,8 @@ class _RecordTabState extends State<_RecordTab> {
         _recordingDuration += const Duration(seconds: 1);
       });
     });
-
     setState(() {
+      _recordingForKey = item.audioKey;
       _isRecording = true;
       _hasRecording = false;
     });
@@ -598,49 +731,85 @@ class _RecordTabState extends State<_RecordTab> {
     await _player.play(DeviceFileSource(_recordingPath!));
   }
 
-  Future<void> _playReference() async {
-    if (_selected == null) return;
+  Future<void> _playReference(_RecordableItem item) async {
     final pron = PronunciationService();
-    await pron.speakAwing(_selected!.awing);
+    await pron.speakAwing(item.awing);
   }
 
-  void _deleteRecording() {
+  void _cancelRecording() {
+    if (_isRecording) {
+      _recorder.stop();
+    }
+    _recordingTimer?.cancel();
     setState(() {
+      _recordingForKey = null;
+      _isRecording = false;
       _hasRecording = false;
       _recordingPath = null;
       _recordingDuration = Duration.zero;
     });
   }
 
-  // ==================== Submit as Contribution ====================
+  // ==================== Submit ====================
 
-  Future<void> _submitRecording() async {
-    if (_selected == null || !_hasRecording) return;
-
+  Future<void> _submitRecording(_RecordableItem item) async {
+    if (!_hasRecording) return;
     setState(() => _submitting = true);
 
     final auth = context.read<AuthService>();
     final contribService = context.read<ContributionService>();
+    final recordings = context.read<RecordingsService>();
     final analytics = AnalyticsService.instance;
 
-    await contribService.submit(
+    // 1. Push Firestore metadata immediately so other devices see it.
+    final device = Platform.isAndroid
+        ? 'Android'
+        : Platform.isIOS
+            ? 'iOS'
+            : 'Other';
+    final recId = await recordings.recordSubmitted(
+      awing: item.awing,
+      english: item.english,
+      source: item.source,
+      audioKey: item.audioKey,
+      category: item.category,
+      device: device,
+      durationMs: _recordingDuration.inMilliseconds,
+    );
+
+    // 2. Upload audio via existing contributions webhook (Drive storage).
+    final contribId = await contribService.submit(
       deviceId: analytics.isOptedOut ? 'anonymous' : 'developer',
       profileName: auth.currentProfile?.displayName ?? 'Developer',
       type: ContributionType.pronunciationFix,
-      targetWord: _selected!.awing,
-      correction: _selected!.awing, // same word, new recording
-      englishMeaning: _selected!.english,
-      category: _selected!.category ?? _selected!.source,
+      targetWord: item.awing,
+      correction: item.awing,
+      englishMeaning: item.english,
+      category: item.category ?? item.source,
       pronunciationGuide: null,
       audioPath: _recordingPath,
       notes:
-          'Developer re-recording (${_selected!.sourceLabel})',
+          'Native recording (${item.sourceLabel}) — auto-apply',
     );
+
+    // 3. Link the Firestore /recordings row to the contribution_id so
+    //    the desktop sync script can fetch the Drive URL.
+    if (recId != null && contribId != null) {
+      try {
+        await FirebaseFirestore.instance
+            .collection('recordings')
+            .doc(recId)
+            .set({'contribution_id': contribId},
+                SetOptions(merge: true));
+      } catch (e) {
+        debugPrint('Failed to link recording → contribution: $e');
+      }
+    }
 
     analytics.logActivity(
       event: 'dev_record',
       level: 'developer',
-      lesson: 'record_${_selected!.source}',
+      lesson: 'record_${item.source}',
     );
 
     if (mounted) {
@@ -649,11 +818,12 @@ class _RecordTabState extends State<_RecordTab> {
         _hasRecording = false;
         _recordingPath = null;
         _recordingDuration = Duration.zero;
+        _recordingForKey = null;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-              'Recording submitted for "${_selected!.awing}" — check Review tab'),
+              'Saved "${item.awing}" — will ship in next build'),
           backgroundColor: Colors.green,
         ),
       );
@@ -664,373 +834,499 @@ class _RecordTabState extends State<_RecordTab> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        // Header
-        Card(
-          color: Colors.deepPurple.shade900,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.mic, color: Colors.purpleAccent),
-                    const SizedBox(width: 8),
-                    Text('Re-record Audio',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.purpleAccent.shade100)),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Select a word, phrase, or letter and record the correct '
-                  'pronunciation. The recording is submitted as a contribution '
-                  'and follows the standard review workflow.',
+    return Consumer<RecordingsService>(
+      builder: (context, recordings, _) {
+        final filtered = _applyFilters(recordings);
+        final currentEmail =
+            FirebaseAuth.instance.currentUser?.email;
+        final anyCount = _allItems
+            .where((i) => recordings.hasRecording(i.audioKey))
+            .length;
+        final myCount = _allItems
+            .where((i) => recordings
+                .recordingsFor(i.audioKey)
+                .any((r) => r.recordedByEmail == currentEmail))
+            .length;
+
+        return Column(
+          children: [
+            _buildHeader(recordings, anyCount, myCount),
+            _buildFilters(recordings),
+            _buildSearch(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 6, 16, 4),
+              child: Row(
+                children: [
+                  Text(
+                    '${filtered.length} of ${_allItems.length} shown',
+                    style: const TextStyle(
+                        fontSize: 11, color: Colors.grey),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${recordings.recorderEmails.length} contributor(s)',
+                    style: const TextStyle(
+                        fontSize: 11, color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: filtered.isEmpty
+                  ? _buildEmptyState()
+                  : ListView.builder(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 12),
+                      itemCount: filtered.length,
+                      itemBuilder: (ctx, i) =>
+                          _buildItemCard(filtered[i], recordings),
+                    ),
+            ),
+            if (_recordingForKey != null) _buildRecordingPanel(),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildHeader(
+      RecordingsService recordings, int anyCount, int myCount) {
+    return Container(
+      width: double.infinity,
+      color: Colors.deepPurple.shade900,
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.mic, color: Colors.purpleAccent),
+              const SizedBox(width: 8),
+              const Expanded(
+                child: Text(
+                  'Native recordings',
                   style: TextStyle(
-                      color: Colors.white70, fontSize: 13, height: 1.4),
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
+              ),
+              if (!recordings.isLoaded)
+                const SizedBox(
+                  width: 14,
+                  height: 14,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.purpleAccent,
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            '$anyCount of ${_allItems.length} recorded'
+            ' • $myCount by you'
+            ' • synced across signed-in devices',
+            style: TextStyle(
+                color: Colors.purpleAccent.shade100, fontSize: 11),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilters(RecordingsService recordings) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (final s in [
+                  'All',
+                  'Words',
+                  'Phrases',
+                  'Letters',
+                  'Sentences',
+                  'Stories'
+                ])
+                  Padding(
+                    padding: const EdgeInsets.only(right: 6),
+                    child: ChoiceChip(
+                      label: Text(s,
+                          style: const TextStyle(fontSize: 11)),
+                      selected: _filterSource == s,
+                      selectedColor: Colors.purpleAccent,
+                      onSelected: (_) =>
+                          setState(() => _filterSource = s),
+                    ),
+                  ),
               ],
             ),
           ),
-        ),
-        const SizedBox(height: 12),
-
-        // Source filter chips
-        Wrap(
-          spacing: 8,
-          children: ['All', 'Words', 'Phrases', 'Letters']
-              .map((src) => ChoiceChip(
-                    label: Text(src, style: const TextStyle(fontSize: 12)),
-                    selected: _filterSource == src,
-                    selectedColor: Colors.purpleAccent,
-                    onSelected: (_) {
-                      _filterSource = src;
-                      _applyFilter();
-                    },
-                  ))
-              .toList(),
-        ),
-        const SizedBox(height: 8),
-
-        // Count
-        Text(
-          '${_filtered.length} items | '
-          '${_allItems.where((i) => i.source == "word").length} words, '
-          '${_allItems.where((i) => i.source == "phrase").length} phrases, '
-          '${_allItems.where((i) => i.source == "letter").length} letters',
-          style: const TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-        const SizedBox(height: 8),
-
-        // Search + Dropdown
-        Autocomplete<_RecordableItem>(
-          optionsBuilder: (textEditingValue) {
-            final query = textEditingValue.text.toLowerCase().trim();
-            if (query.isEmpty) {
-              return _filtered.take(50);
-            }
-            return _filtered
-                .where((item) =>
-                    item.awing.toLowerCase().contains(query) ||
-                    item.english.toLowerCase().contains(query))
-                .take(50);
-          },
-          displayStringForOption: (item) => item.displayLabel,
-          fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
-            // Sync external search controller
-            controller.addListener(() {
-              _searchController.text = controller.text;
-            });
-            return TextField(
-              controller: controller,
-              focusNode: focusNode,
-              decoration: InputDecoration(
-                labelText: 'Search and select content',
-                hintText: 'Type Awing or English...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                suffixIcon: controller.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          controller.clear();
-                          setState(() => _selected = null);
-                        },
-                      )
-                    : null,
-              ),
-            );
-          },
-          optionsViewBuilder: (context, onSelected, options) {
-            return Align(
-              alignment: Alignment.topLeft,
-              child: Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(8),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 300),
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemCount: options.length,
-                    itemBuilder: (ctx, i) {
-                      final item = options.elementAt(i);
-                      return ListTile(
-                        dense: true,
-                        leading: Icon(
-                          item.source == 'word'
-                              ? Icons.abc
-                              : item.source == 'phrase'
-                                  ? Icons.chat_bubble_outline
-                                  : Icons.text_fields,
-                          size: 18,
-                          color: item.source == 'word'
-                              ? Colors.blue
-                              : item.source == 'phrase'
-                                  ? Colors.teal
-                                  : Colors.orange,
-                        ),
-                        title: Text(item.awing,
-                            style:
-                                const TextStyle(fontWeight: FontWeight.w600)),
-                        subtitle: Text(
-                            '${item.english}  •  ${item.sourceLabel}',
-                            style: const TextStyle(fontSize: 11)),
-                        onTap: () => onSelected(item),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            );
-          },
-          onSelected: (item) {
-            setState(() {
-              _selected = item;
-              _hasRecording = false;
-              _recordingPath = null;
-              _recordingDuration = Duration.zero;
-            });
-          },
-        ),
-        const SizedBox(height: 16),
-
-        // Selected item card
-        if (_selected != null) ...[
-          Card(
-            color: Colors.grey.shade900,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(_selected!.awing,
-                                style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                            const SizedBox(height: 4),
-                            Text(_selected!.english,
-                                style: const TextStyle(
-                                    fontSize: 16, color: Colors.white70)),
-                            const SizedBox(height: 4),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: _selected!.source == 'word'
-                                    ? Colors.blue.withOpacity(0.2)
-                                    : _selected!.source == 'phrase'
-                                        ? Colors.teal.withOpacity(0.2)
-                                        : Colors.orange.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(_selected!.sourceLabel,
-                                  style: const TextStyle(
-                                      fontSize: 12, color: Colors.white54)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Hear reference pronunciation
-                      Column(
-                        children: [
-                          IconButton(
-                            onPressed: _playReference,
-                            icon: const Icon(Icons.volume_up,
-                                color: Colors.greenAccent, size: 32),
-                            tooltip: 'Hear current pronunciation',
-                          ),
-                          const Text('Hear it',
-                              style: TextStyle(
-                                  fontSize: 10, color: Colors.white54)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          // Recording controls
-          Card(
-            color: _isRecording
-                ? Colors.red.shade900.withOpacity(0.5)
-                : Colors.grey.shade900,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  // Timer
-                  Text(
-                    '${_recordingDuration.inSeconds}s / ${_maxRecordSeconds}s',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: _isRecording ? Colors.redAccent : Colors.white54,
+          const SizedBox(height: 4),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (final tuple in const [
+                  ('All', 'All', null),
+                  ('NotRecorded', '⬜ To do', Colors.orange),
+                  ('ByMe', '✅ By me', Colors.green),
+                  ('ByOthers', '👥 By others', Colors.blue),
+                ])
+                  Padding(
+                    padding: const EdgeInsets.only(right: 6),
+                    child: ChoiceChip(
+                      label: Text(tuple.$2,
+                          style: const TextStyle(fontSize: 11)),
+                      selected: _filterStatus == tuple.$1,
+                      selectedColor:
+                          tuple.$3 ?? Colors.purpleAccent,
+                      onSelected: (_) =>
+                          setState(() => _filterStatus = tuple.$1),
                     ),
                   ),
-                  if (_isRecording)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: LinearProgressIndicator(
-                        value: _recordingDuration.inSeconds / _maxRecordSeconds,
-                        backgroundColor: Colors.grey.shade800,
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                  const SizedBox(height: 16),
-
-                  // Big mic button
-                  GestureDetector(
-                    onTap: _isRecording ? _stopRecording : _startRecording,
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _isRecording ? Colors.red : Colors.purpleAccent,
-                        boxShadow: _isRecording
-                            ? [
-                                BoxShadow(
-                                    color: Colors.red.withOpacity(0.5),
-                                    blurRadius: 20,
-                                    spreadRadius: 4)
-                              ]
-                            : null,
-                      ),
-                      child: Icon(
-                        _isRecording ? Icons.stop : Icons.mic,
-                        color: Colors.white,
-                        size: 40,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _isRecording
-                        ? 'Tap to stop'
-                        : _hasRecording
-                            ? 'Tap to re-record'
-                            : 'Tap to record',
-                    style: const TextStyle(color: Colors.white54, fontSize: 13),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Playback controls (when recording exists)
-                  if (_hasRecording) ...[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Play recording
-                        ElevatedButton.icon(
-                          onPressed: _isPlaying ? null : _playRecording,
-                          icon: Icon(_isPlaying
-                              ? Icons.hourglass_bottom
-                              : Icons.play_arrow),
-                          label: Text(_isPlaying ? 'Playing...' : 'Play mine'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green.shade700,
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        // Delete recording
-                        OutlinedButton.icon(
-                          onPressed: _deleteRecording,
-                          icon: const Icon(Icons.delete_outline,
-                              color: Colors.redAccent),
-                          label: const Text('Delete',
-                              style: TextStyle(color: Colors.redAccent)),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Submit button
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: _submitting ? null : _submitRecording,
-                        icon: _submitting
-                            ? const SizedBox(
-                                width: 18,
-                                height: 18,
-                                child: CircularProgressIndicator(
-                                    strokeWidth: 2, color: Colors.white))
-                            : const Icon(Icons.send),
-                        label: Text(_submitting
-                            ? 'Submitting...'
-                            : 'Submit to Review Queue'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purpleAccent,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
+                const SizedBox(width: 12),
+                _recorderDropdown(recordings),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
 
-        // Empty state
-        if (_selected == null)
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
-            child: Center(
+  Widget _recorderDropdown(RecordingsService recordings) {
+    final emails = ['Anyone', ...recordings.recorderEmails];
+    return DropdownButton<String>(
+      value: emails.contains(_filterRecorder)
+          ? _filterRecorder
+          : 'Anyone',
+      isDense: true,
+      underline: const SizedBox.shrink(),
+      style: const TextStyle(fontSize: 12, color: Colors.white),
+      dropdownColor: Colors.grey.shade900,
+      items: emails.map((e) {
+        final label = e == 'Anyone' ? 'Anyone' : e.split('@').first;
+        return DropdownMenuItem(
+          value: e,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Text('👤 $label',
+                style: const TextStyle(fontSize: 12)),
+          ),
+        );
+      }).toList(),
+      onChanged: (v) {
+        if (v != null) setState(() => _filterRecorder = v);
+      },
+    );
+  }
+
+  Widget _buildSearch() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+      child: TextField(
+        controller: _searchController,
+        decoration: InputDecoration(
+          hintText: 'Search Awing or English…',
+          isDense: true,
+          prefixIcon: const Icon(Icons.search, size: 20),
+          suffixIcon: _searchController.text.isEmpty
+              ? null
+              : IconButton(
+                  icon: const Icon(Icons.clear, size: 18),
+                  onPressed: () => _searchController.clear(),
+                ),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10)),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.search_off,
+                size: 64, color: Colors.grey.shade700),
+            const SizedBox(height: 12),
+            Text(
+              'No items match these filters',
+              style: TextStyle(
+                  color: Colors.grey.shade400, fontSize: 14),
+            ),
+            const SizedBox(height: 8),
+            TextButton.icon(
+              icon: const Icon(Icons.refresh, size: 18),
+              label: const Text('Clear filters'),
+              onPressed: () {
+                setState(() {
+                  _filterSource = 'All';
+                  _filterStatus = 'All';
+                  _filterRecorder = 'Anyone';
+                  _searchController.clear();
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildItemCard(
+      _RecordableItem item, RecordingsService recordings) {
+    final recs = recordings.recordingsFor(item.audioKey);
+    final currentEmail =
+        FirebaseAuth.instance.currentUser?.email;
+    final byMe =
+        recs.any((r) => r.recordedByEmail == currentEmail);
+    final isActive = _recordingForKey == item.audioKey;
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      color: isActive
+          ? Colors.purple.shade900.withOpacity(0.3)
+          : null,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Icon(item.sourceIcon, color: item.sourceColor, size: 20),
+            const SizedBox(width: 10),
+            Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.mic_none,
-                      size: 64, color: Colors.grey.shade700),
-                  const SizedBox(height: 12),
-                  Text('Select a word, phrase, or letter above\nto start recording',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.grey.shade600, fontSize: 14)),
+                  Text(item.awing,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text(item.english,
+                      style: const TextStyle(
+                          fontSize: 12, color: Colors.white70)),
+                  const SizedBox(height: 2),
+                  _statusLine(item, recs, byMe),
                 ],
               ),
             ),
+            const SizedBox(width: 4),
+            IconButton(
+              tooltip: 'Hear reference TTS',
+              icon: const Icon(Icons.volume_up,
+                  color: Colors.greenAccent),
+              iconSize: 22,
+              onPressed: () => _playReference(item),
+            ),
+            IconButton(
+              tooltip:
+                  isActive ? 'Cancel recording' : 'Record this',
+              icon: Icon(
+                isActive ? Icons.close : Icons.mic,
+                color: isActive
+                    ? Colors.redAccent
+                    : Colors.purpleAccent,
+              ),
+              iconSize: 26,
+              onPressed: isActive
+                  ? _cancelRecording
+                  : () => _startRecording(item),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _statusLine(_RecordableItem item, List<RecordingDoc> recs,
+      bool byMe) {
+    if (recs.isEmpty) {
+      return Row(
+        children: const [
+          Icon(Icons.radio_button_unchecked,
+              size: 11, color: Colors.orange),
+          SizedBox(width: 4),
+          Text('Not recorded',
+              style: TextStyle(fontSize: 10, color: Colors.orange)),
+        ],
+      );
+    }
+    final latest = recs.first;
+    final age = _agoLabel(latest.recordedAt);
+    final name = latest.recordedByName.contains('@')
+        ? latest.recordedByName.split('@').first
+        : latest.recordedByName;
+    final more = recs.length > 1 ? ' (+${recs.length - 1} more)' : '';
+    return Row(
+      children: [
+        Icon(
+          byMe ? Icons.check_circle : Icons.people_alt_outlined,
+          size: 11,
+          color: byMe ? Colors.greenAccent : Colors.lightBlueAccent,
+        ),
+        const SizedBox(width: 4),
+        Expanded(
+          child: Text(
+            byMe && recs.length == 1
+                ? 'You · $age'
+                : '$name · $age$more',
+            style: TextStyle(
+                fontSize: 10,
+                color: byMe
+                    ? Colors.greenAccent
+                    : Colors.lightBlueAccent),
+            overflow: TextOverflow.ellipsis,
           ),
+        ),
       ],
+    );
+  }
+
+  String _agoLabel(DateTime t) {
+    final d = DateTime.now().difference(t);
+    if (d.inDays > 1) return '${d.inDays}d ago';
+    if (d.inHours > 1) return '${d.inHours}h ago';
+    if (d.inMinutes > 1) return '${d.inMinutes}m ago';
+    return 'just now';
+  }
+
+  Widget _buildRecordingPanel() {
+    final item = _allItems.firstWhere(
+      (i) => i.audioKey == _recordingForKey,
+      orElse: () => _RecordableItem(
+          awing: '', english: '', source: 'word'),
+    );
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.shade900,
+        border: const Border(
+            top: BorderSide(color: Colors.purpleAccent)),
+      ),
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 14),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.fiber_manual_record,
+                  color: Colors.redAccent, size: 14),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  item.awing,
+                  style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Text(
+                  '${_recordingDuration.inSeconds}/${_maxRecordSeconds}s',
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: _isRecording
+                          ? Colors.redAccent
+                          : Colors.white54)),
+              const SizedBox(width: 6),
+              IconButton(
+                icon: const Icon(Icons.close,
+                    color: Colors.white54),
+                onPressed: _cancelRecording,
+                iconSize: 20,
+              ),
+            ],
+          ),
+          if (_isRecording)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: LinearProgressIndicator(
+                value:
+                    _recordingDuration.inSeconds / _maxRecordSeconds,
+                backgroundColor: Colors.grey.shade800,
+                color: Colors.redAccent,
+              ),
+            ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (!_hasRecording) ...[
+                GestureDetector(
+                  onTap: _isRecording
+                      ? _stopRecording
+                      : () => _startRecording(item),
+                  child: Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _isRecording
+                          ? Colors.red
+                          : Colors.purpleAccent,
+                    ),
+                    child: Icon(
+                      _isRecording ? Icons.stop : Icons.mic,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                  ),
+                ),
+              ] else ...[
+                ElevatedButton.icon(
+                  onPressed: _isPlaying ? null : _playRecording,
+                  icon: Icon(_isPlaying
+                      ? Icons.hourglass_bottom
+                      : Icons.play_arrow),
+                  label:
+                      Text(_isPlaying ? 'Playing' : 'Play mine'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade700,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                OutlinedButton.icon(
+                  onPressed: () => _startRecording(item),
+                  icon: const Icon(Icons.refresh,
+                      color: Colors.orangeAccent),
+                  label: const Text('Redo',
+                      style:
+                          TextStyle(color: Colors.orangeAccent)),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton.icon(
+                  onPressed: _submitting
+                      ? null
+                      : () => _submitRecording(item),
+                  icon: _submitting
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white))
+                      : const Icon(Icons.cloud_upload),
+                  label: Text(
+                      _submitting ? 'Saving…' : 'Save & ship'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purpleAccent,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1057,6 +1353,48 @@ class _UsersTabState extends State<_UsersTab> {
     _fetchCloudUsers();
   }
 
+  /// Session 61 — G6 security hardening.
+  ///
+  /// Write an append-only audit entry recording that the developer account
+  /// performed a privileged cross-user read. Failure to write the audit
+  /// entry is non-fatal (we still let the read proceed) but is logged to
+  /// the debug console so regressions surface during testing.
+  ///
+  /// The Firestore rule (firestore.rules `match /audit/{auditId}`) enforces
+  /// that:
+  ///   - email field MUST equal request.auth.token.email (no impersonation)
+  ///   - action is a string, userCount is an int
+  ///   - update + delete are rejected (log is immutable)
+  Future<void> _writeAuditLog({
+    required String action,
+    required int userCount,
+    List<String>? userIds,
+  }) async {
+    try {
+      final email = FirebaseAuth.instance.currentUser?.email;
+      if (email == null) {
+        debugPrint('Audit log: no Firebase auth user — skipping');
+        return;
+      }
+      final entry = <String, dynamic>{
+        'email': email,
+        'action': action,
+        'timestamp': DateTime.now().toUtc().toIso8601String(),
+        'userCount': userCount,
+      };
+      if (userIds != null && userIds.isNotEmpty && userIds.length <= 20) {
+        // Cap list size to keep doc small (Firestore doc limit is 1 MiB
+        // but we want to avoid runaway log entries on huge user sets).
+        entry['userIds'] = userIds;
+      }
+      await FirebaseFirestore.instance.collection('audit').add(entry);
+    } catch (e) {
+      // Non-fatal — audit logging failures must not block the read itself.
+      // But we log loudly so dev notices regressions (e.g. rule changes).
+      debugPrint('Audit log write failed: $e');
+    }
+  }
+
   Future<void> _fetchCloudUsers() async {
     setState(() {
       _loadingCloud = true;
@@ -1067,6 +1405,23 @@ class _UsersTabState extends State<_UsersTab> {
       // since many parent /users/{id} documents don't exist (phantom parents).
       final dataSnapshot =
           await FirebaseFirestore.instance.collectionGroup('data').get();
+
+      // Session 61 — G6: record this privileged bulk read in the audit log.
+      // We log the unique user count (number of distinct userIds touched),
+      // not the doc count, since one user yields multiple data docs
+      // (accounts, progress, settings).
+      final uniqueUserIds = <String>{};
+      for (final doc in dataSnapshot.docs) {
+        final parts = doc.reference.path.split('/');
+        if (parts.length >= 2 && parts[0] == 'users') {
+          uniqueUserIds.add(parts[1]);
+        }
+      }
+      // Fire-and-forget; the audit write is non-blocking.
+      unawaited(_writeAuditLog(
+        action: 'bulk_read_users',
+        userCount: uniqueUserIds.length,
+      ));
 
       // Extract unique user IDs from document paths: users/{userId}/data/{docType}
       final userDataMap = <String, Map<String, Map<String, dynamic>?>>{};

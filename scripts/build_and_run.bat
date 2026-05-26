@@ -122,6 +122,45 @@ if !ERRORLEVEL! neq 0 (
 echo        Contributions applied successfully.
 echo.
 
+REM ---- Step 1b: Sync native recordings from webhook ----
+REM Pulls every "Native recording" tagged audio uploaded via the new Dev
+REM Mode Record tab (Session 61b family-recorder-style UI) into
+REM training_data/recordings/ as WAV files + manifest entries. Then
+REM apply_recordings_as_audio.py (Step 1c) copies them into the PAD pack.
+REM Non-fatal: if there are no native recordings to sync, the script
+REM exits cleanly and the build continues with Edge TTS only.
+echo [1b/7] Syncing native recordings from contributors...
+python scripts\sync_recordings.py
+if !ERRORLEVEL! neq 0 (
+    echo        WARNING: sync_recordings.py failed.
+    echo        The build will continue — TTS will fill in for missing native
+    echo        audio. Common causes:
+    echo          - SCRIPT_SECRET not configured (env var, config/webhooks.json,
+    echo            or ~/.awing_script_secret)
+    echo          - ffmpeg not on PATH
+    echo          - Network issue reaching the webhook
+    echo.
+)
+echo.
+
+REM ---- Step 1c: Apply recordings as native audio assets ----
+REM Reads training_data/recordings/manifest.json and copies each WAV to
+REM android/install_time_assets/src/main/assets/audio/native/<category>/
+REM <key>.mp3 via ffmpeg conversion. The Flutter app's PronunciationService
+REM prefers the native/ tier over the 6 Edge TTS voices.
+echo [1c/7] Applying recordings as native audio assets...
+if exist "training_data\recordings\manifest.json" (
+    python scripts\apply_recordings_as_audio.py
+    if !ERRORLEVEL! neq 0 (
+        echo        WARNING: apply_recordings_as_audio.py failed.
+        echo        Build continues with TTS-only audio for the affected words.
+    )
+) else (
+    echo        No manifest.json yet — skipping. (Run the Dev Mode Record tab
+    echo        on a tablet first, or place recordings in training_data\recordings\)
+)
+echo.
+
 REM ---- Set PAD asset output directory ----
 set "PAD_ASSETS=android\install_time_assets\src\main\assets"
 if not exist "%PAD_ASSETS%\audio" mkdir "%PAD_ASSETS%\audio"

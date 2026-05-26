@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.12.3+59
+version: 1.13.0+60
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -36,6 +36,18 @@ dependencies:
   firebase_core: ^3.8.1
   firebase_auth: ^5.3.4
   cloud_firestore: ^5.6.0
+  # Session 61 — V3+G10 security hardening.
+  # Firebase App Check + Play Integrity API. The app proves to Firebase's
+  # backend that requests come from an unmodified, Play-Store-installed copy
+  # of THIS app, not a stolen API key being replayed from curl, a browser,
+  # or a tampered/rooted device. Defends against:
+  #   - V3: someone extracts the Firebase API key from the APK and uses it
+  #         to read/write your Firestore from outside the app.
+  #   - G10: someone repackages the app with auth checks stripped and tries
+  #          to submit malformed contributions or scrape user data.
+  # Requires manual Play Console + Firebase Console setup (see CLAUDE.md
+  # Session 61 deployment checklist).
+  firebase_app_check: ^0.3.1+7
   nsd: ^5.0.1
   network_info_plus: ^6.1.1
 

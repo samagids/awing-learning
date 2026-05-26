@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Session 61 — G2 security hardening.
+
+  Forbid Android Auto-Backup and Device-Transfer from copying ANY app data.
+
+  Without this, the Android OS automatically backs up:
+    • SharedPreferences (auth_dev_code, auth_dev_code_expiry, auth_accounts,
+      progress, settings, …)
+    • Internal files (cache, asset_pack_cache, contribution audio)
+    • Databases
+  to the user's Google Drive account (D2D-Transfer or Auto-Backup), where
+  they sit in plaintext under the developer's GMS quota. For an app that
+  caches developer-mode 2FA state and per-user progress, that's an
+  unnecessary shadow data path.
+
+  Both cloud-backup and device-transfer are explicitly denied at all
+  domain levels (root, file, database, sharedpref, external).
+
+  AndroidManifest must reference this file via
+    android:dataExtractionRules="@xml/data_extraction_rules"
+  AND set
+    android:allowBackup="false"
+  AND set
+    android:fullBackupContent="false"
+  to cover devices that still honor the older backup flags.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </device-transfer>
+</data-extraction-rules>

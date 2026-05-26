@@ -78,5 +78,87 @@ service cloud.firestore {
     match /{path=**}/data/{dataDoc} {
       allow read: if isDeveloper();
     }
+
+    // Session 61 — G6 security hardening.
+    //
+    // Audit log: append-only record of every developer bulk-read of user
+    // data. The Developer Mode > Users tab is a single point of compromise
+    // (if samagids@gmail.com is ever phished, all tester progress is
+    // readable). The audit log creates accountability: we can later answer
+    // "did the dev account read user X's data, and when?".
+    //
+    // Schema (enforced by request.resource.data.keys().hasAll(...)):
+    //   email:     who did the read (request.auth.token.email)
+    //   action:    "bulk_read_users" | "read_single_user" | "delete_user"
+    //   timestamp: ISO 8601 string written by the client
+    //   userCount: how many user docs were touched (integer)
+    //   userIds:   optional list of affected userId strings (for single
+    //              reads; omitted for bulk reads to keep doc size small)
+    //
+    // Rules:
+    //   create: dev only, and the email field MUST match the caller's
+    //           auth token email (prevents the dev from impersonating
+    //           another email in the log).
+    //   read:   dev only.
+    //   update: NEVER. Even the dev can't rewrite history.
+    //   delete: NEVER. Logs are immutable for forensics.
+    match /audit/{auditId} {
+      allow create: if isDeveloper()
+                    && request.resource.data.keys().hasAll(
+                         ['email', 'action', 'timestamp', 'userCount'])
+                    && request.resource.data.email == request.auth.token.email
+                    && request.resource.data.action is string
+                    && request.resource.data.userCount is int;
+      allow read: if isDeveloper();
+      allow update, delete: if false;
+    }
+
+    // Session 61b — native-speaker recording inventory.
+    //
+    // Cross-device tracking of which Awing words/phrases/sentences have been
+    // recorded by whom. Each document represents one recording of one
+    // Awing item by one user, from one device, at one point in time.
+    //
+    // Schema:
+    //   awing:            the Awing text recorded (e.g. "apô")
+    //   english:          English meaning at time of recording
+    //   source:           "word" | "phrase" | "letter" | "sentence" | "story"
+    //   audio_key:        normalized filename stem (matches generate_audio_edge.py)
+    //   category:         optional category tag (for filtering)
+    //   recorded_by_email: email of the recorder (must match auth)
+    //   recorded_by_name: display name at time of recording
+    //   recorded_at:      Timestamp
+    //   device:           platform string ("Pixel Tablet", "Windows desktop")
+    //   drive_url:        populated after audio uploaded to Drive
+    //   duration_ms:      length of the recording
+    //   contribution_id:  link to /contributions row if applicable
+    //
+    // Rules:
+    //   read:   any signed-in user (so anyone using the family/dev recorder
+    //           can see what's already done, avoiding duplicate work).
+    //   create: signed-in user, AND recorded_by_email must equal their own
+    //           auth email (no impersonation), AND required fields present
+    //           with correct types.
+    //   update: developer only OR the original recorder (to add drive_url
+    //           after the upload completes).
+    //   delete: developer only (forensics-friendly; recorders can't hide
+    //           bad recordings, only the dev can prune).
+    match /recordings/{recId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasAll(
+                         ['awing', 'source', 'audio_key',
+                          'recorded_by_email', 'recorded_at'])
+                    && request.resource.data.recorded_by_email ==
+                       request.auth.token.email
+                    && request.resource.data.awing is string
+                    && request.resource.data.source is string
+                    && request.resource.data.audio_key is string;
+      allow update: if request.auth != null
+                    && (resource.data.recorded_by_email ==
+                          request.auth.token.email
+                        || isDeveloper());
+      allow delete: if isDeveloper();
+    }
   }
 }

@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:awing_ai_learning/modules/beginner/beginner_module.dart';
 import 'package:awing_ai_learning/screens/home_screen.dart';
 import 'package:awing_ai_learning/screens/auth/login_screen.dart';
@@ -12,6 +14,7 @@ import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/parent_notification_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
+import 'package:awing_ai_learning/services/recordings_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 void main() async {
@@ -35,6 +38,50 @@ void main() async {
   } catch (e, st) {
     debugPrint('Firebase init failed: $e\n$st');
     // Continue without Firebase — auth + cloud sync will degrade to local.
+  }
+
+  // Session 61 — V3+G10 security hardening (ACTIVATED).
+  //
+  // Firebase App Check: every request to Firebase services (Firestore,
+  // Auth, future Storage) carries a per-request attestation token proving
+  // it came from this app on a non-tampered device. The token is minted
+  // by Play Integrity API on Android, App Attest on iOS 14+ (falling back
+  // to DeviceCheck on older iOS).
+  //
+  // Console setup confirmed (verified 2026-05-25):
+  //   • Android app "Awing AI Learning" (com.awing.learning) → Play Integrity → Registered
+  //   • iOS app "Awing AI Learning iOS" (com.awing.awingAiLearning) → App Attest → Registered
+  //   • Cloud Firestore: Unenforced (collecting metrics)
+  //   • Authentication: Unenforced (collecting metrics)
+  //   • Release keystore SHA-256 already in Project Settings: 6E:11:9D:26:BC:BE:...
+  //
+  // Enforcement plan: ship v1.13.0 with App Check enabled in unenforced mode.
+  // Monitor Firebase Console → App Check → APIs → Cloud Firestore for the
+  // "Verified requests %" metric. Once it stabilizes above 99% (typically 1
+  // week of real-world traffic), flip the Enforce toggle on Firestore AND
+  // Authentication. From that point, any non-attested request fails closed.
+  //
+  // Debug builds use the DEBUG provider which prints a token to logcat on
+  // first launch. To use a debug build during dev: copy the token from
+  // logcat and add it under App Check → Manage debug tokens.
+  try {
+    await FirebaseAppCheck.instance.activate(
+      androidProvider: kDebugMode
+          ? AndroidProvider.debug
+          : AndroidProvider.playIntegrity,
+      appleProvider: kDebugMode
+          ? AppleProvider.debug
+          : AppleProvider.appAttestWithDeviceCheckFallback,
+    ).timeout(
+      const Duration(seconds: 5),
+      onTimeout: () =>
+          debugPrint('App Check activate timed out — continuing'),
+    );
+  } catch (e) {
+    debugPrint('App Check activate failed: $e');
+    // Continue without App Check. Firestore calls will still work in
+    // unenforced mode; once enforcement is flipped on the server, they
+    // will start failing with permission-denied for unattested clients.
   }
 
   // Set global audio context so all audio plays on the MUSIC stream.
@@ -205,6 +252,9 @@ class AwingApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => CloudBackupService()..initialize(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RecordingsService()..initialize(),
         ),
         ProxyProvider2<AuthService, ProgressService, ParentNotificationService>(
           update: (_, auth, progress, previous) {
