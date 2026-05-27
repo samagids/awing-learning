@@ -118,6 +118,13 @@ jobs:
         run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/awing-1.2.0.apk
 
       - name: Upload APK artifact
+        # Non-fatal: artifact storage is a developer-convenience archive
+        # (so we can download the APK from the run page for sideloading).
+        # When the GitHub Actions artifact quota fills up, this step
+        # fails and — without continue-on-error — would short-circuit
+        # the AAB build + Play Console upload. Distribution must NOT
+        # depend on the artifact archive succeeding.
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: awing-android-apk
@@ -135,6 +142,10 @@ jobs:
           flutter build appbundle --release
 
       - name: Upload AAB artifact
+        # Non-fatal — see comment on Upload APK artifact above. Play
+        # Console upload (next step) must run even if the artifact
+        # archive fails on quota.
+        continue-on-error: true
         if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-artifact@v4
         with:

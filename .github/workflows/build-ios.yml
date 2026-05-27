@@ -332,6 +332,13 @@ jobs:
             --export-options-plist=ios/ExportOptions.plist
 
       - name: Upload signed IPA
+        # Non-fatal: artifact storage is a developer-convenience archive
+        # (so we can download the IPA from the run page). When the
+        # GitHub Actions artifact quota fills up, this step fails and —
+        # without continue-on-error — would short-circuit the TestFlight
+        # upload. Distribution must NOT depend on the artifact archive
+        # succeeding.
+        continue-on-error: true
         if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-artifact@v4
         with:
