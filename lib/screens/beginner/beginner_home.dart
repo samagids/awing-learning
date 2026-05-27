@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awing_ai_learning/screens/beginner/alphabet_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/vocabulary_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/quiz_screen.dart';
@@ -20,18 +21,93 @@ class BeginnerHome extends StatefulWidget {
 class _BeginnerHomeState extends State<BeginnerHome> {
   final PronunciationService _pronunciation = PronunciationService();
   bool _isFemaleVoice = false;
+  // Optional kid-voice override. null = use the canonical native voice
+  // ("My voice", which is Dr. Sama's recording for words he covered, or
+  // the Edge TTS character voice otherwise). When set to a kid slug
+  // (joel/janelle/joyce/jadyne), PronunciationService prefers that
+  // kid's recording first, falling back to "My voice" silently when the
+  // specific kid hasn't recorded that word.
+  String? _kidOverride;
+
+  // SharedPreferences keys — separate per gender so flipping Boy↔Girl
+  // remembers each side's last kid pick.
+  static const _kPrefsGender = 'beginner_voice_is_female';
+  static const _kPrefsKidBoy = 'beginner_voice_kid_boy';
+  static const _kPrefsKidGirl = 'beginner_voice_kid_girl';
 
   @override
   void initState() {
     super.initState();
     _pronunciation.setVoiceForLevel('beginner', alternate: _isFemaleVoice);
+    _loadPersistedVoice();
+  }
+
+  Future<void> _loadPersistedVoice() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final female = prefs.getBool(_kPrefsGender) ?? false;
+      final kidKey = female ? _kPrefsKidGirl : _kPrefsKidBoy;
+      final kid = prefs.getString(kidKey);
+      if (!mounted) return;
+      setState(() {
+        _isFemaleVoice = female;
+        _kidOverride = kid;
+      });
+      _pronunciation.setVoiceForLevel('beginner', alternate: female);
+      _pronunciation.setKidOverride(kid);
+    } catch (_) {/* fall back to defaults */}
+  }
+
+  Future<void> _persistGender(bool female) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_kPrefsGender, female);
+    } catch (_) {/* prefs unavailable */}
+  }
+
+  Future<void> _persistKid(String? slug, bool female) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = female ? _kPrefsKidGirl : _kPrefsKidBoy;
+      if (slug == null) {
+        await prefs.remove(key);
+      } else {
+        await prefs.setString(key, slug);
+      }
+    } catch (_) {/* prefs unavailable */}
   }
 
   void _toggleVoice(bool female) {
     setState(() {
       _isFemaleVoice = female;
+      // Reset kid override when switching gender — the previous kid
+      // belongs to the other gender (Joel/Janelle are boys; Joyce/
+      // Jadyne are girls). Restore last-saved pick for the new side
+      // asynchronously via SharedPreferences below.
+      _kidOverride = null;
     });
     _pronunciation.setVoiceForLevel('beginner', alternate: female);
+    _pronunciation.setKidOverride(null);
+    _persistGender(female);
+    // Async-restore the last-saved kid pick for the new gender.
+    _restoreKidForGender(female);
+  }
+
+  Future<void> _restoreKidForGender(bool female) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = female ? _kPrefsKidGirl : _kPrefsKidBoy;
+      final saved = prefs.getString(key);
+      if (saved == null || !mounted) return;
+      setState(() => _kidOverride = saved);
+      _pronunciation.setKidOverride(saved);
+    } catch (_) {}
+  }
+
+  void _pickKid(String? slug) {
+    setState(() => _kidOverride = slug);
+    _pronunciation.setKidOverride(slug);
+    _persistKid(slug, _isFemaleVoice);
   }
 
   @override
@@ -47,7 +123,8 @@ class _BeginnerHomeState extends State<BeginnerHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Voice selector
+            // Voice selector — gender (Boy / Girl) controls the TTS
+            // character voice + which kids the next picker offers.
             Card(
               color: Colors.green.shade50,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -80,6 +157,16 @@ class _BeginnerHomeState extends State<BeginnerHome> {
                   ],
                 ),
               ),
+            ),
+            const SizedBox(height: 10),
+            // Whose voice — "My voice" (Dr. Sama / canonical) is the
+            // default. When a kid is picked, words THEY recorded play
+            // in their voice; words they didn't record still play in
+            // "My voice" silently.
+            _KidVoicePicker(
+              isFemaleVoice: _isFemaleVoice,
+              activeKid: _kidOverride,
+              onChanged: _pickKid,
             ),
             const SizedBox(height: 16),
             const Text(
@@ -282,6 +369,124 @@ class _LessonTile extends StatelessWidget {
         subtitle: Text(subtitle),
         trailing: const Icon(Icons.chevron_right),
         onTap: onTap,
+      ),
+    );
+  }
+}
+
+/// Sub-picker for "Whose voice should we use?". Sits directly below
+/// the Boy/Girl card on the Beginner home screen.
+///
+/// When Boy is selected (isFemaleVoice=false): My voice / Joel / Janelle.
+/// When Girl is selected (isFemaleVoice=true):  My voice / Joyce / Jadyne.
+///
+/// "My voice" is null override — plays Dr. Sama's recording where
+/// available, or the Edge TTS character voice otherwise. Picking a
+/// specific kid plays THEIR recording when present, silently falling
+/// back to "My voice" for words they haven't recorded yet.
+class _KidVoicePicker extends StatelessWidget {
+  final bool isFemaleVoice;
+  final String? activeKid;
+  final ValueChanged<String?> onChanged;
+
+  const _KidVoicePicker({
+    required this.isFemaleVoice,
+    required this.activeKid,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final character = isFemaleVoice ? 'girl' : 'boy';
+    final kids =
+        PronunciationService.kidVoicesByCharacter[character] ?? const [];
+
+    return Card(
+      color: Colors.green.shade50,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: Row(
+          children: [
+            const Icon(Icons.person_pin_circle_outlined,
+                color: Colors.green),
+            const SizedBox(width: 12),
+            const Text(
+              'Whose voice?',
+              style: TextStyle(
+                  fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+            const Spacer(),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                reverse: true, // keep the "My voice" chip visible
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    _KidChip(
+                      label: 'My voice',
+                      selected: activeKid == null,
+                      onTap: () => onChanged(null),
+                    ),
+                    for (final kid in kids) ...[
+                      const SizedBox(width: 6),
+                      _KidChip(
+                        label:
+                            PronunciationService.kidDisplayNames[kid] ??
+                                kid,
+                        selected: activeKid == kid,
+                        onTap: () => onChanged(kid),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _KidChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _KidChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding:
+            const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: selected ? Colors.green : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: selected ? Colors.green : Colors.grey.shade400,
+            width: 1.6,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: selected ? Colors.white : Colors.grey.shade700,
+          ),
+        ),
       ),
     );
   }

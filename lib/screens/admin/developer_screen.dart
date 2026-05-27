@@ -529,6 +529,22 @@ class _RecordTabState extends State<_RecordTab> {
   String _filterRecorder = 'Anyone';
   final _searchController = TextEditingController();
 
+  // Active recorder (whose voice is in the next submission).
+  // Mirrors scripts/build_family_recorder.py FAMILY list — same names so
+  // recordings are attributed consistently across the family HTML recorder
+  // and the in-app Dev Mode Record tab. "Other…" opens a free-text prompt
+  // for guests. Persisted in SharedPreferences across app restarts.
+  static const List<String> _familyRecorders = [
+    'Dr. Guidion Sama',
+    'Berlin Sama',
+    'Joel',
+    'Janelle',
+    'Joyce',
+    'Jadyne',
+  ];
+  static const String _kRecorderPrefsKey = 'record_tab_active_recorder';
+  String _activeRecorder = 'Dr. Guidion Sama';
+
   // Inline recording state
   String? _recordingForKey; // audioKey of the item being recorded
   final AudioRecorder _recorder = AudioRecorder();
@@ -539,6 +555,7 @@ class _RecordTabState extends State<_RecordTab> {
   Duration _recordingDuration = Duration.zero;
   Timer? _recordingTimer;
   bool _isPlaying = false;
+  String? _playingForKey;       // audioKey of item whose recording is playing
   bool _submitting = false;
 
   static const int _maxRecordSeconds = 10;
@@ -549,8 +566,73 @@ class _RecordTabState extends State<_RecordTab> {
     _buildItemList();
     _searchController.addListener(() => setState(() {}));
     _player.onPlayerComplete.listen((_) {
-      if (mounted) setState(() => _isPlaying = false);
+      if (mounted) {
+        setState(() {
+          _isPlaying = false;
+          _playingForKey = null;
+        });
+      }
     });
+    _loadActiveRecorder();
+  }
+
+  Future<void> _loadActiveRecorder() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final saved = prefs.getString(_kRecorderPrefsKey);
+      if (!mounted) return;
+      if (saved != null && saved.isNotEmpty) {
+        setState(() => _activeRecorder = saved);
+      } else {
+        // First run: default to current profile name if it matches a
+        // family member; otherwise stay on Dr. Guidion Sama (the
+        // typical Dev-Mode operator).
+        final auth = context.read<AuthService>();
+        final name = auth.currentProfile?.displayName;
+        if (name != null && _familyRecorders.contains(name)) {
+          setState(() => _activeRecorder = name);
+        }
+      }
+    } catch (_) {/* fall back to default */}
+  }
+
+  Future<void> _setActiveRecorder(String name) async {
+    if (!mounted) return;
+    setState(() => _activeRecorder = name);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_kRecorderPrefsKey, name);
+    } catch (_) {/* prefs unavailable — keep in-memory only */}
+  }
+
+  Future<String?> _promptCustomRecorder() async {
+    final controller = TextEditingController();
+    return showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Who is recording?'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          textCapitalization: TextCapitalization.words,
+          decoration: const InputDecoration(
+            hintText: 'Name (e.g. Aunt Mary)',
+          ),
+          onSubmitted: (v) => Navigator.pop(ctx, v.trim()),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () =>
+                Navigator.pop(ctx, controller.text.trim()),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _buildItemList() {
@@ -736,6 +818,60 @@ class _RecordTabState extends State<_RecordTab> {
     await pron.speakAwing(item.awing);
   }
 
+  /// v1.13.3 — play back a recording the user previously submitted.
+  /// Fetches the Drive URL via the contributions webhook (privileged
+  /// fetch_audio call), downloads the m4a to the temp dir, and plays it
+  /// via AudioPlayer. UI tracks per-key playback state so the button
+  /// can show a spinner while loading.
+  Future<void> _playUserRecording(
+      _RecordableItem item, RecordingDoc rec) async {
+    if (rec.contributionId == null) return;
+    setState(() {
+      _isPlaying = true;
+      _playingForKey = item.audioKey;
+    });
+    try {
+      final contribService = context.read<ContributionService>();
+      final urls = await contribService
+          .fetchAudioUrls([rec.contributionId!]);
+      final url = urls[rec.contributionId!];
+      if (url == null || url.isEmpty) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('No audio on file for that recording yet'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+        return;
+      }
+      // Stream the audio directly from the URL. AudioPlayer's UrlSource
+      // handles range requests and streaming, no temp file needed.
+      await _player.play(UrlSource(url));
+    } catch (e) {
+      debugPrint('Play user recording failed: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Playback failed: $e'),
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    } finally {
+      // _isPlaying is reset to false by the player's onPlayerComplete
+      // listener set up in initState. But if we errored before play
+      // even started, manually reset.
+      if (mounted && _player.state != PlayerState.playing) {
+        setState(() {
+          _isPlaying = false;
+          _playingForKey = null;
+        });
+      }
+    }
+  }
+
   void _cancelRecording() {
     if (_isRecording) {
       _recorder.stop();
@@ -756,7 +892,6 @@ class _RecordTabState extends State<_RecordTab> {
     if (!_hasRecording) return;
     setState(() => _submitting = true);
 
-    final auth = context.read<AuthService>();
     final contribService = context.read<ContributionService>();
     final recordings = context.read<RecordingsService>();
     final analytics = AnalyticsService.instance;
@@ -778,9 +913,14 @@ class _RecordTabState extends State<_RecordTab> {
     );
 
     // 2. Upload audio via existing contributions webhook (Drive storage).
+    //    profileName is the picker's _activeRecorder — that's the *voice*
+    //    in the recording. The audit trail (recordedByEmail in Firestore)
+    //    is the signed-in account that did the upload; those are
+    //    deliberately separate so we can attribute "whose voice this is"
+    //    even when one device does the recording for many family members.
     final contribId = await contribService.submit(
       deviceId: analytics.isOptedOut ? 'anonymous' : 'developer',
-      profileName: auth.currentProfile?.displayName ?? 'Developer',
+      profileName: _activeRecorder,
       type: ContributionType.pronunciationFix,
       targetWord: item.awing,
       correction: item.awing,
@@ -851,6 +991,7 @@ class _RecordTabState extends State<_RecordTab> {
         return Column(
           children: [
             _buildHeader(recordings, anyCount, myCount),
+            _buildRecorderPicker(),
             _buildFilters(recordings),
             _buildSearch(),
             Padding(
@@ -930,6 +1071,87 @@ class _RecordTabState extends State<_RecordTab> {
             ' • synced across signed-in devices',
             style: TextStyle(
                 color: Colors.purpleAccent.shade100, fontSize: 11),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecorderPicker() {
+    // "Recording as: <name>" strip — sits directly under the purple header
+    // so it's the first thing the dev sees. Tapping the dropdown lets the
+    // dev attribute the next recording to any family member, matching the
+    // family_recorder.html workflow. "Other…" opens a free-text prompt for
+    // guests / one-off contributors. Persisted in SharedPreferences.
+    final bool isFamily = _familyRecorders.contains(_activeRecorder);
+    return Container(
+      width: double.infinity,
+      color: Colors.deepPurple.shade700,
+      padding: const EdgeInsets.fromLTRB(16, 6, 12, 6),
+      child: Row(
+        children: [
+          const Icon(Icons.person_outline,
+              color: Colors.white, size: 18),
+          const SizedBox(width: 8),
+          const Text(
+            'Recording as:',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                canvasColor: Colors.deepPurple.shade800,
+              ),
+              child: DropdownButton<String>(
+                value: isFamily ? _activeRecorder : '__custom__',
+                isExpanded: true,
+                isDense: true,
+                iconEnabledColor: Colors.white,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
+                underline: Container(
+                  height: 1,
+                  color: Colors.purpleAccent.shade100,
+                ),
+                items: [
+                  for (final name in _familyRecorders)
+                    DropdownMenuItem(
+                      value: name,
+                      child: Text(name),
+                    ),
+                  if (!isFamily)
+                    DropdownMenuItem(
+                      value: '__custom__',
+                      child: Text('$_activeRecorder (guest)'),
+                    ),
+                  const DropdownMenuItem(
+                    value: '__new_custom__',
+                    child: Text('Other…'),
+                  ),
+                ],
+                onChanged: (v) async {
+                  if (v == null) return;
+                  if (v == '__new_custom__') {
+                    final custom = await _promptCustomRecorder();
+                    if (custom != null && custom.isNotEmpty) {
+                      await _setActiveRecorder(custom);
+                    }
+                  } else if (v == '__custom__') {
+                    // No-op — picker already shows the guest name.
+                  } else {
+                    await _setActiveRecorder(v);
+                  }
+                },
+              ),
+            ),
           ),
         ],
       ),
@@ -1093,11 +1315,17 @@ class _RecordTabState extends State<_RecordTab> {
         recs.any((r) => r.recordedByEmail == currentEmail);
     final isActive = _recordingForKey == item.audioKey;
 
+    // Find this user's most recent recording for this item (used for the
+    // "Play my recording" button below).
+    final myRec = byMe
+        ? recs.firstWhere((r) => r.recordedByEmail == currentEmail)
+        : null;
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
       color: isActive
-          ? Colors.purple.shade900.withOpacity(0.3)
-          : null,
+          ? Colors.purple.shade50
+          : (byMe ? Colors.green.shade50 : null),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
@@ -1109,21 +1337,45 @@ class _RecordTabState extends State<_RecordTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(item.awing,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600)),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey.shade900)),
                   Text(item.english,
-                      style: const TextStyle(
-                          fontSize: 12, color: Colors.white70)),
+                      // v1.13.3 fix: was Colors.white70 (invisible on the
+                      // app's cream background). Now uses black54 — high
+                      // enough contrast to read at fontSize: 12.
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade700)),
                   const SizedBox(height: 2),
                   _statusLine(item, recs, byMe),
                 ],
               ),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 2),
+            // v1.13.3: Play YOUR recording (only shown when byMe).
+            // Calls fetch_audio webhook for the contribution_id, downloads
+            // from Drive, plays via AudioPlayer. Disabled while another
+            // playback is in progress.
+            if (myRec != null && myRec.contributionId != null)
+              IconButton(
+                tooltip: 'Play your recording',
+                icon: Icon(
+                  _isPlaying && _playingForKey == item.audioKey
+                      ? Icons.hourglass_bottom
+                      : Icons.play_circle_outline,
+                  color: Colors.blue.shade700,
+                ),
+                iconSize: 24,
+                onPressed: _isPlaying
+                    ? null
+                    : () => _playUserRecording(item, myRec),
+              ),
             IconButton(
               tooltip: 'Hear reference TTS',
-              icon: const Icon(Icons.volume_up,
-                  color: Colors.greenAccent),
+              icon: Icon(Icons.volume_up,
+                  color: Colors.green.shade700),
               iconSize: 22,
               onPressed: () => _playReference(item),
             ),
@@ -1134,7 +1386,7 @@ class _RecordTabState extends State<_RecordTab> {
                 isActive ? Icons.close : Icons.mic,
                 color: isActive
                     ? Colors.redAccent
-                    : Colors.purpleAccent,
+                    : Colors.deepPurple,
               ),
               iconSize: 26,
               onPressed: isActive
@@ -1151,12 +1403,13 @@ class _RecordTabState extends State<_RecordTab> {
       bool byMe) {
     if (recs.isEmpty) {
       return Row(
-        children: const [
+        children: [
           Icon(Icons.radio_button_unchecked,
-              size: 11, color: Colors.orange),
-          SizedBox(width: 4),
+              size: 11, color: Colors.orange.shade700),
+          const SizedBox(width: 4),
           Text('Not recorded',
-              style: TextStyle(fontSize: 10, color: Colors.orange)),
+              style: TextStyle(
+                  fontSize: 10, color: Colors.orange.shade700)),
         ],
       );
     }
@@ -1166,12 +1419,16 @@ class _RecordTabState extends State<_RecordTab> {
         ? latest.recordedByName.split('@').first
         : latest.recordedByName;
     final more = recs.length > 1 ? ' (+${recs.length - 1} more)' : '';
+    // v1.13.3 fix: status text/icon colors now use darker shades that
+    // read on the app's cream background (was greenAccent/lightBlueAccent
+    // which only worked on a dark theme).
+    final fg = byMe ? Colors.green.shade700 : Colors.blue.shade700;
     return Row(
       children: [
         Icon(
           byMe ? Icons.check_circle : Icons.people_alt_outlined,
           size: 11,
-          color: byMe ? Colors.greenAccent : Colors.lightBlueAccent,
+          color: fg,
         ),
         const SizedBox(width: 4),
         Expanded(
@@ -1179,11 +1436,7 @@ class _RecordTabState extends State<_RecordTab> {
             byMe && recs.length == 1
                 ? 'You · $age'
                 : '$name · $age$more',
-            style: TextStyle(
-                fontSize: 10,
-                color: byMe
-                    ? Colors.greenAccent
-                    : Colors.lightBlueAccent),
+            style: TextStyle(fontSize: 10, color: fg),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -1205,15 +1458,20 @@ class _RecordTabState extends State<_RecordTab> {
       orElse: () => _RecordableItem(
           awing: '', english: '', source: 'word'),
     );
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade900,
-        border: const Border(
-            top: BorderSide(color: Colors.purpleAccent)),
-      ),
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 14),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+    // SafeArea pushes the panel above the phone's gesture nav / 3-button
+    // nav bar so Play / Save / Re-record buttons aren't clipped by the
+    // home indicator on Android 10+ phones and on iOS.
+    return SafeArea(
+      top: false,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey.shade900,
+          border: const Border(
+              top: BorderSide(color: Colors.purpleAccent)),
+        ),
+        padding: const EdgeInsets.fromLTRB(12, 10, 12, 14),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -1322,10 +1580,11 @@ class _RecordTabState extends State<_RecordTab> {
                     foregroundColor: Colors.white,
                   ),
                 ),
+                ],
               ],
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

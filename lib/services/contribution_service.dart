@@ -762,6 +762,80 @@ class ContributionService extends ChangeNotifier {
     }
   }
 
+  /// v1.13.3 — fetch Drive audio URLs for a list of contribution IDs.
+  /// Used by the Dev Mode Record tab "Play my recording" button.
+  ///
+  /// Webhook: `{action:'fetch_audio', ids:[...]}` → `{status, audio:{id:url}}`
+  /// Requires developer auth (privileged action).
+  ///
+  /// Returns map of {contributionId → audioUrl}. Empty map on any failure.
+  /// IDs without audio (or with no recording on file) are omitted from
+  /// the returned map.
+  Future<Map<String, String>> fetchAudioUrls(List<String> ids) async {
+    if (_webhookUrl == null || ids.isEmpty) return {};
+    try {
+      final client = HttpClient();
+      client.connectionTimeout = const Duration(seconds: 15);
+
+      final request = await client.postUrl(Uri.parse(_webhookUrl!));
+      request.headers.set('Content-Type', 'application/json; charset=utf-8');
+      request.followRedirects = false;
+      final payload = <String, dynamic>{
+        'action': 'fetch_audio',
+        'ids': ids,
+      };
+      await _attachAuthIfPrivileged(payload);
+      request.add(utf8.encode(jsonEncode(payload)));
+      final response = await request.close();
+
+      String body;
+      // Apps Script always 302-redirects POSTs to the response URL.
+      if (response.statusCode == 302 || response.statusCode == 301) {
+        await response.drain<void>();
+        final loc = response.headers.value('location');
+        if (loc == null) {
+          client.close();
+          return {};
+        }
+        var uri = Uri.parse(loc);
+        body = '';
+        for (int i = 0; i < 5; i++) {
+          final getReq = await client.getUrl(uri);
+          getReq.followRedirects = false;
+          final getResp = await getReq.close();
+          if (getResp.statusCode == 302 || getResp.statusCode == 301) {
+            await getResp.drain<void>();
+            final next = getResp.headers.value('location');
+            if (next != null) {
+              uri = Uri.parse(next);
+              continue;
+            }
+          }
+          body = await getResp.transform(const Utf8Decoder()).join();
+          break;
+        }
+      } else {
+        body = await response.transform(const Utf8Decoder()).join();
+      }
+      client.close();
+
+      if (body.isEmpty) return {};
+      final result = jsonDecode(body);
+      if (result is! Map || result['status'] != 'ok') return {};
+
+      final audio = result['audio'];
+      if (audio is! Map) return {};
+      final out = <String, String>{};
+      audio.forEach((k, v) {
+        if (k is String && v is String && v.isNotEmpty) out[k] = v;
+      });
+      return out;
+    } catch (e) {
+      if (kDebugMode) print('ContributionService.fetchAudioUrls: $e');
+      return {};
+    }
+  }
+
   /// Fetch ALL contributions (pending + approved + rejected) from webhook
   /// and merge them into local state by id. Used by Developer Mode to keep
   /// the dashboard counters in sync with server state across all devices.

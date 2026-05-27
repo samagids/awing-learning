@@ -28,6 +28,30 @@ class PronunciationService {
   /// Current voice character. Screens set this based on difficulty level.
   String _currentVoice = 'boy';
 
+  /// Optional override: when set to a kid slug, audio lookup tries
+  /// assets/audio/native_kids/<slug>/<category>/<key>.mp3 BEFORE the
+  /// default native voice. Falls back to native (Dr. Sama) when the
+  /// specific kid hasn't recorded that word yet. Persisted by the
+  /// screen that set it (BeginnerHome).
+  String? _kidOverride;
+
+  /// Known kid recorders, keyed by character voice. Only these slugs
+  /// produce hits in audio/native_kids/. Mirrors the FAMILY list in
+  /// scripts/build_family_recorder.py.
+  static const Map<String, List<String>> kidVoicesByCharacter = {
+    'boy': ['joel', 'janelle'],
+    'girl': ['joyce', 'jadyne'],
+  };
+
+  /// Human-readable name for each kid slug. Mirrors the dev Record-tab
+  /// picker so attribution stays consistent across the app.
+  static const Map<String, String> kidDisplayNames = {
+    'joel': 'Joel',
+    'janelle': 'Janelle',
+    'joyce': 'Joyce',
+    'jadyne': 'Jadyne',
+  };
+
   /// Valid voice characters
   static const voices = ['boy', 'girl', 'young_man', 'young_woman', 'man', 'woman'];
 
@@ -38,6 +62,25 @@ class PronunciationService {
 
   /// Get the current voice character name
   String get currentVoice => _currentVoice;
+
+  /// Currently-active kid override slug (or null = use the default
+  /// native voice).
+  String? get kidOverride => _kidOverride;
+
+  /// Set the kid override. Pass null to clear and fall back to the
+  /// canonical native voice (Dr. Sama) for every word.
+  void setKidOverride(String? slug) {
+    if (slug == null || slug.isEmpty) {
+      _kidOverride = null;
+      return;
+    }
+    final knownKids = kidVoicesByCharacter.values
+        .expand((v) => v)
+        .toSet();
+    if (knownKids.contains(slug)) {
+      _kidOverride = slug;
+    }
+  }
 
   /// Set voice by character name
   void setVoice(String voice) {
@@ -145,6 +188,18 @@ class PronunciationService {
   /// audio for words at their difficulty level.
   List<String> _buildSearchPaths(String key, String category) {
     final paths = <String>[];
+
+    // -1. Kid-voice override — only when the user has explicitly picked
+    //     a specific kid (Joel, Janelle, Joyce, Jadyne) in the Beginner
+    //     home picker. Populated by scripts/apply_recordings_as_audio.py
+    //     from training_data/recordings/ when the manifest's `recorder`
+    //     field matches a known kid name. Falls through silently when
+    //     that specific kid hasn't recorded this word yet — the user
+    //     still hears the canonical native voice below.
+    if (_kidOverride != null) {
+      paths.add(
+          'assets/audio/native_kids/$_kidOverride/$category/$key.mp3');
+    }
 
     // 0. Native speaker recording — highest priority across all voices.
     //    Populated by scripts/apply_recordings_as_audio.py from

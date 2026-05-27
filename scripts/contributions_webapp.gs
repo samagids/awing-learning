@@ -294,7 +294,14 @@ function handleSubmission(payload) {
           // environment or being the dev. We accept the residual risk
           // (Drive bandwidth) in exchange for the simpler download path.
           file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-          audioFileUrl = file.getUrl();
+          // v1.13.3: use getDownloadUrl() so sync_recordings.py /
+          // --refetch-audio pipelines receive the raw file content, not the
+          // Drive "view" HTML preview page. file.getUrl() returns
+          //   https://drive.google.com/file/d/{ID}/view?...
+          // which serves an HTML interstitial when fetched programmatically
+          // — ffmpeg then chokes with "moov atom not found" because the
+          // payload isn't actually an m4a.
+          audioFileUrl = file.getDownloadUrl();
         }
       } catch (audioErr) {
         Logger.log('Audio upload error: ' + audioErr.toString());
@@ -319,40 +326,56 @@ function handleSubmission(payload) {
     ''
   ]);
 
-  // Send email notification to developer. Subject uses safeEmailField()
-  // to strip CR/LF (header injection guard).
-  try {
-    var typeLabel = {
-      'spellingCorrection': 'Spelling Fix',
-      'pronunciationFix': 'Pronunciation Recording',
-      'newWord': 'New Word',
-      'newSentence': 'New Sentence',
-      'newPhrase': 'New Phrase',
-      'generalFeedback': 'General Feedback'
-    }[safeType] || safeType || 'Contribution';
+  // v1.13.3: Silence per-submit emails for the developer's own Record-tab
+  // submissions. Triggered when profileName === 'Developer' OR the notes
+  // include any of the auto-apply markers we set client-side ('Native
+  // recording', 'Developer re-recording', 'auto-apply'). Tester
+  // contributions still notify normally so the dev knows when to review.
+  var isDevAutoSubmit =
+      safeProfile === 'Developer' ||
+      (safeNotes && (
+        safeNotes.indexOf('Native recording') !== -1 ||
+        safeNotes.indexOf('Developer re-recording') !== -1 ||
+        safeNotes.indexOf('auto-apply') !== -1));
 
-    var subject = '[Awing] New ' + typeLabel + ': "' +
-                  safeEmailField(safeTarget || '?') + '"';
+  if (!isDevAutoSubmit) {
+    // Send email notification to developer. Subject uses safeEmailField()
+    // to strip CR/LF (header injection guard).
+    try {
+      var typeLabel = {
+        'spellingCorrection': 'Spelling Fix',
+        'pronunciationFix': 'Pronunciation Recording',
+        'newWord': 'New Word',
+        'newSentence': 'New Sentence',
+        'newPhrase': 'New Phrase',
+        'generalFeedback': 'General Feedback'
+      }[safeType] || safeType || 'Contribution';
 
-    var body = 'A user submitted a contribution:\n\n' +
-      'Type: ' + typeLabel + '\n' +
-      'From: ' + safeProfile + '\n' +
-      'Word: ' + safeTarget + '\n' +
-      'Correction: ' + (safeCorrection || '(none)') + '\n' +
-      'English: ' + (safeEnglish || '(none)') + '\n' +
-      'Category: ' + (safeCategory || '(none)') + '\n' +
-      'Notes: ' + (safeNotes || '(none)') + '\n';
+      var subject = '[Awing] New ' + typeLabel + ': "' +
+                    safeEmailField(safeTarget || '?') + '"';
 
-    if (audioFileUrl) {
-      body += '\nAudio recording: ' + audioFileUrl + '\n';
+      var body = 'A user submitted a contribution:\n\n' +
+        'Type: ' + typeLabel + '\n' +
+        'From: ' + safeProfile + '\n' +
+        'Word: ' + safeTarget + '\n' +
+        'Correction: ' + (safeCorrection || '(none)') + '\n' +
+        'English: ' + (safeEnglish || '(none)') + '\n' +
+        'Category: ' + (safeCategory || '(none)') + '\n' +
+        'Notes: ' + (safeNotes || '(none)') + '\n';
+
+      if (audioFileUrl) {
+        body += '\nAudio recording: ' + audioFileUrl + '\n';
+      }
+
+      body += '\nOpen the Awing app > Developer Mode > Review to approve or reject.\n';
+      body += '\nSheet: ' + ss.getUrl();
+
+      MailApp.sendEmail(DEVELOPER_EMAIL, subject, body);
+    } catch (emailErr) {
+      Logger.log('Email error: ' + emailErr.toString());
     }
-
-    body += '\nOpen the Awing app > Developer Mode > Review to approve or reject.\n';
-    body += '\nSheet: ' + ss.getUrl();
-
-    MailApp.sendEmail(DEVELOPER_EMAIL, subject, body);
-  } catch (emailErr) {
-    Logger.log('Email error: ' + emailErr.toString());
+  } else {
+    Logger.log('Skipping submit email (dev auto-submit): ' + safeTarget);
   }
 
   return jsonResponse({
@@ -509,16 +532,33 @@ function handleApproval(payload) {
       versionSheet.getRange(2, 1).setValue(newVersion);
       versionSheet.getRange(2, 2).setValue(new Date().toISOString());
 
-      // Email notification
-      try {
-        MailApp.sendEmail(
-          DEVELOPER_EMAIL,
-          '[Awing] Approved: "' + (payload.targetWord || '') + '" (v' + newVersion + ')',
-          'Content version ' + newVersion + ' published.\n' +
-          'Word: ' + (payload.targetWord || '') + ' → ' + (payload.correction || '') + '\n' +
-          'All users will receive this update on next app open.'
-        );
-      } catch (_) {}
+      // v1.13.3: Skip approval-email for dev auto-submits (same rule as
+      // the submit-email guard in handleSubmit). The submission row's
+      // profileName is at column index 2, notes at column index 9
+      // (per handleSubmit's appendRow column order).
+      var subProfile = data[i][2] || '';
+      var subNotes = data[i][9] || '';
+      var isDevAutoApproval =
+          subProfile === 'Developer' ||
+          (subNotes && (
+            subNotes.indexOf('Native recording') !== -1 ||
+            subNotes.indexOf('Developer re-recording') !== -1 ||
+            subNotes.indexOf('auto-apply') !== -1));
+
+      if (!isDevAutoApproval) {
+        // Email notification — tester contributions only
+        try {
+          MailApp.sendEmail(
+            DEVELOPER_EMAIL,
+            '[Awing] Approved: "' + (payload.targetWord || '') + '" (v' + newVersion + ')',
+            'Content version ' + newVersion + ' published.\n' +
+            'Word: ' + (payload.targetWord || '') + ' → ' + (payload.correction || '') + '\n' +
+            'All users will receive this update on next app open.'
+          );
+        } catch (_) {}
+      } else {
+        Logger.log('Skipping approval email (dev auto-approval): ' + payload.targetWord);
+      }
 
       return jsonResponse({ status: 'ok', version: newVersion });
     }

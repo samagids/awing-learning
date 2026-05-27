@@ -12,7 +12,7 @@ const Duration _autoSyncDebounce = Duration(minutes: 2);
 /// Keep in sync with AboutScreen.appVersion and AboutScreen.buildNumber.
 /// Stamped on every Firestore doc so Developer Mode can see which client
 /// last wrote a given user's data.
-const String _kAppVersion = '1.13.2+62';
+const String _kAppVersion = '1.13.3+63';
 
 /// Cloud backup service using Firebase Firestore.
 ///
@@ -70,14 +70,29 @@ class CloudBackupService extends ChangeNotifier {
     _autoSync = _prefs.getBool(_keyAutoSync) ?? true;
     _lastBackupTime = _prefs.getString(_keyLastBackup);
 
-    // Check if already signed in silently
+    // Check if already signed in silently, AND verify the Firebase Auth
+    // session is still valid (v1.13.3+ stale-auth recovery).
     try {
       final account = await loginGoogleSignIn.signInSilently();
       if (account != null) {
         _isSignedIn = true;
         _connectedEmail = account.email;
-        // Also ensure Firebase Auth is signed in
+        // Force-refresh Firebase Auth in case the persisted token is stale
+        // (a v1.12.x → v1.13.x upgrade silently invalidates the refresh
+        // token; without this check the user appears signed-in locally
+        // but every Firestore query fails the rules `request.auth` check
+        // and returns empty Cloud Users + Review tabs in Dev Mode).
         await _ensureFirebaseAuth(account);
+      } else if (FirebaseAuth.instance.currentUser != null) {
+        // Google silent sign-in returned null, but Firebase Auth still
+        // has a session object. The Google credential is gone — Firebase
+        // Auth is now an orphan. Drop it so the auth gate routes to
+        // login screen on first frame and the user gets a clean re-auth.
+        debugPrint('Auth recovery: Google silent SI returned null but '
+            'Firebase Auth has currentUser — signing out to clear stale session.');
+        try {
+          await FirebaseAuth.instance.signOut();
+        } catch (_) {}
       }
     } catch (e) {
       debugPrint('Cloud backup silent sign-in check failed: $e');
@@ -89,18 +104,58 @@ class CloudBackupService extends ChangeNotifier {
 
   /// Ensure Firebase Auth is signed in using Google credentials.
   /// Required for Firestore security rules (request.auth != null).
+  ///
+  /// v1.13.3 update: instead of trusting `FirebaseAuth.currentUser != null`
+  /// (which can be a stale ghost after major version upgrades), we
+  /// actually force-refresh the ID token. If the refresh succeeds, the
+  /// session is genuinely valid. If it fails (refresh token rejected by
+  /// Google), we re-sign-in with the current Google credentials.
+  ///
+  /// Without this, the Cloud Users + Review tabs of Developer Mode were
+  /// returning empty on real devices after the v1.12.x → v1.13.x upgrade,
+  /// because rules like
+  ///   `request.auth.token.email == 'samagids@gmail.com'`
+  /// silently failed (token expired or refresh-token revoked) but
+  /// `currentUser != null` so the early-return skipped re-auth.
   Future<void> _ensureFirebaseAuth(GoogleSignInAccount account) async {
-    if (FirebaseAuth.instance.currentUser != null) return;
+    final existing = FirebaseAuth.instance.currentUser;
+    if (existing != null) {
+      // Force-refresh the ID token. If this succeeds, the session is
+      // legitimately valid and we don't need to re-sign-in.
+      try {
+        final token = await existing.getIdToken(true);
+        if (token != null && token.isNotEmpty) {
+          // Session is genuinely valid.
+          return;
+        }
+      } catch (e) {
+        // Token refresh failed — refresh_token was revoked or expired.
+        // Fall through to re-sign-in below.
+        debugPrint('Auth recovery: Firebase Auth token refresh failed '
+            '($e) — re-signing in with current Google credentials');
+      }
+    }
     try {
       final googleAuth = await account.authentication;
+      if (googleAuth.idToken == null) {
+        debugPrint('Auth recovery: googleAuth.idToken is null — cannot '
+            're-sign-in. User will be prompted on next interaction.');
+        return;
+      }
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      debugPrint('Firebase Auth: signed in as ${account.email}');
+      final result =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      debugPrint('Firebase Auth: signed in as ${result.user?.email}');
     } catch (e) {
       debugPrint('Firebase Auth sign-in failed: $e');
+      // If re-sign-in failed, force-clear the orphan Firebase Auth so
+      // AuthGate routes the user to the login screen for a clean retry.
+      try {
+        await FirebaseAuth.instance.signOut();
+      } catch (_) {}
     }
   }
 

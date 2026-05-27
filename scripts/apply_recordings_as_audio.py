@@ -37,6 +37,33 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDINGS_DIR = REPO_ROOT / "training_data" / "recordings"
 MANIFEST = RECORDINGS_DIR / "manifest.json"
 NATIVE_OUT = REPO_ROOT / "android" / "install_time_assets" / "src" / "main" / "assets" / "audio" / "native"
+KIDS_OUT   = REPO_ROOT / "android" / "install_time_assets" / "src" / "main" / "assets" / "audio" / "native_kids"
+
+# Known kid recorders → folder slug. Matches the FAMILY list in
+# scripts/build_family_recorder.py and the kidVoicesByCharacter map in
+# lib/services/pronunciation_service.dart. Adding a name here AND
+# updating the Dart picker is what enables a new "Whose voice?" option
+# on the Beginner home screen.
+KID_SLUGS = {
+    "joel":    "joel",
+    "janelle": "janelle",
+    "joyce":   "joyce",
+    "jadyne":  "jadyne",
+}
+
+
+def _recorder_to_kid_slug(name: str | None) -> str | None:
+    """Return the per-kid output slug if `name` is a known family kid,
+    else None. Case-insensitive, tolerates extra whitespace."""
+    if not name:
+        return None
+    norm = name.strip().lower()
+    # Plain match
+    if norm in KID_SLUGS:
+        return KID_SLUGS[norm]
+    # Tolerate "Joel Sama" / "Joel S." etc. by taking the first token.
+    first = norm.split()[0] if norm else ""
+    return KID_SLUGS.get(first)
 
 # Map manifest "source" field -> the audio/native/<category>/ subdir
 # the app's PronunciationService searches under. The app currently
@@ -125,6 +152,8 @@ def main() -> int:
     by_category: dict[str, int] = {}
     written, skipped, failed = 0, 0, 0
 
+    by_kid: dict[str, int] = {}
+
     for entry in entries:
         awing = (entry.get("awing") or "").strip()
         wav_rel = entry.get("wav_path", "")
@@ -145,22 +174,53 @@ def main() -> int:
         key = audio_key(awing)
         mp3_path = NATIVE_OUT / category / f"{key}.mp3"
 
+        # Optional per-kid copy. Only when the manifest names a known
+        # kid (Joel, Janelle, Joyce, Jadyne) does this path get
+        # written. PronunciationService searches the per-kid path
+        # FIRST when the user picks that kid in the Beginner home;
+        # missing words fall through to the canonical native path
+        # below silently. Recordings by Dr. Sama / Berlin Sama /
+        # unknown contributors only write the canonical path.
+        kid_slug = _recorder_to_kid_slug(entry.get("recorder"))
+        kid_mp3_path = (KIDS_OUT / kid_slug / category / f"{key}.mp3"
+                        if kid_slug else None)
+
         if mp3_path.exists() and not args.force:
             wav_mtime = wav_path.stat().st_mtime
             mp3_mtime = mp3_path.stat().st_mtime
-            if mp3_mtime >= wav_mtime:
+            # Skip BOTH targets only if both are already newer than
+            # the source. Otherwise we still need to write the missing
+            # one (e.g. canonical exists but per-kid copy was added
+            # later via a Dart change).
+            kid_ready = (kid_mp3_path is None
+                         or (kid_mp3_path.exists()
+                             and kid_mp3_path.stat().st_mtime >= wav_mtime))
+            if mp3_mtime >= wav_mtime and kid_ready:
                 skipped += 1
                 continue
 
         rel_out = mp3_path.relative_to(REPO_ROOT)
-        print(f"  {awing!r:24s} ({source:11s}) -> {rel_out}")
+        kid_note = f"  [+ kid: {kid_slug}]" if kid_slug else ""
+        print(f"  {awing!r:24s} ({source:11s}) -> {rel_out}{kid_note}")
         by_category[category] = by_category.get(category, 0) + 1
+        if kid_slug:
+            by_kid[kid_slug] = by_kid.get(kid_slug, 0) + 1
 
         if args.dry_run:
             written += 1
             continue
 
-        if convert_wav_to_mp3(wav_path, mp3_path):
+        ok = convert_wav_to_mp3(wav_path, mp3_path)
+        if ok and kid_mp3_path is not None:
+            # Best-effort per-kid copy. If this fails the canonical
+            # write still succeeded so the app keeps working — the
+            # user just won't hear THIS kid's voice for this word.
+            try:
+                kid_mp3_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(mp3_path, kid_mp3_path)
+            except OSError as e:
+                print(f"    WARN: per-kid copy failed: {e}")
+        if ok:
             written += 1
         else:
             failed += 1
@@ -169,8 +229,12 @@ def main() -> int:
     print(f"{'(DRY RUN) ' if args.dry_run else ''}"
           f"Written: {written}  Skipped (cached): {skipped}  Failed: {failed}")
     print(f"By category: {by_category}")
+    if by_kid:
+        print(f"By kid:      {by_kid}")
     print()
     print(f"Output root: {NATIVE_OUT.relative_to(REPO_ROOT)}")
+    if by_kid:
+        print(f"Kid root:    {KIDS_OUT.relative_to(REPO_ROOT)}")
     print()
     if not args.dry_run and written > 0:
         print("Next:")

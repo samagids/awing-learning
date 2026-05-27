@@ -176,17 +176,86 @@ def _post_json(url, payload, timeout=45):
         raise
 
 
+_DRIVE_VIEW_URL_RE = re.compile(
+    r'https://drive\.google\.com/file/d/([a-zA-Z0-9_-]+)/(?:view|edit|preview)',
+    re.IGNORECASE,
+)
+
+
+def _normalize_drive_url(url):
+    """Convert a Drive view URL (HTML preview) into a direct-download URL.
+
+    v1.13.3 fix: webhook v<1.13.3 stored `file.getUrl()` which returns
+        https://drive.google.com/file/d/{ID}/view?usp=drivesdk
+    That URL serves an HTML preview page when fetched programmatically.
+    The 22 already-stored Native recording rows still point at the old
+    format, so we rewrite them client-side:
+        https://drive.google.com/uc?export=download&id={ID}
+    which serves the raw blob for files <100 MB. Our m4a clips are
+    < 500 KB so we never hit the virus-scan interstitial. Server now
+    stores getDownloadUrl() directly so future submissions skip this.
+    """
+    if not url:
+        return url
+    m = _DRIVE_VIEW_URL_RE.match(url)
+    if m:
+        file_id = m.group(1)
+        return 'https://drive.google.com/uc?export=download&id=' + file_id
+    return url
+
+
 def _download_to(url, dest_path, timeout=60):
+    """Download `url` to `dest_path`. Follows redirects (urllib default).
+    Detects HTML payloads so we don't hand them to ffmpeg. Returns
+    (ok, size_bytes).
+    """
+    url = _normalize_drive_url(url)
     try:
-        req = urllib.request.Request(url, method='GET')
+        req = urllib.request.Request(
+            url,
+            method='GET',
+            # Drive's anon endpoints are friendlier to UA-bearing clients.
+            headers={'User-Agent': 'awing-sync/1.13.3'},
+        )
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             data = resp.read()
-        with open(dest_path, 'wb') as f:
-            f.write(data)
-        return True, len(data)
+            content_type = (resp.headers.get('Content-Type') or '').lower()
     except Exception as e:
         print(f'    ✗ download failed: {e}')
         return False, 0
+
+    # Detect HTML interstitial (Drive virus-scan warning, login redirect,
+    # view-preview page). The magic-bytes test is more reliable than
+    # Content-Type alone since Drive sometimes mislabels the content.
+    head = data[:512].lstrip()
+    is_html = (
+        head[:9].lower() == b'<!doctype'
+        or head[:5].lower() == b'<html'
+        or b'<head' in head[:200].lower()
+        or 'text/html' in content_type
+    )
+    if is_html:
+        # Save the HTML for forensic inspection.
+        debug_path = dest_path + '.html'
+        try:
+            with open(debug_path, 'wb') as f:
+                f.write(data)
+        except Exception:
+            pass
+        snippet = head[:120].decode('utf-8', errors='replace')
+        print(f'    ✗ Drive returned HTML, not audio '
+              f'(len={len(data)}, ct={content_type!r}). '
+              f'Saved to {os.path.basename(debug_path)}. '
+              f'First bytes: {snippet!r}')
+        return False, len(data)
+
+    try:
+        with open(dest_path, 'wb') as f:
+            f.write(data)
+    except Exception as e:
+        print(f'    ✗ write failed: {e}')
+        return False, 0
+    return True, len(data)
 
 
 def _have_ffmpeg():
@@ -194,7 +263,21 @@ def _have_ffmpeg():
 
 
 def _convert_m4a_to_wav(m4a_path, wav_path):
-    """ffmpeg m4a → 22050 Hz mono PCM WAV. Returns True on success."""
+    """ffmpeg → 22050 Hz mono PCM WAV. Auto-detects input format (m4a,
+    webm, ogg, wav, mp3) — we let ffmpeg sniff content rather than
+    trusting the extension. Returns True on success.
+    """
+    # Defensive size check — if download_to produced a 0-byte file
+    # somehow, ffmpeg's error is opaque. Surface it cleanly here.
+    try:
+        in_size = os.path.getsize(m4a_path)
+    except OSError as e:
+        print(f'    ✗ cannot stat input: {e}')
+        return False
+    if in_size < 256:
+        print(f'    ✗ input too small ({in_size} bytes) — likely corrupt')
+        return False
+
     try:
         result = subprocess.run(
             ['ffmpeg', '-y', '-loglevel', 'error',
@@ -207,8 +290,12 @@ def _convert_m4a_to_wav(m4a_path, wav_path):
             check=False,
         )
         if result.returncode != 0:
-            err = result.stderr.decode('utf-8', errors='replace')[:200]
-            print(f'    ✗ ffmpeg: {err}')
+            # v1.13.3: print full stderr (was 200-char-truncated, which
+            # hid both the file path and the real diagnostic).
+            err = result.stderr.decode('utf-8', errors='replace').strip()
+            print(f'    ✗ ffmpeg (input {in_size} bytes):')
+            for line in err.splitlines()[:6]:
+                print(f'      {line}')
             return False
         return os.path.exists(wav_path) and os.path.getsize(wav_path) > 1024
     except FileNotFoundError:
