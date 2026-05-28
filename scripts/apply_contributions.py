@@ -1219,6 +1219,11 @@ def apply_contributions(contributions, dry_run=False):
                 'awing': target,
                 'english': english or '',
                 'category': category,
+                # Propagate recorder so downstream pipeline (apply_recordings_
+                # as_audio.py, future per-kid Edge TTS overrides) can attribute
+                # the voice. Falls back to None when the webhook still hasn't
+                # joined profileName from Submissions (pre-Session 60 deploys).
+                'recorder': profile if profile and profile != 'Unknown' else None,
             }
             if speakable_override:
                 word_entry['speakable_override'] = speakable_override

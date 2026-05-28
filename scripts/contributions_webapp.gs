@@ -607,14 +607,24 @@ function handleVersionCheck(payload) {
     return jsonResponse({ status: 'ok', version: currentVersion, updates: [] });
   }
 
-  // Build id → audioUrl map from Submissions sheet (column 10 is 'Audio File')
+  // Build id → audioUrl AND id → profileName maps from Submissions sheet.
+  // Submissions schema (column index): 0=id, 2=profileName, 9=audioUrl.
+  // The Approved sheet schema (8 cols) never recorded the recorder name —
+  // apply_contributions.py needs profileName to bucket per-kid audio into
+  // audio/native_kids/<slug>/<category>/<key>.mp3, so we cross-reference
+  // it here at query time (same pattern as audioUrl).
   var submissions = ss.getSheetByName('Submissions');
   var subData = submissions.getDataRange().getValues();
   var audioById = {};
+  var profileById = {};
   for (var k = 1; k < subData.length; k++) {
     var sid = subData[k][0];
+    var profile = subData[k][2];
     var url = subData[k][9];
-    if (sid && url) audioById[sid] = url;
+    if (sid) {
+      if (url) audioById[sid] = url;
+      if (profile) profileById[sid] = profile;
+    }
   }
 
   // Fetch approved items newer than client version
@@ -634,7 +644,8 @@ function handleVersionCheck(payload) {
         category: data[i][5],
         approvedAt: data[i][6],
         version: data[i][7],
-        audioUrl: audioById[data[i][0]] || null
+        audioUrl: audioById[data[i][0]] || null,
+        profileName: profileById[data[i][0]] || null
       });
     }
   }
