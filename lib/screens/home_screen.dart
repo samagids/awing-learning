@@ -299,14 +299,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       const SizedBox(height: 12),
-                      // Contribute — anyone can submit corrections
+                      // Contribute — parent-gated so kids can't submit
+                      // random/inappropriate recordings to the webhook
+                      // without an adult's knowledge. Uses the same
+                      // ParentalGate pattern as Teacher Mode / Developer
+                      // Mode. Once unlocked, the gate caches the
+                      // verification for the session (per ParentalGate's
+                      // existing behavior), so contributing several
+                      // corrections in a row doesn't re-prompt the parent.
                       _ModeCard(
                         title: 'Contribute',
-                        subtitle: 'Fix a word, record pronunciation',
+                        subtitle: 'Fix a word, record pronunciation (parent unlock)',
                         icon: Icons.volunteer_activism,
                         color: const Color(0xFF006432),
                         locked: false,
-                        onTap: () {
+                        onTap: () async {
+                          AnalyticsService.instance.logActivity(
+                            event: 'open_contribute_attempt',
+                          );
+                          final ok = await ParentalGate.verify(
+                            context,
+                            title: 'Parent unlock',
+                            message: 'Contributing sends recordings to '
+                                'the developer for review. A parent or '
+                                'teacher should approve each session.',
+                          );
+                          if (!ok || !context.mounted) {
+                            AnalyticsService.instance.logActivity(
+                              event: 'open_contribute_blocked',
+                            );
+                            return;
+                          }
                           AnalyticsService.instance.logActivity(
                             event: 'open_contribute',
                           );

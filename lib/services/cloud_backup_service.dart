@@ -12,7 +12,7 @@ const Duration _autoSyncDebounce = Duration(minutes: 2);
 /// Keep in sync with AboutScreen.appVersion and AboutScreen.buildNumber.
 /// Stamped on every Firestore doc so Developer Mode can see which client
 /// last wrote a given user's data.
-const String _kAppVersion = '1.13.4+64';
+const String _kAppVersion = '1.13.5+65';
 
 /// Cloud backup service using Firebase Firestore.
 ///
