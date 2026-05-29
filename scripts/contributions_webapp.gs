@@ -309,6 +309,51 @@ function handleSubmission(payload) {
     }
   }
 
+  // v1.13.4 — REPLACE prior submissions for the same (audio_key,
+  // recorder_slug) pair before appending. Re-recordings (e.g. when
+  // a user re-records a word they already have) should always WIN,
+  // not lose to whatever stale row was there before. Without this, a
+  // truncated/broken upload from earlier today keeps winning the
+  // sync dedup because some downstream comparator picks the older
+  // row, and there's no way to dethrone it short of hand-editing
+  // the sheet. With this, every new submission for (word, recorder)
+  // overwrites the previous one — re-recordings self-heal.
+  //
+  // Only applied to pronunciationFix submissions where the recorder
+  // is identifiable. Other contribution types (spellingCorrection,
+  // newWord, generalFeedback) keep append-only behavior since their
+  // "previous version" semantics are different — a spelling fix for
+  // "X" doesn't necessarily replace a prior spelling fix for "X"
+  // (they could be cumulative corrections).
+  if (safeType === 'pronunciationFix' && safeTarget) {
+    try {
+      var newAudioKey = audioKeyOf(safeTarget);
+      var newRecorderSlug = recorderSlugOf(safeProfile);
+      var data = submissions.getDataRange().getValues();
+      // Walk back-to-front so deleteRow() doesn't shift indices we
+      // haven't visited yet. Skip header row (index 0).
+      for (var k = data.length - 1; k >= 1; k--) {
+        var row = data[k];
+        var existingTarget = row[4];   // Target Word column
+        var existingProfile = row[2];  // Profile Name column
+        var existingType = row[3];     // Type column
+        if (existingType !== 'pronunciationFix') continue;
+        var existingKey = audioKeyOf(existingTarget);
+        var existingSlug = recorderSlugOf(existingProfile);
+        if (existingKey === newAudioKey && existingSlug === newRecorderSlug) {
+          submissions.deleteRow(k + 1); // sheet API is 1-indexed
+          Logger.log('Replaced prior ' + newRecorderSlug +
+                     ' submission for ' + newAudioKey + ' (row ' + (k + 1) + ')');
+        }
+      }
+    } catch (replaceErr) {
+      // Non-fatal: if the replace logic fails, fall through to the
+      // normal append below. Worst case we get two rows for the same
+      // (word, recorder), which the client-side dedup handles.
+      Logger.log('Replace-prior error: ' + replaceErr.toString());
+    }
+  }
+
   // Append row to Submissions sheet
   submissions.appendRow([
     safeId,
@@ -693,6 +738,69 @@ function handleFetchAudio(payload) {
 }
 
 // ==================== Helpers ====================
+
+/**
+ * Compute the canonical ASCII audio_key for an Awing word. Mirrors the
+ * Dart-side _audioKey() and the Python audio_key() in
+ * scripts/sync_recordings.py + apply_recordings_as_audio.py — the three
+ * must produce identical output or per-(key, recorder) dedup breaks.
+ * Used by handleSubmission's replace-prior logic to identify whether
+ * an incoming submission supersedes an existing row.
+ */
+function audioKeyOf(awing) {
+  if (!awing) return '';
+  // Apps Script JS doesn't support Unicode property escapes well, so we
+  // strip combining marks via Normalize + character-class filtering, then
+  // map the Awing-special characters, then ASCII-fy.
+  var s = String(awing).normalize('NFD');
+  // Strip combining diacritical marks (U+0300..U+036F).
+  // Use \u escapes so the regex survives editor round-trips (Apps
+  // Script web editor occasionally normalizes literal combining-mark
+  // characters into invisible mojibake).
+  s = s.replace(/[̀-ͯ]/g, '');
+  s = s.normalize('NFC');
+  // Awing-special character mapping (matches Python _REPLACEMENTS)
+  s = s.replace(/ɛ/g, 'e').replace(/Ɛ/g, 'E')
+       .replace(/ɔ/g, 'o').replace(/Ɔ/g, 'O')
+       .replace(/ə/g, 'e').replace(/Ə/g, 'E')
+       .replace(/ɨ/g, 'i').replace(/Ɨ/g, 'I')
+       .replace(/ŋ/g, 'ng').replace(/Ŋ/g, 'Ng')
+       .replace(/ɣ/g, 'g').replace(/Ɣ/g, 'G')
+       .replace(/['‘’ʼ]/g, '');
+  // Collapse non-[A-Za-z0-9_-] to underscore, then collapse runs of _
+  s = s.replace(/[^A-Za-z0-9_\-]+/g, '_');
+  s = s.replace(/_+/g, '_').replace(/^_|_$/g, '');
+  return s.toLowerCase() || '_';
+}
+
+/**
+ * Normalize a profileName to a canonical recorder slug for dedup.
+ * Mirrors _normalize_recorder() in scripts/sync_recordings.py. Returns
+ * null for unknown recorders (which then share a '_default' bucket).
+ * Used by handleSubmission's replace-prior logic so "sama" + "Dr.
+ * Guidion Sama" + "samagids@gmail.com" all collapse to one identity
+ * server-side, just like client-side.
+ */
+function recorderSlugOf(name) {
+  if (!name) return '_default';
+  var norm = String(name).trim().toLowerCase();
+  if (!norm) return '_default';
+  var aliases = {
+    'joel': 'joel', 'janelle': 'janelle',
+    'joyce': 'joyce', 'jadyne': 'jadyne',
+    'sama': 'samagids', 'samagids': 'samagids',
+    'samagids@gmail.com': 'samagids',
+    'samagidshop@gmail.com': 'samagids',
+    'guidion': 'samagids', 'guidion sama': 'samagids',
+    'dr guidion sama': 'samagids', 'dr. guidion sama': 'samagids',
+    'dr. sama': 'samagids', 'dr sama': 'samagids',
+    'berlin': 'berlin', 'berlin sama': 'berlin',
+  };
+  if (aliases.hasOwnProperty(norm)) return aliases[norm];
+  var first = norm.split(/\s+/)[0];
+  if (aliases.hasOwnProperty(first)) return aliases[first];
+  return '_default';
+}
 
 function getSheet() {
   var files = DriveApp.getFilesByName(SHEET_NAME);

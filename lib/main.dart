@@ -16,6 +16,7 @@ import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
 import 'package:awing_ai_learning/services/recordings_service.dart';
 import 'package:awing_ai_learning/services/image_service.dart';
+import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 void main() async {
@@ -129,6 +130,21 @@ void main() async {
     );
   } catch (e) {
     debugPrint('ImageService manifest init failed: $e');
+  }
+
+  // v1.13.4 — load the native audio inventory so the Dev Mode Record tab
+  // can show per-item per-recorder status badges and power the "Missing
+  // from [active recorder]" filter. Tiny JSON (<50 KB typical), loads in
+  // a few ms. Safe to fail: queries return empty/false, badges just
+  // don't render until next build.
+  try {
+    await NativeAudioInventory.instance.load().timeout(
+      const Duration(seconds: 2),
+      onTimeout: () =>
+          debugPrint('NativeAudioInventory load timed out'),
+    );
+  } catch (e) {
+    debugPrint('NativeAudioInventory load failed: $e');
   }
 
   runApp(const AwingApp());

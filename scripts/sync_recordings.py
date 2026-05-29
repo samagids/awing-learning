@@ -42,6 +42,19 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
+# Force UTF-8 stdout/stderr so the script doesn't crash on Windows when
+# its output is piped (Tee-Object, Select-Object, redirect to a file).
+# Python defaults to cp1252 on Windows for piped streams, which can't
+# encode the → ✓ ✗ ⤷ characters we use in log lines. Without this, the
+# script works fine interactively but explodes the moment you pipe it.
+# Available on Python 3.7+; guarded for older interpreters.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, 'reconfigure'):
+        try:
+            _stream.reconfigure(encoding='utf-8', errors='replace')
+        except Exception:
+            pass
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
 WEBHOOKS_FILE = os.path.join(PROJECT_DIR, 'config', 'webhooks.json')
@@ -60,6 +73,94 @@ _SOURCE_MAP = {
     'sentence': 'sentences',
     'story': 'stories',
 }
+
+# Known kid slugs (mirrors scripts/apply_recordings_as_audio.py::KID_SLUGS
+# and lib/services/pronunciation_service.dart::kidVoicesByCharacter).
+# Kid recordings get prefixed WAV filenames so Joyce's apo.wav doesn't
+# overwrite Joel's apo.wav on disk — both must survive so the per-kid
+# bucketing in apply_recordings_as_audio.py can copy each to
+# audio/native_kids/<slug>/<category>/<key>.mp3. Dr. Sama / Berlin Sama /
+# unknown contributors keep the un-prefixed canonical filename.
+_KID_SLUGS = {'joel', 'janelle', 'joyce', 'jadyne'}
+
+# Canonical-name normalization. The Dev Mode Record picker, the email
+# address, and historical handwritten profile values all produce
+# DIFFERENT strings for the same person — and the dedup bucket key uses
+# the slug, so without normalization "sama" + "Dr. Guidion Sama" would
+# count as two distinct recorders. This map collapses all known
+# variations so dedup treats them as one.
+_RECORDER_ALIASES = {
+    # Kids — must match _KID_SLUGS exactly for routing to audio/native_kids/
+    'joel': 'joel',
+    'janelle': 'janelle',
+    'joyce': 'joyce',
+    'jadyne': 'jadyne',
+    # Dr. Guidion Sama (the developer) — every variation we've seen in
+    # the Submissions sheet to date. Canonical slug 'samagids' (the dev's
+    # email prefix). Sammy/sam aliases NOT added on purpose — those
+    # could be real names of other contributors.
+    'sama': 'samagids',
+    'samagids': 'samagids',
+    'samagids@gmail.com': 'samagids',
+    'samagidshop@gmail.com': 'samagids',
+    'guidion': 'samagids',
+    'guidion sama': 'samagids',
+    'dr guidion sama': 'samagids',
+    'dr. guidion sama': 'samagids',
+    'dr. sama': 'samagids',
+    'dr sama': 'samagids',
+    # Berlin Sama (adult woman). No per-kid bucket today, but
+    # normalizing the name now means dedup is correct when we add a
+    # Berlin override later.
+    'berlin': 'berlin',
+    'berlin sama': 'berlin',
+}
+
+# Reverse map for display. Use the most natural full name per slug.
+_RECORDER_DISPLAY = {
+    'joel': 'Joel',
+    'janelle': 'Janelle',
+    'joyce': 'Joyce',
+    'jadyne': 'Jadyne',
+    'samagids': 'Dr. Guidion Sama',
+    'berlin': 'Berlin Sama',
+}
+
+
+def _normalize_recorder(name):
+    """Map any known profileName variation to a single canonical slug.
+    Returns the slug ('joel', 'samagids', 'berlin', etc.) or None when
+    the recorder is unknown — None routes to the '_default' dedup
+    bucket so unknown contributors share one canonical entry per word."""
+    if not name:
+        return None
+    norm = name.strip().lower()
+    if not norm:
+        return None
+    if norm in _RECORDER_ALIASES:
+        return _RECORDER_ALIASES[norm]
+    # Try first token (handles "Joel Sama", "Dr. Guidion Sama extra...")
+    first = norm.split()[0]
+    if first in _RECORDER_ALIASES:
+        return _RECORDER_ALIASES[first]
+    return None
+
+
+def _display_name(name):
+    """Pretty name for log lines. Falls back to the raw input when the
+    recorder isn't a known family member."""
+    slug = _normalize_recorder(name)
+    if slug and slug in _RECORDER_DISPLAY:
+        return _RECORDER_DISPLAY[slug]
+    return name or 'Unknown'
+
+
+def _recorder_to_kid_slug(name):
+    """Returns the KID slug only (joel/janelle/joyce/jadyne) for routing
+    recordings to audio/native_kids/<slug>/. Adults (Dr. Sama, Berlin)
+    and unknowns return None so they route to canonical audio/native/."""
+    slug = _normalize_recorder(name)
+    return slug if slug in _KID_SLUGS else None
 
 
 # ---------------------------------------------------------------------------
@@ -405,22 +506,42 @@ def sync_recordings(keep_all=False, dry_run=False, verbose=False):
         print('\nNothing to sync. Done.')
         return 0
 
-    # 3. Dedup by audio_key, latest wins
+    # 3. Dedup by (audio_key, recorder_slug) — latest per pair wins.
+    # CRITICAL: Joel + Joyce both record the same word? Both must survive
+    # so the per-kid bucketing downstream can copy each to its own
+    # audio/native_kids/<slug>/ directory. Old per-key dedup collapsed
+    # them into one (whoever recorded last), losing the other entirely.
+    # Recorders that aren't a known kid slug (Dr. Sama / Berlin Sama /
+    # blank / unknown) all dedup together under the same "_default"
+    # bucket — only one canonical recording per word from the
+    # non-kid pool, latest-wins.
     if keep_all:
         kept = native
     else:
-        by_key = {}
+        by_key_recorder = {}
         for c in native:
             key = audio_key(c.get('targetWord', ''))
             if not key:
                 continue
+            # Normalize recorder so "sama" + "Dr. Guidion Sama" +
+            # "samagids@gmail.com" all collapse into one bucket
+            # ('samagids'). Unknown recorders share '_default' for
+            # the canonical-tier dedup.
+            slug = _normalize_recorder(c.get('profileName'))
+            bucket = slug or '_default'
+            compound_key = (key, bucket)
             ts = c.get('submittedAt') or c.get('reviewedAt') or ''
-            existing = by_key.get(key)
+            existing = by_key_recorder.get(compound_key)
             if existing is None or ts > existing.get('_ts', ''):
                 c['_ts'] = ts
-                by_key[key] = c
-        kept = list(by_key.values())
-    print(f'  ← {len(kept)} unique audio_key(s) after dedup')
+                by_key_recorder[compound_key] = c
+        kept = list(by_key_recorder.values())
+    # Count distinct words AND total entries (latter > former when same
+    # word was recorded by multiple kids — that's the new correct behavior).
+    distinct_keys = {audio_key(c.get('targetWord', '')) for c in kept}
+    print(f'  ← {len(kept)} entries after dedup '
+          f'({len(distinct_keys)} distinct words across '
+          f'{len(kept) - len(distinct_keys)} extra per-kid copies)')
 
     if dry_run:
         print('\nDry-run mode — would sync:')
@@ -477,29 +598,70 @@ def sync_recordings(keep_all=False, dry_run=False, verbose=False):
                 skipped += 1
                 continue
 
-            m4a_path = os.path.join(tmpdir, f'{key}.m4a')
+            # When recorder is a known kid, prefix the WAV filename so
+            # joel__apo.wav doesn't overwrite joyce__apo.wav on disk —
+            # both must survive so apply_recordings_as_audio.py can copy
+            # each into its own audio/native_kids/<slug>/ tree. Dr. Sama /
+            # Berlin Sama / unknown contributors keep the canonical
+            # un-prefixed name (backwards compatible with existing
+            # manifest entries from previous runs).
+            kid_slug = _recorder_to_kid_slug(recorder)
+            wav_filename = (f'{kid_slug}__{key}.wav'
+                            if kid_slug else f'{key}.wav')
+
+            # Tempdir m4a uses the same prefixing so multiple kids in the
+            # same batch don't overwrite each other's downloads in tmp.
+            m4a_filename = (f'{kid_slug}__{key}.m4a'
+                            if kid_slug else f'{key}.m4a')
+            m4a_path = os.path.join(tmpdir, m4a_filename)
             ok, size = _download_to(url, m4a_path)
             if not ok:
+                # Forensic dump so the dev can identify the broken row
+                # in the Submissions sheet and delete it manually.
+                # Otherwise every sync re-fails on the same row.
+                print(f'    ⤷ contribution_id={cid}')
+                print(f'    ⤷ submittedAt={c.get("submittedAt", "?")}')
+                print(f'    ⤷ profileName={c.get("profileName", "?")}')
+                print(f'    ⤷ audioUrl={url[:80]}...')
                 skipped += 1
                 continue
 
-            wav_path = os.path.join(RECORDINGS_DIR, f'{key}.wav')
+            wav_path = os.path.join(RECORDINGS_DIR, wav_filename)
             if not _convert_m4a_to_wav(m4a_path, wav_path):
+                # Same forensic dump for conversion failures (the file
+                # downloaded but isn't valid audio — typically a
+                # truncated upload that ffmpeg can't decode).
+                print(f'    ⤷ contribution_id={cid}')
+                print(f'    ⤷ submittedAt={c.get("submittedAt", "?")}')
+                print(f'    ⤷ profileName={c.get("profileName", "?")}')
+                print(f'    ⤷ audioUrl={url[:80]}...')
+                print(f'    ⤷ ACTION: delete this row from the Submissions '
+                      f'sheet so future syncs skip it.')
                 skipped += 1
                 continue
 
             downloaded += 1
             wav_size = os.path.getsize(wav_path)
             wav_rel = os.path.relpath(wav_path, PROJECT_DIR).replace('\\', '/')
-            print(f'  ✓ {key}.wav  ({wav_size:,} bytes)  '
-                  f'←  "{target}" by {recorder}')
+            # Display the canonical form ("Dr. Guidion Sama") rather
+            # than the raw profile string ("sama", "samagids@gmail.com",
+            # etc) so the log reads consistently across submissions.
+            display_recorder = _display_name(recorder)
+            print(f'  ✓ {os.path.basename(wav_path)}  ({wav_size:,} bytes)  '
+                  f'←  "{target}" by {display_recorder}')
 
+            # Also normalize the manifest's `recorder` field. Downstream
+            # (apply_recordings_as_audio.py) does its own _recorder_to_kid_slug
+            # mapping, which already accepts any variation — but keeping
+            # a single canonical form in the manifest makes it readable
+            # and prevents the (key, recorder) dedup from drifting when
+            # we re-sync after a profileName cleanup in the sheet.
             manifest = _merge_manifest_entry(manifest, {
                 'awing': target,
                 'english': english,
                 'source': source,
                 'wav_path': wav_rel,
-                'recorder': recorder,
+                'recorder': display_recorder,
                 'contribution_id': cid,
                 'downloaded_at': datetime.now(timezone.utc).isoformat(),
             })

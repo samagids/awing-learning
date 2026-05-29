@@ -1,0 +1,1991 @@
+{
+  "version": 1,
+  "generated_at": "2026-05-29T01:20:36.897076+00:00",
+  "categories": {
+    "alphabet": {
+      "a": {
+        "canonical": true,
+        "kids": []
+      },
+      "chato": {
+        "canonical": true,
+        "kids": []
+      },
+      "eshue": {
+        "canonical": true,
+        "kids": []
+      },
+      "ghane": {
+        "canonical": true,
+        "kids": []
+      },
+      "jage": {
+        "canonical": true,
+        "kids": []
+      },
+      "kangto": {
+        "canonical": true,
+        "kids": []
+      },
+      "kie": {
+        "canonical": true,
+        "kids": []
+      },
+      "ledno": {
+        "canonical": true,
+        "kids": []
+      },
+      "lenge": {
+        "canonical": true,
+        "kids": []
+      },
+      "lobte": {
+        "canonical": true,
+        "kids": []
+      },
+      "lume": {
+        "canonical": true,
+        "kids": []
+      },
+      "mie": {
+        "canonical": true,
+        "kids": []
+      },
+      "neo": {
+        "canonical": true,
+        "kids": []
+      },
+      "ngae": {
+        "canonical": true,
+        "kids": []
+      },
+      "no": {
+        "canonical": true,
+        "kids": []
+      },
+      "nonge": {
+        "canonical": true,
+        "kids": []
+      },
+      "nyaglo": {
+        "canonical": true,
+        "kids": []
+      },
+      "pene": {
+        "canonical": true,
+        "kids": []
+      },
+      "pime": {
+        "canonical": true,
+        "kids": []
+      },
+      "sedno": {
+        "canonical": true,
+        "kids": []
+      },
+      "shie": {
+        "canonical": true,
+        "kids": []
+      },
+      "toeme": {
+        "canonical": true,
+        "kids": []
+      },
+      "toge": {
+        "canonical": true,
+        "kids": []
+      },
+      "tsoe": {
+        "canonical": true,
+        "kids": []
+      },
+      "waako": {
+        "canonical": true,
+        "kids": []
+      },
+      "yike": {
+        "canonical": true,
+        "kids": []
+      },
+      "zoe": {
+        "canonical": true,
+        "kids": []
+      }
+    },
+    "boy": {
+      "a": {
+        "canonical": true,
+        "kids": []
+      },
+      "achaaka": {
+        "canonical": true,
+        "kids": []
+      },
+      "achaake": {
+        "canonical": true,
+        "kids": []
+      },
+      "achate": {
+        "canonical": true,
+        "kids": []
+      },
+      "achatese": {
+        "canonical": true,
+        "kids": []
+      },
+      "achatesenjie": {
+        "canonical": true,
+        "kids": []
+      },
+      "achekele": {
+        "canonical": true,
+        "kids": []
+      },
+      "achialume": {
+        "canonical": true,
+        "kids": []
+      },
+      "achiatazee": {
+        "canonical": true,
+        "kids": []
+      },
+      "achibe": {
+        "canonical": true,
+        "kids": []
+      },
+      "achibemoteene": {
+        "canonical": true,
+        "kids": []
+      },
+      "achie__3": {
+        "canonical": true,
+        "kids": []
+      },
+      "achile": {
+        "canonical": true,
+        "kids": []
+      },
+      "achina__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "achue": {
+        "canonical": true,
+        "kids": []
+      },
+      "achwine": {
+        "canonical": true,
+        "kids": []
+      },
+      "achwine__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "ade": {
+        "canonical": true,
+        "kids": []
+      },
+      "afable": {
+        "canonical": true,
+        "kids": []
+      },
+      "afae": {
+        "canonical": true,
+        "kids": []
+      },
+      "afage": {
+        "canonical": true,
+        "kids": []
+      },
+      "afana": {
+        "canonical": true,
+        "kids": []
+      },
+      "afange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afangnge": {
+        "canonical": true,
+        "kids": []
+      },
+      "afankonue": {
+        "canonical": true,
+        "kids": []
+      },
+      "afele": {
+        "canonical": true,
+        "kids": []
+      },
+      "afele__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afenge": {
+        "canonical": true,
+        "kids": []
+      },
+      "afenge__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afinankange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afinonkange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afo__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoe": {
+        "canonical": true,
+        "kids": []
+      },
+      "afooghaame": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoone": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoopafo": {
+        "canonical": true,
+        "kids": []
+      },
+      "afune": {
+        "canonical": true,
+        "kids": []
+      },
+      "falendze": {
+        "canonical": true,
+        "kids": []
+      }
+    },
+    "girl": {
+      "a": {
+        "canonical": true,
+        "kids": []
+      },
+      "achaaka": {
+        "canonical": true,
+        "kids": []
+      },
+      "achaake": {
+        "canonical": true,
+        "kids": []
+      },
+      "achate": {
+        "canonical": true,
+        "kids": []
+      },
+      "achatese": {
+        "canonical": true,
+        "kids": []
+      },
+      "achatesenjie": {
+        "canonical": true,
+        "kids": []
+      },
+      "achekele": {
+        "canonical": true,
+        "kids": []
+      },
+      "achialume": {
+        "canonical": true,
+        "kids": []
+      },
+      "achiatazee": {
+        "canonical": true,
+        "kids": []
+      },
+      "achibe": {
+        "canonical": true,
+        "kids": []
+      },
+      "achibemoteene": {
+        "canonical": true,
+        "kids": []
+      },
+      "achie__3": {
+        "canonical": true,
+        "kids": []
+      },
+      "achile": {
+        "canonical": true,
+        "kids": []
+      },
+      "achina__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "achue": {
+        "canonical": true,
+        "kids": []
+      },
+      "achwine": {
+        "canonical": true,
+        "kids": []
+      },
+      "achwine__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "ade": {
+        "canonical": true,
+        "kids": []
+      },
+      "afable": {
+        "canonical": true,
+        "kids": []
+      },
+      "afae": {
+        "canonical": true,
+        "kids": []
+      },
+      "afage": {
+        "canonical": true,
+        "kids": []
+      },
+      "afana": {
+        "canonical": true,
+        "kids": []
+      },
+      "afange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afangnge": {
+        "canonical": true,
+        "kids": []
+      },
+      "afankonue": {
+        "canonical": true,
+        "kids": []
+      },
+      "afele": {
+        "canonical": true,
+        "kids": []
+      },
+      "afele__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afenge": {
+        "canonical": true,
+        "kids": []
+      },
+      "afenge__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afina": {
+        "canonical": true,
+        "kids": []
+      },
+      "afinankange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afinonkange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afo__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoe": {
+        "canonical": true,
+        "kids": []
+      },
+      "afooghaame": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoone": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoopafo": {
+        "canonical": true,
+        "kids": []
+      },
+      "afune": {
+        "canonical": true,
+        "kids": []
+      },
+      "falendze": {
+        "canonical": true,
+        "kids": []
+      }
+    },
+    "man": {
+      "a": {
+        "canonical": true,
+        "kids": []
+      },
+      "a_ghelo_le_ake": {
+        "canonical": true,
+        "kids": []
+      },
+      "a_ke_gheno_meteeno": {
+        "canonical": true,
+        "kids": []
+      },
+      "achaaka": {
+        "canonical": true,
+        "kids": []
+      },
+      "achaake": {
+        "canonical": true,
+        "kids": []
+      },
+      "achate": {
+        "canonical": true,
+        "kids": []
+      },
+      "achatese": {
+        "canonical": true,
+        "kids": []
+      },
+      "achatesenjie": {
+        "canonical": true,
+        "kids": []
+      },
+      "achekele": {
+        "canonical": true,
+        "kids": []
+      },
+      "achialume": {
+        "canonical": true,
+        "kids": []
+      },
+      "achiatazee": {
+        "canonical": true,
+        "kids": []
+      },
+      "achibe": {
+        "canonical": true,
+        "kids": []
+      },
+      "achibemoteene": {
+        "canonical": true,
+        "kids": []
+      },
+      "achie__3": {
+        "canonical": true,
+        "kids": []
+      },
+      "achile": {
+        "canonical": true,
+        "kids": []
+      },
+      "achina__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "achue": {
+        "canonical": true,
+        "kids": []
+      },
+      "achwine": {
+        "canonical": true,
+        "kids": []
+      },
+      "achwine__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "ade": {
+        "canonical": true,
+        "kids": []
+      },
+      "afable": {
+        "canonical": true,
+        "kids": []
+      },
+      "afae": {
+        "canonical": true,
+        "kids": []
+      },
+      "afae_apimne": {
+        "canonical": true,
+        "kids": []
+      },
+      "afage": {
+        "canonical": true,
+        "kids": []
+      },
+      "afana": {
+        "canonical": true,
+        "kids": []
+      },
+      "afange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afangnge": {
+        "canonical": true,
+        "kids": []
+      },
+      "afankonue": {
+        "canonical": true,
+        "kids": []
+      },
+      "afele": {
+        "canonical": true,
+        "kids": []
+      },
+      "afele__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afenge": {
+        "canonical": true,
+        "kids": []
+      },
+      "afenge__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afinankange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afinonkange": {
+        "canonical": true,
+        "kids": []
+      },
+      "afo__2": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoe": {
+        "canonical": true,
+        "kids": []
+      },
+      "afooghaame": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoone": {
+        "canonical": true,
+        "kids": []
+      },
+      "afoopafo": {
+        "canonical": true,
+        "kids": []
+      },
+      "afue_ndie": {
+        "canonical": true,
+        "kids": []
+      },
+      "afune": {
+        "canonical": true,
+        "kids": []
+      },
+      "ajume_nekwae": {
+        "canonical": true,
+        "kids": []
+      },
+      "ajwigo_ngweo": {
+        "canonical": true,
+        "kids": []
+      },
+      "ako_ye_fie": {
+        "canonical": true,
+        "kids": []
+      },
+      "akoe_ndenge": {
+        "canonical": true,
+        "kids": []
+      },
+      "akone_leemo": {
+        "canonical": true,
+        "kids": []
+      },
+      "akone_mbyangne": {
+        "canonical": true,
+        "kids": []
+      },
+      "akone_menggye": {
+        "canonical": true,
+        "kids": []
+      },
+      "akone_ndenge": {
+        "canonical": true,
+        "kids": []
+      },
+      "akone_nkeele": {
+        "canonical": true,
+        "kids": []
+      },
+      "akwang_ye_eshine": {
+        "canonical": true,
+        "kids": []
+      },
+      "akwulo_atie": {
+        "canonical": true,
+        "kids": []
+      },
+      "alae_akooba": {
+        "canonical": true,
+        "kids": []
+      },
+      "alae_pakwue": {
+        "canonical": true,
+        "kids": []
+      },
+      "alango_manggoe": {
+        "canonical": true,
+        "kids": []
+      },
+      "alango_netsao": {
+        "canonical": true,
+        "kids": []
+      },
+      "ali_gheno": {
+        "canonical": true,
+        "kids": []
+      },
+      "ali_yie": {
+        "canonical": true,
+        "kids": []
+      },
+      "alio_ghoke_ese": {
+        "canonical": true,
+        "kids": []
+      },
+      "alio_ketange": {
+        "canonical": true,
+        "kids": []
+      },
+      "alio_nefoone_ese": {
+        "canonical": true,
+        "kids": []
+      },
+      "apago_atseo": {
+        "canonical": true,
+        "kids": []
+      },
+      "apue_mejie": {
+        "canonical": true,
+        "kids": []
+      },
+      "atsae_mbo_nakanga": {
+        "canonical": true,
+        "kids": []
+      },
+      "atsae_ndese": {
+        "canonical": true,
+        "kids": []
+      },
+      "atsoe_ngesange": {
+        "canonical": true,
+        "kids": []
+      },
+      "chi_myaa": {
+        "canonical": true,
+        "kids": []
+      },
+      "chi_no_nggee": {
+        "canonical": true,
+        "kids": []
+      },
+      "chi_te_zee": {
+        "canonical": true,
+        "kids": []
+      },
+      "chie_asango": {
+        "canonical": true,
+        "kids": []
+      },
+      "chige_takoe": {
+        "canonical": true,
+        "kids": []
+      },
+      "chu_eshune": {
+        "canonical": true,
+        "kids": []
+      },
+      "chu_moge": {
+        "canonical": true,
+        "kids": []
+      },
+      "chwaala_afae": {
+        "canonical": true,
+        "kids": []
+      },
+      "chwaala_apee": {
+        "canonical": true,
+        "kids": []
+      },
+      "efeng_melae": {
+        "canonical": true,
+        "kids": []
+      },
+      "efo_nkie": {
+        "canonical": true,
+        "kids": []
+      },
+      "egha_wao": {
+        "canonical": true,
+        "kids": []
+      },
+      "ema_poe": {
+        "canonical": true,
+        "kids": []
+      },
+      "engwale_engwale": {
+        "canonical": true,
+        "kids": []
+      },
+      "engwale_nkeebe": {
+        "canonical": true,
+        "kids": []
+      },
+      "enumne_natue": {
+        "canonical": true,
+        "kids": []
+      },
+      "falendze": {
+        "canonical": true,
+        "kids": []
+      },
+      "fele_alio": {
+        "canonical": true,
+        "kids": []
+      },
+      "fele_ndzoa": {
+        "canonical": true,
+        "kids": []
+      },
+      "fu_mbele": {
+        "canonical": true,
+        "kids": []
+      },
+      "fyae_anue": {
+        "canonical": true,
+        "kids": []
+      },
+      "gho_gheno_le_efo": {
+        "canonical": true,
+        "kids": []
+      },
+      "ka_nesonga": {
+        "canonical": true,
+        "kids": []
+      },
+      "ke_pinko_songe": {
+        "canonical": true,
+        "kids": []
+      },
+      "kwing_nkie": {
+        "canonical": true,
+        "kids": []
+      },
+      "kwud_nkae": {
+        "canonical": true,
+        "kids": []
+      },
+      "le_nepoo": {
+        "canonical": true,
+        "kids": []
+      },
+      "lo": {
+        "canonical": true,
+        "kids": []
+      },
+      "lo_anue_tata_ake_nde_chie_po": {
+        "canonical": true,
+        "kids": []
+      },
+      "ma_melonge": {
+        "canonical": true,
+        "kids": []
+      },
+      "mama_a_te_mbite_nge_gho_gheno_le_efo": {
+        "canonical": true,
+        "kids": []
+      },
+      "mang_chato": {
+        "canonical": true,
+        "kids": []
+      },
+      "mao_atsee": {
+        "canonical": true,
+        "kids": []
+      },
+      "mba_epume": {
+        "canonical": true,
+        "kids": []
+      },
+      "mbachi_apene_ne_mbyab_te_nkoe_atie": {
+        "canonical": true,
+        "kids": []
+      },
+      "mbi_tengkee": {
+        "canonical": true,
+        "kids": []
+      },
+      "mechina_nekaa": {
+        "canonical": true,
+        "kids": []
+      },
+      "mechina_tezae": {
+        "canonical": true,
+        "kids": []
+      },
+      "megte_achate": {
+        "canonical": true,
+        "kids": []
+      },
+      "moone_nonno_ekwuno": {
+        "canonical": true,
+        "kids": []
+      },
+      "nchate_ese": {
+        "canonical": true,
+        "kids": []
+      },
+      "nde_meloe": {
+        "canonical": true,
+        "kids": []
+      },
+      "ndi_mejie": {
+        "canonical": true,
+        "kids": []
+      },
+      "ndzable_mesae": {
+        "canonical": true,
+        "kids": []
+      },
+      "ndzoe_alae": {
+        "canonical": true,
+        "kids": []
+      },
+      "netu_enumne": {
+        "canonical": true,
+        "kids": []
+      },
+      "nga_mee": {
+        "canonical": true,
+        "kids": []
+      },
+      "nga_nkwume": {
+        "canonical": true,
+        "kids": []
+      },
+      "ngwu_ye_a_tuge_penggye_pen_pepe_menggob_men_menteelo_ne_tae_ngwue": {
+        "canonical": true,
+        "kids": []
+      },
+      "nji_netogle": {
+        "canonical": true,
+        "kids": []
+      },
+      "nka_meneeme": {
+        "canonical": true,
+        "kids": []
+      },
+      "nka_nepume": {
+        "canonical": true,
+        "kids": []
+      },
+      "nkang_nkie": {
+        "canonical": true,
+        "kids": []
+      },
+      "nked_teele": {
+        "canonical": true,
+        "kids": []
+      },
+      "nkenge_angwale": {
+        "canonical": true,
+        "kids": []
+      },
+      "nkengk_ole": {
+        "canonical": true,
+        "kids": []
+      },
+      "nkya_nefange": {
+        "canonical": true,
+        "kids": []
+      },
+      "nkya_sange": {
+        "canonical": true,
+        "kids": []
+      },
+      "ntang_ngoe": {
+        "canonical": true,
+        "kids": []
+      },
+      "pa_eshia": {
+        "canonical": true,
+        "kids": []
+      },
+      "panko_akoe": {
+        "canonical": true,
+        "kids": []
+      },
+      "pee_atue": {
+        "canonical": true,
+        "kids": []
+      },
+      "po_ma_ngyie_le_efe_po_gheno_le_nkie": {
+        "canonical": true,
+        "kids": []
+      },
+      "po_mbeebe": {
+        "canonical": true,
+        "kids": []
+      },
+      "po_mbo": {
+        "canonical": true,
+        "kids": []
+      },
+      "po_zi_noole": {
+        "canonical": true,
+        "kids": []
+      },
+      "sea_alia": {
+        "canonical": true,
+        "kids": []
+      },
+      "sog_etsea": {
+        "canonical": true,
+        "kids": []
+      },
+      "ta_afae": {
+        "canonical": true,
+        "kids": []
+      },
+      "ta_nga": {
+        "canonical": true,
+        "kids": []
+      },
+      "tako_ngwune": {
+        "canonical": true,
+        "kids": []
+      },
+      "tako_sange": {
+        "canonical": true,
+        "kids": []
+      },
+      "tasa_moga": {
+        "canonical": true,
+        "kids": []
+      },
+      "to_nkie": {
+        "canonical": true,
+        "kids": []
+      },
+      "toke_nkadte": {
+        "canonical": true,
+        "kids": []
+      },
+      "toke_nkone": {
+        "canonical": true,
+        "kids": []
+      },
+      "tso_etsea": {
+        "canonical": true,
+        "kids": []
+      },
+      "tso_mbiee": {
+        "canonical": true,
+        "kids": []
+      },
+      "tso_mbo": {
+        "canonical": true,
+        "kids": []
+      },
+      "tu_nkie": {
+        "canonical": true,
+        "kids": []
+      },
+      "we_atsea": {
+        "canonical": true,
+        "kids": []
+      },
+      "yeeka_elia": {
+        "canonical": true,
+        "kids": []
+      },
+      "zo_nkie": {
+        "canonical": true,
+        "kids": []
+      }
+    },
+    "vocabulary": {
+      "achie": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "ade": {
+        "canonical": true,
+        "kids": []
+      },
+      "afankonue": {
+        "canonical": true,
+        "kids": []
+      },
+      "afue": {
+        "canonical": true,
+        "kids": []
+      },
+      "agha": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "agha_ghena": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "agha_yia": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "ajwie": {
+        "canonical": true,
+        "kids": []
+      },
+      "akangetue": {
+        "canonical": true,
+        "kids": []
+      },
+      "ake": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "akemotogie": {
+        "canonical": true,
+        "kids": []
+      },
+      "akoole": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "akwengo": {
+        "canonical": true,
+        "kids": []
+      },
+      "ale": {
+        "canonical": true,
+        "kids": []
+      },
+      "aleeme": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "alue": {
+        "canonical": true,
+        "kids": []
+      },
+      "an_endae": {
+        "canonical": true,
+        "kids": []
+      },
+      "anuetajie": {
+        "canonical": true,
+        "kids": []
+      },
+      "anuetame": {
+        "canonical": true,
+        "kids": []
+      },
+      "apeele": {
+        "canonical": true,
+        "kids": []
+      },
+      "apeeme": {
+        "canonical": true,
+        "kids": []
+      },
+      "apene": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "apengetue": {
+        "canonical": true,
+        "kids": []
+      },
+      "apo": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "apue": {
+        "canonical": true,
+        "kids": []
+      },
+      "ateele": {
+        "canonical": true,
+        "kids": []
+      },
+      "atie": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "atogle": {
+        "canonical": true,
+        "kids": []
+      },
+      "atue": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "awe": {
+        "canonical": true,
+        "kids": []
+      },
+      "awenkie": {
+        "canonical": true,
+        "kids": []
+      },
+      "bole": {
+        "canonical": true,
+        "kids": []
+      },
+      "chwie": {
+        "canonical": true,
+        "kids": []
+      },
+      "efe": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "efele": {
+        "canonical": true,
+        "kids": []
+      },
+      "efo": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "eguere": {
+        "canonical": true,
+        "kids": []
+      },
+      "ekwa": {
+        "canonical": true,
+        "kids": []
+      },
+      "ekwenkwange": {
+        "canonical": true,
+        "kids": []
+      },
+      "ekwuno": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "ele": {
+        "canonical": true,
+        "kids": []
+      },
+      "emo": {
+        "canonical": true,
+        "kids": []
+      },
+      "epa": {
+        "canonical": true,
+        "kids": []
+      },
+      "epume": {
+        "canonical": true,
+        "kids": []
+      },
+      "eshie": {
+        "canonical": true,
+        "kids": []
+      },
+      "etse": {
+        "canonical": true,
+        "kids": []
+      },
+      "fablo": {
+        "canonical": true,
+        "kids": []
+      },
+      "fange": {
+        "canonical": true,
+        "kids": []
+      },
+      "fe": {
+        "canonical": true,
+        "kids": []
+      },
+      "fege": {
+        "canonical": true,
+        "kids": []
+      },
+      "fele": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "feme": {
+        "canonical": true,
+        "kids": []
+      },
+      "fia": {
+        "canonical": true,
+        "kids": []
+      },
+      "file": {
+        "canonical": true,
+        "kids": []
+      },
+      "fine": {
+        "canonical": true,
+        "kids": []
+      },
+      "foa": {
+        "canonical": true,
+        "kids": []
+      },
+      "foga": {
+        "canonical": true,
+        "kids": []
+      },
+      "foome": {
+        "canonical": true,
+        "kids": []
+      },
+      "ghange": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "ghelo": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "gheno": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "gho": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "gome": {
+        "canonical": true,
+        "kids": []
+      },
+      "jie": {
+        "canonical": true,
+        "kids": []
+      },
+      "june": {
+        "canonical": true,
+        "kids": []
+      },
+      "jwae": {
+        "canonical": true,
+        "kids": []
+      },
+      "jwie": {
+        "canonical": true,
+        "kids": []
+      },
+      "ka": {
+        "canonical": true,
+        "kids": []
+      },
+      "kake": {
+        "canonical": true,
+        "kids": []
+      },
+      "kamko": {
+        "canonical": true,
+        "kids": []
+      },
+      "kaye": {
+        "canonical": true,
+        "kids": []
+      },
+      "keene": {
+        "canonical": true,
+        "kids": []
+      },
+      "keie": {
+        "canonical": true,
+        "kids": []
+      },
+      "kele": {
+        "canonical": true,
+        "kids": []
+      },
+      "kiee": {
+        "canonical": true,
+        "kids": []
+      },
+      "kong": {
+        "canonical": true,
+        "kids": []
+      },
+      "konge": {
+        "canonical": true,
+        "kids": []
+      },
+      "kongo": {
+        "canonical": true,
+        "kids": []
+      },
+      "koo": {
+        "canonical": true,
+        "kids": []
+      },
+      "kwuo": {
+        "canonical": true,
+        "kids": []
+      },
+      "lae": {
+        "canonical": true,
+        "kids": []
+      },
+      "le": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "leba": {
+        "canonical": true,
+        "kids": []
+      },
+      "lebe": {
+        "canonical": true,
+        "kids": []
+      },
+      "lee": {
+        "canonical": true,
+        "kids": []
+      },
+      "leere": {
+        "canonical": true,
+        "kids": []
+      },
+      "lele": {
+        "canonical": true,
+        "kids": []
+      },
+      "lie": {
+        "canonical": true,
+        "kids": []
+      },
+      "llia": {
+        "canonical": true,
+        "kids": []
+      },
+      "loke": {
+        "canonical": true,
+        "kids": []
+      },
+      "longne": {
+        "canonical": true,
+        "kids": []
+      },
+      "loooo": {
+        "canonical": true,
+        "kids": []
+      },
+      "lyange": {
+        "canonical": true,
+        "kids": []
+      },
+      "ma": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "mabna": {
+        "canonical": true,
+        "kids": []
+      },
+      "mafe": {
+        "canonical": true,
+        "kids": []
+      },
+      "mame": {
+        "canonical": true,
+        "kids": []
+      },
+      "manggye": {
+        "canonical": true,
+        "kids": []
+      },
+      "mata": {
+        "canonical": true,
+        "kids": []
+      },
+      "mbachi": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "mbe": {
+        "canonical": true,
+        "kids": []
+      },
+      "mbeta": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "mbifue": {
+        "canonical": true,
+        "kids": []
+      },
+      "mbo": {
+        "canonical": true,
+        "kids": []
+      },
+      "mbwange": {
+        "canonical": true,
+        "kids": []
+      },
+      "mbyaabe": {
+        "canonical": true,
+        "kids": []
+      },
+      "mese": {
+        "canonical": true,
+        "kids": []
+      },
+      "meteeno": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "metwe": {
+        "canonical": true,
+        "kids": []
+      },
+      "miee": {
+        "canonical": true,
+        "kids": []
+      },
+      "mo": {
+        "canonical": true,
+        "kids": []
+      },
+      "moga": {
+        "canonical": true,
+        "kids": []
+      },
+      "moone": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "muto": {
+        "canonical": true,
+        "kids": []
+      },
+      "na": {
+        "canonical": true,
+        "kids": []
+      },
+      "nae": {
+        "canonical": true,
+        "kids": []
+      },
+      "nangke": {
+        "canonical": true,
+        "kids": []
+      },
+      "nda": {
+        "canonical": true,
+        "kids": []
+      },
+      "ndange": {
+        "canonical": true,
+        "kids": []
+      },
+      "nde": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "ndo": {
+        "canonical": true,
+        "kids": []
+      },
+      "ndua": {
+        "canonical": true,
+        "kids": []
+      },
+      "ndze": {
+        "canonical": true,
+        "kids": []
+      },
+      "nefyane": {
+        "canonical": true,
+        "kids": []
+      },
+      "nekyeele": {
+        "canonical": true,
+        "kids": []
+      },
+      "nelage": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "nele": {
+        "canonical": true,
+        "kids": []
+      },
+      "nelwie": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "nenonge": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "nepe": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "nepeene": {
+        "canonical": true,
+        "kids": []
+      },
+      "nepeme": {
+        "canonical": true,
+        "kids": []
+      },
+      "nese": {
+        "canonical": true,
+        "kids": []
+      },
+      "nesonge": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "netee": {
+        "canonical": true,
+        "kids": []
+      },
+      "neto": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "netogle": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "netue": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "nggoome": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "nggoone": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "nggwenge": {
+        "canonical": true,
+        "kids": []
+      },
+      "ngjakase": {
+        "canonical": true,
+        "kids": []
+      },
+      "ngwumne": {
+        "canonical": true,
+        "kids": []
+      },
+      "ngye": {
+        "canonical": true,
+        "kids": []
+      },
+      "ngyie": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "nja": {
+        "canonical": true,
+        "kids": []
+      },
+      "njie": {
+        "canonical": true,
+        "kids": []
+      },
+      "nkadte": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "nkange": {
+        "canonical": true,
+        "kids": []
+      },
+      "nkie": {
+        "canonical": true,
+        "kids": []
+      },
+      "nkoe": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "nkwa": {
+        "canonical": true,
+        "kids": []
+      },
+      "nnang": {
+        "canonical": true,
+        "kids": []
+      },
+      "nonno": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "nteeme": {
+        "canonical": true,
+        "kids": []
+      },
+      "ntie": {
+        "canonical": true,
+        "kids": []
+      },
+      "ntoe": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "ntsedndzeme": {
+        "canonical": true,
+        "kids": []
+      },
+      "ntsoole": {
+        "canonical": true,
+        "kids": [
+          "joyce"
+        ]
+      },
+      "ntue": {
+        "canonical": true,
+        "kids": []
+      },
+      "nue": {
+        "canonical": true,
+        "kids": []
+      },
+      "nwa": {
+        "canonical": true,
+        "kids": []
+      },
+      "panapeele": {
+        "canonical": true,
+        "kids": []
+      },
+      "pange": {
+        "canonical": true,
+        "kids": []
+      },
+      "pangpange": {
+        "canonical": true,
+        "kids": []
+      },
+      "pano": {
+        "canonical": true,
+        "kids": []
+      },
+      "panopaele": {
+        "canonical": true,
+        "kids": []
+      },
+      "panpange": {
+        "canonical": true,
+        "kids": []
+      },
+      "pe": {
+        "canonical": true,
+        "kids": []
+      },
+      "pee": {
+        "canonical": true,
+        "kids": []
+      },
+      "pege": {
+        "canonical": true,
+        "kids": []
+      },
+      "pie": {
+        "canonical": true,
+        "kids": []
+      },
+      "pimne": {
+        "canonical": true,
+        "kids": []
+      },
+      "pita": {
+        "canonical": true,
+        "kids": []
+      },
+      "pite": {
+        "canonical": true,
+        "kids": []
+      },
+      "poa": {
+        "canonical": true,
+        "kids": []
+      },
+      "poe": {
+        "canonical": true,
+        "kids": []
+      },
+      "pwodke": {
+        "canonical": true,
+        "kids": []
+      },
+      "pya": {
+        "canonical": true,
+        "kids": []
+      },
+      "sae": {
+        "canonical": true,
+        "kids": []
+      },
+      "sake": {
+        "canonical": true,
+        "kids": []
+      },
+      "sama": {
+        "canonical": true,
+        "kids": []
+      },
+      "sane": {
+        "canonical": true,
+        "kids": []
+      },
+      "sange": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "seeke": {
+        "canonical": true,
+        "kids": []
+      },
+      "sene": {
+        "canonical": true,
+        "kids": []
+      },
+      "sga": {
+        "canonical": true,
+        "kids": []
+      },
+      "so": {
+        "canonical": true,
+        "kids": []
+      },
+      "soge": {
+        "canonical": true,
+        "kids": []
+      },
+      "songa": {
+        "canonical": true,
+        "kids": []
+      },
+      "songe": {
+        "canonical": true,
+        "kids": []
+      },
+      "ta": {
+        "canonical": true,
+        "kids": []
+      },
+      "tamto": {
+        "canonical": true,
+        "kids": []
+      },
+      "tate": {
+        "canonical": true,
+        "kids": []
+      },
+      "teka": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "tie": {
+        "canonical": true,
+        "kids": []
+      },
+      "tome": {
+        "canonical": true,
+        "kids": []
+      },
+      "tue": {
+        "canonical": true,
+        "kids": []
+      },
+      "tuga": {
+        "canonical": true,
+        "kids": []
+      },
+      "tume": {
+        "canonical": true,
+        "kids": []
+      },
+      "tyanto": {
+        "canonical": true,
+        "kids": []
+      },
+      "wuee": {
+        "canonical": true,
+        "kids": []
+      },
+      "ye": {
+        "canonical": true,
+        "kids": []
+      },
+      "yie": {
+        "canonical": true,
+        "kids": []
+      },
+      "yila": {
+        "canonical": true,
+        "kids": []
+      },
+      "yo": {
+        "canonical": true,
+        "kids": []
+      },
+      "za": {
+        "canonical": true,
+        "kids": []
+      },
+      "zee": {
+        "canonical": true,
+        "kids": []
+      },
+      "zi": {
+        "canonical": true,
+        "kids": [
+          "joel",
+          "joyce"
+        ]
+      },
+      "zonge": {
+        "canonical": true,
+        "kids": []
+      },
+      "zoo": {
+        "canonical": true,
+        "kids": []
+      }
+    }
+  }
+}

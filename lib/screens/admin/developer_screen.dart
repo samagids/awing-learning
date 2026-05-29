@@ -14,6 +14,7 @@ import 'package:awing_ai_learning/services/cloud_backup_service.dart';
 import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/services/recordings_service.dart';
+import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
 import 'package:awing_ai_learning/data/awing_alphabet.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
@@ -605,6 +606,19 @@ class _RecordTabState extends State<_RecordTab> {
     } catch (_) {/* prefs unavailable — keep in-memory only */}
   }
 
+  /// Returns the lowercase kid slug (joel/janelle/joyce/jadyne) for the
+  /// active recorder, or null if it's Dr. Sama / Berlin / guest. Used
+  /// by the "Missing from active recorder" filter to look up coverage
+  /// in NativeAudioInventory.
+  String? _activeRecorderKidSlug() {
+    const knownKids = {'joel', 'janelle', 'joyce', 'jadyne'};
+    final norm = _activeRecorder.trim().toLowerCase();
+    if (norm.isEmpty) return null;
+    if (knownKids.contains(norm)) return norm;
+    final first = norm.split(RegExp(r'\s+')).first;
+    return knownKids.contains(first) ? first : null;
+  }
+
   Future<String?> _promptCustomRecorder() async {
     final controller = TextEditingController();
     return showDialog<String>(
@@ -731,6 +745,20 @@ class _RecordTabState extends State<_RecordTab> {
         case 'ByOthers':
           if (recs.isEmpty) return false;
           if (recs.length == 1 && byMe) return false;
+          break;
+        case 'MissingFromActive':
+          // v1.13.4 — show items the currently-picked recorder hasn't
+          // covered in the last-built audio inventory. Useful for
+          // tracking down kids' missing words (e.g. Joel's 12 untaped
+          // words after the dedup fix surfaced his real coverage count).
+          // For non-kid active recorders (Dr. Sama / Berlin / guest),
+          // fall back to canonical coverage.
+          final inv = NativeAudioInventory.instance;
+          final kidSlug = _activeRecorderKidSlug();
+          final covered = kidSlug != null
+              ? inv.hasKidRecording(item.audioKey, kidSlug)
+              : inv.hasCanonical(item.audioKey);
+          if (covered) return false;
           break;
       }
 
@@ -1200,6 +1228,11 @@ class _RecordTabState extends State<_RecordTab> {
                   ('NotRecorded', '⬜ To do', Colors.orange),
                   ('ByMe', '✅ By me', Colors.green),
                   ('ByOthers', '👥 By others', Colors.blue),
+                  // v1.13.4 — shows only items the currently-picked
+                  // recorder hasn't covered in the SHIPPED audio
+                  // inventory. Pick "Joel" + this filter to see exactly
+                  // which words Joel needs to (re-)record.
+                  ('MissingFromActive', '🎯 Missing from picker', Colors.red),
                 ])
                   Padding(
                     padding: const EdgeInsets.only(right: 6),
@@ -1350,6 +1383,11 @@ class _RecordTabState extends State<_RecordTab> {
                           color: Colors.grey.shade700)),
                   const SizedBox(height: 2),
                   _statusLine(item, recs, byMe),
+                  // v1.13.4 — per-recorder coverage badges. Pulls from
+                  // NativeAudioInventory (last-built audio tree) so the
+                  // dev can see at a glance which kids have a clip for
+                  // this word. Active recorder's badge is highlighted.
+                  _inventoryBadges(item),
                 ],
               ),
             ),
@@ -1441,6 +1479,58 @@ class _RecordTabState extends State<_RecordTab> {
           ),
         ),
       ],
+    );
+  }
+
+  /// One-row strip of small badges showing which recorders have a
+  /// shipped clip for this item. Pulls from NativeAudioInventory
+  /// (build-time snapshot of audio/native/ + audio/native_kids/).
+  /// Returns SizedBox.shrink when the inventory hasn't loaded yet
+  /// (graceful — the line just doesn't render).
+  ///
+  /// Active recorder's badge gets a colored fill so the dev sees at a
+  /// glance: "this row needs MY recording" vs "this row is covered for
+  /// me but missing for other kids" vs "fully covered".
+  Widget _inventoryBadges(_RecordableItem item) {
+    final inv = NativeAudioInventory.instance;
+    if (!inv.isLoaded) return const SizedBox.shrink();
+
+    final activeSlug = _activeRecorderKidSlug();
+    final hasCanonical = inv.hasCanonical(item.audioKey);
+
+    // Order matches the family list — boy team first (joel/janelle),
+    // then girl team (joyce/jadyne). Dr. Sama (canonical) on the right.
+    const kids = [
+      ('joel', 'J'),
+      ('janelle', 'N'),
+      ('joyce', 'Y'),
+      ('jadyne', 'D'),
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 3),
+      child: Row(
+        children: [
+          for (final (slug, initial) in kids)
+            _CoverageDot(
+              initial: initial,
+              tooltip: PronunciationService.kidDisplayNames[slug] ?? slug,
+              covered: inv.hasKidRecording(item.audioKey, slug),
+              active: slug == activeSlug,
+            ),
+          const SizedBox(width: 6),
+          // Dr. Sama / canonical reference voice — slightly different
+          // shape so it visually reads as "the default" rather than
+          // another kid.
+          _CoverageDot(
+            initial: 'S',
+            tooltip: 'Dr. Sama (canonical)',
+            covered: hasCanonical,
+            active: activeSlug == null,
+            isAdult: true,
+          ),
+        ],
+      ),
     );
   }
 
@@ -1584,6 +1674,63 @@ class _RecordTabState extends State<_RecordTab> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Small circular badge showing whether a recorder has covered an item.
+/// Filled green = covered, hollow grey = not covered, with a colored
+/// outline when this is the active recorder (so the dev sees at a glance
+/// "the kid I'm picked as still needs this one"). Used in
+/// _RecordTabState._inventoryBadges to render the 4 kid badges + Dr.
+/// Sama canonical badge per item card.
+class _CoverageDot extends StatelessWidget {
+  final String initial;
+  final String tooltip;
+  final bool covered;
+  final bool active;
+  final bool isAdult;
+
+  const _CoverageDot({
+    required this.initial,
+    required this.tooltip,
+    required this.covered,
+    required this.active,
+    this.isAdult = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final size = 18.0;
+    final coveredFill = isAdult ? Colors.indigo : Colors.green.shade600;
+    final hollowFill = Colors.grey.shade300;
+    final activeBorder = Colors.deepOrange;
+
+    return Tooltip(
+      message: covered
+          ? '$tooltip — recorded${active ? " (active)" : ""}'
+          : '$tooltip — missing${active ? " (active, you should record this)" : ""}',
+      child: Container(
+        width: size,
+        height: size,
+        margin: const EdgeInsets.only(right: 3),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: covered ? coveredFill : hollowFill,
+          border: active
+              ? Border.all(color: activeBorder, width: 2)
+              : null,
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          initial,
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w700,
+            color: covered ? Colors.white : Colors.grey.shade700,
+          ),
         ),
       ),
     );

@@ -33,6 +33,16 @@ import sys
 import unicodedata
 from pathlib import Path
 
+# Force UTF-8 stdout/stderr so log lines with ✓ / ✗ / arrows don't
+# crash on Windows when piped (cp1252 fallback). See identical block
+# in sync_recordings.py for rationale.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, 'reconfigure'):
+        try:
+            _stream.reconfigure(encoding='utf-8', errors='replace')
+        except Exception:
+            pass
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDINGS_DIR = REPO_ROOT / "training_data" / "recordings"
 MANIFEST = RECORDINGS_DIR / "manifest.json"
@@ -51,10 +61,25 @@ KID_SLUGS = {
     "jadyne":  "jadyne",
 }
 
+# Adult-name normalizations. These all map to None (not a kid slug) so
+# they route to canonical native/, but the SET is recognized so the
+# recorder name in the manifest is canonicalized for display + dedup
+# consistency. Mirrors sync_recordings.py::_RECORDER_ALIASES.
+_ADULT_ALIASES = {
+    "sama", "samagids", "samagids@gmail.com", "samagidshop@gmail.com",
+    "guidion", "guidion sama", "dr guidion sama", "dr. guidion sama",
+    "dr. sama", "dr sama",
+    "berlin", "berlin sama",
+}
+
 
 def _recorder_to_kid_slug(name: str | None) -> str | None:
     """Return the per-kid output slug if `name` is a known family kid,
-    else None. Case-insensitive, tolerates extra whitespace."""
+    else None. Case-insensitive, tolerates extra whitespace. Recognized
+    adult aliases (sama / Dr. Guidion Sama / berlin) also return None
+    but are intentionally distinguished from truly unknown recorders
+    in the routing logic above (both route to canonical, but adults
+    are expected canonical-tier contributors, unknowns are not)."""
     if not name:
         return None
     norm = name.strip().lower()
@@ -185,22 +210,33 @@ def main() -> int:
         kid_mp3_path = (KIDS_OUT / kid_slug / category / f"{key}.mp3"
                         if kid_slug else None)
 
-        if mp3_path.exists() and not args.force:
-            wav_mtime = wav_path.stat().st_mtime
-            mp3_mtime = mp3_path.stat().st_mtime
-            # Skip BOTH targets only if both are already newer than
-            # the source. Otherwise we still need to write the missing
-            # one (e.g. canonical exists but per-kid copy was added
-            # later via a Dart change).
-            kid_ready = (kid_mp3_path is None
-                         or (kid_mp3_path.exists()
-                             and kid_mp3_path.stat().st_mtime >= wav_mtime))
-            if mp3_mtime >= wav_mtime and kid_ready:
-                skipped += 1
-                continue
+        # Routing rule (final architecture):
+        #   kid_slug present (Joel/Janelle/Joyce/Jadyne):
+        #     → write ONLY to audio/native_kids/<slug>/...
+        #     → NEVER touch canonical (preserves "My voice" as Dr. Sama
+        #       only — picking Joyce never falls back to Joel's voice)
+        #
+        #   kid_slug absent (Dr. Sama / Berlin Sama / blank / unknown):
+        #     → write ONLY to canonical audio/native/...
+        #     → curated reference voice; kids never overwrite this
+        #
+        # Result: PronunciationService search order
+        #   1. native_kids/<picked_kid>/   (that kid only)
+        #   2. native/                     (Dr. Sama reference fallback)
+        #   3. <character>/                (Edge TTS Swahili fallback)
+        # cleanly delivers "Joyce's voice only, else Dr. Sama, else TTS".
+        target_path = kid_mp3_path if kid_slug else mp3_path
 
-        rel_out = mp3_path.relative_to(REPO_ROOT)
-        kid_note = f"  [+ kid: {kid_slug}]" if kid_slug else ""
+        wav_mtime = wav_path.stat().st_mtime
+        need_write = (not target_path.exists()
+                      or target_path.stat().st_mtime < wav_mtime)
+
+        if not args.force and not need_write:
+            skipped += 1
+            continue
+
+        rel_out = target_path.relative_to(REPO_ROOT)
+        kid_note = f"  [kid: {kid_slug}]" if kid_slug else "  [canonical]"
         print(f"  {awing!r:24s} ({source:11s}) -> {rel_out}{kid_note}")
         by_category[category] = by_category.get(category, 0) + 1
         if kid_slug:
@@ -210,16 +246,17 @@ def main() -> int:
             written += 1
             continue
 
-        ok = convert_wav_to_mp3(wav_path, mp3_path)
-        if ok and kid_mp3_path is not None:
-            # Best-effort per-kid copy. If this fails the canonical
-            # write still succeeded so the app keeps working — the
-            # user just won't hear THIS kid's voice for this word.
-            try:
-                kid_mp3_path.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(mp3_path, kid_mp3_path)
-            except OSError as e:
-                print(f"    WARN: per-kid copy failed: {e}")
+        # Single conversion to the ONE target path (canonical OR kid,
+        # never both). Storage savings + correctness: every byte written
+        # belongs to exactly one voice tier with no overwrite conflicts.
+        try:
+            target_path.parent.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            print(f"    WARN: target mkdir failed: {e}")
+            failed += 1
+            continue
+
+        ok = convert_wav_to_mp3(wav_path, target_path)
         if ok:
             written += 1
         else:

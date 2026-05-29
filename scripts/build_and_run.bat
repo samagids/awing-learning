@@ -176,6 +176,24 @@ if exist "training_data\recordings\manifest.json" (
 )
 echo.
 
+REM ---- Step 1d: Build native audio inventory manifest ----
+REM Scans audio/native/ + audio/native_kids/<slug>/ and emits
+REM assets/native_audio_manifest.json — a small JSON the Flutter app
+REM bundles in the main APK (NOT the PAD pack, so it's available at
+REM startup before any PAD download). The Dev Mode Record tab uses it
+REM to show per-item badges for which recorders have a clip + power the
+REM "Missing from [active recorder]" filter so the dev can find words
+REM the current picker target hasn't covered yet.
+REM Non-fatal: stale manifest just dulls in-app status badges; doesn't
+REM affect playback or distribution.
+echo [1d/7] Building native audio inventory manifest...
+python scripts\build_native_audio_manifest.py --quiet
+if !ERRORLEVEL! neq 0 (
+    echo        WARNING: native audio manifest build failed.
+    echo        Record tab status badges will be stale until next build.
+)
+echo.
+
 REM ---- Set PAD asset output directory ----
 set "PAD_ASSETS=android\install_time_assets\src\main\assets"
 if not exist "%PAD_ASSETS%\audio" mkdir "%PAD_ASSETS%\audio"
