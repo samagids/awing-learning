@@ -1,0 +1,257 @@
+Body-part clusters: 58
+
+=== 'abdomen' (2 entries) ===
+  L 6143  'atena'                           cat=body         en='abdomen'  [diff=1]
+  L 6145  'nəpemə'                          cat=body         en='abdomen (external)'  [diff=1]
+
+=== 'ashes' (2 entries) ===
+  L  458  'apúə'                            cat=things       en='ashes'  [diff=1]
+  L 6413  'apʉə'                            cat=body         en='ashes'  [diff=1]
+
+=== 'back' (3 entries) ===
+  L  101  'nkadtə'                          cat=body         en='back'
+  L  236  'ndzəmə'                          cat=nature       en='back (place)'  [diff=1]
+  L 6471  'tśmtə'                           cat=body         en='back'  [tone=high, diff=1]
+
+=== 'beard' (2 entries) ===
+  L  125  'əleló'                           cat=body         en='beard'  [AUDIT-VERIFIED, diff=1]
+  L 6569  'alélə'                           cat=body         en='beard'  [tone=high, diff=1]
+
+=== 'bladder' (2 entries) ===
+  L 3761  'atseŋə'                          cat=things       en='bladder'  [diff=1]
+  L 6737  'atsenə'                          cat=body         en='bladder'  [diff=1]
+
+=== 'blink eyes' (2 entries) ===
+  L 2273  'ŋwaŋkô móga'                     cat=body         en='blink eyes'  [tone=falling, diff=2]
+  L 6765  'ŋwaŋkə̂ mə́gə'                   cat=actions      en='blink eyes'  [tone=falling, diff=2]
+
+=== 'body' (2 entries) ===
+  L  106  'ŋgɔ́ɔmə'                         cat=body         en='body'  [diff=1]
+  L 6801  'atsenə'                          cat=things       en='body'  [diff=1]
+
+=== 'bone' (2 entries) ===
+  L  119  'akwəŋó'                          cat=body         en='bone'  [AUDIT-VERIFIED]
+  L 6815  'akwagə'                          cat=body         en='bone'  [diff=1]
+
+=== 'bone marrow' (2 entries) ===
+  L 2249  'manwáŋa'                         cat=body         en='bone marrow'  [tone=high]
+  L 6817  'maŋwaŋnə'                        cat=body         en='bone marrow'  [diff=1]
+
+=== 'breast' (2 entries) ===
+  L 4889  'nəpəənə'                         cat=body         en='breast'  [diff=3]
+  L 6877  'napóəmə'                         cat=body         en='breast'  [tone=high, diff=3]
+
+=== 'breast wear' (2 entries) ===
+  L 4664  'poolá'                           cat=body         en='breast wear'  [diff=3]
+  L 6879  'poələ'                           cat=body         en='breast wear'  [diff=3]
+
+=== 'calf of leg' (2 entries) ===
+  L 2269  'ntəmə akoolə'                    cat=body         en='calf of leg'  [diff=2]
+  L 6991  'ntoma akoola'                    cat=body         en='calf of leg'  [diff=2]
+
+=== 'cheek' (2 entries) ===
+  L  136  'ŋgwɛ̂ŋə'                         cat=body         en='cheek'  [diff=1]
+  L 7149  'naghagə'                         cat=things       en='cheek'  [diff=1]
+
+=== 'communication by mouth' (2 entries) ===
+  L 2214  'atséebántsoolə'                  cat=body         en='communication by mouth'  [tone=high, diff=2]
+  L 7345  'atséəbantsoolə'                  cat=body         en='communication by mouth'  [tone=high, diff=2]
+
+=== 'date palm' (2 entries) ===
+  L 2270  'ntso'                            cat=body         en='date palm'  [diff=1]
+  L 7697  'ntsɔ'                            cat=body         en='date palm'  [diff=1]
+
+=== 'ear' (2 entries) ===
+  L  108  'ntɔ̀ə'                           cat=body         en='ear'
+  L  115  'nətôglə'                         cat=body         en='ear'  [AUDIT-VERIFIED]
+
+=== 'elbow' (3 entries) ===
+  L  138  'nkwə̂ŋə'                         cat=body         en='elbow'
+  L 2266  'nkənə apô'                       cat=body         en='elbow'  [tone=falling, diff=2]
+  L 8183  'nkona apó'                       cat=body         en='elbow'  [tone=high, diff=2]
+
+=== 'eye' (2 entries) ===
+  L  107  'ŋgɔ̀ɔnə'                         cat=body         en='eye'
+  L  114  'nəlágə'                          cat=body         en='eye'  [AUDIT-VERIFIED, pl=mələ́g]
+
+=== 'eyebrow' (2 entries) ===
+  L 2263  'ngəd nəlágə́'                    cat=body         en='eyebrow'  [tone=high, diff=2]
+  L 8367  'ŋgəd nalə̂gə'                    cat=things       en='eyebrow'  [tone=falling, diff=2]
+
+=== 'eyelid' (2 entries) ===
+  L 2265  'ngwub nəlágə'                    cat=body         en='eyelid'  [tone=high, diff=2]
+  L 8371  'ŋgwub nalə̂gə'                   cat=things       en='eyelid'  [tone=falling, diff=2]
+
+=== 'finger' (2 entries) ===
+  L  139  'ntsə̂ŋə'                         cat=body         en='finger'
+  L 2236  'fîə apô'                         cat=body         en='finger'  [tone=falling, diff=2]
+
+=== 'fish bone' (2 entries) ===
+  L 2192  'akwəŋó əshûə'                    cat=body         en='fish bone'  [tone=falling, diff=2]
+  L 8569  'akwagə̂ əshúə'                   cat=actions      en='fish bone'  [tone=falling, diff=2]
+
+=== 'foot' (2 entries) ===
+  L  122  'atéelə'                          cat=body         en='foot'
+  L 8711  'atéela akoola'                   cat=body         en='foot'  [tone=high, diff=2]
+
+=== 'forehead' (4 entries) ===
+  L  142  'ŋgwɔ̂ŋə'                         cat=body         en='forehead'  [diff=1]
+  L 2262  'nəzeŋnə́'                        cat=body         en='forehead'  [tone=high, diff=1]
+  L 8723  'nazəŋnə'                         cat=body         en='forehead'  [diff=1]
+  L 8725  'akíbnə'                          cat=body         en='forehead (high in appearance)'  [tone=high, diff=1]
+
+=== 'gall bladder' (2 entries) ===
+  L 4314  'nkeenə́ akyamə'                  cat=things       en='gall bladder'  [tone=high, diff=2]
+  L 8843  'nkeenə̌ akyáamə'                 cat=body         en='gall bladder'  [tone=rising, diff=2]
+
+=== 'growth, on the neck' (2 entries) ===
+  L 9103  'aloəbə'                          cat=body         en='growth, on the neck'  [diff=1]
+  L 9105  'alaobandágə'                     cat=body         en='growth, on the neck'  [tone=high, diff=1]
+
+=== 'hair' (5 entries) ===
+  L  118  'nənoŋə'                          cat=body         en='hair'  [AUDIT-VERIFIED, pl=mənɔŋə]
+  L 2248  'manoŋ má mbǎəmə'                 cat=body         en='hair (of body)'  [tone=rising, diff=2]
+  L 9147  'atúə'                            cat=body         en='hair'  [tone=high, diff=1]
+  L 9149  'nəŋoŋə'                          cat=body         en='hair'  [diff=1]
+  L 9151  'monoŋ má mbəəmə'                 cat=body         en='hair (of body)'  [tone=high, diff=2]
+
+=== 'hair, worshipped periodically' (2 entries) ===
+  L 9155  'atóəsə'                          cat=body         en='hair, worshipped periodically'  [tone=high, diff=1]
+  L 9157  'atúə'                            cat=body         en='hair, worshipped periodically'  [tone=high, diff=1]
+
+=== 'hand limb' (2 entries) ===
+  L 2255  'nələŋə nó apô'                   cat=body         en='hand limb'  [tone=falling, diff=2]
+  L 9171  'nəlaŋə̌ nə́ apó'                 cat=body         en='hand limb'  [tone=rising, diff=2]
+
+=== 'heart' (2 entries) ===
+  L  134  'ntéəmə'                          cat=body         en='heart'  [AUDIT-VERIFIED, diff=1]
+  L 9253  'ntáəmə'                          cat=body         en='heart'  [tone=high, diff=1]
+
+=== 'heart break' (2 entries) ===
+  L 2196  'alógántəəmə'                     cat=body         en='heart break'  [tone=high, diff=1]
+  L 9255  'aləgántáəmə'                     cat=body         en='heart break'  [tone=high, diff=1]
+
+=== 'heel' (2 entries) ===
+  L 2260  'nətsóŋ nó akoolə'                cat=body         en='heel'  [tone=high, diff=2]
+  L 9271  'nətsəŋ nə́ akoola'               cat=things       en='heel'  [tone=high, diff=2]
+
+=== 'hump' (2 entries) ===
+  L  129  'nəlwɛ̂ɨ'                         cat=body         en='hump'  [diff=1]
+  L 9431  'búsbágə'                         cat=animals      en='hump (of cow)'  [tone=high, diff=1]
+
+=== 'insult' (5 entries) ===
+  L 3321  'zəmtə̂'                          cat=actions      en='insult'  [tone=falling, diff=1]
+  L 4165  'ndzəmnə'                         cat=things       en='insult'  [diff=1]
+  L 6110  'zoomə̂'                          cat=things       en='insult'  [tone=falling, diff=1]
+  L 9611  'atóŋantsoolə'                    cat=body         en='insult (long mouth)'  [tone=high, diff=1]
+  L 9615  'kwum əfeemə'                     cat=numbers      en="insult (split one\\'s forehead)"  [diff=2]
+
+=== 'intestines' (2 entries) ===
+  L  111  'nətô'                            cat=body         en='intestines'  [diff=1]
+  L 9723  'natə̂'                           cat=things       en='intestines'  [tone=falling, diff=1]
+
+=== 'jaw' (2 entries) ===
+  L  141  'ndɛ̂ŋə'                          cat=body         en='jaw'  [diff=1]
+  L 9743  'naghagə'                         cat=body         en='jaw'  [diff=1]
+
+=== 'joint' (2 entries) ===
+  L  152  'nalanɔ́'                         cat=body         en='joint'  [diff=1]
+  L 9757  'nəlaŋə'                          cat=things       en='joint'  [diff=1]
+
+=== 'liver' (2 entries) ===
+  L  110  'nəpe'                            cat=body         en='liver'  [diff=1]
+  L10025  'napə'                            cat=body         en='liver'  [diff=1]
+
+=== 'lock of hair' (2 entries) ===
+  L 2261  'nətsóŋ nó atûə'                  cat=body         en='lock of hair'  [tone=falling, diff=2]
+  L10043  'natsóŋ nə́ atúə'                 cat=body         en='lock of hair'  [tone=high, diff=2]
+
+=== 'nail' (4 entries) ===
+  L  492  'mbéenə'                          cat=things       en='nail'  [diff=1]
+  L 2243  'kwumtô'                          cat=body         en='nail'  [tone=falling]
+  L10459  'kwumə̂'                          cat=body         en='nail'  [tone=falling, diff=1]
+  L10461  'kwumtə'                          cat=body         en='nail'  [diff=1]
+
+=== 'neck' (4 entries) ===
+  L  100  'ndě'                             cat=body         en='neck (body part)'  [pl=məndě, diff=1]
+  L  140  'mbwɔ̂ŋə'                         cat=body         en='neck (back of)'  [diff=1]
+  L 2199  'amiə'                            cat=body         en='neck'  [diff=1]
+  L10499  'amlə'                            cat=body         en='neck'  [diff=1]
+
+=== 'palm' (3 entries) ===
+  L  144  'mbə̂ŋɔ́'                         cat=body         en='palm (of hand)'  [diff=1]
+  L 2246  'máma apô'                        cat=body         en='palm (of hand)'  [tone=falling, diff=2]
+  L10751  'mbəba apó'                       cat=body         en='palm (of hand)'  [tone=high, diff=2]
+
+=== 'palm nut' (2 entries) ===
+  L 2259  'nətəənə'                         cat=body         en='palm nut'  [diff=1]
+  L10749  'azaŋə'                           cat=body         en='palm nut'  [diff=1]
+
+=== 'palm of hand' (2 entries) ===
+  L 2205  'atéelə apô'                      cat=body         en='palm of hand'  [tone=falling, diff=2]
+  L10753  'atéəla apó'                      cat=body         en='palm of hand'  [tone=high, diff=2]
+
+=== 'palm oil' (2 entries) ===
+  L 2244  'məghód má paŋ nə̂'               cat=body         en='palm oil'  [tone=falling, diff=2]
+  L10755  'məghəd mə̂ paŋ nə̌'              cat=body         en='palm oil'  [tone=rising, diff=2]
+
+=== 'palm tree' (2 entries) ===
+  L  534  'atía nɔ́taɔna'                   cat=things       en='palm tree'  [diff=2]
+  L10761  'atìə nataənə̌'                   cat=body         en='palm tree'  [tone=rising, diff=2]
+
+=== 'pimple' (2 entries) ===
+  L 5706  'nənteemə́'                       cat=body         en='pimple'  [tone=high, diff=1]
+  L10943  'nonteemə'                        cat=things       en='pimple'  [diff=1]
+
+=== 'rib' (3 entries) ===
+  L  143  'ntsɔ̂ŋə'                         cat=body         en='rib'  [diff=1]
+  L 2230  'əsâŋngyénə'                      cat=body         en='rib'  [tone=falling, diff=1]
+  L11609  'asá ŋŋgyéŋa'                     cat=body         en='rib'  [tone=high, diff=2]
+
+=== 'scar' (3 entries) ===
+  L 3585  'alagó'                           cat=things       en='scar'  [tone=high, diff=1]
+  L 3681  'apenə'                           cat=things       en='scar'  [diff=1]
+  L11817  'alagə'                           cat=body         en='scar'  [diff=1]
+
+=== 'skin' (4 entries) ===
+  L  149  'ŋgwɛ̀nə'                         cat=body         en='skin'
+  L 2264  'ngwub mbəəmə'                    cat=body         en='skin (of man)'  [diff=2]
+  L12169  'akwubə'                          cat=body         en='skin (of fruit)'  [diff=1]
+  L12171  'jubə'                            cat=body         en='skin(v)'  [diff=1]
+
+=== 'skull' (3 entries) ===
+  L 3488  'aghaglótûə'                      cat=things       en='skull'  [tone=falling, diff=1]
+  L 3567  'akwəŋótûə'                       cat=things       en='skull'  [tone=falling, diff=1]
+  L12179  'akwaŋtúə'                        cat=body         en='skull'  [tone=high, diff=1]
+
+=== 'stomach' (4 entries) ===
+  L  120  'nəpəmə'                          cat=body         en='stomach'  [pl=məpəmə]
+  L 2245  'məm nəpəmə'                      cat=body         en='stomach (internal)'  [diff=2]
+  L12573  'napomə'                          cat=body         en='stomach'  [diff=1]
+  L12575  'n.p. məm napəmə'                 cat=body         en='stomach (internal)'  [diff=2]
+
+=== 'tear' (3 entries) ===
+  L 2278  'seelô'                           cat=body         en='tear (tr)'  [tone=falling, diff=1]
+  L12831  'nkyîməgə'                        cat=body         en='tear'  [tone=falling, diff=1]
+  L12833  'serlə'                           cat=actions      en='tear (tr)'  [diff=1]
+
+=== 'toe' (2 entries) ===
+  L 2235  'fîə akoolə'                      cat=body         en='toe'  [tone=falling, diff=2]
+  L13057  'tô'                              cat=body         en='toe'  [tone=falling, diff=1]
+
+=== 'tongue' (2 entries) ===
+  L  105  'aləəmə'                          cat=body         en='tongue'  [AUDIT-VERIFIED]
+  L13075  'alə̂məə'                         cat=body         en='tongue'  [tone=falling, diff=1]
+
+=== 'urine' (2 entries) ===
+  L 4630  'mətsenə'                         cat=things       en='urine'  [diff=3]
+  L13369  'matseŋnə'                        cat=body         en='urine'  [diff=3]
+
+=== 'wing' (2 entries) ===
+  L  128  'nəbâŋə'                          cat=body         en='wing (of bird)'  [diff=1]
+  L 4223  'nəpeebə'                         cat=things       en='wing'
+
+=== 'wound' (2 entries) ===
+  L 4169  'néŋ nəfaŋə́'                     cat=things       en='wound (sth or sb)'  [tone=high, diff=2]
+  L13761  'nafagə'                          cat=body         en='wound'  [diff=1]
+

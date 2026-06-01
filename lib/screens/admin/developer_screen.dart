@@ -20,6 +20,7 @@ import 'package:awing_ai_learning/data/awing_alphabet.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/data/awing_tones.dart' hide awingVowels;
 import 'package:awing_ai_learning/screens/admin/review_screen.dart';
+import 'package:awing_ai_learning/screens/admin/grader_smoke_test_screen.dart';
 import 'package:awing_ai_learning/screens/about_screen.dart';
 import 'package:awing_ai_learning/screens/medium/sentences_screen.dart'
     show awingSentences;
@@ -1496,10 +1497,20 @@ class _RecordTabState extends State<_RecordTab> {
     if (!inv.isLoaded) return const SizedBox.shrink();
 
     final activeSlug = _activeRecorderKidSlug();
-    final hasCanonical = inv.hasCanonical(item.audioKey);
+    final activeAdultSlug = _activeRecorderAdultSlug();
+    final canonicalOwner = inv.canonicalRecorderFor(item.audioKey);
 
-    // Order matches the family list — boy team first (joel/janelle),
-    // then girl team (joyce/jadyne). Dr. Sama (canonical) on the right.
+    // S dot is filled when Dr. Sama owns the canonical recording.
+    // B dot is filled when Berlin owns it. They're mutually exclusive
+    // because canonical is single-slot — whoever recorded last wins.
+    // If canonical exists but ownership is null (manifest v1 or
+    // unknown contributor), neither dot fills.
+    final samaCovered = canonicalOwner == 'samagids';
+    final berlinCovered = canonicalOwner == 'berlin';
+
+    // Order: boy team (joel/janelle), girl team (joyce/jadyne),
+    // then adults (S / B). Active recorder's badge gets the
+    // orange highlight ring.
     const kids = [
       ('joel', 'J'),
       ('janelle', 'N'),
@@ -1519,19 +1530,38 @@ class _RecordTabState extends State<_RecordTab> {
               active: slug == activeSlug,
             ),
           const SizedBox(width: 6),
-          // Dr. Sama / canonical reference voice — slightly different
-          // shape so it visually reads as "the default" rather than
-          // another kid.
+          // Dr. Sama (canonical, when recorder=samagids)
           _CoverageDot(
             initial: 'S',
-            tooltip: 'Dr. Sama (canonical)',
-            covered: hasCanonical,
-            active: activeSlug == null,
+            tooltip: 'Dr. Guidion Sama (canonical)',
+            covered: samaCovered,
+            active: activeAdultSlug == 'samagids',
+            isAdult: true,
+          ),
+          // Berlin Sama (canonical, when recorder=berlin)
+          _CoverageDot(
+            initial: 'B',
+            tooltip: 'Berlin Sama (canonical)',
+            covered: berlinCovered,
+            active: activeAdultSlug == 'berlin',
             isAdult: true,
           ),
         ],
       ),
     );
+  }
+
+  /// Returns 'samagids' / 'berlin' if the active recorder picker is one
+  /// of the adults, or null when it's a kid / guest. Mirrors the
+  /// _activeRecorderKidSlug helper but for the adult-tier badges.
+  String? _activeRecorderAdultSlug() {
+    final norm = _activeRecorder.trim().toLowerCase();
+    if (norm.isEmpty) return null;
+    if (norm == 'berlin' || norm.startsWith('berlin ')) return 'berlin';
+    if (norm == 'sama' || norm == 'samagids' || norm.contains('guidion')) {
+      return 'samagids';
+    }
+    return null;
   }
 
   String _agoLabel(DateTime t) {
@@ -3125,6 +3155,32 @@ class _SettingsTabState extends State<_SettingsTab> {
             subtitle: const Text('Export local event log as JSON'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _exportAnalytics(context),
+          ),
+        ),
+        const SizedBox(height: 24),
+
+        // ML — Phase 1B grader smoke test entry
+        const Text('Machine learning',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        Card(
+          color: Colors.deepPurple.shade50,
+          child: ListTile(
+            leading: const Icon(Icons.science_outlined,
+                color: Colors.deepPurple),
+            title: const Text('Pronunciation grader smoke test'),
+            subtitle: const Text(
+                'Phase 1B: load FP16 MMS-FA ONNX model from /sdcard/awing_grader/ '
+                'and run inference on a sideloaded WAV. Verifies on-device feasibility.'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const GraderSmokeTestScreen(),
+                ),
+              );
+            },
           ),
         ),
         const SizedBox(height: 24),

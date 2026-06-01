@@ -103,9 +103,9 @@ const List<AwingWord> bodyParts = [
   AwingWord(awing: 'achîə', english: 'blood', category: 'body', difficulty: 3),
   AwingWord(awing: 'akoolə', english: 'leg', category: 'body'),
   AwingWord(awing: 'aləəmə', english: 'tongue', category: 'body'),  // Session 56 audit: was "alɔ́əmə" — dict says "aləəmə"
-  AwingWord(awing: 'ŋgɔ́ɔmə', english: 'body', category: 'body', difficulty: 1),
-  AwingWord(awing: 'ŋgɔ̀ɔnə', english: 'eye', category: 'body'),
-  AwingWord(awing: 'ntɔ̀ə', english: 'ear', category: 'body'),
+  AwingWord(awing: 'mbɔ́ɔmə', english: 'body', category: 'body', difficulty: 1),  // FIXED Session 61 dict-audit: body = mbɔ́ɔmə per dict p.147 + p.98
+  // AwingWord(awing: 'ŋgɔ̀ɔnə', english: 'eye', category: 'body'),  // REMOVED Session 61 dict-audit: eye: 'ŋgɔ̀ɔnə' NOT in 2007 dict (p.157 lists only nəlágə L114)
+  // AwingWord(awing: 'ntɔ̀ə', english: 'ear', category: 'body'),  // REMOVED Session 61 dict-audit: ear: 'ntɔ̀ə' NOT in 2007 dict (p.157 lists only nətôglə L115)
   // Medium (difficulty 2)
   AwingWord(awing: 'nəpe', english: 'liver', category: 'body', difficulty: 1),
   AwingWord(awing: 'nətô', english: 'intestines', category: 'body', difficulty: 1),
@@ -138,7 +138,7 @@ const List<AwingWord> bodyParts = [
   AwingWord(awing: 'nkwə̂ŋə', english: 'elbow', category: 'body'),
   AwingWord(awing: 'ntsə̂ŋə', english: 'finger', category: 'body'),
   AwingWord(awing: 'mbwɔ̂ŋə', english: 'neck (back of)', category: 'body', difficulty: 1),
-  AwingWord(awing: 'ndɛ̂ŋə', english: 'jaw', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'ndɛ̂ŋə', english: 'jaw', category: 'body', difficulty: 1),  // REMOVED Session 61 dict-audit: jaw: 'ndɛ̂ŋə' NOT in dict for jaw — dict p.157 lists nəghagə (see L9743)
   AwingWord(awing: 'ŋgwɔ̂ŋə', english: 'forehead', category: 'body', difficulty: 1),
   AwingWord(awing: 'ntsɔ̂ŋə', english: 'rib', category: 'body', difficulty: 1),
   AwingWord(awing: 'mbə̂ŋɔ́', english: 'palm (of hand)', category: 'body', difficulty: 1),
@@ -598,7 +598,7 @@ const List<AwingWord> familyPeople = [
   AwingWord(awing: 'ətsɛ́bə', english: 'speaker/orator', category: 'family', difficulty: 1),
   AwingWord(awing: 'əzó\'ə', english: 'listener/judge', category: 'family', difficulty: 1),
   // Session 52 gloss audit: was "traditional doctor" — dict says "owner" (like ngaŋə at L603)
-  AwingWord(awing: 'ngàŋə', english: 'owner', category: 'family', difficulty: 1),
+  // AwingWord(awing: 'ngàŋə', english: 'owner', category: 'family', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L579 ('ngaŋə')
   AwingWord(awing: 'əfo wíŋɔ́', english: 'paramount chief', category: 'family', difficulty: 2),
   AwingWord(awing: 'əkwáŋə', english: 'stranger/visitor', category: 'family', difficulty: 1),
   AwingWord(awing: 'ndzɔ̂ŋə', english: 'age group', category: 'family', difficulty: 1),
@@ -697,7 +697,7 @@ const List<AwingWord> moreThings = [
   AwingWord(awing: 'akwé', english: 'response', category: 'things', difficulty: 1),
   AwingWord(awing: 'akoolá', english: 'latrine', category: 'things', difficulty: 1),
   AwingWord(awing: "ashwí'ə", english: 'swelling', category: 'things', difficulty: 2),
-  AwingWord(awing: 'njwîŋə', english: 'whistle', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'njwîŋə', english: 'whistle', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L395 ('njwíŋə')
   AwingWord(awing: 'mbwódnə', english: 'blessing', category: 'things', difficulty: 1),
   // Session 52 gloss audit: was "hardship" — dict says "year" / "red-feathered bird" / "termite"
   AwingWord(awing: "ngó'ə", english: 'year', category: 'things', difficulty: 2),
@@ -740,7 +740,7 @@ const List<AwingWord> descriptiveWords = [
   AwingWord(awing: 'shwàŋə', english: 'sharp', category: 'descriptive'),
   AwingWord(awing: 'tsɛ̀ŋə', english: 'dry', category: 'descriptive'),
   // CORRECTED fúfúə "bright/clean" → "white" per Awing English Dictionary EXACT match (Session 51 audit)
-  AwingWord(awing: 'fúfúə', english: 'white', category: 'descriptive'),
+  // AwingWord(awing: 'fúfúə', english: 'white', category: 'descriptive'),  // REMOVED Session 61 Phase1: OCR clone, kept L712 ('fúfûə')
   AwingWord(awing: 'dzə̀mə', english: 'deep', category: 'descriptive', difficulty: 1),
   // Session 52 gloss audit: was "wide" — dict says "think" (and also "clean furrows of farm bed")
   AwingWord(awing: 'kwàŋə', english: 'think', category: 'actions', difficulty: 1),
@@ -755,7 +755,7 @@ const List<AwingWord> descriptiveWords = [
   // Session 52 gloss audit: was "early" — dict says "steep place, hilly place" (primary gloss)
   AwingWord(awing: 'kə̂ŋə', english: 'steep place, hilly place', category: 'nature', difficulty: 1),
   // Session 52 gloss audit: was "late" — dict says "cane, walking stick" (tone variant of L 208 mbâŋə)
-  AwingWord(awing: 'mbàŋə', english: 'cane, walking stick', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'mbàŋə', english: 'cane, walking stick', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L246 ('mbâŋə')
   AwingWord(awing: 'ntsɔ́ŋɔ́', english: 'fast/quick', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'nyàŋə', english: 'slow/careful', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'wɔ̂ŋə', english: 'quiet/silent', category: 'descriptive', difficulty: 1),
@@ -3811,7 +3811,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'bîm', english: 'sound that describes something that is fall. When a fat person falls on the ground, he falls thump', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'bíshobə', english: 'bishop. A bishop is a high ranking person in the church', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'bílɨ', english: 'sound of movement by a group or herd of cattle', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'blêmə', english: 'blame', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'blêmə', english: 'blame', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2663 ('blemâ')
   AwingWord(awing: 'bóbə', english: 'bulb', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'bûm', english: 'word that intensifies the sound of a traditionally made gun, or of something falling', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'búsbágə', english: 'hump (of cow). The hump (of cow) is a choiced morsel', category: 'things', tonePattern: 'high', difficulty: 2),
@@ -3876,7 +3876,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'əghâ akə', english: 'when?, what time', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əghâ atsəmə', english: 'always', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əghâ aghâ', english: 'irregularly; from time to time', category: 'things', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'əghâ ghená', english: 'now', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'əghâ ghená', english: 'now', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L45 ('agha ghena')
   AwingWord(awing: 'əghâ nda\'ə', english: 'another time', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əghâ njia', english: 'time of famine', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əghâ pipó ní nó', english: 'often, most of the time', category: 'things', tonePattern: 'falling', difficulty: 2),
@@ -4073,7 +4073,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'mág mó əfo', english: 'somebody who investigates issues and report to the fon', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'məgtə azonə̂', english: 'settle dispute', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'mâghaba', english: 'adultry', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'məghám mém mbê nə nəkwa', english: 'twenty-four (24)', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'məghám mém mbê nə nəkwa', english: 'twenty-four (24)', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L651 ('məghə́m mém mbê nə́ nəkwa')
   AwingWord(awing: 'məghám mém mbê nə tá\'ə', english: 'twenty-one (21)', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'məghó\'kənə', english: 'worship; worshipping', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'məkálé', english: 'English language', category: 'things', tonePattern: 'high', difficulty: 1),
@@ -4505,12 +4505,12 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'azoŋkə', english: 'second, second place', category: 'numbers', difficulty: 1),
   AwingWord(awing: 'kwa', english: 'four (see nəkwa)', category: 'numbers', difficulty: 1),
   AwingWord(awing: 'məghám mém mbê', english: 'twenty (20)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'məghám mén nəfeemə̂', english: 'eighty (80)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'məghám mén nəfeemə̂', english: 'eighty (80)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L643 ('məghə́m mén nəfeemə́')
   AwingWord(awing: 'məghám mén nəkwa', english: 'forty (40)', category: 'numbers', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'məghám mén nəpu\'ə̂', english: 'ninety (90)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'məghám mén ntogə̂', english: 'sixty (60)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'məghám mén ntogə̂', english: 'sixty (60)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L641 ('məghə́m mén ntogə́')
   AwingWord(awing: 'məghám mén teelə̂', english: 'thirty (30)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'məghám mén tênə', english: 'fifty (50)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'məghám mén tênə', english: 'fifty (50)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L640 ('məghə́m mén tênə')
   AwingWord(awing: 'məghám méná asaambê', english: 'seventy (70)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nəghámə', english: 'ten (alternate form)', category: 'numbers', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'nkelá', english: 'hundred (100)', category: 'numbers', tonePattern: 'high', difficulty: 1),
@@ -4613,11 +4613,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'mbula', english: '(numeral) 6', category: 'things', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'məghám mém mbê nə pém pê', english: 'twenty-two (22)', category: 'numbers', difficulty: 2),
+  // AwingWord(awing: 'məghám mém mbê nə pém pê', english: 'twenty-two (22)', category: 'numbers', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L649 ('məghə́m mém mbê nə́ pém pê')
   // dict:p.?
-  AwingWord(awing: 'məghám mém mbê nə pén teelə̂', english: 'twenty-three (23)', category: 'numbers', difficulty: 2),
+  // AwingWord(awing: 'məghám mém mbê nə pén teelə̂', english: 'twenty-three (23)', category: 'numbers', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L650 ('məghə́m mém mbê nə́ pén teelə́')
   // dict:p.?
-  AwingWord(awing: 'məghám mém mbê nə pén tênə', english: 'twenty-five (25)', category: 'numbers', difficulty: 2),
+  // AwingWord(awing: 'məghám mém mbê nə pén tênə', english: 'twenty-five (25)', category: 'numbers', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L652 ('məghə́m mém mbê nə́ pén tênə')
   // dict:p.?
   AwingWord(awing: 'məlwîə', english: 'nasal mucus, snot, catarrh', category: 'things', difficulty: 3),
   // dict:p.?
@@ -4684,7 +4684,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.13
   AwingWord(awing: 'á', english: 'at (preposition - point in time)', category: 'things', difficulty: 1),
   // dict:p.14
-  AwingWord(awing: 'achiə', english: 'blood', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'achiə', english: 'blood', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L103 ('achîə')
   // dict:p.16
   AwingWord(awing: 'afúə', english: 'curative of any sort; medicines, drugs; protective charm; magical power', category: 'things', difficulty: 2),
   // dict:p.18
@@ -4698,7 +4698,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.25
   AwingWord(awing: 'akwáalə', english: 'donations; handouts; support', category: 'things', difficulty: 2),
   // dict:p.25
-  AwingWord(awing: 'akwáalónkîə', english: 'baptism', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'akwáalónkîə', english: 'baptism', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L3552 ('akwáalónkǐə')
   // dict:p.26
   AwingWord(awing: 'akwe', english: 'response, answer', category: 'actions', difficulty: 1),
   // dict:p.26
@@ -4710,9 +4710,9 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.28
   AwingWord(awing: 'ale', english: 'lust (noun)', category: 'things', difficulty: 1),
   // dict:p.28
-  AwingWord(awing: 'alě', english: 'day', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'alě', english: 'day', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L202 ('àlě')
   // dict:p.32
-  AwingWord(awing: 'aloŋə', english: 'dance group', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'aloŋə', english: 'dance group', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L453 ('alóŋə')
   // dict:p.32
   AwingWord(awing: 'alûə', english: 'yeast, the substance that makes raffia palm turn alchoholic', category: 'body', difficulty: 2),
   // dict:p.35
@@ -4722,13 +4722,13 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.37
   AwingWord(awing: 'asógə', english: 'A kind of grass that itches when it touches the body', category: 'nature', difficulty: 2),
   // dict:p.38
-  AwingWord(awing: 'ate', english: 'rust', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ate', english: 'rust', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L499 ('atê')
   // dict:p.39
   AwingWord(awing: 'atáŝsəəmə', english: 'A wound that has scabbies and is unhealing. He has an unhealing wound on his leg', category: 'body', difficulty: 2),
   // dict:p.42
   AwingWord(awing: "atsa'ə", english: 'blocks for construction', category: 'things', difficulty: 2),
   // dict:p.44
-  AwingWord(awing: 'awatə', english: 'hospital', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'awatə', english: 'hospital', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L587 ('awátə')
   // dict:p.46
   AwingWord(awing: 'azágá', english: "1) possessive pronoun 'ours' used for class 7 nouns 2) possessive adj 'ours' used to modify class...", category: 'pronouns', difficulty: 2),
   // dict:p.46
@@ -4742,7 +4742,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.57
   AwingWord(awing: 'ə̂', english: 'yes', category: 'things', difficulty: 1),
   // dict:p.59
-  AwingWord(awing: 'áfó', english: 'where? (interrogative)', category: 'pronouns', difficulty: 1),
+  // AwingWord(awing: 'áfó', english: 'where? (interrogative)', category: 'pronouns', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L617 ('àfó')
   // dict:p.59
   AwingWord(awing: "əfó' nkîə", english: 'dry river bed', category: 'nature', difficulty: 2),
   // dict:p.60
@@ -4758,13 +4758,13 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.66
   AwingWord(awing: 'féŋə', english: '1) be cold 2) be wet', category: 'descriptive', difficulty: 1),
   // dict:p.67
-  AwingWord(awing: 'féenkîə', english: 'baptise', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'féenkîə', english: 'baptise', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3959 ('féenkǐə')
   // dict:p.68
   AwingWord(awing: 'finə̂', english: 'sell. Some people say that business people do business with supernatural power, no one knows whet...', category: 'actions', difficulty: 2),
   // dict:p.69
   AwingWord(awing: 'finə', english: 'look alike. Twins usually look alike', category: 'actions', difficulty: 1),
   // dict:p.69
-  AwingWord(awing: 'fógá', english: 'fellow-wife (co-wife in polygamous marriage)', category: 'family', difficulty: 1),
+  // AwingWord(awing: 'fógá', english: 'fellow-wife (co-wife in polygamous marriage)', category: 'family', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L419 ('fóga')
   // dict:p.70
   AwingWord(awing: 'fyaabə̂', english: 'control embers using a piece of stick or iron, also to handle other things that are harmful or di...', category: 'body', difficulty: 2),
   // dict:p.71
@@ -4774,7 +4774,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'gho', english: "the singular pronoun 'you'", category: 'pronouns', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: 'jîə', english: 'eat', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'jîə', english: 'eat', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L337 ('jíə')
   // dict:p.?
   AwingWord(awing: 'jwítə', english: 'kill, murder', category: 'actions', difficulty: 3),
   // dict:p.?
@@ -4794,7 +4794,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'kágtə', english: 'a little small', category: 'descriptive', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'kəŋə', english: 'steep place, hilly place', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kəŋə', english: 'steep place, hilly place', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L756 ('kə̂ŋə')
   // dict:p.?
   AwingWord(awing: 'kóŋə', english: 'crawl', category: 'things', difficulty: 1),
   // dict:p.?
@@ -4814,21 +4814,21 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'konə̂', english: 'hit, strike (with hand)', category: 'body', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'kwáankîə', english: 'be baptised', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kwáankîə', english: 'be baptised', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2937 ('kwáankǐə')
   // dict:p.?
-  AwingWord(awing: 'kwaŋə̂', english: 'think', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kwaŋə̂', english: 'think', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L746 ('kwàŋə')
   // dict:p.?
   AwingWord(awing: 'kwáŋə̂', english: 'a piece of metal used for cleaning an achu mortar', category: 'things', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'kwəglə', english: 'ringworm', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kwəglə', english: 'ringworm', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L750 ('kwə̂glə')
   // dict:p.?
-  AwingWord(awing: 'kwíŋ nkîə', english: 'turtle (water turtle)', category: 'nature', difficulty: 2),
+  // AwingWord(awing: 'kwíŋ nkîə', english: 'turtle (water turtle)', category: 'nature', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2390 ('kwíŋ nkǐə')
   // dict:p.?
   AwingWord(awing: 'kwíŋə', english: '1) grow up (mentally and physically), especially of human beings and to some extent animals. 2) p...', category: 'descriptive', difficulty: 2),
   // dict:p.?
   AwingWord(awing: 'kwíŋə̂', english: 'tortoise', category: 'animals', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'kyagô', english: 'untie', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kyagô', english: 'untie', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L336 ('kyagó')
   // dict:p.?
   AwingWord(awing: 'kyéetə', english: 'claim many reimbursements', category: 'numbers', difficulty: 1),
   // dict:p.?
@@ -4872,7 +4872,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'ndumə', english: 'top, on top', category: 'things', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'ndwigtə', english: 'end', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ndwigtə', english: 'end', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L494 ('ndwîgtə')
   // dict:p.?
   AwingWord(awing: 'nəfèŋə', english: 'inhygenic behaviour that is exagerated eg cooking and eating with excrement lying in', category: 'pronouns', difficulty: 3),
   // dict:p.?
@@ -4882,9 +4882,9 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'nəkáŋə', english: 'the manner of frying', category: 'things', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'nəkəŋ nó nkíə', english: 'pot (for water)', category: 'nature', difficulty: 2),
+  // AwingWord(awing: 'nəkəŋ nó nkíə', english: 'pot (for water)', category: 'nature', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4192 ('nəkəŋ nó nkǐə')
   // dict:p.?
-  AwingWord(awing: 'nəlwíə', english: 'nose', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'nəlwíə', english: 'nose', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L99 ('nəlwîə')
   // dict:p.?
   AwingWord(awing: 'nəpəənə', english: 'breast', category: 'body', difficulty: 3),
   // dict:p.?
@@ -4912,15 +4912,15 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'nkáŋə', english: 'corn beer', category: 'food', difficulty: 1),
   // dict:p.?
-  AwingWord(awing: 'nked teelə̂', english: 'three hundred (300)', category: 'numbers', difficulty: 2),
+  // AwingWord(awing: 'nked teelə̂', english: 'three hundred (300)', category: 'numbers', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L655 ('nked teelə́')
   // dict:p.?
   AwingWord(awing: 'nkəŋə́', english: 'pestle', category: 'things', difficulty: 1),
   // dict:p.?
   AwingWord(awing: 'nkwuə', english: 'a sort of okra, much more slippery, used for making sauce for garri', category: 'food', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: 'ntsəb teelə̂', english: 'thirteen (13)', category: 'numbers', difficulty: 2),
+  // AwingWord(awing: 'ntsəb teelə̂', english: 'thirteen (13)', category: 'numbers', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L629 ('ntsəb teelə́')
   // dict:p.?
-  AwingWord(awing: 'nwáŋə', english: 'disappear', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nwáŋə', english: 'disappear', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L677 ('nwâŋə')
   // dict:p.?
   AwingWord(awing: 'pêntə', english: 'paint', category: 'things', difficulty: 1),
   // dict:p.?
@@ -4940,7 +4940,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'poŋə', english: 'before (contrasted with after). I will finish my work before going', category: 'actions', difficulty: 2),
   // dict:p.?
-  AwingWord(awing: 'púshiə', english: 'cat', category: 'animals', difficulty: 1),
+  // AwingWord(awing: 'púshiə', english: 'cat', category: 'animals', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L174 ('pûshíə')
   // dict:p.?
   AwingWord(awing: "sá'ə", english: '1) gush out, of a spring 2) germinate 3) explode', category: 'nature', difficulty: 2),
   // dict:p.?
@@ -4958,7 +4958,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: "tô'", english: 'sound that describes the sound of a gun (modern made). Pə́ tə ńkəmb nəwû lə̀ məŋgád mə́ ŋgáŋnkáb ...', category: 'descriptive', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'tú nkîə', english: 'cross river', category: 'nature', difficulty: 2),
+  // AwingWord(awing: 'tú nkîə', english: 'cross river', category: 'nature', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2577 ('tú nkǐə')
   // dict:p.?
   AwingWord(awing: 'tsəŋə', english: '1) curse. 2) destroy. 3) spoil. V.s: ńtsəŋ', category: 'things', difficulty: 3),
   // dict:p.?
@@ -5089,7 +5089,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.36
   AwingWord(awing: 'apu\'ə', english: 'remnant, remainder', category: 'things', difficulty: 1),
   // dict:p.36
-  AwingWord(awing: 'asaambê', english: 'seven (7)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'asaambê', english: 'seven (7)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L623 ('asaambê')
   // dict:p.37
   AwingWord(awing: 'asagá', english: 'pasture land', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.37
@@ -5097,7 +5097,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.37
   AwingWord(awing: 'asəkə', english: 'pride, the act of showing off', category: 'things', difficulty: 1),
   // dict:p.37
-  AwingWord(awing: 'asogə', english: 'soap (From: English)', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'asogə', english: 'soap (From: English)', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L464 ('asogə')
   // dict:p.37
   AwingWord(awing: 'asogə', english: 'baboon', category: 'animals', difficulty: 1),
   // dict:p.37
@@ -5159,15 +5159,15 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.46
   AwingWord(awing: 'azágá', english: '1) possessive pronoun \'ours\' used for class 7 nouns 2) possessive adj \'ours\' used to modify class 7 nouns', category: 'things', tonePattern: 'high', difficulty: 2),
   // dict:p.46
-  AwingWord(awing: 'azoŋə', english: 'junior (eg brother, sister)', category: 'family', difficulty: 1),
+  // AwingWord(awing: 'azoŋə', english: 'junior (eg brother, sister)', category: 'family', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3799 ('azoŋə')
   // dict:p.46
   AwingWord(awing: 'azóŋə', english: 'Half horn of a cow used for drilling blood or pus from the body', category: 'body', tonePattern: 'high', difficulty: 3),
   // dict:p.47
-  AwingWord(awing: 'bílɨ', english: 'sound of movement by a group (eg people) or herd of cattle', category: 'family', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'bílɨ', english: 'sound of movement by a group (eg people) or herd of cattle', category: 'family', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3813 ('bílɨ')
   // dict:p.47
   AwingWord(awing: 'chaakâ', english: 'accompany, lead away', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.48
-  AwingWord(awing: 'cháb-tə', english: 'tightly clustered (eg coffee grains on branches or lice in hair)', category: 'body', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'cháb-tə', english: 'tightly clustered (eg coffee grains on branches or lice in hair)', category: 'body', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2668 ('cháb-tə')
   // dict:p.48
   AwingWord(awing: 'chágə', english: 'make a place dirty by throwing bits of dirt', category: 'actions', tonePattern: 'high', difficulty: 1),
   // dict:p.49
@@ -5215,7 +5215,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.56
   AwingWord(awing: 'chwigtə', english: 'spy many times; spy a little', category: 'descriptive', difficulty: 1),
   // dict:p.56
-  AwingWord(awing: 'chwíŋ', english: 'sound (word) that intensifies the sourness of something (eg fruit)', category: 'nature', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: 'chwíŋ', english: 'sound (word) that intensifies the sourness of something (eg fruit)', category: 'nature', tonePattern: 'high', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L3835 ('chwíŋ')
   // dict:p.56
   AwingWord(awing: 'chwíŋtə', english: 'pour liquid into a container', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.57
@@ -5279,15 +5279,15 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.65
   AwingWord(awing: 'əzəgá', english: '1) possessive pronoun \'ours\' used for nouns of class 9 2) possessive adj \'our\' used for nouns of class 9', category: 'things', tonePattern: 'high', difficulty: 2),
   // dict:p.65
-  AwingWord(awing: 'fádtə', english: 'stuff or force in many things (eg food into the mouth)', category: 'body', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'fádtə', english: 'stuff or force in many things (eg food into the mouth)', category: 'body', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2774 ('fádtə')
   // dict:p.65
-  AwingWord(awing: 'fagô', english: 'break, dislodge (eg chickens from hen)', category: 'animals', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'fagô', english: 'break, dislodge (eg chickens from hen)', category: 'animals', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2776 ('fagô')
   // dict:p.65
   AwingWord(awing: 'fálisîə', english: 'High Priest', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.66
   AwingWord(awing: 'fáŋə', english: 'be fat, be thick', category: 'actions', tonePattern: 'high', difficulty: 1),
   // dict:p.66
-  AwingWord(awing: 'feŋə̂', english: 'unwrap, expose, open food that has been wrapped (eg achu, fufu corn, coki corn etc)', category: 'food', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'feŋə̂', english: 'unwrap, expose, open food that has been wrapped (eg achu, fufu corn, coki corn etc)', category: 'food', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2785 ('feŋə̂')
   // dict:p.66
   AwingWord(awing: 'feŋə̂', english: 'roof a house with grass', category: 'nature', tonePattern: 'falling', difficulty: 1),
   // dict:p.66
@@ -5321,7 +5321,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.68
   AwingWord(awing: 'filə', english: 'blame. A lazy person always blames his tool for a job badly done', category: 'family', difficulty: 2),
   // dict:p.68
-  AwingWord(awing: 'finə̂', english: 'sell', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'finə̂', english: 'sell', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L324 ('fínə')
   // dict:p.69
   AwingWord(awing: 'fi\'tə̂', english: 'tell', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.69
@@ -5367,7 +5367,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.73-79
   AwingWord(awing: 'ghó\'kə', english: 'vomit (as a pregnant woman)', category: 'actions', tonePattern: 'high', difficulty: 3),
   // dict:p.73-79
-  AwingWord(awing: 'jáabə', english: 'reduce (eg something that is overful or much)', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'jáabə', english: 'reduce (eg something that is overful or much)', category: 'descriptive', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2854 ('jáabə')
   // dict:p.73-79
   AwingWord(awing: 'já\'kə', english: 'initiate (into secret society such as kwifon)', category: 'family', tonePattern: 'high', difficulty: 1),
   // dict:p.73-79
@@ -5381,7 +5381,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.73-79
   AwingWord(awing: 'jinə', english: 'find each other', category: 'descriptive', difficulty: 1),
   // dict:p.73-79
-  AwingWord(awing: 'káatə', english: 'threaten (eg with a slap or spank)', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'káatə', english: 'threaten (eg with a slap or spank)', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2879 ('káatə')
   // dict:p.73-79
   AwingWord(awing: 'ká\'ə', english: 'solidify (eg oil)', category: 'food', tonePattern: 'high', difficulty: 1),
   // dict:p.73-79
@@ -5391,7 +5391,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.73-79
   AwingWord(awing: 'kagə̂', english: 'threaten', category: 'things', tonePattern: 'falling', difficulty: 1),
   // dict:p.73-79
-  AwingWord(awing: 'kamə̂', english: 'lift in big lumps (eg ground)', category: 'nature', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kamə̂', english: 'lift in big lumps (eg ground)', category: 'nature', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2886 ('kamə̂')
   // dict:p.73-79
   AwingWord(awing: 'kaŋə', english: 'fry', category: 'things', difficulty: 1),
   // dict:p.73-79
@@ -5429,7 +5429,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.80-86
   AwingWord(awing: 'ká\'tə', english: 'measure many things', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // dict:p.80-86
-  AwingWord(awing: 'kîə', english: 'key (from English)', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kîə', english: 'key (from English)', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L470 ('kîə')
   // dict:p.80-86
   AwingWord(awing: 'kíbtə', english: 'shell a little, eg of groundnuts', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // dict:p.80-86
@@ -5437,7 +5437,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.80-86
   AwingWord(awing: 'kí\'tə', english: '1) Obstruct many people, things or places. 2) defend (many people, things or places)', category: 'family', tonePattern: 'high', difficulty: 2),
   // dict:p.80-86
-  AwingWord(awing: 'ko', english: 'take; listen', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ko', english: 'take; listen', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L368 ('kǒ')
   // dict:p.80-86
   AwingWord(awing: 'ko\'â', english: 'be able', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // dict:p.80-86
@@ -5451,7 +5451,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.80-86
   AwingWord(awing: 'kóomə', english: 'scrape off something, eg dirt on the ground', category: 'nature', tonePattern: 'high', difficulty: 1),
   // dict:p.80-86
-  AwingWord(awing: 'kə', english: 'marker of negation', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'kə', english: 'marker of negation', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4791 ('kə̌')
   // dict:p.80-86
   AwingWord(awing: 'kó\'ə', english: 'blow, of wind (in a sense the wind is said to rise)', category: 'nature', tonePattern: 'high', difficulty: 2),
   // dict:p.80-86
@@ -5487,7 +5487,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.80-86
   AwingWord(awing: 'kweekô', english: 'Influence a person or an animal against another, eg a dog to attack one\'s enemy', category: 'numbers', tonePattern: 'falling', difficulty: 2),
   // dict:p.80-86
-  AwingWord(awing: 'kwê', english: '(colloquial) tell a lie (people lie in politics to such extent that one can black object an call it red)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'kwê', english: '(colloquial) tell a lie (people lie in politics to such extent that one can black object an call it red)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2946 ('kwê')
   // dict:p.80-86
   AwingWord(awing: 'kwedtâ', english: 'pour out a little of something on the ground or in a container; pour something on the ground or in a container', category: 'nature', tonePattern: 'falling', difficulty: 2),
   // dict:p.80-86
@@ -5507,7 +5507,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.80-86
   AwingWord(awing: 'kwúbtə', english: 'close eg palm, eyes, mouth', category: 'actions', tonePattern: 'high', difficulty: 1),
   // dict:p.87-93
-  AwingWord(awing: 'kwúdtə', english: 'tie many things (eg bundles)', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'kwúdtə', english: 'tie many things (eg bundles)', category: 'descriptive', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2955 ('kwúdtə')
   // dict:p.87-93
   AwingWord(awing: 'kwum əfeemó', english: '(expression used as insult) split somebody\'s forehead with a mason\'s tool', category: 'body', tonePattern: 'high', difficulty: 2),
   // dict:p.87-93
@@ -5523,7 +5523,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.87-93
   AwingWord(awing: 'kyéŋə', english: 'cry, weep', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.87-93
-  AwingWord(awing: 'kyê', english: 'pluck (eg, fruit)', category: 'nature', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kyê', english: 'pluck (eg, fruit)', category: 'nature', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L370 ('kyê')
   // dict:p.87-93
   AwingWord(awing: 'kyikâ', english: '1) (of babies) have the habit of refusing strangers. 2) refuse, of many people', category: 'family', tonePattern: 'falling', difficulty: 2),
   // dict:p.87-93
@@ -5561,7 +5561,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.87-93
   AwingWord(awing: 'ləmkə̂', english: 'be tasty, (be) sweet', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // dict:p.87-93
-  AwingWord(awing: 'ləŋə', english: 'melt (intr)', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ləŋə', english: 'melt (intr)', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L411 ('ləŋə')
   // dict:p.87-93
   AwingWord(awing: 'lí\'ə', english: 'poison (v)', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.87-93
@@ -5569,7 +5569,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.87-93
   AwingWord(awing: 'lumə', english: 'be hot; be passionate', category: 'actions', difficulty: 1),
   // dict:p.87-93
-  AwingWord(awing: 'lyáŋə', english: 'hide (tr)', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'lyáŋə', english: 'hide (tr)', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L425 ('lyǎŋə')
   // dict:p.87-93
   AwingWord(awing: 'mǎ', english: 'marker of negation', category: 'things', tonePattern: 'rising', difficulty: 3),
   // dict:p.87-93
@@ -5595,7 +5595,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.87-93
   AwingWord(awing: 'mbi ndê', english: 'plaster; wall', category: 'things', tonePattern: 'falling', difficulty: 2),
   // dict:p.94-100
-  AwingWord(awing: 'mé ghagə́', english: 'molar tooth', category: 'body', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'mé ghagə', english: 'molar tooth', category: 'body', tonePattern: 'high', difficulty: 2),  // FIXED Session 61 dict-audit: dictionary form
   // dict:p.94-100
   AwingWord(awing: 'méla', english: 'set, of the sun', category: 'nature', tonePattern: 'high', difficulty: 1),
   // dict:p.94-100
@@ -5625,7 +5625,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.94-100
   AwingWord(awing: 'ndě', english: 'elder, a senior; affix before the names of elderly people beforeuse by their juniors', category: 'family', tonePattern: 'rising', difficulty: 2),
   // dict:p.94-100
-  AwingWord(awing: 'ndě', english: 'neck', category: 'body', tonePattern: 'rising', difficulty: 1),
+  // AwingWord(awing: 'ndě', english: 'neck', category: 'body', tonePattern: 'rising', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L100 ('ndě')
   // dict:p.94-100
   AwingWord(awing: 'ndedta', english: '1) frontier (of ethnic area). 2) boundary', category: 'family', difficulty: 1),
   // dict:p.94-100
@@ -5677,7 +5677,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.101-107
   AwingWord(awing: 'nə́', english: 'with. He has opened the door with a key', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.101-107
-  AwingWord(awing: 'nəchwéd nə́ atoonə akáŋəsê', english: 'alter (sic)', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'nəchwéd nə́ atoonə akáŋəsê', english: 'alter (sic)', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4172 ('nəchwéd nə́ atoonə akáŋəsê')
   // dict:p.101-107
   AwingWord(awing: 'nəchwélə', english: 'fireside stone, hearth stone', category: 'nature', tonePattern: 'high', difficulty: 1),
   // dict:p.101-107
@@ -5687,11 +5687,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.101-107
   AwingWord(awing: 'nəfaŋə', english: 'physical growth', category: 'things', difficulty: 1),
   // dict:p.101-107
-  AwingWord(awing: 'nəfeemə́', english: 'eight (8)', category: 'numbers', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'nəfeemə́', english: 'eight (8)', category: 'numbers', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L624 ('nəfeemə́')
   // dict:p.101-107
   AwingWord(awing: 'nəfaŋə', english: 'wound, sore', category: 'body', difficulty: 1),
   // dict:p.101-107
-  AwingWord(awing: 'nəghámə', english: 'ten (10)', category: 'numbers', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'nəghámə', english: 'ten (10)', category: 'numbers', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4515 ('nəghámə')
   // dict:p.101-107
   AwingWord(awing: 'nəjíə', english: '1) possessive pronoun "his" used for class 5 nouns', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.101-107
@@ -5761,17 +5761,17 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.108-114
   AwingWord(awing: 'njakásə', english: 'jackal', category: 'animals', tonePattern: 'high', difficulty: 1),
   // dict:p.108-114
-  AwingWord(awing: 'nkaŋ nkíə', english: 'river bank; sea shore', category: 'nature', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'nkaŋ nkíə', english: 'river bank; sea shore', category: 'nature', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2551 ('nkaŋ nkǐə')
   // dict:p.108-114
   AwingWord(awing: 'nkaŋə', english: 'biblical verse', category: 'things', difficulty: 1),
   // dict:p.108-114
   AwingWord(awing: 'nkaŋə', english: 'traditional wedding ceremony', category: 'things', difficulty: 1),
   // dict:p.108-114
-  AwingWord(awing: 'nked pê', english: 'two hundred (200)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'nked pê', english: 'two hundred (200)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L654 ('nked pê')
   // dict:p.108-114
-  AwingWord(awing: 'nked tênə', english: 'five hundred (500)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'nked tênə', english: 'five hundred (500)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L657 ('nked tênə')
   // dict:p.108-114
-  AwingWord(awing: 'nked zén nəkwa', english: 'four hundred (400)', category: 'numbers', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'nked zén nəkwa', english: 'four hundred (400)', category: 'numbers', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L656 ('nked zén nəkwa')
   // dict:p.108-114
   AwingWord(awing: 'nká\'ə', english: 'butcher, somebody who cuts', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.108-114
@@ -5791,21 +5791,21 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.115-121
   AwingWord(awing: 'nóŋkə', english: 'suckle, nurse, suckle (baby) (tr)', category: 'family', tonePattern: 'high', difficulty: 1),
   // dict:p.115-121
-  AwingWord(awing: 'ntogə́', english: 'six (6)', category: 'numbers', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'ntogə́', english: 'six (6)', category: 'numbers', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L622 ('ntogə́')
   // dict:p.115-121
   AwingWord(awing: 'ntsóŋə', english: 'diarrhea', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.115-121
-  AwingWord(awing: 'ntsoolə', english: 'mouth', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'ntsoolə', english: 'mouth', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L116 ('ntsoolə')
   // dict:p.115-121
   AwingWord(awing: 'ntsoolə', english: 'war', category: 'things', difficulty: 1),
   // dict:p.115-121
-  AwingWord(awing: 'ntsəb nəfeemə́', english: 'eighteen (18)', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'ntsəb nəfeemə́', english: 'eighteen (18)', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L634 ('ntsəb nəfeemə́')
   // dict:p.115-121
-  AwingWord(awing: 'ntsəb nəkwa', english: 'fourteen (14)', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'ntsəb nəkwa', english: 'fourteen (14)', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L630 ('ntsəb nəkwa')
   // dict:p.115-121
-  AwingWord(awing: 'ntsəb ntogə́', english: 'sixteen (16)', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'ntsəb ntogə́', english: 'sixteen (16)', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L632 ('ntsəb ntogə́')
   // dict:p.115-121
-  AwingWord(awing: 'ntsəb tênə', english: 'fifteen (15)', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ntsəb tênə', english: 'fifteen (15)', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L631 ('ntsəb tênə')
   // dict:p.115-121
   AwingWord(awing: 'nyá\'ə', english: 'a little. Nyá\' ńgyǐ ńko = Approach a little', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // dict:p.115-121
@@ -5833,7 +5833,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.115-121
   AwingWord(awing: 'pe\'ə', english: 'carry', category: 'things', difficulty: 1),
   // dict:p.122-128
-  AwingWord(awing: 'pě', english: 'two (2)', category: 'numbers', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'pě', english: 'two (2)', category: 'numbers', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4521 ('pě')
   // dict:p.122-128
   AwingWord(awing: 'pêsê', english: 'demon; evil spirit', category: 'things', tonePattern: 'falling', difficulty: 3),
   // dict:p.122-128
@@ -5943,11 +5943,11 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.129-135
   AwingWord(awing: 'táksə', english: 'tax', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.129-135
-  AwingWord(awing: 'tămto', english: 'tomato', category: 'food', difficulty: 1),
+  // AwingWord(awing: 'tămto', english: 'tomato', category: 'food', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L277 ('tâmto')
   // dict:p.129-135
-  AwingWord(awing: 'teelə', english: 'three (3)', category: 'numbers', difficulty: 2),
+  // AwingWord(awing: 'teelə', english: 'three (3)', category: 'numbers', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4522 ('teelə')
   // dict:p.129-135
-  AwingWord(awing: 'tênə', english: 'five', category: 'numbers', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tênə', english: 'five', category: 'numbers', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4523 ('tênə')
   // dict:p.129-135
   AwingWord(awing: 'tê', english: 'Shine, of the sun. The sun is shinning', category: 'nature', tonePattern: 'falling', difficulty: 1),
   // dict:p.129-135
@@ -6053,7 +6053,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.136-139
   AwingWord(awing: 'wúnta', english: 'invite, of many people; demand or ask many people to help one do sth often difficult for the individual to do', category: 'numbers', tonePattern: 'high', difficulty: 2),
   // dict:p.136-139
-  AwingWord(awing: 'wûu', english: 'sound (word) that describes the rumbling (eg stream, thunder, or car) of something', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'wûu', english: 'sound (word) that describes the rumbling (eg stream, thunder, or car) of something', category: 'nature', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4486 ('wûu')
   // dict:p.136-139
   AwingWord(awing: 'yáŋə', english: 'recover from illness', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.136-139
@@ -6069,7 +6069,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.136-139
   AwingWord(awing: 'yikə̂', english: 'come (of many things or people)', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // dict:p.136-139
-  AwingWord(awing: 'yíkə', english: 'harden', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'yíkə', english: 'harden', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L669 ('yîkə')
   // dict:p.136-139
   AwingWord(awing: 'yílə', english: '1) piece of wire put on the mouth of a pig to stop it from digging the ground', category: 'body', tonePattern: 'high', difficulty: 2),
   // dict:p.136-139
@@ -6146,7 +6146,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.143
   AwingWord(awing: 'kɔ\'ə', english: 'able', category: 'things', difficulty: 1),
   // index:p.143
-  AwingWord(awing: 'mbî pəkwûə', english: 'abode of the dead', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'mbî pəkwûə', english: 'abode of the dead', category: 'descriptive', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3408 ('mbi pəkwûə')
   // index:p.143
   AwingWord(awing: 'atîə', english: 'above', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.143
@@ -6180,7 +6180,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.143
   AwingWord(awing: 'asɔ\'ə', english: 'achu motar spoon (carved)', category: 'things', difficulty: 1),
   // index:p.143
-  AwingWord(awing: 'apədnə', english: 'acquaintance', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'apədnə', english: 'acquaintance', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3671 ('apádnə')
   // index:p.143
   AwingWord(awing: 'ghelə', english: 'act', category: 'things', difficulty: 1),
   // index:p.143
@@ -6206,9 +6206,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.143
   AwingWord(awing: 'tákɔ\' nwunə', english: 'adult', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.143
-  AwingWord(awing: 'anuəməghaba', english: 'adultery', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'anuəməghaba', english: 'adultery', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4570 ('anuəməghabə')
   // index:p.143
-  AwingWord(awing: 'məghaba', english: 'adultry', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'məghaba', english: 'adultry', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4075 ('mâghaba')
   // index:p.143
   AwingWord(awing: 'chia mbiə', english: 'advanced', category: 'things', difficulty: 2),
   // index:p.143
@@ -6238,11 +6238,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.143
   AwingWord(awing: 'ɔfi ndasə', english: 'agent, of a real estate', category: 'descriptive', difficulty: 2),
   // index:p.143
-  AwingWord(awing: 'apímnə', english: 'agreement', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'apímnə', english: 'agreement', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3684 ('apimnə')
   // index:p.143
   AwingWord(awing: 'chia mbiə', english: 'ahead', category: 'things', difficulty: 2),
   // index:p.143
-  AwingWord(awing: 'êlə', english: 'aids', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'êlə', english: 'aids', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3838 ('élə')
   // index:p.143
   AwingWord(awing: 'aghoonə tapɔna', english: 'aids', category: 'things', difficulty: 2),
   // index:p.143
@@ -6254,7 +6254,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.143
   AwingWord(awing: 'kəŋkə', english: 'alienate', category: 'things', difficulty: 1),
   // index:p.143
-  AwingWord(awing: 'zag naana', english: 'alight', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'zag naana', english: 'alight', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3296 ('zag náanə')
   // index:p.143
   AwingWord(awing: 'chia mbiə', english: 'alive', category: 'descriptive', difficulty: 2),
   // index:p.143
@@ -6288,7 +6288,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.144
   AwingWord(awing: 'ndá\'ə', english: 'alternative', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.144
-  AwingWord(awing: 'aghá atsama', english: 'always', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'aghá atsama', english: 'always', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3877 ('əghâ atsəmə')
   // index:p.144
   AwingWord(awing: 'alá\'akalə', english: 'America', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.144
@@ -6350,9 +6350,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.144
   AwingWord(awing: 'kwée', english: 'answer', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.144
-  AwingWord(awing: 'tasélaséla', english: 'ant', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'tasélaséla', english: 'ant', category: 'animals', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2427 ('tásélaséla')
   // index:p.144
-  AwingWord(awing: 'chwiə', english: 'antelope', category: 'animals', difficulty: 1),
+  // AwingWord(awing: 'chwiə', english: 'antelope', category: 'animals', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L179 ('chwíə')
   // index:p.144
   AwingWord(awing: 'ndɔŋə', english: 'antenna of insects', category: 'things', difficulty: 1),
   // index:p.144
@@ -6372,7 +6372,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.144
   AwingWord(awing: 'ka\'ə', english: 'appear', category: 'actions', difficulty: 1),
   // index:p.144
-  AwingWord(awing: 'afelə', english: 'appearance', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'afelə', english: 'appearance', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3849 ('əfelə')
   // index:p.144
   AwingWord(awing: 'ashʉ̂\'ŋə', english: 'appearance', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // index:p.144
@@ -6394,7 +6394,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.144
   AwingWord(awing: 'azənə', english: 'argument', category: 'things', difficulty: 1),
   // index:p.144
-  AwingWord(awing: 'naghabtə', english: 'armpit', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'naghabtə', english: 'armpit', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2252 ('nəghabta')
   // index:p.144
   AwingWord(awing: 'naléla', english: 'army ant', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.144
@@ -6438,13 +6438,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.145
   AwingWord(awing: 'aweláwelə', english: 'assorted', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.145
-  AwingWord(awing: 'akwagəntáəmə', english: 'asthmatic cough', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'akwagəntáəmə', english: 'asthmatic cough', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3554 ('akwagəntəəmə')
   // index:p.145
   AwingWord(awing: 'kéolə', english: 'attack, of cold', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.145
   AwingWord(awing: 'fi\'ə', english: 'attempt', category: 'actions', difficulty: 1),
   // index:p.145
-  AwingWord(awing: 'pyə', english: 'avocado', category: 'food', difficulty: 1),
+  // AwingWord(awing: 'pyə', english: 'avocado', category: 'food', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L281 ('pyâ')
   // index:p.145
   AwingWord(awing: 'kaŋkə', english: 'avoid', category: 'actions', difficulty: 1),
   // index:p.145
@@ -6462,11 +6462,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.145
   AwingWord(awing: 'mɔ́ yi mbéolə', english: 'baby', category: 'family', tonePattern: 'high', difficulty: 2),
   // index:p.145
-  AwingWord(awing: 'apadtəmoonə', english: 'baby sling', category: 'family', difficulty: 1),
+  // AwingWord(awing: 'apadtəmoonə', english: 'baby sling', category: 'family', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3672 ('apadtəmóonə')
   // index:p.145
-  AwingWord(awing: 'nkwiŋ ŋwu mbyàŋnə', english: 'bachelor', category: 'family', tonePattern: 'low', difficulty: 2),
+  // AwingWord(awing: 'nkwiŋ ŋwu mbyàŋnə', english: 'bachelor', category: 'family', tonePattern: 'low', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4340 ('nkwiŋ ŋwu mbyâŋnə')
   // index:p.145
-  AwingWord(awing: 'ndzama', english: 'back', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'ndzama', english: 'back', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L236 ('ndzəmə')
   // index:p.145
   AwingWord(awing: 'tśmtə', english: 'back', category: 'body', tonePattern: 'high', difficulty: 1),
   // index:p.145
@@ -6478,7 +6478,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.145
   AwingWord(awing: 'atóəsə', english: 'bag, worshipped periodically', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.145
-  AwingWord(awing: 'péeba', english: 'bake (in ashes)', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'péeba', english: 'bake (in ashes)', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3093 ('péebə')
   // index:p.145
   AwingWord(awing: 'ndzaŋkə', english: 'balafon', category: 'things', difficulty: 1),
   // index:p.145
@@ -6500,7 +6500,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.145
   AwingWord(awing: 'bóyə', english: 'banana, sort of', category: 'food', tonePattern: 'high', difficulty: 1),
   // index:p.145
-  AwingWord(awing: 'bandècha', english: 'bandage', category: 'things', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'bandècha', english: 'bandage', category: 'things', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3806 ('bándéchə')
   // index:p.145
   AwingWord(awing: 'aféŋa akoola', english: 'bangle', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.145
@@ -6520,7 +6520,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.145
   AwingWord(awing: 'ndé məlo\'a', english: 'bar', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.145
-  AwingWord(awing: 'nkóoma atúa', english: 'barber', category: 'family', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'nkóoma atúa', english: 'barber', category: 'family', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4329 ('nkóomə atûə')
   // index:p.145
   AwingWord(awing: 'nkye maŋgyé', english: 'bark (as dog)', category: 'animals', tonePattern: 'high', difficulty: 2),
   // index:p.145
@@ -6530,7 +6530,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.145
   AwingWord(awing: 'asaŋə', english: 'basin (of weaved)', category: 'things', difficulty: 1),
   // index:p.145
-  AwingWord(awing: 'nkeemə', english: 'basket', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nkeemə', english: 'basket', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L477 ('nkeemə́')
   // index:p.145
   AwingWord(awing: 'akakə\'ə', english: 'basket, sort of', category: 'things', difficulty: 1),
   // index:p.145
@@ -6620,7 +6620,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   AwingWord(awing: 'lə nkéeba', english: 'beg for money', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.146
-  AwingWord(awing: 'ndóona', english: 'beggar', category: 'family', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ndóona', english: 'beggar', category: 'family', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4869 ('ndóonə')
   // index:p.146
   AwingWord(awing: 'alə̂na', english: 'begging', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.146
@@ -6632,7 +6632,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   AwingWord(awing: 'chánə', english: 'behave imperfectly', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.146
-  AwingWord(awing: 'kógna', english: 'behave stupidly', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'kógna', english: 'behave stupidly', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2912 ('kógnə')
   // index:p.146
   AwingWord(awing: 'chiga neema akwala', english: 'behaved, poorly', category: 'things', difficulty: 2),
   // index:p.146
@@ -6644,7 +6644,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   AwingWord(awing: 'ŋwunə', english: 'being, human', category: 'things', difficulty: 1),
   // index:p.146
-  AwingWord(awing: 'pəgə', english: 'belch', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'pəgə', english: 'belch', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L5852 ('págə')
   // index:p.146
   AwingWord(awing: 'mbímə', english: 'believe in', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.146
@@ -6656,7 +6656,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   AwingWord(awing: 'awaga', english: 'bell', category: 'things', difficulty: 1),
   // index:p.146
-  AwingWord(awing: 'awaga', english: 'bellow', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'awaga', english: 'bellow', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3779 ('awəgə')
   // index:p.146
   AwingWord(awing: 'ape\'ə', english: 'belongings', category: 'things', difficulty: 1),
   // index:p.146
@@ -6688,7 +6688,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'ghá\'ə', english: 'big', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'mé asóola', english: 'big hoe', category: 'descriptive', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'mé asóola', english: 'big hoe', category: 'descriptive', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3411 ('mé asóolə')
   // index:p.147
   AwingWord(awing: 'téembəgla', english: 'big snake, a very', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.147
@@ -6732,15 +6732,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'shíshí nwunə', english: 'black man', category: 'family', tonePattern: 'high', difficulty: 2),
   // index:p.147
-  AwingWord(awing: 'ntwíə aleemə', english: 'blacksmith', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'ntwíə aleemə', english: 'blacksmith', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2364 ('ntwîə aleemə')
   // index:p.147
   AwingWord(awing: 'atsenə', english: 'bladder', category: 'body', difficulty: 1),
   // index:p.147
   AwingWord(awing: 'mbenə̌ mə́ nayeŋə', english: 'blade, of grass', category: 'nature', tonePattern: 'rising', difficulty: 2),
   // index:p.147
-  AwingWord(awing: 'fílə', english: 'blame', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'fílə', english: 'blame', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2801 ('filə')
   // index:p.147
-  AwingWord(awing: 'blemə̂', english: 'blame', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'blemə̂', english: 'blame', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2663 ('blemâ')
   // index:p.147
   AwingWord(awing: 'fá\'ə', english: 'blame', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.147
@@ -6754,13 +6754,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'aloonə', english: 'blessing, sort of', category: 'actions', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'fágə', english: 'blight', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'fágə', english: 'blight', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5308 ('fágə')
   // index:p.147
   AwingWord(awing: 'fágə', english: 'blind', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'afagə', english: 'blind person', category: 'family', difficulty: 1),
+  // AwingWord(awing: 'afagə', english: 'blind person', category: 'family', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2313 ('əfəgə')
   // index:p.147
-  AwingWord(awing: 'afə̂gmógə', english: 'blind person', category: 'family', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'afə̂gmógə', english: 'blind person', category: 'family', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2314 ('əfəgmógə')
   // index:p.147
   AwingWord(awing: 'ŋwaŋkə̂ mə́gə', english: 'blink eyes', category: 'actions', tonePattern: 'falling', difficulty: 2),
   // index:p.147
@@ -6768,7 +6768,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'atsa\'ə', english: 'blocks for construction', category: 'things', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'achíə', english: 'blood', category: 'body', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: 'achíə', english: 'blood', category: 'body', tonePattern: 'high', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L103 ('achîə')
   // index:p.147
   AwingWord(awing: 'fágta', english: 'blow', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.147
@@ -6776,7 +6776,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'fágtə', english: 'blow many times', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'fid nalwíə', english: 'blow nose', category: 'actions', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'fid nalwíə', english: 'blow nose', category: 'actions', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2237 ('fid nəlwîə')
   // index:p.147
   AwingWord(awing: 'wágə', english: 'blow, of air', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.147
@@ -6792,7 +6792,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'fíəə', english: 'blunt', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'ndû kwúneemə', english: 'boar', category: 'animals', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ndû kwúneemə', english: 'boar', category: 'animals', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2405 ('ndú kwúneemə')
   // index:p.147
   AwingWord(awing: 'fə̂dnə', english: 'boast', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // index:p.147
@@ -6828,7 +6828,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.147
   AwingWord(awing: 'ndedtə', english: 'boundary', category: 'things', difficulty: 1),
   // index:p.147
-  AwingWord(awing: 'napeela', english: 'boundary of field', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'napeela', english: 'boundary of field', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2547 ('nəpeelə')
   // index:p.148
   AwingWord(awing: 'ŋwú\'na', english: 'bow, as in greeting', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.148
@@ -6836,7 +6836,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'akáŋ yə shí nə́', english: 'bowl', category: 'actions', tonePattern: 'high', difficulty: 2),
   // index:p.148
-  AwingWord(awing: 'nked nkyîlə', english: 'bowstring', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'nked nkyîlə', english: 'bowstring', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4317 ('nked nkyílə')
   // index:p.148
   AwingWord(awing: 'aghaglə̂ máchísə', english: 'box(empty), of match', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
   // index:p.148
@@ -6844,13 +6844,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'ŋgí yi mbyâŋnə', english: 'boyfriend', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.148
-  AwingWord(awing: 'aféŋə', english: 'bracelet', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'aféŋə', english: 'bracelet', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5232 ('əfeŋə')
   // index:p.148
   AwingWord(awing: 'kə́\'tə', english: 'brag', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.148
   AwingWord(awing: 'pá\'ə', english: 'braid, weave', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.148
-  AwingWord(awing: 'atúə', english: 'brain, used colloquially', category: 'body', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'atúə', english: 'brain, used colloquially', category: 'body', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5132 ('atûə')
   // index:p.148
   AwingWord(awing: 'əfaga atìə', english: 'branch, of tree', category: 'nature', tonePattern: 'low', difficulty: 2),
   // index:p.148
@@ -6882,7 +6882,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'jwiəə', english: 'breathe', category: 'actions', difficulty: 1),
   // index:p.148
-  AwingWord(awing: 'baláibə', english: 'bribe', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'baláibə', english: 'bribe', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3808 ('bəláibə')
   // index:p.148
   AwingWord(awing: 'jûnə', english: 'bribe', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // index:p.148
@@ -6902,7 +6902,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'kyeetə', english: 'bring together', category: 'actions', difficulty: 1),
   // index:p.148
-  AwingWord(awing: 'kógə', english: 'bring up', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'kógə', english: 'bring up', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2911 ('kóga')
   // index:p.148
   AwingWord(awing: 'kwíŋkə', english: 'broken, get', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.148
@@ -6916,7 +6916,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'mápɔ́gə̂ fláwa', english: 'bud', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.148
-  AwingWord(awing: 'néela', english: 'buffalo', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'néela', english: 'buffalo', category: 'animals', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2410 ('néelə')
   // index:p.148
   AwingWord(awing: 'pɔ́ɔmə', english: 'build', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.148
@@ -6926,7 +6926,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'bə̂bə', english: 'bulb', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.148
-  AwingWord(awing: 'ndû neema', english: 'bull', category: 'animals', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ndû neema', english: 'bull', category: 'animals', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2407 ('ndú neemə')
   // index:p.148
   AwingWord(awing: 'nalwelə', english: 'bump', category: 'things', difficulty: 1),
   // index:p.148
@@ -6964,7 +6964,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.148
   AwingWord(awing: 'ntoalə', english: 'business capital', category: 'things', difficulty: 1),
   // index:p.148
-  AwingWord(awing: 'afi neemə', english: 'butcher', category: 'family', difficulty: 2),
+  // AwingWord(awing: 'afi neemə', english: 'butcher', category: 'family', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2317 ('əfi neemə')
   // index:p.148
   AwingWord(awing: 'nkɔ\'ə', english: 'butcher', category: 'family', difficulty: 1),
   // index:p.148
@@ -7048,11 +7048,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.149
   AwingWord(awing: 'peelə', english: 'carry on the back', category: 'actions', difficulty: 1),
   // index:p.149
-  AwingWord(awing: 'kîghidghaaba', english: 'cartilage', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kîghidghaaba', english: 'cartilage', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3998 ('kíghidghaabə')
   // index:p.149
   AwingWord(awing: 'aso\'ə', english: 'carved piece of wood', category: 'nature', difficulty: 1),
   // index:p.149
-  AwingWord(awing: 'aŋkasàlə', english: 'cassava', category: 'food', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'aŋkasàlə', english: 'cassava', category: 'food', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L288 ('aŋkəsálə')
   // index:p.149
   AwingWord(awing: 'sáətə', english: 'castrate many things', category: 'descriptive', tonePattern: 'high', difficulty: 3),
   // index:p.149
@@ -7060,7 +7060,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.149
   AwingWord(awing: 'asóəlakwùneemə', english: 'castrated pig', category: 'animals', tonePattern: 'high-low', difficulty: 3),
   // index:p.149
-  AwingWord(awing: 'púshîə', english: 'cat', category: 'animals', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'púshîə', english: 'cat', category: 'animals', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L174 ('pûshíə')
   // index:p.149
   AwingWord(awing: 'nəmaŋnə', english: 'cat, wild', category: 'animals', difficulty: 1),
   // index:p.149
@@ -7122,7 +7122,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.150
   AwingWord(awing: 'naghələ', english: 'challenging task', category: 'things', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'kánáŋə', english: 'chameleon', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'kánáŋə', english: 'chameleon', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L172 ('kánáŋə́')
   // index:p.150
   AwingWord(awing: 'seelə', english: 'change course of water', category: 'nature', difficulty: 1),
   // index:p.150
@@ -7144,11 +7144,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.150
   AwingWord(awing: 'achibəmóteenə', english: 'cheap products', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'chita', english: 'cheat', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'chita', english: 'cheat', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2736 ('chíta')
   // index:p.150
   AwingWord(awing: 'naghagə', english: 'cheek', category: 'things', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'ghaŋa', english: 'chest', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'ghaŋa', english: 'chest', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L113 ('ghaŋə')
   // index:p.150
   AwingWord(awing: 'tsámtə', english: 'chew a little', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.150
@@ -7170,7 +7170,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.150
   AwingWord(awing: 'anaaləmóona', english: 'child dedication', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'àndó móona', english: 'childishly', category: 'things', tonePattern: 'high-low', difficulty: 2),
+  // AwingWord(awing: 'àndó móona', english: 'childishly', category: 'things', tonePattern: 'high-low', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3645 ('ándó móonə')
   // index:p.150
   AwingWord(awing: 'pó\'ə', english: 'chimpanzee', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.150
@@ -7182,7 +7182,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.150
   AwingWord(awing: 'fógə', english: 'choose', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'kaŋə', english: 'choose', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kaŋə', english: 'choose', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4783 ('kaŋə̂')
   // index:p.150
   AwingWord(awing: 'anûsə', english: 'christianity', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.150
@@ -7210,7 +7210,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.150
   AwingWord(awing: 'zénə', english: 'classifier', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'anyiŋa', english: 'claw', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'anyiŋa', english: 'claw', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L221 ('anyiŋə')
   // index:p.150
   AwingWord(awing: 'atsa\'ənəkaŋə', english: 'clay', category: 'things', difficulty: 1),
   // index:p.150
@@ -7220,7 +7220,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.150
   AwingWord(awing: 'kyaatə', english: 'clean a little', category: 'actions', difficulty: 1),
   // index:p.150
-  AwingWord(awing: 'kwagtə', english: 'clean a little, using a hoe', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'kwagtə', english: 'clean a little, using a hoe', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2940 ('kwagtə̂')
   // index:p.150
   AwingWord(awing: 'kwaŋə', english: 'clean a little', category: 'actions', difficulty: 1),
   // index:p.150
@@ -7300,7 +7300,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.151
   AwingWord(awing: 'kéelə', english: 'coil (tr)', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.151
-  AwingWord(awing: 'napiə', english: 'cola nut', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'napiə', english: 'cola nut', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4229 ('nəpíə')
   // index:p.151
   AwingWord(awing: 'afə̂gə', english: 'cold', category: 'nature', tonePattern: 'falling', difficulty: 1),
   // index:p.151
@@ -7318,7 +7318,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.151
   AwingWord(awing: 'ndzaŋə', english: 'color', category: 'things', difficulty: 1),
   // index:p.151
-  AwingWord(awing: 'akeenə', english: 'colour', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'akeenə', english: 'colour', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5254 ('əkeenə')
   // index:p.151
   AwingWord(awing: 'akɔ́\'nə ləəmá', english: 'colt', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.151
@@ -7356,7 +7356,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.151
   AwingWord(awing: 'ləmtə', english: 'complain', category: 'things', difficulty: 1),
   // index:p.151
-  AwingWord(awing: 'apûtə', english: 'complaint, especially in court', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'apûtə', english: 'complaint, especially in court', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3696 ('apútə')
   // index:p.151
   AwingWord(awing: 'ńgə̂', english: 'complement, a', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.151
@@ -7384,7 +7384,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.151
   AwingWord(awing: 'pímə', english: 'confess', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.151
-  AwingWord(awing: 'zoomə', english: 'confess', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'zoomə', english: 'confess', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L6112 ('zoomə̂')
   // index:p.151
   AwingWord(awing: 'nakyéŋa mbi əsé', english: 'confession', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.151
@@ -7396,7 +7396,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.151
   AwingWord(awing: 'fê ndǎ', english: 'congratulate', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.152
-  AwingWord(awing: 'akaghoolámága', english: 'conjunctivitis', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'akaghoolámága', english: 'conjunctivitis', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3527 ('akəghoolámagə')
   // index:p.152
   AwingWord(awing: 'ladkə', english: 'connect', category: 'things', difficulty: 1),
   // index:p.152
@@ -7418,7 +7418,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'ghen nə mbiə', english: 'continue', category: 'things', difficulty: 2),
   // index:p.152
-  AwingWord(awing: 'kə̌', english: 'continuously', category: 'things', tonePattern: 'rising', difficulty: 1),
+  // AwingWord(awing: 'kə̌', english: 'continuously', category: 'things', tonePattern: 'rising', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4787 ('kǎ')
   // index:p.152
   AwingWord(awing: 'paŋtə', english: 'contradict', category: 'things', difficulty: 1),
   // index:p.152
@@ -7430,7 +7430,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'kwùblə mbímə', english: 'convert', category: 'things', tonePattern: 'high-low', difficulty: 2),
   // index:p.152
-  AwingWord(awing: 'anáŋna majiə', english: 'cook', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'anáŋna majiə', english: 'cook', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3909 ('ənáŋnə majîə')
   // index:p.152
   AwingWord(awing: 'nâŋa', english: 'cook', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.152
@@ -7472,7 +7472,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'koshamə', english: 'cottage cheese', category: 'food', difficulty: 1),
   // index:p.152
-  AwingWord(awing: 'kótina', english: 'cotton', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'kótina', english: 'cotton', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4012 ('kótinə')
   // index:p.152
   AwingWord(awing: 'akwagə', english: 'cough', category: 'things', difficulty: 1),
   // index:p.152
@@ -7486,13 +7486,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'túg ntáəmə', english: 'courageous', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.152
-  AwingWord(awing: 'atátə', english: 'courtyard', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'atátə', english: 'courtyard', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3728 ('atátá')
   // index:p.152
   AwingWord(awing: 'atálə', english: 'courtyard in the palace', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.152
   AwingWord(awing: 'akeena', english: 'covenant', category: 'things', difficulty: 3),
   // index:p.152
-  AwingWord(awing: 'kə̂bka', english: 'cover', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kə̂bka', english: 'cover', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2892 ('kábkə')
   // index:p.152
   AwingWord(awing: 'sôə', english: 'cover completely, v', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.152
@@ -7508,7 +7508,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'akəbka', english: 'covering (n)', category: 'things', difficulty: 1),
   // index:p.152
-  AwingWord(awing: 'ngwê neemə', english: 'cow', category: 'animals', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ngwê neemə', english: 'cow', category: 'animals', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2421 ('ngwě neemə')
   // index:p.152
   AwingWord(awing: 'ngyenəbə\'lə', english: 'cow boy', category: 'animals', difficulty: 1),
   // index:p.152
@@ -7528,9 +7528,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.152
   AwingWord(awing: 'ntso\'lə', english: 'crest', category: 'things', difficulty: 1),
   // index:p.152
-  AwingWord(awing: 'asééna', english: 'crevice', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'asééna', english: 'crevice', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3934 ('əséenə')
   // index:p.152
-  AwingWord(awing: 'kîchìə', english: 'cricket', category: 'animals', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kîchìə', english: 'cricket', category: 'animals', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2385 ('kíchíə')
   // index:p.152
   AwingWord(awing: 'ŋwuna alə\'ə', english: 'cripple', category: 'things', difficulty: 2),
   // index:p.152
@@ -7604,11 +7604,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.153
   AwingWord(awing: 'alə̂\'ə', english: 'curse', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.153
-  AwingWord(awing: 'apínə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: 'apínə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L3685 ('apinə')
   // index:p.153
   AwingWord(awing: 'awê\'ə', english: 'curse', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.153
-  AwingWord(awing: 'ndóonə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: 'ndóonə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4154 ('ndoonə')
   // index:p.153
   AwingWord(awing: 'tsaŋə', english: 'curse', category: 'things', difficulty: 3),
   // index:p.153
@@ -7692,7 +7692,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.154
   AwingWord(awing: 'makwumə', english: 'dance group of veiled men', category: 'actions', difficulty: 1),
   // index:p.154
-  AwingWord(awing: 'ndzəmə', english: 'darkness', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'ndzəmə', english: 'darkness', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2542 ('ndzəmá')
   // index:p.154
   AwingWord(awing: 'ntsɔ', english: 'date palm', category: 'body', difficulty: 1),
   // index:p.154
@@ -7704,7 +7704,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.154
   AwingWord(awing: 'ngomə', english: 'daughter-in-law', category: 'family', difficulty: 1),
   // index:p.154
-  AwingWord(awing: 'nkyəkəpeŋə', english: 'dawn', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'nkyəkəpeŋə', english: 'dawn', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2561 ('nkyakəpeŋə')
   // index:p.154
   AwingWord(awing: 'alə', english: 'day', category: 'nature', difficulty: 1),
   // index:p.154
@@ -7750,9 +7750,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.154
   AwingWord(awing: 'akə̌təbə', english: 'deaf (in)', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.154
-  AwingWord(awing: 'akə̌mátóglə', english: 'deaf person', category: 'family', tonePattern: 'rising', difficulty: 1),
+  // AwingWord(awing: 'akə̌mátóglə', english: 'deaf person', category: 'family', tonePattern: 'rising', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2320 ('əkə̂mátôglə')
   // index:p.154
-  AwingWord(awing: 'nəwùə', english: 'death', category: 'things', tonePattern: 'low', difficulty: 3),
+  // AwingWord(awing: 'nəwùə', english: 'death', category: 'things', tonePattern: 'low', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4893 ('nəwûə')
   // index:p.154
   AwingWord(awing: 'chwáala nəwùə', english: 'death, survive', category: 'things', tonePattern: 'high-low', difficulty: 3),
   // index:p.154
@@ -7824,7 +7824,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.154
   AwingWord(awing: 'nəaalə', english: 'demonstrate', category: 'things', difficulty: 1),
   // index:p.154
-  AwingWord(awing: 'anaalə', english: 'demonstration', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'anaalə', english: 'demonstration', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5072 ('anəələ')
   // index:p.154
   AwingWord(awing: 'zə̂', english: 'demonstrative adj \'that\'', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.154
@@ -7902,7 +7902,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.155
   AwingWord(awing: 'tû nklə', english: 'die (euphemistic)', category: 'actions', tonePattern: 'falling', difficulty: 2),
   // index:p.155
-  AwingWord(awing: 'kwùkə', english: 'die, of many things', category: 'descriptive', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'kwùkə', english: 'die, of many things', category: 'descriptive', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2957 ('kwúka')
   // index:p.155
   AwingWord(awing: 'chia ntso nawùə', english: 'dieng', category: 'things', tonePattern: 'low', difficulty: 2),
   // index:p.155
@@ -8020,7 +8020,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.156
   AwingWord(awing: 'tsoəbə', english: 'do imperfectly', category: 'actions', difficulty: 1),
   // index:p.156
-  AwingWord(awing: 'ngwùə', english: 'dog', category: 'animals', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'ngwùə', english: 'dog', category: 'animals', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L173 ('ngwûə')
   // index:p.156
   AwingWord(awing: 'kwùmə', english: 'dog, shy', category: 'animals', tonePattern: 'low', difficulty: 1),
   // index:p.156
@@ -8040,19 +8040,19 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.156
   AwingWord(awing: 'Ndəwálə', english: 'Douala', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.156
-  AwingWord(awing: 'aŋkəŋə', english: 'dove', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'aŋkəŋə', english: 'dove', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3667 ('aŋkəŋâ')
   // index:p.156
   AwingWord(awing: 'matəŋə', english: 'down', category: 'descriptive', difficulty: 1),
   // index:p.156
   AwingWord(awing: 'matəgnə', english: 'down', category: 'descriptive', difficulty: 1),
   // index:p.156
-  AwingWord(awing: 'aghoolə atúə', english: 'dowry', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'aghoolə atúə', english: 'dowry', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3495 ('aghoolá atûa')
   // index:p.156
-  AwingWord(awing: 'aghoolə atúə', english: 'dowry (for groom\'s family)', category: 'family', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'aghoolə atúə', english: 'dowry (for groom\'s family)', category: 'family', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3495 ('aghoolá atûa')
   // index:p.156
   AwingWord(awing: 'ghoolə', english: 'dowry (v)', category: 'things', difficulty: 1),
   // index:p.156
-  AwingWord(awing: 'soŋa ndasé', english: 'drag on the grown', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'soŋa ndasé', english: 'drag on the grown', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4436 ('soŋə ndəsê')
   // index:p.156
   AwingWord(awing: 'tə̂fu\'əmántséntsé', english: 'dragonfly', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.156
@@ -8070,15 +8070,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.156
   AwingWord(awing: 'nə nô', english: 'drink', category: 'food', tonePattern: 'falling', difficulty: 2),
   // index:p.156
-  AwingWord(awing: 'kwùbkə', english: 'drink hastily', category: 'actions', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'kwùbkə', english: 'drink hastily', category: 'actions', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5506 ('kwúbkə')
   // index:p.156
   AwingWord(awing: 'ndê məlo\'ə', english: 'drinking spot', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.156
-  AwingWord(awing: 'tsáəmə', english: 'drip', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'tsáəmə', english: 'drip', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3240 ('tsəəmə')
   // index:p.156
   AwingWord(awing: 'soŋa mútə', english: 'drive a car', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.156
-  AwingWord(awing: 'kamə', english: 'drive away', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kamə', english: 'drive away', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2898 ('kəmə̂')
   // index:p.156
   AwingWord(awing: 'zagə', english: 'drive into the ground', category: 'nature', difficulty: 1),
   // index:p.156
@@ -8110,7 +8110,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.156
   AwingWord(awing: 'fəmkə', english: 'dry (intr)', category: 'descriptive', difficulty: 1),
   // index:p.156
-  AwingWord(awing: 'aghá aluma', english: 'dry season', category: 'nature', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'aghá aluma', english: 'dry season', category: 'nature', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2498 ('əghâ alumə')
   // index:p.156
   AwingWord(awing: 'jùmə', english: 'dry up', category: 'descriptive', tonePattern: 'low', difficulty: 1),
   // index:p.157
@@ -8120,7 +8120,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.157
   AwingWord(awing: 'akəpóglə', english: 'dust', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.157
-  AwingWord(awing: 'kîkam ŋwuna', english: 'dwarf', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'kîkam ŋwuna', english: 'dwarf', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3999 ('kíkəm ŋwunə')
   // index:p.157
   AwingWord(awing: 'tó\'ə', english: 'dwarf, become (of people)', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.157
@@ -8130,7 +8130,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.157
   AwingWord(awing: 'mbó\'máwumə', english: 'eagle', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.157
-  AwingWord(awing: 'natóglə', english: 'ear', category: 'body', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'natóglə', english: 'ear', category: 'body', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L115 ('nətôglə')
   // index:p.157
   AwingWord(awing: 'ŋgyétə', english: 'earache', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.157
@@ -8146,11 +8146,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.157
   AwingWord(awing: 'lúmnə', english: 'eat food with less soup', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.157
-  AwingWord(awing: 'kamtə', english: 'eat hastily', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'kamtə', english: 'eat hastily', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L353 ('kamtə̂')
   // index:p.157
   AwingWord(awing: 'faələ', english: 'eat heavily (derog.)', category: 'actions', difficulty: 1),
   // index:p.157
-  AwingWord(awing: 'faələ', english: 'eat heavily (derogatory)', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'faələ', english: 'eat heavily (derogatory)', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L8151 ('faələ')
   // index:p.157
   AwingWord(awing: 'kódtə', english: 'eat many things', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.157
@@ -8166,21 +8166,21 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.157
   AwingWord(awing: 'aghaŋə̌', english: 'edge of a hollow vessel', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.157
-  AwingWord(awing: 'napumə', english: 'egg', category: 'food', difficulty: 1),
+  // AwingWord(awing: 'napumə', english: 'egg', category: 'food', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L272 ('nəpumə́')
   // index:p.157
   AwingWord(awing: 'nkə̂\' napumə', english: 'eggshell', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.157
   AwingWord(awing: 'njî\'ə', english: 'egussi', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.157
-  AwingWord(awing: 'êlə', english: 'eight', category: 'numbers', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'êlə', english: 'eight', category: 'numbers', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5228 ('élə')
   // index:p.157
-  AwingWord(awing: 'nafeemə', english: 'eight (8)', category: 'numbers', difficulty: 2),
+  // AwingWord(awing: 'nafeemə', english: 'eight (8)', category: 'numbers', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L624 ('nəfeemə́')
   // index:p.157
   AwingWord(awing: 'nshûna nafeemə', english: 'eighteen (18)', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.157
   AwingWord(awing: 'magh ə̂m mênə nafeemə', english: 'eighty', category: 'numbers', tonePattern: 'falling', difficulty: 2),
   // index:p.157
-  AwingWord(awing: 'nkona apó', english: 'elbow', category: 'body', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'nkona apó', english: 'elbow', category: 'body', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 dict-audit: elbow: OCR of L2266 nkənə apô
   // index:p.157
   AwingWord(awing: 'ntse ndê', english: 'elder', category: 'family', tonePattern: 'falling', difficulty: 2),
   // index:p.157
@@ -8222,7 +8222,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.157
   AwingWord(awing: 'matóga maŋgyé', english: 'engaged, being ~', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.157
-  AwingWord(awing: 'atséebə́makálə', english: 'English language', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'atséebə́makálə', english: 'English language', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3754 ('atséebámakálə')
   // index:p.157
   AwingWord(awing: 'mokálə', english: 'English language', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.157
@@ -8232,7 +8232,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.157
   AwingWord(awing: 'laŋkə ndelə', english: 'entertain', category: 'things', difficulty: 2),
   // index:p.157
-  AwingWord(awing: 'nakwuunə', english: 'entrance', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nakwuunə', english: 'entrance', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L231 ('nəkwuunə́')
   // index:p.158
   AwingWord(awing: 'ntúmkə', english: 'entrance hut', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.158
@@ -8262,7 +8262,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.158
   AwingWord(awing: 'júmə', english: 'evaporate', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.158
-  AwingWord(awing: 'nkwanə', english: 'evening', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'nkwanə', english: 'evening', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L212 ('nkwaná')
   // index:p.158
   AwingWord(awing: 'majî mə́ nkwanə', english: 'evening meal', category: 'nature', tonePattern: 'falling', difficulty: 2),
   // index:p.158
@@ -8270,7 +8270,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.158
   AwingWord(awing: 'anuə ŋwu ntsəmə', english: 'event, open to all', category: 'descriptive', difficulty: 2),
   // index:p.158
-  AwingWord(awing: 'ŋwu ntsamə', english: 'everybody', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'ŋwu ntsamə', english: 'everybody', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4379 ('ŋwu ntsəmə')
   // index:p.158
   AwingWord(awing: 'alə̌ atsama', english: 'everyday', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.158
@@ -8278,7 +8278,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.158
   AwingWord(awing: 'ali\'ə̂tsama', english: 'Everywhere', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.158
-  AwingWord(awing: 'ndû atsama', english: 'everywhere', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ndû atsama', english: 'everywhere', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4156 ('ndú atsəmə')
   // index:p.158
   AwingWord(awing: 'taɔŋə', english: 'evil', category: 'things', difficulty: 1),
   // index:p.158
@@ -8294,7 +8294,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.158
   AwingWord(awing: 'ashwadka', english: 'exageration', category: 'things', difficulty: 1),
   // index:p.158
-  AwingWord(awing: 'lazəmə', english: 'exam', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'lazəmə', english: 'exam', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4031 ('ləzámə')
   // index:p.158
   AwingWord(awing: 'pyáata', english: 'examine closely', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.158
@@ -8312,13 +8312,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.158
   AwingWord(awing: 'chîpó\'ə', english: 'excited person, less', category: 'family', tonePattern: 'falling', difficulty: 1),
   // index:p.158
-  AwingWord(awing: 'aghaglə', english: 'excitement', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'aghaglə', english: 'excitement', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4691 ('agháglə')
   // index:p.158
   AwingWord(awing: 'ajùblə', english: 'excitement, foolish', category: 'descriptive', tonePattern: 'low', difficulty: 1),
   // index:p.158
   AwingWord(awing: 'ayêlə', english: 'exclamation', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.158
-  AwingWord(awing: 'napélə', english: 'excrement', category: 'things', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: 'napélə', english: 'excrement', category: 'things', tonePattern: 'high', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4650 ('nəpélə')
   // index:p.158
   AwingWord(awing: 'azáŋkəmbəəmə', english: 'exercise, physical', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.158
@@ -8362,7 +8362,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.158
   AwingWord(awing: 'napə', english: 'exzema', category: 'things', difficulty: 1),
   // index:p.158
-  AwingWord(awing: 'nalə̂gə', english: 'eye', category: 'body', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'nalə̂gə', english: 'eye', category: 'body', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L114 ('nəlágə')
   // index:p.158
   AwingWord(awing: 'ŋgəd nalə̂gə', english: 'eyebrow', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.158
@@ -8418,7 +8418,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.159
   AwingWord(awing: 'shûəə', english: 'fart', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.159
-  AwingWord(awing: 'anuyəfìə', english: 'fashion', category: 'things', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'anuyəfìə', english: 'fashion', category: 'things', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3660 ('anuyəfíə')
   // index:p.159
   AwingWord(awing: 'féelə', english: 'fasten', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.159
@@ -8438,7 +8438,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.159
   AwingWord(awing: 'maføomə', english: 'fat', category: 'descriptive', difficulty: 1),
   // index:p.159
-  AwingWord(awing: 'nafoonə', english: 'fat', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'nafoonə', english: 'fat', category: 'descriptive', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3422 ('nəfoonə')
   // index:p.159
   AwingWord(awing: 'fáŋkə', english: 'fat', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.159
@@ -8448,11 +8448,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.159
   AwingWord(awing: 'ŋkêna', english: 'father in-law', category: 'family', tonePattern: 'falling', difficulty: 1),
   // index:p.159
-  AwingWord(awing: 'ndim tâ yi mbyâŋnə', english: 'father\'s brother (uncle)', category: 'family', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ndim tâ yi mbyâŋnə', english: 'father\'s brother (uncle)', category: 'family', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2350 ('ndim tǎ yi mbyâŋnə')
   // index:p.159
   AwingWord(awing: 'ndim tâ yi maŋgyé', english: 'father\'s sister (aunt)', category: 'family', tonePattern: 'falling', difficulty: 2),
   // index:p.159
-  AwingWord(awing: 'chùbnə', english: 'fault finding', category: 'things', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'chùbnə', english: 'fault finding', category: 'things', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2742 ('chúbnə')
   // index:p.159
   AwingWord(awing: 'aghoaŋə', english: 'fear', category: 'things', difficulty: 1),
   // index:p.159
@@ -8464,7 +8464,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.159
   AwingWord(awing: 'ndelə', english: 'feast, for Bororos', category: 'things', difficulty: 1),
   // index:p.159
-  AwingWord(awing: 'nafelə', english: 'feather', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nafelə', english: 'feather', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4176 ('nəfelə')
   // index:p.159
   AwingWord(awing: 'zə̂gə', english: 'feel', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.159
@@ -8474,7 +8474,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.159
   AwingWord(awing: 'chwí\'tə', english: 'feel sickly, of body', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.159
-  AwingWord(awing: 'fógə', english: 'fellow-wife', category: 'family', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'fógə', english: 'fellow-wife', category: 'family', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L419 ('fóga')
   // index:p.159
   AwingWord(awing: 'afóəlanə̂ neemə', english: 'female pig, sort of', category: 'animals', tonePattern: 'falling', difficulty: 2),
   // index:p.159
@@ -8486,7 +8486,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.159
   AwingWord(awing: 'famə', english: 'ferment', category: 'things', difficulty: 1),
   // index:p.159
-  AwingWord(awing: 'pə̂gə', english: 'ferment, eg of food', category: 'food', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'pə̂gə', english: 'ferment, eg of food', category: 'food', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5832 ('págə')
   // index:p.159
   AwingWord(awing: 'ndasé yi əshî\'na', english: 'fertile soil', category: 'nature', tonePattern: 'falling', difficulty: 2),
   // index:p.159
@@ -8510,7 +8510,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.160
   AwingWord(awing: 'afʉə aghəma', english: 'fig leave', category: 'things', difficulty: 2),
   // index:p.160
-  AwingWord(awing: 'aghəma', english: 'fig (tree)', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'aghəma', english: 'fig (tree)', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3888 ('əghəmə')
   // index:p.160
   AwingWord(awing: 'pó\'nə', english: 'fight', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.160
@@ -8534,13 +8534,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.160
   AwingWord(awing: 'zəənə', english: 'find', category: 'things', difficulty: 1),
   // index:p.160
-  AwingWord(awing: 'jîna', english: 'find each other', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'jîna', english: 'find each other', category: 'descriptive', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5382 ('jinə')
   // index:p.160
   AwingWord(awing: 'ashî\'na', english: 'fine', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.160
   AwingWord(awing: 'atsóoba', english: 'fine', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.160
-  AwingWord(awing: 'fîə apó', english: 'finger', category: 'body', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'fîə apó', english: 'finger', category: 'body', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2236 ('fîə apô')
   // index:p.160
   AwingWord(awing: 'anyîŋa apó', english: 'fingernail', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.160
@@ -8562,25 +8562,25 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.160
   AwingWord(awing: 'mɔ́ natúə', english: 'firstborn', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.160
-  AwingWord(awing: 'əshúə', english: 'fish', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'əshúə', english: 'fish', category: 'animals', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L159 ('əshûə')
   // index:p.160
   AwingWord(awing: 'kó əshúə', english: 'fish', category: 'animals', tonePattern: 'high', difficulty: 2),
   // index:p.160
   AwingWord(awing: 'akwagə̂ əshúə', english: 'fish bone', category: 'actions', tonePattern: 'falling', difficulty: 2),
   // index:p.160
-  AwingWord(awing: 'nkî əshúə', english: 'fish dam', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'nkî əshúə', english: 'fish dam', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2423 ('nkǐ əshúə')
   // index:p.160
   AwingWord(awing: 'ataənə̌ akóola əshúə', english: 'fish trap', category: 'actions', tonePattern: 'rising', difficulty: 2),
   // index:p.160
   AwingWord(awing: 'ŋgwam əshúə', english: 'fisherman', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.160
-  AwingWord(awing: 'nkelə̌ akóola əshúə', english: 'fishing net', category: 'things', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'nkelə̌ akóola əshúə', english: 'fishing net', category: 'things', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4318 ('nkelá akóolə əshúə')
   // index:p.160
-  AwingWord(awing: 'akwuba əshúə', english: 'fish-scale', category: 'animals', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'akwuba əshúə', english: 'fish-scale', category: 'animals', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3569 ('akwubə əshûə')
   // index:p.160
   AwingWord(awing: 'akəpu\'ə', english: 'fit (n)', category: 'things', difficulty: 1),
   // index:p.160
-  AwingWord(awing: 'tâ', english: 'five', category: 'numbers', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tâ', english: 'five', category: 'numbers', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4953 ('tâ')
   // index:p.160
   AwingWord(awing: 'atáəməmógə', english: 'flame', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.160
@@ -8622,7 +8622,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.160
   AwingWord(awing: 'tómkə', english: 'flow out forcefully', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.160
-  AwingWord(awing: 'faláwa', english: 'flower', category: 'nature', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'faláwa', english: 'flower', category: 'nature', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2508 ('fəláwa')
   // index:p.160
   AwingWord(awing: 'məsaŋ mə́ ngəsaŋə', english: 'flower on corn stalk', category: 'nature', tonePattern: 'high', difficulty: 2),
   // index:p.160
@@ -8692,7 +8692,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.161
   AwingWord(awing: 'əfoontə\'ə', english: 'fon\'s name (fon of the palace)', category: 'things', difficulty: 2),
   // index:p.161
-  AwingWord(awing: 'majìə', english: 'food', category: 'food', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'majìə', english: 'food', category: 'food', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2631 ('məjîə')
   // index:p.161
   AwingWord(awing: 'anə pumə', english: 'food for a dead celebration', category: 'food', difficulty: 2),
   // index:p.161
@@ -8706,7 +8706,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.161
   AwingWord(awing: 'akəkógə atséeba', english: 'foolish, of talk or words', category: 'descriptive', tonePattern: 'high', difficulty: 2),
   // index:p.161
-  AwingWord(awing: 'napə̂gə', english: 'foolishness', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'napə̂gə', english: 'foolishness', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4226 ('nəpəgə')
   // index:p.161
   AwingWord(awing: 'atéela akoola', english: 'foot', category: 'body', tonePattern: 'high', difficulty: 2),
   // index:p.161
@@ -8732,7 +8732,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.161
   AwingWord(awing: 'lagnə', english: 'forget', category: 'things', difficulty: 1),
   // index:p.161
-  AwingWord(awing: 'alagnə', english: 'forgetfulness', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'alagnə', english: 'forgetfulness', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3601 ('aləgnə')
   // index:p.161
   AwingWord(awing: 'lagnə', english: 'forgive', category: 'things', difficulty: 1),
   // index:p.161
@@ -8744,11 +8744,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.161
   AwingWord(awing: 'n. mbiə', english: 'forward', category: 'things', difficulty: 2),
   // index:p.161
-  AwingWord(awing: 'kwa', english: 'four', category: 'numbers', difficulty: 1),
+  // AwingWord(awing: 'kwa', english: 'four', category: 'numbers', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4506 ('kwa')
   // index:p.161
-  AwingWord(awing: 'nked zén nakwa', english: 'four hundred (400)', category: 'numbers', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'nked zén nakwa', english: 'four hundred (400)', category: 'numbers', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L656 ('nked zén nəkwa')
   // index:p.161
-  AwingWord(awing: 'ntsəb nakwa', english: 'fourteen (14)', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'ntsəb nakwa', english: 'fourteen (14)', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L630 ('ntsəb nəkwa')
   // index:p.161
   AwingWord(awing: 'ngəba', english: 'fowl', category: 'things', difficulty: 1),
   // index:p.161
@@ -8762,19 +8762,19 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.161
   AwingWord(awing: 'fəŋtə', english: 'fresh', category: 'things', difficulty: 1),
   // index:p.161
-  AwingWord(awing: 'ngaana', english: 'friend', category: 'family', difficulty: 1),
+  // AwingWord(awing: 'ngaana', english: 'friend', category: 'family', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L570 ('ngəənə')
   // index:p.161
   AwingWord(awing: 'chiga ngaana', english: 'friend, good or true', category: 'family', difficulty: 2),
   // index:p.161
   AwingWord(awing: 'alì\'ɔ́túə', english: 'friend, of very close', category: 'family', tonePattern: 'high-low', difficulty: 1),
   // index:p.161
-  AwingWord(awing: 'aghaana', english: 'friendship', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'aghaana', english: 'friendship', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3887 ('əghəənə')
   // index:p.162
   AwingWord(awing: 'chiga əshunə', english: 'friendship, good', category: 'descriptive', difficulty: 2),
   // index:p.162
-  AwingWord(awing: 'ghədkə', english: 'frighten', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ghədkə', english: 'frighten', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2850 ('ghədkə̂')
   // index:p.162
-  AwingWord(awing: 'tatseema', english: 'frog', category: 'animals', difficulty: 1),
+  // AwingWord(awing: 'tatseema', english: 'frog', category: 'animals', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L183 ('tətseemə')
   // index:p.162
   AwingWord(awing: 'á', english: 'from', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.162
@@ -8784,7 +8784,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.162
   AwingWord(awing: 'ntónəsénə', english: 'frontal headache', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.162
-  AwingWord(awing: 'akwùləshìə', english: 'frown(n)', category: 'things', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'akwùləshìə', english: 'frown(n)', category: 'things', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3574 ('akwúláshîə')
   // index:p.162
   AwingWord(awing: 'v. ghá\'ə', english: 'frugal', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.162
@@ -8806,7 +8806,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.162
   AwingWord(awing: 'alílsəmə', english: 'fruit bat', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.162
-  AwingWord(awing: 'káŋə', english: 'fry', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'káŋə', english: 'fry', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5396 ('kaŋə')
   // index:p.162
   AwingWord(awing: 'káŋtə', english: 'fry, of little things', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.162
@@ -8878,11 +8878,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.162
   AwingWord(awing: 'kwáalə', english: 'get', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.162
-  AwingWord(awing: 'sənkə', english: 'get broken', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'sənkə', english: 'get broken', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3134 ('sánkə')
   // index:p.162
   AwingWord(awing: 'tweetə atwágə', english: 'get ready for action', category: 'actions', tonePattern: 'high', difficulty: 2),
   // index:p.162
-  AwingWord(awing: 'chakə', english: 'get smashed (intr)', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'chakə', english: 'get smashed (intr)', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2673 ('chakâ')
   // index:p.162
   AwingWord(awing: 'chwí\'na', english: 'get tight together', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.162
@@ -8896,9 +8896,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.162
   AwingWord(awing: 'apéna', english: 'gift', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.162
-  AwingWord(awing: 'nəlwi nə́ əshúə', english: 'gill', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'nəlwi nə́ əshúə', english: 'gill', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4216 ('nəlwí nə́ əshúə')
   // index:p.163
-  AwingWord(awing: 'anjwə', english: 'giraffe', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'anjwə', english: 'giraffe', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L185 ('anjwa')
   // index:p.163
   AwingWord(awing: 'mɔ́ má mangyé', english: 'girl', category: 'family', tonePattern: 'high', difficulty: 2),
   // index:p.163
@@ -8936,7 +8936,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.163
   AwingWord(awing: 'afo najîə', english: 'glutton', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.163
-  AwingWord(awing: 'ghenə', english: 'go', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ghenə', english: 'go', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L325 ('ghenə̂')
   // index:p.163
   AwingWord(awing: 'pəənə', english: 'go back', category: 'actions', difficulty: 1),
   // index:p.163
@@ -8962,7 +8962,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.163
   AwingWord(awing: 'kəmú\'ntə\'ə', english: 'gold', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.163
-  AwingWord(awing: 'gólə', english: 'gold', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'gólə', english: 'gold', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3971 ('gôlə')
   // index:p.163
   AwingWord(awing: 'pɔŋə', english: 'good', category: 'descriptive', difficulty: 1),
   // index:p.163
@@ -8982,7 +8982,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.163
   AwingWord(awing: 'nki yi əshî\'na', english: 'gospel', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.163
-  AwingWord(awing: 'atséebə̂ndzəməndzəma', english: 'gossip', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'atséebə̂ndzəməndzəma', english: 'gossip', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3756 ('atséebándzəmándzəmə')
   // index:p.163
   AwingWord(awing: 'tyaŋə monaŋə', english: 'gossip', category: 'things', difficulty: 2),
   // index:p.163
@@ -9000,19 +9000,19 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.163
   AwingWord(awing: 'tâ máə̂', english: 'grandfather (maternal)', category: 'family', tonePattern: 'falling', difficulty: 2),
   // index:p.163
-  AwingWord(awing: 'tâ pətə̂', english: 'grandfather (paternal)', category: 'family', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'tâ pətə̂', english: 'grandfather (paternal)', category: 'family', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4444 ('tä pətä')
   // index:p.163
   AwingWord(awing: 'má pəməə̌', english: 'grandmother (maternal)', category: 'family', tonePattern: 'rising', difficulty: 2),
   // index:p.163
   AwingWord(awing: 'má mə̂mə̂ yi ndzá\'kə', english: 'grandmother (maternal)', category: 'family', tonePattern: 'falling', difficulty: 2),
   // index:p.163
-  AwingWord(awing: 'má pətə̂', english: 'grandmother (paternal)', category: 'family', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'má pətə̂', english: 'grandmother (paternal)', category: 'family', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4038 ('mǎ pətǎ')
   // index:p.163
   AwingWord(awing: 'mɔ́ pətə̂ yi ndzá\'kə', english: 'grandson', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.163
   AwingWord(awing: 'mɔ́ pətə̂ yi mbyâŋnə', english: 'grandson', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.163
-  AwingWord(awing: 'galéba', english: 'grape', category: 'food', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'galéba', english: 'grape', category: 'food', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L291 ('gəlébə')
   // index:p.163
   AwingWord(awing: 'kóolə', english: 'grasp', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.163
@@ -9042,17 +9042,17 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.164
   AwingWord(awing: 'tâ pətə̂ yi ndzá\'kə', english: 'great grandfather (paternal)', category: 'family', tonePattern: 'falling', difficulty: 2),
   // index:p.164
-  AwingWord(awing: 'má pətə̂ pətə̂', english: 'great grandmother (paternal)', category: 'family', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'má pətə̂ pətə̂', english: 'great grandmother (paternal)', category: 'family', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3406 ('mǎ pətǎ pətǎ')
   // index:p.164
   AwingWord(awing: 'təgndé', english: 'greed', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.164
-  AwingWord(awing: 'atogə', english: 'greed', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'atogə', english: 'greed', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5122 ('atogá')
   // index:p.164
   AwingWord(awing: 'atsá\'na', english: 'greed', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.164
   AwingWord(awing: 'akəmántsoolə', english: 'greedy person', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.164
-  AwingWord(awing: 'nóola akafə', english: 'green mamba', category: 'descriptive', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'nóola akafə', english: 'green mamba', category: 'descriptive', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3431 ('nóolə akəfə́')
   // index:p.164
   AwingWord(awing: 'cha\'tə', english: 'greet', category: 'things', difficulty: 1),
   // index:p.164
@@ -9074,7 +9074,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.164
   AwingWord(awing: 'mɔ́ ngə̂\' naghə̌', english: 'grinding stone, upper', category: 'nature', tonePattern: 'rising', difficulty: 2),
   // index:p.164
-  AwingWord(awing: 'néla', english: 'groan', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'néla', english: 'groan', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3058 ('nélə')
   // index:p.164
   AwingWord(awing: 'ndúma', english: 'groom', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.164
@@ -9110,7 +9110,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.164
   AwingWord(awing: 'ləmtə', english: 'grumble', category: 'things', difficulty: 1),
   // index:p.164
-  AwingWord(awing: 'mbyâəba', english: 'guard', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'mbyâəba', english: 'guard', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4061 ('mbyáabə')
   // index:p.164
   AwingWord(awing: 'ŋgwápə', english: 'guava', category: 'food', tonePattern: 'high', difficulty: 1),
   // index:p.164
@@ -9124,13 +9124,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.164
   AwingWord(awing: 'anua mə̂ wam ndə̌', english: 'guilty', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.164
-  AwingWord(awing: 'kâyé məsaŋə', english: 'guinea corn', category: 'food', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'kâyé məsaŋə', english: 'guinea corn', category: 'food', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2620 ('káyé məsaŋə̂')
   // index:p.164
   AwingWord(awing: 'ŋg mbə̂ ngəba akoobə', english: 'guinea fowl', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.164
   AwingWord(awing: 'gɔmə', english: 'gum', category: 'things', difficulty: 1),
   // index:p.164
-  AwingWord(awing: 'makeemə', english: 'gun powder', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'makeemə', english: 'gun powder', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4080 ('məkeemə̂')
   // index:p.164
   AwingWord(awing: 'sá\'ə', english: 'gush out, of a spring', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.164
@@ -9164,9 +9164,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.164
   AwingWord(awing: 'yéŋta', english: 'half-eat, as of cat, rat etc', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.164
-  AwingWord(awing: 'nduə', english: 'hammer', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nduə', english: 'hammer', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L445 ('ndua')
   // index:p.165
-  AwingWord(awing: 'apó', english: 'hand', category: 'body', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'apó', english: 'hand', category: 'body', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L97 ('apô')
   // index:p.165
   AwingWord(awing: 'nəlaŋə̌ nə́ apó', english: 'hand limb', category: 'body', tonePattern: 'rising', difficulty: 2),
   // index:p.165
@@ -9200,7 +9200,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.165
   AwingWord(awing: 'sáp pábə', english: 'harmattan', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.165
-  AwingWord(awing: 'naloŋə', english: 'harp', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'naloŋə', english: 'harp', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4214 ('nəloŋə')
   // index:p.165
   AwingWord(awing: 'tógə', english: 'harvest, of ground products', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.165
@@ -9214,7 +9214,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.165
   AwingWord(awing: 'zaŋkə', english: 'hastily', category: 'things', difficulty: 1),
   // index:p.165
-  AwingWord(awing: 'leela', english: 'hat', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'leela', english: 'hat', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4843 ('leelə')
   // index:p.165
   AwingWord(awing: 'kyé\'tə', english: 'hatch', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.165
@@ -9222,23 +9222,23 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.165
   AwingWord(awing: 'kyáglə', english: 'have dirty marks', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.165
-  AwingWord(awing: 'tê', english: 'have sex with, (colloq)', category: 'things', tonePattern: 'falling', difficulty: 3),
+  // AwingWord(awing: 'tê', english: 'have sex with, (colloq)', category: 'things', tonePattern: 'falling', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L5958 ('tê')
   // index:p.165
   AwingWord(awing: 'pa\'ə', english: 'have sexual intercourse', category: 'things', difficulty: 3),
   // index:p.165
   AwingWord(awing: 'zɔ̌\'na', english: 'have sexual intercourse with', category: 'things', tonePattern: 'rising', difficulty: 3),
   // index:p.165
-  AwingWord(awing: 'máwùmə', english: 'hawk', category: 'animals', tonePattern: 'high-low', difficulty: 1),
+  // AwingWord(awing: 'máwùmə', english: 'hawk', category: 'animals', tonePattern: 'high-low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L251 ('máwúmə́')
   // index:p.165
   AwingWord(awing: 'a', english: 'he', category: 'things', difficulty: 1),
   // index:p.165
-  AwingWord(awing: 'atúə', english: 'head', category: 'body', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'atúə', english: 'head', category: 'body', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L98 ('atûə')
   // index:p.165
-  AwingWord(awing: 'ntso nkyîlə', english: 'head of arrow', category: 'body', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ntso nkyîlə', english: 'head of arrow', category: 'body', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2271 ('ntso nkyílə')
   // index:p.165
   AwingWord(awing: 'atû ya pó nə́', english: 'headache', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.165
-  AwingWord(awing: 'nakeela', english: 'headpad', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nakeela', english: 'headpad', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4188 ('nəkéelə')
   // index:p.165
   AwingWord(awing: 'tó\'ə', english: 'heal (tr.)', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.165
@@ -9250,19 +9250,19 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.165
   AwingWord(awing: 'zó\'ə', english: 'hear', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.165
-  AwingWord(awing: 'ntáəmə', english: 'heart', category: 'body', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ntáəmə', english: 'heart', category: 'body', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 dict-audit: heart: OCR variant; ntéəmə L134 (Session 56 audit-verified, dict p.157)
   // index:p.165
   AwingWord(awing: 'aləgántáəmə', english: 'heart break', category: 'body', tonePattern: 'high', difficulty: 1),
   // index:p.165
   AwingWord(awing: 'ajû ya sá nə́', english: 'heartburn', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.165
-  AwingWord(awing: 'nakyelə', english: 'hearth', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nakyelə', english: 'hearth', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4207 ('nəkyelá')
   // index:p.165
   AwingWord(awing: 'nakyelə̌ nə́ mógə', english: 'hearth', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.165
   AwingWord(awing: 'nachwelə', english: 'hearth stone', category: 'nature', difficulty: 1),
   // index:p.165
-  AwingWord(awing: 'məm napóola', english: 'heaven', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'məm napóola', english: 'heaven', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4090 ('məm nəpóola')
   // index:p.165
   AwingWord(awing: 'leelə', english: 'heavy', category: 'descriptive', difficulty: 1),
   // index:p.165
@@ -9304,27 +9304,27 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.165
   AwingWord(awing: 'əfê', english: 'here', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.165
-  AwingWord(awing: 'nantoolə', english: 'hernia', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'nantoolə', english: 'hernia', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4648 ('nəntoolá')
   // index:p.165
   AwingWord(awing: 'ngwùdləŋə', english: 'heron', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.165
   AwingWord(awing: 'ajia', english: 'hers', category: 'things', difficulty: 1),
   // index:p.166
-  AwingWord(awing: 'kwaŋ kə̂kə̌ŋə', english: 'hesitate', category: 'things', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'kwaŋ kə̂kə̌ŋə', english: 'hesitate', category: 'things', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4016 ('kwaŋ kákáŋə̂')
   // index:p.166
-  AwingWord(awing: 'ghidntəŋə', english: 'hiccough', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ghidntəŋə', english: 'hiccough', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3976 ('ghídntəŋə̂')
   // index:p.166
   AwingWord(awing: 'chia nəlyaŋə', english: 'hidden, be in a ~ place', category: 'things', difficulty: 2),
   // index:p.166
   AwingWord(awing: 'ngwubə', english: 'hide of any animal', category: 'animals', difficulty: 1),
   // index:p.166
-  AwingWord(awing: 'ngwub neema', english: 'hide of cattle', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'ngwub neema', english: 'hide of cattle', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4292 ('ngwub neemə')
   // index:p.166
-  AwingWord(awing: 'lyaŋə', english: 'hide (tr)', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'lyaŋə', english: 'hide (tr)', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L425 ('lyǎŋə')
   // index:p.166
   AwingWord(awing: 'machina atìə', english: 'high', category: 'things', tonePattern: 'low', difficulty: 2),
   // index:p.166
-  AwingWord(awing: 'kîbnə', english: 'high, of forehead', category: 'body', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kîbnə', english: 'high, of forehead', category: 'body', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2905 ('kíbnə')
   // index:p.166
   AwingWord(awing: 'akə\'ə', english: 'high office', category: 'things', difficulty: 1),
   // index:p.166
@@ -9344,7 +9344,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.166
   AwingWord(awing: 'alú\'ə', english: 'hip', category: 'body', tonePattern: 'high', difficulty: 1),
   // index:p.166
-  AwingWord(awing: 'ambóna', english: 'hippopotamus', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ambóna', english: 'hippopotamus', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L178 ('ambónə')
   // index:p.166
   AwingWord(awing: 'ajia', english: 'his', category: 'things', difficulty: 1),
   // index:p.166
@@ -9384,7 +9384,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.166
   AwingWord(awing: 'ntsâ\'ə', english: 'hoof', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.166
-  AwingWord(awing: 'apənə', english: 'hook', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'apənə', english: 'hook', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3675 ('apanə')
   // index:p.166
   AwingWord(awing: 'lâ\'ə', english: 'hook', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.166
@@ -9434,9 +9434,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.166
   AwingWord(awing: 'nkonə', english: 'hunchback', category: 'things', difficulty: 1),
   // index:p.166
-  AwingWord(awing: 'nkelə', english: 'hundred (100)', category: 'numbers', difficulty: 1),
+  // AwingWord(awing: 'nkelə', english: 'hundred (100)', category: 'numbers', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4516 ('nkelá')
   // index:p.166
-  AwingWord(awing: 'njîə', english: 'hunger', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'njîə', english: 'hunger', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4303 ('njiə')
   // index:p.166
   AwingWord(awing: 'n.p. chî nə̌ njîə', english: 'hungry', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.166
@@ -9446,7 +9446,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.166
   AwingWord(awing: 'mbóəmə apóəmə', english: 'hunter', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.166
-  AwingWord(awing: 'afoona', english: 'hunting', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'afoona', english: 'hunting', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L226 ('afoonə')
   // index:p.166
   AwingWord(awing: 'nkelə apóəmə', english: 'hunting net', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.166
@@ -9590,7 +9590,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.168
   AwingWord(awing: 'tímə', english: 'insecticide, sort of', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.168
-  AwingWord(awing: 'məmə', english: 'inside', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'məmə', english: 'inside', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5608 ('máma')
   // index:p.168
   AwingWord(awing: 'fyáalə', english: 'insist', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.168
@@ -9602,11 +9602,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.168
   AwingWord(awing: 'anyîŋnə', english: 'instability, of the emotions', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.168
-  AwingWord(awing: 'zoomə', english: 'insult', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'zoomə', english: 'insult', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L6110 ('zoomə̂')
   // index:p.168
-  AwingWord(awing: 'zəmtə', english: 'insult', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'zəmtə', english: 'insult', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3321 ('zəmtə̂')
   // index:p.168
-  AwingWord(awing: 'zəmnə', english: 'insult each other', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'zəmnə', english: 'insult each other', category: 'descriptive', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3320 ('zəmnə̂')
   // index:p.168
   AwingWord(awing: 'atóŋantsoolə', english: 'insult (long mouth)', category: 'body', tonePattern: 'high', difficulty: 1),
   // index:p.168
@@ -9718,7 +9718,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.168
   AwingWord(awing: 'akwa\'lə', english: 'interview', category: 'things', difficulty: 1),
   // index:p.168
-  AwingWord(awing: 'akaghoolə', english: 'intestinal worm', category: 'animals', difficulty: 1),
+  // AwingWord(awing: 'akaghoolə', english: 'intestinal worm', category: 'animals', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3526 ('akəghoolə')
   // index:p.168
   AwingWord(awing: 'natə̂', english: 'intestines', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.168
@@ -9736,11 +9736,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.168
   AwingWord(awing: 'Ísîlə', english: 'Israel', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'á', english: 'it', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'á', english: 'it', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5002 ('á')
   // index:p.169
   AwingWord(awing: 'ɔ́', english: 'it, thing refered to', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'naghagə', english: 'jaw', category: 'body', difficulty: 1),
+  AwingWord(awing: 'nəghagə', english: 'jaw', category: 'body', difficulty: 1),  // FIXED Session 61 dict-audit: dictionary form
   // index:p.169
   AwingWord(awing: 'ŋvéeta', english: 'jealous', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.169
@@ -9758,7 +9758,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.169
   AwingWord(awing: 'atséebə̂mangeemə', english: 'joke', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'ndzogə', english: 'itch(n)', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ndzogə', english: 'itch(n)', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4162 ('ndzogə')
   // index:p.169
   AwingWord(awing: 'atséebɔ́nə̌kwa\'ə', english: 'journey', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.169
@@ -9774,7 +9774,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.169
   AwingWord(awing: 'lîə', english: 'jump', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'kanə', english: 'jump from a high place', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'kanə', english: 'jump from a high place', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2887 ('kanə̂')
   // index:p.169
   AwingWord(awing: 'akyé', english: 'Jungle dweller', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.169
@@ -9788,7 +9788,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.169
   AwingWord(awing: 'lə\'kə', english: 'keep', category: 'things', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'kiə', english: 'key', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kiə', english: 'key', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L470 ('kîə')
   // index:p.169
   AwingWord(awing: 'támə', english: 'kick', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.169
@@ -9800,17 +9800,17 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.169
   AwingWord(awing: 'əshî\'na', english: 'kindness', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'anua nafoonə', english: 'kingdom of', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'anua nafoonə', english: 'kingdom of', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3654 ('anuə nəfoonə')
   // index:p.169
   AwingWord(awing: 'nafə nə̌', english: 'kingfisher', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.169
   AwingWord(awing: 'kə̂\'tátə', english: 'kiss', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.169
-  AwingWord(awing: 'chwígtə', english: 'kiss a little', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'chwígtə', english: 'kiss a little', category: 'descriptive', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2764 ('chwigtə')
   // index:p.169
   AwingWord(awing: 'ŋ nəŋ ntsoolə', english: 'kiss, of lovers only', category: 'things', difficulty: 2),
   // index:p.169
-  AwingWord(awing: 'ndê mógə', english: 'kitchen', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ndê mógə', english: 'kitchen', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4142 ('ndě móga')
   // index:p.169
   AwingWord(awing: 'mɔ́ púshlə', english: 'kitten', category: 'animals', tonePattern: 'high', difficulty: 2),
   // index:p.169
@@ -9848,7 +9848,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.170
   AwingWord(awing: 'nalə\' nə́ aghela majìə', english: 'ladle', category: 'things', tonePattern: 'high-low', difficulty: 2),
   // index:p.170
-  AwingWord(awing: 'afooghaamə', english: 'lake Awing', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'afooghaamə', english: 'lake Awing', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2496 ('əfooghaəmá')
   // index:p.170
   AwingWord(awing: 'mɔ́ mbéŋ ndzelə', english: 'lamb', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.170
@@ -9880,7 +9880,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.170
   AwingWord(awing: 'alì\'əmótseŋnə', english: 'latrine', category: 'things', tonePattern: 'high-low', difficulty: 1),
   // index:p.170
-  AwingWord(awing: 'akoolə', english: 'latrine', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'akoolə', english: 'latrine', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L698 ('akoolá')
   // index:p.170
   AwingWord(awing: 'kə̂\' nəsoŋə', english: 'laugh in a wild manner', category: 'actions', tonePattern: 'falling', difficulty: 2),
   // index:p.170
@@ -9888,9 +9888,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.170
   AwingWord(awing: 'nəŋkə', english: 'law', category: 'things', difficulty: 1),
   // index:p.170
-  AwingWord(awing: 'nyîəə', english: 'lay eggs', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'nyîəə', english: 'lay eggs', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5812 ('nyīəə')
   // index:p.170
-  AwingWord(awing: 'aləŋə', english: 'laziness', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'aləŋə', english: 'laziness', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3907 ('ələŋə')
   // index:p.170
   AwingWord(awing: 'lə̂ŋə', english: 'lazy', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.170
@@ -9962,7 +9962,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.170
   AwingWord(awing: 'kə̌\'kə', english: 'lift', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.170
-  AwingWord(awing: 'kamə', english: 'lift in big lumps', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'kamə', english: 'lift in big lumps', category: 'descriptive', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2886 ('kamə̂')
   // index:p.170
   AwingWord(awing: 'kyaalə', english: 'lift, of sth heavy', category: 'descriptive', difficulty: 1),
   // index:p.170
@@ -9990,7 +9990,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.171
   AwingWord(awing: 'ladkə', english: 'link', category: 'things', difficulty: 1),
   // index:p.171
-  AwingWord(awing: 'aghaŋə̂ ntsoola', english: 'lip', category: 'body', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'aghaŋ ntsoolə', english: 'lip', category: 'body', tonePattern: 'falling', difficulty: 2),  // FIXED Session 61 dict-audit: dictionary form
   // index:p.171
   AwingWord(awing: 'nalə̂\' nə nalwíə', english: 'lip disk', category: 'body', tonePattern: 'falling', difficulty: 2),
   // index:p.171
@@ -10022,7 +10022,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.171
   AwingWord(awing: 'jîna', english: 'live freely with each other', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // index:p.171
-  AwingWord(awing: 'napə', english: 'liver', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'napə', english: 'liver', category: 'body', difficulty: 1),  // REMOVED Session 61 dict-audit: liver: OCR (na- prefix); nəpe L110 is canonical
   // index:p.171
   AwingWord(awing: 'pəbənduuŋgə\'ə', english: 'lizard', category: 'animals', difficulty: 1),
   // index:p.171
@@ -10042,7 +10042,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.171
   AwingWord(awing: 'natsóŋ nə́ atúə', english: 'lock of hair', category: 'body', tonePattern: 'high', difficulty: 2),
   // index:p.171
-  AwingWord(awing: 'ngwumnə', english: 'locust', category: 'animals', difficulty: 1),
+  // AwingWord(awing: 'ngwumnə', english: 'locust', category: 'animals', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L192 ('ngwumnə́')
   // index:p.171
   AwingWord(awing: 'akwu\'lə', english: 'log', category: 'things', difficulty: 1),
   // index:p.171
@@ -10072,7 +10072,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.171
   AwingWord(awing: 'pə̂gə', english: 'lost', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.171
-  AwingWord(awing: 'anə̂mə', english: 'louse', category: 'animals', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'anə̂mə', english: 'louse', category: 'animals', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L190 ('anəmá')
   // index:p.171
   AwingWord(awing: 'akəŋnə', english: 'love', category: 'things', difficulty: 1),
   // index:p.171
@@ -10102,7 +10102,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.171
   AwingWord(awing: 'alaə̂ ajûmə', english: 'lust(n)', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.171
-  AwingWord(awing: 'ŋwiŋə', english: 'machete', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ŋwiŋə', english: 'machete', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L524 ('ŋwíŋə')
   // index:p.171
   AwingWord(awing: 'pélə', english: 'mad', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.171
@@ -10116,7 +10116,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.171
   AwingWord(awing: 'mbə̂ŋə', english: 'maggot-like insects', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.171
-  AwingWord(awing: 'nakaŋə', english: 'magic', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nakaŋə', english: 'magic', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4187 ('nəkaŋə')
   // index:p.172
   AwingWord(awing: 'ngaŋnəkaŋə', english: 'magic practitioner', category: 'things', difficulty: 1),
   // index:p.172
@@ -10134,7 +10134,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.172
   AwingWord(awing: 'koolə', english: 'make fall', category: 'actions', difficulty: 1),
   // index:p.172
-  AwingWord(awing: 'ghenkə', english: 'make go', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'ghenkə', english: 'make go', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2840 ('ghenkə̂')
   // index:p.172
   AwingWord(awing: 'líbkə', english: 'make go round', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.172
@@ -10190,7 +10190,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.172
   AwingWord(awing: 'nóanə', english: 'many', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.172
-  AwingWord(awing: 'ngwê ləəmə', english: 'mare (horse)', category: 'animals', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ngwê ləəmə', english: 'mare (horse)', category: 'animals', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2418 ('ngwě ləəmə́')
   // index:p.172
   AwingWord(awing: 'teŋkə', english: 'mark', category: 'things', difficulty: 1),
   // index:p.172
@@ -10198,7 +10198,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.172
   AwingWord(awing: 'sə ndedta', english: 'mark out', category: 'things', difficulty: 2),
   // index:p.172
-  AwingWord(awing: 'məteenə', english: 'market', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'məteenə', english: 'market', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L566 ('məteenə̂')
   // index:p.172
   AwingWord(awing: 'alə̌ məteenə', english: 'market day', category: 'nature', tonePattern: 'rising', difficulty: 2),
   // index:p.172
@@ -10216,7 +10216,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.172
   AwingWord(awing: 'natsa\'ə', english: 'marsh', category: 'things', difficulty: 1),
   // index:p.172
-  AwingWord(awing: 'nkwə', english: 'mask', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nkwə', english: 'mask', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4334 ('nkwa')
   // index:p.172
   AwingWord(awing: 'makwumə', english: 'masquerader', category: 'things', difficulty: 1),
   // index:p.172
@@ -10282,7 +10282,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.173
   AwingWord(awing: 'lɔŋə', english: 'melt (intr)', category: 'things', difficulty: 1),
   // index:p.173
-  AwingWord(awing: 'twiə', english: 'melt iron', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'twiə', english: 'melt iron', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3221 ('twîə')
   // index:p.173
   AwingWord(awing: 'akwùntə', english: 'memorial', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.173
@@ -10298,7 +10298,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.173
   AwingWord(awing: 'afʉə aghəma', english: 'message, from the fon', category: 'things', difficulty: 2),
   // index:p.173
-  AwingWord(awing: 'ntúma', english: 'messenger', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ntúma', english: 'messenger', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L525 ('ntúmə')
   // index:p.173
   AwingWord(awing: 'aŋyî ntúma', english: 'messenger', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.173
@@ -10314,7 +10314,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.173
   AwingWord(awing: 'fêla ali\'ə', english: 'migrate', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.173
-  AwingWord(awing: 'məligə', english: 'milk', category: 'food', difficulty: 1),
+  // AwingWord(awing: 'məligə', english: 'milk', category: 'food', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L275 ('máliga')
   // index:p.173
   AwingWord(awing: 'məsaŋ mə̂ aluma', english: 'millet, of the dry season', category: 'nature', tonePattern: 'falling', difficulty: 2),
   // index:p.173
@@ -10348,27 +10348,27 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.173
   AwingWord(awing: 'awága', english: 'mockery', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.173
-  AwingWord(awing: 'mê ghagə', english: 'molar tooth', category: 'body', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'mê ghagə', english: 'molar tooth', category: 'body', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L5598 ('mé ghagə́')
   // index:p.173
-  AwingWord(awing: 'afəmə', english: 'mold', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'afəmə', english: 'mold', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3852 ('əfəmá')
   // index:p.173
   AwingWord(awing: 'póəmə', english: 'mold', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.173
   AwingWord(awing: 'mbê ndumə', english: 'mole', category: 'animals', tonePattern: 'falling', difficulty: 2),
   // index:p.173
-  AwingWord(awing: 'nkéeba', english: 'money', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'nkéeba', english: 'money', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L528 ('nkéebə')
   // index:p.173
   AwingWord(awing: 'anə\'ə', english: 'money, smallest in value', category: 'things', difficulty: 1),
   // index:p.173
   AwingWord(awing: 'nkəməzə\'ə', english: 'monkey', category: 'animals', difficulty: 1),
   // index:p.173
-  AwingWord(awing: 'saŋə', english: 'month', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'saŋə', english: 'month', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L48 ('sáŋə')
   // index:p.173
   AwingWord(awing: 'saŋə', english: 'moon', category: 'nature', difficulty: 1),
   // index:p.173
   AwingWord(awing: 'nkya\' saŋə', english: 'moonlight', category: 'nature', difficulty: 2),
   // index:p.173
-  AwingWord(awing: 'məsanə', english: 'morning', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'məsanə', english: 'morning', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2532 ('məsâna')
   // index:p.173
   AwingWord(awing: 'chiga məsanə', english: 'morning, early', category: 'nature', difficulty: 2),
   // index:p.173
@@ -10378,7 +10378,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.173
   AwingWord(awing: 'chəsə mbəlóló\'ə', english: 'mosque', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.173
-  AwingWord(awing: 'ndazəəmə', english: 'moth', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ndazəəmə', english: 'moth', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4153 ('ndəzəəmə')
   // index:p.173
   AwingWord(awing: 'máa', english: 'mother', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.173
@@ -10390,9 +10390,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.173
   AwingWord(awing: 'məpánə', english: 'mother-in-law to the bride', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.173
-  AwingWord(awing: 'ndim mə̂ yi mbyâŋnə', english: 'mother\'s brother (uncle)', category: 'family', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ndim mə̂ yi mbyâŋnə', english: 'mother\'s brother (uncle)', category: 'family', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2348 ('ndim mǎ yi mbyâŋnə')
   // index:p.173
-  AwingWord(awing: 'ndim mə̌ yi mangyé', english: 'mother\'s sister (aunt)', category: 'family', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'ndim mə̌ yi mangyé', english: 'mother\'s sister (aunt)', category: 'family', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2349 ('ndim mǎ yi məngyè')
   // index:p.173
   AwingWord(awing: 'kə̂\'ə', english: 'mount, (eg a horse)', category: 'animals', tonePattern: 'falling', difficulty: 1),
   // index:p.173
@@ -10422,7 +10422,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.174
   AwingWord(awing: 'atsa\'ə ndasé', english: 'mud block', category: 'nature', tonePattern: 'high', difficulty: 2),
   // index:p.174
-  AwingWord(awing: 'ashúmáfagə', english: 'mudfish', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ashúmáfagə', english: 'mudfish', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3941 ('əshúmə̌fágə')
   // index:p.174
   AwingWord(awing: 'apábpéebə', english: 'multicoloured', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.174
@@ -10490,15 +10490,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.174
   AwingWord(awing: 'malwíə', english: 'nasal mucus', category: 'body', tonePattern: 'high', difficulty: 3),
   // index:p.174
-  AwingWord(awing: 'ndê yi mbwódta nə̌', english: 'nausea', category: 'things', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'ndê yi mbwódta nə̌', english: 'nausea', category: 'things', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4139 ('ndě yi mbwódta nə̂')
   // index:p.174
-  AwingWord(awing: 'natoŋə', english: 'navel', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'natoŋə', english: 'navel', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L130 ('nətoŋə́')
   // index:p.174
   AwingWord(awing: 'veebə', english: 'neat', category: 'things', difficulty: 1),
   // index:p.174
   AwingWord(awing: 'amlə', english: 'neck', category: 'body', difficulty: 1),
   // index:p.174
-  AwingWord(awing: 'ndê', english: 'neck', category: 'body', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'ndê', english: 'neck', category: 'body', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L100 ('ndě')
   // index:p.174
   AwingWord(awing: 'ndê\'ə', english: 'necklace', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.174
@@ -10524,15 +10524,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.174
   AwingWord(awing: 'téema', english: 'net, of fish', category: 'animals', tonePattern: 'high', difficulty: 1),
   // index:p.174
-  AwingWord(awing: 'tákâ', english: 'never', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tákâ', english: 'never', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L47 ('təká')
   // index:p.174
-  AwingWord(awing: 'fìə', english: 'new', category: 'descriptive', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'fìə', english: 'new', category: 'descriptive', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L774 ('fîə')
   // index:p.174
   AwingWord(awing: 'chî ya fìə', english: 'new', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
   // index:p.174
   AwingWord(awing: 'ŋ saŋ yi fìə', english: 'new moon', category: 'nature', tonePattern: 'low', difficulty: 2),
   // index:p.174
-  AwingWord(awing: 'aka yi fìə', english: 'new testament', category: 'descriptive', tonePattern: 'low', difficulty: 2),
+  // AwingWord(awing: 'aka yi fìə', english: 'new testament', category: 'descriptive', tonePattern: 'low', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3376 ('əka yi fîə')
   // index:p.175
   AwingWord(awing: 'nkəənə', english: 'news', category: 'things', difficulty: 1),
   // index:p.175
@@ -10556,7 +10556,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.175
   AwingWord(awing: 'ŋga', english: 'no', category: 'things', difficulty: 1),
   // index:p.175
-  AwingWord(awing: 'akama', english: 'nobleship', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'akama', english: 'nobleship', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3897 ('əkəmə́')
   // index:p.175
   AwingWord(awing: 'pə kâ ŋwuna', english: 'nobody', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.175
@@ -10574,25 +10574,25 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.175
   AwingWord(awing: 'məkə\'nə̌', english: 'north', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.175
-  AwingWord(awing: 'nalwíə', english: 'nose', category: 'body', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'nalwíə', english: 'nose', category: 'body', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L99 ('nəlwîə')
   // index:p.175
-  AwingWord(awing: 'afeŋ nalwíə', english: 'nose ring', category: 'body', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'afeŋ nalwíə', english: 'nose ring', category: 'body', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2225 ('əfeŋ nəlwîə')
   // index:p.175
   AwingWord(awing: 'shweekə', english: 'not work as planned', category: 'things', difficulty: 1),
   // index:p.175
   AwingWord(awing: 'akəma ŋwa\'lə', english: 'note (n)', category: 'things', difficulty: 2),
   // index:p.175
-  AwingWord(awing: 'kâ ajûmə', english: 'nothing', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'kâ ajûmə', english: 'nothing', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3980 ('ká ajúmə')
   // index:p.175
   AwingWord(awing: 'leŋkə', english: 'notice', category: 'things', difficulty: 1),
   // index:p.175
   AwingWord(awing: 'aghá ghenə', english: 'noun', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.175
-  AwingWord(awing: 'aghá ghenə', english: 'now', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'aghá ghenə', english: 'now', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L45 ('agha ghena')
   // index:p.175
   AwingWord(awing: 'chia àndó nga\'ə', english: 'numb', category: 'things', tonePattern: 'high-low', difficulty: 2),
   // index:p.175
-  AwingWord(awing: 'ndena', english: 'number', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ndena', english: 'number', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L533 ('ndenə')
   // index:p.175
   AwingWord(awing: 'shâgə', english: 'number', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.175
@@ -10646,7 +10646,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.175
   AwingWord(awing: 'n. nkwə', english: 'okra, sort of', category: 'things', difficulty: 2),
   // index:p.175
-  AwingWord(awing: 'ndena', english: 'old', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'ndena', english: 'old', category: 'descriptive', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L726 ('ndenə')
   // index:p.175
   AwingWord(awing: 'achikə ŋwuna', english: 'old and irresponsive to feelings', category: 'descriptive', difficulty: 2),
   // index:p.175
@@ -10654,7 +10654,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.175
   AwingWord(awing: 'ŋ nden ŋwuna', english: 'old man', category: 'family', difficulty: 2),
   // index:p.175
-  AwingWord(awing: 'aka yi lena', english: 'old testament', category: 'descriptive', difficulty: 2),
+  // AwingWord(awing: 'aka yi lena', english: 'old testament', category: 'descriptive', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3377 ('əka yi lenə')
   // index:p.175
   AwingWord(awing: 'ndim mongyé', english: 'old woman', category: 'family', tonePattern: 'high', difficulty: 2),
   // index:p.175
@@ -10732,15 +10732,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.176
   AwingWord(awing: 'chwí\'tə', english: 'pack', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.176
-  AwingWord(awing: 'mbi yi ndzaŋnə', english: 'pain', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'mbi yi ndzaŋnə', english: 'pain', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4052 ('mbi yi ńdzáŋnə')
   // index:p.176
-  AwingWord(awing: 'pénta', english: 'paint', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'pénta', english: 'paint', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4925 ('pêntə')
   // index:p.176
   AwingWord(awing: 'azéena', english: 'palace assembly ground', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.176
   AwingWord(awing: 'laŋə', english: 'palate', category: 'things', difficulty: 1),
   // index:p.176
-  AwingWord(awing: 'azaŋə', english: 'palm branch', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'azaŋə', english: 'palm branch', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2217 ('azáŋə')
   // index:p.176
   AwingWord(awing: 'n. atsê', english: 'palm leave, of one', category: 'numbers', tonePattern: 'falling', difficulty: 2),
   // index:p.176
@@ -10772,7 +10772,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.176
   AwingWord(awing: 'tâ', english: 'parent', category: 'family', tonePattern: 'falling', difficulty: 1),
   // index:p.176
-  AwingWord(awing: 'sáŋ məkalə', english: 'parrot', category: 'animals', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'sáŋ məkalə', english: 'parrot', category: 'animals', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L5926 ('sáŋ məkálə')
   // index:p.176
   AwingWord(awing: 'ngwaŋə', english: 'part', category: 'things', difficulty: 1),
   // index:p.176
@@ -10818,15 +10818,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'napə\' nə́ məkalə', english: 'pawpaw', category: 'food', tonePattern: 'high', difficulty: 2),
   // index:p.177
-  AwingWord(awing: 'tûə', english: 'pay', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tûə', english: 'pay', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3213 ('tûə')
   // index:p.177
   AwingWord(awing: 'nkəŋə', english: 'peace plant', category: 'nature', difficulty: 1),
   // index:p.177
-  AwingWord(awing: 'tsógə', english: 'peck (tr)', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'tsógə', english: 'peck (tr)', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L6026 ('tsóga')
   // index:p.177
   AwingWord(awing: 'jubə', english: 'peel', category: 'things', difficulty: 1),
   // index:p.177
-  AwingWord(awing: 'jubtə', english: 'peel many things', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'jubtə', english: 'peel many things', category: 'descriptive', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2865 ('jubtə̂')
   // index:p.177
   AwingWord(awing: 'kagə', english: 'peel, of raffia fruit', category: 'nature', difficulty: 1),
   // index:p.177
@@ -10838,13 +10838,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'pa\'ə', english: 'peel off something', category: 'things', difficulty: 1),
   // index:p.177
-  AwingWord(awing: 'sə ndedta', english: 'peg out', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'sə ndedta', english: 'peg out', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4418 ('sá ndedtə')
   // index:p.177
   AwingWord(awing: 'nkəŋə aŋwa\'lə', english: 'pen', category: 'things', difficulty: 2),
   // index:p.177
   AwingWord(awing: 'atsaŋə', english: 'penalty', category: 'things', difficulty: 1),
   // index:p.177
-  AwingWord(awing: 'nakəələ', english: 'penis (colloquial)', category: 'body', difficulty: 3),
+  // AwingWord(awing: 'nakəələ', english: 'penis (colloquial)', category: 'body', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4646 ('nəkəələ')
   // index:p.177
   AwingWord(awing: 'akwaŋə', english: 'pensiveness, esp. negative', category: 'things', difficulty: 1),
   // index:p.177
@@ -10856,7 +10856,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'shí səntə', english: 'pepper (black)', category: 'food', tonePattern: 'high', difficulty: 2),
   // index:p.177
-  AwingWord(awing: 'shí səntə', english: 'pepper (green)', category: 'food', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'shí səntə', english: 'pepper (green)', category: 'food', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L10857 ('shí səntə')
   // index:p.177
   AwingWord(awing: 'paŋ səntə', english: 'pepper (red)', category: 'food', difficulty: 2),
   // index:p.177
@@ -10902,7 +10902,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'ŋ nəə̌ fútə', english: 'photographer', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.177
-  AwingWord(awing: 'aghánta', english: 'physical exercise', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'aghánta', english: 'physical exercise', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3489 ('aghántə')
   // index:p.177
   AwingWord(awing: 'fógə', english: 'pick (tr)', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.177
@@ -10928,7 +10928,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'tə̂ga', english: 'pierce, of ears', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.177
-  AwingWord(awing: 'kwuneemə', english: 'pig', category: 'animals', difficulty: 1),
+  // AwingWord(awing: 'kwuneemə', english: 'pig', category: 'animals', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L182 ('kwúneemə')
   // index:p.177
   AwingWord(awing: 'chwaalə ndúmə', english: 'pig, ready for crossing', category: 'animals', tonePattern: 'high', difficulty: 2),
   // index:p.177
@@ -10944,7 +10944,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'zagtə', english: 'pin, of many things eg sticks', category: 'descriptive', difficulty: 1),
   // index:p.178
-  AwingWord(awing: 'panápáala', english: 'pineapple', category: 'food', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'panápáala', english: 'pineapple', category: 'food', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L279 ('panápəələ')
   // index:p.178
   AwingWord(awing: 'nəkaŋə', english: 'pipe, of tobacco', category: 'things', difficulty: 3),
   // index:p.178
@@ -11012,7 +11012,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.178
   AwingWord(awing: 'achilə ajûmə', english: 'plug', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.178
-  AwingWord(awing: 'azooma', english: 'plum', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'azooma', english: 'plum', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3801 ('azoomə')
   // index:p.178
   AwingWord(awing: 'kwáalə', english: 'plunder', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.178
@@ -11042,9 +11042,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.178
   AwingWord(awing: 'mbóŋa', english: 'poor man', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.178
-  AwingWord(awing: 'afə̂mə', english: 'poor person', category: 'family', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'afə̂mə', english: 'poor person', category: 'family', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2315 ('əfəmə')
   // index:p.178
-  AwingWord(awing: 'kâkáŋə', english: 'poorly', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kâkáŋə', english: 'poorly', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3987 ('kákáŋə́')
   // index:p.178
   AwingWord(awing: 'ndzəblə masâ\'ə', english: 'porcupine', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.178
@@ -11108,7 +11108,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.179
   AwingWord(awing: 'awagə', english: 'possessive pronoun \'ours\'', category: 'things', difficulty: 1),
   // index:p.179
-  AwingWord(awing: 'azagə', english: 'possessive pronoun \'ours\'', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'azagə', english: 'possessive pronoun \'ours\'', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L11107 ('azágə')
   // index:p.179
   AwingWord(awing: 'nazagə', english: 'possessive pronoun \'ours\'', category: 'things', difficulty: 1),
   // index:p.179
@@ -11134,7 +11134,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.179
   AwingWord(awing: 'nazə̂', english: 'possessive singular prn \'yours\'', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.179
-  AwingWord(awing: 'azə̌', english: 'possessive singular prn \'yours\'', category: 'things', tonePattern: 'rising', difficulty: 1),
+  // AwingWord(awing: 'azə̌', english: 'possessive singular prn \'yours\'', category: 'things', tonePattern: 'rising', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L11131 ('azə̂')
   // index:p.179
   AwingWord(awing: 'azəəmə', english: 'possessive pronoun \'mine\'', category: 'things', difficulty: 1),
   // index:p.179
@@ -11206,7 +11206,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.179
   AwingWord(awing: 'chî nə napomə', english: 'pregnant', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.179
-  AwingWord(awing: 'ghed majìə', english: 'prepare food', category: 'food', tonePattern: 'low', difficulty: 2),
+  // AwingWord(awing: 'ghed majìə', english: 'prepare food', category: 'food', tonePattern: 'low', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2615 ('ghed məjîə')
   // index:p.179
   AwingWord(awing: 'chwí\'tə', english: 'prepare, of one\'s self', category: 'numbers', tonePattern: 'high', difficulty: 1),
   // index:p.179
@@ -11232,7 +11232,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.180
   AwingWord(awing: 'ashwadka', english: 'pride', category: 'things', difficulty: 1),
   // index:p.180
-  AwingWord(awing: 'ataalə', english: 'pride', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ataalə', english: 'pride', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3723 ('atəələ')
   // index:p.180
   AwingWord(awing: 'ŋwu Əsê', english: 'priest', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.180
@@ -11288,9 +11288,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.180
   AwingWord(awing: 'ndzɔ\'ə alá\'ə', english: 'public, in', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.180
-  AwingWord(awing: 'aghaŋə naságə', english: 'pudenda', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'aghaŋə naságə', english: 'pudenda', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3492 ('aghəŋə nəságə')
   // index:p.180
-  AwingWord(awing: 'séenasê', english: 'puff adder', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'séenasê', english: 'puff adder', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4421 ('séenásê')
   // index:p.180
   AwingWord(awing: 'chî\' mbəəmə', english: 'puff up', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
   // index:p.180
@@ -11302,7 +11302,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.180
   AwingWord(awing: 'kwum afeemə', english: 'punish by brutal killing', category: 'things', difficulty: 3),
   // index:p.180
-  AwingWord(awing: 'atsaŋə', english: 'punishment', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'atsaŋə', english: 'punishment', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L704 ('atsáŋə')
   // index:p.180
   AwingWord(awing: 'mbula', english: 'pup', category: 'things', difficulty: 1),
   // index:p.180
@@ -11344,7 +11344,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.180
   AwingWord(awing: 'tsentə', english: 'put together', category: 'descriptive', difficulty: 1),
   // index:p.180
-  AwingWord(awing: 'nó ngàma', english: 'python', category: 'animals', tonePattern: 'high-low', difficulty: 2),
+  // AwingWord(awing: 'nó ngàma', english: 'python', category: 'animals', tonePattern: 'high-low', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4348 ('nó ngámə')
   // index:p.180
   AwingWord(awing: 'fya\'ə', english: 'quarrel', category: 'things', difficulty: 1),
   // index:p.180
@@ -11360,7 +11360,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.181
   AwingWord(awing: 'apítə', english: 'question', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.181
-  AwingWord(awing: 'apítə atséebə', english: 'question', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'apítə atséebə', english: 'question', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3687 ('apitə atsêebə')
   // index:p.181
   AwingWord(awing: 'atɔ\'na', english: 'quickly', category: 'things', difficulty: 1),
   // index:p.181
@@ -11378,7 +11378,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.181
   AwingWord(awing: 'aŋkwùba', english: 'raffia fruit, sort of', category: 'nature', tonePattern: 'low', difficulty: 1),
   // index:p.181
-  AwingWord(awing: 'nkyeelə', english: 'raffia palm', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'nkyeelə', english: 'raffia palm', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2267 ('nkyeelá')
   // index:p.181
   AwingWord(awing: 'nakwiŋə', english: 'rafter', category: 'things', difficulty: 1),
   // index:p.181
@@ -11394,7 +11394,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.181
   AwingWord(awing: 'nkoŋ nó ŋgáma', english: 'rainbow', category: 'nature', tonePattern: 'high', difficulty: 2),
   // index:p.181
-  AwingWord(awing: 'aghá magheemə', english: 'rainy season', category: 'nature', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'aghá magheemə', english: 'rainy season', category: 'nature', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2499 ('əghâ magheemá')
   // index:p.181
   AwingWord(awing: 'kwiŋkə', english: 'raise eg a child', category: 'family', difficulty: 1),
   // index:p.181
@@ -11406,9 +11406,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.181
   AwingWord(awing: 'ŋ nêe ndzə\'ə', english: 'rape', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.181
-  AwingWord(awing: 'fóolə', english: 'rat', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'fóolə', english: 'rat', category: 'animals', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L189 ('fóolá')
   // index:p.181
-  AwingWord(awing: 'aghógta', english: 'rattle', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'aghógta', english: 'rattle', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3499 ('aghógta')
   // index:p.181
   AwingWord(awing: 'pâgə', english: 'raw, not ripe', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.181
@@ -11448,7 +11448,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.181
   AwingWord(awing: 'júmə', english: 'redeem', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.181
-  AwingWord(awing: 'napaŋə', english: 'redness', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'napaŋə', english: 'redness', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4222 ('nəpaŋə')
   // index:p.181
   AwingWord(awing: 'lɔga', english: 'reduce', category: 'things', difficulty: 1),
   // index:p.181
@@ -11532,9 +11532,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.182
   AwingWord(awing: 'tsoŋkə', english: 'repair', category: 'things', difficulty: 1),
   // index:p.182
-  AwingWord(awing: 'kwùblə', english: 'repent', category: 'things', tonePattern: 'low', difficulty: 3),
+  // AwingWord(awing: 'kwùblə', english: 'repent', category: 'things', tonePattern: 'low', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L420 ('kwúblə')
   // index:p.182
-  AwingWord(awing: 'akwùblə', english: 'repentance', category: 'things', tonePattern: 'low', difficulty: 3),
+  // AwingWord(awing: 'akwùblə', english: 'repentance', category: 'things', tonePattern: 'low', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L5048 ('akwúblə')
   // index:p.182
   AwingWord(awing: 'makwùblana', english: 'repenting', category: 'things', tonePattern: 'low', difficulty: 3),
   // index:p.182
@@ -11568,7 +11568,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.182
   AwingWord(awing: 'ghô\'kə', english: 'respect', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.182
-  AwingWord(awing: 'akwe', english: 'response', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'akwe', english: 'response', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L697 ('akwé')
   // index:p.182
   AwingWord(awing: 'afìə', english: 'resemblance', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.182
@@ -11580,7 +11580,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.182
   AwingWord(awing: 'jwitə', english: 'rest', category: 'things', difficulty: 1),
   // index:p.182
-  AwingWord(awing: 'afî majìə', english: 'restaurant dealer', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'afî majìə', english: 'restaurant dealer', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3854 ('əfi məjîə')
   // index:p.182
   AwingWord(awing: 'alêla\'ə', english: 'resting day', category: 'nature', tonePattern: 'falling', difficulty: 1),
   // index:p.182
@@ -11592,7 +11592,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.182
   AwingWord(awing: 'ŋap fê', english: 'return (v) (tr)', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.182
-  AwingWord(awing: 'kwigə', english: 'revenge', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kwigə', english: 'revenge', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2950 ('kwígə')
   // index:p.182
   AwingWord(awing: 'ngo\'kə', english: 'reverence', category: 'things', difficulty: 1),
   // index:p.182
@@ -11608,13 +11608,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.182
   AwingWord(awing: 'asá ŋŋgyéŋa', english: 'rib', category: 'body', tonePattern: 'high', difficulty: 2),
   // index:p.182
-  AwingWord(awing: 'nakwùna', english: 'rice', category: 'food', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'nakwùna', english: 'rice', category: 'food', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L274 ('nəkwúnə')
   // index:p.182
   AwingWord(awing: 'fo\'ə', english: 'rich', category: 'descriptive', difficulty: 1),
   // index:p.182
   AwingWord(awing: 'chî nə̌ ajûmə', english: 'rich', category: 'descriptive', tonePattern: 'rising', difficulty: 2),
   // index:p.182
-  AwingWord(awing: 'ngaŋkéeba', english: 'rich person', category: 'family', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ngaŋkéeba', english: 'rich person', category: 'family', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3426 ('ngaŋkéebə')
   // index:p.182
   AwingWord(awing: 'chigaŋgaŋkéeba', english: 'rich, very ~', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.182
@@ -11668,7 +11668,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.183
   AwingWord(awing: 'alaŋamakálə', english: 'road, paved', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.183
-  AwingWord(awing: 'zoolə', english: 'roar', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'zoolə', english: 'roar', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3317 ('zoolə̂')
   // index:p.183
   AwingWord(awing: 'toonə', english: 'roast', category: 'things', difficulty: 1),
   // index:p.183
@@ -11690,13 +11690,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.183
   AwingWord(awing: 'əfeŋə', english: 'room', category: 'things', difficulty: 1),
   // index:p.183
-  AwingWord(awing: 'atóga', english: 'room', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'atóga', english: 'room', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L463 ('atógə')
   // index:p.183
   AwingWord(awing: 'aŋkə\'ə', english: 'rooster', category: 'animals', difficulty: 1),
   // index:p.183
   AwingWord(awing: 'aŋaŋə', english: 'root', category: 'nature', difficulty: 1),
   // index:p.183
-  AwingWord(awing: 'nkelə', english: 'rope', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nkelə', english: 'rope', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L473 ('nkelá')
   // index:p.183
   AwingWord(awing: 'nkəkəa', english: 'rope, sort of', category: 'things', difficulty: 1),
   // index:p.183
@@ -11716,7 +11716,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.183
   AwingWord(awing: 'zɔ́\' nə maghələ', english: 'rub with oil', category: 'food', tonePattern: 'high', difficulty: 2),
   // index:p.183
-  AwingWord(awing: 'lába', english: 'rubber', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'lába', english: 'rubber', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4026 ('ləba')
   // index:p.183
   AwingWord(awing: 'ndɔ́tə', english: 'rubbish', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.183
@@ -11758,15 +11758,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.183
   AwingWord(awing: 'nawagə', english: 'sales point', category: 'things', difficulty: 1),
   // index:p.183
-  AwingWord(awing: 'matwê', english: 'saliva', category: 'body', tonePattern: 'falling', difficulty: 3),
+  // AwingWord(awing: 'matwê', english: 'saliva', category: 'body', tonePattern: 'falling', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4861 ('mətwê')
   // index:p.183
   AwingWord(awing: 'ngwagə', english: 'salt', category: 'food', difficulty: 1),
   // index:p.183
-  AwingWord(awing: 'nchwadkə', english: 'salvation', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'nchwadkə', english: 'salvation', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4133 ('nchwadkə̂')
   // index:p.183
   AwingWord(awing: 'alaglə', english: 'same', category: 'things', difficulty: 1),
   // index:p.183
-  AwingWord(awing: 'àlàglə', english: 'same', category: 'things', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'àlàglə', english: 'same', category: 'things', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L11767 ('alaglə')
   // index:p.183
   AwingWord(awing: 'ali\'á ghô\'ka Əsê', english: 'sanctuary', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.184
@@ -11816,7 +11816,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'alagə', english: 'scar', category: 'body', difficulty: 1),
   // index:p.184
-  AwingWord(awing: 'apena', english: 'scar', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'apena', english: 'scar', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3681 ('apenə')
   // index:p.184
   AwingWord(awing: 'aleŋkə', english: 'scar, of a ritual', category: 'body', difficulty: 3),
   // index:p.184
@@ -11828,7 +11828,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'shamkə', english: 'scatter', category: 'things', difficulty: 1),
   // index:p.184
-  AwingWord(awing: 'saŋə', english: 'scatter, of ground or grain', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'saŋə', english: 'scatter, of ground or grain', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5928 ('səŋə')
   // index:p.184
   AwingWord(awing: 'chîa ashəmna ashəmnə', english: 'scattered', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.184
@@ -11846,7 +11846,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'kə̂mtə', english: 'Scratch', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.184
-  AwingWord(awing: 'kə̂mtə', english: 'scratch', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kə̂mtə', english: 'scratch', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L11847 ('kə̂mtə')
   // index:p.184
   AwingWord(awing: 'kə̂mtə', english: 'Scratch a little', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
   // index:p.184
@@ -11866,7 +11866,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'chiga nâŋa', english: 'scrutinise', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.184
-  AwingWord(awing: 'nəənə', english: 'sea', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'nəənə', english: 'sea', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L542 ('náanə')
   // index:p.184
   AwingWord(awing: 'nkaŋ nklə', english: 'sea shore', category: 'nature', difficulty: 2),
   // index:p.184
@@ -11892,7 +11892,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'zəəna', english: 'see', category: 'things', difficulty: 1),
   // index:p.184
-  AwingWord(awing: 'mbìə', english: 'seed', category: 'nature', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'mbìə', english: 'seed', category: 'nature', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2528 ('mbiə')
   // index:p.184
   AwingWord(awing: 'mbəəmə', english: 'self', category: 'things', difficulty: 1),
   // index:p.184
@@ -11900,7 +11900,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   AwingWord(awing: 'aji\'tə', english: 'selfishness', category: 'things', difficulty: 1),
   // index:p.184
-  AwingWord(awing: 'fînə', english: 'sell', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'fînə', english: 'sell', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L324 ('fínə')
   // index:p.184
   AwingWord(awing: 'afî apûmə', english: 'seller', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.184
@@ -11936,7 +11936,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.185
   AwingWord(awing: 'táətə', english: 'set many traps', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.185
-  AwingWord(awing: 'mêlə', english: 'set, of the sun', category: 'nature', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'mêlə', english: 'set, of the sun', category: 'nature', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5600 ('méla')
   // index:p.185
   AwingWord(awing: 'lóga á ndu mbumə', english: 'set on eggs', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.185
@@ -11946,7 +11946,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.185
   AwingWord(awing: 'afəmáləgə', english: 'settlement, former', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.185
-  AwingWord(awing: 'asaambé', english: 'seven (7)', category: 'numbers', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'asaambé', english: 'seven (7)', category: 'numbers', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L623 ('asaambê')
   // index:p.185
   AwingWord(awing: 'ntsɔɔbə asaambé', english: 'seventeen (17)', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.185
@@ -11954,7 +11954,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.185
   AwingWord(awing: 'tə̂', english: 'sew, of dresses', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.185
-  AwingWord(awing: 'tîma', english: 'sew using a needle', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tîma', english: 'sew using a needle', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3198 ('tímə')
   // index:p.185
   AwingWord(awing: 'chî to zɔ́\' ndzə\'ə', english: 'sex, abstain from', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.185
@@ -11990,9 +11990,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.185
   AwingWord(awing: 'kweŋkə', english: 'sharpen', category: 'things', difficulty: 1),
   // index:p.185
-  AwingWord(awing: 'pêe', english: 'sharpen', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'pêe', english: 'sharpen', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3092 ('pèe')
   // index:p.185
-  AwingWord(awing: 'kwiŋa mə́ ŋwiŋə', english: 'sharpen a knife', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'kwiŋa mə́ ŋwiŋə', english: 'sharpen a knife', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4019 ('kwíŋə mə́ ŋwíŋə')
   // index:p.185
   AwingWord(awing: 'kóəmə', english: 'shuve', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.185
@@ -12006,7 +12006,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.185
   AwingWord(awing: 'ŋgwâ', english: 'sheath', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.185
-  AwingWord(awing: 'mbéŋ ndzela', english: 'sheep', category: 'animals', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'mbéŋ ndzela', english: 'sheep', category: 'animals', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2393 ('mbéŋ ndzelə')
   // index:p.185
   AwingWord(awing: 'ngwê mbéŋə', english: 'she-goat', category: 'animals', tonePattern: 'falling', difficulty: 2),
   // index:p.185
@@ -12060,7 +12060,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.185
   AwingWord(awing: 'c.n. kîkəma ajîə', english: 'shortsightedness', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.185
-  AwingWord(awing: 'atúakeenə', english: 'shoulder', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'atúə akeenə', english: 'shoulder', category: 'things', tonePattern: 'high', difficulty: 1),  // FIXED Session 61 dict-audit: dictionary form
   // index:p.185
   AwingWord(awing: 'mbe\'tə', english: 'shoulder', category: 'things', difficulty: 1),
   // index:p.185
@@ -12084,7 +12084,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.186
   AwingWord(awing: 'njùə', english: 'shrimp', category: 'animals', tonePattern: 'low', difficulty: 1),
   // index:p.186
-  AwingWord(awing: 'kaŋə', english: 'shut', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kaŋə', english: 'shut', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L424 ('kəŋə̂')
   // index:p.186
   AwingWord(awing: 'kaŋtə', english: 'shut a little', category: 'descriptive', difficulty: 1),
   // index:p.186
@@ -12108,7 +12108,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.186
   AwingWord(awing: 'aseeləseelə', english: 'sideward', category: 'things', difficulty: 1),
   // index:p.186
-  AwingWord(awing: 'saŋə', english: 'sifter', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'saŋə', english: 'sifter', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3148 ('səŋə')
   // index:p.186
   AwingWord(awing: 'akye\'ə', english: 'sign', category: 'things', difficulty: 1),
   // index:p.186
@@ -12134,7 +12134,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.186
   AwingWord(awing: 'sînəgəgə', english: 'sinagogue', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.186
-  AwingWord(awing: 'zoobə', english: 'sing', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'zoobə', english: 'sing', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L348 ('zoobə̂')
   // index:p.186
   AwingWord(awing: 'toonə', english: 'singe', category: 'things', difficulty: 1),
   // index:p.186
@@ -12158,13 +12158,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.186
   AwingWord(awing: 'adj. ntogə', english: 'six', category: 'numbers', difficulty: 2),
   // index:p.186
-  AwingWord(awing: 'ntsəb ntogə', english: 'sixteen', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'ntsəb ntogə', english: 'sixteen', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L632 ('ntsəb ntogə́')
   // index:p.186
   AwingWord(awing: 'magh ə̂m mên ntogə', english: 'sixty', category: 'numbers', tonePattern: 'falling', difficulty: 2),
   // index:p.186
   AwingWord(awing: 'yîgə', english: 'skilled in evading capture', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.186
-  AwingWord(awing: 'ngwùba akoolə', english: 'skin of foot', category: 'body', tonePattern: 'low', difficulty: 2),
+  // AwingWord(awing: 'ngwùba akoolə', english: 'skin of foot', category: 'body', tonePattern: 'low', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L5754 ('ngwubə akoolə')
   // index:p.186
   AwingWord(awing: 'akwubə', english: 'skin (of fruit)', category: 'body', difficulty: 1),
   // index:p.186
@@ -12180,13 +12180,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.186
   AwingWord(awing: 'atìə', english: 'sky', category: 'nature', tonePattern: 'low', difficulty: 1),
   // index:p.186
-  AwingWord(awing: 'napóola', english: 'sky', category: 'nature', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'napóola', english: 'sky', category: 'nature', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L205 ('nəpóolə')
   // index:p.186
   AwingWord(awing: 'zɔ̌\'kə', english: 'slack', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.186
   AwingWord(awing: 'ŋ tsaŋ alêna', english: 'slander', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.186
-  AwingWord(awing: 'labə', english: 'slap', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'labə', english: 'slap', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2994 ('ləbə')
   // index:p.186
   AwingWord(awing: 'wênə', english: 'slash or whip', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.186
@@ -12204,7 +12204,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.186
   AwingWord(awing: 'sáətə', english: 'slice in many pieces', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.186
-  AwingWord(awing: 'ndóona', english: 'slime (inorganic)', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ndóona', english: 'slime (inorganic)', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5650 ('ndóonə')
   // index:p.187
   AwingWord(awing: 'malóŋə', english: 'slime (organic)', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.187
@@ -12234,7 +12234,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.187
   AwingWord(awing: 'afeelɔkwú\'ə', english: 'small of back', category: 'body', tonePattern: 'high', difficulty: 1),
   // index:p.187
-  AwingWord(awing: 'apuməŋkwùnə', english: 'small pox', category: 'descriptive', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'apuməŋkwùnə', english: 'small pox', category: 'descriptive', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3353 ('apuməŋkwúnə')
   // index:p.187
   AwingWord(awing: 'gháglə', english: 'smart', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.187
@@ -12272,7 +12272,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.187
   AwingWord(awing: 'atata\'ə', english: 'snail', category: 'animals', difficulty: 1),
   // index:p.187
-  AwingWord(awing: 'nóola', english: 'snake', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'nóola', english: 'snake', category: 'animals', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L162 ('nóolə')
   // index:p.187
   AwingWord(awing: 'ləglələglə', english: 'snake-like movement', category: 'animals', difficulty: 1),
   // index:p.187
@@ -12290,7 +12290,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.187
   AwingWord(awing: 'chîbə', english: 'soak', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.187
-  AwingWord(awing: 'asoga', english: 'soap', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'asoga', english: 'soap', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L464 ('asogə')
   // index:p.187
   AwingWord(awing: 'alə̌ lê', english: 'someday', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.187
@@ -12342,7 +12342,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.187
   AwingWord(awing: 'ndé\'nə', english: 'something without companion', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.187
-  AwingWord(awing: 'aghá yîtsə', english: 'sometimes', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'aghá yîtsə', english: 'sometimes', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3886 ('əghâ yitsə̌')
   // index:p.187
   AwingWord(awing: 'mɔ́ mbyâŋnə', english: 'son', category: 'family', tonePattern: 'falling', difficulty: 2),
   // index:p.187
@@ -12354,7 +12354,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.187
   AwingWord(awing: 'nkaŋə', english: 'song', category: 'things', difficulty: 1),
   // index:p.187
-  AwingWord(awing: 'nchìə', english: 'soot', category: 'things', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'nchìə', english: 'soot', category: 'things', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4130 ('nchîə')
   // index:p.188
   AwingWord(awing: 'ngaŋnakaŋə', english: 'sorcerer', category: 'things', difficulty: 3),
   // index:p.188
@@ -12396,7 +12396,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.188
   AwingWord(awing: 'afoopafo', english: 'sovereign', category: 'things', difficulty: 1),
   // index:p.188
-  AwingWord(awing: 'ngwê kwùneemə', english: 'sow', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ngwê kwùneemə', english: 'sow', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2417 ('ngwě kwúneemə')
   // index:p.188
   AwingWord(awing: 'piəə', english: 'sow', category: 'things', difficulty: 1),
   // index:p.188
@@ -12416,7 +12416,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.188
   AwingWord(awing: 'chiga', english: 'special', category: 'things', difficulty: 1),
   // index:p.188
-  AwingWord(awing: 'chigə', english: 'special', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'chigə', english: 'special', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L12417 ('chiga')
   // index:p.188
   AwingWord(awing: 'leŋə', english: 'speckle', category: 'things', difficulty: 1),
   // index:p.188
@@ -12444,7 +12444,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.188
   AwingWord(awing: 'ncha\'tə Əsê', english: 'spiritual healer', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.188
-  AwingWord(awing: 'twìaə', english: 'spit', category: 'things', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'twìaə', english: 'spit', category: 'things', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2282 ('twîəə')
   // index:p.188
   AwingWord(awing: 'pwə̂\'ə', english: 'spit unpleasantly', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // index:p.188
@@ -12452,7 +12452,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.188
   AwingWord(awing: 'akəma ajûmə', english: 'splinter', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.188
-  AwingWord(awing: 'pəga', english: 'spoil', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'pəga', english: 'spoil', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5856 ('págə')
   // index:p.188
   AwingWord(awing: 'tsaŋə', english: 'spoil', category: 'things', difficulty: 1),
   // index:p.188
@@ -12482,7 +12482,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.188
   AwingWord(awing: 'shâ\'tə', english: 'sprout', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.188
-  AwingWord(awing: 'nchwigə', english: 'spy', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nchwigə', english: 'spy', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4135 ('nchwiga')
   // index:p.188
   AwingWord(awing: 'chwigə', english: 'spy a little', category: 'descriptive', difficulty: 1),
   // index:p.188
@@ -12508,7 +12508,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.188
   AwingWord(awing: 'akoŋə', english: 'stalk (of maize, millet, etc.)', category: 'food', difficulty: 1),
   // index:p.188
-  AwingWord(awing: 'ndû ləəmə', english: 'stallion', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ndû ləəmə', english: 'stallion', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2406 ('ndú ləəmə́')
   // index:p.188
   AwingWord(awing: 'naŋə', english: 'stamp (with feet)', category: 'things', difficulty: 1),
   // index:p.189
@@ -12540,7 +12540,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'akoŋə', english: 'stem', category: 'things', difficulty: 1),
   // index:p.189
-  AwingWord(awing: 'atsaŋə', english: 'stem, of banana', category: 'food', difficulty: 1),
+  // AwingWord(awing: 'atsaŋə', english: 'stem, of banana', category: 'food', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3752 ('atsaŋá')
   // index:p.189
   AwingWord(awing: 'nkoŋ ndapa\'ə', english: 'stem of pipe', category: 'things', difficulty: 2),
   // index:p.189
@@ -12570,9 +12570,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'lagə', english: 'stir', category: 'things', difficulty: 1),
   // index:p.189
-  AwingWord(awing: 'napomə', english: 'stomach', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'napomə', english: 'stomach', category: 'body', difficulty: 1),  // REMOVED Session 61 dict-audit: stomach: OCR (na- prefix); nəpəmə L120 is canonical
   // index:p.189
-  AwingWord(awing: 'n.p. məm napəmə', english: 'stomach (internal)', category: 'body', difficulty: 2),
+  // AwingWord(awing: 'n.p. məm napəmə', english: 'stomach (internal)', category: 'body', difficulty: 2),  // REMOVED Session 61 dict-audit: stomach: has 'n.p.' OCR metadata leak from dictionary
   // index:p.189
   AwingWord(awing: 'atogə', english: 'stomach of a witch', category: 'body', difficulty: 3),
   // index:p.189
@@ -12590,7 +12590,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'ŋwù\'kə', english: 'stoop, make sth', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.189
-  AwingWord(awing: 'fəatə', english: 'stoop, of many people', category: 'family', difficulty: 1),
+  // AwingWord(awing: 'fəatə', english: 'stoop, of many people', category: 'family', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5304 ('fáətə')
   // index:p.189
   AwingWord(awing: 'kwù\'tə', english: 'stoop', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.189
@@ -12624,7 +12624,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'chwáŋtə nklə', english: 'stream', category: 'nature', tonePattern: 'high', difficulty: 2),
   // index:p.189
-  AwingWord(awing: 'mataənə', english: 'strength', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'mataənə', english: 'strength', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4108 ('mətəənə')
   // index:p.189
   AwingWord(awing: 'natáŋə', english: 'stress', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.189
@@ -12660,7 +12660,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'akeelə kwùneemə', english: 'sty, of pig', category: 'animals', tonePattern: 'low', difficulty: 2),
   // index:p.189
-  AwingWord(awing: 'nachwáakə', english: 'style of beginning', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'nachwáakə', english: 'style of beginning', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4170 ('nəchwáakə')
   // index:p.189
   AwingWord(awing: 'nkamə', english: 'sub-chief', category: 'family', difficulty: 1),
   // index:p.189
@@ -12668,7 +12668,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'laŋə', english: 'succeed', category: 'things', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'shwiŋə', english: 'suck', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'shwiŋə', english: 'suck', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3174 ('shwíŋə')
   // index:p.190
   AwingWord(awing: 'nəŋkə', english: 'suckle (baby) (tr)', category: 'family', difficulty: 1),
   // index:p.190
@@ -12676,7 +12676,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'ghabkə', english: 'suddenly', category: 'things', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'táŋnə', english: 'suffer', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'táŋnə', english: 'suffer', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3180 ('taŋnə')
   // index:p.190
   AwingWord(awing: 'nkaŋk ó\'lə', english: 'sugar cane', category: 'food', tonePattern: 'high', difficulty: 2),
   // index:p.190
@@ -12684,7 +12684,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'natúə', english: 'summit', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'mánumə', english: 'sun', category: 'nature', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'mánumə', english: 'sun', category: 'nature', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L206 ('mánuma')
   // index:p.190
   AwingWord(awing: 'ndzəŋ mánumə', english: 'sun down', category: 'nature', tonePattern: 'high', difficulty: 2),
   // index:p.190
@@ -12698,9 +12698,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'apɔ̂\'mbô', english: 'supplication', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'akwáalə', english: 'support', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'akwáalə', english: 'support', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L455 ('akwâalə')
   // index:p.190
-  AwingWord(awing: 'atênkə', english: 'support', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'atênkə', english: 'support', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3722 ('aténkə')
   // index:p.190
   AwingWord(awing: 'chìə', english: 'support', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.190
@@ -12724,9 +12724,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'azâ\'kə', english: 'surty', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'míəə', english: 'swallow', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'míəə', english: 'swallow', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L316 ('mîəə')
   // index:p.190
-  AwingWord(awing: 'asamə', english: 'swarm', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'asamə', english: 'swarm', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3708 ('asəmə')
   // index:p.190
   AwingWord(awing: 'ngoolə', english: 'swear', category: 'things', difficulty: 1),
   // index:p.190
@@ -12736,11 +12736,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'lednə', english: 'sweat', category: 'body', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'zagə', english: 'sweep', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'zagə', english: 'sweep', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3309 ('zəgə')
   // index:p.190
-  AwingWord(awing: 'zagtə', english: 'sweep a little', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'zagtə', english: 'sweep a little', category: 'descriptive', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3310 ('zəgtə̂')
   // index:p.190
-  AwingWord(awing: 'kə̂glə', english: 'sweep imperfectly', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kə̂glə', english: 'sweep imperfectly', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2882 ('káglə')
   // index:p.190
   AwingWord(awing: 'lamkə', english: 'sweet', category: 'descriptive', difficulty: 1),
   // index:p.190
@@ -12754,7 +12754,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'n.p. zɔ́\' nklə', english: 'swim', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.190
-  AwingWord(awing: 'sabkə', english: 'swing', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'sabkə', english: 'swing', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3143 ('sábkə')
   // index:p.190
   AwingWord(awing: 'nkyîlə', english: 'sword', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.190
@@ -12804,7 +12804,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.191
   AwingWord(awing: 'tsablə', english: 'talk nonsense', category: 'actions', difficulty: 1),
   // index:p.191
-  AwingWord(awing: 'alambeŋə', english: 'talking drum', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'alambeŋə', english: 'talking drum', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3602 ('alámbeŋə')
   // index:p.191
   AwingWord(awing: 'soolə', english: 'tame', category: 'things', difficulty: 1),
   // index:p.191
@@ -12822,7 +12822,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.191
   AwingWord(awing: 'ngaŋakwaalatáksə', english: 'tax collector', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.191
-  AwingWord(awing: 'nkwátáksə', english: 'tax collector', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'nkwátáksə', english: 'tax collector', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4336 ('nkwâtáksə')
   // index:p.191
   AwingWord(awing: 'zê\'kə', english: 'teach', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.191
@@ -12838,15 +12838,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.191
   AwingWord(awing: 'ntaŋ ngə\'ə', english: 'temple hut', category: 'things', difficulty: 2),
   // index:p.191
-  AwingWord(awing: 'témpaalə', english: 'temple', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'témpaalə', english: 'temple', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5962 ('témpəələ')
   // index:p.191
   AwingWord(awing: 'kwa\'lə', english: 'tempt', category: 'things', difficulty: 1),
   // index:p.191
   AwingWord(awing: 'akwa\'lə', english: 'temptation', category: 'things', difficulty: 1),
   // index:p.191
-  AwingWord(awing: 'naghámə', english: 'ten (10)', category: 'numbers', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'naghámə', english: 'ten (10)', category: 'numbers', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4515 ('nəghámə')
   // index:p.191
-  AwingWord(awing: 'aŋaŋ nələŋə', english: 'tendon', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'aŋaŋ nələŋə', english: 'tendon', category: 'things', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2228 ('əŋaŋ nələŋə')
   // index:p.191
   AwingWord(awing: 'tə̂', english: 'tense marker', category: 'things', tonePattern: 'falling', difficulty: 3),
   // index:p.191
@@ -12890,7 +12890,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.191
   AwingWord(awing: 'nachwaakinə', english: 'the start', category: 'things', difficulty: 1),
   // index:p.191
-  AwingWord(awing: 'azələ', english: 'theft', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'azələ', english: 'theft', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3952 ('əzələ')
   // index:p.191
   AwingWord(awing: 'n. apɔ\'tə', english: 'theft, done stealthily', category: 'things', difficulty: 2),
   // index:p.191
@@ -12918,9 +12918,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.191
   AwingWord(awing: 'chwiŋə', english: 'thin', category: 'descriptive', difficulty: 1),
   // index:p.191
-  AwingWord(awing: 'ajûmə', english: 'thing', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'ajûmə', english: 'thing', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L434 ('ajúmə')
   // index:p.191
-  AwingWord(awing: 'kwaŋə', english: 'think', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kwaŋə', english: 'think', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L746 ('kwàŋə')
   // index:p.191
   AwingWord(awing: 'kwaŋtə', english: 'think a bit', category: 'actions', difficulty: 1),
   // index:p.191
@@ -12932,7 +12932,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.191
   AwingWord(awing: 'ntsɔb teelə', english: 'thirteen (13)', category: 'things', difficulty: 2),
   // index:p.191
-  AwingWord(awing: 'maghám mên teelə', english: 'thirty', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'maghám mên teelə', english: 'thirty', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4512 ('məghám mén teelə̂')
   // index:p.191
   AwingWord(awing: 'əfenə̂', english: 'this compound', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.191
@@ -12958,19 +12958,19 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   AwingWord(awing: 'num. tə̂sa', english: 'thousand (1000)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
   // index:p.192
-  AwingWord(awing: 'atashîə', english: 'thread', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'atashîə', english: 'thread', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3727 ('atashiə')
   // index:p.192
   AwingWord(awing: 'ashwíŋnə', english: 'thread, of raffia palm', category: 'body', tonePattern: 'high', difficulty: 1),
   // index:p.192
   AwingWord(awing: 'ka\'ə', english: 'threaten', category: 'things', difficulty: 1),
   // index:p.192
-  AwingWord(awing: 'kə̂gə', english: 'threaten', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kə̂gə', english: 'threaten', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5392 ('kagə̂')
   // index:p.192
-  AwingWord(awing: 'kəgnə', english: 'threaten each other', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'kəgnə', english: 'threaten each other', category: 'descriptive', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2883 ('kagnə̂')
   // index:p.192
-  AwingWord(awing: 'kəgtə', english: 'threaten many times', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'kəgtə', english: 'threaten many times', category: 'descriptive', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2884 ('kagtə̂')
   // index:p.192
-  AwingWord(awing: 'nked teelə', english: 'three hundred (300)', category: 'numbers', difficulty: 2),
+  // AwingWord(awing: 'nked teelə', english: 'three hundred (300)', category: 'numbers', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L655 ('nked teelə́')
   // index:p.192
   AwingWord(awing: 'pó\'ə', english: 'thresh, of grain', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.192
@@ -12978,7 +12978,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   AwingWord(awing: 'akɔ\'əndê', english: 'threshold', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.192
-  AwingWord(awing: 'tógndê', english: 'throat', category: 'body', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tógndê', english: 'throat', category: 'body', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2281 ('tôgndě')
   // index:p.192
   AwingWord(awing: 'pəŋka aghoonə', english: 'throb with pain', category: 'things', difficulty: 2),
   // index:p.192
@@ -12998,7 +12998,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   AwingWord(awing: 'mê fîə apó', english: 'thumb', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.192
-  AwingWord(awing: 'nafaŋə', english: 'thunder', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'nafaŋə', english: 'thunder', category: 'nature', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L210 ('nəfaŋə')
   // index:p.192
   AwingWord(awing: 'kwùlə', english: 'tie', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.192
@@ -13014,7 +13014,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   AwingWord(awing: 'aghâ', english: 'time', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.192
-  AwingWord(awing: 'ndelə', english: 'time', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ndelə', english: 'time', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4146 ('ndelə̂')
   // index:p.192
   AwingWord(awing: 'aghá ndá\'ə', english: 'time, anothern', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.192
@@ -13044,7 +13044,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   AwingWord(awing: 'á', english: 'to', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.192
-  AwingWord(awing: 'lóolə', english: 'toad', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'lóolə', english: 'toad', category: 'animals', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L184 ('lóolá')
   // index:p.192
   AwingWord(awing: 'ndapa\'ə', english: 'tobacco', category: 'things', difficulty: 3),
   // index:p.192
@@ -13072,7 +13072,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   AwingWord(awing: 'alə̂məə', english: 'tomorrow', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.192
-  AwingWord(awing: 'alə̂məə', english: 'tongue', category: 'body', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'alə̂məə', english: 'tongue', category: 'body', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 dict-audit: tongue: OCR variant of aləəmə L105 (Session 56 audit-verified)
   // index:p.192
   AwingWord(awing: 'nchwâ\'ə', english: 'tontine', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.192
@@ -13080,7 +13080,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   AwingWord(awing: 'afeemə', english: 'tool of a mason', category: 'things', difficulty: 1),
   // index:p.192
-  AwingWord(awing: 'nasoŋə', english: 'tooth', category: 'body', difficulty: 1),
+  // AwingWord(awing: 'nasoŋə', english: 'tooth', category: 'body', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L117 ('nəsoŋə')
   // index:p.192
   AwingWord(awing: 'atsɔ\'əmasoŋə', english: 'tooth stick', category: 'body', difficulty: 1),
   // index:p.192
@@ -13098,15 +13098,15 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.193
   AwingWord(awing: 'asɔŋə', english: 'tornado', category: 'things', difficulty: 1),
   // index:p.193
-  AwingWord(awing: 'kwíŋə', english: 'tortoise', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'kwíŋə', english: 'tortoise', category: 'animals', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4829 ('kwíŋə̂')
   // index:p.193
   AwingWord(awing: 'atsamə', english: 'total', category: 'things', difficulty: 1),
   // index:p.193
   AwingWord(awing: 'atsəməatsama', english: 'total', category: 'things', difficulty: 1),
   // index:p.193
-  AwingWord(awing: 'atsama', english: 'total', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'atsama', english: 'total', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L13103 ('atsamə')
   // index:p.193
-  AwingWord(awing: 'kwumə̂', english: 'touch', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'kwumə̂', english: 'touch', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5514 ('kwumə')
   // index:p.193
   AwingWord(awing: 'kwumtə', english: 'touch, many times', category: 'descriptive', difficulty: 1),
   // index:p.193
@@ -13174,7 +13174,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.193
   AwingWord(awing: 'awága', english: 'treatment, disrespectful', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.193
-  AwingWord(awing: 'atìə', english: 'tree', category: 'nature', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'atìə', english: 'tree', category: 'nature', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L76 ('atǐə')
   // index:p.193
   AwingWord(awing: 'atìə awaglə', english: 'tree, for boundaries', category: 'nature', tonePattern: 'low', difficulty: 2),
   // index:p.193
@@ -13214,13 +13214,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.193
   AwingWord(awing: 'ngo\'kə', english: 'tribute', category: 'things', difficulty: 1),
   // index:p.193
-  AwingWord(awing: 'tsimkə', english: 'trickle', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'tsimkə', english: 'trickle', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3246 ('tsímkə')
   // index:p.193
   AwingWord(awing: 'kontə', english: 'trip', category: 'things', difficulty: 1),
   // index:p.193
   AwingWord(awing: 'ndɔŋə', english: 'trophy', category: 'things', difficulty: 1),
   // index:p.193
-  AwingWord(awing: 'aleelə', english: 'trouble', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'aleelə', english: 'trouble', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3591 ('aleelá')
   // index:p.193
   AwingWord(awing: 'ndzə̂\'ə', english: 'trouble (colloquial)', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.193
@@ -13242,9 +13242,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.194
   AwingWord(awing: 'fi\'ə', english: 'try', category: 'things', difficulty: 1),
   // index:p.194
-  AwingWord(awing: 'moomə', english: 'try', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'moomə', english: 'try', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3044 ('moomâ')
   // index:p.194
-  AwingWord(awing: 'mbaŋə', english: 'tumor', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'mbaŋə', english: 'tumor', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4851 ('mbaŋə̂')
   // index:p.194
   AwingWord(awing: 'achi\'lə', english: 'turf', category: 'things', difficulty: 1),
   // index:p.194
@@ -13262,25 +13262,25 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.194
   AwingWord(awing: 'ntsɔb pê', english: 'twelve (12)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
   // index:p.194
-  AwingWord(awing: 'maghám mêm mbê', english: 'twenty', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'maghám mêm mbê', english: 'twenty', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4507 ('məghám mém mbê')
   // index:p.194
-  AwingWord(awing: 'maghám mêm mbê nə̌ pên tênə', english: 'twenty-five', category: 'numbers', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'maghám mêm mbê nə̌ pên tênə', english: 'twenty-five', category: 'numbers', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L652 ('məghə́m mém mbê nə́ pén tênə')
   // index:p.194
-  AwingWord(awing: 'maghám mêm mbê nə̌ nakwa', english: 'twenty-four', category: 'numbers', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'maghám mêm mbê nə̌ nakwa', english: 'twenty-four', category: 'numbers', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L651 ('məghə́m mém mbê nə́ nəkwa')
   // index:p.194
   AwingWord(awing: 'maghám mêm mbê nə̌ tâ\'ə', english: 'twenty-one', category: 'numbers', tonePattern: 'rising', difficulty: 2),
   // index:p.194
-  AwingWord(awing: 'maghám mêm mbê nə̌ pên teelə', english: 'twenty-three', category: 'numbers', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'maghám mêm mbê nə̌ pên teelə', english: 'twenty-three', category: 'numbers', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L650 ('məghə́m mém mbê nə́ pén teelə́')
   // index:p.194
-  AwingWord(awing: 'maghám mêm mbê nə̌ pêm pê', english: 'twenty-two', category: 'numbers', tonePattern: 'rising', difficulty: 2),
+  // AwingWord(awing: 'maghám mêm mbê nə̌ pêm pê', english: 'twenty-two', category: 'numbers', tonePattern: 'rising', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L649 ('məghə́m mém mbê nə́ pém pê')
   // index:p.194
-  AwingWord(awing: 'nafágə', english: 'twin', category: 'family', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'nafágə', english: 'twin', category: 'family', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4174 ('nəfágə')
   // index:p.194
   AwingWord(awing: 'pî\'kə', english: 'twist', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.194
   AwingWord(awing: 'chwî mbô', english: 'twitch fingers', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.194
-  AwingWord(awing: 'pê', english: 'two (2)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'pê', english: 'two (2)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4521 ('pě')
   // index:p.194
   AwingWord(awing: 'napî nə́ neemə', english: 'udder', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.194
@@ -13306,7 +13306,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.194
   AwingWord(awing: 'fulə', english: 'uncover', category: 'things', difficulty: 1),
   // index:p.194
-  AwingWord(awing: 'naténə', english: 'underneath', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'naténə', english: 'underneath', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5720 ('nəténə')
   // index:p.194
   AwingWord(awing: 'tsɔ\' atsə\'ə', english: 'undress', category: 'things', difficulty: 2),
   // index:p.194
@@ -13364,7 +13364,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'napam nə̌ lúm nə̌', english: 'upset stomach', category: 'body', tonePattern: 'rising', difficulty: 2),
   // index:p.195
-  AwingWord(awing: 'atoŋátoŋə', english: 'upside down', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'atoŋátoŋə', english: 'upside down', category: 'descriptive', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3735 ('atoŋátóŋə')
   // index:p.195
   AwingWord(awing: 'matseŋnə', english: 'urine', category: 'body', difficulty: 3),
   // index:p.195
@@ -13382,11 +13382,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'ê', english: 'utterance of regret', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.195
-  AwingWord(awing: 'naságə', english: 'vagina', category: 'body', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: 'naságə', english: 'vagina', category: 'body', tonePattern: 'high', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4652 ('nəságə')
   // index:p.195
   AwingWord(awing: 'atataŋə', english: 'vagina fluid', category: 'body', difficulty: 3),
   // index:p.195
-  AwingWord(awing: 'váina', english: 'vain', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'váina', english: 'vain', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L6038 ('vâinə')
   // index:p.195
   AwingWord(awing: 'afó\'ə', english: 'valley, sort of deep', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.195
@@ -13424,9 +13424,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'ndzəəmə', english: 'vision', category: 'things', difficulty: 1),
   // index:p.195
-  AwingWord(awing: 'nagheenə', english: 'visit', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nagheenə', english: 'visit', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4182 ('nəghéenə')
   // index:p.195
-  AwingWord(awing: 'ghéena', english: 'visit', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ghéena', english: 'visit', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2837 ('ghéenə')
   // index:p.195
   AwingWord(awing: 'ghánta', english: 'visit a little', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.195
@@ -13444,9 +13444,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'ajá\'kə', english: 'vomit (n)', category: 'actions', tonePattern: 'high', difficulty: 3),
   // index:p.195
-  AwingWord(awing: 'zooma', english: 'vow', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'zooma', english: 'vow', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L6108 ('zoomə')
   // index:p.195
-  AwingWord(awing: 'ndi sáŋə', english: 'vulture', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'ndi sáŋə', english: 'vulture', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2404 ('ndi sáŋə́')
   // index:p.195
   AwingWord(awing: 'chî\'á asaŋə', english: 'wag tail', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.195
@@ -13460,9 +13460,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: 'zoomə', english: 'wake sb from sleep', category: 'actions', difficulty: 1),
   // index:p.195
-  AwingWord(awing: 'jimkə', english: 'wake somebody up (tr)', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'jimkə', english: 'wake somebody up (tr)', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2861 ('jimkə')
   // index:p.195
-  AwingWord(awing: 'jimnə', english: 'wake up (intr)', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'jimnə', english: 'wake up (intr)', category: 'actions', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2862 ('jimnə̂')
   // index:p.195
   AwingWord(awing: 'n.p. atû yə jûm nə̌', english: 'wakefulness', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.195
@@ -13478,9 +13478,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.196
   AwingWord(awing: 'asagəndê', english: 'wall of a house', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.196
-  AwingWord(awing: 'alá ndê', english: 'wall of a house', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'alá ndê', english: 'wall of a house', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3900 ('ə́lá ndê')
   // index:p.196
-  AwingWord(awing: 'tîmnə', english: 'wander', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tîmnə', english: 'wander', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3201 ('tímnə')
   // index:p.196
   AwingWord(awing: 'chîa ndzəəmə', english: 'wandering', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.196
@@ -13488,11 +13488,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.196
   AwingWord(awing: 'pábtə', english: 'warm a little', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.196
-  AwingWord(awing: 'kwùneemə afoonə', english: 'warthog', category: 'things', tonePattern: 'low', difficulty: 2),
+  // AwingWord(awing: 'kwùneemə afoonə', english: 'warthog', category: 'things', tonePattern: 'low', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L2391 ('kwúneemə afoonə')
   // index:p.196
   AwingWord(awing: 'chwaglə', english: 'wash in an improper way', category: 'actions', difficulty: 1),
   // index:p.196
-  AwingWord(awing: 'sog apûmə', english: 'wash utensils', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'sog apûmə', english: 'wash utensils', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4431 ('sog əpúmə')
   // index:p.196
   AwingWord(awing: 'támsə', english: 'wastage', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.196
@@ -13508,7 +13508,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.196
   AwingWord(awing: 'afəələ', english: 'water tube', category: 'nature', difficulty: 1),
   // index:p.196
-  AwingWord(awing: 'nəfóga', english: 'waterfall', category: 'nature', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'nəfóga', english: 'waterfall', category: 'nature', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L214 ('nəfógə')
   // index:p.196
   AwingWord(awing: 'apêla nklə', english: 'waterhole', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.196
@@ -13516,7 +13516,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.196
   AwingWord(awing: 'mati mə̌ nklə', english: 'wave of water', category: 'actions', tonePattern: 'rising', difficulty: 2),
   // index:p.196
-  AwingWord(awing: 'nanchwina', english: 'waxbill', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'nanchwina', english: 'waxbill', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4217 ('nənchwínə')
   // index:p.196
   AwingWord(awing: 'kibu\'lakibu\'lə', english: 'way of movement', category: 'things', difficulty: 1),
   // index:p.196
@@ -13584,7 +13584,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.196
   AwingWord(awing: 'aghá akə̂', english: 'when?', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.196
-  AwingWord(awing: 'əfó', english: 'where?', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'əfó', english: 'where?', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L617 ('àfó')
   // index:p.196
   AwingWord(awing: 'pâ\'ə', english: 'where', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.196
@@ -13592,7 +13592,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.196
   AwingWord(awing: 'kəənə', english: 'whether', category: 'things', difficulty: 1),
   // index:p.196
-  AwingWord(awing: 'wəənə̂', english: 'which?', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'wəənə̂', english: 'which?', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4484 ('wáənə')
   // index:p.196
   AwingWord(awing: 'v. pâ\'ə', english: 'which', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.196
@@ -13608,17 +13608,17 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.196
   AwingWord(awing: 'məlo\' mə́ məkalə', english: 'whiskies', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.196
-  AwingWord(awing: 'wiskìə', english: 'whisky', category: 'things', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'wiskìə', english: 'whisky', category: 'things', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4485 ('wískiə')
   // index:p.196
   AwingWord(awing: 'chámta', english: 'whisper', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.196
-  AwingWord(awing: 'alámta', english: 'whisper(n)', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'alámta', english: 'whisper(n)', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3603 ('aləmtə')
   // index:p.197
   AwingWord(awing: 'antsê', english: 'whistle', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'tôŋ njwìŋə', english: 'whistle', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'tôŋ njwìŋə', english: 'whistle', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4466 ('tóŋ njwîŋə')
   // index:p.197
-  AwingWord(awing: 'fùfùa', english: 'white', category: 'descriptive', tonePattern: 'low', difficulty: 1),
+  // AwingWord(awing: 'fùfùa', english: 'white', category: 'descriptive', tonePattern: 'low', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L712 ('fúfûə')
   // index:p.197
   AwingWord(awing: 'fógə', english: 'white', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.197
@@ -13626,7 +13626,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'məkálə', english: 'white man', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'mbəəmə', english: 'whitewash', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'mbəəmə', english: 'whitewash', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L5588 ('mbǎəmə')
   // index:p.197
   AwingWord(awing: 'ntsama', english: 'whole', category: 'things', difficulty: 1),
   // index:p.197
@@ -13646,11 +13646,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'nkoŋ mongyé', english: 'widow', category: 'family', tonePattern: 'high', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'nkogə', english: 'widow', category: 'family', difficulty: 3),
+  // AwingWord(awing: 'nkogə', english: 'widow', category: 'family', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L3063 ('nkogə́')
   // index:p.197
   AwingWord(awing: 'nkoŋ ŋwu mbyâŋnə', english: 'widower', category: 'family', tonePattern: 'falling', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'akogə', english: 'widowhood', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'akogə', english: 'widowhood', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L3898 ('əkogə́')
   // index:p.197
   AwingWord(awing: 'kaŋə', english: 'wild cat, preys on fowls', category: 'animals', difficulty: 1),
   // index:p.197
@@ -13668,13 +13668,13 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'kâ\'lə', english: 'wine container, a sort of', category: 'food', tonePattern: 'falling', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'napeebə', english: 'wing', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'napeebə', english: 'wing', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4223 ('nəpeebə')
   // index:p.197
   AwingWord(awing: 'ləg nəlágə', english: 'wink (of eye)', category: 'actions', tonePattern: 'high', difficulty: 2),
   // index:p.197
   AwingWord(awing: 'zàə', english: 'winnow', category: 'things', tonePattern: 'low', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'shigə', english: 'wipe', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'shigə', english: 'wipe', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3162 ('shígə')
   // index:p.197
   AwingWord(awing: 'zegə', english: 'wipe off something sticky', category: 'things', difficulty: 1),
   // index:p.197
@@ -13688,7 +13688,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'ndəəma', english: 'witch (female)', category: 'things', difficulty: 3),
   // index:p.197
-  AwingWord(awing: 'məsê', english: 'witchcraft', category: 'things', tonePattern: 'falling', difficulty: 3),
+  // AwingWord(awing: 'məsê', english: 'witchcraft', category: 'things', tonePattern: 'falling', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4628 ('məse')
   // index:p.197
   AwingWord(awing: 'mɔ́ apəena', english: 'witchcraft (used colloquially)', category: 'things', tonePattern: 'high', difficulty: 3),
   // index:p.197
@@ -13706,11 +13706,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'maŋgyé', english: 'woman, wife', category: 'family', tonePattern: 'high', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'alaŋəmóona', english: 'womb', category: 'body', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'alaŋəmóona', english: 'womb', category: 'body', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4566 ('aləŋəmóonə')
   // index:p.197
   AwingWord(awing: 'ghánta', english: 'wonder about', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.197
-  AwingWord(awing: 'manoŋ mə́ mbéŋə', english: 'wool', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'manoŋ mə́ mbéŋə', english: 'wool', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4099 ('manoŋ má mbéŋa')
   // index:p.197
   AwingWord(awing: 'atséebə', english: 'word', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.197
@@ -13728,7 +13728,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.197
   AwingWord(awing: 'kə̂ apûmblə', english: 'work wood', category: 'actions', tonePattern: 'falling', difficulty: 2),
   // index:p.197
-  AwingWord(awing: 'mbîa', english: 'world', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'mbîa', english: 'world', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4855 ('mbîə')
   // index:p.197
   AwingWord(awing: 'alá\'a pəkwùə', english: 'world, of the dead', category: 'descriptive', tonePattern: 'high-low', difficulty: 2),
   // index:p.197
@@ -13762,7 +13762,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.198
   AwingWord(awing: 'atáəsóəmə', english: 'wound (unhealing), sort of', category: 'body', tonePattern: 'high', difficulty: 2),
   // index:p.198
-  AwingWord(awing: 'néŋ nafaŋə', english: 'wound(v)', category: 'body', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'néŋ nafaŋə', english: 'wound(v)', category: 'body', tonePattern: 'high', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L4169 ('néŋ nəfaŋə́')
   // index:p.198
   AwingWord(awing: 'kéelə', english: 'wrap up', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.198
@@ -13790,7 +13790,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.198
   AwingWord(awing: 'nala\'ə', english: 'yam, sweet', category: 'food', difficulty: 1),
   // index:p.198
-  AwingWord(awing: 'jága', english: 'yawn', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'jága', english: 'yawn', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L359 ('jágə')
   // index:p.198
   AwingWord(awing: 'ngó\'ə', english: 'year', category: 'nature', tonePattern: 'high', difficulty: 1),
   // index:p.198
@@ -13798,11 +13798,11 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.198
   AwingWord(awing: 'yagə', english: 'yell out curses', category: 'things', difficulty: 3),
   // index:p.198
-  AwingWord(awing: 'koŋə', english: 'yell with hate', category: 'things', difficulty: 3),
+  // AwingWord(awing: 'koŋə', english: 'yell with hate', category: 'things', difficulty: 3),  // REMOVED Session 61 Phase1: OCR clone, kept L4805 ('koŋə̂')
   // index:p.198
   AwingWord(awing: 'ə́lə̌lə̌', english: 'yes', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.198
-  AwingWord(awing: 'azoonə', english: 'yesterday', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'azoonə', english: 'yesterday', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3955 ('əzooná')
   // index:p.198
   AwingWord(awing: 'tati napu nə̌ ngəba', english: 'yolk of egg', category: 'food', tonePattern: 'rising', difficulty: 2),
   // index:p.198
@@ -13824,11 +13824,73 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.198
   AwingWord(awing: 'awəənə̌', english: 'yours (pl)', category: 'things', tonePattern: 'rising', difficulty: 1),
   // index:p.198
-  AwingWord(awing: 'azəənə̌', english: 'yours (pl)', category: 'things', tonePattern: 'rising', difficulty: 1),
+  // AwingWord(awing: 'azəənə̌', english: 'yours (pl)', category: 'things', tonePattern: 'rising', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L3950 ('əzəəná')
   // index:p.198
   AwingWord(awing: 'tóga atúə', english: 'zealous', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.198
   AwingWord(awing: 'kimbó\'nkonə', english: 'zebra', category: 'things', tonePattern: 'high', difficulty: 1),
+  // === Session 61 v2 dictionary extraction ===
+  AwingWord(awing: 'chaakə̌ məngyê', english: 'escort a bride to her groom', category: 'things', difficulty: 2),  // v2:page_048
+  AwingWord(awing: 'chaanə̌', english: 'be abundant, be much', category: 'things', difficulty: 2),  // v2:page_048
+  AwingWord(awing: 'cha\'ə', english: 'last very long', category: 'things', difficulty: 2),  // v2:page_048
+  AwingWord(awing: 'cha\'ə', english: 'bear a white substance especially early in the morning from bed', category: 'body', difficulty: 2),  // v2:page_048
+  AwingWord(awing: 'chagə', english: '(colloquial) smash or step on something', category: 'things', difficulty: 2),  // v2:page_048
+  AwingWord(awing: 'chəgə', english: 'place dirty by throwing bits of dirt', category: 'things', difficulty: 2),  // v2:page_048
+  AwingWord(awing: 'chə̀\'lə̌', english: 'a sort of white substance from the eye that comes especially after sleeping', category: 'body', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'ńchaakə̌', english: 'verb stem of chaakə̌', category: 'things', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'ńchaanə̌', english: 'verb stem of chaanə̌ (be abundant)', category: 'things', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'ńchábtə', english: 'verb stem of chábtə', category: 'things', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'ńcha\'', english: 'verb stem of cha\'ə', category: 'things', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'ńchagə', english: 'verb stem of chagə', category: 'things', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'ńchəgə', english: 'verb stem of chəgə', category: 'things', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'ńchagtə', english: 'verb stem of chagtə̌', category: 'things', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'ńchakə̌', english: 'verb stem of chakə̌', category: 'things', difficulty: 1),  // v2:page_048
+  AwingWord(awing: 'kyê', english: 'abandon something because it has been desecrated or misused', category: 'things', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'kyêə', english: 'smash grain into little pieces, using a grinding machine', category: 'nature', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'kyê\'ə', english: 'make a small opening on a thing', category: 'actions', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'kyê\'kə', english: 'develop openings or cracks (intr)', category: 'things', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'kyêŋə mbi ǒsê', english: 'confess', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'kyêntə', english: 'cut off things attached to the main part, eg undesirable ends of vegetable', category: 'food', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'kyé\'tə', english: 'hatch', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'kyíbə', english: 'a kind of basket weaved using the hard covering of raffia bamboo', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'kyíkə', english: '1) (of babies) have the habit of refusing strangers 2) refuse, of many people', category: 'family', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ladkə', english: '1) continuously, non-stop 2) connect, link', category: 'things', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'lá\'ə', english: 'hook', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'lá\'ə', english: 'far future tense marker — used with another future marker for very far future, sometimes implying lack of hope', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'lá\'ə', english: '1) announce (especially of a birth) 2) say (colloquial)', category: 'things', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'lagə', english: '1) fetch, of firewood 2) gather or assemble, of objects', category: 'nature', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'lá\'kə', english: 'thank or give thanks', category: 'things', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'lá\'kə', english: 'make something to get', category: 'actions', difficulty: 2),  // v2:page_088
+  AwingWord(awing: 'ńkyé', english: 'verb stem of kyê (abandon)', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńkyêə', english: 'verb stem of kyêə (smash grain)', category: 'nature', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńkyeetə', english: 'verb stem of kyeetə (bring together)', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńkyê\'kə', english: 'verb stem of kyê\'kə', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńkyêntə', english: 'verb stem of kyêntə', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńkyé\'tə', english: 'verb stem of kyé\'tə (hatch)', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńkyêetə', english: 'verb stem of kyêetə', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńkyím', english: 'verb stem of kyímə', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńkyimtə', english: 'verb stem of kyímtə', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńdadtə', english: 'verb stem of ladtə (tangle)', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńdá\'ə', english: 'verb stem of lá\'ə (hook/announce)', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńdagə', english: 'verb stem of lagə', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'ńdá\'kə', english: 'verb stem of lá\'kə (thank)', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'pəkyibə', english: 'plural of kyíbə (basket of raffia)', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'pəláalé', english: 'plural of láalé (jiggers)', category: 'things', difficulty: 1),  // v2:page_088
+  AwingWord(awing: 'mbaŋə', english: 'stomach disease (1)', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbaŋə', english: 'little cocoyams attached to the main one', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbe\'nə̌', english: 'the eighth day of the week', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbe\'tə', english: 'shoulder', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbe', english: 'name used only for the son or village chief', category: 'family', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbe', english: 'word used at the end of an expression to give more force to one\'s idea', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbê nduŋə', english: 'mule', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbena', english: 'a word used at the beginning of an expression (phrase, sentence, etc) to mark surprise (exclamation)', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbenə̂ má nəyeŋə̌', english: 'blade of grass', category: 'nature', difficulty: 2),  // v2:page_092
+  AwingWord(awing: 'mbɔ́\' nasáğə', english: 'buttock', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbɔ́\'ə', english: 'lump (of clay or mud)', category: 'things', difficulty: 1),  // v2:page_092
+  AwingWord(awing: 'mbɔɔmə apɔɔmə', english: 'human person', category: 'family', difficulty: 2),  // v2:page_092
+  AwingWord(awing: 'mbɔɔmə atîə', english: 'bark of tree', category: 'nature', difficulty: 2),  // v2:page_092
+  AwingWord(awing: 'mbɔkə̌', english: 'people of where, people of what (a sort of phrasal expression). This word is always attached to names of places to signify the origin of', category: 'family', difficulty: 1),  // v2:page_092
+
 ];
 
 // ============================================================

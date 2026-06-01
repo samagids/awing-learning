@@ -1,0 +1,1817 @@
+# Suspected OCR-duplicate report
+Total AwingWord entries: 5923
+Duplicate clusters: 445
+Extra rows (would be removed if keeping 1 per cluster): 477
+
+## 'possessive pronoun \\'  (4 entries)
+   L 3948  'əyîə'                          AwingWord(awing: 'əyîə', english: 'possessive pronoun \'hers\' used for class 1 nouns', category: 'things', tonePattern:
+   L 5278  'əyîə'                          AwingWord(awing: 'əyîə', english: 'possessive pronoun \'his\' used for class 1 nouns', category: 'things', tonePattern: 
+   L11079  'ayîə'                          AwingWord(awing: 'ayîə', english: 'possessive pronoun \'hers\'', category: 'things', tonePattern: 'falling', difficulty:
+   L11087  'ayîə'                          AwingWord(awing: 'ayîə', english: 'possessive pronoun \'his\'', category: 'things', tonePattern: 'falling', difficulty: 
+
+## 'blame'  (3 entries)
+   L 2663  'blemâ'                         AwingWord(awing: 'blemâ', english: 'blame', category: 'actions', tonePattern: 'falling'),
+   L 3814  'blêmə'                         AwingWord(awing: 'blêmə', english: 'blame', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 6743  'blemə̂'                        AwingWord(awing: 'blemə̂', english: 'blame', category: 'actions', tonePattern: 'falling', difficulty: 1),
+
+## 'blood'  (3 entries)
+   L  103  'achîə'                         AwingWord(awing: 'achîə', english: 'blood', category: 'body', difficulty: 3),
+   L 4687  'achiə'                         AwingWord(awing: 'achiə', english: 'blood', category: 'things', difficulty: 3),
+   L 6771  'achíə'                         AwingWord(awing: 'achíə', english: 'blood', category: 'body', tonePattern: 'high', difficulty: 3),
+
+## 'cat'  (3 entries)
+   L  174  'pûshíə'                        AwingWord(awing: 'pûshíə', english: 'cat', category: 'animals'),
+   L 4943  'púshiə'                        AwingWord(awing: 'púshiə', english: 'cat', category: 'animals', difficulty: 1),
+   L 7063  'púshîə'                        AwingWord(awing: 'púshîə', english: 'cat', category: 'animals', tonePattern: 'falling', difficulty: 1),
+
+## 'eight'  (3 entries)
+   L  624  'nəfeemə́'                      AwingWord(awing: 'nəfeemə́', english: 'eight', category: 'numbers'),
+   L 5690  'nəfeemə́'                      AwingWord(awing: 'nəfeemə́', english: 'eight (8)', category: 'numbers', tonePattern: 'high', difficulty: 2),
+   L 8177  'nafeemə'                       AwingWord(awing: 'nafeemə', english: 'eight (8)', category: 'numbers', difficulty: 2),
+
+## 'fellow-wife'  (3 entries)
+   L  419  'fóga'                          AwingWord(awing: 'fóga', english: 'fellow-wife', category: 'family', difficulty: 1),
+   L 4767  'fógá'                          AwingWord(awing: 'fógá', english: 'fellow-wife (co-wife in polygamous marriage)', category: 'family', difficulty: 1),
+   L 8477  'fógə'                          AwingWord(awing: 'fógə', english: 'fellow-wife', category: 'family', tonePattern: 'high', difficulty: 1),
+
+## 'four hundred'  (3 entries)
+   L  656  'nked zén nəkwa'                AwingWord(awing: 'nked zén nəkwa', english: 'four hundred', category: 'numbers', difficulty: 2),
+   L 5774  'nked zén nəkwa'                AwingWord(awing: 'nked zén nəkwa', english: 'four hundred (400)', category: 'numbers', tonePattern: 'high', difficulty: 
+   L 8749  'nked zén nakwa'                AwingWord(awing: 'nked zén nakwa', english: 'four hundred (400)', category: 'numbers', tonePattern: 'high', difficulty: 
+
+## 'fourteen'  (3 entries)
+   L  630  'ntsəb nəkwa'                   AwingWord(awing: 'ntsəb nəkwa', english: 'fourteen', category: 'numbers', difficulty: 2),
+   L 5804  'ntsəb nəkwa'                   AwingWord(awing: 'ntsəb nəkwa', english: 'fourteen (14)', category: 'things', difficulty: 2),
+   L 8751  'ntsəb nakwa'                   AwingWord(awing: 'ntsəb nakwa', english: 'fourteen (14)', category: 'things', difficulty: 2),
+
+## 'hide'  (3 entries)
+   L  425  'lyǎŋə'                         AwingWord(awing: 'lyǎŋə', english: 'hide', category: 'actions', difficulty: 1),
+   L 5572  'lyáŋə'                         AwingWord(awing: 'lyáŋə', english: 'hide (tr)', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 9323  'lyaŋə'                         AwingWord(awing: 'lyaŋə', english: 'hide (tr)', category: 'things', difficulty: 1),
+
+## 'key'  (3 entries)
+   L  470  'kîə'                           AwingWord(awing: 'kîə', english: 'key', category: 'things', tonePattern: 'falling'),
+   L 5432  'kîə'                           AwingWord(awing: 'kîə', english: 'key (from English)', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 9791  'kiə'                           AwingWord(awing: 'kiə', english: 'key', category: 'things', difficulty: 1),
+
+## 'lift in big lumps'  (3 entries)
+   L 2886  'kamə̂'                         AwingWord(awing: 'kamə̂', english: 'lift in big lumps', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L 5394  'kamə̂'                         AwingWord(awing: 'kamə̂', english: 'lift in big lumps (eg ground)', category: 'nature', tonePattern: 'falling', difficul
+   L 9965  'kamə'                          AwingWord(awing: 'kamə', english: 'lift in big lumps', category: 'descriptive', difficulty: 1),
+
+## 'neck'  (3 entries)
+   L  100  'ndě'                           AwingWord(awing: 'ndě', english: 'neck (body part)', category: 'body', pluralForm: 'məndě', difficulty: 1),
+   L 5628  'ndě'                           AwingWord(awing: 'ndě', english: 'neck', category: 'body', tonePattern: 'rising', difficulty: 1),
+   L10501  'ndê'                           AwingWord(awing: 'ndê', english: 'neck', category: 'body', tonePattern: 'falling', difficulty: 1),
+
+## 'nose'  (3 entries)
+   L   99  'nəlwîə'                        AwingWord(awing: 'nəlwîə', english: 'nose', category: 'body'),
+   L 4887  'nəlwíə'                        AwingWord(awing: 'nəlwíə', english: 'nose', category: 'body', difficulty: 1),
+   L10577  'nalwíə'                        AwingWord(awing: 'nalwíə', english: 'nose', category: 'body', tonePattern: 'high', difficulty: 1),
+
+## 'now'  (3 entries)
+   L   45  'agha ghena'                    AwingWord(awing: 'agha ghena', english: 'now', category: 'things', difficulty: 2),
+   L 3879  'əghâ ghená'                    AwingWord(awing: 'əghâ ghená', english: 'now', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L10591  'aghá ghenə'                    AwingWord(awing: 'aghá ghenə', english: 'now', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'possessive pronoun \\'  (3 entries)
+   L 3792  'azéemə'                        AwingWord(awing: 'azéemə', english: 'possessive pronoun \'mine\', used for class 7 nouns. Where is my own plum?', catego
+   L 3949  'əzeemə'                        AwingWord(awing: 'əzeemə', english: 'possessive pronoun \'mine\' used for class 9 nouns', category: 'things', difficulty
+   L11097  'azéema'                        AwingWord(awing: 'azéema', english: 'possessive pronoun \'mine\'', category: 'things', tonePattern: 'high', difficulty: 
+
+## 'possessive pronoun \\'  (3 entries)
+   L 3951  'əzəgá'                         AwingWord(awing: 'əzəgá', english: 'possessive pronoun \'ours\' used for nouns of class 9; possessive adj \'our\' used f
+   L11107  'azágə'                         AwingWord(awing: 'azágə', english: 'possessive pronoun \'ours\'', category: 'things', tonePattern: 'high', difficulty: 1
+   L11111  'azagə'                         AwingWord(awing: 'azagə', english: 'possessive pronoun \'ours\'', category: 'things', difficulty: 1),
+
+## 'possessive pronoun \\'  (3 entries)
+   L 4094  'məmía'                         AwingWord(awing: 'məmía', english: 'possessive pronoun \'his\' used for class 6 nouns; possessive pronoun hers, used for
+   L11081  'mamîə'                         AwingWord(awing: 'mamîə', english: 'possessive pronoun \'hers\'', category: 'things', tonePattern: 'falling', difficulty
+   L11089  'mamîə'                         AwingWord(awing: 'mamîə', english: 'possessive pronoun \'his\'', category: 'things', tonePattern: 'falling', difficulty:
+
+## 'sell'  (3 entries)
+   L  324  'fínə'                          AwingWord(awing: 'fínə', english: 'sell', category: 'actions', shortForm: 'fi'),
+   L 5324  'finə̂'                         AwingWord(awing: 'finə̂', english: 'sell', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L11903  'fînə'                          AwingWord(awing: 'fînə', english: 'sell', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'seven'  (3 entries)
+   L  623  'asaambê'                       AwingWord(awing: 'asaambê', english: 'seven', category: 'numbers'),
+   L 5092  'asaambê'                       AwingWord(awing: 'asaambê', english: 'seven (7)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+   L11949  'asaambé'                       AwingWord(awing: 'asaambé', english: 'seven (7)', category: 'numbers', tonePattern: 'high', difficulty: 2),
+
+## 'sixteen'  (3 entries)
+   L  632  'ntsəb ntogə́'                  AwingWord(awing: 'ntsəb ntogə́', english: 'sixteen', category: 'numbers', difficulty: 2),
+   L 5806  'ntsəb ntogə́'                  AwingWord(awing: 'ntsəb ntogə́', english: 'sixteen (16)', category: 'things', tonePattern: 'high', difficulty: 2),
+   L12161  'ntsəb ntogə'                   AwingWord(awing: 'ntsəb ntogə', english: 'sixteen', category: 'things', difficulty: 2),
+
+## 'soap'  (3 entries)
+   L  464  'asogə'                         AwingWord(awing: 'asogə', english: 'soap', category: 'things', difficulty: 1),
+   L 5100  'asogə'                         AwingWord(awing: 'asogə', english: 'soap (From: English)', category: 'things', difficulty: 1),
+   L12293  'asoga'                         AwingWord(awing: 'asoga', english: 'soap', category: 'things', difficulty: 1),
+
+## 'ten'  (3 entries)
+   L 4515  'nəghámə'                       AwingWord(awing: 'nəghámə', english: 'ten (alternate form)', category: 'numbers', tonePattern: 'high', difficulty: 1),
+   L 5694  'nəghámə'                       AwingWord(awing: 'nəghámə', english: 'ten (10)', category: 'numbers', tonePattern: 'high', difficulty: 1),
+   L12847  'naghámə'                       AwingWord(awing: 'naghámə', english: 'ten (10)', category: 'numbers', tonePattern: 'high', difficulty: 1),
+
+## 'think'  (3 entries)
+   L  746  'kwàŋə'                         AwingWord(awing: 'kwàŋə', english: 'think', category: 'actions', difficulty: 1),
+   L 4819  'kwaŋə̂'                        AwingWord(awing: 'kwaŋə̂', english: 'think', category: 'things', difficulty: 1),
+   L12923  'kwaŋə'                         AwingWord(awing: 'kwaŋə', english: 'think', category: 'things', difficulty: 1),
+
+## 'three hundred'  (3 entries)
+   L  655  'nked teelə́'                   AwingWord(awing: 'nked teelə́', english: 'three hundred', category: 'numbers', difficulty: 2),
+   L 4915  'nked teelə̂'                   AwingWord(awing: 'nked teelə̂', english: 'three hundred (300)', category: 'numbers', difficulty: 2),
+   L12973  'nked teelə'                    AwingWord(awing: 'nked teelə', english: 'three hundred (300)', category: 'numbers', difficulty: 2),
+
+## 'twenty-five'  (3 entries)
+   L  652  'məghə́m mém mbê nə́ pén tênə'  AwingWord(awing: 'məghə́m mém mbê nə́ pén tênə', english: 'twenty-five', category: 'numbers', difficulty: 2),
+   L 4620  'məghám mém mbê nə pén tênə'    AwingWord(awing: 'məghám mém mbê nə pén tênə', english: 'twenty-five (25)', category: 'numbers', difficulty: 2),
+   L13267  'maghám mêm mbê nə̌ pên tênə'   AwingWord(awing: 'maghám mêm mbê nə̌ pên tênə', english: 'twenty-five', category: 'numbers', tonePattern: 'rising', diff
+
+## 'twenty-four'  (3 entries)
+   L  651  'məghə́m mém mbê nə́ nəkwa'     AwingWord(awing: 'məghə́m mém mbê nə́ nəkwa', english: 'twenty-four', category: 'numbers', difficulty: 2),
+   L 4076  'məghám mém mbê nə nəkwa'       AwingWord(awing: 'məghám mém mbê nə nəkwa', english: 'twenty-four (24)', category: 'things', tonePattern: 'falling', dif
+   L13269  'maghám mêm mbê nə̌ nakwa'      AwingWord(awing: 'maghám mêm mbê nə̌ nakwa', english: 'twenty-four', category: 'numbers', tonePattern: 'rising', difficu
+
+## 'twenty-three'  (3 entries)
+   L  650  'məghə́m mém mbê nə́ pén teelə́'  AwingWord(awing: 'məghə́m mém mbê nə́ pén teelə́', english: 'twenty-three', category: 'numbers', difficulty: 2),
+   L 4618  'məghám mém mbê nə pén teelə̂'  AwingWord(awing: 'məghám mém mbê nə pén teelə̂', english: 'twenty-three (23)', category: 'numbers', difficulty: 2),
+   L13273  'maghám mêm mbê nə̌ pên teelə'  AwingWord(awing: 'maghám mêm mbê nə̌ pên teelə', english: 'twenty-three', category: 'numbers', tonePattern: 'rising', di
+
+## 'twenty-two'  (3 entries)
+   L  649  'məghə́m mém mbê nə́ pém pê'    AwingWord(awing: 'məghə́m mém mbê nə́ pém pê', english: 'twenty-two', category: 'numbers', difficulty: 2),
+   L 4616  'məghám mém mbê nə pém pê'      AwingWord(awing: 'məghám mém mbê nə pém pê', english: 'twenty-two (22)', category: 'numbers', difficulty: 2),
+   L13275  'maghám mêm mbê nə̌ pêm pê'     AwingWord(awing: 'maghám mêm mbê nə̌ pêm pê', english: 'twenty-two', category: 'numbers', tonePattern: 'rising', difficu
+
+## 'two'  (3 entries)
+   L 4521  'pě'                            AwingWord(awing: 'pě', english: 'two (alternate form)', category: 'numbers', tonePattern: 'rising', difficulty: 1),
+   L 5836  'pě'                            AwingWord(awing: 'pě', english: 'two (2)', category: 'numbers', tonePattern: 'rising', difficulty: 2),
+   L13283  'pê'                            AwingWord(awing: 'pê', english: 'two (2)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+
+## 'where?'  (3 entries)
+   L  617  'àfó'                           AwingWord(awing: 'àfó', english: 'where?', category: 'descriptive', difficulty: 1)];
+   L 4745  'áfó'                           AwingWord(awing: 'áfó', english: 'where? (interrogative)', category: 'pronouns', difficulty: 1),
+   L13587  'əfó'                           AwingWord(awing: 'əfó', english: 'where?', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'white'  (3 entries)
+   L  712  'fúfûə'                         AwingWord(awing: 'fúfûə', english: 'white', category: 'descriptive'),
+   L  743  'fúfúə'                         AwingWord(awing: 'fúfúə', english: 'white', category: 'descriptive'),
+   L13621  'fùfùa'                         AwingWord(awing: 'fùfùa', english: 'white', category: 'descriptive', tonePattern: 'low', difficulty: 1),
+
+## '1) possessive pronoun \\'  (2 entries)
+   L 5160  'azágá'                         AwingWord(awing: 'azágá', english: '1) possessive pronoun \'ours\' used for class 7 nouns 2) possessive adj \'ours\' use
+   L 5280  'əzəgá'                         AwingWord(awing: 'əzəgá', english: '1) possessive pronoun \'ours\' used for nouns of class 9 2) possessive adj \'our\' u
+
+## 'abode of the dead'  (2 entries)
+   L 3408  'mbi pəkwûə'                    AwingWord(awing: 'mbi pəkwûə', english: 'abode of the dead', category: 'descriptive', tonePattern: 'falling', difficulty
+   L 6149  'mbî pəkwûə'                    AwingWord(awing: 'mbî pəkwûə', english: 'abode of the dead', category: 'descriptive', tonePattern: 'falling', difficulty
+
+## 'acquaintance'  (2 entries)
+   L 3671  'apádnə'                        AwingWord(awing: 'apádnə', english: 'acquaintance', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 6183  'apədnə'                        AwingWord(awing: 'apədnə', english: 'acquaintance', category: 'things', difficulty: 1),
+
+## 'adultery'  (2 entries)
+   L 4570  'anuəməghabə'                   AwingWord(awing: 'anuəməghabə', english: 'adultery', category: 'things', difficulty: 3),
+   L 6209  'anuəməghaba'                   AwingWord(awing: 'anuəməghaba', english: 'adultery', category: 'things', difficulty: 3),
+
+## 'adultry'  (2 entries)
+   L 4075  'mâghaba'                       AwingWord(awing: 'mâghaba', english: 'adultry', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 6211  'məghaba'                       AwingWord(awing: 'məghaba', english: 'adultry', category: 'things', difficulty: 1),
+
+## 'agreement'  (2 entries)
+   L 3684  'apimnə'                        AwingWord(awing: 'apimnə', english: 'agreement', category: 'things', difficulty: 1),
+   L 6241  'apímnə'                        AwingWord(awing: 'apímnə', english: 'agreement', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'aids'  (2 entries)
+   L 3838  'élə'                           AwingWord(awing: 'élə', english: 'aids', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 6245  'êlə'                           AwingWord(awing: 'êlə', english: 'aids', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'alight'  (2 entries)
+   L 3296  'zag náanə'                     AwingWord(awing: 'zag náanə', english: 'alight', category: 'actions', tonePattern: 'high', difficulty: 2),
+   L 6257  'zag naana'                     AwingWord(awing: 'zag naana', english: 'alight', category: 'things', difficulty: 2),
+
+## 'alter'  (2 entries)
+   L 4172  'nəchwéd nə́ atoonə akáŋəsê'    AwingWord(awing: 'nəchwéd nə́ atoonə akáŋəsê', english: 'alter', category: 'things', tonePattern: 'falling', difficulty:
+   L 5680  'nəchwéd nə́ atoonə akáŋəsê'    AwingWord(awing: 'nəchwéd nə́ atoonə akáŋəsê', english: 'alter (sic)', category: 'things', tonePattern: 'falling', diffi
+
+## 'always'  (2 entries)
+   L 3877  'əghâ atsəmə'                   AwingWord(awing: 'əghâ atsəmə', english: 'always', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L 6291  'aghá atsama'                   AwingWord(awing: 'aghá atsama', english: 'always', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'ant'  (2 entries)
+   L 2427  'tásélaséla'                    AwingWord(awing: 'tásélaséla', english: 'ant', category: 'animals', tonePattern: 'high', difficulty: 1),
+   L 6353  'tasélaséla'                    AwingWord(awing: 'tasélaséla', english: 'ant', category: 'animals', tonePattern: 'high', difficulty: 1),
+
+## 'antelope'  (2 entries)
+   L  179  'chwíə'                         AwingWord(awing: 'chwíə', english: 'antelope', category: 'animals', difficulty: 1),
+   L 6355  'chwiə'                         AwingWord(awing: 'chwiə', english: 'antelope', category: 'animals', difficulty: 1),
+
+## 'appearance'  (2 entries)
+   L 3849  'əfelə'                         AwingWord(awing: 'əfelə', english: 'appearance', category: 'things', difficulty: 1),
+   L 6375  'afelə'                         AwingWord(awing: 'afelə', english: 'appearance', category: 'actions', difficulty: 1),
+
+## 'armpit'  (2 entries)
+   L 2252  'nəghabta'                      AwingWord(awing: 'nəghabta', english: 'armpit', category: 'body', difficulty: 1),
+   L 6397  'naghabtə'                      AwingWord(awing: 'naghabtə', english: 'armpit', category: 'things', difficulty: 1),
+
+## 'asthmatic cough'  (2 entries)
+   L 3554  'akwagəntəəmə'                  AwingWord(awing: 'akwagəntəəmə', english: 'asthmatic cough', category: 'things', difficulty: 1),
+   L 6441  'akwagəntáəmə'                  AwingWord(awing: 'akwagəntáəmə', english: 'asthmatic cough', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'attribute \\'  (2 entries)
+   L 3438  'pətsá'                         AwingWord(awing: 'pətsá', english: 'attribute \'some\', modifying classes 2 and 8 nouns', category: 'descriptive', toneP
+   L 5862  'pətsá'                         AwingWord(awing: 'pətsá', english: 'attribute \'certain\', modifying classes two and eight nouns; attribute \'other\', m
+
+## 'avocado'  (2 entries)
+   L  281  'pyâ'                           AwingWord(awing: 'pyâ', english: 'avocado', category: 'food'),
+   L 6447  'pyə'                           AwingWord(awing: 'pyə', english: 'avocado', category: 'food', difficulty: 1),
+
+## 'baby sling'  (2 entries)
+   L 3672  'apadtəmóonə'                   AwingWord(awing: 'apadtəmóonə', english: 'baby sling', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 6465  'apadtəmoonə'                   AwingWord(awing: 'apadtəmoonə', english: 'baby sling', category: 'family', difficulty: 1),
+
+## 'bachelor'  (2 entries)
+   L 4340  'nkwiŋ ŋwu mbyâŋnə'             AwingWord(awing: 'nkwiŋ ŋwu mbyâŋnə', english: 'bachelor', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L 6467  'nkwiŋ ŋwu mbyàŋnə'             AwingWord(awing: 'nkwiŋ ŋwu mbyàŋnə', english: 'bachelor', category: 'family', tonePattern: 'low', difficulty: 2),
+
+## 'back'  (2 entries)
+   L  236  'ndzəmə'                        AwingWord(awing: 'ndzəmə', english: 'back (place)', category: 'nature', difficulty: 1),
+   L 6469  'ndzama'                        AwingWord(awing: 'ndzama', english: 'back', category: 'body', difficulty: 1),
+
+## 'bake'  (2 entries)
+   L 3093  'péebə'                         AwingWord(awing: 'péebə', english: 'bake (in ashes)', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 6481  'péeba'                         AwingWord(awing: 'péeba', english: 'bake (in ashes)', category: 'actions', tonePattern: 'high', difficulty: 1),
+
+## 'bandage'  (2 entries)
+   L 3806  'bándéchə'                      AwingWord(awing: 'bándéchə', english: 'bandage', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 6503  'bandècha'                      AwingWord(awing: 'bandècha', english: 'bandage', category: 'things', tonePattern: 'low', difficulty: 1),
+
+## 'baptise'  (2 entries)
+   L 3959  'féenkǐə'                       AwingWord(awing: 'féenkǐə', english: 'baptise', category: 'things', tonePattern: 'rising', difficulty: 1),
+   L 4761  'féenkîə'                       AwingWord(awing: 'féenkîə', english: 'baptise', category: 'things', difficulty: 1),
+
+## 'baptism'  (2 entries)
+   L 3552  'akwáalónkǐə'                   AwingWord(awing: 'akwáalónkǐə', english: 'baptism', category: 'things', tonePattern: 'rising', difficulty: 3),
+   L 4701  'akwáalónkîə'                   AwingWord(awing: 'akwáalónkîə', english: 'baptism', category: 'things', difficulty: 3),
+
+## 'barber'  (2 entries)
+   L 4329  'nkóomə atûə'                   AwingWord(awing: 'nkóomə atûə', english: 'barber', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L 6523  'nkóoma atúa'                   AwingWord(awing: 'nkóoma atúa', english: 'barber', category: 'family', tonePattern: 'high', difficulty: 2),
+
+## 'basket'  (2 entries)
+   L  477  'nkeemə́'                       AwingWord(awing: 'nkeemə́', english: 'basket', category: 'things'),  // Session 56 audit: was "nkéemɔ́" — dict says "nke
+   L 6533  'nkeemə'                        AwingWord(awing: 'nkeemə', english: 'basket', category: 'things', difficulty: 1),
+
+## 'be baptised'  (2 entries)
+   L 2937  'kwáankǐə'                      AwingWord(awing: 'kwáankǐə', english: 'be baptised', category: 'actions', tonePattern: 'rising', difficulty: 1),
+   L 4817  'kwáankîə'                      AwingWord(awing: 'kwáankîə', english: 'be baptised', category: 'things', difficulty: 1),
+
+## 'beggar'  (2 entries)
+   L 4869  'ndóonə'                        AwingWord(awing: 'ndóonə', english: 'beggar', category: 'things', difficulty: 1),
+   L 6623  'ndóona'                        AwingWord(awing: 'ndóona', english: 'beggar', category: 'family', tonePattern: 'high', difficulty: 1),
+
+## 'behave stupidly'  (2 entries)
+   L 2912  'kógnə'                         AwingWord(awing: 'kógnə', english: 'behave stupidly', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 6635  'kógna'                         AwingWord(awing: 'kógna', english: 'behave stupidly', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'belch'  (2 entries)
+   L 5852  'págə'                          AwingWord(awing: 'págə', english: 'belch', category: 'things', tonePattern: 'high', difficulty: 3),
+   L 6647  'pəgə'                          AwingWord(awing: 'pəgə', english: 'belch', category: 'things', difficulty: 3),
+
+## 'bellow'  (2 entries)
+   L 3779  'awəgə'                         AwingWord(awing: 'awəgə', english: 'bellow', category: 'things', difficulty: 1),
+   L 6659  'awaga'                         AwingWord(awing: 'awaga', english: 'bellow', category: 'things', difficulty: 1),
+
+## 'big hoe'  (2 entries)
+   L 3411  'mé asóolə'                     AwingWord(awing: 'mé asóolə', english: 'big hoe', category: 'descriptive', tonePattern: 'high', difficulty: 2),
+   L 6691  'mé asóola'                     AwingWord(awing: 'mé asóola', english: 'big hoe', category: 'descriptive', tonePattern: 'high', difficulty: 2),
+
+## 'blacksmith'  (2 entries)
+   L 2364  'ntwîə aleemə'                  AwingWord(awing: 'ntwîə aleemə', english: 'blacksmith', category: 'family', tonePattern: 'falling', difficulty: 2),
+   L 6735  'ntwíə aleemə'                  AwingWord(awing: 'ntwíə aleemə', english: 'blacksmith', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'blame'  (2 entries)
+   L 2801  'filə'                          AwingWord(awing: 'filə', english: 'blame', category: 'actions'),
+   L 6741  'fílə'                          AwingWord(awing: 'fílə', english: 'blame', category: 'actions', tonePattern: 'high', difficulty: 1),
+
+## 'blight'  (2 entries)
+   L 5308  'fágə'                          AwingWord(awing: 'fágə', english: 'blight (a plant disease)', category: 'nature', tonePattern: 'high', difficulty: 1),
+   L 6757  'fágə'                          AwingWord(awing: 'fágə', english: 'blight', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'blind person'  (2 entries)
+   L 2313  'əfəgə'                         AwingWord(awing: 'əfəgə', english: 'blind person', category: 'family', difficulty: 1),
+   L 6761  'afagə'                         AwingWord(awing: 'afagə', english: 'blind person', category: 'family', difficulty: 1),
+
+## 'blind person'  (2 entries)
+   L 2314  'əfəgmógə'                      AwingWord(awing: 'əfəgmógə', english: 'blind person', category: 'family', tonePattern: 'high', difficulty: 1),
+   L 6763  'afə̂gmógə'                     AwingWord(awing: 'afə̂gmógə', english: 'blind person', category: 'family', tonePattern: 'falling', difficulty: 1),
+
+## 'blow nose'  (2 entries)
+   L 2237  'fid nəlwîə'                    AwingWord(awing: 'fid nəlwîə', english: 'blow nose', category: 'body', tonePattern: 'falling', difficulty: 2),
+   L 6779  'fid nalwíə'                    AwingWord(awing: 'fid nalwíə', english: 'blow nose', category: 'actions', tonePattern: 'high', difficulty: 2),
+
+## 'boar'  (2 entries)
+   L 2405  'ndú kwúneemə'                  AwingWord(awing: 'ndú kwúneemə', english: 'boar', category: 'animals', tonePattern: 'high', difficulty: 2),
+   L 6795  'ndû kwúneemə'                  AwingWord(awing: 'ndû kwúneemə', english: 'boar', category: 'animals', tonePattern: 'falling', difficulty: 2),
+
+## 'boundary of field'  (2 entries)
+   L 2547  'nəpeelə'                       AwingWord(awing: 'nəpeelə', english: 'boundary of field', category: 'nature', difficulty: 1),
+   L 6831  'napeela'                       AwingWord(awing: 'napeela', english: 'boundary of field', category: 'nature', difficulty: 1),
+
+## 'bowstring'  (2 entries)
+   L 4317  'nked nkyílə'                   AwingWord(awing: 'nked nkyílə', english: 'bowstring', category: 'things', tonePattern: 'high', difficulty: 2),
+   L 6839  'nked nkyîlə'                   AwingWord(awing: 'nked nkyîlə', english: 'bowstring', category: 'actions', tonePattern: 'falling', difficulty: 2),
+
+## 'bracelet'  (2 entries)
+   L 5232  'əfeŋə'                         AwingWord(awing: 'əfeŋə', english: 'bracelet', category: 'things', difficulty: 1),
+   L 6847  'aféŋə'                         AwingWord(awing: 'aféŋə', english: 'bracelet', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'brain, used colloquially'  (2 entries)
+   L 5132  'atûə'                          AwingWord(awing: 'atûə', english: 'brain, used colloquially', category: 'body', tonePattern: 'falling', difficulty: 1),
+   L 6853  'atúə'                          AwingWord(awing: 'atúə', english: 'brain, used colloquially', category: 'body', tonePattern: 'high', difficulty: 1),
+
+## 'break, dislodge'  (2 entries)
+   L 2776  'fagô'                          AwingWord(awing: 'fagô', english: 'break, dislodge', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L 5284  'fagô'                          AwingWord(awing: 'fagô', english: 'break, dislodge (eg chickens from hen)', category: 'animals', tonePattern: 'falling',
+
+## 'bribe'  (2 entries)
+   L 3808  'bəláibə'                       AwingWord(awing: 'bəláibə', english: 'bribe', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 6885  'baláibə'                       AwingWord(awing: 'baláibə', english: 'bribe', category: 'actions', tonePattern: 'high', difficulty: 1),
+
+## 'bring up'  (2 entries)
+   L 2911  'kóga'                          AwingWord(awing: 'kóga', english: 'bring up (child or young of any animal)', category: 'actions', tonePattern: 'high', d
+   L 6905  'kógə'                          AwingWord(awing: 'kógə', english: 'bring up', category: 'actions', tonePattern: 'high', difficulty: 1),
+
+## 'buffalo'  (2 entries)
+   L 2410  'néelə'                         AwingWord(awing: 'néelə', english: 'buffalo', category: 'animals', tonePattern: 'high'),
+   L 6919  'néela'                         AwingWord(awing: 'néela', english: 'buffalo', category: 'animals', tonePattern: 'high', difficulty: 1),
+
+## 'bull'  (2 entries)
+   L 2407  'ndú neemə'                     AwingWord(awing: 'ndú neemə', english: 'bull', category: 'animals', tonePattern: 'high', difficulty: 2),
+   L 6929  'ndû neema'                     AwingWord(awing: 'ndû neema', english: 'bull', category: 'animals', tonePattern: 'falling', difficulty: 2),
+
+## 'butcher'  (2 entries)
+   L 2317  'əfi neemə'                     AwingWord(awing: 'əfi neemə', english: 'butcher', category: 'family', difficulty: 2),
+   L 6967  'afi neemə'                     AwingWord(awing: 'afi neemə', english: 'butcher', category: 'family', difficulty: 2),
+
+## 'cane, walking stick'  (2 entries)
+   L  246  'mbâŋə'                         AwingWord(awing: 'mbâŋə', english: 'cane, walking stick', category: 'things', difficulty: 1),
+   L  758  'mbàŋə'                         AwingWord(awing: 'mbàŋə', english: 'cane, walking stick', category: 'things', difficulty: 1),
+
+## 'cartilage'  (2 entries)
+   L 3998  'kíghidghaabə'                  AwingWord(awing: 'kíghidghaabə', english: 'cartilage', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 7051  'kîghidghaaba'                  AwingWord(awing: 'kîghidghaaba', english: 'cartilage', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'cassava'  (2 entries)
+   L  288  'aŋkəsálə'                      AwingWord(awing: 'aŋkəsálə', english: 'cassava', category: 'food', difficulty: 1),
+   L 7055  'aŋkasàlə'                      AwingWord(awing: 'aŋkasàlə', english: 'cassava', category: 'food', tonePattern: 'low', difficulty: 1),
+
+## 'chameleon'  (2 entries)
+   L  172  'kánáŋə́'                       AwingWord(awing: 'kánáŋə́', english: 'chameleon', category: 'animals', difficulty: 1),  // Session 56 audit: was "kónáŋó
+   L 7125  'kánáŋə'                        AwingWord(awing: 'kánáŋə', english: 'chameleon', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'cheat'  (2 entries)
+   L 2736  'chíta'                         AwingWord(awing: 'chíta', english: 'cheat', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 7147  'chita'                         AwingWord(awing: 'chita', english: 'cheat', category: 'things', difficulty: 1),
+
+## 'chest'  (2 entries)
+   L  113  'ghaŋə'                         AwingWord(awing: 'ghaŋə', english: 'chest', category: 'body', difficulty: 1),  // Session 56 audit: was "aghâŋə" — dict 
+   L 7151  'ghaŋa'                         AwingWord(awing: 'ghaŋa', english: 'chest', category: 'body', difficulty: 1),
+
+## 'childishly'  (2 entries)
+   L 3645  'ándó móonə'                    AwingWord(awing: 'ándó móonə', english: 'childishly', category: 'things', tonePattern: 'high', difficulty: 2),
+   L 7173  'àndó móona'                    AwingWord(awing: 'àndó móona', english: 'childishly', category: 'things', tonePattern: 'high-low', difficulty: 2),
+
+## 'choose'  (2 entries)
+   L 4783  'kaŋə̂'                         AwingWord(awing: 'kaŋə̂', english: 'choose', category: 'things', difficulty: 1),
+   L 7185  'kaŋə'                          AwingWord(awing: 'kaŋə', english: 'choose', category: 'things', difficulty: 1),
+
+## 'claw'  (2 entries)
+   L  221  'anyiŋə'                        AwingWord(awing: 'anyiŋə', english: 'claw', category: 'animals', difficulty: 1),  // Session 56 audit: was "anyeŋə" — di
+   L 7213  'anyiŋa'                        AwingWord(awing: 'anyiŋa', english: 'claw', category: 'things', difficulty: 1),
+
+## 'clean a little, using a hoe'  (2 entries)
+   L 2940  'kwagtə̂'                       AwingWord(awing: 'kwagtə̂', english: 'clean a little, using a hoe (usually in the coffee farm)', category: 'actions', to
+   L 7223  'kwagtə'                        AwingWord(awing: 'kwagtə', english: 'clean a little, using a hoe', category: 'actions', difficulty: 1),
+
+## 'cola nut'  (2 entries)
+   L 4229  'nəpíə'                         AwingWord(awing: 'nəpíə', english: 'cola nut', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 7303  'napiə'                         AwingWord(awing: 'napiə', english: 'cola nut', category: 'things', difficulty: 1),
+
+## 'colour'  (2 entries)
+   L 5254  'əkeenə'                        AwingWord(awing: 'əkeenə', english: 'colour', category: 'things', difficulty: 1),
+   L 7321  'akeenə'                        AwingWord(awing: 'akeenə', english: 'colour', category: 'things', difficulty: 1),
+
+## 'complaint, especially in court'  (2 entries)
+   L 3696  'apútə'                         AwingWord(awing: 'apútə', english: 'complaint, especially in court', category: 'things', tonePattern: 'high', difficulty
+   L 7359  'apûtə'                         AwingWord(awing: 'apûtə', english: 'complaint, especially in court', category: 'things', tonePattern: 'falling', difficu
+
+## 'confess'  (2 entries)
+   L 6112  'zoomə̂'                        AwingWord(awing: 'zoomə̂', english: 'confess', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 7387  'zoomə'                         AwingWord(awing: 'zoomə', english: 'confess', category: 'things', difficulty: 1),
+
+## 'conjunctivitis'  (2 entries)
+   L 3527  'akəghoolámagə'                 AwingWord(awing: 'akəghoolámagə', english: 'conjunctivitis', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 7399  'akaghoolámága'                 AwingWord(awing: 'akaghoolámága', english: 'conjunctivitis', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'continuously'  (2 entries)
+   L 4787  'kǎ'                            AwingWord(awing: 'kǎ', english: 'continuously', category: 'things', difficulty: 1),
+   L 7421  'kə̌'                           AwingWord(awing: 'kə̌', english: 'continuously', category: 'things', tonePattern: 'rising', difficulty: 1),
+
+## 'cook'  (2 entries)
+   L 3909  'ənáŋnə majîə'                  AwingWord(awing: 'ənáŋnə majîə', english: 'cook', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L 7433  'anáŋna majiə'                  AwingWord(awing: 'anáŋna majiə', english: 'cook', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'cotton'  (2 entries)
+   L 4012  'kótinə'                        AwingWord(awing: 'kótinə', english: 'cotton (from English)', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 7475  'kótina'                        AwingWord(awing: 'kótina', english: 'cotton', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'courtyard'  (2 entries)
+   L 3728  'atátá'                         AwingWord(awing: 'atátá', english: 'courtyard', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 7489  'atátə'                         AwingWord(awing: 'atátə', english: 'courtyard', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'cover'  (2 entries)
+   L 2892  'kábkə'                         AwingWord(awing: 'kábkə', english: 'cover', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 7495  'kə̂bka'                        AwingWord(awing: 'kə̂bka', english: 'cover', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'cow'  (2 entries)
+   L 2421  'ngwě neemə'                    AwingWord(awing: 'ngwě neemə', english: 'cow', category: 'animals', tonePattern: 'rising', difficulty: 2),
+   L 7511  'ngwê neemə'                    AwingWord(awing: 'ngwê neemə', english: 'cow', category: 'animals', tonePattern: 'falling', difficulty: 2),
+
+## 'crevice'  (2 entries)
+   L 3934  'əséenə'                        AwingWord(awing: 'əséenə', english: 'crevice', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 7531  'asééna'                        AwingWord(awing: 'asééna', english: 'crevice', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'cricket'  (2 entries)
+   L 2385  'kíchíə'                        AwingWord(awing: 'kíchíə', english: 'cricket (insect that thrives in dry season)', category: 'animals', tonePattern: 'hi
+   L 7533  'kîchìə'                        AwingWord(awing: 'kîchìə', english: 'cricket', category: 'animals', tonePattern: 'falling', difficulty: 1),
+
+## 'cross river'  (2 entries)
+   L 2577  'tú nkǐə'                       AwingWord(awing: 'tú nkǐə', english: 'cross river', category: 'nature', tonePattern: 'rising', difficulty: 2),
+   L 4961  'tú nkîə'                       AwingWord(awing: 'tú nkîə', english: 'cross river', category: 'nature', difficulty: 2),
+
+## 'curse'  (2 entries)
+   L 3685  'apinə'                         AwingWord(awing: 'apinə', english: 'curse', category: 'things', difficulty: 3),
+   L 7607  'apínə'                         AwingWord(awing: 'apínə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),
+
+## 'curse'  (2 entries)
+   L 4154  'ndoonə'                        AwingWord(awing: 'ndoonə', english: 'curse', category: 'things', difficulty: 3),
+   L 7611  'ndóonə'                        AwingWord(awing: 'ndóonə', english: 'curse', category: 'things', tonePattern: 'high', difficulty: 3),
+
+## 'dance group'  (2 entries)
+   L  453  'alóŋə'                         AwingWord(awing: 'alóŋə', english: 'dance group', category: 'things'),  // Session 56 audit: was "əlɔ́ŋə" — dict says "a
+   L 4715  'aloŋə'                         AwingWord(awing: 'aloŋə', english: 'dance group', category: 'actions', difficulty: 1),
+
+## 'darkness'  (2 entries)
+   L 2542  'ndzəmá'                        AwingWord(awing: 'ndzəmá', english: 'darkness', category: 'nature', tonePattern: 'high', difficulty: 1),
+   L 7695  'ndzəmə'                        AwingWord(awing: 'ndzəmə', english: 'darkness', category: 'nature', difficulty: 1),
+
+## 'dawn'  (2 entries)
+   L 2561  'nkyakəpeŋə'                    AwingWord(awing: 'nkyakəpeŋə', english: 'dawn', category: 'nature', difficulty: 1),
+   L 7707  'nkyəkəpeŋə'                    AwingWord(awing: 'nkyəkəpeŋə', english: 'dawn', category: 'nature', difficulty: 1),
+
+## 'day'  (2 entries)
+   L  202  'àlě'                           AwingWord(awing: 'àlě', english: 'day', category: 'nature'),
+   L 4713  'alě'                           AwingWord(awing: 'alě', english: 'day', category: 'things', difficulty: 1),
+
+## 'deaf person'  (2 entries)
+   L 2320  'əkə̂mátôglə'                   AwingWord(awing: 'əkə̂mátôglə', english: 'deaf person', category: 'family', tonePattern: 'falling', difficulty: 1),
+   L 7753  'akə̌mátóglə'                   AwingWord(awing: 'akə̌mátóglə', english: 'deaf person', category: 'family', tonePattern: 'rising', difficulty: 1),
+
+## 'death'  (2 entries)
+   L 4893  'nəwûə'                         AwingWord(awing: 'nəwûə', english: 'death', category: 'things', difficulty: 3),
+   L 7755  'nəwùə'                         AwingWord(awing: 'nəwùə', english: 'death', category: 'things', tonePattern: 'low', difficulty: 3),
+
+## 'demonstration'  (2 entries)
+   L 5072  'anəələ'                        AwingWord(awing: 'anəələ', english: 'demonstration', category: 'things', difficulty: 1),
+   L 7827  'anaalə'                        AwingWord(awing: 'anaalə', english: 'demonstration', category: 'things', difficulty: 1),
+
+## 'demonstrative adj \\'  (2 entries)
+   L 4116  'mîa'                           AwingWord(awing: 'mîa', english: 'demonstrative adj \'those\', modifies nouns of class six', category: 'things', tonePat
+   L 7847  'miə'                           AwingWord(awing: 'miə', english: 'demonstrative adj \'those\'', category: 'things', difficulty: 3),
+
+## 'demonstrative adj \\'  (2 entries)
+   L 5868  'pîə'                           AwingWord(awing: 'pîə', english: 'demonstrative adj \'those\', modifies classes 2 and 8 nouns. Occurs after the noun', c
+   L 7851  'pîə'                           AwingWord(awing: 'pîə', english: 'demonstrative adj \'those\'', category: 'things', tonePattern: 'falling', difficulty: 
+
+## 'demonstrative adj \\'  (2 entries)
+   L 7829  'zə̂'                           AwingWord(awing: 'zə̂', english: 'demonstrative adj \'that\'', category: 'things', tonePattern: 'falling', difficulty: 3
+   L 7837  'zə̌'                           AwingWord(awing: 'zə̌', english: 'demonstrative adj \'these\'', category: 'things', tonePattern: 'rising', difficulty: 3
+
+## 'demonstrative pronoun \\'  (2 entries)
+   L 6048  'wáələ'                         AwingWord(awing: 'wáələ', english: 'demonstrative pronoun \'it\' used to modify nouns of classes one and three', categor
+   L 7857  'wáalə̂'                        AwingWord(awing: 'wáalə̂', english: 'demonstrative pronoun \'it\'', category: 'things', tonePattern: 'falling', difficul
+
+## 'demonstrative pronoun \\'  (2 entries)
+   L 6092  'zəələ́'                        AwingWord(awing: 'zəələ́', english: 'demonstrative pronoun \'it\' used to modify nouns of classes 5, 7 and 9', category:
+   L 7859  'záalə̂'                        AwingWord(awing: 'záalə̂', english: 'demonstrative pronoun \'it\'', category: 'things', tonePattern: 'falling', difficul
+
+## 'die, of many things'  (2 entries)
+   L 2957  'kwúka'                         AwingWord(awing: 'kwúka', english: 'die, of many things', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 7905  'kwùkə'                         AwingWord(awing: 'kwùkə', english: 'die, of many things', category: 'descriptive', tonePattern: 'low', difficulty: 1),
+
+## 'disappear'  (2 entries)
+   L  677  'nwâŋə'                         AwingWord(awing: 'nwâŋə', english: 'disappear', category: 'actions', difficulty: 1),
+   L 4923  'nwáŋə'                         AwingWord(awing: 'nwáŋə', english: 'disappear', category: 'things', difficulty: 1),
+
+## 'dog'  (2 entries)
+   L  173  'ngwûə'                         AwingWord(awing: 'ngwûə', english: 'dog', category: 'animals', pluralForm: 'məngwûə'),
+   L 8023  'ngwùə'                         AwingWord(awing: 'ngwùə', english: 'dog', category: 'animals', tonePattern: 'low', difficulty: 1),
+
+## 'dove'  (2 entries)
+   L 3667  'aŋkəŋâ'                        AwingWord(awing: 'aŋkəŋâ', english: 'dove', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 8043  'aŋkəŋə'                        AwingWord(awing: 'aŋkəŋə', english: 'dove', category: 'things', difficulty: 1),
+
+## 'dowry'  (2 entries)
+   L 3495  'aghoolá atûa'                  AwingWord(awing: 'aghoolá atûa', english: 'dowry', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L 8049  'aghoolə atúə'                  AwingWord(awing: 'aghoolə atúə', english: 'dowry', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'drag on the grown'  (2 entries)
+   L 4436  'soŋə ndəsê'                    AwingWord(awing: 'soŋə ndəsê', english: 'drag on the grown', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L 8055  'soŋa ndasé'                    AwingWord(awing: 'soŋa ndasé', english: 'drag on the grown', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'drink hastily'  (2 entries)
+   L 5506  'kwúbkə'                        AwingWord(awing: 'kwúbkə', english: 'drink (eg water, wine, medicine) hastily', category: 'actions', tonePattern: 'high'
+   L 8073  'kwùbkə'                        AwingWord(awing: 'kwùbkə', english: 'drink hastily', category: 'actions', tonePattern: 'low', difficulty: 1),
+
+## 'drip'  (2 entries)
+   L 3240  'tsəəmə'                        AwingWord(awing: 'tsəəmə', english: 'drip', category: 'actions', difficulty: 1),
+   L 8077  'tsáəmə'                        AwingWord(awing: 'tsáəmə', english: 'drip', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'drive away'  (2 entries)
+   L 2898  'kəmə̂'                         AwingWord(awing: 'kəmə̂', english: 'drive away', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L 8081  'kamə'                          AwingWord(awing: 'kamə', english: 'drive away', category: 'things', difficulty: 1),
+
+## 'dry season'  (2 entries)
+   L 2498  'əghâ alumə'                    AwingWord(awing: 'əghâ alumə', english: 'dry season', category: 'nature', tonePattern: 'falling', difficulty: 2),
+   L 8113  'aghá aluma'                    AwingWord(awing: 'aghá aluma', english: 'dry season', category: 'nature', tonePattern: 'high', difficulty: 2),
+
+## 'dwarf'  (2 entries)
+   L 3999  'kíkəm ŋwunə'                   AwingWord(awing: 'kíkəm ŋwunə', english: 'dwarf', category: 'things', tonePattern: 'high', difficulty: 2),
+   L 8123  'kîkam ŋwuna'                   AwingWord(awing: 'kîkam ŋwuna', english: 'dwarf', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'ear'  (2 entries)
+   L  115  'nətôglə'                       AwingWord(awing: 'nətôglə', english: 'ear', category: 'body'),  // Session 56 audit: was "ntɔ̂glə" — dict says "nətôglə"
+   L 8133  'natóglə'                       AwingWord(awing: 'natóglə', english: 'ear', category: 'body', tonePattern: 'high', difficulty: 1),
+
+## 'eat'  (2 entries)
+   L  337  'jíə'                           AwingWord(awing: 'jíə', english: 'eat', category: 'actions'),
+   L 4777  'jîə'                           AwingWord(awing: 'jîə', english: 'eat', category: 'actions', difficulty: 1),
+
+## 'eat hastily'  (2 entries)
+   L  353  'kamtə̂'                        AwingWord(awing: 'kamtə̂', english: 'eat hastily', category: 'actions'),  // Session 56 audit: was "kamtɔ́" — dict says 
+   L 8149  'kamtə'                         AwingWord(awing: 'kamtə', english: 'eat hastily', category: 'actions', difficulty: 1),
+
+## 'eat heavily'  (2 entries)
+   L 8151  'faələ'                         AwingWord(awing: 'faələ', english: 'eat heavily (derog.)', category: 'actions', difficulty: 1),
+   L 8153  'faələ'                         AwingWord(awing: 'faələ', english: 'eat heavily (derogatory)', category: 'actions', difficulty: 1),
+
+## 'egg'  (2 entries)
+   L  272  'nəpumə́'                       AwingWord(awing: 'nəpumə́', english: 'egg', category: 'food', pluralForm: 'mbumɔ́'),  // Session 56 audit: was "nəpumɔ́"
+   L 8169  'napumə'                        AwingWord(awing: 'napumə', english: 'egg', category: 'food', difficulty: 1),
+
+## 'eight'  (2 entries)
+   L 5228  'élə'                           AwingWord(awing: 'élə', english: 'eight', category: 'numbers', tonePattern: 'high', difficulty: 1),
+   L 8175  'êlə'                           AwingWord(awing: 'êlə', english: 'eight', category: 'numbers', tonePattern: 'falling', difficulty: 1),
+
+## 'eighteen'  (2 entries)
+   L  634  'ntsəb nəfeemə́'                AwingWord(awing: 'ntsəb nəfeemə́', english: 'eighteen', category: 'numbers', difficulty: 2),
+   L 5802  'ntsəb nəfeemə́'                AwingWord(awing: 'ntsəb nəfeemə́', english: 'eighteen (18)', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'eighty'  (2 entries)
+   L  643  'məghə́m mén nəfeemə́'          AwingWord(awing: 'məghə́m mén nəfeemə́', english: 'eighty', category: 'numbers', difficulty: 2),
+   L 4508  'məghám mén nəfeemə̂'           AwingWord(awing: 'məghám mén nəfeemə̂', english: 'eighty (80)', category: 'numbers', tonePattern: 'falling', difficulty:
+
+## 'end'  (2 entries)
+   L  494  'ndwîgtə'                       AwingWord(awing: 'ndwîgtə', english: 'end', category: 'things', difficulty: 1),
+   L 4875  'ndwigtə'                       AwingWord(awing: 'ndwigtə', english: 'end', category: 'things', difficulty: 1),
+
+## 'english language'  (2 entries)
+   L 3754  'atséebámakálə'                 AwingWord(awing: 'atséebámakálə', english: 'English language', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 8225  'atséebə́makálə'                AwingWord(awing: 'atséebə́makálə', english: 'English language', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'entrance'  (2 entries)
+   L  231  'nəkwuunə́'                     AwingWord(awing: 'nəkwuunə́', english: 'entrance', category: 'nature', difficulty: 1),  // Session 56 audit: was "nəkwùː
+   L 8235  'nakwuunə'                      AwingWord(awing: 'nakwuunə', english: 'entrance', category: 'things', difficulty: 1),
+
+## 'evening'  (2 entries)
+   L  212  'nkwaná'                        AwingWord(awing: 'nkwaná', english: 'evening', category: 'nature'),  // Session 56 audit: was "nkwanɔ́" — dict says "nkw
+   L 8265  'nkwanə'                        AwingWord(awing: 'nkwanə', english: 'evening', category: 'nature', difficulty: 1),
+
+## 'everybody'  (2 entries)
+   L 4379  'ŋwu ntsəmə'                    AwingWord(awing: 'ŋwu ntsəmə', english: 'everybody', category: 'things', difficulty: 2),
+   L 8273  'ŋwu ntsamə'                    AwingWord(awing: 'ŋwu ntsamə', english: 'everybody', category: 'things', difficulty: 2),
+
+## 'everywhere'  (2 entries)
+   L 4156  'ndú atsəmə'                    AwingWord(awing: 'ndú atsəmə', english: 'everywhere', category: 'things', tonePattern: 'high', difficulty: 2),
+   L 8281  'ndû atsama'                    AwingWord(awing: 'ndû atsama', english: 'everywhere', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'exam'  (2 entries)
+   L 4031  'ləzámə'                        AwingWord(awing: 'ləzámə', english: 'exam', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 8297  'lazəmə'                        AwingWord(awing: 'lazəmə', english: 'exam', category: 'things', difficulty: 1),
+
+## 'excitement'  (2 entries)
+   L 4691  'agháglə'                       AwingWord(awing: 'agháglə', english: 'excitement', category: 'things', difficulty: 1),
+   L 8315  'aghaglə'                       AwingWord(awing: 'aghaglə', english: 'excitement', category: 'things', difficulty: 1),
+
+## 'excrement'  (2 entries)
+   L 4650  'nəpélə'                        AwingWord(awing: 'nəpélə', english: 'excrement', category: 'things', difficulty: 3),
+   L 8321  'napélə'                        AwingWord(awing: 'napélə', english: 'excrement', category: 'things', tonePattern: 'high', difficulty: 3),
+
+## 'eye'  (2 entries)
+   L  114  'nəlágə'                        AwingWord(awing: 'nəlágə', english: 'eye', category: 'body', pluralForm: 'mələ́g'),  // Session 56 audit: was "nəlɔ́gə" 
+   L 8365  'nalə̂gə'                       AwingWord(awing: 'nalə̂gə', english: 'eye', category: 'body', tonePattern: 'falling', difficulty: 1),
+
+## 'fashion'  (2 entries)
+   L 3660  'anuyəfíə'                      AwingWord(awing: 'anuyəfíə', english: 'fashion', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 8421  'anuyəfìə'                      AwingWord(awing: 'anuyəfìə', english: 'fashion', category: 'things', tonePattern: 'low', difficulty: 1),
+
+## 'fat'  (2 entries)
+   L 3422  'nəfoonə'                       AwingWord(awing: 'nəfoonə', english: 'fat', category: 'descriptive'),
+   L 8441  'nafoonə'                       AwingWord(awing: 'nafoonə', english: 'fat', category: 'descriptive', difficulty: 1),
+
+## 'father\\'  (2 entries)
+   L 2350  'ndim tǎ yi mbyâŋnə'            AwingWord(awing: 'ndim tǎ yi mbyâŋnə', english: 'father\'s brother (uncle)', category: 'family', tonePattern: 'rising', 
+   L 8451  'ndim tâ yi mbyâŋnə'            AwingWord(awing: 'ndim tâ yi mbyâŋnə', english: 'father\'s brother (uncle)', category: 'family', tonePattern: 'falling',
+
+## 'fault finding'  (2 entries)
+   L 2742  'chúbnə'                        AwingWord(awing: 'chúbnə', english: 'fault finding', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 8455  'chùbnə'                        AwingWord(awing: 'chùbnə', english: 'fault finding', category: 'things', tonePattern: 'low', difficulty: 1),
+
+## 'feather'  (2 entries)
+   L 4176  'nəfelə'                        AwingWord(awing: 'nəfelə', english: 'feather', category: 'things'),
+   L 8467  'nafelə'                        AwingWord(awing: 'nafelə', english: 'feather', category: 'things', difficulty: 1),
+
+## 'ferment, eg of food'  (2 entries)
+   L 5832  'págə'                          AwingWord(awing: 'págə', english: 'ferment, eg of food', category: 'food', tonePattern: 'high', difficulty: 1),
+   L 8489  'pə̂gə'                         AwingWord(awing: 'pə̂gə', english: 'ferment, eg of food', category: 'food', tonePattern: 'falling', difficulty: 1),
+
+## 'fifteen'  (2 entries)
+   L  631  'ntsəb tênə'                    AwingWord(awing: 'ntsəb tênə', english: 'fifteen', category: 'numbers', difficulty: 2),
+   L 5808  'ntsəb tênə'                    AwingWord(awing: 'ntsəb tênə', english: 'fifteen (15)', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'fifty'  (2 entries)
+   L  640  'məghə́m mén tênə'              AwingWord(awing: 'məghə́m mén tênə', english: 'fifty', category: 'numbers', difficulty: 2),
+   L 4513  'məghám mén tênə'               AwingWord(awing: 'məghám mén tênə', english: 'fifty (50)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+
+## 'fig'  (2 entries)
+   L 3888  'əghəmə'                        AwingWord(awing: 'əghəmə', english: 'fig (tree)', category: 'things', difficulty: 1),
+   L 8513  'aghəma'                        AwingWord(awing: 'aghəma', english: 'fig (tree)', category: 'nature', difficulty: 1),
+
+## 'find each other'  (2 entries)
+   L 5382  'jinə'                          AwingWord(awing: 'jinə', english: 'find each other', category: 'descriptive', difficulty: 1),
+   L 8537  'jîna'                          AwingWord(awing: 'jîna', english: 'find each other', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
+
+## 'finger'  (2 entries)
+   L 2236  'fîə apô'                       AwingWord(awing: 'fîə apô', english: 'finger', category: 'body', tonePattern: 'falling', difficulty: 2),
+   L 8543  'fîə apó'                       AwingWord(awing: 'fîə apó', english: 'finger', category: 'body', tonePattern: 'falling', difficulty: 2),
+
+## 'fish'  (2 entries)
+   L  159  'əshûə'                         AwingWord(awing: 'əshûə', english: 'fish', category: 'animals'),
+   L 8565  'əshúə'                         AwingWord(awing: 'əshúə', english: 'fish', category: 'animals', tonePattern: 'high', difficulty: 1),
+
+## 'fish dam'  (2 entries)
+   L 2423  'nkǐ əshúə'                     AwingWord(awing: 'nkǐ əshúə', english: 'fish dam', category: 'animals', tonePattern: 'rising', difficulty: 2),
+   L 8571  'nkî əshúə'                     AwingWord(awing: 'nkî əshúə', english: 'fish dam', category: 'actions', tonePattern: 'falling', difficulty: 2),
+
+## 'fish-scale'  (2 entries)
+   L 3569  'akwubə əshûə'                  AwingWord(awing: 'akwubə əshûə', english: 'fish-scale', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L 8579  'akwuba əshúə'                  AwingWord(awing: 'akwuba əshúə', english: 'fish-scale', category: 'animals', tonePattern: 'high', difficulty: 2),
+
+## 'fishing net'  (2 entries)
+   L 4318  'nkelá akóolə əshúə'            AwingWord(awing: 'nkelá akóolə əshúə', english: 'fishing net', category: 'things', tonePattern: 'high', difficulty: 2),
+   L 8577  'nkelə̌ akóola əshúə'           AwingWord(awing: 'nkelə̌ akóola əshúə', english: 'fishing net', category: 'things', tonePattern: 'rising', difficulty: 2
+
+## 'five'  (2 entries)
+   L 4523  'tênə'                          AwingWord(awing: 'tênə', english: 'five (alternate form)', category: 'numbers', tonePattern: 'falling', difficulty: 1),
+   L 5950  'tênə'                          AwingWord(awing: 'tênə', english: 'five', category: 'numbers', tonePattern: 'falling', difficulty: 1),
+
+## 'five'  (2 entries)
+   L 4953  'tâ'                            AwingWord(awing: 'tâ', english: 'five (See: tênə)', category: 'actions', difficulty: 1),
+   L 8583  'tâ'                            AwingWord(awing: 'tâ', english: 'five', category: 'numbers', tonePattern: 'falling', difficulty: 1),
+
+## 'five hundred'  (2 entries)
+   L  657  'nked tênə'                     AwingWord(awing: 'nked tênə', english: 'five hundred', category: 'numbers', difficulty: 2),
+   L 5772  'nked tênə'                     AwingWord(awing: 'nked tênə', english: 'five hundred (500)', category: 'numbers', tonePattern: 'falling', difficulty: 2)
+
+## 'flower'  (2 entries)
+   L 2508  'fəláwa'                        AwingWord(awing: 'fəláwa', english: 'flower (Whites like planting flowers in their compounds)', category: 'nature', tone
+   L 8625  'faláwa'                        AwingWord(awing: 'faláwa', english: 'flower', category: 'nature', tonePattern: 'high', difficulty: 1),
+
+## 'food'  (2 entries)
+   L 2631  'məjîə'                         AwingWord(awing: 'məjîə', english: 'food', category: 'food', tonePattern: 'falling'),
+   L 8695  'majìə'                         AwingWord(awing: 'majìə', english: 'food', category: 'food', tonePattern: 'low', difficulty: 1),
+
+## 'foolishness'  (2 entries)
+   L 4226  'nəpəgə'                        AwingWord(awing: 'nəpəgə', english: 'foolishness', category: 'things', difficulty: 1),
+   L 8709  'napə̂gə'                       AwingWord(awing: 'napə̂gə', english: 'foolishness', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'forgetfulness'  (2 entries)
+   L 3601  'aləgnə'                        AwingWord(awing: 'aləgnə', english: 'forgetfulness', category: 'things', difficulty: 1),
+   L 8735  'alagnə'                        AwingWord(awing: 'alagnə', english: 'forgetfulness', category: 'things', difficulty: 1),
+
+## 'four'  (2 entries)
+   L 4506  'kwa'                           AwingWord(awing: 'kwa', english: 'four (see nəkwa)', category: 'numbers', difficulty: 1),
+   L 8747  'kwa'                           AwingWord(awing: 'kwa', english: 'four', category: 'numbers', difficulty: 1),
+
+## 'friend'  (2 entries)
+   L  570  'ngəənə'                        AwingWord(awing: 'ngəənə', english: 'friend', category: 'family', pluralForm: 'pəghəənə'),
+   L 8765  'ngaana'                        AwingWord(awing: 'ngaana', english: 'friend', category: 'family', difficulty: 1),
+
+## 'friendship'  (2 entries)
+   L 3887  'əghəənə'                       AwingWord(awing: 'əghəənə', english: 'friendship', category: 'things', difficulty: 1),
+   L 8771  'aghaana'                       AwingWord(awing: 'aghaana', english: 'friendship', category: 'things', difficulty: 1),
+
+## 'frighten'  (2 entries)
+   L 2850  'ghədkə̂'                       AwingWord(awing: 'ghədkə̂', english: 'frighten', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L 8775  'ghədkə'                        AwingWord(awing: 'ghədkə', english: 'frighten', category: 'things', difficulty: 1),
+
+## 'frog'  (2 entries)
+   L  183  'tətseemə'                      AwingWord(awing: 'tətseemə', english: 'frog', category: 'animals'),  // Session 56 audit: was "tatseemə" — dict says "tə
+   L 8777  'tatseema'                      AwingWord(awing: 'tatseema', english: 'frog', category: 'animals', difficulty: 1),
+
+## 'frown'  (2 entries)
+   L 3574  'akwúláshîə'                    AwingWord(awing: 'akwúláshîə', english: 'frown (noun)', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 8787  'akwùləshìə'                    AwingWord(awing: 'akwùləshìə', english: 'frown(n)', category: 'things', tonePattern: 'low', difficulty: 1),
+
+## 'fry'  (2 entries)
+   L 5396  'kaŋə'                          AwingWord(awing: 'kaŋə', english: 'fry', category: 'things', difficulty: 1),
+   L 8809  'káŋə'                          AwingWord(awing: 'káŋə', english: 'fry', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'get broken'  (2 entries)
+   L 3134  'sánkə'                         AwingWord(awing: 'sánkə', english: 'get broken', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 8881  'sənkə'                         AwingWord(awing: 'sənkə', english: 'get broken', category: 'actions', difficulty: 1),
+
+## 'get smashed'  (2 entries)
+   L 2673  'chakâ'                         AwingWord(awing: 'chakâ', english: 'get smashed (intr)', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L 8885  'chakə'                         AwingWord(awing: 'chakə', english: 'get smashed (intr)', category: 'actions', difficulty: 1),
+
+## 'gill'  (2 entries)
+   L 4216  'nəlwí nə́ əshúə'               AwingWord(awing: 'nəlwí nə́ əshúə', english: 'gill', category: 'things', tonePattern: 'high', difficulty: 2),
+   L 8899  'nəlwi nə́ əshúə'               AwingWord(awing: 'nəlwi nə́ əshúə', english: 'gill', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'giraffe'  (2 entries)
+   L  185  'anjwa'                         AwingWord(awing: 'anjwa', english: 'giraffe', category: 'animals', difficulty: 1),
+   L 8901  'anjwə'                         AwingWord(awing: 'anjwə', english: 'giraffe', category: 'things', difficulty: 1),
+
+## 'go'  (2 entries)
+   L  325  'ghenə̂'                        AwingWord(awing: 'ghenə̂', english: 'go', category: 'actions'),  // Session 56 audit: was "ghɛnɔ́" — dict says "ghenə̂"
+   L 8939  'ghenə'                         AwingWord(awing: 'ghenə', english: 'go', category: 'things', difficulty: 1),
+
+## 'gold'  (2 entries)
+   L 3971  'gôlə'                          AwingWord(awing: 'gôlə', english: 'gold', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 8965  'gólə'                          AwingWord(awing: 'gólə', english: 'gold', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'gossip'  (2 entries)
+   L 3756  'atséebándzəmándzəmə'           AwingWord(awing: 'atséebándzəmándzəmə', english: 'gossip', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 8985  'atséebə̂ndzəməndzəma'          AwingWord(awing: 'atséebə̂ndzəməndzəma', english: 'gossip', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'grandfather'  (2 entries)
+   L 4444  'tä pətä'                       AwingWord(awing: 'tä pətä', english: 'grandfather (paternal)', category: 'things', difficulty: 2),
+   L 9003  'tâ pətə̂'                      AwingWord(awing: 'tâ pətə̂', english: 'grandfather (paternal)', category: 'family', tonePattern: 'falling', difficulty: 
+
+## 'grandmother'  (2 entries)
+   L 4038  'mǎ pətǎ'                       AwingWord(awing: 'mǎ pətǎ', english: 'grandmother (paternal)', category: 'things', tonePattern: 'rising', difficulty: 2)
+   L 9009  'má pətə̂'                      AwingWord(awing: 'má pətə̂', english: 'grandmother (paternal)', category: 'family', tonePattern: 'falling', difficulty: 
+
+## 'grape'  (2 entries)
+   L  291  'gəlébə'                        AwingWord(awing: 'gəlébə', english: 'grape', category: 'food', difficulty: 1),  // Session 56 audit: was "galéba" — dict
+   L 9015  'galéba'                        AwingWord(awing: 'galéba', english: 'grape', category: 'food', tonePattern: 'high', difficulty: 1),
+
+## 'great grandmother'  (2 entries)
+   L 3406  'mǎ pətǎ pətǎ'                  AwingWord(awing: 'mǎ pətǎ pətǎ', english: 'great grandmother (paternal)', category: 'descriptive', tonePattern: 'rising'
+   L 9045  'má pətə̂ pətə̂'                AwingWord(awing: 'má pətə̂ pətə̂', english: 'great grandmother (paternal)', category: 'family', tonePattern: 'falling', 
+
+## 'greed'  (2 entries)
+   L 5122  'atogá'                         AwingWord(awing: 'atogá', english: 'greed', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 9049  'atogə'                         AwingWord(awing: 'atogə', english: 'greed', category: 'things', difficulty: 1),
+
+## 'green mamba'  (2 entries)
+   L 3431  'nóolə akəfə́'                  AwingWord(awing: 'nóolə akəfə́', english: 'green mamba', category: 'descriptive', tonePattern: 'high', difficulty: 2),
+   L 9055  'nóola akafə'                   AwingWord(awing: 'nóola akafə', english: 'green mamba', category: 'descriptive', tonePattern: 'high', difficulty: 2),
+
+## 'groan'  (2 entries)
+   L 3058  'nélə'                          AwingWord(awing: 'nélə', english: 'groan', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 9077  'néla'                          AwingWord(awing: 'néla', english: 'groan', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'guard'  (2 entries)
+   L 4061  'mbyáabə'                       AwingWord(awing: 'mbyáabə', english: 'guard', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 9113  'mbyâəba'                       AwingWord(awing: 'mbyâəba', english: 'guard', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'guinea corn'  (2 entries)
+   L 2620  'káyé məsaŋə̂'                  AwingWord(awing: 'káyé məsaŋə̂', english: 'guinea corn', category: 'food', tonePattern: 'falling', difficulty: 2),
+   L 9127  'kâyé məsaŋə'                   AwingWord(awing: 'kâyé məsaŋə', english: 'guinea corn', category: 'food', tonePattern: 'falling', difficulty: 2),
+
+## 'gun powder'  (2 entries)
+   L 4080  'məkeemə̂'                      AwingWord(awing: 'məkeemə̂', english: 'gun powder', category: 'things', tonePattern: 'falling', difficulty: 3),
+   L 9133  'makeemə'                       AwingWord(awing: 'makeemə', english: 'gun powder', category: 'things', difficulty: 3),
+
+## 'hammer'  (2 entries)
+   L  445  'ndua'                          AwingWord(awing: 'ndua', english: 'hammer', category: 'things', difficulty: 1),  // Session 56 audit: was "nduə" — dict 
+   L 9167  'nduə'                          AwingWord(awing: 'nduə', english: 'hammer', category: 'things', difficulty: 1),
+
+## 'hand'  (2 entries)
+   L   97  'apô'                           AwingWord(awing: 'apô', english: 'hand', category: 'body'),
+   L 9169  'apó'                           AwingWord(awing: 'apó', english: 'hand', category: 'body', tonePattern: 'high', difficulty: 1),
+
+## 'harden'  (2 entries)
+   L  669  'yîkə'                          AwingWord(awing: 'yîkə', english: 'harden', category: 'actions', difficulty: 1),
+   L 6072  'yíkə'                          AwingWord(awing: 'yíkə', english: 'harden', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'harp'  (2 entries)
+   L 4214  'nəloŋə'                        AwingWord(awing: 'nəloŋə', english: 'harp', category: 'things', difficulty: 1),
+   L 9203  'naloŋə'                        AwingWord(awing: 'naloŋə', english: 'harp', category: 'things', difficulty: 1),
+
+## 'hat'  (2 entries)
+   L 4843  'leelə'                         AwingWord(awing: 'leelə', english: 'hat', category: 'things', difficulty: 1),
+   L 9217  'leela'                         AwingWord(awing: 'leela', english: 'hat', category: 'things', difficulty: 1),
+
+## 'have sex with,'  (2 entries)
+   L 5958  'tê'                            AwingWord(awing: 'tê', english: 'have sex with, (colloquial usage)', category: 'things', tonePattern: 'falling', difficu
+   L 9225  'tê'                            AwingWord(awing: 'tê', english: 'have sex with, (colloq)', category: 'things', tonePattern: 'falling', difficulty: 3),
+
+## 'hawk'  (2 entries)
+   L  251  'máwúmə́'                       AwingWord(awing: 'máwúmə́', english: 'hawk', category: 'animals', difficulty: 1),  // Session 56 audit: was "máwúmɔ́" — 
+   L 9231  'máwùmə'                        AwingWord(awing: 'máwùmə', english: 'hawk', category: 'animals', tonePattern: 'high-low', difficulty: 1),
+
+## 'head'  (2 entries)
+   L   98  'atûə'                          AwingWord(awing: 'atûə', english: 'head', category: 'body'),
+   L 9235  'atúə'                          AwingWord(awing: 'atúə', english: 'head', category: 'body', tonePattern: 'high', difficulty: 1),
+
+## 'head of arrow'  (2 entries)
+   L 2271  'ntso nkyílə'                   AwingWord(awing: 'ntso nkyílə', english: 'head of arrow', category: 'body', tonePattern: 'high', difficulty: 2),
+   L 9237  'ntso nkyîlə'                   AwingWord(awing: 'ntso nkyîlə', english: 'head of arrow', category: 'body', tonePattern: 'falling', difficulty: 2),
+
+## 'headpad'  (2 entries)
+   L 4188  'nəkéelə'                       AwingWord(awing: 'nəkéelə', english: 'headpad', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 9241  'nakeela'                       AwingWord(awing: 'nakeela', english: 'headpad', category: 'things', difficulty: 1),
+
+## 'hearth'  (2 entries)
+   L 4207  'nəkyelá'                       AwingWord(awing: 'nəkyelá', english: 'hearth', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 9259  'nakyelə'                       AwingWord(awing: 'nakyelə', english: 'hearth', category: 'things', difficulty: 1),
+
+## 'heaven'  (2 entries)
+   L 4090  'məm nəpóola'                   AwingWord(awing: 'məm nəpóola', english: 'heaven', category: 'things', tonePattern: 'high', difficulty: 2),
+   L 9265  'məm napóola'                   AwingWord(awing: 'məm napóola', english: 'heaven', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'hernia'  (2 entries)
+   L 4648  'nəntoolá'                      AwingWord(awing: 'nəntoolá', english: 'hernia (a disease)', category: 'things', difficulty: 3),
+   L 9307  'nantoolə'                      AwingWord(awing: 'nantoolə', english: 'hernia', category: 'things', difficulty: 3),
+
+## 'hesitate'  (2 entries)
+   L 4016  'kwaŋ kákáŋə̂'                  AwingWord(awing: 'kwaŋ kákáŋə̂', english: 'hesitate (when an evil doer hesitates in his plans, it demonstrates the voice
+   L 9313  'kwaŋ kə̂kə̌ŋə'                 AwingWord(awing: 'kwaŋ kə̂kə̌ŋə', english: 'hesitate', category: 'things', tonePattern: 'rising', difficulty: 2),
+
+## 'hiccough'  (2 entries)
+   L 3976  'ghídntəŋə̂'                    AwingWord(awing: 'ghídntəŋə̂', english: 'hiccough', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 9315  'ghidntəŋə'                     AwingWord(awing: 'ghidntəŋə', english: 'hiccough', category: 'things', difficulty: 1),
+
+## 'hide of cattle'  (2 entries)
+   L 4292  'ngwub neemə'                   AwingWord(awing: 'ngwub neemə', english: 'hide of cattle', category: 'things', difficulty: 2),
+   L 9321  'ngwub neema'                   AwingWord(awing: 'ngwub neema', english: 'hide of cattle', category: 'things', difficulty: 2),
+
+## 'high, of forehead'  (2 entries)
+   L 2905  'kíbnə'                         AwingWord(awing: 'kíbnə', english: 'high, of forehead', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 9327  'kîbnə'                         AwingWord(awing: 'kîbnə', english: 'high, of forehead', category: 'body', tonePattern: 'falling', difficulty: 1),
+
+## 'hippopotamus'  (2 entries)
+   L  178  'ambónə'                        AwingWord(awing: 'ambónə', english: 'hippopotamus', category: 'animals', difficulty: 1),
+   L 9347  'ambóna'                        AwingWord(awing: 'ambóna', english: 'hippopotamus', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'hook'  (2 entries)
+   L 3675  'apanə'                         AwingWord(awing: 'apanə', english: 'hook', category: 'things', difficulty: 1),
+   L 9387  'apənə'                         AwingWord(awing: 'apənə', english: 'hook', category: 'things', difficulty: 1),
+
+## 'hospital'  (2 entries)
+   L  587  'awátə'                         AwingWord(awing: 'awátə', english: 'hospital', category: 'family', difficulty: 1),
+   L 4731  'awatə'                         AwingWord(awing: 'awatə', english: 'hospital', category: 'things', difficulty: 1),
+
+## 'hundred'  (2 entries)
+   L 4516  'nkelá'                         AwingWord(awing: 'nkelá', english: 'hundred (100)', category: 'numbers', tonePattern: 'high', difficulty: 1),
+   L 9437  'nkelə'                         AwingWord(awing: 'nkelə', english: 'hundred (100)', category: 'numbers', difficulty: 1),
+
+## 'hunger'  (2 entries)
+   L 4303  'njiə'                          AwingWord(awing: 'njiə', english: 'hunger', category: 'things', difficulty: 1),
+   L 9439  'njîə'                          AwingWord(awing: 'njîə', english: 'hunger', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'hunting'  (2 entries)
+   L  226  'afoonə'                        AwingWord(awing: 'afoonə', english: 'hunting', category: 'nature', difficulty: 1),  // Session 56 audit: was "əfóonə" — 
+   L 9449  'afoona'                        AwingWord(awing: 'afoona', english: 'hunting', category: 'things', difficulty: 1),
+
+## 'inside'  (2 entries)
+   L 5608  'máma'                          AwingWord(awing: 'máma', english: 'inside', category: 'things', tonePattern: 'high', difficulty: 1),
+   L 9593  'məmə'                          AwingWord(awing: 'məmə', english: 'inside', category: 'things', difficulty: 1),
+
+## 'insult'  (2 entries)
+   L 3321  'zəmtə̂'                        AwingWord(awing: 'zəmtə̂', english: 'insult', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L 9607  'zəmtə'                         AwingWord(awing: 'zəmtə', english: 'insult', category: 'things', difficulty: 1),
+
+## 'insult'  (2 entries)
+   L 6110  'zoomə̂'                        AwingWord(awing: 'zoomə̂', english: 'insult', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L 9605  'zoomə'                         AwingWord(awing: 'zoomə', english: 'insult', category: 'things', difficulty: 1),
+
+## 'insult each other'  (2 entries)
+   L 3320  'zəmnə̂'                        AwingWord(awing: 'zəmnə̂', english: 'insult each other', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L 9609  'zəmnə'                         AwingWord(awing: 'zəmnə', english: 'insult each other', category: 'descriptive', difficulty: 1),
+
+## 'intestinal worm'  (2 entries)
+   L 3526  'akəghoolə'                     AwingWord(awing: 'akəghoolə', english: 'intestinal worm', category: 'things', difficulty: 1),
+   L 9721  'akaghoolə'                     AwingWord(awing: 'akaghoolə', english: 'intestinal worm', category: 'animals', difficulty: 1),
+
+## 'it'  (2 entries)
+   L 5002  'á'                             AwingWord(awing: 'á', english: 'it (impersonal/animal pronoun)', category: 'animals', tonePattern: 'high', difficulty: 1
+   L 9739  'á'                             AwingWord(awing: 'á', english: 'it', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'itch'  (2 entries)
+   L 4162  'ndzogə'                        AwingWord(awing: 'ndzogə', english: 'itch (n)', category: 'things', difficulty: 1),
+   L 9761  'ndzogə'                        AwingWord(awing: 'ndzogə', english: 'itch(n)', category: 'things', difficulty: 1),
+
+## 'jump from a high place'  (2 entries)
+   L 2887  'kanə̂'                         AwingWord(awing: 'kanə̂', english: 'jump from a high place', category: 'actions', tonePattern: 'falling', difficulty: 1)
+   L 9777  'kanə'                          AwingWord(awing: 'kanə', english: 'jump from a high place', category: 'actions', difficulty: 1),
+
+## 'junior'  (2 entries)
+   L 3799  'azoŋə'                         AwingWord(awing: 'azoŋə', english: 'junior', category: 'things', difficulty: 1),
+   L 5162  'azoŋə'                         AwingWord(awing: 'azoŋə', english: 'junior (eg brother, sister)', category: 'family', difficulty: 1),
+
+## 'kingdom of'  (2 entries)
+   L 3654  'anuə nəfoonə'                  AwingWord(awing: 'anuə nəfoonə', english: 'kingdom of', category: 'things', difficulty: 2),
+   L 9803  'anua nafoonə'                  AwingWord(awing: 'anua nafoonə', english: 'kingdom of', category: 'things', difficulty: 2),
+
+## 'kiss a little'  (2 entries)
+   L 2764  'chwigtə'                       AwingWord(awing: 'chwigtə', english: 'kiss a little', category: 'actions', difficulty: 1),
+   L 9809  'chwígtə'                       AwingWord(awing: 'chwígtə', english: 'kiss a little', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+
+## 'kitchen'  (2 entries)
+   L 4142  'ndě móga'                      AwingWord(awing: 'ndě móga', english: 'kitchen', category: 'things', tonePattern: 'rising', difficulty: 2),
+   L 9813  'ndê mógə'                      AwingWord(awing: 'ndê mógə', english: 'kitchen', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'lake awing'  (2 entries)
+   L 2496  'əfooghaəmá'                    AwingWord(awing: 'əfooghaəmá', english: 'lake Awing (only lake Awing is called by this name)', category: 'nature', toneP
+   L 9851  'afooghaamə'                    AwingWord(awing: 'afooghaamə', english: 'lake Awing', category: 'nature', difficulty: 1),
+
+## 'latrine'  (2 entries)
+   L  698  'akoolá'                        AwingWord(awing: 'akoolá', english: 'latrine', category: 'things', difficulty: 1),
+   L 9883  'akoolə'                        AwingWord(awing: 'akoolə', english: 'latrine', category: 'things', difficulty: 1),
+
+## 'lay eggs'  (2 entries)
+   L 5812  'nyīəə'                         AwingWord(awing: 'nyīəə', english: 'lay eggs', category: 'things', tonePattern: 'mid', difficulty: 1),
+   L 9891  'nyîəə'                         AwingWord(awing: 'nyîəə', english: 'lay eggs', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'laziness'  (2 entries)
+   L 3907  'ələŋə'                         AwingWord(awing: 'ələŋə', english: 'laziness', category: 'things', difficulty: 1),
+   L 9893  'aləŋə'                         AwingWord(awing: 'aləŋə', english: 'laziness', category: 'things', difficulty: 1),
+
+## 'locust'  (2 entries)
+   L  192  'ngwumnə́'                      AwingWord(awing: 'ngwumnə́', english: 'locust', category: 'animals', difficulty: 1),  // Session 56 audit: was "ngwúmnɔ́
+   L10045  'ngwumnə'                       AwingWord(awing: 'ngwumnə', english: 'locust', category: 'animals', difficulty: 1),
+
+## 'lord\\'  (2 entries)
+   L 3927  'əpûntéelə'                     AwingWord(awing: 'əpûntéelə', english: 'Lord\'s Supper article', category: 'things', tonePattern: 'falling', difficulty:
+   L10069  'apúntéelə'                     AwingWord(awing: 'apúntéelə', english: 'Lord\'s Supper articles', category: 'things', tonePattern: 'high', difficulty: 1
+
+## 'louse'  (2 entries)
+   L  190  'anəmá'                         AwingWord(awing: 'anəmá', english: 'louse', category: 'animals', difficulty: 1),  // Session 56 audit: was "anɔ́mɔ́" — d
+   L10075  'anə̂mə'                        AwingWord(awing: 'anə̂mə', english: 'louse', category: 'animals', tonePattern: 'falling', difficulty: 1),
+
+## 'machete'  (2 entries)
+   L  524  'ŋwíŋə'                         AwingWord(awing: 'ŋwíŋə', english: 'machete', category: 'things', difficulty: 1),  // Session 56 audit: was "nwîŋa" — di
+   L10105  'ŋwiŋə'                         AwingWord(awing: 'ŋwiŋə', english: 'machete', category: 'things', difficulty: 1),
+
+## 'magic'  (2 entries)
+   L 4187  'nəkaŋə'                        AwingWord(awing: 'nəkaŋə', english: 'magic', category: 'things', difficulty: 1),
+   L10119  'nakaŋə'                        AwingWord(awing: 'nakaŋə', english: 'magic', category: 'things', difficulty: 1),
+
+## 'make go'  (2 entries)
+   L 2840  'ghenkə̂'                       AwingWord(awing: 'ghenkə̂', english: 'make go', category: 'actions', tonePattern: 'falling'),
+   L10137  'ghenkə'                        AwingWord(awing: 'ghenkə', english: 'make go', category: 'actions', difficulty: 1),
+
+## 'mare'  (2 entries)
+   L 2418  'ngwě ləəmə́'                   AwingWord(awing: 'ngwě ləəmə́', english: 'mare (horse)', category: 'animals', tonePattern: 'rising', difficulty: 2),
+   L10193  'ngwê ləəmə'                    AwingWord(awing: 'ngwê ləəmə', english: 'mare (horse)', category: 'animals', tonePattern: 'falling', difficulty: 2),
+
+## 'marker of negation'  (2 entries)
+   L 4791  'kə̌'                           AwingWord(awing: 'kə̌', english: 'marker of negation', category: 'things', difficulty: 3),
+   L 5454  'kə'                            AwingWord(awing: 'kə', english: 'marker of negation', category: 'things', difficulty: 3),
+
+## 'market'  (2 entries)
+   L  566  'məteenə̂'                      AwingWord(awing: 'məteenə̂', english: 'market', category: 'family', difficulty: 1),  // Session 56 audit: was "mətéenɔ́"
+   L10201  'məteenə'                       AwingWord(awing: 'məteenə', english: 'market', category: 'things', difficulty: 1),
+
+## 'mask'  (2 entries)
+   L 4334  'nkwa'                          AwingWord(awing: 'nkwa', english: 'mask', category: 'things'),
+   L10219  'nkwə'                          AwingWord(awing: 'nkwə', english: 'mask', category: 'things', difficulty: 1),
+
+## 'melt'  (2 entries)
+   L  411  'ləŋə'                          AwingWord(awing: 'ləŋə', english: 'melt', category: 'actions', difficulty: 1),  // Session 56 audit: was "loŋa" — dict s
+   L 5564  'ləŋə'                          AwingWord(awing: 'ləŋə', english: 'melt (intr)', category: 'things', difficulty: 1),
+
+## 'melt iron'  (2 entries)
+   L 3221  'twîə'                          AwingWord(awing: 'twîə', english: 'melt iron', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L10285  'twiə'                          AwingWord(awing: 'twiə', english: 'melt iron', category: 'things', difficulty: 1),
+
+## 'messenger'  (2 entries)
+   L  525  'ntúmə'                         AwingWord(awing: 'ntúmə', english: 'messenger', category: 'things', difficulty: 1),  // Session 56 audit: was "ntúma" — 
+   L10301  'ntúma'                         AwingWord(awing: 'ntúma', english: 'messenger', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'milk'  (2 entries)
+   L  275  'máliga'                        AwingWord(awing: 'máliga', english: 'milk', category: 'food'),  // Session 56 audit: was "mɔ́lígə" — dict says "máliga"
+   L10317  'məligə'                        AwingWord(awing: 'məligə', english: 'milk', category: 'food', difficulty: 1),
+
+## 'molar tooth'  (2 entries)
+   L 5598  'mé ghagə́'                     AwingWord(awing: 'mé ghagə́', english: 'molar tooth', category: 'body', tonePattern: 'high', difficulty: 2),
+   L10351  'mê ghagə'                      AwingWord(awing: 'mê ghagə', english: 'molar tooth', category: 'body', tonePattern: 'falling', difficulty: 2),
+
+## 'mold'  (2 entries)
+   L 3852  'əfəmá'                         AwingWord(awing: 'əfəmá', english: 'mold', category: 'things', tonePattern: 'high', difficulty: 1),
+   L10353  'afəmə'                         AwingWord(awing: 'afəmə', english: 'mold', category: 'things', difficulty: 1),
+
+## 'money'  (2 entries)
+   L  528  'nkéebə'                        AwingWord(awing: 'nkéebə', english: 'money', category: 'things', difficulty: 1),  // Session 56 audit: was "nkɛɛbɔ" — di
+   L10359  'nkéeba'                        AwingWord(awing: 'nkéeba', english: 'money', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'month'  (2 entries)
+   L   48  'sáŋə'                          AwingWord(awing: 'sáŋə', english: 'month', category: 'things', difficulty: 1),  // Session 56 audit: was "saŋ" — dict sa
+   L10365  'saŋə'                          AwingWord(awing: 'saŋə', english: 'month', category: 'nature', difficulty: 1),
+
+## 'morning'  (2 entries)
+   L 2532  'məsâna'                        AwingWord(awing: 'məsâna', english: 'morning', category: 'nature', tonePattern: 'falling'),
+   L10371  'məsanə'                        AwingWord(awing: 'məsanə', english: 'morning', category: 'nature', difficulty: 1),
+
+## 'moth'  (2 entries)
+   L 4153  'ndəzəəmə'                      AwingWord(awing: 'ndəzəəmə', english: 'moth', category: 'things', difficulty: 1),
+   L10381  'ndazəəmə'                      AwingWord(awing: 'ndazəəmə', english: 'moth', category: 'things', difficulty: 1),
+
+## 'mother\\'  (2 entries)
+   L 2348  'ndim mǎ yi mbyâŋnə'            AwingWord(awing: 'ndim mǎ yi mbyâŋnə', english: 'mother\'s brother (uncle)', category: 'family', tonePattern: 'rising', 
+   L10393  'ndim mə̂ yi mbyâŋnə'           AwingWord(awing: 'ndim mə̂ yi mbyâŋnə', english: 'mother\'s brother (uncle)', category: 'family', tonePattern: 'falling'
+
+## 'mother\\'  (2 entries)
+   L 2349  'ndim mǎ yi məngyè'             AwingWord(awing: 'ndim mǎ yi məngyè', english: 'mother\'s sister (aunt)', category: 'family', tonePattern: 'rising', dif
+   L10395  'ndim mə̌ yi mangyé'            AwingWord(awing: 'ndim mə̌ yi mangyé', english: 'mother\'s sister (aunt)', category: 'family', tonePattern: 'rising', di
+
+## 'mouth'  (2 entries)
+   L  116  'ntsoolə'                       AwingWord(awing: 'ntsoolə', english: 'mouth (body)', category: 'body', pluralForm: 'məntsoolə', difficulty: 1),
+   L 5798  'ntsoolə'                       AwingWord(awing: 'ntsoolə', english: 'mouth', category: 'body', difficulty: 1),
+
+## 'mudfish'  (2 entries)
+   L 3941  'əshúmə̌fágə'                   AwingWord(awing: 'əshúmə̌fágə', english: 'mudfish', category: 'things', tonePattern: 'rising', difficulty: 1),
+   L10425  'ashúmáfagə'                    AwingWord(awing: 'ashúmáfagə', english: 'mudfish', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'nausea'  (2 entries)
+   L 4139  'ndě yi mbwódta nə̂'            AwingWord(awing: 'ndě yi mbwódta nə̂', english: 'nausea', category: 'things', tonePattern: 'rising', difficulty: 2),
+   L10493  'ndê yi mbwódta nə̌'            AwingWord(awing: 'ndê yi mbwódta nə̌', english: 'nausea', category: 'things', tonePattern: 'rising', difficulty: 2),
+
+## 'navel'  (2 entries)
+   L  130  'nətoŋə́'                       AwingWord(awing: 'nətoŋə́', english: 'navel', category: 'body', difficulty: 1),  // Session 56 audit: was "nətɔŋɔ́" — di
+   L10495  'natoŋə'                        AwingWord(awing: 'natoŋə', english: 'navel', category: 'body', difficulty: 1),
+
+## 'never'  (2 entries)
+   L   47  'təká'                          AwingWord(awing: 'təká', english: 'never', category: 'things', difficulty: 1),  // Session 56 audit: was "taká" — dict s
+   L10527  'tákâ'                          AwingWord(awing: 'tákâ', english: 'never', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'new'  (2 entries)
+   L  774  'fîə'                           AwingWord(awing: 'fîə', english: 'new', category: 'descriptive', difficulty: 1),  // Session 56 audit: was "fía" — dict 
+   L10529  'fìə'                           AwingWord(awing: 'fìə', english: 'new', category: 'descriptive', tonePattern: 'low', difficulty: 1),
+
+## 'new testament'  (2 entries)
+   L 3376  'əka yi fîə'                    AwingWord(awing: 'əka yi fîə', english: 'new testament', category: 'descriptive', tonePattern: 'falling', difficulty: 2)
+   L10535  'aka yi fìə'                    AwingWord(awing: 'aka yi fìə', english: 'new testament', category: 'descriptive', tonePattern: 'low', difficulty: 2),
+
+## 'nobleship'  (2 entries)
+   L 3897  'əkəmə́'                        AwingWord(awing: 'əkəmə́', english: 'nobleship', category: 'things', tonePattern: 'high', difficulty: 1),
+   L10559  'akama'                         AwingWord(awing: 'akama', english: 'nobleship', category: 'things', difficulty: 1),
+
+## 'nose ring'  (2 entries)
+   L 2225  'əfeŋ nəlwîə'                   AwingWord(awing: 'əfeŋ nəlwîə', english: 'nose ring', category: 'body', tonePattern: 'falling', difficulty: 2),
+   L10579  'afeŋ nalwíə'                   AwingWord(awing: 'afeŋ nalwíə', english: 'nose ring', category: 'body', tonePattern: 'high', difficulty: 2),
+
+## 'nothing'  (2 entries)
+   L 3980  'ká ajúmə'                      AwingWord(awing: 'ká ajúmə', english: 'nothing', category: 'things', tonePattern: 'high', difficulty: 2),
+   L10585  'kâ ajûmə'                      AwingWord(awing: 'kâ ajûmə', english: 'nothing', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'number'  (2 entries)
+   L  533  'ndenə'                         AwingWord(awing: 'ndenə', english: 'number', category: 'things', difficulty: 1),  // Session 56 audit: was "ndema" — dic
+   L10595  'ndena'                         AwingWord(awing: 'ndena', english: 'number', category: 'things', difficulty: 1),
+
+## 'old'  (2 entries)
+   L  726  'ndenə'                         AwingWord(awing: 'ndenə', english: 'old', category: 'descriptive'),
+   L10649  'ndena'                         AwingWord(awing: 'ndena', english: 'old', category: 'descriptive', difficulty: 1),
+
+## 'old testament'  (2 entries)
+   L 3377  'əka yi lenə'                   AwingWord(awing: 'əka yi lenə', english: 'old testament', category: 'descriptive', difficulty: 2),
+   L10657  'aka yi lena'                   AwingWord(awing: 'aka yi lena', english: 'old testament', category: 'descriptive', difficulty: 2),
+
+## 'owner'  (2 entries)
+   L  579  'ngaŋə'                         AwingWord(awing: 'ngaŋə', english: 'owner', category: 'family', difficulty: 1),
+   L  601  'ngàŋə'                         AwingWord(awing: 'ngàŋə', english: 'owner', category: 'family', difficulty: 1),
+
+## 'pain'  (2 entries)
+   L 4052  'mbi yi ńdzáŋnə'                AwingWord(awing: 'mbi yi ńdzáŋnə', english: 'pain', category: 'things', tonePattern: 'high', difficulty: 2),
+   L10735  'mbi yi ndzaŋnə'                AwingWord(awing: 'mbi yi ndzaŋnə', english: 'pain', category: 'things', difficulty: 2),
+
+## 'paint'  (2 entries)
+   L 4925  'pêntə'                         AwingWord(awing: 'pêntə', english: 'paint', category: 'things', difficulty: 1),
+   L10737  'pénta'                         AwingWord(awing: 'pénta', english: 'paint', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'palm branch'  (2 entries)
+   L 2217  'azáŋə'                         AwingWord(awing: 'azáŋə', english: 'palm branch', category: 'body', tonePattern: 'high', difficulty: 1),
+   L10743  'azaŋə'                         AwingWord(awing: 'azaŋə', english: 'palm branch', category: 'body', difficulty: 1),
+
+## 'parrot'  (2 entries)
+   L 5926  'sáŋ məkálə'                    AwingWord(awing: 'sáŋ məkálə', english: 'parrot', category: 'animals', tonePattern: 'high', difficulty: 2),
+   L10775  'sáŋ məkalə'                    AwingWord(awing: 'sáŋ məkalə', english: 'parrot', category: 'animals', tonePattern: 'high', difficulty: 2),
+
+## 'pay'  (2 entries)
+   L 3213  'tûə'                           AwingWord(awing: 'tûə', english: 'pay (for goods, services, etc.)', category: 'actions', tonePattern: 'falling', difficu
+   L10821  'tûə'                           AwingWord(awing: 'tûə', english: 'pay', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'peck'  (2 entries)
+   L 6026  'tsóga'                         AwingWord(awing: 'tsóga', english: 'peck (tr)', category: 'things', tonePattern: 'high', difficulty: 1),
+   L10825  'tsógə'                         AwingWord(awing: 'tsógə', english: 'peck (tr)', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'peel many things'  (2 entries)
+   L 2865  'jubtə̂'                        AwingWord(awing: 'jubtə̂', english: 'peel many things', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L10829  'jubtə'                         AwingWord(awing: 'jubtə', english: 'peel many things', category: 'descriptive', difficulty: 1),
+
+## 'peg out'  (2 entries)
+   L 4418  'sá ndedtə'                     AwingWord(awing: 'sá ndedtə', english: 'peg out (of boundary)', category: 'things', tonePattern: 'high', difficulty: 2),
+   L10841  'sə ndedta'                     AwingWord(awing: 'sə ndedta', english: 'peg out', category: 'things', difficulty: 2),
+
+## 'penis'  (2 entries)
+   L 4646  'nəkəələ'                       AwingWord(awing: 'nəkəələ', english: 'penis (colloquial usage)', category: 'things', difficulty: 3),
+   L10847  'nakəələ'                       AwingWord(awing: 'nakəələ', english: 'penis (colloquial)', category: 'body', difficulty: 3),
+
+## 'pepper'  (2 entries)
+   L10857  'shí səntə'                     AwingWord(awing: 'shí səntə', english: 'pepper (black)', category: 'food', tonePattern: 'high', difficulty: 2),
+   L10859  'shí səntə'                     AwingWord(awing: 'shí səntə', english: 'pepper (green)', category: 'food', tonePattern: 'high', difficulty: 2),
+
+## 'physical exercise'  (2 entries)
+   L 3489  'aghántə'                       AwingWord(awing: 'aghántə', english: 'physical exercise', category: 'things', tonePattern: 'high', difficulty: 1),
+   L10905  'aghánta'                       AwingWord(awing: 'aghánta', english: 'physical exercise', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'pig'  (2 entries)
+   L  182  'kwúneemə'                      AwingWord(awing: 'kwúneemə', english: 'pig', category: 'animals'),
+   L10931  'kwuneemə'                      AwingWord(awing: 'kwuneemə', english: 'pig', category: 'animals', difficulty: 1),
+
+## 'pineapple'  (2 entries)
+   L  279  'panápəələ'                     AwingWord(awing: 'panápəələ', english: 'pineapple', category: 'food'),  // Session 56 audit: was "panɔ́paələ" — dict say
+   L10947  'panápáala'                     AwingWord(awing: 'panápáala', english: 'pineapple', category: 'food', tonePattern: 'high', difficulty: 1),
+
+## 'pluck'  (2 entries)
+   L  370  'kyê'                           AwingWord(awing: 'kyê', english: 'pluck', category: 'actions', difficulty: 1),  // Session 56 audit: was "kjê" — dict sa
+   L 5526  'kyê'                           AwingWord(awing: 'kyê', english: 'pluck (eg, fruit)', category: 'nature', tonePattern: 'falling', difficulty: 1),
+
+## 'plum'  (2 entries)
+   L 3801  'azoomə'                        AwingWord(awing: 'azoomə', english: 'plum', category: 'things', difficulty: 1),
+   L11015  'azooma'                        AwingWord(awing: 'azooma', english: 'plum', category: 'things', difficulty: 1),
+
+## 'poor person'  (2 entries)
+   L 2315  'əfəmə'                         AwingWord(awing: 'əfəmə', english: 'poor person', category: 'family', difficulty: 1),
+   L11045  'afə̂mə'                        AwingWord(awing: 'afə̂mə', english: 'poor person', category: 'family', tonePattern: 'falling', difficulty: 1),
+
+## 'poorly'  (2 entries)
+   L 3987  'kákáŋə́'                       AwingWord(awing: 'kákáŋə́', english: 'poorly', category: 'things', tonePattern: 'high', difficulty: 1),
+   L11047  'kâkáŋə'                        AwingWord(awing: 'kâkáŋə', english: 'poorly', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'possessive adj \\'  (2 entries)
+   L11059  'azagə'                         AwingWord(awing: 'azagə', english: 'possessive adj \'our\'', category: 'things', difficulty: 1),
+   L11063  'azágə'                         AwingWord(awing: 'azágə', english: 'possessive adj \'ours\'', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'possessive pronoun \\'  (2 entries)
+   L 3793  'azénə'                         AwingWord(awing: 'azénə', english: 'possessive pronoun \'ours\' used for nouns of class 7', category: 'things', tonePatt
+   L11105  'azéna'                         AwingWord(awing: 'azéna', english: 'possessive pronoun \'ours\'', category: 'things', tonePattern: 'high', difficulty: 1
+
+## 'possessive pronoun \\'  (2 entries)
+   L 3946  'əwəgə́'                        AwingWord(awing: 'əwəgə́', english: 'possessive pronoun \'ours\' used for class 1 nouns; possessive adj \'our\' used for
+   L11109  'awagə'                         AwingWord(awing: 'awagə', english: 'possessive pronoun \'ours\'', category: 'things', difficulty: 1),
+
+## 'possessive pronoun \\'  (2 entries)
+   L 4403  'pəpíə'                         AwingWord(awing: 'pəpíə', english: 'possessive pronoun \'his\' used for class 2 nouns; possessive pronoun \'hers\' used 
+   L11085  'papîə'                         AwingWord(awing: 'papîə', english: 'possessive pronoun \'hers\'', category: 'things', tonePattern: 'falling', difficulty
+
+## 'possessive pronoun \\'  (2 entries)
+   L 5252  'agheemə'                       AwingWord(awing: 'agheemə', english: 'possessive pronoun \'mine\' used for classes 1 and 7 nouns', category: 'things', d
+   L11099  'agheema'                       AwingWord(awing: 'agheema', english: 'possessive pronoun \'mine\'', category: 'things', difficulty: 1),
+
+## 'possessive singular prn \\'  (2 entries)
+   L11131  'azə̂'                          AwingWord(awing: 'azə̂', english: 'possessive singular prn \'yours\'', category: 'things', tonePattern: 'falling', diffi
+   L11137  'azə̌'                          AwingWord(awing: 'azə̌', english: 'possessive singular prn \'yours\'', category: 'things', tonePattern: 'rising', diffic
+
+## 'possessive singular pronoun \\'  (2 entries)
+   L 3797  'azó'                           AwingWord(awing: 'azó', english: 'possessive singular pronoun \'yours\' used for class 7 nouns', category: 'things', ton
+   L 3953  'əzo'                           AwingWord(awing: 'əzo', english: 'possessive singular pronoun \'yours\' used for class 9 nouns', category: 'things', dif
+
+## 'pot'  (2 entries)
+   L 4192  'nəkəŋ nó nkǐə'                 AwingWord(awing: 'nəkəŋ nó nkǐə', english: 'pot (for water)', category: 'things', tonePattern: 'rising', difficulty: 2),
+   L 4885  'nəkəŋ nó nkíə'                 AwingWord(awing: 'nəkəŋ nó nkíə', english: 'pot (for water)', category: 'nature', difficulty: 2),
+
+## 'prepare food'  (2 entries)
+   L 2615  'ghed məjîə'                    AwingWord(awing: 'ghed məjîə', english: 'prepare food (mid-day meal)', category: 'food', tonePattern: 'falling', difficu
+   L11209  'ghed majìə'                    AwingWord(awing: 'ghed majìə', english: 'prepare food', category: 'food', tonePattern: 'low', difficulty: 2),
+
+## 'pride'  (2 entries)
+   L 3723  'atəələ'                        AwingWord(awing: 'atəələ', english: 'pride', category: 'things', difficulty: 1),
+   L11235  'ataalə'                        AwingWord(awing: 'ataalə', english: 'pride', category: 'things', difficulty: 1),
+
+## 'pudenda'  (2 entries)
+   L 3492  'aghəŋə nəságə'                 AwingWord(awing: 'aghəŋə nəságə', english: 'pudenda', category: 'things', tonePattern: 'high', difficulty: 2),
+   L11291  'aghaŋə naságə'                 AwingWord(awing: 'aghaŋə naságə', english: 'pudenda', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'puff adder'  (2 entries)
+   L 4421  'séenásê'                       AwingWord(awing: 'séenásê', english: 'puff adder', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L11293  'séenasê'                       AwingWord(awing: 'séenasê', english: 'puff adder', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'punishment'  (2 entries)
+   L  704  'atsáŋə'                        AwingWord(awing: 'atsáŋə', english: 'punishment', category: 'things', difficulty: 1),
+   L11305  'atsaŋə'                        AwingWord(awing: 'atsaŋə', english: 'punishment', category: 'things', difficulty: 1),
+
+## 'python'  (2 entries)
+   L 4348  'nó ngámə'                      AwingWord(awing: 'nó ngámə', english: 'python', category: 'things', tonePattern: 'high', difficulty: 2),
+   L11347  'nó ngàma'                      AwingWord(awing: 'nó ngàma', english: 'python', category: 'animals', tonePattern: 'high-low', difficulty: 2),
+
+## 'question'  (2 entries)
+   L 3687  'apitə atsêebə'                 AwingWord(awing: 'apitə atsêebə', english: 'question', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L11363  'apítə atséebə'                 AwingWord(awing: 'apítə atséebə', english: 'question', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'raffia palm'  (2 entries)
+   L 2267  'nkyeelá'                       AwingWord(awing: 'nkyeelá', english: 'raffia palm', category: 'body', tonePattern: 'high', difficulty: 1),
+   L11381  'nkyeelə'                       AwingWord(awing: 'nkyeelə', english: 'raffia palm', category: 'body', difficulty: 1),
+
+## 'rainy season'  (2 entries)
+   L 2499  'əghâ magheemá'                 AwingWord(awing: 'əghâ magheemá', english: 'rainy season', category: 'nature', tonePattern: 'falling', difficulty: 2),
+   L11397  'aghá magheemə'                 AwingWord(awing: 'aghá magheemə', english: 'rainy season', category: 'nature', tonePattern: 'high', difficulty: 2),
+
+## 'rat'  (2 entries)
+   L  189  'fóolá'                         AwingWord(awing: 'fóolá', english: 'rat', category: 'animals'),  // Session 56 audit: was "fóolɔ́" — dict says "fóolá"
+   L11409  'fóolə'                         AwingWord(awing: 'fóolə', english: 'rat', category: 'animals', tonePattern: 'high', difficulty: 1),
+
+## 'rattle'  (2 entries)
+   L 3499  'aghógta'                       AwingWord(awing: 'aghógta', english: 'rattle (musical instrument)', category: 'things', tonePattern: 'high', difficulty:
+   L11411  'aghógta'                       AwingWord(awing: 'aghógta', english: 'rattle', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'redness'  (2 entries)
+   L 4222  'nəpaŋə'                        AwingWord(awing: 'nəpaŋə', english: 'redness', category: 'things', difficulty: 1),
+   L11451  'napaŋə'                        AwingWord(awing: 'napaŋə', english: 'redness', category: 'things', difficulty: 1),
+
+## 'reduce'  (2 entries)
+   L 2854  'jáabə'                         AwingWord(awing: 'jáabə', english: 'reduce', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 5370  'jáabə'                         AwingWord(awing: 'jáabə', english: 'reduce (eg something that is overful or much)', category: 'descriptive', tonePattern
+
+## 'repent'  (2 entries)
+   L  420  'kwúblə'                        AwingWord(awing: 'kwúblə', english: 'repent', category: 'actions', difficulty: 3),  // Session 56 audit: was "kwúbla" — 
+   L11535  'kwùblə'                        AwingWord(awing: 'kwùblə', english: 'repent', category: 'things', tonePattern: 'low', difficulty: 3),
+
+## 'repentance'  (2 entries)
+   L 5048  'akwúblə'                       AwingWord(awing: 'akwúblə', english: 'repentance', category: 'things', tonePattern: 'high', difficulty: 3),
+   L11537  'akwùblə'                       AwingWord(awing: 'akwùblə', english: 'repentance', category: 'things', tonePattern: 'low', difficulty: 3),
+
+## 'response'  (2 entries)
+   L  697  'akwé'                          AwingWord(awing: 'akwé', english: 'response', category: 'things', difficulty: 1),
+   L11571  'akwe'                          AwingWord(awing: 'akwe', english: 'response', category: 'things', difficulty: 1),
+
+## 'restaurant dealer'  (2 entries)
+   L 3854  'əfi məjîə'                     AwingWord(awing: 'əfi məjîə', english: 'restaurant dealer', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L11583  'afî majìə'                     AwingWord(awing: 'afî majìə', english: 'restaurant dealer', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'revenge'  (2 entries)
+   L 2950  'kwígə'                         AwingWord(awing: 'kwígə', english: 'revenge', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L11595  'kwigə'                         AwingWord(awing: 'kwigə', english: 'revenge', category: 'things', difficulty: 1),
+
+## 'rice'  (2 entries)
+   L  274  'nəkwúnə'                       AwingWord(awing: 'nəkwúnə', english: 'rice', category: 'food'),
+   L11611  'nakwùna'                       AwingWord(awing: 'nakwùna', english: 'rice', category: 'food', tonePattern: 'low', difficulty: 1),
+
+## 'rich person'  (2 entries)
+   L 3426  'ngaŋkéebə'                     AwingWord(awing: 'ngaŋkéebə', english: 'rich person', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+   L11617  'ngaŋkéeba'                     AwingWord(awing: 'ngaŋkéeba', english: 'rich person', category: 'family', tonePattern: 'high', difficulty: 1),
+
+## 'ringworm'  (2 entries)
+   L  750  'kwə̂glə'                       AwingWord(awing: 'kwə̂glə', english: 'ringworm', category: 'body', difficulty: 1),
+   L 4823  'kwəglə'                        AwingWord(awing: 'kwəglə', english: 'ringworm', category: 'things', difficulty: 1),
+
+## 'river bank; sea shore'  (2 entries)
+   L 2551  'nkaŋ nkǐə'                     AwingWord(awing: 'nkaŋ nkǐə', english: 'river bank; sea shore', category: 'nature', tonePattern: 'rising', difficulty: 2
+   L 5764  'nkaŋ nkíə'                     AwingWord(awing: 'nkaŋ nkíə', english: 'river bank; sea shore', category: 'nature', tonePattern: 'high', difficulty: 2),
+
+## 'roar'  (2 entries)
+   L 3317  'zoolə̂'                        AwingWord(awing: 'zoolə̂', english: 'roar', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L11671  'zoolə'                         AwingWord(awing: 'zoolə', english: 'roar', category: 'things', difficulty: 1),
+
+## 'room'  (2 entries)
+   L  463  'atógə'                         AwingWord(awing: 'atógə', english: 'room', category: 'things', difficulty: 1),  // Session 56 audit: was "atɔ́gə" — dict
+   L11693  'atóga'                         AwingWord(awing: 'atóga', english: 'room', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'rope'  (2 entries)
+   L  473  'nkelá'                         AwingWord(awing: 'nkelá', english: 'rope', category: 'things', pluralForm: 'mənkelɔ́'),  // Session 56 audit: was "nkelɔ
+   L11699  'nkelə'                         AwingWord(awing: 'nkelə', english: 'rope', category: 'things', difficulty: 1),
+
+## 'rubber'  (2 entries)
+   L 4026  'ləba'                          AwingWord(awing: 'ləba', english: 'rubber', category: 'things', difficulty: 1),
+   L11719  'lába'                          AwingWord(awing: 'lába', english: 'rubber', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'rust'  (2 entries)
+   L  499  'atê'                           AwingWord(awing: 'atê', english: 'rust', category: 'things', difficulty: 1),
+   L 4725  'ate'                           AwingWord(awing: 'ate', english: 'rust', category: 'things', difficulty: 1),
+
+## 'saliva'  (2 entries)
+   L 4861  'mətwê'                         AwingWord(awing: 'mətwê', english: 'saliva', category: 'things', difficulty: 3),
+   L11761  'matwê'                         AwingWord(awing: 'matwê', english: 'saliva', category: 'body', tonePattern: 'falling', difficulty: 3),
+
+## 'salvation'  (2 entries)
+   L 4133  'nchwadkə̂'                     AwingWord(awing: 'nchwadkə̂', english: 'salvation', category: 'things', tonePattern: 'falling', difficulty: 3),
+   L11765  'nchwadkə'                      AwingWord(awing: 'nchwadkə', english: 'salvation', category: 'things', difficulty: 3),
+
+## 'same'  (2 entries)
+   L11767  'alaglə'                        AwingWord(awing: 'alaglə', english: 'same', category: 'things', difficulty: 1),
+   L11769  'àlàglə'                        AwingWord(awing: 'àlàglə', english: 'same', category: 'things', tonePattern: 'low', difficulty: 1),
+
+## 'scar'  (2 entries)
+   L 3681  'apenə'                         AwingWord(awing: 'apenə', english: 'scar', category: 'things', difficulty: 1),
+   L11819  'apena'                         AwingWord(awing: 'apena', english: 'scar', category: 'body', difficulty: 1),
+
+## 'scatter, of ground or grain'  (2 entries)
+   L 5928  'səŋə'                          AwingWord(awing: 'səŋə', english: 'scatter, of ground or grain', category: 'nature', difficulty: 1),
+   L11831  'saŋə'                          AwingWord(awing: 'saŋə', english: 'scatter, of ground or grain', category: 'nature', difficulty: 1),
+
+## 'scratch'  (2 entries)
+   L11847  'kə̂mtə'                        AwingWord(awing: 'kə̂mtə', english: 'Scratch', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L11849  'kə̂mtə'                        AwingWord(awing: 'kə̂mtə', english: 'scratch', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'sea'  (2 entries)
+   L  542  'náanə'                         AwingWord(awing: 'náanə', english: 'sea', category: 'things', difficulty: 1),  // Session 56 audit: was "nɔ́sana" — dict
+   L11869  'nəənə'                         AwingWord(awing: 'nəənə', english: 'sea', category: 'nature', difficulty: 1),
+
+## 'seed'  (2 entries)
+   L 2528  'mbiə'                          AwingWord(awing: 'mbiə', english: 'seed', category: 'nature'),
+   L11895  'mbìə'                          AwingWord(awing: 'mbìə', english: 'seed', category: 'nature', tonePattern: 'low', difficulty: 1),
+
+## 'set, of the sun'  (2 entries)
+   L 5600  'méla'                          AwingWord(awing: 'méla', english: 'set, of the sun', category: 'nature', tonePattern: 'high', difficulty: 1),
+   L11939  'mêlə'                          AwingWord(awing: 'mêlə', english: 'set, of the sun', category: 'nature', tonePattern: 'falling', difficulty: 1),
+
+## 'sew using a needle'  (2 entries)
+   L 3198  'tímə'                          AwingWord(awing: 'tímə', english: 'sew using a needle', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L11957  'tîma'                          AwingWord(awing: 'tîma', english: 'sew using a needle', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'sharpen'  (2 entries)
+   L 3092  'pèe'                           AwingWord(awing: 'pèe', english: 'sharpen', category: 'actions', tonePattern: 'low', difficulty: 1),
+   L11993  'pêe'                           AwingWord(awing: 'pêe', english: 'sharpen', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'sharpen a knife'  (2 entries)
+   L 4019  'kwíŋə mə́ ŋwíŋə'               AwingWord(awing: 'kwíŋə mə́ ŋwíŋə', english: 'sharpen a knife', category: 'things', tonePattern: 'high', difficulty: 2),
+   L11995  'kwiŋa mə́ ŋwiŋə'               AwingWord(awing: 'kwiŋa mə́ ŋwiŋə', english: 'sharpen a knife', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'sheep'  (2 entries)
+   L 2393  'mbéŋ ndzelə'                   AwingWord(awing: 'mbéŋ ndzelə', english: 'sheep', category: 'animals', tonePattern: 'high', difficulty: 2),
+   L12009  'mbéŋ ndzela'                   AwingWord(awing: 'mbéŋ ndzela', english: 'sheep', category: 'animals', tonePattern: 'high', difficulty: 2),
+
+## 'shut'  (2 entries)
+   L  424  'kəŋə̂'                         AwingWord(awing: 'kəŋə̂', english: 'shut', category: 'actions', difficulty: 1),  // Session 56 audit: was "kaŋɔ́" — dict
+   L12087  'kaŋə'                          AwingWord(awing: 'kaŋə', english: 'shut', category: 'things', difficulty: 1),
+
+## 'sifter'  (2 entries)
+   L 3148  'səŋə'                          AwingWord(awing: 'səŋə', english: 'sifter', category: 'actions', difficulty: 1),
+   L12111  'saŋə'                          AwingWord(awing: 'saŋə', english: 'sifter', category: 'things', difficulty: 1),
+
+## 'sing'  (2 entries)
+   L  348  'zoobə̂'                        AwingWord(awing: 'zoobə̂', english: 'sing', category: 'actions'),  // Session 56 audit: was "zoobɔ́" — dict says "zoobə̂
+   L12137  'zoobə'                         AwingWord(awing: 'zoobə', english: 'sing', category: 'things', difficulty: 1),
+
+## 'six'  (2 entries)
+   L  622  'ntogə́'                        AwingWord(awing: 'ntogə́', english: 'six', category: 'numbers'),
+   L 5794  'ntogə́'                        AwingWord(awing: 'ntogə́', english: 'six (6)', category: 'numbers', tonePattern: 'high', difficulty: 2),
+
+## 'sixty'  (2 entries)
+   L  641  'məghə́m mén ntogə́'            AwingWord(awing: 'məghə́m mén ntogə́', english: 'sixty', category: 'numbers', difficulty: 2),
+   L 4511  'məghám mén ntogə̂'             AwingWord(awing: 'məghám mén ntogə̂', english: 'sixty (60)', category: 'numbers', tonePattern: 'falling', difficulty: 2)
+
+## 'skin of foot'  (2 entries)
+   L 5754  'ngwubə akoolə'                 AwingWord(awing: 'ngwubə akoolə', english: 'skin of foot', category: 'body', difficulty: 2),
+   L12167  'ngwùba akoolə'                 AwingWord(awing: 'ngwùba akoolə', english: 'skin of foot', category: 'body', tonePattern: 'low', difficulty: 2),
+
+## 'sky'  (2 entries)
+   L  205  'nəpóolə'                       AwingWord(awing: 'nəpóolə', english: 'sky', category: 'nature'),
+   L12183  'napóola'                       AwingWord(awing: 'napóola', english: 'sky', category: 'nature', tonePattern: 'high', difficulty: 1),
+
+## 'slap'  (2 entries)
+   L 2994  'ləbə'                          AwingWord(awing: 'ləbə', english: 'slap', category: 'actions', difficulty: 1),
+   L12189  'labə'                          AwingWord(awing: 'labə', english: 'slap', category: 'things', difficulty: 1),
+
+## 'slime'  (2 entries)
+   L 5650  'ndóonə'                        AwingWord(awing: 'ndóonə', english: 'slime (inorganic)', category: 'things', tonePattern: 'high', difficulty: 1),
+   L12207  'ndóona'                        AwingWord(awing: 'ndóona', english: 'slime (inorganic)', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'small pox'  (2 entries)
+   L 3353  'apuməŋkwúnə'                   AwingWord(awing: 'apuməŋkwúnə', english: 'small pox', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+   L12237  'apuməŋkwùnə'                   AwingWord(awing: 'apuməŋkwùnə', english: 'small pox', category: 'descriptive', tonePattern: 'low', difficulty: 1),
+
+## 'snake'  (2 entries)
+   L  162  'nóolə'                         AwingWord(awing: 'nóolə', english: 'snake', category: 'animals'),
+   L12275  'nóola'                         AwingWord(awing: 'nóola', english: 'snake', category: 'animals', tonePattern: 'high', difficulty: 1),
+
+## 'sometimes'  (2 entries)
+   L 3886  'əghâ yitsə̌'                   AwingWord(awing: 'əghâ yitsə̌', english: 'sometimes', category: 'things', tonePattern: 'rising', difficulty: 2),
+   L12345  'aghá yîtsə'                    AwingWord(awing: 'aghá yîtsə', english: 'sometimes', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'soot'  (2 entries)
+   L 4130  'nchîə'                         AwingWord(awing: 'nchîə', english: 'soot', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L12357  'nchìə'                         AwingWord(awing: 'nchìə', english: 'soot', category: 'things', tonePattern: 'low', difficulty: 1),
+
+## 'sound of movement by a group or herd of cattle'  (2 entries)
+   L 3813  'bílɨ'                          AwingWord(awing: 'bílɨ', english: 'sound of movement by a group or herd of cattle', category: 'things', tonePattern: 'hi
+   L 5166  'bílɨ'                          AwingWord(awing: 'bílɨ', english: 'sound of movement by a group (eg people) or herd of cattle', category: 'family', tone
+
+## 'sound that describes the rumbling of something'  (2 entries)
+   L 4486  'wûu'                           AwingWord(awing: 'wûu', english: 'sound (word) that describes the rumbling of something', category: 'things', tonePatter
+   L 6056  'wûu'                           AwingWord(awing: 'wûu', english: 'sound (word) that describes the rumbling (eg stream, thunder, or car) of something', c
+
+## 'sound that intensifies the sourness of something'  (2 entries)
+   L 3835  'chwíŋ'                         AwingWord(awing: 'chwíŋ', english: 'sound (word) that intensifies the sourness of something', category: 'things', tonePa
+   L 5218  'chwíŋ'                         AwingWord(awing: 'chwíŋ', english: 'sound (word) that intensifies the sourness of something (eg fruit)', category: 'natu
+
+## 'sow'  (2 entries)
+   L 2417  'ngwě kwúneemə'                 AwingWord(awing: 'ngwě kwúneemə', english: 'sow', category: 'animals', tonePattern: 'rising', difficulty: 2),
+   L12399  'ngwê kwùneemə'                 AwingWord(awing: 'ngwê kwùneemə', english: 'sow', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'special'  (2 entries)
+   L12417  'chiga'                         AwingWord(awing: 'chiga', english: 'special', category: 'things', difficulty: 1),
+   L12419  'chigə'                         AwingWord(awing: 'chigə', english: 'special', category: 'things', difficulty: 1),
+
+## 'spit'  (2 entries)
+   L 2282  'twîəə'                         AwingWord(awing: 'twîəə', english: 'spit', category: 'body', tonePattern: 'falling', difficulty: 1),
+   L12447  'twìaə'                         AwingWord(awing: 'twìaə', english: 'spit', category: 'things', tonePattern: 'low', difficulty: 1),
+
+## 'spoil'  (2 entries)
+   L 5856  'págə'                          AwingWord(awing: 'págə', english: 'spoil', category: 'things', tonePattern: 'high', difficulty: 1),
+   L12455  'pəga'                          AwingWord(awing: 'pəga', english: 'spoil', category: 'things', difficulty: 1),
+
+## 'spy'  (2 entries)
+   L 4135  'nchwiga'                       AwingWord(awing: 'nchwiga', english: 'spy', category: 'things', difficulty: 1),
+   L12485  'nchwigə'                       AwingWord(awing: 'nchwigə', english: 'spy', category: 'things', difficulty: 1),
+
+## 'stallion'  (2 entries)
+   L 2406  'ndú ləəmə́'                    AwingWord(awing: 'ndú ləəmə́', english: 'stallion', category: 'animals', tonePattern: 'high', difficulty: 2),
+   L12511  'ndû ləəmə'                     AwingWord(awing: 'ndû ləəmə', english: 'stallion', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'steep place, hilly place'  (2 entries)
+   L  756  'kə̂ŋə'                         AwingWord(awing: 'kə̂ŋə', english: 'steep place, hilly place', category: 'nature', difficulty: 1),
+   L 4797  'kəŋə'                          AwingWord(awing: 'kəŋə', english: 'steep place, hilly place', category: 'things', difficulty: 1),
+
+## 'stem, of banana'  (2 entries)
+   L 3752  'atsaŋá'                        AwingWord(awing: 'atsaŋá', english: 'stem, of banana', category: 'things', tonePattern: 'high', difficulty: 1),
+   L12543  'atsaŋə'                        AwingWord(awing: 'atsaŋə', english: 'stem, of banana', category: 'food', difficulty: 1),
+
+## 'stoop, of many people'  (2 entries)
+   L 5304  'fáətə'                         AwingWord(awing: 'fáətə', english: 'stoop, of many people', category: 'family', tonePattern: 'high', difficulty: 1),
+   L12593  'fəatə'                         AwingWord(awing: 'fəatə', english: 'stoop, of many people', category: 'family', difficulty: 1),
+
+## 'strength'  (2 entries)
+   L 4108  'mətəənə'                       AwingWord(awing: 'mətəənə', english: 'strength', category: 'things', difficulty: 1),
+   L12627  'mataənə'                       AwingWord(awing: 'mataənə', english: 'strength', category: 'things', difficulty: 1),
+
+## 'stuff or force in many things'  (2 entries)
+   L 2774  'fádtə'                         AwingWord(awing: 'fádtə', english: 'stuff or force in many things', category: 'actions', tonePattern: 'high', difficulty
+   L 5282  'fádtə'                         AwingWord(awing: 'fádtə', english: 'stuff or force in many things (eg food into the mouth)', category: 'body', tonePatte
+
+## 'style of beginning'  (2 entries)
+   L 4170  'nəchwáakə'                     AwingWord(awing: 'nəchwáakə', english: 'style of beginning', category: 'things', tonePattern: 'high', difficulty: 1),
+   L12663  'nachwáakə'                     AwingWord(awing: 'nachwáakə', english: 'style of beginning', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'suck'  (2 entries)
+   L 3174  'shwíŋə'                        AwingWord(awing: 'shwíŋə', english: 'suck', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L12671  'shwiŋə'                        AwingWord(awing: 'shwiŋə', english: 'suck', category: 'things', difficulty: 1),
+
+## 'suffer'  (2 entries)
+   L 3180  'taŋnə'                         AwingWord(awing: 'taŋnə', english: 'suffer', category: 'actions', difficulty: 1),
+   L12679  'táŋnə'                         AwingWord(awing: 'táŋnə', english: 'suffer', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'sun'  (2 entries)
+   L  206  'mánuma'                        AwingWord(awing: 'mánuma', english: 'sun', category: 'nature'),  // Session 56 audit: was "mɔ́numə" — dict says "mánuma"
+   L12687  'mánumə'                        AwingWord(awing: 'mánumə', english: 'sun', category: 'nature', tonePattern: 'high', difficulty: 1),
+
+## 'support'  (2 entries)
+   L  455  'akwâalə'                       AwingWord(awing: 'akwâalə', english: 'support', category: 'things', difficulty: 1),
+   L12701  'akwáalə'                       AwingWord(awing: 'akwáalə', english: 'support', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'support'  (2 entries)
+   L 3722  'aténkə'                        AwingWord(awing: 'aténkə', english: 'support', category: 'things', tonePattern: 'high', difficulty: 1),
+   L12703  'atênkə'                        AwingWord(awing: 'atênkə', english: 'support', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'swallow'  (2 entries)
+   L  316  'mîəə'                          AwingWord(awing: 'mîəə', english: 'swallow', category: 'actions', difficulty: 1),  // Session 56 audit: was "mîə" — dict
+   L12727  'míəə'                          AwingWord(awing: 'míəə', english: 'swallow', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'swarm'  (2 entries)
+   L 3708  'asəmə'                         AwingWord(awing: 'asəmə', english: 'swarm', category: 'things', difficulty: 1),
+   L12729  'asamə'                         AwingWord(awing: 'asamə', english: 'swarm', category: 'things', difficulty: 1),
+
+## 'sweep'  (2 entries)
+   L 3309  'zəgə'                          AwingWord(awing: 'zəgə', english: 'sweep', category: 'actions', difficulty: 1),
+   L12739  'zagə'                          AwingWord(awing: 'zagə', english: 'sweep', category: 'things', difficulty: 1),
+
+## 'sweep a little'  (2 entries)
+   L 3310  'zəgtə̂'                        AwingWord(awing: 'zəgtə̂', english: 'sweep a little', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L12741  'zagtə'                         AwingWord(awing: 'zagtə', english: 'sweep a little', category: 'descriptive', difficulty: 1),
+
+## 'sweep imperfectly'  (2 entries)
+   L 2882  'káglə'                         AwingWord(awing: 'káglə', english: 'sweep imperfectly', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L12743  'kə̂glə'                        AwingWord(awing: 'kə̂glə', english: 'sweep imperfectly', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'swing'  (2 entries)
+   L 3143  'sábkə'                         AwingWord(awing: 'sábkə', english: 'swing', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L12757  'sabkə'                         AwingWord(awing: 'sabkə', english: 'swing', category: 'things', difficulty: 1),
+
+## 'take; listen'  (2 entries)
+   L  368  'kǒ'                            AwingWord(awing: 'kǒ', english: 'take; listen', category: 'actions', difficulty: 1),
+   L 5440  'ko'                            AwingWord(awing: 'ko', english: 'take; listen', category: 'things', difficulty: 1),
+
+## 'talking drum'  (2 entries)
+   L 3602  'alámbeŋə'                      AwingWord(awing: 'alámbeŋə', english: 'talking drum', category: 'things', tonePattern: 'high', difficulty: 1),
+   L12807  'alambeŋə'                      AwingWord(awing: 'alambeŋə', english: 'talking drum', category: 'things', difficulty: 1),
+
+## 'tax collector'  (2 entries)
+   L 4336  'nkwâtáksə'                     AwingWord(awing: 'nkwâtáksə', english: 'tax collector', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L12825  'nkwátáksə'                     AwingWord(awing: 'nkwátáksə', english: 'tax collector', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'tell a lie'  (2 entries)
+   L 2946  'kwê'                           AwingWord(awing: 'kwê', english: '(colloquial) tell a lie (people lie in politics to such extent that one can see a blac
+   L 5490  'kwê'                           AwingWord(awing: 'kwê', english: '(colloquial) tell a lie (people lie in politics to such extent that one can black obje
+
+## 'temple'  (2 entries)
+   L 5962  'témpəələ'                      AwingWord(awing: 'témpəələ', english: 'temple', category: 'things', tonePattern: 'high', difficulty: 1),
+   L12841  'témpaalə'                      AwingWord(awing: 'témpaalə', english: 'temple', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'tendon'  (2 entries)
+   L 2228  'əŋaŋ nələŋə'                   AwingWord(awing: 'əŋaŋ nələŋə', english: 'tendon', category: 'body', difficulty: 2),
+   L12849  'aŋaŋ nələŋə'                   AwingWord(awing: 'aŋaŋ nələŋə', english: 'tendon', category: 'things', difficulty: 2),
+
+## 'theft'  (2 entries)
+   L 3952  'əzələ'                         AwingWord(awing: 'əzələ', english: 'theft', category: 'things', difficulty: 1),
+   L12893  'azələ'                         AwingWord(awing: 'azələ', english: 'theft', category: 'things', difficulty: 1),
+
+## 'thing'  (2 entries)
+   L  434  'ajúmə'                         AwingWord(awing: 'ajúmə', english: 'thing', category: 'things', difficulty: 1),
+   L12921  'ajûmə'                         AwingWord(awing: 'ajûmə', english: 'thing', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'thirteen'  (2 entries)
+   L  629  'ntsəb teelə́'                  AwingWord(awing: 'ntsəb teelə́', english: 'thirteen', category: 'numbers', difficulty: 2),
+   L 4921  'ntsəb teelə̂'                  AwingWord(awing: 'ntsəb teelə̂', english: 'thirteen (13)', category: 'numbers', difficulty: 2),
+
+## 'thirty'  (2 entries)
+   L 4512  'məghám mén teelə̂'             AwingWord(awing: 'məghám mén teelə̂', english: 'thirty (30)', category: 'numbers', tonePattern: 'falling', difficulty: 2
+   L12935  'maghám mên teelə'              AwingWord(awing: 'maghám mên teelə', english: 'thirty', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+
+## 'thread'  (2 entries)
+   L 3727  'atashiə'                       AwingWord(awing: 'atashiə', english: 'thread', category: 'things', difficulty: 1),
+   L12961  'atashîə'                       AwingWord(awing: 'atashîə', english: 'thread', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'threaten'  (2 entries)
+   L 2879  'káatə'                         AwingWord(awing: 'káatə', english: 'threaten', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 5384  'káatə'                         AwingWord(awing: 'káatə', english: 'threaten (eg with a slap or spank)', category: 'things', tonePattern: 'high', diffic
+
+## 'threaten'  (2 entries)
+   L 5392  'kagə̂'                         AwingWord(awing: 'kagə̂', english: 'threaten', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L12967  'kə̂gə'                         AwingWord(awing: 'kə̂gə', english: 'threaten', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'threaten each other'  (2 entries)
+   L 2883  'kagnə̂'                        AwingWord(awing: 'kagnə̂', english: 'threaten each other', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L12969  'kəgnə'                         AwingWord(awing: 'kəgnə', english: 'threaten each other', category: 'descriptive', difficulty: 1),
+
+## 'threaten many times'  (2 entries)
+   L 2884  'kagtə̂'                        AwingWord(awing: 'kagtə̂', english: 'threaten many times', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L12971  'kəgtə'                         AwingWord(awing: 'kəgtə', english: 'threaten many times', category: 'descriptive', difficulty: 1),
+
+## 'three'  (2 entries)
+   L 4522  'teelə'                         AwingWord(awing: 'teelə', english: 'three (alternate form)', category: 'numbers', difficulty: 1),
+   L 5948  'teelə'                         AwingWord(awing: 'teelə', english: 'three (3)', category: 'numbers', difficulty: 2),
+
+## 'throat'  (2 entries)
+   L 2281  'tôgndě'                        AwingWord(awing: 'tôgndě', english: 'throat', category: 'body', tonePattern: 'rising', difficulty: 1),
+   L12981  'tógndê'                        AwingWord(awing: 'tógndê', english: 'throat', category: 'body', tonePattern: 'falling', difficulty: 1),
+
+## 'thunder'  (2 entries)
+   L  210  'nəfaŋə'                        AwingWord(awing: 'nəfaŋə', english: 'thunder', category: 'nature', difficulty: 1),  // Session 56 audit: was "nəfáŋɔ́" —
+   L13001  'nafaŋə'                        AwingWord(awing: 'nafaŋə', english: 'thunder', category: 'nature', difficulty: 1),
+
+## 'tie many things'  (2 entries)
+   L 2955  'kwúdtə'                        AwingWord(awing: 'kwúdtə', english: 'tie many things', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 5510  'kwúdtə'                        AwingWord(awing: 'kwúdtə', english: 'tie many things (eg bundles)', category: 'descriptive', tonePattern: 'high', diffic
+
+## 'tightly clustered'  (2 entries)
+   L 2668  'cháb-tə'                       AwingWord(awing: 'cháb-tə', english: 'tightly clustered ', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L 5170  'cháb-tə'                       AwingWord(awing: 'cháb-tə', english: 'tightly clustered (eg coffee grains on branches or lice in hair)', category: 'body
+
+## 'time'  (2 entries)
+   L 4146  'ndelə̂'                        AwingWord(awing: 'ndelə̂', english: 'time', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L13017  'ndelə'                         AwingWord(awing: 'ndelə', english: 'time', category: 'things', difficulty: 1),
+
+## 'toad'  (2 entries)
+   L  184  'lóolá'                         AwingWord(awing: 'lóolá', english: 'toad', category: 'animals'),  // Session 56 audit: was "lóolə" — dict says "lóolá"
+   L13047  'lóolə'                         AwingWord(awing: 'lóolə', english: 'toad', category: 'animals', tonePattern: 'high', difficulty: 1),
+
+## 'tomato'  (2 entries)
+   L  277  'tâmto'                         AwingWord(awing: 'tâmto', english: 'tomato', category: 'food'),
+   L 5946  'tămto'                         AwingWord(awing: 'tămto', english: 'tomato', category: 'food', difficulty: 1),
+
+## 'tooth'  (2 entries)
+   L  117  'nəsoŋə'                        AwingWord(awing: 'nəsoŋə', english: 'tooth', category: 'body', pluralForm: 'məsoŋ'),  // Session 56 audit: was "nəsoŋɔ́"
+   L13083  'nasoŋə'                        AwingWord(awing: 'nasoŋə', english: 'tooth', category: 'body', difficulty: 1),
+
+## 'tortoise'  (2 entries)
+   L 4829  'kwíŋə̂'                        AwingWord(awing: 'kwíŋə̂', english: 'tortoise', category: 'animals', difficulty: 1),
+   L13101  'kwíŋə'                         AwingWord(awing: 'kwíŋə', english: 'tortoise', category: 'animals', tonePattern: 'high', difficulty: 1),
+
+## 'total'  (2 entries)
+   L13103  'atsamə'                        AwingWord(awing: 'atsamə', english: 'total', category: 'things', difficulty: 1),
+   L13107  'atsama'                        AwingWord(awing: 'atsama', english: 'total', category: 'things', difficulty: 1),
+
+## 'touch'  (2 entries)
+   L 5514  'kwumə'                         AwingWord(awing: 'kwumə', english: 'touch', category: 'things', difficulty: 1),
+   L13109  'kwumə̂'                        AwingWord(awing: 'kwumə̂', english: 'touch', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'tree'  (2 entries)
+   L   76  'atǐə'                          AwingWord(awing: 'atǐə', english: 'tree', category: 'nature', tonePattern: 'rising', difficulty: 1),
+   L13177  'atìə'                          AwingWord(awing: 'atìə', english: 'tree', category: 'nature', tonePattern: 'low', difficulty: 1),
+
+## 'trickle'  (2 entries)
+   L 3246  'tsímkə'                        AwingWord(awing: 'tsímkə', english: 'trickle', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L13217  'tsimkə'                        AwingWord(awing: 'tsimkə', english: 'trickle', category: 'things', difficulty: 1),
+
+## 'trouble'  (2 entries)
+   L 3591  'aleelá'                        AwingWord(awing: 'aleelá', english: 'trouble', category: 'things', tonePattern: 'high', difficulty: 1),
+   L13223  'aleelə'                        AwingWord(awing: 'aleelə', english: 'trouble', category: 'things', difficulty: 1),
+
+## 'try'  (2 entries)
+   L 3044  'moomâ'                         AwingWord(awing: 'moomâ', english: 'try', category: 'actions', tonePattern: 'falling', difficulty: 1),
+   L13245  'moomə'                         AwingWord(awing: 'moomə', english: 'try', category: 'things', difficulty: 1),
+
+## 'tumor'  (2 entries)
+   L 4851  'mbaŋə̂'                        AwingWord(awing: 'mbaŋə̂', english: 'tumor', category: 'things', difficulty: 3),
+   L13247  'mbaŋə'                         AwingWord(awing: 'mbaŋə', english: 'tumor', category: 'things', difficulty: 3),
+
+## 'turtle'  (2 entries)
+   L 2390  'kwíŋ nkǐə'                     AwingWord(awing: 'kwíŋ nkǐə', english: 'turtle (water turtle)', category: 'animals', tonePattern: 'rising', difficulty: 
+   L 4825  'kwíŋ nkîə'                     AwingWord(awing: 'kwíŋ nkîə', english: 'turtle (water turtle)', category: 'nature', difficulty: 2),
+
+## 'twenty'  (2 entries)
+   L 4507  'məghám mém mbê'                AwingWord(awing: 'məghám mém mbê', english: 'twenty (20)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+   L13265  'maghám mêm mbê'                AwingWord(awing: 'maghám mêm mbê', english: 'twenty', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+
+## 'twin'  (2 entries)
+   L 4174  'nəfágə'                        AwingWord(awing: 'nəfágə', english: 'twin', category: 'things', tonePattern: 'high'),
+   L13277  'nafágə'                        AwingWord(awing: 'nafágə', english: 'twin', category: 'family', tonePattern: 'high', difficulty: 1),
+
+## 'two hundred'  (2 entries)
+   L  654  'nked pê'                       AwingWord(awing: 'nked pê', english: 'two hundred', category: 'numbers', difficulty: 2),
+   L 5770  'nked pê'                       AwingWord(awing: 'nked pê', english: 'two hundred (200)', category: 'numbers', tonePattern: 'falling', difficulty: 2),
+
+## 'underneath'  (2 entries)
+   L 5720  'nəténə'                        AwingWord(awing: 'nəténə', english: 'underneath', category: 'things', tonePattern: 'high', difficulty: 1),
+   L13309  'naténə'                        AwingWord(awing: 'naténə', english: 'underneath', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'untie'  (2 entries)
+   L  336  'kyagó'                         AwingWord(awing: 'kyagó', english: 'untie', category: 'actions', difficulty: 1),
+   L 4831  'kyagô'                         AwingWord(awing: 'kyagô', english: 'untie', category: 'things', difficulty: 1),
+
+## 'unwrap, expose, open food that has been wrapped'  (2 entries)
+   L 2785  'feŋə̂'                         AwingWord(awing: 'feŋə̂', english: 'unwrap, expose, open food that has been wrapped', category: 'actions', tonePattern: 
+   L 5290  'feŋə̂'                         AwingWord(awing: 'feŋə̂', english: 'unwrap, expose, open food that has been wrapped (eg achu, fufu corn, coki corn etc)'
+
+## 'upside down'  (2 entries)
+   L 3735  'atoŋátóŋə'                     AwingWord(awing: 'atoŋátóŋə', english: 'upside down', category: 'things', tonePattern: 'high', difficulty: 1),
+   L13367  'atoŋátoŋə'                     AwingWord(awing: 'atoŋátoŋə', english: 'upside down', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+
+## 'vagina'  (2 entries)
+   L 4652  'nəságə'                        AwingWord(awing: 'nəságə', english: 'vagina', category: 'things', difficulty: 3),
+   L13385  'naságə'                        AwingWord(awing: 'naságə', english: 'vagina', category: 'body', tonePattern: 'high', difficulty: 3),
+
+## 'vain'  (2 entries)
+   L 6038  'vâinə'                         AwingWord(awing: 'vâinə', english: 'vain', category: 'things', tonePattern: 'falling', difficulty: 1),
+   L13389  'váina'                         AwingWord(awing: 'váina', english: 'vain', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'visit'  (2 entries)
+   L 2837  'ghéenə'                        AwingWord(awing: 'ghéenə', english: 'visit', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L13429  'ghéena'                        AwingWord(awing: 'ghéena', english: 'visit', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'visit'  (2 entries)
+   L 4182  'nəghéenə'                      AwingWord(awing: 'nəghéenə', english: 'visit', category: 'things', tonePattern: 'high', difficulty: 1),
+   L13427  'nagheenə'                      AwingWord(awing: 'nagheenə', english: 'visit', category: 'things', difficulty: 1),
+
+## 'vow'  (2 entries)
+   L 6108  'zoomə'                         AwingWord(awing: 'zoomə', english: 'vow', category: 'things', difficulty: 1),
+   L13447  'zooma'                         AwingWord(awing: 'zooma', english: 'vow', category: 'things', difficulty: 1),
+
+## 'vulture'  (2 entries)
+   L 2404  'ndi sáŋə́'                     AwingWord(awing: 'ndi sáŋə́', english: 'vulture', category: 'animals', tonePattern: 'high', difficulty: 2),
+   L13449  'ndi sáŋə'                      AwingWord(awing: 'ndi sáŋə', english: 'vulture', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'wake somebody up'  (2 entries)
+   L 2861  'jimkə'                         AwingWord(awing: 'jimkə', english: 'wake somebody up (transitive)', category: 'actions', difficulty: 1),
+   L13463  'jimkə'                         AwingWord(awing: 'jimkə', english: 'wake somebody up (tr)', category: 'actions', difficulty: 1),
+
+## 'wake up'  (2 entries)
+   L 2862  'jimnə̂'                        AwingWord(awing: 'jimnə̂', english: 'wake up (intransitive)', category: 'actions', tonePattern: 'falling', difficulty: 1
+   L13465  'jimnə'                         AwingWord(awing: 'jimnə', english: 'wake up (intr)', category: 'actions', difficulty: 1),
+
+## 'wall of a house'  (2 entries)
+   L 3900  'ə́lá ndê'                      AwingWord(awing: 'ə́lá ndê', english: 'wall of a house', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L13481  'alá ndê'                       AwingWord(awing: 'alá ndê', english: 'wall of a house', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'wander'  (2 entries)
+   L 3201  'tímnə'                         AwingWord(awing: 'tímnə', english: 'wander', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L13483  'tîmnə'                         AwingWord(awing: 'tîmnə', english: 'wander', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'warthog'  (2 entries)
+   L 2391  'kwúneemə afoonə'               AwingWord(awing: 'kwúneemə afoonə', english: 'warthog', category: 'animals', tonePattern: 'high', difficulty: 2),
+   L13491  'kwùneemə afoonə'               AwingWord(awing: 'kwùneemə afoonə', english: 'warthog', category: 'things', tonePattern: 'low', difficulty: 2),
+
+## 'wash utensils'  (2 entries)
+   L 4431  'sog əpúmə'                     AwingWord(awing: 'sog əpúmə', english: 'wash utensils', category: 'things', tonePattern: 'high', difficulty: 2),
+   L13495  'sog apûmə'                     AwingWord(awing: 'sog apûmə', english: 'wash utensils', category: 'actions', tonePattern: 'falling', difficulty: 2),
+
+## 'waterfall'  (2 entries)
+   L  214  'nəfógə'                        AwingWord(awing: 'nəfógə', english: 'waterfall', category: 'nature', difficulty: 1),
+   L13511  'nəfóga'                        AwingWord(awing: 'nəfóga', english: 'waterfall', category: 'nature', tonePattern: 'high', difficulty: 1),
+
+## 'waxbill'  (2 entries)
+   L 4217  'nənchwínə'                     AwingWord(awing: 'nənchwínə', english: 'waxbill', category: 'things', tonePattern: 'high', difficulty: 1),
+   L13519  'nanchwina'                     AwingWord(awing: 'nanchwina', english: 'waxbill', category: 'things', difficulty: 1),
+
+## 'which?'  (2 entries)
+   L 4484  'wáənə'                         AwingWord(awing: 'wáənə', english: 'which?', category: 'things', tonePattern: 'high', difficulty: 1),
+   L13595  'wəənə̂'                        AwingWord(awing: 'wəənə̂', english: 'which?', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'whisky'  (2 entries)
+   L 4485  'wískiə'                        AwingWord(awing: 'wískiə', english: 'whisky', category: 'things', tonePattern: 'high', difficulty: 1),
+   L13611  'wiskìə'                        AwingWord(awing: 'wiskìə', english: 'whisky', category: 'things', tonePattern: 'low', difficulty: 1),
+
+## 'whisper'  (2 entries)
+   L 3603  'aləmtə'                        AwingWord(awing: 'aləmtə', english: 'whisper', category: 'things', difficulty: 1),
+   L13615  'alámta'                        AwingWord(awing: 'alámta', english: 'whisper(n)', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'whistle'  (2 entries)
+   L  395  'njwíŋə'                        AwingWord(awing: 'njwíŋə', english: 'whistle', category: 'actions'),
+   L  700  'njwîŋə'                        AwingWord(awing: 'njwîŋə', english: 'whistle', category: 'things', difficulty: 1),
+
+## 'whistle'  (2 entries)
+   L 4466  'tóŋ njwîŋə'                    AwingWord(awing: 'tóŋ njwîŋə', english: 'whistle', category: 'things', tonePattern: 'falling', difficulty: 2),
+   L13619  'tôŋ njwìŋə'                    AwingWord(awing: 'tôŋ njwìŋə', english: 'whistle', category: 'things', tonePattern: 'falling', difficulty: 2),
+
+## 'whitewash'  (2 entries)
+   L 5588  'mbǎəmə'                        AwingWord(awing: 'mbǎəmə', english: 'whitewash', category: 'things', tonePattern: 'rising', difficulty: 1),
+   L13629  'mbəəmə'                        AwingWord(awing: 'mbəəmə', english: 'whitewash', category: 'things', difficulty: 1),
+
+## 'widow'  (2 entries)
+   L 3063  'nkogə́'                        AwingWord(awing: 'nkogə́', english: 'widow (used neutrally for both man and woman)', category: 'actions', tonePattern: '
+   L13649  'nkogə'                         AwingWord(awing: 'nkogə', english: 'widow', category: 'family', difficulty: 3),
+
+## 'widowhood'  (2 entries)
+   L 3898  'əkogə́'                        AwingWord(awing: 'əkogə́', english: 'widowhood', category: 'things', tonePattern: 'high', difficulty: 3),
+   L13653  'akogə'                         AwingWord(awing: 'akogə', english: 'widowhood', category: 'things', difficulty: 3),
+
+## 'wing'  (2 entries)
+   L 4223  'nəpeebə'                       AwingWord(awing: 'nəpeebə', english: 'wing', category: 'things'),
+   L13671  'napeebə'                       AwingWord(awing: 'napeebə', english: 'wing', category: 'things', difficulty: 1),
+
+## 'wipe'  (2 entries)
+   L 3162  'shígə'                         AwingWord(awing: 'shígə', english: 'wipe', category: 'actions', tonePattern: 'high', difficulty: 1),
+   L13677  'shigə'                         AwingWord(awing: 'shigə', english: 'wipe', category: 'things', difficulty: 1),
+
+## 'witchcraft'  (2 entries)
+   L 4628  'məse'                          AwingWord(awing: 'məse', english: 'witchcraft', category: 'things', difficulty: 3),
+   L13691  'məsê'                          AwingWord(awing: 'məsê', english: 'witchcraft', category: 'things', tonePattern: 'falling', difficulty: 3),
+
+## 'womb'  (2 entries)
+   L 4566  'aləŋəmóonə'                    AwingWord(awing: 'aləŋəmóonə', english: 'womb', category: 'body', difficulty: 1),
+   L13709  'alaŋəmóona'                    AwingWord(awing: 'alaŋəmóona', english: 'womb', category: 'body', tonePattern: 'high', difficulty: 1),
+
+## 'wool'  (2 entries)
+   L 4099  'manoŋ má mbéŋa'                AwingWord(awing: 'manoŋ má mbéŋa', english: 'wool', category: 'things', tonePattern: 'high', difficulty: 2),
+   L13713  'manoŋ mə́ mbéŋə'               AwingWord(awing: 'manoŋ mə́ mbéŋə', english: 'wool', category: 'things', tonePattern: 'high', difficulty: 2),
+
+## 'world'  (2 entries)
+   L 4855  'mbîə'                          AwingWord(awing: 'mbîə', english: 'world', category: 'things', difficulty: 1),
+   L13731  'mbîa'                          AwingWord(awing: 'mbîa', english: 'world', category: 'things', tonePattern: 'falling', difficulty: 1),
+
+## 'wound'  (2 entries)
+   L 4169  'néŋ nəfaŋə́'                   AwingWord(awing: 'néŋ nəfaŋə́', english: 'wound (sth or sb)', category: 'things', tonePattern: 'high', difficulty: 2),
+   L13765  'néŋ nafaŋə'                    AwingWord(awing: 'néŋ nafaŋə', english: 'wound(v)', category: 'body', tonePattern: 'high', difficulty: 2),
+
+## 'yawn'  (2 entries)
+   L  359  'jágə'                          AwingWord(awing: 'jágə', english: 'yawn', category: 'actions', difficulty: 1),
+   L13793  'jága'                          AwingWord(awing: 'jága', english: 'yawn', category: 'things', tonePattern: 'high', difficulty: 1),
+
+## 'yell with hate'  (2 entries)
+   L 4805  'koŋə̂'                         AwingWord(awing: 'koŋə̂', english: 'yell with hate', category: 'actions', difficulty: 3),
+   L13801  'koŋə'                          AwingWord(awing: 'koŋə', english: 'yell with hate', category: 'things', difficulty: 3),
+
+## 'yesterday'  (2 entries)
+   L 3955  'əzooná'                        AwingWord(awing: 'əzooná', english: 'yesterday', category: 'things', tonePattern: 'high'),
+   L13805  'azoonə'                        AwingWord(awing: 'azoonə', english: 'yesterday', category: 'things', difficulty: 1),
+
+## 'yours'  (2 entries)
+   L 3950  'əzəəná'                        AwingWord(awing: 'əzəəná', english: 'yours (pl)', category: 'things', tonePattern: 'high', difficulty: 1),
+   L13827  'azəənə̌'                       AwingWord(awing: 'azəənə̌', english: 'yours (pl)', category: 'things', tonePattern: 'rising', difficulty: 1),
+

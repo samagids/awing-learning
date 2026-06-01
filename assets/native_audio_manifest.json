@@ -1,11 +1,12 @@
 {
-  "version": 1,
-  "generated_at": "2026-05-29T01:20:36.897076+00:00",
+  "version": 2,
+  "generated_at": "2026-06-01T18:19:12.315420+00:00",
   "categories": {
     "alphabet": {
       "a": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "chato": {
         "canonical": true,
@@ -13,7 +14,8 @@
       },
       "eshue": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ghane": {
         "canonical": true,
@@ -115,7 +117,8 @@
     "boy": {
       "a": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "achaaka": {
         "canonical": true,
@@ -269,7 +272,8 @@
     "girl": {
       "a": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "achaaka": {
         "canonical": true,
@@ -427,7 +431,8 @@
     "man": {
       "a": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "a_ghelo_le_ake": {
         "canonical": true,
@@ -1026,8 +1031,10 @@
       "achie": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "ade": {
         "canonical": true,
@@ -1037,6 +1044,11 @@
         "canonical": true,
         "kids": []
       },
+      "afobla": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
+      },
       "afue": {
         "canonical": true,
         "kids": []
@@ -1044,27 +1056,34 @@
       "agha": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "agha_ghena": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "agha_yia": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "ajwie": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "akangetue": {
         "canonical": true,
@@ -1073,9 +1092,11 @@
       "ake": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "akemotogie": {
         "canonical": true,
@@ -1084,12 +1105,15 @@
       "akoole": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "akwengo": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ale": {
         "canonical": true,
@@ -1098,12 +1122,15 @@
       "aleeme": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "alue": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "an_endae": {
         "canonical": true,
@@ -1128,9 +1155,11 @@
       "apene": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "apengetue": {
         "canonical": true,
@@ -1139,9 +1168,11 @@
       "apo": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "apue": {
         "canonical": true,
@@ -1149,14 +1180,17 @@
       },
       "ateele": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "atie": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "atogle": {
         "canonical": true,
@@ -1165,9 +1199,16 @@
       "atue": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
+      },
+      "atuekeene": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "awe": {
         "canonical": true,
@@ -1188,9 +1229,11 @@
       "efe": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "efele": {
         "canonical": true,
@@ -1199,9 +1242,11 @@
       "efo": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "eguere": {
         "canonical": true,
@@ -1218,13 +1263,20 @@
       "ekwuno": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "ele": {
         "canonical": true,
         "kids": []
+      },
+      "elelo": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "emo": {
         "canonical": true,
@@ -1241,6 +1293,11 @@
       "eshie": {
         "canonical": true,
         "kids": []
+      },
+      "eshue": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "etse": {
         "canonical": true,
@@ -1265,8 +1322,10 @@
       "fele": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "feme": {
         "canonical": true,
@@ -1299,29 +1358,37 @@
       "ghange": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "ghelo": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "gheno": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "gho": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "gome": {
         "canonical": true,
@@ -1381,7 +1448,8 @@
       },
       "konge": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "kongo": {
         "canonical": true,
@@ -1390,6 +1458,11 @@
       "koo": {
         "canonical": true,
         "kids": []
+      },
+      "kwote": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "kwuo": {
         "canonical": true,
@@ -1402,9 +1475,11 @@
       "le": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "leba": {
         "canonical": true,
@@ -1453,9 +1528,11 @@
       "ma": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "mabna": {
         "canonical": true,
@@ -1480,9 +1557,11 @@
       "mbachi": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "mbe": {
         "canonical": true,
@@ -1491,8 +1570,15 @@
       "mbeta": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
+      },
+      "mbie": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "mbifue": {
         "canonical": true,
@@ -1517,9 +1603,11 @@
       "meteeno": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "metwe": {
         "canonical": true,
@@ -1540,9 +1628,11 @@
       "moone": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "muto": {
         "canonical": true,
@@ -1555,6 +1645,11 @@
       "nae": {
         "canonical": true,
         "kids": []
+      },
+      "nalano": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nangke": {
         "canonical": true,
@@ -1571,9 +1666,11 @@
       "nde": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "ndo": {
         "canonical": true,
@@ -1587,6 +1684,11 @@
         "canonical": true,
         "kids": []
       },
+      "nebange": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
+      },
       "nefyane": {
         "canonical": true,
         "kids": []
@@ -1598,39 +1700,54 @@
       "nelage": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nele": {
         "canonical": true,
         "kids": []
       },
+      "nelwei": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
+      },
       "nelwie": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nenonge": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nepe": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nepeene": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nepeme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nese": {
         "canonical": true,
@@ -1639,47 +1756,66 @@
       "nesonge": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "netee": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "neto": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "netogle": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
+      },
+      "netonge": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "netue": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nggoome": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nggoone": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nggwenge": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ngjakase": {
         "canonical": true,
@@ -1696,9 +1832,11 @@
       "ngyie": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nja": {
         "canonical": true,
@@ -1711,9 +1849,11 @@
       "nkadte": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nkange": {
         "canonical": true,
@@ -1726,13 +1866,20 @@
       "nkoe": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nkwa": {
         "canonical": true,
         "kids": []
+      },
+      "nkwenge": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nnang": {
         "canonical": true,
@@ -1741,33 +1888,46 @@
       "nonno": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "nteeme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntie": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntoe": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "ntsedndzeme": {
         "canonical": true,
         "kids": []
       },
+      "ntsonge": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
+      },
       "ntsoole": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "ntue": {
         "canonical": true,
@@ -1868,9 +2028,11 @@
       "sange": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "seeke": {
         "canonical": true,
@@ -1915,9 +2077,11 @@
       "teka": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "tie": {
         "canonical": true,
@@ -1974,9 +2138,11 @@
       "zi": {
         "canonical": true,
         "kids": [
+          "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
       "zonge": {
         "canonical": true,

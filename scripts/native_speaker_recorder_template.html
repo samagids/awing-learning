@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Awing Voice Recording — for Native Speakers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f4f6f8; color: #1a1a1a;
+  }
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: #006432; color: #fff; padding: 12px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  header h1 { margin: 0; font-size: 18px; font-weight: 700; }
+  header .sub { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+  .speaker-bar {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.10); padding: 6px 10px; border-radius: 6px;
+    margin-top: 8px; font-size: 13px; flex-wrap: wrap;
+  }
+  .speaker-bar label { white-space: nowrap; }
+  .speaker-bar input {
+    flex: 1; min-width: 160px;
+    padding: 5px 8px; border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 5px; background: rgba(255,255,255,0.95); color: #1a1a1a;
+    font-size: 13px;
+  }
+  .speaker-bar .progress { color: #fff; font-weight: 600; }
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    padding: 10px 16px; background: #fff; border-bottom: 1px solid #e0e0e0;
+    position: sticky; top: 92px; z-index: 49;
+  }
+  .controls button, .controls select, .controls input {
+    padding: 6px 10px; border: 1px solid #cfd8dc; border-radius: 6px;
+    background: #fff; font-size: 13px; cursor: pointer;
+  }
+  .controls button.active { background: #006432; color: #fff; border-color: #006432; }
+  .controls input[type=search] { min-width: 200px; }
+  .controls .spacer { flex: 1; }
+  .controls .danger { background: #e53935; color: #fff; border-color: #e53935; }
+  .controls .primary { background: #006432; color: #fff; border-color: #006432; font-weight: 600; }
+  main { padding: 12px 16px 90px; max-width: 1100px; margin: 0 auto; }
+  details.help {
+    margin-bottom: 12px; padding: 10px 14px;
+    background: #fff8e1; border-radius: 8px; border: 1px solid #ffe082;
+  }
+  details.help summary { cursor: pointer; font-weight: 700; color: #5d4037; }
+  details.help h3 { margin: 12px 0 4px; font-size: 14px; color: #5d4037; }
+  details.help ol, details.help ul { margin: 4px 0 0 18px; padding: 0; }
+  details.help li { margin: 4px 0; line-height: 1.4; }
+  details.help code { background: #fffde7; padding: 1px 4px; border-radius: 3px; font-size: 12px; }
+  .card {
+    background: #fff; border: 1px solid #e0e0e0; border-radius: 10px;
+    margin-bottom: 10px; padding: 12px 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card-head { margin-bottom: 10px; }
+  .awing {
+    font-size: 24px; font-weight: 700;
+    line-height: 1.2; word-break: break-word; margin-bottom: 4px;
+  }
+  .english { color: #1a1a1a; font-size: 15px; line-height: 1.35; margin-bottom: 6px; }
+  .english .label {
+    color: #888; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase; margin-right: 6px;
+  }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+  .kind-phrase   .awing { color: #4527a0; }
+  .kind-sentence .awing { color: #b71c1c; }
+  .kind-word     .awing { color: #006432; }
+  .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .rec-btn {
+    flex: 1; min-width: 140px;
+    padding: 8px 12px; border: none; border-radius: 6px;
+    background: #006432; color: #fff; cursor: pointer;
+    font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .rec-btn.recording { background: #e53935; animation: pulse 1s infinite; }
+  .rec-btn.recorded { background: #2e7d32; }
+  .play-btn {
+    padding: 8px 14px; border: 1px solid #cfd8dc; border-radius: 6px;
+    background: #fff; cursor: pointer; font-size: 14px;
+  }
+  .play-btn:hover { background: #eceff1; }
+  .play-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+  .play-btn.playing { background: #fff8e1; border-color: #ffb300; }
+  .rec-dur { font-size: 11px; color: #555; }
+  .empty { text-align: center; color: #999; padding: 40px 0; }
+  @keyframes pulse { 50% { opacity: 0.65; } }
+  .footer-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #fff; border-top: 1px solid #e0e0e0; padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-size: 13px; z-index: 60;
+  }
+  .footer-bar .status { flex: 1; color: #555; }
+  .footer-bar button {
+    padding: 8px 14px; border: 1px solid #006432; border-radius: 6px;
+    background: #006432; color: #fff; font-weight: 600; font-size: 14px;
+    cursor: pointer;
+  }
+  .footer-bar button[disabled] {
+    background: #cfd8dc; border-color: #cfd8dc; color: #757575; cursor: not-allowed;
+  }
+  .pill {
+    display: inline-block; padding: 1px 8px; border-radius: 999px;
+    background: #eceff1; color: #455a64; font-size: 11px;
+  }
+  .pill.diff-1 { background: #c8e6c9; color: #1b5e20; }
+  .pill.diff-2 { background: #ffecb3; color: #ef6c00; }
+  .pill.diff-3 { background: #ffcdd2; color: #b71c1c; }
+  .pill.kind-phrase { background: #ede7f6; color: #4527a0; }
+  .pill.kind-sentence { background: #ffebee; color: #b71c1c; }
+  .pill.kind-word { background: #e8f5e9; color: #1b5e20; }
+  .hint { font-size: 12px; color: #777; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎙️ Awing Voice Recording — Native Speaker</h1>
+  <div class="sub">Thank you for helping preserve the Awing language for the next generation.</div>
+  <div class="speaker-bar">
+    <label for="speakerName">Your name (so we can credit you):</label>
+    <input type="text" id="speakerName" placeholder="e.g. Marie Tabe" value="__SPEAKER_NAME__">
+    <span class="progress" id="progressLabel">0 recorded</span>
+  </div>
+</header>
+
+<div class="controls">
+  <button data-filter="all" class="active">All (<span id="cnt-all">0</span>)</button>
+  <button data-filter="phrase">Phrases (<span id="cnt-phrase">0</span>)</button>
+  <button data-filter="sentence">Sentences (<span id="cnt-sentence">0</span>)</button>
+  <button data-filter="word-1">Beginner words (<span id="cnt-word-1">0</span>)</button>
+  <button data-filter="word-2">Medium words (<span id="cnt-word-2">0</span>)</button>
+  <button data-filter="word-3">Expert words (<span id="cnt-word-3">0</span>)</button>
+  <span class="spacer"></span>
+  <select id="recorderFilter">
+    <option value="">Show all items</option>
+    <option value="not-recorded">Not yet recorded</option>
+    <option value="recorded">Already recorded</option>
+  </select>
+  <input type="search" id="search" placeholder="Search Awing or English...">
+  <button id="resetBtn" class="danger" title="Reset progress + audio cache. Does NOT delete downloaded files.">Reset</button>
+</div>
+
+<main>
+  <details class="help" open>
+    <summary>📖 Read this first — how to use this page</summary>
+    __PERSONAL_WELCOME__
+   
+    <h3>1) Enable the microphone</h3>
+    <p>This page works offline. The browser must be allowed to use your microphone.</p>
+    <ul>
+      <li><strong>Best:</strong> Open this file in <strong>Firefox</strong> (free download: <code>firefox.com</code>). When you start recording the first time, Firefox will ask permission — click <strong>Allow</strong>.</li>
+      <li><strong>If using Chrome / Edge:</strong> microphones do not work on local files. Ask the person who sent you this file to give you the <em>localhost</em> version, OR install Firefox.</li>
+    </ul>
+    <h3>2) Type your name at the top</h3>
+    <p>Your name gets added to every recording filename so we know who contributed.</p>
+    <h3>3) Record each word</h3>
+    <ol>
+      <li>Click the green <strong>🎤 Record</strong> button next to a word.</li>
+      <li>Speak clearly, naturally, the way you would say the word to a child.</li>
+      <li>Click <strong>⏹ Stop</strong> when done.</li>
+      <li>Your browser will save the recording to your <strong>Downloads</strong> folder automatically (filename like <code>native_marie__apo.webm</code>).</li>
+      <li>Click <strong>▶ Play</strong> to listen. If unhappy, click <strong>🔁 Re-record</strong> to do it again.</li>
+    </ol>
+    <h3>4) When you are done — send everything back</h3>
+    <ol>
+      <li>Click the green <strong>Download all as ZIP</strong> button at the bottom of this page.</li>
+      <li>You'll get one ZIP file containing every recording you made.</li>
+      <li>Email or WhatsApp that ZIP to <strong>Dr. Guidion Sama</strong> at <code>samagids@gmail.com</code>.</li>
+    </ol>
+    <h3>Tips</h3>
+    <ul>
+      <li>You don't have to record everything in one sitting. Your progress is saved automatically in this browser.</li>
+      <li>Quiet room is best. Speak about 6 inches from the microphone.</li>
+      <li>Use the <strong>Beginner words</strong> filter first — those are the most common words children will learn.</li>
+      <li>If you don't know how to say a word, skip it. Just leave it un-recorded.</li>
+    </ul>
+  </details>
+
+  <div id="list"></div>
+  <div class="empty" id="empty" hidden>No items match the current filter.</div>
+</main>
+
+<div class="footer-bar">
+  <span class="status" id="status">Ready.</span>
+  <button id="downloadAllBtn" disabled>📦 Download all as ZIP</button>
+</div>
+
+<!-- JSZip for bundling recordings into one .zip file -->
+<!-- JSZip removed: replaced with inline vanilla-JS ZIP writer below -->
+
+<script>
+const ITEMS = __ITEMS_JSON__;
+
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+
+const STORAGE_KEY = "awing_native_speaker_progress_v1";
+
+// ---------- IndexedDB for blob storage ----------
+const DB_NAME    = "awing_native_recordings_v1";
+const DB_STORE   = "blobs";
+let dbHandle = null;
+
+function openDb() {
+  return new Promise((resolve, reject) => {
+    if (dbHandle) return resolve(dbHandle);
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(DB_STORE)) {
+        db.createObjectStore(DB_STORE);
+      }
+    };
+    req.onsuccess = (e) => { dbHandle = e.target.result; resolve(dbHandle); };
+    req.onerror   = (e) => reject(e.target.error);
+  });
+}
+
+async function dbPut(id, blob) {
+  const db = await openDb();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).put(blob, id);
+    tx.oncomplete = () => res();
+    tx.onerror = (e) => rej(e.target.error);
+  });
+}
+
+async function dbGet(id) {
+  const db = await openDb();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(DB_STORE, "readonly");
+    const r = tx.objectStore(DB_STORE).get(id);
+    r.onsuccess = () => res(r.result || null);
+    r.onerror = (e) => rej(e.target.error);
+  });
+}
+
+async function dbClear() {
+  const db = await openDb();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(DB_STORE, "readwrite");
+    tx.objectStore(DB_STORE).clear();
+    tx.oncomplete = () => res();
+    tx.onerror = (e) => rej(e.target.error);
+  });
+}
+
+async function dbAll() {
+  const db = await openDb();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(DB_STORE, "readonly");
+    const store = tx.objectStore(DB_STORE);
+    const results = [];
+    const req = store.openCursor();
+    req.onsuccess = (e) => {
+      const cur = e.target.result;
+      if (cur) { results.push({ id: cur.key, blob: cur.value }); cur.continue(); }
+      else res(results);
+    };
+    req.onerror = (e) => rej(e.target.error);
+  });
+}
+
+// ---------- localStorage for progress + name ----------
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch { return {}; }
+}
+function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+let progress = loadProgress();
+let activeRecorder = null;
+let activeButton = null;
+let activeChunks = [];
+let activeStart = 0;
+let activeTimer = null;
+let currentFilter = "all";
+let recorderFilter = "";
+let searchTerm = "";
+let currentAudio = null;
+let speakerName = localStorage.getItem("awing_speaker_name") || document.getElementById("speakerName").value || "";
+if (speakerName && !localStorage.getItem("awing_speaker_name")) {
+  localStorage.setItem("awing_speaker_name", speakerName);
+}
+
+function speakerSlug() {
+  // ASCII-safe slug for filenames
+  let n = (speakerName || "anonymous").toLowerCase();
+  n = n.normalize("NFD").replace(/[̀-ͯ]/g, "");
+  n = n.replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+  return n || "anonymous";
+}
+
+function stopCurrentAudio() {
+  if (currentAudio) { currentAudio.pause(); currentAudio.src = ""; currentAudio = null; }
+  $$(".play-btn.playing").forEach(b => { b.classList.remove("playing"); b.textContent = "▶ Play"; });
+}
+
+function recordedCount() {
+  let n = 0;
+  for (const k of Object.keys(progress)) if (progress[k]) n++;
+  return n;
+}
+
+function updateProgressLabel() {
+  const n = recordedCount();
+  $("#progressLabel").textContent = `${n} recorded of ${ITEMS.length}`;
+  $("#downloadAllBtn").disabled = (n === 0);
+}
+
+function matchesFilter(item) {
+  if (currentFilter === "all") return true;
+  if (currentFilter === "phrase")   return item.kind === "phrase";
+  if (currentFilter === "sentence") return item.kind === "sentence";
+  if (currentFilter.startsWith("word-")) {
+    const d = parseInt(currentFilter.split("-")[1], 10);
+    return item.kind === "word" && item.difficulty === d;
+  }
+  return true;
+}
+
+function matchesSearch(item) {
+  if (!searchTerm) return true;
+  const q = searchTerm.toLowerCase();
+  return item.awing.toLowerCase().includes(q) || item.english.toLowerCase().includes(q);
+}
+
+function matchesRecorderFilter(item) {
+  if (!recorderFilter) return true;
+  const has = !!progress[item.key];
+  if (recorderFilter === "recorded")     return has;
+  if (recorderFilter === "not-recorded") return !has;
+  return true;
+}
+
+function renderList() {
+  const root = $("#list");
+  root.innerHTML = "";
+  let shown = 0;
+  for (const item of ITEMS) {
+    if (!matchesFilter(item))  continue;
+    if (!matchesSearch(item))  continue;
+    if (!matchesRecorderFilter(item)) continue;
+    root.appendChild(renderItem(item));
+    shown++;
+    if (shown >= 600) {
+      const more = document.createElement("div");
+      more.className = "empty";
+      more.textContent = `Showing first ${shown}. Use search / filter to narrow.`;
+      root.appendChild(more);
+      break;
+    }
+  }
+  $("#empty").hidden = shown > 0;
+  $("#status").textContent = `Showing ${shown} of ${ITEMS.length} items`;
+}
+
+function renderItem(item) {
+  const card = document.createElement("div");
+  card.className = "card kind-" + item.kind;
+
+  const head = document.createElement("div");
+  head.className = "card-head";
+
+  const awing = document.createElement("div");
+  awing.className = "awing";
+  awing.textContent = item.awing;
+  head.appendChild(awing);
+
+  const eng = document.createElement("div");
+  eng.className = "english";
+  const label = document.createElement("span");
+  label.className = "label";
+  label.textContent = "English";
+  eng.appendChild(label);
+  eng.appendChild(document.createTextNode(item.english));
+  head.appendChild(eng);
+
+  const meta = document.createElement("div");
+  meta.className = "meta-row";
+  const kp = document.createElement("span");
+  kp.className = "pill kind-" + item.kind;
+  kp.textContent = item.kind;
+  meta.appendChild(kp);
+  if (item.kind === "word" && item.difficulty) {
+    const dp = document.createElement("span");
+    dp.className = "pill diff-" + item.difficulty;
+    dp.textContent = ["", "Beginner", "Medium", "Expert"][item.difficulty] || "";
+    meta.appendChild(dp);
+  }
+  const cp = document.createElement("span");
+  cp.className = "pill";
+  cp.textContent = item.category;
+  meta.appendChild(cp);
+  head.appendChild(meta);
+
+  card.appendChild(head);
+
+  const actions = document.createElement("div");
+  actions.className = "actions";
+  const recorded = progress[item.key];
+
+  const btn = document.createElement("button");
+  btn.className = "rec-btn" + (recorded ? " recorded" : "");
+  btn.textContent = recorded ? "🔁 Re-record" : "🎤 Record";
+  btn.addEventListener("click", () => toggleRecording(item, btn, actions));
+  actions.appendChild(btn);
+
+  if (recorded) {
+    const play = document.createElement("button");
+    play.className = "play-btn";
+    play.textContent = "▶ Play";
+    play.addEventListener("click", () => playRecording(item, play));
+    actions.appendChild(play);
+
+    const dur = document.createElement("span");
+    dur.className = "rec-dur";
+    dur.textContent = (recorded.duration || 0).toFixed(1) + "s";
+    actions.appendChild(dur);
+  }
+
+  card.appendChild(actions);
+  return card;
+}
+
+async function playRecording(item, playBtn) {
+  if (playBtn.classList.contains("playing")) { stopCurrentAudio(); return; }
+  stopCurrentAudio();
+  const blob = await dbGet(item.key);
+  if (!blob) {
+    alert("Audio is no longer in this browser's memory. The .webm file is in your Downloads folder — play it from there, or re-record.");
+    return;
+  }
+  const url = URL.createObjectURL(blob);
+  const audio = new Audio(url);
+  audio.addEventListener("ended", () => {
+    URL.revokeObjectURL(url);
+    playBtn.classList.remove("playing");
+    playBtn.textContent = "▶ Play";
+    currentAudio = null;
+  });
+  playBtn.classList.add("playing");
+  playBtn.textContent = "⏸ Stop";
+  currentAudio = audio;
+  try { await audio.play(); } catch (e) { console.error(e); stopCurrentAudio(); }
+}
+
+async function toggleRecording(item, btn, actions) {
+  stopCurrentAudio();
+  if (!speakerName) {
+    alert("Please type your name at the top of the page first.");
+    $("#speakerName").focus();
+    return;
+  }
+
+  if (activeRecorder && activeRecorder.state === "recording") {
+    if (activeButton === btn) { stopRecording(); return; }
+    stopRecording();
+    await new Promise(r => setTimeout(r, 200));
+  }
+
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true,
+        sampleRate: 44100,
+      }
+    });
+  } catch (err) {
+    alert(
+      "Could not access the microphone.\n\n" +
+      "If you opened this file by double-clicking and your browser is Chrome or Edge, the microphone is blocked on local files.\n\n" +
+      "Please open this page in Firefox (free at firefox.com) — it will ask for microphone permission. Click Allow.\n\n" +
+      "Detail: " + (err.message || err)
+    );
+    console.error(err);
+    return;
+  }
+
+  activeChunks = [];
+  const mimeType = (typeof MediaRecorder !== "undefined"
+                    && MediaRecorder.isTypeSupported
+                    && MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))
+    ? "audio/webm;codecs=opus"
+    : (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "");
+  activeRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+  activeButton = btn;
+  activeStart = Date.now();
+
+  activeRecorder.addEventListener("dataavailable", e => {
+    if (e.data && e.data.size > 0) activeChunks.push(e.data);
+  });
+  activeRecorder.addEventListener("stop", async () => {
+    stream.getTracks().forEach(t => t.stop());
+    const blob = new Blob(activeChunks, { type: activeRecorder.mimeType || "audio/webm" });
+    const duration = (Date.now() - activeStart) / 1000;
+    await finishRecording(item, btn, actions, blob, duration);
+    activeRecorder = null;
+    activeButton = null;
+    if (activeTimer) { clearInterval(activeTimer); activeTimer = null; }
+  });
+
+  btn.classList.add("recording");
+  btn.classList.remove("recorded");
+  btn.textContent = "⏹ Stop (0.0s)";
+  $("#status").textContent = `Recording: ${item.awing}…`;
+
+  activeTimer = setInterval(() => {
+    const t = (Date.now() - activeStart) / 1000;
+    btn.textContent = `⏹ Stop (${t.toFixed(1)}s)`;
+  }, 100);
+  activeRecorder.start();
+}
+
+function stopRecording() {
+  if (activeRecorder && activeRecorder.state === "recording") activeRecorder.stop();
+}
+
+async function finishRecording(item, btn, actionsRow, blob, duration) {
+  const filename = `native_${speakerSlug()}__${item.key}.webm`;
+
+  // 1) Save to IndexedDB so the Play button + ZIP export work.
+  try { await dbPut(item.key, blob); } catch (e) { console.warn(e); }
+
+  // 2) Auto-download the per-clip file.
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 5000);
+
+  // 3) Update progress.
+  progress[item.key] = {
+    duration,
+    ts: new Date().toISOString(),
+    filename,
+  };
+  saveProgress(progress);
+  updateProgressLabel();
+
+  // 4) Re-render this card so Play button appears.
+  const newCard = renderItem(item);
+  actionsRow.parentElement.replaceWith(newCard);
+  $("#status").textContent = `Saved ${filename} (${duration.toFixed(1)}s)`;
+}
+
+// ---------- Inline vanilla-JS stored-ZIP writer (no JSZip needed) ----------
+// Builds a standards-compliant PKZip 2.0 archive with STORED entries.
+// Audio is already Opus-compressed so STORED costs nothing vs DEFLATE.
+
+const CRC_TABLE = (() => {
+  const t = new Uint32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c = i;
+    for (let j = 0; j < 8; j++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[i] = c >>> 0;
+  }
+  return t;
+})();
+
+function crc32(bytes) {
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+
+function utf8Bytes(str) { return new TextEncoder().encode(str); }
+
+function writeU16(view, off, val) { view.setUint16(off, val, true); }
+function writeU32(view, off, val) { view.setUint32(off, val, true); }
+
+async function buildZip(entries) {
+  // entries: [{ name: string, data: Blob|Uint8Array }, ...]
+  // Pre-read everything to Uint8Array (sequentially so memory stays sane)
+  const prepared = [];
+  for (const e of entries) {
+    let bytes;
+    if (e.data instanceof Blob) {
+      bytes = new Uint8Array(await e.data.arrayBuffer());
+    } else if (e.data instanceof Uint8Array) {
+      bytes = e.data;
+    } else if (typeof e.data === "string") {
+      bytes = utf8Bytes(e.data);
+    } else {
+      throw new Error("Unsupported entry data type for " + e.name);
+    }
+    prepared.push({
+      nameBytes: utf8Bytes(e.name),
+      data: bytes,
+      crc: crc32(bytes),
+    });
+  }
+
+  // Compute total size
+  let totalSize = 0;
+  for (const p of prepared) totalSize += 30 + p.nameBytes.length + p.data.length;
+  let centralSize = 0;
+  for (const p of prepared) centralSize += 46 + p.nameBytes.length;
+  totalSize += centralSize + 22;
+
+  const buf = new Uint8Array(totalSize);
+  const view = new DataView(buf.buffer);
+  let off = 0;
+  const centralStarts = [];
+
+  // Local file headers + data
+  for (const p of prepared) {
+    centralStarts.push(off);
+    writeU32(view, off + 0,  0x04034b50);     // signature
+    writeU16(view, off + 4,  20);             // version needed
+    writeU16(view, off + 6,  0);              // flags (no encryption, no UTF-8 flag because we set names ourselves)
+    writeU16(view, off + 8,  0);              // compression: STORED
+    writeU16(view, off + 10, 0);              // mod time (set to 0)
+    writeU16(view, off + 12, 0x21);           // mod date (1980-01-01)
+    writeU32(view, off + 14, p.crc);          // CRC-32
+    writeU32(view, off + 18, p.data.length);  // compressed size
+    writeU32(view, off + 22, p.data.length);  // uncompressed size
+    writeU16(view, off + 26, p.nameBytes.length);
+    writeU16(view, off + 28, 0);              // extra length
+    buf.set(p.nameBytes, off + 30);
+    buf.set(p.data, off + 30 + p.nameBytes.length);
+    off += 30 + p.nameBytes.length + p.data.length;
+  }
+
+  const centralOffset = off;
+
+  // Central directory
+  for (let i = 0; i < prepared.length; i++) {
+    const p = prepared[i];
+    writeU32(view, off + 0,  0x02014b50);     // signature
+    writeU16(view, off + 4,  20);             // version made by
+    writeU16(view, off + 6,  20);             // version needed
+    writeU16(view, off + 8,  0);              // flags
+    writeU16(view, off + 10, 0);              // compression
+    writeU16(view, off + 12, 0);              // mod time
+    writeU16(view, off + 14, 0x21);           // mod date
+    writeU32(view, off + 16, p.crc);          // CRC-32
+    writeU32(view, off + 20, p.data.length);  // compressed size
+    writeU32(view, off + 24, p.data.length);  // uncompressed size
+    writeU16(view, off + 28, p.nameBytes.length);
+    writeU16(view, off + 30, 0);              // extra length
+    writeU16(view, off + 32, 0);              // comment length
+    writeU16(view, off + 34, 0);              // disk number
+    writeU16(view, off + 36, 0);              // internal attrs
+    writeU32(view, off + 38, 0);              // external attrs
+    writeU32(view, off + 42, centralStarts[i]); // local header offset
+    buf.set(p.nameBytes, off + 46);
+    off += 46 + p.nameBytes.length;
+  }
+
+  // End of central directory
+  writeU32(view, off + 0,  0x06054b50);
+  writeU16(view, off + 4,  0);
+  writeU16(view, off + 6,  0);
+  writeU16(view, off + 8,  prepared.length);
+  writeU16(view, off + 10, prepared.length);
+  writeU32(view, off + 12, centralSize);
+  writeU32(view, off + 16, centralOffset);
+  writeU16(view, off + 20, 0);
+
+  return new Blob([buf], { type: "application/zip" });
+}
+
+async function downloadAllAsZip() {
+  $("#status").textContent = "Bundling recordings into ZIP...";
+  $("#downloadAllBtn").disabled = true;
+  try {
+    const all = await dbAll();
+    if (all.length === 0) {
+      alert("You have no recordings to download yet.");
+      $("#downloadAllBtn").disabled = false;
+      return;
+    }
+    const slug = speakerSlug();
+    const keyMap = {};
+    for (const it of ITEMS) keyMap[it.key] = it;
+
+    const readme = [
+      "Awing Native Speaker Recordings",
+      "================================",
+      "Speaker name: " + (speakerName || "(unnamed)"),
+      "Recordings:   " + all.length,
+      "Exported on:  " + new Date().toISOString(),
+      "",
+      "Each .webm file is named: native_{speaker}__{audio_key}.webm",
+      "",
+      "Send this whole ZIP to Dr. Guidion Sama at samagids@gmail.com",
+    ].join("\n");
+
+    const entries = [{ name: "README.txt", data: readme }];
+    for (const entry of all) {
+      const item = keyMap[entry.id];
+      if (!item) continue;
+      entries.push({
+        name: "native_" + slug + "__" + item.key + ".webm",
+        data: entry.blob,
+      });
+      $("#status").textContent = "Bundling " + entries.length + " of " + (all.length + 1) + "...";
+    }
+
+    const zipBlob = await buildZip(entries);
+    const url = URL.createObjectURL(zipBlob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "awing_recordings_" + slug + ".zip";
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 5000);
+    $("#status").textContent = "Done! Saved " + a.download + " with " + all.length + " recordings. Email it to samagids@gmail.com.";
+  } catch (err) {
+    console.error(err);
+    alert("Failed to build ZIP: " + (err.message || err));
+    $("#status").textContent = "ZIP failed - see browser console.";
+  } finally {
+    $("#downloadAllBtn").disabled = false;
+  }
+}
+
+function bindControls() {
+  $$(".controls button[data-filter]").forEach(b => {
+    b.addEventListener("click", () => {
+      currentFilter = b.dataset.filter;
+      $$(".controls button[data-filter]").forEach(o => o.classList.toggle("active", o === b));
+      renderList();
+    });
+  });
+  $("#search").addEventListener("input", e => { searchTerm = e.target.value.trim(); renderList(); });
+  $("#recorderFilter").addEventListener("change", e => { recorderFilter = e.target.value; renderList(); });
+  $("#resetBtn").addEventListener("click", async () => {
+    if (!confirm("Reset everything? This clears your progress AND deletes recordings stored in this page.\n\n" +
+                 "Your downloaded .webm files in your Downloads folder are NOT deleted.")) return;
+    progress = {};
+    saveProgress(progress);
+    try { await dbClear(); } catch (e) { console.warn(e); }
+    stopCurrentAudio();
+    updateProgressLabel();
+    renderList();
+  });
+  $("#speakerName").value = speakerName;
+  $("#speakerName").addEventListener("input", e => {
+    speakerName = e.target.value.trim();
+    localStorage.setItem("awing_speaker_name", speakerName);
+  });
+  $("#downloadAllBtn").addEventListener("click", downloadAllAsZip);
+}
+
+function updateCounts() {
+  const c = { all: ITEMS.length, phrase: 0, sentence: 0, "word-1": 0, "word-2": 0, "word-3": 0 };
+  for (const it of ITEMS) {
+    if (it.kind === "phrase")   c.phrase++;
+    if (it.kind === "sentence") c.sentence++;
+    if (it.kind === "word")     c["word-" + it.difficulty] = (c["word-" + it.difficulty] || 0) + 1;
+  }
+  for (const k in c) {
+    const el = document.getElementById("cnt-" + k);
+    if (el) el.textContent = c[k];
+  }
+}
+
+updateCounts();
+updateProgressLabel();
+renderList();
+bindControls();
+</script>
+
+</body>
+</html>

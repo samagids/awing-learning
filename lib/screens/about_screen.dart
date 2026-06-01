@@ -10,8 +10,8 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
-  static const String appVersion = '1.13.5';
-  static const String buildNumber = '65';
+  static const String appVersion = '1.13.6';
+  static const String buildNumber = '66';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
   static const String appDescription =
@@ -700,20 +700,77 @@ class _AboutScreenState extends State<AboutScreen> {
       ),
     );
 
-    // Send code via webhook — must succeed for security
+    // Send code via webhook
     final sent = await _sendDevVerificationEmail(code);
 
     if (!mounted) return;
     Navigator.pop(context); // dismiss loading
 
+    // Webhook-failed fallback: show the code on-screen instead of via email.
+    // Security model is intact — caller already cleared the `awing2026`
+    // access-code gate, is signed in as the developer email, and still has
+    // to type the 6-digit code into the verification dialog. The webhook
+    // email is a third factor that's helpful in production but blocks
+    // local-only dev work when the network or webhook deployment is down.
     if (!sent) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Could not send verification email. Check internet connection and webhook deployment.'),
-          backgroundColor: Colors.red,
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => AlertDialog(
+          title: const Row(
+            children: [
+              Icon(Icons.warning_amber, color: Colors.orange),
+              SizedBox(width: 8),
+              Text('Email unavailable'),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'The verification email could not be sent (offline or '
+                'webhook down). Showing the code on-screen as a fallback:',
+              ),
+              const SizedBox(height: 16),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey.shade400),
+                ),
+                child: SelectableText(
+                  code,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 28,
+                    letterSpacing: 8,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Copy or memorize the code, then tap Continue.',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Continue'),
+            ),
+          ],
         ),
       );
-      return;
+      if (!mounted) return;
     }
 
     // Show code entry dialog

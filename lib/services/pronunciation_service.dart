@@ -169,6 +169,54 @@ class PronunciationService {
     }
   }
 
+  /// Resolve a file path to the WAV reference for the on-device
+  /// pronunciation grader (lib/services/pronunciation_grader.dart).
+  ///
+  /// The PAD pack ships a .wav alongside every native-tier .mp3
+  /// (see scripts/apply_recordings_as_audio.py v2+). Search order
+  /// mirrors playback's [_buildSearchPaths] BUT only across the
+  /// native + native_kids tiers — the grader never compares against
+  /// TTS-synthesized character voices, those aren't real speech.
+  ///
+  /// Returns:
+  ///   - The cached file path of the first matching .wav, OR
+  ///   - null when no native reference exists for this word
+  ///     (caller should hide / disable the grader UI for that word).
+  ///
+  /// Walks tiers:
+  ///   1. native_kids/<picked kid>/<category>/<key>.wav  (when kid override active)
+  ///   2. native/<category>/<key>.wav                    (canonical Dr. Sama reference)
+  ///
+  /// Caches the resolved path inside the same PAD-asset extraction
+  /// cache the audio player uses, so subsequent grader calls for the
+  /// same word are free.
+  Future<String?> referenceWavPathForGrading({
+    required String awingWord,
+    required String category,
+  }) async {
+    final key = _audioKey(awingWord);
+
+    final candidates = <String>[];
+    if (_kidOverride != null) {
+      candidates
+          .add('assets/audio/native_kids/$_kidOverride/$category/$key.wav');
+    }
+    candidates.add('assets/audio/native/$category/$key.wav');
+
+    for (final asset in candidates) {
+      try {
+        final packPath = asset.replaceFirst('assets/', '');
+        final exists = await _assetPack.assetExists(packPath);
+        if (!exists) continue;
+        final filePath = await _assetPack.getAssetPath(packPath);
+        if (filePath != null) return filePath;
+      } catch (_) {
+        // Try next candidate.
+      }
+    }
+    return null;
+  }
+
   /// Get the voice list for the same level as the current voice.
   List<String> _sameLevelVoices() {
     if (beginnerVoices.contains(_currentVoice)) return beginnerVoices;

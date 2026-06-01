@@ -1,0 +1,7048 @@
+[
+  {
+    "english": "a boundary stick which its leaves are used for making a public announcement",
+    "entries": [
+      {
+        "line": 2469,
+        "awing": "atɨə awaglápanêmə",
+        "english": "a boundary stick which its leaves are used for making a public announcement",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 2505,
+        "awing": "əwaglápanə̂mə",
+        "english": "a boundary stick which its leaves are used for making a public announcement (a special kind that grows only in Baminyam)",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "abdomen",
+    "entries": [
+      {
+        "line": 6143,
+        "awing": "atena",
+        "english": "abdomen",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 6145,
+        "awing": "nəpemə",
+        "english": "abdomen (external)",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "animal, wild",
+    "entries": [
+      {
+        "line": 6317,
+        "awing": "nə mayenə",
+        "english": "animal, wild",
+        "category": "animals",
+        "difficulty": 2
+      },
+      {
+        "line": 6319,
+        "awing": "nə neyenə",
+        "english": "animal, wild",
+        "category": "animals",
+        "difficulty": 2
+      },
+      {
+        "line": 6321,
+        "awing": "neemə akoobə",
+        "english": "animal, wild",
+        "category": "animals",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "ashes",
+    "entries": [
+      {
+        "line": 458,
+        "awing": "apúə",
+        "english": "ashes",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 6413,
+        "awing": "apʉə",
+        "english": "ashes",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "attack, of cold",
+    "entries": [
+      {
+        "line": 5448,
+        "awing": "kóolə",
+        "english": "attack, of cold",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 6443,
+        "awing": "kéolə",
+        "english": "attack, of cold",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "baby",
+    "entries": [
+      {
+        "line": 555,
+        "awing": "mábna",
+        "english": "baby",
+        "category": "family"
+      },
+      {
+        "line": 2343,
+        "awing": "mó yi mbóolə",
+        "english": "baby",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 6463,
+        "awing": "mɔ́ yi mbéolə",
+        "english": "baby",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "back",
+    "entries": [
+      {
+        "line": 101,
+        "awing": "nkadtə",
+        "english": "back",
+        "category": "body"
+      },
+      {
+        "line": 236,
+        "awing": "ndzəmə",
+        "english": "back (place)",
+        "category": "nature",
+        "difficulty": 1
+      },
+      {
+        "line": 6471,
+        "awing": "tśmtə",
+        "english": "back",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "banana, sort of",
+    "entries": [
+      {
+        "line": 6499,
+        "awing": "baskó",
+        "english": "banana, sort of",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 6501,
+        "awing": "bóyə",
+        "english": "banana, sort of",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "baobab tree",
+    "entries": [
+      {
+        "line": 2494,
+        "awing": "əfo atíə",
+        "english": "baobab tree",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 6511,
+        "awing": "fəənkla",
+        "english": "baobab tree",
+        "category": "nature",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "bark",
+    "entries": [
+      {
+        "line": 2569,
+        "awing": "póga",
+        "english": "bark (as dog)",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 6525,
+        "awing": "nkye maŋgyé",
+        "english": "bark (as dog)",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "beans",
+    "entries": [
+      {
+        "line": 442,
+        "awing": "ndzɔ",
+        "english": "beans",
+        "category": "food",
+        "audit": "session56"
+      },
+      {
+        "line": 6561,
+        "awing": "ndzə",
+        "english": "beans",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "bear fruit",
+    "entries": [
+      {
+        "line": 2649,
+        "awing": "pi nənteemə́",
+        "english": "bear fruit",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 6563,
+        "awing": "pî pənteemə",
+        "english": "bear fruit",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "beard",
+    "entries": [
+      {
+        "line": 125,
+        "awing": "əleló",
+        "english": "beard",
+        "category": "body",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 6569,
+        "awing": "alélə",
+        "english": "beard",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "bee",
+    "entries": [
+      {
+        "line": 242,
+        "awing": "ŋgwíŋə",
+        "english": "bee",
+        "category": "animals"
+      },
+      {
+        "line": 2397,
+        "awing": "məŋwédnúə",
+        "english": "bee",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 6601,
+        "awing": "magwédnuə",
+        "english": "bee",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "big",
+    "entries": [
+      {
+        "line": 715,
+        "awing": "wíŋɔ́",
+        "english": "big",
+        "category": "descriptive"
+      },
+      {
+        "line": 6685,
+        "awing": "wiŋə",
+        "english": "big",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 6687,
+        "awing": "mê",
+        "english": "big",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "bird",
+    "entries": [
+      {
+        "line": 175,
+        "awing": "sáŋə",
+        "english": "bird",
+        "category": "animals",
+        "pluralForm": "pəsáŋɔ́",
+        "audit": "session56"
+      },
+      {
+        "line": 6701,
+        "awing": "apə̌aba",
+        "english": "bird",
+        "category": "animals",
+        "tonePattern": "rising",
+        "difficulty": 1
+      },
+      {
+        "line": 6703,
+        "awing": "kwùlə",
+        "english": "bird",
+        "category": "animals",
+        "tonePattern": "low",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "black",
+    "entries": [
+      {
+        "line": 711,
+        "awing": "shíshíə",
+        "english": "black",
+        "category": "descriptive"
+      },
+      {
+        "line": 6727,
+        "awing": "shíshə",
+        "english": "black",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 6729,
+        "awing": "sénə",
+        "english": "black",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "black man",
+    "entries": [
+      {
+        "line": 3440,
+        "awing": "shí ŋwunə",
+        "english": "black man",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 3441,
+        "awing": "shíshí ŋwunə",
+        "english": "black man",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 6731,
+        "awing": "shí nwunə",
+        "english": "black man",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 6733,
+        "awing": "shíshí nwunə",
+        "english": "black man",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "bladder",
+    "entries": [
+      {
+        "line": 3761,
+        "awing": "atseŋə",
+        "english": "bladder",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 6737,
+        "awing": "atsenə",
+        "english": "bladder",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "blind person",
+    "entries": [
+      {
+        "line": 2313,
+        "awing": "əfəgə",
+        "english": "blind person",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 2314,
+        "awing": "əfəgmógə",
+        "english": "blind person",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "blink eyes",
+    "entries": [
+      {
+        "line": 2273,
+        "awing": "ŋwaŋkô móga",
+        "english": "blink eyes",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 6765,
+        "awing": "ŋwaŋkə̂ mə́gə",
+        "english": "blink eyes",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "body",
+    "entries": [
+      {
+        "line": 106,
+        "awing": "ŋgɔ́ɔmə",
+        "english": "body",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 6801,
+        "awing": "atsenə",
+        "english": "body",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "bone",
+    "entries": [
+      {
+        "line": 119,
+        "awing": "akwəŋó",
+        "english": "bone",
+        "category": "body",
+        "audit": "session56"
+      },
+      {
+        "line": 6815,
+        "awing": "akwagə",
+        "english": "bone",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "bone marrow",
+    "entries": [
+      {
+        "line": 2249,
+        "awing": "manwáŋa",
+        "english": "bone marrow",
+        "category": "body",
+        "tonePattern": "high"
+      },
+      {
+        "line": 6817,
+        "awing": "maŋwaŋnə",
+        "english": "bone marrow",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "bony",
+    "entries": [
+      {
+        "line": 3378,
+        "awing": "əkwə̌nkwáŋə̂",
+        "english": "bony",
+        "category": "descriptive",
+        "tonePattern": "rising",
+        "difficulty": 1
+      },
+      {
+        "line": 6819,
+        "awing": "akwâgkwáŋə",
+        "english": "bony",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "boy",
+    "entries": [
+      {
+        "line": 611,
+        "awing": "məbîə",
+        "english": "boy",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 6843,
+        "awing": "mɔ́ mbyâŋnə",
+        "english": "boy",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "bread",
+    "entries": [
+      {
+        "line": 456,
+        "awing": "əpéenə",
+        "english": "bread",
+        "category": "things"
+      },
+      {
+        "line": 6859,
+        "awing": "apéenəməkálə",
+        "english": "bread",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "breast",
+    "entries": [
+      {
+        "line": 4889,
+        "awing": "nəpəənə",
+        "english": "breast",
+        "category": "body",
+        "difficulty": 3
+      },
+      {
+        "line": 6877,
+        "awing": "napóəmə",
+        "english": "breast",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "breast wear",
+    "entries": [
+      {
+        "line": 4664,
+        "awing": "poolá",
+        "english": "breast wear",
+        "category": "body",
+        "difficulty": 3
+      },
+      {
+        "line": 6879,
+        "awing": "poələ",
+        "english": "breast wear",
+        "category": "body",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "bridge",
+    "entries": [
+      {
+        "line": 694,
+        "awing": "əleglə",
+        "english": "bridge",
+        "category": "things",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 2556,
+        "awing": "nkəŋ nelwîə",
+        "english": "bridge (of nose)",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 6891,
+        "awing": "aleəla",
+        "english": "bridge",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "bunch of banana",
+    "entries": [
+      {
+        "line": 282,
+        "awing": "ngéemə",
+        "english": "bunch of banana",
+        "category": "food",
+        "difficulty": 1
+      },
+      {
+        "line": 6933,
+        "awing": "ŋgéemə",
+        "english": "bunch of banana",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "butcher",
+    "entries": [
+      {
+        "line": 614,
+        "awing": "adzə̌ə",
+        "english": "butcher",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 2317,
+        "awing": "əfi neemə",
+        "english": "butcher",
+        "category": "family",
+        "difficulty": 2
+      },
+      {
+        "line": 2359,
+        "awing": "ngwad neemə",
+        "english": "butcher",
+        "category": "family",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "butterfly",
+    "entries": [
+      {
+        "line": 188,
+        "awing": "kígháləgháló",
+        "english": "butterfly",
+        "category": "animals",
+        "difficulty": 1
+      },
+      {
+        "line": 3997,
+        "awing": "kíghálágháalə",
+        "english": "butterfly",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 6973,
+        "awing": "kîghálaghála",
+        "english": "butterfly",
+        "category": "animals",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "calf of leg",
+    "entries": [
+      {
+        "line": 2269,
+        "awing": "ntəmə akoolə",
+        "english": "calf of leg",
+        "category": "body",
+        "difficulty": 2
+      },
+      {
+        "line": 6991,
+        "awing": "ntoma akoola",
+        "english": "calf of leg",
+        "category": "body",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "camel",
+    "entries": [
+      {
+        "line": 4027,
+        "awing": "ləəmó koŋ yi njùbtə",
+        "english": "camel",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 7001,
+        "awing": "laomá kəŋ yi njùbtə",
+        "english": "camel",
+        "category": "animals",
+        "tonePattern": "high-low",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "carrot-like food",
+    "entries": [
+      {
+        "line": 2596,
+        "awing": "aŋkəələ",
+        "english": "carrot-like food",
+        "category": "food",
+        "difficulty": 1
+      },
+      {
+        "line": 7033,
+        "awing": "nəkoala",
+        "english": "carrot-like food",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "carry, of heavy load",
+    "entries": [
+      {
+        "line": 3284,
+        "awing": "yaalô",
+        "english": "carry, of heavy load (colloquial usage)",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 7045,
+        "awing": "yaalə",
+        "english": "carry, of heavy load (colloquial)",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "castrated",
+    "entries": [
+      {
+        "line": 3354,
+        "awing": "asəələ",
+        "english": "castrated",
+        "category": "descriptive",
+        "difficulty": 3
+      },
+      {
+        "line": 7059,
+        "awing": "asóəla",
+        "english": "castrated",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "cheek",
+    "entries": [
+      {
+        "line": 136,
+        "awing": "ŋgwɛ̂ŋə",
+        "english": "cheek",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 7149,
+        "awing": "naghagə",
+        "english": "cheek",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "chick",
+    "entries": [
+      {
+        "line": 4120,
+        "awing": "mó ngába",
+        "english": "chick",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 7161,
+        "awing": "mɔ́ ngəba",
+        "english": "chick",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "child",
+    "entries": [
+      {
+        "line": 578,
+        "awing": "mɔ́ŋkə",
+        "english": "child",
+        "category": "family"
+      },
+      {
+        "line": 2337,
+        "awing": "móona",
+        "english": "child",
+        "category": "family",
+        "tonePattern": "high"
+      },
+      {
+        "line": 2341,
+        "awing": "mó nkə",
+        "english": "child",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 7169,
+        "awing": "mɔ́ nkə",
+        "english": "child",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "church",
+    "entries": [
+      {
+        "line": 588,
+        "awing": "chɔ́sə",
+        "english": "church",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 7189,
+        "awing": "chîsə",
+        "english": "church",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "coffee",
+    "entries": [
+      {
+        "line": 280,
+        "awing": "akəfə",
+        "english": "coffee",
+        "category": "food",
+        "audit": "session56"
+      },
+      {
+        "line": 7293,
+        "awing": "akɔfé",
+        "english": "coffee",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "cold",
+    "entries": [
+      {
+        "line": 723,
+        "awing": "nwâ",
+        "english": "cold",
+        "category": "descriptive"
+      },
+      {
+        "line": 7305,
+        "awing": "afə̂gə",
+        "english": "cold",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 7307,
+        "awing": "fə̂ŋə",
+        "english": "cold",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "communication by mouth",
+    "entries": [
+      {
+        "line": 2214,
+        "awing": "atséebántsoolə",
+        "english": "communication by mouth",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 7345,
+        "awing": "atséəbantsoolə",
+        "english": "communication by mouth",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "compound",
+    "entries": [
+      {
+        "line": 584,
+        "awing": "nchîndê",
+        "english": "compound",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 7365,
+        "awing": "ncháindê",
+        "english": "compound",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "corn beer",
+    "entries": [
+      {
+        "line": 4913,
+        "awing": "nkáŋə",
+        "english": "corn beer",
+        "category": "food",
+        "difficulty": 1
+      },
+      {
+        "line": 7445,
+        "awing": "nkapə",
+        "english": "corn beer",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "corn husk",
+    "entries": [
+      {
+        "line": 2587,
+        "awing": "afúə ŋgəsáŋə",
+        "english": "corn husk",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 7451,
+        "awing": "afʉə ngəsaŋə",
+        "english": "corn husk",
+        "category": "food",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "corrupt person",
+    "entries": [
+      {
+        "line": 5018,
+        "awing": "ajiəmbágló",
+        "english": "corrupt person",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 7467,
+        "awing": "ajîambágla",
+        "english": "corrupt person",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "country",
+    "entries": [
+      {
+        "line": 615,
+        "awing": "ndzɔ̂ŋɔ",
+        "english": "country",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 7485,
+        "awing": "atúmə",
+        "english": "country",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "crab",
+    "entries": [
+      {
+        "line": 240,
+        "awing": "ŋgàbə",
+        "english": "crab",
+        "category": "animals"
+      },
+      {
+        "line": 2384,
+        "awing": "kéenó",
+        "english": "crab",
+        "category": "animals",
+        "tonePattern": "high"
+      },
+      {
+        "line": 7517,
+        "awing": "kéenə",
+        "english": "crab",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "cricket",
+    "entries": [
+      {
+        "line": 170,
+        "awing": "kshǐa",
+        "english": "cricket",
+        "category": "animals"
+      },
+      {
+        "line": 2385,
+        "awing": "kíchíə",
+        "english": "cricket (insect that thrives in dry season)",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "crop of bird",
+    "entries": [
+      {
+        "line": 3565,
+        "awing": "akwelə sóŋó",
+        "english": "crop of bird",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 7541,
+        "awing": "akwadə sáŋə",
+        "english": "crop of bird",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "cross river",
+    "entries": [
+      {
+        "line": 2577,
+        "awing": "tú nkǐə",
+        "english": "cross river",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 7549,
+        "awing": "tû nklə",
+        "english": "cross river",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "cruel",
+    "entries": [
+      {
+        "line": 7567,
+        "awing": "chiga neemə",
+        "english": "cruel",
+        "category": "descriptive",
+        "difficulty": 2
+      },
+      {
+        "line": 7569,
+        "awing": "chia àndó neemə",
+        "english": "cruel",
+        "category": "descriptive",
+        "tonePattern": "high-low",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "date palm",
+    "entries": [
+      {
+        "line": 2270,
+        "awing": "ntso",
+        "english": "date palm",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 7697,
+        "awing": "ntsɔ",
+        "english": "date palm",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "day",
+    "entries": [
+      {
+        "line": 202,
+        "awing": "àlě",
+        "english": "day",
+        "category": "nature"
+      },
+      {
+        "line": 2452,
+        "awing": "alěmbîə",
+        "english": "day",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 1
+      },
+      {
+        "line": 7709,
+        "awing": "alə",
+        "english": "day",
+        "category": "nature",
+        "difficulty": 1
+      },
+      {
+        "line": 7711,
+        "awing": "alə̂mbiə",
+        "english": "day",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "day before yesterday",
+    "entries": [
+      {
+        "line": 2506,
+        "awing": "əzooná yîə",
+        "english": "day before yesterday",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 7717,
+        "awing": "azoona yîlə",
+        "english": "day before yesterday",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "deaf person",
+    "entries": [
+      {
+        "line": 2294,
+        "awing": "akəmótógiə",
+        "english": "deaf person",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 2320,
+        "awing": "əkə̂mátôglə",
+        "english": "deaf person",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 3537,
+        "awing": "akətûə",
+        "english": "deaf person",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "deep",
+    "entries": [
+      {
+        "line": 744,
+        "awing": "dzə̀mə",
+        "english": "deep",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 7791,
+        "awing": "fəmə",
+        "english": "deep",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 7793,
+        "awing": "shîəə",
+        "english": "deep",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "descendant",
+    "entries": [
+      {
+        "line": 568,
+        "awing": "əgùərə",
+        "english": "descendant",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 7871,
+        "awing": "ngwulə",
+        "english": "descendant",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "difficult",
+    "entries": [
+      {
+        "line": 770,
+        "awing": "yɨ̌la",
+        "english": "difficult",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 7913,
+        "awing": "nyantə",
+        "english": "difficult",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 7915,
+        "awing": "yilə",
+        "english": "difficult",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "dirty",
+    "entries": [
+      {
+        "line": 7929,
+        "awing": "kyáglə",
+        "english": "dirty",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 7931,
+        "awing": "dɔtə",
+        "english": "dirty",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "dove",
+    "entries": [
+      {
+        "line": 248,
+        "awing": "nkwúbə",
+        "english": "dove",
+        "category": "animals",
+        "difficulty": 1
+      },
+      {
+        "line": 3667,
+        "awing": "aŋkəŋâ",
+        "english": "dove",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "down",
+    "entries": [
+      {
+        "line": 8045,
+        "awing": "matəŋə",
+        "english": "down",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 8047,
+        "awing": "matəgnə",
+        "english": "down",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "dowry",
+    "entries": [
+      {
+        "line": 3495,
+        "awing": "aghoolá atûa",
+        "english": "dowry",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 8051,
+        "awing": "aghoolə atúə",
+        "english": "dowry (for groom\\'s family)",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8053,
+        "awing": "ghoolə",
+        "english": "dowry (v)",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "drink",
+    "entries": [
+      {
+        "line": 313,
+        "awing": "nô",
+        "english": "drink",
+        "category": "actions"
+      },
+      {
+        "line": 8071,
+        "awing": "nə nô",
+        "english": "drink",
+        "category": "food",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "dry",
+    "entries": [
+      {
+        "line": 741,
+        "awing": "tsɛ̀ŋə",
+        "english": "dry",
+        "category": "descriptive"
+      },
+      {
+        "line": 4949,
+        "awing": "saŋə",
+        "english": "dry (intr)",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 8107,
+        "awing": "njùbtə",
+        "english": "dry",
+        "category": "descriptive",
+        "tonePattern": "low",
+        "difficulty": 1
+      },
+      {
+        "line": 8111,
+        "awing": "fəmkə",
+        "english": "dry (intr)",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "duck",
+    "entries": [
+      {
+        "line": 169,
+        "awing": "ndoŋə",
+        "english": "duck",
+        "category": "animals",
+        "audit": "session56"
+      },
+      {
+        "line": 8117,
+        "awing": "ndɔnə",
+        "english": "duck",
+        "category": "animals",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "dust",
+    "entries": [
+      {
+        "line": 233,
+        "awing": "ndùə",
+        "english": "dust",
+        "category": "nature",
+        "difficulty": 1
+      },
+      {
+        "line": 2438,
+        "awing": "akəpógló",
+        "english": "dust",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 8121,
+        "awing": "akəpóglə",
+        "english": "dust",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "ear",
+    "entries": [
+      {
+        "line": 108,
+        "awing": "ntɔ̀ə",
+        "english": "ear",
+        "category": "body"
+      },
+      {
+        "line": 115,
+        "awing": "nətôglə",
+        "english": "ear",
+        "category": "body",
+        "audit": "session56"
+      }
+    ]
+  },
+  {
+    "english": "earthworm",
+    "entries": [
+      {
+        "line": 2413,
+        "awing": "nənyaglə",
+        "english": "earthworm",
+        "category": "animals",
+        "difficulty": 1
+      },
+      {
+        "line": 8137,
+        "awing": "nəŋwagə",
+        "english": "earthworm",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "eight",
+    "entries": [
+      {
+        "line": 624,
+        "awing": "nəfeemə́",
+        "english": "eight",
+        "category": "numbers"
+      },
+      {
+        "line": 5228,
+        "awing": "élə",
+        "english": "eight",
+        "category": "numbers",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "eighteen",
+    "entries": [
+      {
+        "line": 634,
+        "awing": "ntsəb nəfeemə́",
+        "english": "eighteen",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 8179,
+        "awing": "nshûna nafeemə",
+        "english": "eighteen (18)",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "eighty",
+    "entries": [
+      {
+        "line": 643,
+        "awing": "məghə́m mén nəfeemə́",
+        "english": "eighty",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 8181,
+        "awing": "magh ə̂m mênə nafeemə",
+        "english": "eighty",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "elbow",
+    "entries": [
+      {
+        "line": 138,
+        "awing": "nkwə̂ŋə",
+        "english": "elbow",
+        "category": "body"
+      },
+      {
+        "line": 2266,
+        "awing": "nkənə apô",
+        "english": "elbow",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 8183,
+        "awing": "nkona apó",
+        "english": "elbow",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "elder",
+    "entries": [
+      {
+        "line": 573,
+        "awing": "ndè",
+        "english": "elder",
+        "category": "family"
+      },
+      {
+        "line": 2367,
+        "awing": "ntse mbiə",
+        "english": "elder",
+        "category": "family",
+        "difficulty": 2
+      },
+      {
+        "line": 8185,
+        "awing": "ntse ndê",
+        "english": "elder",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "elder sister",
+    "entries": [
+      {
+        "line": 2366,
+        "awing": "ntse mbi yi məngyè",
+        "english": "elder sister",
+        "category": "family",
+        "tonePattern": "low",
+        "difficulty": 2
+      },
+      {
+        "line": 8187,
+        "awing": "ntse mbi yi maŋgyé",
+        "english": "elder sister",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "empty",
+    "entries": [
+      {
+        "line": 737,
+        "awing": "kóŋɔ́",
+        "english": "empty",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 8213,
+        "awing": "chî kətaŋə",
+        "english": "empty",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "evil",
+    "entries": [
+      {
+        "line": 3445,
+        "awing": "təpəŋə",
+        "english": "evil",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 8283,
+        "awing": "taɔŋə",
+        "english": "evil",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "ewe",
+    "entries": [
+      {
+        "line": 2419,
+        "awing": "ngwě mbéŋ ndzelə",
+        "english": "ewe",
+        "category": "animals",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 8289,
+        "awing": "ŋgwê mbéŋ ndzelə",
+        "english": "ewe",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "eye",
+    "entries": [
+      {
+        "line": 107,
+        "awing": "ŋgɔ̀ɔnə",
+        "english": "eye",
+        "category": "body"
+      },
+      {
+        "line": 114,
+        "awing": "nəlágə",
+        "english": "eye",
+        "category": "body",
+        "pluralForm": "mələ́g",
+        "audit": "session56"
+      }
+    ]
+  },
+  {
+    "english": "eyebrow",
+    "entries": [
+      {
+        "line": 2263,
+        "awing": "ngəd nəlágə́",
+        "english": "eyebrow",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8367,
+        "awing": "ŋgəd nalə̂gə",
+        "english": "eyebrow",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "eyelid",
+    "entries": [
+      {
+        "line": 2265,
+        "awing": "ngwub nəlágə",
+        "english": "eyelid",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8371,
+        "awing": "ŋgwub nalə̂gə",
+        "english": "eyelid",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "farm bed",
+    "entries": [
+      {
+        "line": 2513,
+        "awing": "ghóŋə",
+        "english": "farm bed",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 2514,
+        "awing": "ghóŋə aneemə",
+        "english": "farm bed (animal-related)",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "fat",
+    "entries": [
+      {
+        "line": 3414,
+        "awing": "məfóomə",
+        "english": "fat",
+        "category": "descriptive",
+        "tonePattern": "high"
+      },
+      {
+        "line": 3422,
+        "awing": "nəfoonə",
+        "english": "fat",
+        "category": "descriptive"
+      },
+      {
+        "line": 8439,
+        "awing": "maføomə",
+        "english": "fat",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 8443,
+        "awing": "fáŋkə",
+        "english": "fat",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "father\\'s sister",
+    "entries": [
+      {
+        "line": 2351,
+        "awing": "ndim tǎ yi məngyè",
+        "english": "father\\'s sister (aunt)",
+        "category": "family",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 8453,
+        "awing": "ndim tâ yi maŋgyé",
+        "english": "father\\'s sister (aunt)",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "fence, usually of wood",
+    "entries": [
+      {
+        "line": 3521,
+        "awing": "akeelə",
+        "english": "fence, usually of wood",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 8485,
+        "awing": "ŋgwé sé",
+        "english": "fence, usually of wood",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "fifty",
+    "entries": [
+      {
+        "line": 640,
+        "awing": "məghə́m mén tênə",
+        "english": "fifty",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 8509,
+        "awing": "magh ə̂m mênə tênə",
+        "english": "fifty",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "finger",
+    "entries": [
+      {
+        "line": 139,
+        "awing": "ntsə̂ŋə",
+        "english": "finger",
+        "category": "body"
+      },
+      {
+        "line": 2236,
+        "awing": "fîə apô",
+        "english": "finger",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "fish",
+    "entries": [
+      {
+        "line": 159,
+        "awing": "əshûə",
+        "english": "fish",
+        "category": "animals"
+      },
+      {
+        "line": 8567,
+        "awing": "kó əshúə",
+        "english": "fish",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "fish bone",
+    "entries": [
+      {
+        "line": 2192,
+        "awing": "akwəŋó əshûə",
+        "english": "fish bone",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 8569,
+        "awing": "akwagə̂ əshúə",
+        "english": "fish bone",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "fisherman",
+    "entries": [
+      {
+        "line": 2360,
+        "awing": "ngwam əshúə",
+        "english": "fisherman",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8575,
+        "awing": "ŋgwam əshúə",
+        "english": "fisherman",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "five",
+    "entries": [
+      {
+        "line": 4523,
+        "awing": "tênə",
+        "english": "five (alternate form)",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 4953,
+        "awing": "tâ",
+        "english": "five (See: tênə)",
+        "category": "actions",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "flower",
+    "entries": [
+      {
+        "line": 2508,
+        "awing": "fəláwa",
+        "english": "flower (Whites like planting flowers in their compounds)",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 2510,
+        "awing": "fláwa",
+        "english": "flower",
+        "category": "nature",
+        "tonePattern": "high"
+      }
+    ]
+  },
+  {
+    "english": "fly",
+    "entries": [
+      {
+        "line": 222,
+        "awing": "nənjwínə",
+        "english": "fly",
+        "category": "animals",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 3295,
+        "awing": "zagə",
+        "english": "fly",
+        "category": "actions",
+        "difficulty": 1
+      },
+      {
+        "line": 8635,
+        "awing": "nəŋwina",
+        "english": "fly",
+        "category": "animals",
+        "difficulty": 1
+      },
+      {
+        "line": 8639,
+        "awing": "təfəəlésə yi ndzag nə́",
+        "english": "fly",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "flying ant",
+    "entries": [
+      {
+        "line": 2428,
+        "awing": "tásélaséla yi ndzag nə",
+        "english": "flying ant",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8641,
+        "awing": "akwùnə",
+        "english": "flying ant",
+        "category": "animals",
+        "tonePattern": "low",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "fon\\'s messenger",
+    "entries": [
+      {
+        "line": 2333,
+        "awing": "məko mó əfo",
+        "english": "fon\\'s messenger",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8691,
+        "awing": "məkə mə́ əfo",
+        "english": "fon\\'s messenger",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "foolish talk",
+    "entries": [
+      {
+        "line": 3333,
+        "awing": "akəghə atséebə",
+        "english": "foolish talk",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 3335,
+        "awing": "akəkógó atséebə",
+        "english": "foolish talk",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "foot",
+    "entries": [
+      {
+        "line": 122,
+        "awing": "atéelə",
+        "english": "foot",
+        "category": "body"
+      },
+      {
+        "line": 8711,
+        "awing": "atéela akoola",
+        "english": "foot",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "forehead",
+    "entries": [
+      {
+        "line": 142,
+        "awing": "ŋgwɔ̂ŋə",
+        "english": "forehead",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 2262,
+        "awing": "nəzeŋnə́",
+        "english": "forehead",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 8723,
+        "awing": "nazəŋnə",
+        "english": "forehead",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 8725,
+        "awing": "akíbnə",
+        "english": "forehead (high in appearance)",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "forty",
+    "entries": [
+      {
+        "line": 639,
+        "awing": "mbá əpá",
+        "english": "forty",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 4509,
+        "awing": "məghám mén nəkwa",
+        "english": "forty (40)",
+        "category": "numbers",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8743,
+        "awing": "magh ə̂m mên nakwa",
+        "english": "forty",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "fruit",
+    "entries": [
+      {
+        "line": 2639,
+        "awing": "nənta nó atíə",
+        "english": "fruit",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 2640,
+        "awing": "nənteemə́",
+        "english": "fruit",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 8803,
+        "awing": "akwubə",
+        "english": "fruit",
+        "category": "nature",
+        "difficulty": 1
+      },
+      {
+        "line": 8805,
+        "awing": "nəntə nə atìə",
+        "english": "fruit",
+        "category": "nature",
+        "tonePattern": "low",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "full",
+    "entries": [
+      {
+        "line": 751,
+        "awing": "ataŋə",
+        "english": "full",
+        "category": "descriptive",
+        "audit": "session56"
+      },
+      {
+        "line": 8821,
+        "awing": "lwénkə",
+        "english": "full",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "full moon",
+    "entries": [
+      {
+        "line": 2573,
+        "awing": "sáŋ yi ńdwénkə nó",
+        "english": "full moon",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8823,
+        "awing": "ŋ saŋ yi ndwénkə nə́",
+        "english": "full moon",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "gall bladder",
+    "entries": [
+      {
+        "line": 4314,
+        "awing": "nkeenə́ akyamə",
+        "english": "gall bladder",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8843,
+        "awing": "nkeenə̌ akyáamə",
+        "english": "gall bladder",
+        "category": "body",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "girl",
+    "entries": [
+      {
+        "line": 612,
+        "awing": "əbîə",
+        "english": "girl",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 8903,
+        "awing": "mɔ́ má mangyé",
+        "english": "girl",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "granddaughter",
+    "entries": [
+      {
+        "line": 2340,
+        "awing": "mó má yi mangyè",
+        "english": "granddaughter",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 8999,
+        "awing": "mɔ́ má yi mangyé",
+        "english": "granddaughter",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "grandfather",
+    "entries": [
+      {
+        "line": 554,
+        "awing": "tátə",
+        "english": "grandfather",
+        "category": "family"
+      },
+      {
+        "line": 2372,
+        "awing": "tădmé",
+        "english": "grandfather (maternal)",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 4444,
+        "awing": "tä pətä",
+        "english": "grandfather (paternal)",
+        "category": "things",
+        "difficulty": 2
+      },
+      {
+        "line": 9001,
+        "awing": "tâ máə̂",
+        "english": "grandfather (maternal)",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "grandmother",
+    "entries": [
+      {
+        "line": 593,
+        "awing": "mǎ wíŋɔ́",
+        "english": "grandmother",
+        "category": "family",
+        "difficulty": 2
+      },
+      {
+        "line": 2334,
+        "awing": "mámé",
+        "english": "grandmother (maternal)",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 4037,
+        "awing": "mǎ pəmá",
+        "english": "grandmother (maternal)",
+        "category": "things",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 4038,
+        "awing": "mǎ pətǎ",
+        "english": "grandmother (paternal)",
+        "category": "things",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 9005,
+        "awing": "má pəməə̌",
+        "english": "grandmother (maternal)",
+        "category": "family",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "grandson",
+    "entries": [
+      {
+        "line": 2339,
+        "awing": "mó má yi mbyâŋnə",
+        "english": "grandson",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 9013,
+        "awing": "mɔ́ pətə̂ yi mbyâŋnə",
+        "english": "grandson",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "grass",
+    "entries": [
+      {
+        "line": 209,
+        "awing": "nəyeŋə́",
+        "english": "grass",
+        "category": "nature",
+        "audit": "session56"
+      },
+      {
+        "line": 4897,
+        "awing": "ngónə",
+        "english": "grass",
+        "category": "nature",
+        "difficulty": 1
+      },
+      {
+        "line": 9019,
+        "awing": "ngəna",
+        "english": "grass",
+        "category": "nature",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "great grandfather",
+    "entries": [
+      {
+        "line": 3442,
+        "awing": "tä pətä pətä",
+        "english": "great grandfather (paternal)",
+        "category": "descriptive",
+        "difficulty": 2
+      },
+      {
+        "line": 9041,
+        "awing": "tâ pətə̂",
+        "english": "great grandfather (paternal)",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "grinding stone",
+    "entries": [
+      {
+        "line": 696,
+        "awing": "nəghǒ",
+        "english": "grinding stone",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 9073,
+        "awing": "naghə̌",
+        "english": "grinding stone",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "groundnut",
+    "entries": [
+      {
+        "line": 4859,
+        "awing": "mândzô",
+        "english": "groundnut",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 9087,
+        "awing": "məndzə",
+        "english": "groundnut",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "growth, on the neck",
+    "entries": [
+      {
+        "line": 9103,
+        "awing": "aloəbə",
+        "english": "growth, on the neck",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 9105,
+        "awing": "alaobandágə",
+        "english": "growth, on the neck",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "guava",
+    "entries": [
+      {
+        "line": 5752,
+        "awing": "ngwápə",
+        "english": "guava",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9115,
+        "awing": "ŋgwápə",
+        "english": "guava",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "hair",
+    "entries": [
+      {
+        "line": 118,
+        "awing": "nənoŋə",
+        "english": "hair",
+        "category": "body",
+        "pluralForm": "mənɔŋə",
+        "audit": "session56"
+      },
+      {
+        "line": 2248,
+        "awing": "manoŋ má mbǎəmə",
+        "english": "hair (of body)",
+        "category": "body",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 9147,
+        "awing": "atúə",
+        "english": "hair",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9149,
+        "awing": "nəŋoŋə",
+        "english": "hair",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 9151,
+        "awing": "monoŋ má mbəəmə",
+        "english": "hair (of body)",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "hair, worshipped periodically",
+    "entries": [
+      {
+        "line": 9155,
+        "awing": "atóəsə",
+        "english": "hair, worshipped periodically",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9157,
+        "awing": "atúə",
+        "english": "hair, worshipped periodically",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "hand limb",
+    "entries": [
+      {
+        "line": 2255,
+        "awing": "nələŋə nó apô",
+        "english": "hand limb",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 9171,
+        "awing": "nəlaŋə̌ nə́ apó",
+        "english": "hand limb",
+        "category": "body",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "hang up",
+    "entries": [
+      {
+        "line": 3089,
+        "awing": "panô",
+        "english": "hang up",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 9181,
+        "awing": "panə",
+        "english": "hang up",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "happy",
+    "entries": [
+      {
+        "line": 9187,
+        "awing": "koŋnə",
+        "english": "happy",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 9189,
+        "awing": "kəŋtə",
+        "english": "happy",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 9191,
+        "awing": "tóga akəŋnə",
+        "english": "happy",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "hard",
+    "entries": [
+      {
+        "line": 769,
+        "awing": "tyanɔ́",
+        "english": "hard",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 9195,
+        "awing": "yîkə",
+        "english": "hard",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "heart",
+    "entries": [
+      {
+        "line": 134,
+        "awing": "ntéəmə",
+        "english": "heart",
+        "category": "body",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 9253,
+        "awing": "ntáəmə",
+        "english": "heart",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "heart break",
+    "entries": [
+      {
+        "line": 2196,
+        "awing": "alógántəəmə",
+        "english": "heart break",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9255,
+        "awing": "aləgántáəmə",
+        "english": "heart break",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "heaven",
+    "entries": [
+      {
+        "line": 257,
+        "awing": "mɔ̀m napooɔ́la",
+        "english": "heaven",
+        "category": "nature",
+        "difficulty": 2
+      },
+      {
+        "line": 4090,
+        "awing": "məm nəpóola",
+        "english": "heaven",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "heavy",
+    "entries": [
+      {
+        "line": 752,
+        "awing": "tsɔ̂ŋə",
+        "english": "heavy",
+        "category": "descriptive"
+      },
+      {
+        "line": 9267,
+        "awing": "leelə",
+        "english": "heavy",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "heel",
+    "entries": [
+      {
+        "line": 2260,
+        "awing": "nətsóŋ nó akoolə",
+        "english": "heel",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 9271,
+        "awing": "nətsəŋ nə́ akoola",
+        "english": "heel",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "hen",
+    "entries": [
+      {
+        "line": 4326,
+        "awing": "nkog ngábə",
+        "english": "hen",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 9293,
+        "awing": "nkoŋ ngəba",
+        "english": "hen",
+        "category": "animals",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "high",
+    "entries": [
+      {
+        "line": 3336,
+        "awing": "akíbnə",
+        "english": "high (of forehead)",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9325,
+        "awing": "machina atìə",
+        "english": "high",
+        "category": "things",
+        "tonePattern": "low",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "hospital",
+    "entries": [
+      {
+        "line": 587,
+        "awing": "awátə",
+        "english": "hospital",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 9399,
+        "awing": "ndê",
+        "english": "hospital",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "hot",
+    "entries": [
+      {
+        "line": 9405,
+        "awing": "lumə",
+        "english": "hot",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 9407,
+        "awing": "tənə",
+        "english": "hot",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "house",
+    "entries": [
+      {
+        "line": 461,
+        "awing": "ndê",
+        "english": "house",
+        "category": "things"
+      },
+      {
+        "line": 564,
+        "awing": "adě",
+        "english": "house",
+        "category": "family"
+      }
+    ]
+  },
+  {
+    "english": "hump",
+    "entries": [
+      {
+        "line": 129,
+        "awing": "nəlwɛ̂ɨ",
+        "english": "hump",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 9431,
+        "awing": "búsbágə",
+        "english": "hump (of cow)",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "hundred",
+    "entries": [
+      {
+        "line": 646,
+        "awing": "ŋgwú",
+        "english": "hundred",
+        "category": "numbers",
+        "difficulty": 1
+      },
+      {
+        "line": 4516,
+        "awing": "nkelá",
+        "english": "hundred (100)",
+        "category": "numbers",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "hunter",
+    "entries": [
+      {
+        "line": 605,
+        "awing": "əlúmə",
+        "english": "hunter",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 2327,
+        "awing": "mbǎəmə apóəmə",
+        "english": "hunter",
+        "category": "family",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 9447,
+        "awing": "mbóəmə apóəmə",
+        "english": "hunter",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "husk",
+    "entries": [
+      {
+        "line": 3158,
+        "awing": "shaalô",
+        "english": "husk (corn)",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 9459,
+        "awing": "shaalə",
+        "english": "husk (corn)",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "ill temper",
+    "entries": [
+      {
+        "line": 3367,
+        "awing": "atságántəəmə",
+        "english": "ill temper",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9483,
+        "awing": "atsɔgntáəmə",
+        "english": "ill temper",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "important",
+    "entries": [
+      {
+        "line": 9519,
+        "awing": "achina",
+        "english": "important",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 9521,
+        "awing": "asəglə",
+        "english": "important",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 9523,
+        "awing": "chigə",
+        "english": "important",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 9525,
+        "awing": "mê",
+        "english": "important",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 9527,
+        "awing": "chîna",
+        "english": "important",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "indian bamboo bush",
+    "entries": [
+      {
+        "line": 2440,
+        "awing": "akoobá afəgó",
+        "english": "indian bamboo bush",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 9549,
+        "awing": "akoobə afoge",
+        "english": "indian bamboo bush",
+        "category": "nature",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "inhabit",
+    "entries": [
+      {
+        "line": 9569,
+        "awing": "chiə",
+        "english": "inhabit",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 9571,
+        "awing": "chikə",
+        "english": "inhabit (many places)",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "insect",
+    "entries": [
+      {
+        "line": 3730,
+        "awing": "atatsələ",
+        "english": "insect",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 9589,
+        "awing": "atatselə",
+        "english": "insect",
+        "category": "animals",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "insult",
+    "entries": [
+      {
+        "line": 3321,
+        "awing": "zəmtə̂",
+        "english": "insult",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 4165,
+        "awing": "ndzəmnə",
+        "english": "insult",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 6110,
+        "awing": "zoomə̂",
+        "english": "insult",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 9611,
+        "awing": "atóŋantsoolə",
+        "english": "insult (long mouth)",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9615,
+        "awing": "kwum əfeemə",
+        "english": "insult (split one\\'s forehead)",
+        "category": "numbers",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "intestines",
+    "entries": [
+      {
+        "line": 111,
+        "awing": "nətô",
+        "english": "intestines",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 9723,
+        "awing": "natə̂",
+        "english": "intestines",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "jaw",
+    "entries": [
+      {
+        "line": 141,
+        "awing": "ndɛ̂ŋə",
+        "english": "jaw",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 9743,
+        "awing": "naghagə",
+        "english": "jaw",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "joint",
+    "entries": [
+      {
+        "line": 152,
+        "awing": "nalanɔ́",
+        "english": "joint",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 9757,
+        "awing": "nəlaŋə",
+        "english": "joint",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "kind",
+    "entries": [
+      {
+        "line": 521,
+        "awing": "ndzaŋa",
+        "english": "kind",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 9799,
+        "awing": "pwə̂dnə",
+        "english": "kind",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "kitten",
+    "entries": [
+      {
+        "line": 2402,
+        "awing": "mó púshîa",
+        "english": "kitten",
+        "category": "animals",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 9815,
+        "awing": "mɔ́ púshlə",
+        "english": "kitten",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "knot",
+    "entries": [
+      {
+        "line": 9827,
+        "awing": "natsoŋə",
+        "english": "knot",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 9829,
+        "awing": "afìə",
+        "english": "knot (in wood)",
+        "category": "nature",
+        "tonePattern": "low",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "lamb",
+    "entries": [
+      {
+        "line": 2399,
+        "awing": "mó mbéŋ ndzelə",
+        "english": "lamb",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 9853,
+        "awing": "mɔ́ mbéŋ ndzelə",
+        "english": "lamb",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "last",
+    "entries": [
+      {
+        "line": 9871,
+        "awing": "ntsédndzəmə",
+        "english": "last",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9873,
+        "awing": "tsédndzəmə",
+        "english": "last",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9875,
+        "awing": "lwigtə",
+        "english": "last",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "lazy person",
+    "entries": [
+      {
+        "line": 2353,
+        "awing": "ndɔ́ŋə",
+        "english": "lazy person",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9897,
+        "awing": "ndoŋə",
+        "english": "lazy person",
+        "category": "family",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "leaf of plants",
+    "entries": [
+      {
+        "line": 5008,
+        "awing": "afúə",
+        "english": "leaf of plants",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9903,
+        "awing": "afʉə",
+        "english": "leaf of plants",
+        "category": "nature",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "lemon",
+    "entries": [
+      {
+        "line": 2625,
+        "awing": "lámósə yi ńtságnə",
+        "english": "lemon",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 9923,
+        "awing": "lámésə yi ntsógnə",
+        "english": "lemon",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "leopard",
+    "entries": [
+      {
+        "line": 3485,
+        "awing": "afunó",
+        "english": "leopard",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 9929,
+        "awing": "afunə",
+        "english": "leopard",
+        "category": "animals",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "little goat",
+    "entries": [
+      {
+        "line": 2400,
+        "awing": "mó mbéŋə",
+        "english": "little goat",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 10015,
+        "awing": "mɔ́ mbéŋə",
+        "english": "little goat",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "little, a",
+    "entries": [
+      {
+        "line": 10005,
+        "awing": "kə̂yêe",
+        "english": "little, a",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 10007,
+        "awing": "mɔ́ kənyəŋə",
+        "english": "little, a",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "liver",
+    "entries": [
+      {
+        "line": 110,
+        "awing": "nəpe",
+        "english": "liver",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 10025,
+        "awing": "napə",
+        "english": "liver",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "lock of hair",
+    "entries": [
+      {
+        "line": 2261,
+        "awing": "nətsóŋ nó atûə",
+        "english": "lock of hair",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 10043,
+        "awing": "natsóŋ nə́ atúə",
+        "english": "lock of hair",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "long",
+    "entries": [
+      {
+        "line": 10053,
+        "awing": "sákə",
+        "english": "long",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 10055,
+        "awing": "túgə",
+        "english": "long",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "make rough",
+    "entries": [
+      {
+        "line": 3391,
+        "awing": "ghelə̂ á kakô",
+        "english": "make rough",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 10153,
+        "awing": "ghelə̌ á kakə",
+        "english": "make rough",
+        "category": "actions",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "many",
+    "entries": [
+      {
+        "line": 772,
+        "awing": "mbɔŋɔ́",
+        "english": "many",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 10189,
+        "awing": "mbənə",
+        "english": "many",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 10191,
+        "awing": "nóanə",
+        "english": "many",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "marker of past tense for an event that took place a few days ago",
+    "entries": [
+      {
+        "line": 3393,
+        "awing": "kə",
+        "english": "marker of past tense for an event that took place a few days ago",
+        "category": "descriptive",
+        "difficulty": 3
+      },
+      {
+        "line": 3421,
+        "awing": "nə",
+        "english": "marker of past tense for an event that took place a few days ago",
+        "category": "descriptive",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "market",
+    "entries": [
+      {
+        "line": 59,
+        "awing": "məteenɔ́",
+        "english": "market",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 566,
+        "awing": "məteenə̂",
+        "english": "market",
+        "category": "family",
+        "difficulty": 1,
+        "audit": "session56"
+      }
+    ]
+  },
+  {
+    "english": "market day",
+    "entries": [
+      {
+        "line": 2450,
+        "awing": "alě məteenə",
+        "english": "market day",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 10203,
+        "awing": "alə̌ məteenə",
+        "english": "market day",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "mature",
+    "entries": [
+      {
+        "line": 773,
+        "awing": "tsaanɔ́",
+        "english": "mature",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 10235,
+        "awing": "kwíŋə",
+        "english": "mature",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "messenger",
+    "entries": [
+      {
+        "line": 525,
+        "awing": "ntúmə",
+        "english": "messenger",
+        "category": "things",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 2323,
+        "awing": "ənyi ntúmə",
+        "english": "messenger",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 10303,
+        "awing": "aŋyî ntúma",
+        "english": "messenger",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "mix",
+    "entries": [
+      {
+        "line": 3069,
+        "awing": "nyamnô",
+        "english": "mix",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 3269,
+        "awing": "wednô",
+        "english": "mix",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 3270,
+        "awing": "wedtô",
+        "english": "mix (many things)",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 10337,
+        "awing": "nyamə",
+        "english": "mix",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 10339,
+        "awing": "wednə",
+        "english": "mix",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 10341,
+        "awing": "welə",
+        "english": "mix",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 10343,
+        "awing": "wedtə",
+        "english": "mix (many things)",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "mole",
+    "entries": [
+      {
+        "line": 4045,
+        "awing": "mbě ndumó",
+        "english": "mole",
+        "category": "things",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 10357,
+        "awing": "mbê ndumə",
+        "english": "mole",
+        "category": "animals",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "morning-star",
+    "entries": [
+      {
+        "line": 2536,
+        "awing": "mó sáŋ ndúumbîa",
+        "english": "morning-star (Venus)",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 10375,
+        "awing": "mə̌ saŋ ndúmnələ",
+        "english": "morning-star (Venus)",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "mother",
+    "entries": [
+      {
+        "line": 553,
+        "awing": "mǎ",
+        "english": "mother",
+        "category": "family",
+        "pluralForm": "pəmǎ"
+      },
+      {
+        "line": 10383,
+        "awing": "máa",
+        "english": "mother",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "mother-in-law to the bride",
+    "entries": [
+      {
+        "line": 2336,
+        "awing": "mápéenə",
+        "english": "mother-in-law to the bride",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 10391,
+        "awing": "məpánə",
+        "english": "mother-in-law to the bride",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "mountain",
+    "entries": [
+      {
+        "line": 218,
+        "awing": "nkwəənə",
+        "english": "mountain",
+        "category": "nature"
+      },
+      {
+        "line": 10399,
+        "awing": "nkwama",
+        "english": "mountain",
+        "category": "nature",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "mouse",
+    "entries": [
+      {
+        "line": 2398,
+        "awing": "mó fóolə́",
+        "english": "mouse",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 10403,
+        "awing": "mɔ́ fóolə",
+        "english": "mouse",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "much",
+    "entries": [
+      {
+        "line": 10413,
+        "awing": "mbóyə",
+        "english": "much",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 10415,
+        "awing": "nóəna",
+        "english": "much",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "nail",
+    "entries": [
+      {
+        "line": 492,
+        "awing": "mbéenə",
+        "english": "nail",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 2243,
+        "awing": "kwumtô",
+        "english": "nail",
+        "category": "body",
+        "tonePattern": "falling"
+      },
+      {
+        "line": 10459,
+        "awing": "kwumə̂",
+        "english": "nail",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 10461,
+        "awing": "kwumtə",
+        "english": "nail",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "narrow",
+    "entries": [
+      {
+        "line": 747,
+        "awing": "ntsə̂ŋə",
+        "english": "narrow",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 10487,
+        "awing": "kâga",
+        "english": "narrow",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "neck",
+    "entries": [
+      {
+        "line": 100,
+        "awing": "ndě",
+        "english": "neck (body part)",
+        "category": "body",
+        "pluralForm": "məndě",
+        "difficulty": 1
+      },
+      {
+        "line": 140,
+        "awing": "mbwɔ̂ŋə",
+        "english": "neck (back of)",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 2199,
+        "awing": "amiə",
+        "english": "neck",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 10499,
+        "awing": "amlə",
+        "english": "neck",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "new",
+    "entries": [
+      {
+        "line": 774,
+        "awing": "fîə",
+        "english": "new",
+        "category": "descriptive",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 10531,
+        "awing": "chî ya fìə",
+        "english": "new",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "new moon",
+    "entries": [
+      {
+        "line": 2572,
+        "awing": "sáŋ yi fîə",
+        "english": "new moon",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 10533,
+        "awing": "ŋ saŋ yi fìə",
+        "english": "new moon",
+        "category": "nature",
+        "tonePattern": "low",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "nurse",
+    "entries": [
+      {
+        "line": 412,
+        "awing": "nóŋkə",
+        "english": "nurse",
+        "category": "actions",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 10599,
+        "awing": "nə̂ŋka",
+        "english": "nurse",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "obscene person",
+    "entries": [
+      {
+        "line": 5028,
+        "awing": "akəféŋəntsoolə",
+        "english": "obscene person",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 10611,
+        "awing": "akəfəŋantsoolə",
+        "english": "obscene person",
+        "category": "family",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "oil",
+    "entries": [
+      {
+        "line": 298,
+        "awing": "nkúnə",
+        "english": "oil",
+        "category": "food"
+      },
+      {
+        "line": 2629,
+        "awing": "məghóla",
+        "english": "oil",
+        "category": "food",
+        "tonePattern": "high"
+      }
+    ]
+  },
+  {
+    "english": "old",
+    "entries": [
+      {
+        "line": 726,
+        "awing": "ndenə",
+        "english": "old",
+        "category": "descriptive"
+      },
+      {
+        "line": 10653,
+        "awing": "lenə",
+        "english": "old",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "old man",
+    "entries": [
+      {
+        "line": 2346,
+        "awing": "nden ŋwunə",
+        "english": "old man",
+        "category": "family",
+        "difficulty": 2
+      },
+      {
+        "line": 10655,
+        "awing": "ŋ nden ŋwuna",
+        "english": "old man",
+        "category": "family",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "old woman",
+    "entries": [
+      {
+        "line": 2345,
+        "awing": "nden mangyè",
+        "english": "old woman",
+        "category": "family",
+        "tonePattern": "low",
+        "difficulty": 2
+      },
+      {
+        "line": 10659,
+        "awing": "ndim mongyé",
+        "english": "old woman",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "onion",
+    "entries": [
+      {
+        "line": 286,
+        "awing": "ónyúsə",
+        "english": "onion",
+        "category": "food",
+        "audit": "session56"
+      },
+      {
+        "line": 10681,
+        "awing": "ənyusa",
+        "english": "onion",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "orphan",
+    "entries": [
+      {
+        "line": 4121,
+        "awing": "mó ntîə",
+        "english": "orphan",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 3
+      },
+      {
+        "line": 10707,
+        "awing": "ŋ nə̂ tíə",
+        "english": "orphan",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "ostrich",
+    "entries": [
+      {
+        "line": 2395,
+        "awing": "mé sáŋə́",
+        "english": "ostrich",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 10709,
+        "awing": "pə̂ mê saŋə",
+        "english": "ostrich",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "palm",
+    "entries": [
+      {
+        "line": 144,
+        "awing": "mbə̂ŋɔ́",
+        "english": "palm (of hand)",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 2246,
+        "awing": "máma apô",
+        "english": "palm (of hand)",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 10751,
+        "awing": "mbəba apó",
+        "english": "palm (of hand)",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "palm nut",
+    "entries": [
+      {
+        "line": 2259,
+        "awing": "nətəənə",
+        "english": "palm nut",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 10749,
+        "awing": "azaŋə",
+        "english": "palm nut",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "palm of hand",
+    "entries": [
+      {
+        "line": 2205,
+        "awing": "atéelə apô",
+        "english": "palm of hand",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 10753,
+        "awing": "atéəla apó",
+        "english": "palm of hand",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "palm oil",
+    "entries": [
+      {
+        "line": 2244,
+        "awing": "məghód má paŋ nə̂",
+        "english": "palm oil",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 10755,
+        "awing": "məghəd mə̂ paŋ nə̌",
+        "english": "palm oil",
+        "category": "body",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "palm tree",
+    "entries": [
+      {
+        "line": 534,
+        "awing": "atía nɔ́taɔna",
+        "english": "palm tree",
+        "category": "things",
+        "difficulty": 2
+      },
+      {
+        "line": 10761,
+        "awing": "atìə nataənə̌",
+        "english": "palm tree",
+        "category": "body",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "parrot",
+    "entries": [
+      {
+        "line": 249,
+        "awing": "ŋkwɔ́ŋə",
+        "english": "parrot",
+        "category": "animals",
+        "difficulty": 1
+      },
+      {
+        "line": 5926,
+        "awing": "sáŋ məkálə",
+        "english": "parrot",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "path of a wild animal",
+    "entries": [
+      {
+        "line": 2504,
+        "awing": "əshwáŋ neemə",
+        "english": "path of a wild animal",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 10807,
+        "awing": "ɔshwaŋ neemə",
+        "english": "path of a wild animal",
+        "category": "animals",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "pawpaw",
+    "entries": [
+      {
+        "line": 271,
+        "awing": "apopó",
+        "english": "pawpaw",
+        "category": "food",
+        "difficulty": 1
+      },
+      {
+        "line": 10817,
+        "awing": "apɔpə",
+        "english": "pawpaw",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "people of",
+    "entries": [
+      {
+        "line": 2326,
+        "awing": "mbô",
+        "english": "people of",
+        "category": "family",
+        "tonePattern": "falling"
+      },
+      {
+        "line": 10851,
+        "awing": "mbə̌",
+        "english": "people of",
+        "category": "family",
+        "tonePattern": "rising",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "pepper",
+    "entries": [
+      {
+        "line": 2648,
+        "awing": "paŋ sêntê",
+        "english": "pepper (red)",
+        "category": "food",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 10857,
+        "awing": "shí səntə",
+        "english": "pepper (black)",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 10861,
+        "awing": "paŋ səntə",
+        "english": "pepper (red)",
+        "category": "food",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "piglet",
+    "entries": [
+      {
+        "line": 4117,
+        "awing": "mó kwúneemə",
+        "english": "piglet",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 10937,
+        "awing": "mɔ́ kwùneema",
+        "english": "piglet",
+        "category": "animals",
+        "tonePattern": "high-low",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "pimple",
+    "entries": [
+      {
+        "line": 5706,
+        "awing": "nənteemə́",
+        "english": "pimple",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 10943,
+        "awing": "nonteemə",
+        "english": "pimple",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "pit",
+    "entries": [
+      {
+        "line": 3679,
+        "awing": "apélə",
+        "english": "pit",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 10951,
+        "awing": "atéəmə",
+        "english": "pit (deadly and dangerous)",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "plant",
+    "entries": [
+      {
+        "line": 393,
+        "awing": "tɔ̀ə",
+        "english": "plant (seed)",
+        "category": "actions",
+        "difficulty": 1
+      },
+      {
+        "line": 416,
+        "awing": "píta",
+        "english": "plant",
+        "category": "actions",
+        "difficulty": 1
+      },
+      {
+        "line": 10983,
+        "awing": "piəə",
+        "english": "plant",
+        "category": "nature",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "plantain",
+    "entries": [
+      {
+        "line": 440,
+        "awing": "nəngoomá",
+        "english": "plantain",
+        "category": "things",
+        "audit": "session56"
+      },
+      {
+        "line": 10993,
+        "awing": "nəgoomə",
+        "english": "plantain",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "poor",
+    "entries": [
+      {
+        "line": 11039,
+        "awing": "fámə",
+        "english": "poor",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 11041,
+        "awing": "pɔŋə",
+        "english": "poor",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "pot",
+    "entries": [
+      {
+        "line": 447,
+        "awing": "nəkəŋ",
+        "english": "pot",
+        "category": "things",
+        "pluralForm": "məkəŋɔ́",
+        "audit": "session56"
+      },
+      {
+        "line": 501,
+        "awing": "ŋgwánə",
+        "english": "pot (clay)",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 4192,
+        "awing": "nəkəŋ nó nkǐə",
+        "english": "pot (for water)",
+        "category": "things",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 11141,
+        "awing": "nəkaŋə",
+        "english": "pot",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 11143,
+        "awing": "nəkaŋ nə̂ nklə",
+        "english": "pot (for water)",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "potter",
+    "entries": [
+      {
+        "line": 2331,
+        "awing": "mbó məkəŋə",
+        "english": "potter",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 11151,
+        "awing": "ŋ mbə̂ makaŋə",
+        "english": "potter",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "potter\\'s kiln",
+    "entries": [
+      {
+        "line": 2355,
+        "awing": "nətə nó məkəŋə",
+        "english": "potter\\'s kiln",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 11155,
+        "awing": "natə nə̌ makaŋə",
+        "english": "potter\\'s kiln",
+        "category": "things",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "put soil on ridges",
+    "entries": [
+      {
+        "line": 2571,
+        "awing": "pwəlô",
+        "english": "put soil on ridges",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 11341,
+        "awing": "pwə̂la",
+        "english": "put soil on ridges",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "rain",
+    "entries": [
+      {
+        "line": 207,
+        "awing": "mbaŋə",
+        "english": "rain",
+        "category": "nature",
+        "audit": "session56"
+      },
+      {
+        "line": 11387,
+        "awing": "mbô",
+        "english": "rain",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "rainbow",
+    "entries": [
+      {
+        "line": 255,
+        "awing": "nkɔŋ nó ngɔ́sma",
+        "english": "rainbow",
+        "category": "nature",
+        "difficulty": 2
+      },
+      {
+        "line": 2557,
+        "awing": "nkəŋ nó ngámə",
+        "english": "rainbow",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 11395,
+        "awing": "nkoŋ nó ŋgáma",
+        "english": "rainbow",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "real, true",
+    "entries": [
+      {
+        "line": 3419,
+        "awing": "ndɔ́",
+        "english": "real, true",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 3420,
+        "awing": "ndǎndɔ́",
+        "english": "real, true",
+        "category": "descriptive",
+        "tonePattern": "rising",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "red",
+    "entries": [
+      {
+        "line": 3436,
+        "awing": "panpaŋə",
+        "english": "red",
+        "category": "descriptive"
+      },
+      {
+        "line": 11445,
+        "awing": "paŋpaŋə",
+        "english": "red",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 11447,
+        "awing": "paŋə",
+        "english": "red",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "relationship by family",
+    "entries": [
+      {
+        "line": 2321,
+        "awing": "əlimə́",
+        "english": "relationship by family",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 11477,
+        "awing": "n. alímə",
+        "english": "relationship by family",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "remain",
+    "entries": [
+      {
+        "line": 11497,
+        "awing": "chìə",
+        "english": "remain",
+        "category": "things",
+        "tonePattern": "low",
+        "difficulty": 1
+      },
+      {
+        "line": 11499,
+        "awing": "chikə",
+        "english": "remain (in many places)",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "rhinoceros",
+    "entries": [
+      {
+        "line": 2403,
+        "awing": "na nkîa",
+        "english": "rhinoceros",
+        "category": "animals",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 11607,
+        "awing": "nə pa nkîə",
+        "english": "rhinoceros",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "rib",
+    "entries": [
+      {
+        "line": 143,
+        "awing": "ntsɔ̂ŋə",
+        "english": "rib",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 2230,
+        "awing": "əsâŋngyénə",
+        "english": "rib",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 11609,
+        "awing": "asá ŋŋgyéŋa",
+        "english": "rib",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "rice",
+    "entries": [
+      {
+        "line": 274,
+        "awing": "nəkwúnə",
+        "english": "rice",
+        "category": "food"
+      },
+      {
+        "line": 2632,
+        "awing": "məkwúnə",
+        "english": "rice",
+        "category": "food",
+        "tonePattern": "high"
+      }
+    ]
+  },
+  {
+    "english": "river",
+    "entries": [
+      {
+        "line": 11649,
+        "awing": "nklə",
+        "english": "river",
+        "category": "nature",
+        "difficulty": 1
+      },
+      {
+        "line": 11651,
+        "awing": "nkaŋ nklə",
+        "english": "river",
+        "category": "nature",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "river bank",
+    "entries": [
+      {
+        "line": 11653,
+        "awing": "alaŋə",
+        "english": "river bank",
+        "category": "nature",
+        "difficulty": 1
+      },
+      {
+        "line": 11655,
+        "awing": "ndúmə",
+        "english": "river bank",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "round",
+    "entries": [
+      {
+        "line": 11707,
+        "awing": "tsənkeelə",
+        "english": "round",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 11709,
+        "awing": "akamta",
+        "english": "round",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 11711,
+        "awing": "matsəŋkeelə",
+        "english": "round",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "salt",
+    "entries": [
+      {
+        "line": 303,
+        "awing": "ntsɔ́ŋə",
+        "english": "salt (local)",
+        "category": "food",
+        "difficulty": 1
+      },
+      {
+        "line": 441,
+        "awing": "ngwáŋə",
+        "english": "salt",
+        "category": "things"
+      },
+      {
+        "line": 11763,
+        "awing": "ngwagə",
+        "english": "salt",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "same",
+    "entries": [
+      {
+        "line": 776,
+        "awing": "ndaŋə",
+        "english": "same",
+        "category": "descriptive",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 11767,
+        "awing": "alaglə",
+        "english": "same",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "sand",
+    "entries": [
+      {
+        "line": 198,
+        "awing": "wáako",
+        "english": "sand",
+        "category": "nature",
+        "audit": "session56"
+      },
+      {
+        "line": 11775,
+        "awing": "waakə",
+        "english": "sand",
+        "category": "nature",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "scar",
+    "entries": [
+      {
+        "line": 3585,
+        "awing": "alagó",
+        "english": "scar",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 3681,
+        "awing": "apenə",
+        "english": "scar",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 11817,
+        "awing": "alagə",
+        "english": "scar",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "scorpion",
+    "entries": [
+      {
+        "line": 4098,
+        "awing": "mángâsé",
+        "english": "scorpion",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 11837,
+        "awing": "maŋgakə",
+        "english": "scorpion",
+        "category": "animals",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "scratch",
+    "entries": [
+      {
+        "line": 5460,
+        "awing": "kómtə",
+        "english": "scratch (a little, eg an itching part of the body)",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 11847,
+        "awing": "kə̂mtə",
+        "english": "Scratch",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "season",
+    "entries": [
+      {
+        "line": 49,
+        "awing": "agha",
+        "english": "season",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 11875,
+        "awing": "zoona",
+        "english": "season",
+        "category": "nature",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "second",
+    "entries": [
+      {
+        "line": 11879,
+        "awing": "azoŋkə",
+        "english": "second",
+        "category": "numbers",
+        "difficulty": 1
+      },
+      {
+        "line": 11881,
+        "awing": "zoŋkə",
+        "english": "second",
+        "category": "numbers",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "seller or somebody who sells",
+    "entries": [
+      {
+        "line": 2316,
+        "awing": "əfi əpúmə",
+        "english": "seller or somebody who sells",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 2318,
+        "awing": "əfinə",
+        "english": "seller or somebody who sells",
+        "category": "family",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "senile person",
+    "entries": [
+      {
+        "line": 2369,
+        "awing": "ŋwu yi ńdéeləŋ nó",
+        "english": "senile person",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 11915,
+        "awing": "ŋwu yi ndâəla nə̌",
+        "english": "senile person",
+        "category": "family",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "set many traps",
+    "entries": [
+      {
+        "line": 3176,
+        "awing": "táaatə",
+        "english": "set many traps",
+        "category": "actions",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 11937,
+        "awing": "táətə",
+        "english": "set many traps",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "seventeen",
+    "entries": [
+      {
+        "line": 633,
+        "awing": "ntsəb asaambê",
+        "english": "seventeen",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 4517,
+        "awing": "ntsoobə asaambê",
+        "english": "seventeen (17)",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 11951,
+        "awing": "ntsɔɔbə asaambé",
+        "english": "seventeen (17)",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "seventy",
+    "entries": [
+      {
+        "line": 642,
+        "awing": "məghə́m mén asaambê",
+        "english": "seventy",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 4514,
+        "awing": "məghám méná asaambê",
+        "english": "seventy (70)",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 11953,
+        "awing": "magh ə̂m mênə asaambé",
+        "english": "seventy",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "shadow",
+    "entries": [
+      {
+        "line": 216,
+        "awing": "móláglə",
+        "english": "shadow",
+        "category": "nature",
+        "audit": "session56"
+      },
+      {
+        "line": 11967,
+        "awing": "məlaglə",
+        "english": "shadow",
+        "category": "nature",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "share",
+    "entries": [
+      {
+        "line": 11979,
+        "awing": "ghabnə",
+        "english": "share",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 11981,
+        "awing": "ghabtə",
+        "english": "share",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 11985,
+        "awing": "jîna",
+        "english": "share (in many aspects)",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "sharp",
+    "entries": [
+      {
+        "line": 740,
+        "awing": "shwàŋə",
+        "english": "sharp",
+        "category": "descriptive"
+      },
+      {
+        "line": 11989,
+        "awing": "tsəgə",
+        "english": "sharp",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "shell",
+    "entries": [
+      {
+        "line": 3570,
+        "awing": "akwubə môndzó",
+        "english": "shell (of groundnut)",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 4308,
+        "awing": "nka kwíŋə́",
+        "english": "shell (of turtle)",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 12017,
+        "awing": "nə̌ kwíŋə",
+        "english": "shell (of turtle)",
+        "category": "animals",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "shell a little",
+    "entries": [
+      {
+        "line": 2906,
+        "awing": "kíbtə",
+        "english": "shell a little",
+        "category": "actions",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 12013,
+        "awing": "kə̂bta",
+        "english": "Shell a little",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "shrimp",
+    "entries": [
+      {
+        "line": 191,
+        "awing": "njá",
+        "english": "shrimp",
+        "category": "animals",
+        "difficulty": 1
+      },
+      {
+        "line": 12085,
+        "awing": "njùə",
+        "english": "shrimp",
+        "category": "animals",
+        "tonePattern": "low",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "six",
+    "entries": [
+      {
+        "line": 622,
+        "awing": "ntogə́",
+        "english": "six",
+        "category": "numbers"
+      },
+      {
+        "line": 12159,
+        "awing": "adj. ntogə",
+        "english": "six",
+        "category": "numbers",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "sixty",
+    "entries": [
+      {
+        "line": 641,
+        "awing": "məghə́m mén ntogə́",
+        "english": "sixty",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 12163,
+        "awing": "magh ə̂m mên ntogə",
+        "english": "sixty",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "skin",
+    "entries": [
+      {
+        "line": 149,
+        "awing": "ŋgwɛ̀nə",
+        "english": "skin",
+        "category": "body"
+      },
+      {
+        "line": 2264,
+        "awing": "ngwub mbəəmə",
+        "english": "skin (of man)",
+        "category": "body",
+        "difficulty": 2
+      },
+      {
+        "line": 12169,
+        "awing": "akwubə",
+        "english": "skin (of fruit)",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 12171,
+        "awing": "jubə",
+        "english": "skin(v)",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "skull",
+    "entries": [
+      {
+        "line": 3488,
+        "awing": "aghaglótûə",
+        "english": "skull",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 3567,
+        "awing": "akwəŋótûə",
+        "english": "skull",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 12179,
+        "awing": "akwaŋtúə",
+        "english": "skull",
+        "category": "body",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "sky",
+    "entries": [
+      {
+        "line": 205,
+        "awing": "nəpóolə",
+        "english": "sky",
+        "category": "nature"
+      },
+      {
+        "line": 5120,
+        "awing": "atɨə",
+        "english": "sky",
+        "category": "nature",
+        "difficulty": 1
+      },
+      {
+        "line": 12181,
+        "awing": "atìə",
+        "english": "sky",
+        "category": "nature",
+        "tonePattern": "low",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "slow",
+    "entries": [
+      {
+        "line": 12223,
+        "awing": "nyaanə",
+        "english": "slow",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 12225,
+        "awing": "lêelə",
+        "english": "slow",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "small",
+    "entries": [
+      {
+        "line": 716,
+        "awing": "mɔ́",
+        "english": "small",
+        "category": "descriptive"
+      },
+      {
+        "line": 12229,
+        "awing": "mɔ́ kənyəŋə",
+        "english": "small",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 12231,
+        "awing": "kógə",
+        "english": "small",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "small drum",
+    "entries": [
+      {
+        "line": 3417,
+        "awing": "mó nkeelə",
+        "english": "small drum",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 12233,
+        "awing": "mɔ́ nkeelə",
+        "english": "small drum",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "smoke",
+    "entries": [
+      {
+        "line": 5788,
+        "awing": "nô",
+        "english": "smoke",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 12265,
+        "awing": "nóə",
+        "english": "smoke",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "some",
+    "entries": [
+      {
+        "line": 12313,
+        "awing": "matsə",
+        "english": "some",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 12315,
+        "awing": "notsə",
+        "english": "some",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 12317,
+        "awing": "patsə",
+        "english": "some",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 12319,
+        "awing": "yîtsə",
+        "english": "some",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "son of man",
+    "entries": [
+      {
+        "line": 4634,
+        "awing": "Mó Ŋwunə",
+        "english": "Son of Man",
+        "category": "family",
+        "difficulty": 2
+      },
+      {
+        "line": 12351,
+        "awing": "Mɔ́ Ŋwuna",
+        "english": "Son of Man",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "sour",
+    "entries": [
+      {
+        "line": 12387,
+        "awing": "atsógə",
+        "english": "sour",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 12389,
+        "awing": "tsógə",
+        "english": "sour",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "sow",
+    "entries": [
+      {
+        "line": 427,
+        "awing": "piə̀",
+        "english": "sow",
+        "category": "actions",
+        "difficulty": 1
+      },
+      {
+        "line": 2417,
+        "awing": "ngwě kwúneemə",
+        "english": "sow",
+        "category": "animals",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 12401,
+        "awing": "piəə",
+        "english": "sow",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "spider",
+    "entries": [
+      {
+        "line": 241,
+        "awing": "nətwéenə",
+        "english": "spider",
+        "category": "animals"
+      },
+      {
+        "line": 4001,
+        "awing": "kílelónkaŋə̂",
+        "english": "spider",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 12431,
+        "awing": "akəkəŋə",
+        "english": "spider",
+        "category": "animals",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "spider\\'s web",
+    "entries": [
+      {
+        "line": 2422,
+        "awing": "nka kíleləŋkaŋə́",
+        "english": "spider\\'s web",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 12433,
+        "awing": "n.p. nka kîlélənkaŋə",
+        "english": "spider\\'s web",
+        "category": "animals",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "star",
+    "entries": [
+      {
+        "line": 2537,
+        "awing": "mó sáŋə",
+        "english": "star",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 12517,
+        "awing": "mə̌ saŋa",
+        "english": "star",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "stomach",
+    "entries": [
+      {
+        "line": 120,
+        "awing": "nəpəmə",
+        "english": "stomach",
+        "category": "body",
+        "pluralForm": "məpəmə"
+      },
+      {
+        "line": 2245,
+        "awing": "məm nəpəmə",
+        "english": "stomach (internal)",
+        "category": "body",
+        "difficulty": 2
+      },
+      {
+        "line": 12573,
+        "awing": "napomə",
+        "english": "stomach",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 12575,
+        "awing": "n.p. məm napəmə",
+        "english": "stomach (internal)",
+        "category": "body",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "straight",
+    "entries": [
+      {
+        "line": 748,
+        "awing": "tə̂ŋə",
+        "english": "straight",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 12613,
+        "awing": "tî ndaŋdaŋə",
+        "english": "straight",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "stranger",
+    "entries": [
+      {
+        "line": 5980,
+        "awing": "təlénja",
+        "english": "stranger",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 12619,
+        "awing": "ngaŋnagheenə",
+        "english": "stranger",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 12621,
+        "awing": "ɔlênja",
+        "english": "stranger",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "stream",
+    "entries": [
+      {
+        "line": 591,
+        "awing": "ndo",
+        "english": "stream",
+        "category": "family",
+        "difficulty": 1,
+        "audit": "session56"
+      },
+      {
+        "line": 12625,
+        "awing": "chwáŋtə nklə",
+        "english": "stream",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "strong",
+    "entries": [
+      {
+        "line": 777,
+        "awing": "achîna",
+        "english": "strong",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 12643,
+        "awing": "tyantə",
+        "english": "strong",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "stupid person",
+    "entries": [
+      {
+        "line": 12651,
+        "awing": "akoghə",
+        "english": "stupid person",
+        "category": "family",
+        "difficulty": 3
+      },
+      {
+        "line": 12653,
+        "awing": "shîəə",
+        "english": "stupid person",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "suckle",
+    "entries": [
+      {
+        "line": 3066,
+        "awing": "nóŋə",
+        "english": "suckle (intr)",
+        "category": "actions",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 12673,
+        "awing": "nəŋkə",
+        "english": "suckle (baby) (tr)",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 12675,
+        "awing": "nəŋə",
+        "english": "suckle (intr)",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "sunshine",
+    "entries": [
+      {
+        "line": 2531,
+        "awing": "mánu yi ńté nó",
+        "english": "sunshine",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 12695,
+        "awing": "mánu yi nî nə̌",
+        "english": "sunshine",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "support",
+    "entries": [
+      {
+        "line": 455,
+        "awing": "akwâalə",
+        "english": "support",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 3722,
+        "awing": "aténkə",
+        "english": "support",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 12705,
+        "awing": "chìə",
+        "english": "support",
+        "category": "things",
+        "tonePattern": "low",
+        "difficulty": 1
+      },
+      {
+        "line": 12707,
+        "awing": "tśmtə",
+        "english": "support",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 12709,
+        "awing": "atóəmə",
+        "english": "support (esp. for a tall banana stem)",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "sweet",
+    "entries": [
+      {
+        "line": 739,
+        "awing": "kwɨ̂ŋɔ́",
+        "english": "sweet",
+        "category": "descriptive"
+      },
+      {
+        "line": 12745,
+        "awing": "lamkə",
+        "english": "sweet",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "tear",
+    "entries": [
+      {
+        "line": 2278,
+        "awing": "seelô",
+        "english": "tear (tr)",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 12831,
+        "awing": "nkyîməgə",
+        "english": "tear",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 12833,
+        "awing": "serlə",
+        "english": "tear (tr)",
+        "category": "actions",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "tether",
+    "entries": [
+      {
+        "line": 3197,
+        "awing": "taŋnô",
+        "english": "tether (sheep, goats)",
+        "category": "actions",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 12877,
+        "awing": "taŋnə",
+        "english": "tether (sheep, goats)",
+        "category": "animals",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "them",
+    "entries": [
+      {
+        "line": 4693,
+        "awing": "ághóoba",
+        "english": "them (personal pronoun)",
+        "category": "pronouns",
+        "difficulty": 1
+      },
+      {
+        "line": 12897,
+        "awing": "pó",
+        "english": "them",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "thick",
+    "entries": [
+      {
+        "line": 12909,
+        "awing": "asəglə",
+        "english": "thick",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 12911,
+        "awing": "faŋə",
+        "english": "thick",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "thief",
+    "entries": [
+      {
+        "line": 567,
+        "awing": "ndáəshə",
+        "english": "thief",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 2354,
+        "awing": "ndzɔ̂lə",
+        "english": "thief",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "thin",
+    "entries": [
+      {
+        "line": 719,
+        "awing": "ashwánə",
+        "english": "thin",
+        "category": "descriptive"
+      },
+      {
+        "line": 12919,
+        "awing": "chwiŋə",
+        "english": "thin",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "thirteen",
+    "entries": [
+      {
+        "line": 629,
+        "awing": "ntsəb teelə́",
+        "english": "thirteen",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 12933,
+        "awing": "ntsɔb teelə",
+        "english": "thirteen (13)",
+        "category": "things",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "thirty",
+    "entries": [
+      {
+        "line": 638,
+        "awing": "mbá nə əghám",
+        "english": "thirty",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 4512,
+        "awing": "məghám mén teelə̂",
+        "english": "thirty (30)",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "this",
+    "entries": [
+      {
+        "line": 361,
+        "awing": "zə́ənə",
+        "english": "this (demonstrative)",
+        "category": "descriptive",
+        "difficulty": 3
+      },
+      {
+        "line": 12939,
+        "awing": "lê",
+        "english": "this",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 12945,
+        "awing": "n. əfê",
+        "english": "this",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "this is",
+    "entries": [
+      {
+        "line": 82,
+        "awing": "Lɛ̌",
+        "english": "this is",
+        "category": "pronouns",
+        "tonePattern": "rising",
+        "difficulty": 3
+      },
+      {
+        "line": 5540,
+        "awing": "lě",
+        "english": "this is",
+        "category": "things",
+        "tonePattern": "rising",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "thorn",
+    "entries": [
+      {
+        "line": 543,
+        "awing": "sə̀bə̀ə̀bə́",
+        "english": "thorn",
+        "category": "things",
+        "difficulty": 1
+      },
+      {
+        "line": 2533,
+        "awing": "məsobsoobə̂",
+        "english": "thorn",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 12949,
+        "awing": "n. masɔbsoobə",
+        "english": "thorn",
+        "category": "things",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "thousand",
+    "entries": [
+      {
+        "line": 6000,
+        "awing": "tóosə",
+        "english": "thousand (1000)",
+        "category": "numbers",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 12959,
+        "awing": "num. tə̂sa",
+        "english": "thousand (1000)",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "today",
+    "entries": [
+      {
+        "line": 729,
+        "awing": "senô",
+        "english": "today",
+        "category": "descriptive",
+        "audit": "session56"
+      },
+      {
+        "line": 13053,
+        "awing": "alə̌ mbîə senə̌",
+        "english": "today",
+        "category": "things",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 13055,
+        "awing": "senə̌",
+        "english": "today",
+        "category": "things",
+        "tonePattern": "rising",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "toe",
+    "entries": [
+      {
+        "line": 2235,
+        "awing": "fîə akoolə",
+        "english": "toe",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 13057,
+        "awing": "tô",
+        "english": "toe",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "tomato",
+    "entries": [
+      {
+        "line": 277,
+        "awing": "tâmto",
+        "english": "tomato",
+        "category": "food"
+      },
+      {
+        "line": 13071,
+        "awing": "támtə",
+        "english": "tomato",
+        "category": "food",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "tongue",
+    "entries": [
+      {
+        "line": 105,
+        "awing": "aləəmə",
+        "english": "tongue",
+        "category": "body",
+        "audit": "session56"
+      },
+      {
+        "line": 13075,
+        "awing": "alə̂məə",
+        "english": "tongue",
+        "category": "body",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "town",
+    "entries": [
+      {
+        "line": 5996,
+        "awing": "tóŋə",
+        "english": "town",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 13119,
+        "awing": "təŋə",
+        "english": "town",
+        "category": "family",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "trader",
+    "entries": [
+      {
+        "line": 2363,
+        "awing": "ntáŋ məteenə́",
+        "english": "trader",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 13129,
+        "awing": "ntáŋ moteenə",
+        "english": "trader",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "tree",
+    "entries": [
+      {
+        "line": 76,
+        "awing": "atǐə",
+        "english": "tree",
+        "category": "nature",
+        "tonePattern": "rising",
+        "difficulty": 1
+      },
+      {
+        "line": 196,
+        "awing": "atɨə",
+        "english": "tree",
+        "category": "nature",
+        "audit": "session56"
+      },
+      {
+        "line": 13181,
+        "awing": "atìə awaglápəənəmə",
+        "english": "tree",
+        "category": "nature",
+        "tonePattern": "high-low",
+        "difficulty": 2
+      },
+      {
+        "line": 13183,
+        "awing": "awaglápəənəmə",
+        "english": "tree",
+        "category": "nature",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "tree, sort of",
+    "entries": [
+      {
+        "line": 13203,
+        "awing": "atìə chaŋnə",
+        "english": "tree, sort of",
+        "category": "nature",
+        "tonePattern": "low",
+        "difficulty": 2
+      },
+      {
+        "line": 13205,
+        "awing": "olê",
+        "english": "tree, sort of",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "true",
+    "entries": [
+      {
+        "line": 13229,
+        "awing": "chigə",
+        "english": "true",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 13231,
+        "awing": "ndə̂",
+        "english": "true",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 13233,
+        "awing": "ndándə̂",
+        "english": "true",
+        "category": "descriptive",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "turtle",
+    "entries": [
+      {
+        "line": 2390,
+        "awing": "kwíŋ nkǐə",
+        "english": "turtle (water turtle)",
+        "category": "animals",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 13259,
+        "awing": "kwíŋ nklə",
+        "english": "turtle (water)",
+        "category": "animals",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "twelve",
+    "entries": [
+      {
+        "line": 628,
+        "awing": "əghám nə əpá",
+        "english": "twelve",
+        "category": "numbers",
+        "difficulty": 2
+      },
+      {
+        "line": 4520,
+        "awing": "ntsəb pê",
+        "english": "twelve (12)",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 13263,
+        "awing": "ntsɔb pê",
+        "english": "twelve (12)",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "twenty",
+    "entries": [
+      {
+        "line": 637,
+        "awing": "mbá",
+        "english": "twenty",
+        "category": "numbers",
+        "difficulty": 1
+      },
+      {
+        "line": 4507,
+        "awing": "məghám mém mbê",
+        "english": "twenty (20)",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "two",
+    "entries": [
+      {
+        "line": 4521,
+        "awing": "pě",
+        "english": "two (alternate form)",
+        "category": "numbers",
+        "tonePattern": "rising",
+        "difficulty": 1
+      },
+      {
+        "line": 5586,
+        "awing": "mbê",
+        "english": "two",
+        "category": "numbers",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "ugly",
+    "entries": [
+      {
+        "line": 13287,
+        "awing": "dɔtə",
+        "english": "ugly",
+        "category": "descriptive",
+        "difficulty": 1
+      },
+      {
+        "line": 13289,
+        "awing": "shwaalə",
+        "english": "ugly",
+        "category": "descriptive",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "unlucky person",
+    "entries": [
+      {
+        "line": 2328,
+        "awing": "mbógə atúə",
+        "english": "unlucky person",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 13339,
+        "awing": "n. mbágə atúə",
+        "english": "unlucky person",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "unmarried person",
+    "entries": [
+      {
+        "line": 2362,
+        "awing": "nkwiŋə",
+        "english": "unmarried person",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 13343,
+        "awing": "n. nkwiŋə",
+        "english": "unmarried person",
+        "category": "family",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "urine",
+    "entries": [
+      {
+        "line": 4630,
+        "awing": "mətsenə",
+        "english": "urine",
+        "category": "things",
+        "difficulty": 3
+      },
+      {
+        "line": 13369,
+        "awing": "matseŋnə",
+        "english": "urine",
+        "category": "body",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "vegetable",
+    "entries": [
+      {
+        "line": 269,
+        "awing": "ndzě",
+        "english": "vegetable",
+        "category": "food",
+        "difficulty": 1
+      },
+      {
+        "line": 13399,
+        "awing": "ndzə",
+        "english": "vegetable",
+        "category": "food",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "voice",
+    "entries": [
+      {
+        "line": 565,
+        "awing": "ngye",
+        "english": "voice",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 13437,
+        "awing": "ŋgye",
+        "english": "voice",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "we",
+    "entries": [
+      {
+        "line": 4399,
+        "awing": "pəgə",
+        "english": "we (not including you)",
+        "category": "pronouns",
+        "difficulty": 1
+      },
+      {
+        "line": 13523,
+        "awing": "pénə",
+        "english": "we",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 13525,
+        "awing": "pə",
+        "english": "we",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "what",
+    "entries": [
+      {
+        "line": 68,
+        "awing": "aké",
+        "english": "what",
+        "category": "pronouns",
+        "difficulty": 1
+      },
+      {
+        "line": 3524,
+        "awing": "akô",
+        "english": "what (interrogative pronoun)",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 13579,
+        "awing": "kə̂",
+        "english": "what",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "white",
+    "entries": [
+      {
+        "line": 712,
+        "awing": "fúfûə",
+        "english": "white",
+        "category": "descriptive"
+      },
+      {
+        "line": 13623,
+        "awing": "fógə",
+        "english": "white",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "white man",
+    "entries": [
+      {
+        "line": 5604,
+        "awing": "məkálé",
+        "english": "white man",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 13627,
+        "awing": "məkálə",
+        "english": "white man",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "widow",
+    "entries": [
+      {
+        "line": 3063,
+        "awing": "nkogə́",
+        "english": "widow (used neutrally for both man and woman)",
+        "category": "actions",
+        "tonePattern": "high",
+        "difficulty": 3
+      },
+      {
+        "line": 4325,
+        "awing": "nkog məngyè",
+        "english": "widow",
+        "category": "things",
+        "tonePattern": "low",
+        "difficulty": 3
+      },
+      {
+        "line": 13647,
+        "awing": "nkoŋ mongyé",
+        "english": "widow",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "widower",
+    "entries": [
+      {
+        "line": 4327,
+        "awing": "nkog ŋwu mbyâŋnə",
+        "english": "widower",
+        "category": "things",
+        "tonePattern": "falling",
+        "difficulty": 3
+      },
+      {
+        "line": 13651,
+        "awing": "nkoŋ ŋwu mbyâŋnə",
+        "english": "widower",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 3
+      }
+    ]
+  },
+  {
+    "english": "will of a dead person",
+    "entries": [
+      {
+        "line": 2305,
+        "awing": "atséebánkwûə",
+        "english": "will of a dead person",
+        "category": "family",
+        "tonePattern": "falling",
+        "difficulty": 1
+      },
+      {
+        "line": 13659,
+        "awing": "atséebáŋkwùə",
+        "english": "will of a dead person",
+        "category": "family",
+        "tonePattern": "high-low",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "wind",
+    "entries": [
+      {
+        "line": 208,
+        "awing": "sáma",
+        "english": "wind",
+        "category": "nature",
+        "audit": "session56"
+      },
+      {
+        "line": 13663,
+        "awing": "afə̂gə",
+        "english": "wind",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "wind time",
+    "entries": [
+      {
+        "line": 5364,
+        "awing": "ghenkə̂ ndəlá",
+        "english": "wind time",
+        "category": "nature",
+        "tonePattern": "falling",
+        "difficulty": 2
+      },
+      {
+        "line": 13665,
+        "awing": "ghenkə ndelə",
+        "english": "wind time",
+        "category": "nature",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "wing",
+    "entries": [
+      {
+        "line": 128,
+        "awing": "nəbâŋə",
+        "english": "wing (of bird)",
+        "category": "body",
+        "difficulty": 1
+      },
+      {
+        "line": 4223,
+        "awing": "nəpeebə",
+        "english": "wing",
+        "category": "things"
+      }
+    ]
+  },
+  {
+    "english": "wisdom",
+    "entries": [
+      {
+        "line": 590,
+        "awing": "ayáŋə",
+        "english": "wisdom",
+        "category": "family",
+        "difficulty": 1
+      },
+      {
+        "line": 13681,
+        "awing": "ndəmə",
+        "english": "wisdom",
+        "category": "things",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "word that describes how a foolish man moves, especially into trouble",
+    "entries": [
+      {
+        "line": 3395,
+        "awing": "kákwumə̌kókwumə",
+        "english": "word that describes how a foolish man moves, especially into trouble",
+        "category": "descriptive",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 3398,
+        "awing": "kápyagəkápyaga",
+        "english": "word that describes how a foolish man moves, especially into trouble",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "wound",
+    "entries": [
+      {
+        "line": 4169,
+        "awing": "néŋ nəfaŋə́",
+        "english": "wound (sth or sb)",
+        "category": "things",
+        "tonePattern": "high",
+        "difficulty": 2
+      },
+      {
+        "line": 13761,
+        "awing": "nafagə",
+        "english": "wound",
+        "category": "body",
+        "difficulty": 1
+      }
+    ]
+  },
+  {
+    "english": "young",
+    "entries": [
+      {
+        "line": 13809,
+        "awing": "mɔ́",
+        "english": "young",
+        "category": "descriptive",
+        "tonePattern": "high",
+        "difficulty": 1
+      },
+      {
+        "line": 13813,
+        "awing": "pə̌ nkaŋ ŋwunə",
+        "english": "young",
+        "category": "descriptive",
+        "tonePattern": "rising",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "english": "younger sister",
+    "entries": [
+      {
+        "line": 2307,
+        "awing": "azoŋ yə məŋgyě",
+        "english": "younger sister",
+        "category": "family",
+        "tonePattern": "rising",
+        "difficulty": 2
+      },
+      {
+        "line": 13821,
+        "awing": "azoŋ yə mangyé",
+        "english": "younger sister",
+        "category": "family",
+        "tonePattern": "high",
+        "difficulty": 2
+      }
+    ]
+  }
+]

@@ -46,8 +46,47 @@ for _stream in (sys.stdout, sys.stderr):
 REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDINGS_DIR = REPO_ROOT / "training_data" / "recordings"
 MANIFEST = RECORDINGS_DIR / "manifest.json"
-NATIVE_OUT = REPO_ROOT / "android" / "install_time_assets" / "src" / "main" / "assets" / "audio" / "native"
-KIDS_OUT   = REPO_ROOT / "android" / "install_time_assets" / "src" / "main" / "assets" / "audio" / "native_kids"
+PAD_AUDIO_ROOT = REPO_ROOT / "android" / "install_time_assets" / "src" / "main" / "assets" / "audio"
+NATIVE_OUT = PAD_AUDIO_ROOT / "native"
+KIDS_OUT   = PAD_AUDIO_ROOT / "native_kids"
+
+# Algorithm-version sentinel for the silence-trim pipeline. Bump this
+# integer whenever the trim algorithm changes in a way that warrants a
+# full re-encode of the PAD pack (different windowing, different
+# threshold, fixed bug, etc.). The script auto-forces a full re-encode
+# whenever the sentinel on disk differs from this constant, so future
+# build_and_run.bat runs Just Work — no one has to remember to pass
+# --force after pulling a trim improvement.
+#
+#   v1: initial silence trim (10ms windows, 5% relative threshold,
+#       0.005 absolute floor, 20ms padding) — matches lib/utils/
+#       silence_trim.dart defaults.
+#   v2: emit permanent 16 kHz mono PCM-16 WAV alongside the MP3 as
+#       the grader reference (Phase 1C). Existing PAD packs have
+#       only MP3, so v2 triggers a full re-encode pass to generate
+#       the missing .wav files.
+_AUDIO_PIPELINE_VERSION = 2
+_PIPELINE_VERSION_FILE = PAD_AUDIO_ROOT / ".pipeline_version"
+
+
+def _read_pipeline_version() -> int:
+    """Return the algorithm version recorded in the PAD pack, or 0 if
+    the sentinel is missing/unreadable (treats first-run as "below v1"
+    so the next encode pass refreshes everything)."""
+    try:
+        return int(_PIPELINE_VERSION_FILE.read_text(encoding="utf-8").strip())
+    except (FileNotFoundError, ValueError, OSError):
+        return 0
+
+
+def _write_pipeline_version() -> None:
+    try:
+        _PIPELINE_VERSION_FILE.parent.mkdir(parents=True, exist_ok=True)
+        _PIPELINE_VERSION_FILE.write_text(
+            str(_AUDIO_PIPELINE_VERSION) + "\n", encoding="utf-8"
+        )
+    except OSError as exc:
+        print(f"  WARNING: could not write pipeline version sentinel: {exc}")
 
 # Known kid recorders → folder slug. Matches the FAMILY list in
 # scripts/build_family_recorder.py and the kidVoicesByCharacter map in
@@ -133,12 +172,99 @@ def audio_key(awing: str) -> str:
 
 
 def convert_wav_to_mp3(wav_path: Path, mp3_path: Path) -> bool:
-    """ffmpeg WAV -> MP3 at 64 kbps mono — matches the rest of the bank."""
+    """Trim silence and emit BOTH a permanent 16 kHz mono PCM-16 WAV
+    (grader reference) AND a 22050 Hz mono MP3 (in-app playback).
+
+    Two outputs per recording:
+      - {mp3_path}                       — MP3 for the audio player
+      - {mp3_path.with_suffix('.wav')}   — WAV for the on-device
+                                            pronunciation grader
+
+    Why two formats:
+      - The Flutter audio player wants MP3 (existing behavior — small,
+        fast, codec built into every Android/iOS audio stack).
+      - The pronunciation grader (lib/services/pronunciation_grader.dart)
+        wants raw PCM so we DON'T have to bundle an MP3 decoder native
+        library — which would reintroduce the cross-platform / x86_64
+        Android problem that killed the ONNX approach. WAV decoder is
+        pure Dart, runs everywhere.
+
+    Pipeline:
+      1. Trim leading/trailing silence (shared algorithm with the
+         on-device grader — scripts/trim_silence.py mirrors
+         lib/utils/silence_trim.dart byte-for-byte).
+      2. Write trimmed audio as 16 kHz mono PCM-16 WAV (canonical
+         speech rate, ~32 KB/sec).
+      3. ffmpeg the WAV -> MP3 at 22050 Hz mono 64 kbps for playback.
+
+    Size impact: ~15 MB added to the PAD pack across all native +
+    native_kids clips. Acceptable for the offline, on-device grader.
+    """
     mp3_path.parent.mkdir(parents=True, exist_ok=True)
+    wav_out = mp3_path.with_suffix(".wav")
+
+    # 1) Trim silence directly to the permanent 16 kHz WAV.
+    try:
+        from scripts.trim_silence import trim_audio_file  # type: ignore
+    except ImportError:
+        try:
+            import sys as _sys
+
+            _sys.path.insert(0, str(REPO_ROOT))
+            from scripts.trim_silence import trim_audio_file  # type: ignore
+        except Exception:
+            trim_audio_file = None  # type: ignore
+
+    trimmed_ok = False
+    if trim_audio_file is not None:
+        try:
+            info = trim_audio_file(wav_path, wav_out, target_sample_rate=16000)
+            if info.all_silent:
+                # Recording was entirely silent — skip both outputs so
+                # we don't ship a useless reference / MP3 over the wire.
+                print(f"    ⚠ entirely silent — skipped")
+                wav_out.unlink(missing_ok=True)
+                return False
+            if info.removed_sec >= 0.1:
+                print(
+                    f"    ✂ trimmed {info.removed_sec:.2f}s silence "
+                    f"({info.original_sec:.2f}s → {info.trimmed_sec:.2f}s)"
+                )
+            trimmed_ok = True
+        except Exception as exc:  # noqa: BLE001
+            print(f"    trim failed ({exc!s:.80}) — falling back to ffmpeg copy")
+            wav_out.unlink(missing_ok=True)
+
+    # 2) Fallback if trim wasn't available or failed: ffmpeg the source
+    # WAV to 16 kHz mono PCM-16 so the grader at least has a valid
+    # reference, even if it includes silence padding.
+    if not trimmed_ok:
+        try:
+            result = subprocess.run(
+                ["ffmpeg", "-y", "-loglevel", "error",
+                 "-i", str(wav_path),
+                 "-ar", "16000",
+                 "-ac", "1",
+                 "-sample_fmt", "s16",
+                 str(wav_out)],
+                capture_output=True,
+                check=False,
+            )
+            if result.returncode != 0:
+                print(
+                    f"    ffmpeg WAV-copy error: "
+                    f"{result.stderr.decode('utf-8', errors='replace')[:200]}"
+                )
+                return False
+        except FileNotFoundError:
+            print("ERROR: ffmpeg not on PATH. Install ffmpeg or run from the venv with ffmpeg available.")
+            return False
+
+    # 3) ffmpeg the trimmed WAV -> MP3 at the standard playback settings.
     try:
         result = subprocess.run(
             ["ffmpeg", "-y", "-loglevel", "error",
-             "-i", str(wav_path),
+             "-i", str(wav_out),
              "-codec:a", "libmp3lame",
              "-b:a", "64k",
              "-ar", "22050",
@@ -149,8 +275,14 @@ def convert_wav_to_mp3(wav_path: Path, mp3_path: Path) -> bool:
         )
         if result.returncode != 0:
             print(f"    ffmpeg error: {result.stderr.decode('utf-8', errors='replace')[:200]}")
+            # Don't delete wav_out — the grader can still use it even if
+            # the MP3 step failed.
             return False
-        return mp3_path.exists() and mp3_path.stat().st_size > 500
+        ok = mp3_path.exists() and mp3_path.stat().st_size > 500
+        if ok and not (wav_out.exists() and wav_out.stat().st_size > 500):
+            # Sanity: should never happen since trim/ffmpeg wrote it above
+            print(f"    WARN: WAV reference missing or empty at {wav_out.name}")
+        return ok
     except FileNotFoundError:
         print("ERROR: ffmpeg not on PATH. Install ffmpeg or run from the venv with ffmpeg available.")
         return False
@@ -170,6 +302,26 @@ def main() -> int:
     if not MANIFEST.exists():
         print(f"ERROR: {MANIFEST} not found.")
         return 1
+
+    # Pipeline version is now informational only. The per-file check
+    # below considers BOTH the MP3 and the WAV side-car and skips when
+    # both exist and are newer than the source WAV. So if v2 added the
+    # WAV side-car, the first run will re-encode files that are missing
+    # their .wav, but files that already have BOTH outputs and were
+    # encoded by the current algorithm just get skipped — no wholesale
+    # re-encoding.
+    #
+    # If you DO want to force a full re-encode (e.g. after tweaking the
+    # silence-trim thresholds and wanting every clip refreshed), pass
+    # --force on the command line.
+    on_disk_version = _read_pipeline_version()
+    if on_disk_version != _AUDIO_PIPELINE_VERSION and not args.dry_run:
+        print(
+            f"  Pipeline version: disk=v{on_disk_version} "
+            f"→ script=v{_AUDIO_PIPELINE_VERSION} "
+            f"(per-file check handles upgrades incrementally; "
+            f"pass --force for full re-encode)\n"
+        )
 
     entries = json.loads(MANIFEST.read_text(encoding="utf-8"))
     print(f"Manifest: {len(entries)} recordings\n")
@@ -226,10 +378,24 @@ def main() -> int:
         #   3. <character>/                (Edge TTS Swahili fallback)
         # cleanly delivers "Joyce's voice only, else Dr. Sama, else TTS".
         target_path = kid_mp3_path if kid_slug else mp3_path
+        wav_companion = target_path.with_suffix(".wav")
 
         wav_mtime = wav_path.stat().st_mtime
-        need_write = (not target_path.exists()
-                      or target_path.stat().st_mtime < wav_mtime)
+
+        # Skip when ALL of these are true:
+        #   - The MP3 already exists AND is newer than the source WAV
+        #   - The WAV side-car already exists AND is newer than the source WAV
+        #     (added in pipeline v2 for the on-device grader)
+        # If either output is missing or older than the source, we re-encode.
+        mp3_fresh = (
+            target_path.exists()
+            and target_path.stat().st_mtime >= wav_mtime
+        )
+        wav_fresh = (
+            wav_companion.exists()
+            and wav_companion.stat().st_mtime >= wav_mtime
+        )
+        need_write = not (mp3_fresh and wav_fresh)
 
         if not args.force and not need_write:
             skipped += 1
@@ -273,6 +439,15 @@ def main() -> int:
     if by_kid:
         print(f"Kid root:    {KIDS_OUT.relative_to(REPO_ROOT)}")
     print()
+
+    # Record the algorithm version we just encoded with so future runs
+    # know not to re-trim everything. We only update the sentinel if at
+    # least one clip was processed without a hard failure — partial runs
+    # (e.g. ffmpeg crashed midway) should NOT advance the version, so the
+    # next invocation retries the remaining files.
+    if not args.dry_run and failed == 0:
+        _write_pipeline_version()
+
     if not args.dry_run and written > 0:
         print("Next:")
         print("  flutter build appbundle --release")

@@ -60,7 +60,7 @@ class NativeAudioInventory {
   }
 
   /// True if the canonical native/ tier has a clip for [audioKey] —
-  /// i.e. Dr. Sama (or Berlin) recorded it. Used by the "Missing from
+  /// i.e. Dr. Sama or Berlin recorded it. Used by the "Missing from
   /// [active recorder]" filter as the second-priority status (so the
   /// dev sees that the canonical reference is already covered even if
   /// the active kid isn't).
@@ -72,6 +72,25 @@ class NativeAudioInventory {
       return entry.canonical;
     }
     return false;
+  }
+
+  /// Which adult slug owns the canonical recording for [audioKey], or
+  /// null if there's no canonical recording / no manifest entry records
+  /// the owner. Used by the Record tab to show distinct S (Dr. Sama)
+  /// and B (Berlin) dots instead of a single ambiguous "canonical
+  /// exists" indicator. Possible return values:
+  ///   - 'samagids' — Dr. Guidion Sama recorded it
+  ///   - 'berlin'   — Berlin Sama recorded it
+  ///   - null       — no canonical exists OR ownership not tracked
+  ///                  (older recordings predating manifest v2)
+  String? canonicalRecorderFor(String audioKey) {
+    if (!_loaded) return null;
+    for (final cat in _byCategory.values) {
+      final entry = cat[audioKey];
+      if (entry == null) continue;
+      return entry.canonicalRecorder;
+    }
+    return null;
   }
 
   /// Load the manifest from rootBundle. Safe to call multiple times —
@@ -97,6 +116,10 @@ class NativeAudioInventory {
             kids: (info['kids'] as List<dynamic>? ?? const [])
                 .map((s) => s.toString())
                 .toSet(),
+            // Manifest v2+ only. Older manifests omit this field
+            // entirely → null → "canonical owner unknown" treatment in
+            // the badge UI (S dot greys-out, no B dot fills).
+            canonicalRecorder: info['canonical_recorder'] as String?,
           );
         }
         _byCategory[category] = catMap;
@@ -114,5 +137,10 @@ class NativeAudioInventory {
 class _Entry {
   final bool canonical;
   final Set<String> kids;
-  _Entry({required this.canonical, required this.kids});
+  final String? canonicalRecorder; // 'samagids' | 'berlin' | null
+  _Entry({
+    required this.canonical,
+    required this.kids,
+    this.canonicalRecorder,
+  });
 }

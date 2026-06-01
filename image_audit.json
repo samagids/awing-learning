@@ -1,0 +1,84 @@
+{
+  "summary": {
+    "expected_total_unique": 3977,
+    "on_disk": 15750,
+    "missing_total": 0,
+    "extra_total": 11773,
+    "by_namespace": {
+      "vocabulary": {
+        "expected": 3758,
+        "missing": 0
+      },
+      "phrases": {
+        "expected": 177,
+        "missing": 0
+      },
+      "sentences": {
+        "expected": 37,
+        "missing": 0
+      },
+      "stories": {
+        "expected": 5,
+        "missing": 0
+      }
+    }
+  },
+  "missing": {
+    "vocabulary": [],
+    "phrases": [],
+    "sentences": [],
+    "stories": []
+  },
+  "extra_sample": [
+    "a.png",
+    "a__from.png",
+    "a__he.png",
+    "a__it.png",
+    "a__preposition_at.png",
+    "a__said.png",
+    "a__she.png",
+    "a__to.png",
+    "a__with.png",
+    "aaz__uzziah.png",
+    "aaze__uzziah.png",
+    "aba__abba.png",
+    "abadone__king.png",
+    "abeele__righteous.png",
+    "abeele__speaks.png",
+    "abel__sanctuary.png",
+    "abija__abijah.png",
+    "abilene__reign.png",
+    "abiud__abiud.png",
+    "abiude__abiud.png",
+    "ablaame__abraham.png",
+    "abo__near.png",
+    "abyata__house.png",
+    "achaaka__escort_with_a_bride.png",
+    "achaake.png",
+    "achabte.png",
+    "achabtea.png",
+    "achakus__part.png",
+    "achana__behaviour_disgusting.png",
+    "achane.png",
+    "achapte__dirt_on_a_surface.png",
+    "achate.png",
+    "achate__greet.png",
+    "achate__greetings__2.png",
+    "achatese.png",
+    "achatese__prayer.png",
+    "achatese__prayers__2.png",
+    "achatesenji__fast.png",
+    "achatesenjie.png",
+    "achatesenjie__fast.png",
+    "achatesenjie__fasting.png",
+    "achatesenjie__fasting_intensive_and_serious_pr__2.png",
+    "achekele.png",
+    "achi__blood.png",
+    "achia.png",
+    "achialuma__quarter_name_in_awing.png",
+    "achialume.png",
+    "achialumes.png",
+    "achiasmatie__name_of_a_quarter.png",
+    "achiataponge__sign_of_misfortune.png"
+  ]
+}
