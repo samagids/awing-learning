@@ -4,8 +4,6 @@ import 'package:awing_ai_learning/screens/beginner/beginner_home.dart';
 import 'package:awing_ai_learning/screens/medium/medium_home.dart';
 import 'package:awing_ai_learning/screens/expert/expert_home.dart';
 import 'package:awing_ai_learning/screens/profile_screen.dart';
-import 'package:awing_ai_learning/screens/stories_screen.dart';
-import 'package:awing_ai_learning/screens/daily_words_screen.dart';
 import 'package:awing_ai_learning/screens/exam/teacher_setup_screen.dart';
 import 'package:awing_ai_learning/screens/exam/student_join_screen.dart';
 import 'package:awing_ai_learning/screens/admin/developer_screen.dart';
@@ -312,46 +310,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       const SizedBox(height: 12),
-                      // Stories — always available
-                      _ModeCard(
-                        title: 'Stories',
-                        subtitle: 'Read & listen to Awing stories',
-                        icon: Icons.auto_stories,
-                        color: Colors.teal,
-                        locked: false,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const StoriesScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      // v1.15.0 — Daily AI word suggestions. Picks 3 words per
-                      // day based on the learner's level, the season, time of
-                      // day, and weekly category rotation. Settings inside the
-                      // screen let parents toggle a daily local notification.
-                      _ModeCard(
-                        title: "Today's Words",
-                        subtitle: '3 new words picked for you each day',
-                        icon: Icons.wb_sunny,
-                        color: Colors.deepPurple,
-                        locked: false,
-                        onTap: () {
-                          AnalyticsService.instance.logActivity(
-                            event: 'open_daily_words',
-                          );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const DailyWordsScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 12),
+                      // v1.16.0: "Today's Words/Sentences/Conversations" moved
+                      // into each mode's lesson list so content matches level.
                       // Contribute — parent-gated so kids can't submit
                       // random/inappropriate recordings to the webhook
                       // without an adult's knowledge. Uses the same

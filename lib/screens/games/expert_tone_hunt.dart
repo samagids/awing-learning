@@ -112,13 +112,28 @@ class _ExpertToneHuntState extends State<ExpertToneHunt> {
     final perTone = (totalRounds / _tonesOffered.length).ceil();
     final balanced = <AwingWord>[];
     for (final t in _tonesOffered) {
-      balanced.addAll(grouped[t]!.take(perTone));
+      // v1.15.1 — prefer unseen tone words from each bucket
+      final progress = context.read<ProgressService>();
+      final split = progress.splitBySeen<AwingWord>(
+        ProgressService.gameToneHunt,
+        grouped[t]!,
+        (w) => '${w.awing}|${w.english}',
+      );
+      split.unseen.shuffle(_random);
+      split.seen.shuffle(_random);
+      balanced.addAll([...split.unseen, ...split.seen].take(perTone));
     }
     pool.addAll(balanced);
 
-    // Shuffle full pool, take 10
     pool.shuffle(_random);
     _rounds = pool.take(totalRounds).toList();
+
+    // Persist seen-words coverage
+    final progress = context.read<ProgressService>();
+    progress.recordGameRoundSeen(
+      ProgressService.gameToneHunt,
+      _rounds.map((w) => MapEntry(w.awing, w.english)),
+    );
 
     _roundIndex = 0;
     _totalCorrect = 0;
@@ -390,6 +405,139 @@ class _ExpertToneHuntState extends State<ExpertToneHunt> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Listen carefully and pick the tone',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        // Word card
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.red.shade50,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.red.shade200, width: 2),
+                          ),
+                          child: Column(
+                            children: [
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  word.awing,
+                                  style: TextStyle(
+                                    fontSize: 44,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red.shade800,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                word.english,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.red.shade600,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 12),
+                              ElevatedButton.icon(
+                                onPressed: _playCurrent,
+                                icon: const Icon(Icons.volume_up),
+                                label: const Text('Hear it again'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 12),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        // Tone options grid
+                        Expanded(
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 14,
+                            mainAxisSpacing: 14,
+                            childAspectRatio: 1.6,
+                            children: _tonesOffered.map((t) {
+                              final isSelected = _selectedTone == t;
+                              final isCorrect = t == correctTone;
+                              Color bgColor = Colors.white;
+                              Color borderColor = Colors.red.shade200;
+                              Color textColor = Colors.red.shade800;
+
+                              if (_revealed) {
+                                if (isCorrect) {
+                                  bgColor = Colors.green.shade100;
+                                  borderColor = Colors.green;
+                                  textColor = Colors.green.shade900;
+                                } else if (isSelected) {
+                                  bgColor = Colors.red.shade100;
+                                  borderColor = Colors.red;
+                                  textColor = Colors.red.shade900;
+                                }
+                              }
+
+                              return GestureDetector(
+                                onTap: () => _selectTone(t),
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  decoration: BoxDecoration(
+                                    color: bgColor,
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(color: borderColor, width: 3),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        _toneSymbols[t]!,
+                                        style: TextStyle(
+                                          fontSize: 36,
+                                          fontWeight: FontWeight.bold,
+                                          color: textColor,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        _toneLabels[t]!,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: textColor,
+                                        ),
+                                      ),
+                                      if (_revealed && isCorrect)
+                                        const Padding(
+                                          padding: EdgeInsets.only(top: 4),
+                                          child: Icon(Icons.check_circle,
+                                              color: Colors.green, size: 20),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Chip(
@@ -416,3 +564,4 @@ class _ExpertToneHuntState extends State<ExpertToneHunt> {
     );
   }
 }
+

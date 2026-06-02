@@ -18,7 +18,9 @@ import 'package:awing_ai_learning/services/recordings_service.dart';
 import 'package:awing_ai_learning/services/image_service.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/notification_service.dart';
+import 'package:awing_ai_learning/services/vocab_embeddings.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'dart:async' show unawaited;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -161,6 +163,18 @@ void main() async {
   } catch (e) {
     debugPrint('NotificationService init failed: $e');
   }
+
+  // v1.16.0 — Background load of the precomputed vocab embeddings.
+  // Fire-and-forget: the daily suggester checks `isLoaded` at scoring
+  // time and gracefully falls back to rules-only if the blob isn't
+  // ready yet or the PAD pack is missing it. Doesn't block app start.
+  // The full sentence-transformer model itself (43 MB) is loaded
+  // LAZILY only when explicitly requested (e.g. "Find similar words"
+  // button). Most kids will never need it; the embeddings blob is
+  // enough for the daily-suggester semantic boost.
+  unawaited(VocabEmbeddings.instance.load().catchError((e) {
+    debugPrint('VocabEmbeddings load failed (non-fatal): $e');
+  }));
 
   runApp(const AwingApp());
 }

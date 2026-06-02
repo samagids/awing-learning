@@ -10,6 +10,9 @@ import 'package:awing_ai_learning/screens/beginner/numbers_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/vocabulary_review_screen.dart';
 import 'package:awing_ai_learning/screens/games/beginner_picture_match.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
+import 'package:awing_ai_learning/screens/daily_words_screen.dart';
+import 'package:awing_ai_learning/screens/stories_screen.dart';
 
 class BeginnerHome extends StatefulWidget {
   const BeginnerHome({Key? key}) : super(key: key);
@@ -174,6 +177,38 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
+            _LessonTile(
+              title: "Today's Words",
+              subtitle: '10 new words picked for you every day 🧠',
+              icon: Icons.wb_sunny,
+              color: Colors.deepPurple.shade300,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const DailyWordsScreen(
+                    contentType: DailyContentType.words,
+                    levelOverride: 'beginner',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Stories',
+              subtitle: 'Read & listen to simple Awing stories',
+              icon: Icons.auto_stories,
+              color: Colors.teal.shade300,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const StoriesScreen(
+                    maxDifficulty: 1,
+                    titleOverride: 'Beginner Stories',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
             _LessonTile(
               title: 'Alphabet',
               subtitle: 'Learn the 22 consonants and 9 vowels',

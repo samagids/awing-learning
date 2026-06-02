@@ -60,13 +60,6 @@ class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
 
   void _generateGame() {
     _random = Random();
-    // Session 61c — filter to vocabulary that BOTH (a) is beginner-level
-    // and (b) has a bundled illustration. Without the image-manifest
-    // filter, rounds occasionally surfaced words like "intestines"
-    // whose tile rendered as a green placeholder icon, breaking the
-    // drag-the-word-onto-the-picture mechanic since there's no picture
-    // to look at. hasImageSync degrades to true when the manifest hasn't
-    // loaded yet (rare race) so the game never shows zero rounds.
     final imageService = ImageService.instance;
     final beginnerWords = allVocabulary
         .where((w) =>
@@ -74,15 +67,32 @@ class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
             w.awing.isNotEmpty &&
             imageService.hasImageSync(w.awing, w.english))
         .toList();
-    beginnerWords.shuffle(_random);
+
+    // v1.15.1 — coverage tracker: prefer words the kid hasn't seen yet
+    // so over multiple sessions, every beginner word eventually surfaces.
+    // When unseen pool exhausts, fall back to seen pool (shuffled).
+    final progress = context.read<ProgressService>();
+    final split = progress.splitBySeen<AwingWord>(
+      ProgressService.gamePictureMatch,
+      beginnerWords,
+      (w) => '${w.awing}|${w.english}',
+    );
+    split.unseen.shuffle(_random);
+    split.seen.shuffle(_random);
+    final ordered = [...split.unseen, ...split.seen];
 
     _rounds = [];
-    // Need 8 rounds * 4 words = 32 unique words minimum
-    final count = (totalRounds * pairsPerRound).clamp(0, beginnerWords.length);
+    final count = (totalRounds * pairsPerRound).clamp(0, ordered.length);
     for (int i = 0; i < count; i += pairsPerRound) {
       if (i + pairsPerRound > count) break;
-      _rounds.add(beginnerWords.sublist(i, i + pairsPerRound));
+      _rounds.add(ordered.sublist(i, i + pairsPerRound));
     }
+
+    // Persist that we've now shown these words.
+    final shown = _rounds.expand((r) => r).map(
+        (w) => MapEntry(w.awing, w.english));
+    progress.recordGameRoundSeen(ProgressService.gamePictureMatch, shown);
+
     _roundIndex = 0;
     _totalCorrect = 0;
     _totalAttempts = 0;
@@ -212,6 +222,19 @@ class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
     }
     final round = _rounds[_roundIndex];
 
+    // v1.15.1 — coverage banner: shows progress through the FULL beginner
+    // pool, not just the current session's 25 rounds.
+    final progress = context.watch<ProgressService>();
+    final imageSvc = ImageService.instance;
+    final totalPool = allVocabulary
+        .where((w) =>
+            w.difficulty == 1 &&
+            w.awing.isNotEmpty &&
+            imageSvc.hasImageSync(w.awing, w.english))
+        .length;
+    final seenCount = progress.gameSeenCount(ProgressService.gamePictureMatch);
+    final coveragePct = totalPool > 0 ? (seenCount * 100 ~/ totalPool) : 0;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Picture Match - Round ${_roundIndex + 1}/${totalRounds.clamp(0, _rounds.length)}'),
@@ -228,6 +251,28 @@ class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
                       _rounds.length,
                   backgroundColor: Colors.green.shade50,
                   valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+                ),
+                // v1.15.1 — Coverage banner: how many beginner words the
+                // kid has seen in this game over all time.
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  color: Colors.green.shade50,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.collections_bookmark,
+                          size: 16, color: Colors.green),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          'Words seen: $seenCount of $totalPool ($coveragePct%)',
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.green.shade800,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 12),
                 const Text(
@@ -431,3 +476,4 @@ class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
     );
   }
 }
+

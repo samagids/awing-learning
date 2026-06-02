@@ -9,6 +9,11 @@ class AwingStory {
   final List<StorySentence> sentences;
   final List<StoryVocabulary> vocabulary;
   final List<ComprehensionQuestion> questions;
+  /// v1.16.0 — Story difficulty for per-mode filtering.
+  /// 1 = Beginner (simple vocab, short sentences)
+  /// 2 = Medium (compound subjects, Q&A patterns)
+  /// 3 = Expert (long narratives, complex tone patterns)
+  final int difficulty;
   bool isCompleted;
 
   AwingStory({
@@ -18,6 +23,7 @@ class AwingStory {
     required this.sentences,
     required this.vocabulary,
     required this.questions,
+    this.difficulty = 1,
     this.isCompleted = false,
   });
 }
@@ -117,6 +123,7 @@ final List<AwingStory> awingStories = [
         options: ['market', 'house', 'school', 'farm'],
       ),
     ],
+    difficulty: 1,
   ),
   AwingStory(
     titleEnglish: 'The Baby on the Bed',
@@ -148,6 +155,7 @@ final List<AwingStory> awingStories = [
         options: ['baby', 'father', 'sister', 'cat'],
       ),
     ],
+    difficulty: 1,
   ),
   AwingStory(
     titleEnglish: 'Where Are You Going?',
@@ -185,6 +193,7 @@ final List<AwingStory> awingStories = [
         options: ['to the river', 'to the market', 'to the house', 'to school'],
       ),
     ],
+    difficulty: 2,
   ),
   AwingStory(
     titleEnglish: 'Climbing a Tree',
@@ -218,6 +227,7 @@ final List<AwingStory> awingStories = [
         options: ['tree', 'house', 'rock', 'flower'],
       ),
     ],
+    difficulty: 2,
   ),
 ];
 
@@ -227,7 +237,14 @@ final List<AwingStory> awingStories = [
 /// ============================================================================
 
 class StoriesScreen extends StatelessWidget {
-  const StoriesScreen({Key? key}) : super(key: key);
+  /// v1.16.0 — When set, only stories with difficulty <= maxDifficulty
+  /// are shown. Null = show all (current behavior).
+  final int? maxDifficulty;
+
+  /// Optional override of the title shown in the AppBar.
+  final String? titleOverride;
+  const StoriesScreen({Key? key, this.maxDifficulty, this.titleOverride})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +252,7 @@ class StoriesScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Awing Stories'),
+          title: Text(titleOverride ?? 'Awing Stories'),
           backgroundColor: Colors.teal,
           bottom: const TabBar(
             indicatorColor: Colors.white,
@@ -259,14 +276,17 @@ class StoriesScreen extends StatelessWidget {
 }
 
 class StoryListView extends StatefulWidget {
-  const StoryListView({Key? key}) : super(key: key);
+  final int? maxDifficulty;
+  const StoryListView({Key? key, this.maxDifficulty}) : super(key: key);
 
   @override
   State<StoryListView> createState() => _StoryListViewState();
 }
 
 class _StoryListViewState extends State<StoryListView> {
-  late List<AwingStory> _stories = List.from(awingStories);
+  late List<AwingStory> _stories = widget.maxDifficulty == null
+      ? List.from(awingStories)
+      : awingStories.where((s) => s.difficulty <= widget.maxDifficulty!).toList();
 
   void _markStoryComplete(int index) {
     setState(() {

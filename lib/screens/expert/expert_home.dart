@@ -8,6 +8,9 @@ import 'package:awing_ai_learning/screens/expert/numbers_expert_screen.dart';
 import 'package:awing_ai_learning/screens/games/expert_tone_hunt.dart';
 import 'package:awing_ai_learning/screens/beginner/vocabulary_screen.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
+import 'package:awing_ai_learning/screens/daily_words_screen.dart';
+import 'package:awing_ai_learning/screens/stories_screen.dart';
 
 class ExpertHome extends StatefulWidget {
   const ExpertHome({Key? key}) : super(key: key);
@@ -86,6 +89,38 @@ class _ExpertHomeState extends State<ExpertHome> {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
+            _LessonTile(
+              title: "Today's Conversations",
+              subtitle: '10 new advanced sentences picked for you 🧠',
+              icon: Icons.wb_sunny,
+              color: Colors.deepPurple.shade300,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const DailyWordsScreen(
+                    contentType: DailyContentType.conversations,
+                    levelOverride: 'expert',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Stories',
+              subtitle: 'Read & listen to all Awing stories',
+              icon: Icons.auto_stories,
+              color: Colors.teal.shade300,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const StoriesScreen(
+                    maxDifficulty: 3,
+                    titleOverride: 'Expert Stories',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
             _LessonTile(
               title: 'Tone Mastery',
               subtitle: 'Advanced tone patterns in sentences',

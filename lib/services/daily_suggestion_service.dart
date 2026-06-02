@@ -44,6 +44,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/services/image_service.dart';
+import 'package:awing_ai_learning/services/vocab_embeddings.dart';
 
 class DailyWord {
   final String awing;
@@ -77,9 +78,26 @@ class DailyWord {
       );
 }
 
+/// What kind of daily content to suggest. Each mode has its own
+/// independent "seen" set so a kid learning sentences in Medium doesn't
+/// affect the Beginner words counter.
+enum DailyContentType { words, sentences, conversations }
+
 class DailySuggestionService {
+  static const _kSeenWordsKey = 'daily_seen_words';
+  static const _kSeenSentencesKey = 'daily_seen_sentences';
+  static const _kSeenConversationsKey = 'daily_seen_conversations';
+
+  static const _kLastSuggestionWordsKey = 'daily_last_suggestion_words';
+  static const _kLastSuggestionSentencesKey =
+      'daily_last_suggestion_sentences';
+  static const _kLastSuggestionConversationsKey =
+      'daily_last_suggestion_conversations';
+
+  // Old keys (back-compat with v1.15.0 single-content version)
   static const _kSeenWords = 'daily_seen_words';
   static const _kLastSuggestion = 'daily_last_suggestion';
+
   static const _kEnabled = 'daily_notification_enabled';
   static const _kHour = 'daily_notification_hour';
   static const _kMinute = 'daily_notification_minute';
@@ -87,6 +105,25 @@ class DailySuggestionService {
   /// Default time for daily notification (8:00 AM local).
   static const int defaultHour = 8;
   static const int defaultMinute = 0;
+
+  /// How many items to pick per day. v1.16.0+: bumped 3 → 10 per Dr. Sama.
+  static const int picksPerDay = 10;
+
+  static String _seenKeyFor(DailyContentType t) {
+    switch (t) {
+      case DailyContentType.words: return _kSeenWordsKey;
+      case DailyContentType.sentences: return _kSeenSentencesKey;
+      case DailyContentType.conversations: return _kSeenConversationsKey;
+    }
+  }
+  static String _lastSuggestionKeyFor(DailyContentType t) {
+    switch (t) {
+      case DailyContentType.words: return _kLastSuggestionWordsKey;
+      case DailyContentType.sentences: return _kLastSuggestionSentencesKey;
+      case DailyContentType.conversations:
+        return _kLastSuggestionConversationsKey;
+    }
+  }
 
   /// Category → which time-of-day buckets this category fits.
   static const _categoryTimeAffinity = <String, Set<String>>{
@@ -159,21 +196,36 @@ class DailySuggestionService {
     return 'evening';
   }
 
-  /// Pick 3 daily words. Deterministic for a given (date, learnerLevel,
-  /// seen-set) combination so the same kid sees the same 3 words if they
-  /// re-open the app within a day.
-  ///
-  /// [learnerLevel] is one of 'beginner', 'medium', 'expert'.
-  /// [now] defaults to DateTime.now(); pass-in for tests.
+  /// Backwards-compatible alias for the old beginner-only API.
+  /// New callers should use [pickTodayItems] with an explicit type.
   static Future<List<DailyWord>> pickToday({
     required String learnerLevel,
+    DateTime? now,
+  }) =>
+      pickTodayItems(
+        learnerLevel: learnerLevel,
+        contentType: DailyContentType.words,
+        now: now,
+      );
+
+  /// Pick today's 10 items for the given content type.
+  /// Deterministic for a given (date, learnerLevel, seen-set, type).
+  ///
+  /// - `words`: 10 vocab AwingWord entries
+  /// - `sentences`: 10 short AwingPhrase entries (≤8 awing tokens)
+  /// - `conversations`: 10 longer AwingPhrase entries (≥4 awing tokens)
+  static Future<List<DailyWord>> pickTodayItems({
+    required String learnerLevel,
+    required DailyContentType contentType,
     DateTime? now,
   }) async {
     final clock = now ?? DateTime.now();
     final prefs = await SharedPreferences.getInstance();
+    final lastKey = _lastSuggestionKeyFor(contentType);
+    final seenKey = _seenKeyFor(contentType);
 
     // Check if we already picked today
-    final lastRaw = prefs.getString(_kLastSuggestion);
+    final lastRaw = prefs.getString(lastKey);
     if (lastRaw != null) {
       try {
         final j = jsonDecode(lastRaw) as Map<String, dynamic>;
@@ -190,24 +242,83 @@ class DailySuggestionService {
       } catch (_) {/* fall through to re-pick */}
     }
 
-    // Build pool: all words at or below learner's level, with images.
+    // Build pool depending on content type.
     final maxDifficulty = _levelToMaxDifficulty(learnerLevel);
     final imageSvc = ImageService.instance;
-    final pool = allVocabulary
-        .where((w) =>
-            w.difficulty <= maxDifficulty &&
-            w.awing.isNotEmpty &&
-            w.english.isNotEmpty &&
-            imageSvc.hasImageSync(w.awing, w.english))
-        .toList();
+    final pool = <_PickCandidate>[];
+
+    if (contentType == DailyContentType.words) {
+      for (final w in allVocabulary) {
+        if (w.difficulty > maxDifficulty) continue;
+        if (w.awing.isEmpty || w.english.isEmpty) continue;
+        if (!imageSvc.hasImageSync(w.awing, w.english)) continue;
+        pool.add(_PickCandidate(
+          awing: w.awing, english: w.english,
+          category: w.category, difficulty: w.difficulty,
+        ));
+      }
+    } else {
+      // Sentences / conversations come from awingPhrases.
+      for (final p in awingPhrases) {
+        if (p.awing.isEmpty || p.english.isEmpty) continue;
+        final tokenCount = p.awing.trim().split(RegExp(r'\s+')).length;
+        if (contentType == DailyContentType.sentences) {
+          // Medium: short to medium phrases (1-8 tokens)
+          if (tokenCount > 8) continue;
+        } else {
+          // Expert conversations: longer constructions (4+ tokens)
+          if (tokenCount < 4) continue;
+        }
+        pool.add(_PickCandidate(
+          awing: p.awing, english: p.english,
+          category: p.category, difficulty: 1,
+        ));
+      }
+    }
 
     if (pool.isEmpty) return [];
 
-    final seenJson = prefs.getStringList(_kSeenWords) ?? const [];
+    final seenJson = prefs.getStringList(seenKey) ?? const [];
     final seen = seenJson.toSet();
     final season = seasonFor(clock);
     final tod = timeOfDayFor(clock);
     final weekdayCat = _weeklyRotation[clock.weekday] ?? '';
+
+    // v1.16.0 — AI semantic boost. If the embeddings blob is loaded,
+    // build a "recently-engaged" centroid from the last 5 seen words
+    // and boost any candidate whose embedding lies near it.
+    // This is the real ML-powered signal layered on top of the rules.
+    List<double>? recentCentroid;
+    final vocabEmbeds = VocabEmbeddings.instance;
+    if (vocabEmbeds.isLoaded && seen.isNotEmpty) {
+      final recent = seen.toList().reversed.take(5).toList();
+      final accum = List<double>.filled(384, 0.0);
+      int hit = 0;
+      for (final key in recent) {
+        final parts = key.split('|');
+        if (parts.length != 2) continue;
+        final vec = vocabEmbeds.getEmbedding(parts[0], parts[1]);
+        if (vec == null) continue;
+        for (int d = 0; d < 384; d++) {
+          accum[d] += vec[d];
+        }
+        hit++;
+      }
+      if (hit > 0) {
+        for (int d = 0; d < 384; d++) {
+          accum[d] /= hit;
+        }
+        // Re-normalize so cosine math stays clean
+        double n = 0.0;
+        for (final v in accum) { n += v * v; }
+        n = n > 1e-9 ? n : 1.0;
+        final norm = n;
+        for (int d = 0; d < 384; d++) {
+          accum[d] /= norm;
+        }
+        recentCentroid = accum;
+      }
+    }
 
     // Score every candidate, then pick top 3 distinct by category to vary.
     final scored = <_ScoredWord>[];
@@ -234,36 +345,47 @@ class DailySuggestionService {
         score += 4;
         reasons.add('${_weekdayName(clock.weekday)} word');
       }
-
       // Not yet seen (+5) — strongly prefer new words
       final key = '${w.awing}|${w.english}';
       if (!seen.contains(key)) {
         score += 5;
         reasons.add('new for you');
       } else {
-        score -= 3; // penalty for already-seen
+        score -= 3;
       }
 
-      // Pseudo-random tie-breaker seeded by date + word so the same
-      // day always picks the same word from a tied set.
+      // AI semantic similarity boost (up to +6)
+      if (recentCentroid != null) {
+        final candVec = vocabEmbeds.getEmbedding(w.awing, w.english);
+        if (candVec != null) {
+          double dot = 0.0;
+          for (int d = 0; d < 384; d++) {
+            dot += recentCentroid[d] * candVec[d];
+          }
+          final boost = ((dot + 1.0) * 3.0).round();
+          if (boost > 0) {
+            score += boost;
+            if (dot > 0.5) reasons.add('AI ★ semantic match');
+          }
+        }
+      }
+
+      // Pseudo-random tie-breaker
       final seed = clock.day * 31 + clock.month * 257 + w.awing.hashCode;
-      score += (seed & 0x3); // 0..3 noise
+      score += (seed & 0x3);
 
       scored.add(_ScoredWord(w, score, reasons.join(', ')));
     }
 
     scored.sort((a, b) => b.score.compareTo(a.score));
 
-    // Pick 3 with distinct categories where possible
+    // Pick `picksPerDay` (10). Variety for the first half.
     final picked = <DailyWord>[];
     final usedCategories = <String>{};
     for (final s in scored) {
-      if (picked.length >= 3) break;
-      if (usedCategories.contains(s.word.category) && picked.length < 2) {
-        // Allow same category if we're really short on candidates, but
-        // prefer variety for the first two picks.
-        continue;
-      }
+      if (picked.length >= picksPerDay) break;
+      final wantVariety = picked.length < (picksPerDay ~/ 2);
+      if (wantVariety && usedCategories.contains(s.word.category)) continue;
       picked.add(DailyWord(
         awing: s.word.awing,
         english: s.word.english,
@@ -274,24 +396,28 @@ class DailySuggestionService {
       usedCategories.add(s.word.category);
     }
 
-    // Persist today's picks and the new "seen" set.
-    final newSeen = {...seen, for (final p in picked) '${p.awing}|${p.english}'};
-    await prefs.setStringList(_kSeenWords, newSeen.toList());
+    final newSeen = {
+      ...seen,
+      for (final p in picked) '${p.awing}|${p.english}',
+    };
+    await prefs.setStringList(seenKey, newSeen.toList());
     await prefs.setString(
-        _kLastSuggestion,
-        jsonEncode({
-          'date': '${clock.year}-${clock.month}-${clock.day}',
-          'picks': picked.map((p) => p.toJson()).toList(),
-        }));
+      lastKey,
+      jsonEncode({
+        'date': '${clock.year}-${clock.month}-${clock.day}',
+        'picks': picked.map((p) => p.toJson()).toList(),
+      }),
+    );
 
     return picked;
   }
 
   /// Get yesterday's persisted picks for re-display without re-scoring.
-  /// Returns empty list if nothing saved or not today.
-  static Future<List<DailyWord>> getCachedTodayPicks() async {
+  static Future<List<DailyWord>> getCachedTodayPicks({
+    DailyContentType contentType = DailyContentType.words,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString(_kLastSuggestion);
+    final raw = prefs.getString(_lastSuggestionKeyFor(contentType));
     if (raw == null) return [];
     try {
       final j = jsonDecode(raw) as Map<String, dynamic>;
@@ -309,17 +435,19 @@ class DailySuggestionService {
     }
   }
 
-  /// Reset the seen-words history (e.g. for "show me everything again").
-  static Future<void> resetSeenWords() async {
+  /// Reset the seen-words history for the given content type.
+  static Future<void> resetSeenWords({
+    DailyContentType contentType = DailyContentType.words,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_kSeenWords);
-    await prefs.remove(_kLastSuggestion);
+    await prefs.remove(_seenKeyFor(contentType));
+    await prefs.remove(_lastSuggestionKeyFor(contentType));
   }
 
   /// Settings: notification enabled?
   static Future<bool> isEnabled() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_kEnabled) ?? false; // off by default
+    return prefs.getBool(_kEnabled) ?? false;
   }
 
   static Future<void> setEnabled(bool v) async {
@@ -361,8 +489,21 @@ class DailySuggestionService {
   }
 }
 
+class _PickCandidate {
+  final String awing;
+  final String english;
+  final String category;
+  final int difficulty;
+  const _PickCandidate({
+    required this.awing,
+    required this.english,
+    required this.category,
+    required this.difficulty,
+  });
+}
+
 class _ScoredWord {
-  final AwingWord word;
+  final _PickCandidate word;
   final int score;
   final String reason;
   _ScoredWord(this.word, this.score, this.reason);

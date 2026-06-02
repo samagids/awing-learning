@@ -8,6 +8,9 @@ import 'package:awing_ai_learning/screens/medium/numbers_medium_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/vocabulary_screen.dart';
 import 'package:awing_ai_learning/screens/games/medium_sentence_build.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
+import 'package:awing_ai_learning/screens/daily_words_screen.dart';
+import 'package:awing_ai_learning/screens/stories_screen.dart';
 
 class MediumHome extends StatefulWidget {
   const MediumHome({Key? key}) : super(key: key);
@@ -86,6 +89,38 @@ class _MediumHomeState extends State<MediumHome> {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
+            _LessonTile(
+              title: "Today's Sentences",
+              subtitle: '10 new everyday sentences picked for you 🧠',
+              icon: Icons.wb_sunny,
+              color: Colors.deepPurple.shade300,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const DailyWordsScreen(
+                    contentType: DailyContentType.sentences,
+                    levelOverride: 'medium',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Stories',
+              subtitle: 'Read & listen to medium-level Awing stories',
+              icon: Icons.auto_stories,
+              color: Colors.teal.shade300,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const StoriesScreen(
+                    maxDifficulty: 2,
+                    titleOverride: 'Medium Stories',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
             _LessonTile(
               title: 'Short Sentences',
               subtitle: 'Learn everyday Awing sentences',

@@ -105,6 +105,12 @@ class ProgressService extends ChangeNotifier {
   static const String _keyViewedLetters = 'viewed_letters';
   static const String _keyViewedWords = 'viewed_words';
   static const String _keyTriedDifficultyLevels = 'tried_difficulty_levels';
+  // v1.15.1 — per-game seen-words coverage tracker. Each game tracks which
+  // unique (awing|english) keys have been shown so the next session can
+  // prefer unseen words. Persisted across app restarts.
+  static const String _keyGameSeenPictureMatch = 'game_seen_picture_match';
+  static const String _keyGameSeenSentenceBuild = 'game_seen_sentence_build';
+  static const String _keyGameSeenToneHunt = 'game_seen_tone_hunt';
 
   late SharedPreferences _prefs;
   bool _initialized = false;
@@ -119,6 +125,9 @@ class ProgressService extends ChangeNotifier {
   Set<String> _viewedLetters = {};
   Set<String> _viewedWords = {};
   Set<String> _triedDifficultyLevels = {};
+  Set<String> _gameSeenPictureMatch = {};
+  Set<String> _gameSeenSentenceBuild = {};
+  Set<String> _gameSeenToneHunt = {};
 
   // Initialize the service
   Future<void> initialize() async {
@@ -135,6 +144,9 @@ class ProgressService extends ChangeNotifier {
     _viewedLetters = _loadStringSet(_keyViewedLetters);
     _viewedWords = _loadStringSet(_keyViewedWords);
     _triedDifficultyLevels = _loadStringSet(_keyTriedDifficultyLevels);
+    _gameSeenPictureMatch = _loadStringSet(_keyGameSeenPictureMatch);
+    _gameSeenSentenceBuild = _loadStringSet(_keyGameSeenSentenceBuild);
+    _gameSeenToneHunt = _loadStringSet(_keyGameSeenToneHunt);
 
     // Handle daily streak
     _updateDailyStreak();
@@ -319,6 +331,93 @@ class ProgressService extends ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  // ==================== Game Coverage Tracking (v1.15.1) ====================
+  // Each game persists the set of unique (awing|english) keys it has
+  // surfaced to the learner. New game sessions PREFER unseen keys so
+  // every word in the mode's pool eventually appears.
+
+  static const String gamePictureMatch = 'picture_match';
+  static const String gameSentenceBuild = 'sentence_build';
+  static const String gameToneHunt = 'tone_hunt';
+
+  Set<String> _gameSeenSetFor(String gameId) {
+    switch (gameId) {
+      case gamePictureMatch: return _gameSeenPictureMatch;
+      case gameSentenceBuild: return _gameSeenSentenceBuild;
+      case gameToneHunt: return _gameSeenToneHunt;
+    }
+    return {};
+  }
+
+  String _gameSeenKeyFor(String gameId) {
+    switch (gameId) {
+      case gamePictureMatch: return _keyGameSeenPictureMatch;
+      case gameSentenceBuild: return _keyGameSeenSentenceBuild;
+      case gameToneHunt: return _keyGameSeenToneHunt;
+    }
+    return '';
+  }
+
+  /// Return the count of unique words already surfaced in [gameId].
+  int gameSeenCount(String gameId) => _gameSeenSetFor(gameId).length;
+
+  /// True if [awing|english] key has been shown in [gameId].
+  bool isGameWordSeen(String gameId, String awing, String english) {
+    return _gameSeenSetFor(gameId).contains('$awing|$english');
+  }
+
+  /// Record that the learner saw [awing|english] in [gameId].
+  Future<void> recordGameWordSeen(
+      String gameId, String awing, String english) async {
+    final set = _gameSeenSetFor(gameId);
+    final key = '$awing|$english';
+    if (set.add(key)) {
+      await _saveStringSet(_gameSeenKeyFor(gameId), set);
+      notifyListeners();
+    }
+  }
+
+  /// Bulk-record (faster than per-word) — call once per generated round.
+  Future<void> recordGameRoundSeen(
+      String gameId, Iterable<MapEntry<String, String>> wordsAndGloss) async {
+    final set = _gameSeenSetFor(gameId);
+    bool changed = false;
+    for (final e in wordsAndGloss) {
+      if (set.add('${e.key}|${e.value}')) changed = true;
+    }
+    if (changed) {
+      await _saveStringSet(_gameSeenKeyFor(gameId), set);
+      notifyListeners();
+    }
+  }
+
+  /// Clear seen-words history for [gameId] so kid sees everything again.
+  Future<void> resetGameSeen(String gameId) async {
+    final set = _gameSeenSetFor(gameId);
+    if (set.isEmpty) return;
+    set.clear();
+    await _saveStringSet(_gameSeenKeyFor(gameId), set);
+    notifyListeners();
+  }
+
+  /// Pool selector: returns (unseen, seen) split so games can prefer
+  /// unseen words. Caller passes the FULL eligible pool; this method
+  /// just classifies them. Stable order within each bucket.
+  ({List<T> unseen, List<T> seen}) splitBySeen<T>(
+      String gameId, List<T> pool, String Function(T) keyOf) {
+    final set = _gameSeenSetFor(gameId);
+    final unseen = <T>[];
+    final seen = <T>[];
+    for (final item in pool) {
+      if (set.contains(keyOf(item))) {
+        seen.add(item);
+      } else {
+        unseen.add(item);
+      }
+    }
+    return (unseen: unseen, seen: seen);
   }
 
   /// Get words that need review today
@@ -580,6 +679,7 @@ class ProgressService extends ChangeNotifier {
 
     try {
       List<dynamic> decoded = jsonDecode(json);
+  
       return decoded.map((e) => e.toString()).toSet();
     } catch (e) {
       if (kDebugMode) {

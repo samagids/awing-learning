@@ -15,7 +15,13 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
 
 class DailyWordsScreen extends StatefulWidget {
-  const DailyWordsScreen({super.key});
+  final DailyContentType contentType;
+  final String? levelOverride;
+  const DailyWordsScreen({
+    super.key,
+    this.contentType = DailyContentType.words,
+    this.levelOverride,
+  });
 
   @override
   State<DailyWordsScreen> createState() => _DailyWordsScreenState();
@@ -38,8 +44,11 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
 
   Future<void> _load() async {
     final auth = context.read<AuthService>();
-    final level = auth.currentProfile?.currentLevel ?? 'beginner';
-    final picks = await DailySuggestionService.pickToday(learnerLevel: level);
+    final level = widget.levelOverride ?? auth.currentProfile?.currentLevel ?? 'beginner';
+    final picks = await DailySuggestionService.pickTodayItems(
+      learnerLevel: level,
+      contentType: widget.contentType,
+    );
     final enabled = await DailySuggestionService.isEnabled();
     final h = await DailySuggestionService.notificationHour();
     final m = await DailySuggestionService.notificationMinute();
@@ -51,6 +60,33 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
       _minute = m;
       _loading = false;
     });
+  }
+
+  String get _titleText {
+    switch (widget.contentType) {
+      case DailyContentType.words:
+        return "Today's Words";
+      case DailyContentType.sentences:
+        return "Today's Sentences";
+      case DailyContentType.conversations:
+        return "Today's Conversations";
+    }
+  }
+
+  String get _itemNoun {
+    switch (widget.contentType) {
+      case DailyContentType.words: return 'words';
+      case DailyContentType.sentences: return 'sentences';
+      case DailyContentType.conversations: return 'conversations';
+    }
+  }
+
+  Color get _accentColor {
+    switch (widget.contentType) {
+      case DailyContentType.words: return Colors.green;
+      case DailyContentType.sentences: return Colors.orange;
+      case DailyContentType.conversations: return Colors.red;
+    }
   }
 
   Future<void> _toggleEnabled(bool v) async {
@@ -133,8 +169,8 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Today's Awing Words"),
-        backgroundColor: Colors.deepPurple,
+        title: Text(_titleText),
+        backgroundColor: _accentColor,
         foregroundColor: Colors.white,
       ),
       body: _loading
@@ -171,18 +207,18 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
     final season = DailySuggestionService.seasonFor(DateTime.now());
     final tod = DailySuggestionService.timeOfDayFor(DateTime.now());
     return Card(
-      color: Colors.deepPurple.shade50,
+      color: _accentColor.withOpacity(0.08),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Your 3 words for today',
+            Text(
+              'Your ${DailySuggestionService.picksPerDay} $_itemNoun for today',
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple),
+                  color: _accentColor),
             ),
             const SizedBox(height: 4),
             Text(
@@ -239,13 +275,13 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
                     style: TextStyle(
                         fontSize: 11,
                         fontStyle: FontStyle.italic,
-                        color: Colors.deepPurple.shade400),
+                        color: _accentColor),
                   ),
                 ],
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.volume_up, color: Colors.deepPurple),
+              icon: Icon(Icons.volume_up, color: _accentColor),
               iconSize: 32,
               onPressed: () => _pronunciation.speakAwing(w.awing),
               tooltip: 'Hear it',
