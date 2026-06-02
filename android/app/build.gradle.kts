@@ -24,6 +24,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        // v1.15.0 — required by flutter_local_notifications 17.x because it
+        // uses java.time APIs that need backporting on minSdk 26+.
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -112,5 +115,9 @@ flutter {
 // Flutter's transitive activity dep may be older.
 dependencies {
     implementation("androidx.activity:activity-ktx:1.9.2")
+    // v1.15.0 — pairs with isCoreLibraryDesugaringEnabled = true above.
+    // Backports java.time / java.util.stream / etc. so flutter_local_notifications
+    // 17.x can run on the full minSdk range.
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 }
 

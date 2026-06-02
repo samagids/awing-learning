@@ -17,6 +17,7 @@ import 'package:awing_ai_learning/services/cloud_backup_service.dart';
 import 'package:awing_ai_learning/services/recordings_service.dart';
 import 'package:awing_ai_learning/services/image_service.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
+import 'package:awing_ai_learning/services/notification_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 void main() async {
@@ -145,6 +146,20 @@ void main() async {
     );
   } catch (e) {
     debugPrint('NativeAudioInventory load failed: $e');
+  }
+
+  // v1.15.0 — Initialize local-notifications plugin so the daily-word
+  // suggestion notification can fire even when the app isn't running.
+  // Safe to fail: feature is opt-in via Daily Words settings card, and
+  // a failed init just means notifications won't schedule (the in-app
+  // Today's Words screen still works).
+  try {
+    await NotificationService.instance.initialize().timeout(
+      const Duration(seconds: 3),
+      onTimeout: () => debugPrint('NotificationService init timed out'),
+    );
+  } catch (e) {
+    debugPrint('NotificationService init failed: $e');
   }
 
   runApp(const AwingApp());

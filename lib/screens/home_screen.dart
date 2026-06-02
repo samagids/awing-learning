@@ -5,6 +5,7 @@ import 'package:awing_ai_learning/screens/medium/medium_home.dart';
 import 'package:awing_ai_learning/screens/expert/expert_home.dart';
 import 'package:awing_ai_learning/screens/profile_screen.dart';
 import 'package:awing_ai_learning/screens/stories_screen.dart';
+import 'package:awing_ai_learning/screens/daily_words_screen.dart';
 import 'package:awing_ai_learning/screens/exam/teacher_setup_screen.dart';
 import 'package:awing_ai_learning/screens/exam/student_join_screen.dart';
 import 'package:awing_ai_learning/screens/admin/developer_screen.dart';
@@ -231,8 +232,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             : null,
                         onTap: () {
                           if (!auth.isLevelUnlocked('medium')) {
+                            final lDone = profile?.beginnerLessonsCompleted() ?? 0;
+                            final lTotal = UserProfile.beginnerLessonIds.length;
+                            final qDone = profile?.beginnerQuizzesPassed() ?? 0;
+                            final qTotal = UserProfile.beginnerQuizIds.length;
+                            final lRem = lTotal - lDone;
+                            final qRem = qTotal - qDone;
+                            final parts = <String>[];
+                            if (lRem > 0) parts.add('$lRem more lesson${lRem == 1 ? "" : "s"}');
+                            if (qRem > 0) parts.add('$qRem more quiz${qRem == 1 ? "" : "zes"} at 90%+');
+                            final remaining = parts.isEmpty
+                                ? 'Almost there!'
+                                : 'You still need: ${parts.join(" and ")}.';
                             _showLockedDialog(context, 'Medium',
-                                'Complete all Beginner lessons and score 90% on all 10 quizzes to unlock Medium.');
+                                'Beginner progress: $lDone/$lTotal lessons done, $qDone/$qTotal quizzes passed.\n\n$remaining\n\nKeep going — you can do it!');
                             return;
                           }
                           context.read<ProgressService>().markDifficultyLevelTried('Medium');
@@ -265,8 +278,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             : null,
                         onTap: () {
                           if (!auth.isLevelUnlocked('expert')) {
+                            if (!auth.isLevelUnlocked('medium')) {
+                              _showLockedDialog(context, 'Expert',
+                                  'You need to unlock Medium first by finishing all Beginner lessons and quizzes.');
+                              return;
+                            }
+                            final lDone = profile?.mediumLessonsCompleted() ?? 0;
+                            final lTotal = UserProfile.mediumLessonIds.length;
+                            final qDone = profile?.mediumQuizzesPassed() ?? 0;
+                            final qTotal = UserProfile.mediumQuizIds.length;
+                            final lRem = lTotal - lDone;
+                            final qRem = qTotal - qDone;
+                            final parts = <String>[];
+                            if (lRem > 0) parts.add('$lRem more Medium lesson${lRem == 1 ? "" : "s"}');
+                            if (qRem > 0) parts.add('the writing quiz at 90%+');
+                            final remaining = parts.isEmpty
+                                ? 'Almost there!'
+                                : 'You still need: ${parts.join(" and ")}.';
                             _showLockedDialog(context, 'Expert',
-                                'Complete all Medium lessons and score 90% on the writing quiz to unlock Expert.');
+                                'Medium progress: $lDone/$lTotal lessons done, $qDone/$qTotal quizzes passed.\n\n$remaining\n\nKeep going — you can do it!');
                             return;
                           }
                           context.read<ProgressService>().markDifficultyLevelTried('Expert');
@@ -294,6 +324,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (_) => const StoriesScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      // v1.15.0 — Daily AI word suggestions. Picks 3 words per
+                      // day based on the learner's level, the season, time of
+                      // day, and weekly category rotation. Settings inside the
+                      // screen let parents toggle a daily local notification.
+                      _ModeCard(
+                        title: "Today's Words",
+                        subtitle: '3 new words picked for you each day',
+                        icon: Icons.wb_sunny,
+                        color: Colors.deepPurple,
+                        locked: false,
+                        onTap: () {
+                          AnalyticsService.instance.logActivity(
+                            event: 'open_daily_words',
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const DailyWordsScreen(),
                             ),
                           );
                         },

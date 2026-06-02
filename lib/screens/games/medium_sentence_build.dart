@@ -49,7 +49,9 @@ const List<_GameSentence> _sentencePool = [
 ];
 
 class _MediumSentenceBuildState extends State<MediumSentenceBuild> {
-  static const int totalRounds = 6;
+  // v1.15.0 — expanded from 6 to all PDF-verified sentences (12 currently).
+  // Game uses every available sentence per session; rounds = pool.length.
+  static int get totalRounds => _sentencePool.length;
 
   final PronunciationService _pronunciation = PronunciationService();
   late ConfettiController _confettiController;

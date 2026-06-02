@@ -23,7 +23,10 @@ class BeginnerPictureMatch extends StatefulWidget {
 }
 
 class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
-  static const int totalRounds = 8;
+  // v1.15.0 — expanded from 8 to 25 rounds so kids see ~100 different words
+  // per session (was 32). Still well under the 13k beginner pool, but pool
+  // is shuffled randomly each game so different words surface across sessions.
+  static const int totalRounds = 25;
   static const int pairsPerRound = 4;
 
   final PronunciationService _pronunciation = PronunciationService();

@@ -1,0 +1,456 @@
+Total: 454 entries to bump from difficulty 1 to 3
+
+L   451  [WEAPONS             ]  'mbê'                           → knife
+L   567  [INSULTS             ]  'ndáəshə'                       → thief
+L   783  [INSULTS             ]  'préta'                         → crazy
+L  2195  [BLOOD_GORE          ]  "achí yə əshi\\'nə"             → good sign when blood twitches near the eye
+L  2233  [BLOOD_GORE          ]  'chî nó əlimá'                  → Have many blood relations who are caring
+L  2283  [WEAPONS             ]  'ntso nkyílə'                   → head of arrow
+L  2287  [BLOOD_GORE          ]  'péŋə achíə'                    → bleed or lose blood. Heavy work makes people lose blood
+L  2308  [WAR                 ]  "akwu\\'ó"                      → travelling people (mystical, cause floods in enemy villages)
+L  2317  [DEATH_DIE           ]  'atséebánkwûə'                  → will of a dead person
+L  2366  [INSULTS             ]  'ndzɔ̂lə'                       → thief
+L  2388  [WAR                 ]  'təwélakámə'                    → A sharp flute used for rallying people for emergenncies (example war, serious development projects etc)
+L  2497  [DISEASES            ]  'chúbə'                         → remove something in a very fast way, usually from danger or by means of forceful seizure
+L  2498  [VIOLENCE_DESC       ]  'chwáanə'                       → cut in a crude or inhuman way
+L  2625  [DEATH_DIE           ]  'ənɔ̌ púmə'                     → food offered by relatives of the diseased during a dead celebration
+L  2723  [VIOLENCE_DESC       ]  "chîə ándó ngɔ\\'ə"             → be numb, unemotional and inhuman (idiom)
+L  2737  [DEATH_DIE           ]  'chîə ntso nəwûə'               → be dieing or about to die
+L  2748  [INSULTS             ]  'chíta'                         → cheat
+L  2768  [DEATH_DIE           ]  'chwáalə nəwûə'                 → survive death
+L  2830  [INSULTS             ]  'fwootâ'                        → mumble. A dumb mumbles instead
+L  2838  [DEATH_DIE           ]  "fya\\'sê"                      → sacrifice to the dead
+L  2855  [INSULTS             ]  'ghəənə̂'                       → be stupid
+L  2893  [BLOOD_GORE          ]  "ká\\'ə"                        → clot (as blood)
+L  2929  [INSULTS             ]  'kóokə'                         → shift blame (when a thief is caught he shifts the blame to hunger)
+L  2968  [DEATH_DIE           ]  'kwûə'                          → be dead; die
+L  2969  [DEATH_DIE           ]  'kwúka'                         → die, of many things
+L  2970  [WEAPONS             ]  "kwú\\'kə"                      → make sb or sth stoop, bend or bow
+L  3096  [WEAPONS             ]  "ŋwú\\'nə"                      → bow, as in greeting; stoop
+L  3101  [VIOLENCE_ACT        ]  'panô'                          → hang up
+L  3110  [DEATH_DIE           ]  'péelə'                         → be mad. Rather than stay alive and be mad, one be dead rather
+L  3208  [VIOLENCE_ACT        ]  'támə'                          → kick, shoot
+L  3339  [DEATH_DIE           ]  "afya\\'ó anuə"                 → sacrifice for the dead, libation
+L  3355  [DEATH_DIE           ]  "alá\\'ə pakwûə"                → world of the dead
+L  3376  [DEATH_DIE           ]  'atúəsê'                        → bag containing a dead close relation\'s (father, mother, grand mother, grand father etc) hair, worshipped periodically f
+L  3395  [DEATH_DIE           ]  'əloonə'                        → a sort of blessing invoked from the dead
+L  3401  [DEATH_DIE           ]  "fya\\'átûə"                    → sacrifice to the dead. People worship the dead in Awing and this against the word of God
+L  3420  [DEATH_DIE           ]  'mbi pəkwûə'                    → abode of the dead
+L  3457  [INSULTS             ]  'təpəŋə'                        → evil
+L  3506  [DEATH_DIE           ]  'aghóoba'                       → fear, trembling on hearing of death
+L  3540  [INSULTS             ]  'akəkógó'                       → fool
+L  3759  [BLOOD_GORE          ]  'atúənósénə'                    → frontal headache. frontal headache causes blood to flow from one\'s nose
+L  3810  [INSULTS             ]  "azó\\'ámakálá"                 → mbecile, fool, stupid person. A sort of yam that originated from Ibo land in Nigeria
+L  3828  [WEAPONS             ]  'bûm'                           → word that intensifies the sound of a traditionally made gun, or of something falling
+L  3944  [WITCHCRAFT          ]  'əsê'                           → god; fetish (spirit)
+L  3977  [INSULTS             ]  'fógə təpəŋə'                   → exorcise. Evil cannot be used to ward off evil
+L  4012  [INSULTS             ]  'kíkəmə ajîə'                   → shortsightedness (a shortsighted person is not different from a fool)
+L  4028  [INSULTS             ]  'kwaŋ kákáŋə̂'                  → hesitate (when an evil doer hesitates in his plans, it demonstrates the voice of God)
+L  4031  [WEAPONS             ]  'kwíŋə mə́ ŋwíŋə'               → sharpen a knife
+L  4092  [WEAPONS             ]  'məkeemə̂'                      → gun powder
+L  4118  [SEXUAL              ]  'mápə́ŋə́ móona'                → foetus
+L  4126  [DEATH               ]  'mətwâŋnə'                      → burial, burying
+L  4134  [WEAPONS             ]  'mó ŋwíŋə'                      → knife
+L  4171  [WEAPONS             ]  'ndzeemó'                       → axe
+L  4208  [WEAPONS             ]  'nəkoŋ nó nkyílə'               → arrow
+L  4209  [WEAPONS             ]  'nəkoŋə́'                       → lance, spear
+L  4260  [WEAPONS             ]  'nətu nó nəkoŋə́'               → shaft of arrow
+L  4262  [DEATH               ]  'nətwéŋ nó pəkwûə'              → cemetery
+L  4267  [DEATH               ]  'nəwû nó nkǐ mógə'              → funeral
+L  4287  [WEAPONS             ]  'ngéelə'                        → gun
+L  4302  [WITCHCRAFT          ]  'ngwě əsê'                      → fetish priestess
+L  4333  [WITCHCRAFT          ]  'nkəm əsê'                      → fetish priestess
+L  4358  [WEAPONS             ]  'nkyílə'                        → hunting bow; sword
+L  4464  [SEXUAL              ]  "təjî ndzɔ\\'á"                 → virgin
+L  4578  [SEXUAL              ]  'aləŋəmóonə'                    → womb
+L  5146  [DEATH_DIE           ]  'atûə'                          → a small bag containing a dead man\'s hair
+L  5150  [SEXUAL              ]  "atúəsá\\'ó"                    → The first menstrual flow of a girl. girls first menstrual flow in their teens
+L  5152  [DEATH_DIE           ]  'atúəsê'                        → hair of a dead close relation (father, mother, grand mother, grand father etc) worshipped periodically for appeasement
+L  5192  [SEXUAL              ]  "chî tə zə\\' ndzə\\'ə"         → abstain from sex, stay away from sex
+L  5214  [DISEASES            ]  'chúbə'                         → remove something in a very fast way, usually from danger or by means of forceful seizure; rescue from danger
+L  5324  [DEATH               ]  "fi\\'â"                        → unearth. Baminyam people unearth a corpse for fear of witchcraft
+L  5430  [DEATH_DIE           ]  'kəmə̂'                         → celebrate a death, during which there is gun firing, eating, drinking and dancing
+L  5456  [WEAPONS             ]  'kogə'                          → be blunt, eg of a knife
+L  5500  [WAR                 ]  'kweekô'                        → Influence a person or an animal against another, eg a dog to attack one\'s enemy
+L  5514  [WEAPONS             ]  'kwíŋə'                         → sharpen, bring to point (arrow)
+L  5566  [WAR                 ]  "lə\\'ə"                        → fight, of war only
+L  5592  [WEAPONS             ]  'mbê'                           → a knife used for tapping raffia palm
+L  5624  [SEXUAL              ]  'mangyè'                        → 1) female (sex), woman, wife
+L  5628  [INSULTS             ]  'móona'                         → have an extremely low mental level that renders one to behave as a fool or as if (\'slightly mad\')
+L  5684  [SEXUAL              ]  "ndzɔ́\\'ə"                     → modern wedding ceremony; sexual intercourse
+L  5794  [DEATH_DIE           ]  'nkwû əsê'                      → spirit of a dead person (invisible)
+L  5802  [SEXUAL              ]  'noŋnô'                         → have sexual relations with
+L  5812  [WAR                 ]  'ntsoolə'                       → war
+L  5850  [WITCHCRAFT          ]  'pêsê'                          → demon; evil spirit
+L  5970  [SEXUAL              ]  'tê'                            → have sex with, (colloquial usage)
+L  6002  [WEAPONS             ]  "tô\\'"                         → sound that describes the sound of a gun (modern made)
+L  6016  [DEATH_DIE           ]  'tú nkîə'                       → euphemism for die
+L  6052  [VIOLENCE_ACT        ]  'waalô'                         → slaughter animals; butcher animals
+L  6132  [SEXUAL              ]  "zó\\'ə"                        → 1) have sexual intercourse (of one person on the other especially without the accord or full participation of the victim
+L  6136  [SEXUAL              ]  "zó\\'nə"                       → Have sexual intercourse with (usually with each other\'s accord and full participation)
+L  6381  [SEXUAL              ]  'afʉkéelə'                      → anus
+L  6473  [WEAPONS             ]  'ndzeemə'                       → axe
+L  6845  [WEAPONS             ]  "ŋwú\\'na"                      → bow, as in greeting
+L  6847  [WEAPONS             ]  'nkyîlə'                        → bow, for hunting
+L  6913  [WEAPONS             ]  'kíkyə'                         → bring to point (arrow)
+L  6955  [DEATH               ]  'matwáŋnə'                      → burial
+L  7113  [DEATH               ]  "chitázə\\'ə"                   → cemetery
+L  7115  [DEATH               ]  "ali\\'ɔnâ nə pəkwûə"           → cemetery
+L  7419  [WITCHCRAFT          ]  'nâŋa anuə'                     → consult a sorcerer
+L  7469  [DEATH               ]  'akwùə'                         → corpse
+L  7757  [DEATH_DIE           ]  'kwùə'                          → dead
+L  7769  [DEATH_DIE           ]  'chwáala nəwùə'                 → death, survive
+L  7835  [WITCHCRAFT          ]  'pə̂sé'                         → demon
+L  7915  [DEATH_DIE           ]  'tû nklə'                       → die (euphemistic)
+L  7965  [SEXUAL              ]  'aghoonə̂ məghaba'              → disease, contracted via sex
+L  8233  [WAR                 ]  'ŋgaŋkəpeenə'                   → enemy
+L  8295  [INSULTS             ]  'taɔŋə'                         → evil
+L  8297  [INSULTS             ]  'ngedtapɔŋə'                    → evil doer
+L  8299  [INSULTS             ]  'pə̂sé'                         → evil spirit
+L  8493  [SEXUAL              ]  'maŋgyé'                        → female (sex) in
+L  8509  [WITCHCRAFT          ]  'ŋgwêsé'                        → fetish priestess
+L  8511  [WITCHCRAFT          ]  'asê'                           → fetish (spirit)
+L  8531  [WAR                 ]  "lá\\'ə"                        → fight, of war only
+L  8659  [SEXUAL              ]  'mápígə̂ móona'                 → foetus
+L  8717  [INSULTS             ]  'akəkógə'                       → fool
+L  8841  [DEATH               ]  'nə̂ nawú nə nkî mága'          → funeral
+L  9041  [DEATH               ]  'n. nawùə'                      → grave
+L  9193  [VIOLENCE_ACT        ]  'panə'                          → hang up
+L  9241  [SEXUAL              ]  "zɔ̌\\'na"                      → have sexual intercourse with
+L  9833  [WEAPONS             ]  'mɔ́ ŋwiŋə'                     → knife
+L  9835  [WEAPONS             ]  'mbê'                           → knife, for tapping
+L 10185  [SEXUAL              ]  'ŋwu mbyâŋnə'                   → male (sex)
+L 11763  [DEATH_DIE           ]  "fya\\'átúə"                    → sacrifice to the dead
+L 11971  [SEXUAL              ]  "chî to zɔ́\\' ndzə\\'ə"        → sex, abstain from
+L 11981  [WEAPONS             ]  'nakaŋ nə̌ nakəgə'              → shaft of arrow
+L 12063  [VIOLENCE_ACT        ]  'tóma'                          → shoot
+L 12373  [WITCHCRAFT          ]  'n. ŋgantê'                     → sorcerer (male)
+L 12455  [DEATH_DIE           ]  'nkwùəsê'                       → spirit of the dead (invisible)
+L 12665  [INSULTS             ]  'shîəə'                         → stupid person
+L 12763  [DEATH_DIE           ]  "kɔ\\'ə"                        → swell (eg a dead animal)
+L 12771  [WEAPONS             ]  'nkyîlə'                        → sword
+L 12795  [SEXUAL              ]  'kwùbkə'                        → take curative via the anus
+L 13469  [DEATH_DIE           ]  "pó\\' ŋoŋə"                    → wail, sign of death
+L 13671  [DEATH_DIE           ]  'atséebáŋkwùə'                  → will of a dead person
+L 13705  [WITCHCRAFT          ]  'mɔ́ apəena'                    → witchcraft (used colloquially)
+L 13745  [DEATH_DIE           ]  "alá\\'a pəkwùə"                → world, of the dead
+L 13908  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 13963  [WITCHCRAFT          ]  'mó apeemə'                     → 1) pocket 2) witchcraft (used colloquially)
+L 13979  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 13980  [DEATH_DIE           ]  'achíbə'                        → food, drinks or anything given to somebody in difficulties to console the dead. Done especially during death celebration
+L 13983  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 13991  [WITCHCRAFT          ]  'agheemə'                       → sorcery, fortune telling, spiritism. Agheemə̌ á chí lə̌ lə̌ ghelə̌ pi pó tapoŋə — Sorcery is practiced by evil people
+L 14000  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 14059  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 14060  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 14067  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 14146  [SEXUAL              ]  'nəsáŋə'                        → vagina
+L 14164  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 14165  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 14172  [INSULTS             ]  'akakógə̌ atséebə'              → foolish or obscene talk. A fool loves saying foolish things
+L 14178  [WEAPONS             ]  'akamə mbəga'                   → unwise stick. Akamə mbəga á chí lə̌ andó makəŋə mə̌ ŋwiŋə. A throwing stick is like a weapon of war
+L 14183  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 14287  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 14292  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 14293  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 14303  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 14400  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 14448  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 14449  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 14459  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 14582  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 14604  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 14605  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 14615  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 14754  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 14771  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 14772  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 14782  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 14901  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 14918  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 14919  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 14962  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 15081  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 15098  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 15099  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 15126  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 15173  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 15292  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 15309  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 15310  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 15337  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 15367  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 15385  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 15400  [SEXUAL              ]  'aləŋə̌móoonə̌'                 → womb
+L 15541  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 15558  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 15559  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 15586  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 15616  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 15631  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 15673  [INSULTS             ]  'asɔnataózənə̌'                 → 1) false witness 2) liar
+L 15688  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 15814  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 15831  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 15832  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 15859  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 15889  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 15904  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 15941  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 15970  [WEAPONS             ]  'bûm'                           → sound that intensifies the sound of a traditionally made gun, or of something falling
+L 16099  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 16116  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 16117  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 16144  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 16174  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 16189  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 16226  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 16318  [DEATH_DIE           ]  'anə̌ púmə̌'                    → food offered by relatives of the diseased during a dead celebration
+L 16392  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 16409  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 16410  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 16437  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 16467  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 16482  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 16519  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 16685  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 16702  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 16703  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 16730  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 16760  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 16775  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 16812  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 16990  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 17007  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 17008  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 17035  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 17065  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 17080  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 17117  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 17320  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 17337  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 17338  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 17365  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 17395  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 17410  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 17447  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 17613  [SEXUAL              ]  'məghabə̌'                      → adultery
+L 17614  [SEXUAL              ]  'məghabnə apô'                  → adultery
+L 17630  [INSULTS             ]  'ndzə̌lə̌'                      → thief
+L 17652  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 17669  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 17670  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 17697  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 17727  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 17742  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 17779  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 17953  [DEATH               ]  'nətlwiŋ nó pakwûə̌'            → cemetery
+L 17959  [INSULTS             ]  'nawelə̌'                       → A sort of small bird, known to be very unstable and as jumpy as a fool
+L 17960  [DEATH               ]  'nawû nə̌ nki mə́gə̌'           → funeral
+L 17975  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 18006  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 18007  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 18034  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 18064  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 18079  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 18116  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 18302  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 18356  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 18357  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 18384  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 18414  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 18429  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 18466  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 18652  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 18709  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 18710  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 18737  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 18760  [INSULTS             ]  'akɔgə'                         → stupid person, stupidity, imbecile
+L 18778  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 18793  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 18847  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 19033  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 19080  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 19081  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 19108  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 19138  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 19153  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 19193  [SEXUAL              ]  'atátə̌'                        → white fluid that flows from the vagina as a sign of labour
+L 19204  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 19405  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 19452  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 19453  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 19480  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 19510  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 19525  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 19566  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 19787  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 19834  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 19835  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 19862  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 19892  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 19907  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 19948  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 20166  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 20213  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 20214  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 20241  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 20271  [DEATH_DIE           ]  "alá\\'ə akwa"                  → world of the dead
+L 20286  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 20327  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 20509  [SEXUAL              ]  'məpə́ŋə̌'                      → 1) an unformed animal in the womb
+L 20510  [SEXUAL              ]  'məpə́ŋə̌'                      → foetus
+L 20514  [WITCHCRAFT          ]  'masə̌'                         → 1) witchcraft
+L 20524  [DEATH               ]  'matwagnə'                      → burial, burying
+L 20571  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 20618  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 20619  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 20661  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 20706  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 20718  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 20726  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 20797  [DEATH               ]  'atogə̌'                        → A certain substance in a witch\'s stomach that influences him/her to kill in order to gratify it
+L 21011  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 21058  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 21059  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 21088  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 21121  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 21128  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 21135  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 21190  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 21262  [BLOOD_GORE          ]  'chí nə əlíma'                  → have many blood relations who are caring
+L 21482  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 21529  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 21530  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 21559  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 21592  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 21599  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 21606  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 21654  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 21753  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 21758  [WITCHCRAFT          ]  'əsê'                           → fetish spirit
+L 21784  [WAR                 ]  'fəmkə'                         → war drown enemies in water as a way of punishing them
+L 21927  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 21974  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 21975  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 22004  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 22037  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 22044  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 22051  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 22099  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 22173  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 22380  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 22427  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 22428  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 22457  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 22490  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 22497  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 22504  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 22552  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 22626  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 22727  [DEATH_DIE           ]  'mbi pakwüə'                    → abode of the dead, of dead
+L 22756  [INSULTS             ]  'móonə'                         → have an extremely low mental level that renders one to behave as a fool or as if slightly mad
+L 22758  [WITCHCRAFT          ]  'mə̌ apeemə'                    → pocket, witchcraft
+L 22824  [WEAPONS             ]  'nəkəŋ na nkyíə'                → arrow
+L 22825  [WEAPONS             ]  'nəkəŋə'                        → lance, spear
+L 22858  [DISEASES            ]  "nka\\'ə̌"                      → leprosy
+L 22905  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 22906  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 22935  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 22968  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 22975  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 22982  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 23030  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 23104  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 23262  [WAR                 ]  'ngaŋkapéenə'                   → enemy
+L 23296  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 23343  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 23344  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 23373  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 23406  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 23413  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 23420  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 23468  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 23542  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 23695  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 23733  [WITCHCRAFT          ]  'pésé'                          → demon, evil spirit
+L 23832  [BLOOD_GORE          ]  "achí yə əshí\\'nə"             → good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+L 23833  [BLOOD_GORE          ]  'achíə tapoŋə'                  → bad sign, happening when blood twitches somebody\'s eye
+L 23862  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 23895  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 23902  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 23909  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 23957  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 24031  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 24184  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 24257  [BREAST_LABOUR       ]  'pəələ'                         → breast wear
+L 24325  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → Good sign, happening when blood twitches somebodys eye in a particular spot
+L 24329  [BLOOD_GORE          ]  'achíə tapəŋə'                  → Bad sign, happening when blood twitches somebodys eyes
+L 24359  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 24392  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 24399  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 24406  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 24461  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 24535  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 24723  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 24807  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → Good sign, happening when blood twitches somebodys eye in a particular spot
+L 24836  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 24869  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 24876  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 24883  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 24933  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 24981  [BLOOD_GORE          ]  'chí nə əlíma'                  → have many blood relations
+L 25018  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 25172  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 25251  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → Good sign, happening when blood twitches somebodys eye in a particular spot
+L 25280  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 25313  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 25320  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 25327  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 25375  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 25469  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 25623  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 25702  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → Good sign, happening when blood twitches somebodys eye in a particular spot
+L 25731  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 25764  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 25771  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 25778  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 25826  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 25912  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 26025  [WEAPONS             ]  'mbê'                           → knife for tapping raffia palm
+L 26117  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 26196  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → Good sign, happening when blood twitches somebodys eye in a particular spot
+L 26225  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 26258  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 26265  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 26272  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 26320  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 26406  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 26582  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 26671  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → Good sign, happening when blood twitches somebodys eye in a particular spot
+L 26682  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → good sign blood twitches eye
+L 26703  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 26746  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 26753  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 26760  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 26766  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead
+L 26816  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 26902  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 27068  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 27182  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → Good sign, happening when blood twitches somebodys eye in a particular spot
+L 27193  [BLOOD_GORE          ]  "achí ya ashí\\'na"             → good sign blood twitches eye
+L 27212  [DEATH_DIE           ]  'aghóobə'                       → death always brings shock in one\'s mind
+L 27249  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead, Europe or America
+L 27256  [DEATH_DIE           ]  'alê nəwüə Yésə'                → good Friday, day of Jesus\' death
+L 27263  [INSULTS             ]  "akye\\'ánuə"                   → omen. Ŋwu tapoŋ wə̌ á nəalə̌ má nó akye\'ánuə̌. That evil man has reveal to me that he is capable of evil
+L 27269  [DEATH_DIE           ]  "alá\\'skalə̌"                  → world of the dead
+L 27324  [SEXUAL              ]  "atúəsə\\'ə̌"                   → first menstrual flow of a girl
+L 27410  [VIOLENCE_ACT        ]  "əsa\\'ə"                       → shoot
+L 27417  [WITCHCRAFT          ]  'əsê'                           → 1) god. 2) fetish (spirit). 3) ancestor
+L 27437  [SEXUAL              ]  'fəələ'                         → 1) blow (of fire or nose). Also to pump in water to the bowels through the anus. 2) eat heavily (derogative use)
+L 27442  [WAR                 ]  'fəmkə'                         → drown(tr); in war people drown their enemies in water as a way of punishing them
+L 27448  [DEATH               ]  "fí\\'ə"                        → unearth; Baminyam people unearth a corpse for fear of witchcraft
+L 27475  [INSULTS             ]  'ghəənə'                        → be stupid; if a man is foolish his child will also be stupid
+L 27639  [DISEASES            ]  "nka\\'ə"                       → leprosy
+L 27737  [DEATH               ]  "wu\\'nə nkwumə"                → 1) close a box. 2) close a coffin
+L 27740  [INSULTS             ]  'yagə'                          → 1) scare away shouting eg of animals or birds in a farm. 2) yell out curses eg to a thief

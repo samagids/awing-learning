@@ -25,7 +25,9 @@ class ExpertToneHunt extends StatefulWidget {
 }
 
 class _ExpertToneHuntState extends State<ExpertToneHunt> {
-  static const int totalRounds = 10;
+  // v1.15.0 — expanded from 10 to 24 rounds (6 per tone × 4 tones).
+  // Balanced sampling across high/low/rising/falling tones.
+  static const int totalRounds = 24;
 
   /// Only the 4 tones that are explicitly marked in vocabulary data.
   /// Mid tone is unmarked in the orthography so game stimuli can't be
