@@ -346,9 +346,9 @@ class _NumbersExpertScreenState extends State<NumbersExpertScreen>
             color: Colors.orange.shade700,
             icon: Icons.close,
             examples: [
-              'mbá = 20 (short form)',
+              'məghə́m mêm mbê = 20 (groups-of two)',
               'məghə́m mén tênə = 50 (groups-of five)',
-              'məghə́m mén nəfeemə́ = 80 (groups-of eight)',
+              'məghə́m mém nəfeemə́ = 80 (groups-of eight)',
             ],
           ),
           const SizedBox(height: 12),

@@ -1,252 +1,136 @@
 [
   {
-    "awing": "kyê",
-    "phonetic": "kjê",
+    "awing": "kyə",
+    "phonetic": "kjə̀",
     "pos": "v",
-    "english": "abandon something because it has been desecrated or misused",
-    "vs": "ńkyé"
-  },
-  {
-    "awing": "kyêə",
-    "phonetic": "kjêə",
-    "pos": "v",
-    "english": "smash grain into little pieces, using a grinding machine",
-    "vs": "ńkyêə"
-  },
-  {
-    "awing": "kyeetə",
-    "phonetic": "kjètə",
-    "pos": "v",
-    "english": "bring together, gather",
-    "vs": "ńkyeetə"
-  },
-  {
-    "awing": "kyê'ə",
-    "phonetic": "kjê?ə",
-    "pos": "v",
-    "english": "make a small opening on a thing"
-  },
-  {
-    "awing": "kyê'kə",
-    "phonetic": "kjê?kə",
-    "pos": "v",
-    "english": "develop openings or cracks (intr)",
-    "vs": "ńkyê'kə"
-  },
-  {
-    "awing": "kyêŋə",
-    "phonetic": "kjêŋə",
-    "pos": "v",
-    "english": "cry, weep"
-  },
-  {
-    "awing": "kyêŋə mbi ǒsê",
-    "phonetic": "kjêŋə mbi se",
-    "pos": "v",
-    "english": "confess"
-  },
-  {
-    "awing": "kyêntə",
-    "phonetic": "kjèntə",
-    "pos": "v",
-    "english": "cut off things attached to the main part, eg undesirable ends of vegetable",
-    "vs": "ńkyêntə"
-  },
-  {
-    "awing": "kyé'tə",
-    "phonetic": "kjê?tə",
-    "pos": "v",
-    "english": "hatch",
-    "vs": "ńkyé'tə"
-  },
-  {
-    "awing": "kyê",
-    "phonetic": "kjê",
-    "pos": "v",
-    "english": "pluck (eg fruit)",
-    "vs": "ńkyê"
+    "english": "abandon sth because it has been desecrated"
   },
   {
     "awing": "kyéelə",
-    "phonetic": "kjêrə",
+    "phonetic": "kjéelə̌",
     "pos": "v",
-    "english": "claim reimbursement",
-    "vs": "ńkyê"
+    "english": "Bring together, gather"
   },
   {
-    "awing": "kyêetə",
-    "phonetic": "kjêtə",
+    "awing": "kyə'ə",
+    "phonetic": "kjéʔə̀",
     "pos": "v",
-    "english": "claim many reimbursements",
-    "vs": "ńkyêetə"
+    "english": "Make a small opening on a thing"
   },
   {
-    "awing": "kyíbə",
-    "phonetic": "kjibə",
+    "awing": "kyə'kə",
+    "phonetic": "kjéʔkə̀",
+    "pos": "v",
+    "english": "develop openings or cracks"
+  },
+  {
+    "awing": "kyéŋə mbi əsé",
+    "phonetic": "kjéŋə̀ mbí əsé",
+    "pos": "v.p",
+    "english": "confess"
+  },
+  {
+    "awing": "kyéntə",
+    "phonetic": "kjéntə̌",
+    "pos": "v",
+    "english": "Cut off things attached to the main part"
+  },
+  {
+    "awing": "láálə",
+    "phonetic": "láálə̀",
     "pos": "n",
     "noun_class": "1/2",
-    "english": "a kind of basket weaved using the hard covering of raffia bamboo",
-    "plural": "pəkyibə"
-  },
-  {
-    "awing": "kyíkə",
-    "phonetic": "kjikə",
-    "pos": "adj",
-    "english": "1) (of babies) have the habit of refusing strangers 2) refuse, of many people"
-  },
-  {
-    "awing": "kyímə",
-    "phonetic": "kjimə",
-    "pos": "v",
-    "english": "cut off sth attached to another, esp. using a sharp point",
-    "vs": "ńkyím"
-  },
-  {
-    "awing": "kyímtə",
-    "phonetic": "kjimtə",
-    "pos": "v",
-    "english": "cut off things attached to the main part, especially using a sharp point",
-    "vs": "ńkyimtə"
-  },
-  {
-    "awing": "láalé",
-    "phonetic": "làlê",
-    "pos": "n",
-    "noun_class": "1/2",
-    "english": "jigger (parasitic insect)",
-    "plural": "pəláalé"
+    "english": "jigger"
   },
   {
     "awing": "ladkə",
-    "phonetic": "làdkə",
+    "phonetic": "làdkə̀",
     "pos": "v",
-    "english": "1) continuously, non-stop 2) connect, link"
+    "english": "continuously, non-stop, connect, link"
   },
   {
     "awing": "ladtə",
-    "phonetic": "làdtə",
+    "phonetic": "làdtə̌",
     "pos": "v",
-    "english": "tangle",
-    "vs": "ńdadtə"
+    "english": "tangle"
   },
   {
     "awing": "lá'ə",
-    "phonetic": "là?ə",
-    "pos": "v",
-    "english": "hook",
-    "vs": "ńdá'ə"
+    "phonetic": "láʔə̌",
+    "pos": "n",
+    "english": "marker for future tense"
   },
   {
     "awing": "lá'ə",
-    "phonetic": "là?ə",
-    "pos": "ms mk",
-    "english": "far future tense marker — used with another future marker for very far future, sometimes implying lack of hope"
+    "phonetic": "láʔə̌",
+    "pos": "v",
+    "english": "announce especially of a birth"
   },
   {
-    "awing": "lá'ə",
-    "phonetic": "là?ə",
+    "awing": "la'ə",
+    "phonetic": "láʔə̌",
     "pos": "v",
-    "english": "1) announce (especially of a birth) 2) say (colloquial)",
-    "vs": "ńdá'ə"
+    "english": "say (colloquial)"
   },
   {
     "awing": "lagə",
-    "phonetic": "làgə",
+    "phonetic": "làgə̌",
     "pos": "v",
-    "english": "1) fetch, of firewood 2) gather or assemble, of objects",
-    "vs": "ńdagə"
+    "english": "fetch, of firewood. 2) gather or assemble, of objects"
   },
   {
     "awing": "lá'kə",
-    "phonetic": "là?kə",
+    "phonetic": "láʔkə̌",
     "pos": "v",
-    "english": "thank or give thanks",
-    "vs": "ńdá'kə"
+    "english": "thank or give thanks"
   },
   {
     "awing": "lá'kə",
-    "phonetic": "là?kə",
+    "phonetic": "láʔkə̌",
     "pos": "v",
-    "english": "make something to get"
+    "english": "make something to get undesirable ends of vegetable"
   },
   {
-    "awing": "ńkyé",
-    "pos": "vs",
-    "english": "verb stem of kyê (abandon)"
+    "awing": "lá'kə",
+    "phonetic": "láʔkə̌",
+    "pos": "v",
+    "english": "hatch (eg, fruit)"
   },
   {
-    "awing": "ńkyêə",
-    "pos": "vs",
-    "english": "verb stem of kyêə (smash grain)"
+    "awing": "lá'kə",
+    "phonetic": "láʔkə̌",
+    "pos": "v",
+    "english": "claim reimbursement"
   },
   {
-    "awing": "ńkyeetə",
-    "pos": "vs",
-    "english": "verb stem of kyeetə (bring together)"
+    "awing": "kyéelə",
+    "phonetic": "kjéelə̌",
+    "pos": "v",
+    "english": "claim many reimbursement"
   },
   {
-    "awing": "ńkyê'kə",
-    "pos": "vs",
-    "english": "verb stem of kyê'kə"
+    "awing": "kyíbə",
+    "phonetic": "kjíbə̀",
+    "pos": "n",
+    "noun_class": "1/2",
+    "english": "a kind of basket weaved using the hard covering of raffia bamboo"
   },
   {
-    "awing": "ńkyêntə",
-    "pos": "vs",
-    "english": "verb stem of kyêntə"
+    "awing": "kyíkə",
+    "phonetic": "kjíkə̀",
+    "pos": "adj",
+    "english": "of babies have the habit of refusing strangers"
   },
   {
-    "awing": "ńkyé'tə",
-    "pos": "vs",
-    "english": "verb stem of kyé'tə (hatch)"
+    "awing": "kyímə",
+    "phonetic": "kjímə̀",
+    "pos": "v",
+    "english": "Cut off sth attached to another"
   },
   {
-    "awing": "ńkyê",
-    "pos": "vs",
-    "english": "verb stem of kyê (pluck)"
-  },
-  {
-    "awing": "ńkyêetə",
-    "pos": "vs",
-    "english": "verb stem of kyêetə"
-  },
-  {
-    "awing": "ńkyím",
-    "pos": "vs",
-    "english": "verb stem of kyímə"
-  },
-  {
-    "awing": "ńkyimtə",
-    "pos": "vs",
-    "english": "verb stem of kyímtə"
-  },
-  {
-    "awing": "ńdadtə",
-    "pos": "vs",
-    "english": "verb stem of ladtə (tangle)"
-  },
-  {
-    "awing": "ńdá'ə",
-    "pos": "vs",
-    "english": "verb stem of lá'ə (hook/announce)"
-  },
-  {
-    "awing": "ńdagə",
-    "pos": "vs",
-    "english": "verb stem of lagə"
-  },
-  {
-    "awing": "ńdá'kə",
-    "pos": "vs",
-    "english": "verb stem of lá'kə (thank)"
-  },
-  {
-    "awing": "pəkyibə",
-    "pos": "n.pl",
-    "english": "plural of kyíbə (basket of raffia)"
-  },
-  {
-    "awing": "pəláalé",
-    "pos": "n.pl",
-    "english": "plural of láalé (jiggers)"
+    "awing": "kyímtə",
+    "phonetic": "kjímtə̀",
+    "pos": "v",
+    "english": "Cut off things attached to the main part"
   }
 ]

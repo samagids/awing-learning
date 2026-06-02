@@ -1581,11 +1581,18 @@ def parse_vocabulary() -> dict:
         return re.sub(r"\\(.)", r"\1", s)
 
     total_literals = 0
-    source_duplicates = 0
-    # Count how many times each base key has been seen, so we can append
-    # `__2`, `__3`, ... for source-data duplicates.
-    base_key_occurrence: dict = {}
+    commented_skipped = 0
+    duplicates_skipped = 0
+    seen_base_keys: set = set()
     for match in re.finditer(pattern, content, flags=re.DOTALL):
+        # Session 60 fix: skip commented-out lines (avoid ~466 wasted images
+        # from commented entries left over from prior audits/regressions).
+        line_start = content.rfind('\n', 0, match.start()) + 1
+        line_prefix = content[line_start:match.start()]
+        if '//' in line_prefix:
+            commented_skipped += 1
+            continue
+
         g = match.groups()
         # groups: (awing_sq, awing_dq, english_sq, english_dq, category_sq, category_dq)
         awing = _unescape(g[0] if g[0] is not None else g[1]).strip()
@@ -1596,28 +1603,29 @@ def parse_vocabulary() -> dict:
 
         total_literals += 1
         base = image_key(awing, english)
-        seen = base_key_occurrence.get(base, 0)
-        if seen == 0:
-            key = base
-        else:
-            # Nth occurrence (N starts at 2). These extra files are written to
-            # disk but NOT looked up by the app — see docstring.
-            key = f"{base}__{seen + 1}"
-            source_duplicates += 1
-        base_key_occurrence[base] = seen + 1
+        # Session 60 fix: previously we appended __2, __3 for exact-duplicate
+        # (awing, english) pairs in the source Dart. Those filenames were
+        # NEVER read by the app (imageKey() returns only the base key) — they
+        # were pure disk noise and the largest single cause of bloated runs
+        # (11,829 wasted images out of 21,536). Skip duplicates entirely.
+        if base in seen_base_keys:
+            duplicates_skipped += 1
+            continue
+        seen_base_keys.add(base)
 
-        vocabulary[key] = {
+        vocabulary[base] = {
             "awing": awing,
             "english": english,
             "category": category,
         }
 
-    if total_literals:
-        msg = (f"Parsed {total_literals} AwingWord literals -> "
+    if total_literals or commented_skipped or duplicates_skipped:
+        msg = (f"Parsed {total_literals} active AwingWord literals -> "
                f"{len(vocabulary)} unique image keys")
-        if source_duplicates:
-            msg += (f"  [NOTE: {source_duplicates} indexed variants "
-                    f"(source-data duplicates)]")
+        if commented_skipped:
+            msg += f"  [skipped {commented_skipped} commented-out lines]"
+        if duplicates_skipped:
+            msg += f"  [skipped {duplicates_skipped} exact (awing,english) duplicates]"
         print(msg)
     return vocabulary
 

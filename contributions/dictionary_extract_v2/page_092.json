@@ -1,197 +1,186 @@
 [
   {
     "awing": "mbaŋə",
-    "phonetic": "mbàŋə",
+    "phonetic": "mbâŋə̀",
     "pos": "n",
-    "noun_class": "1/6",
-    "english": "stomach disease (1)",
-    "plural": "mbməbaŋə"
+    "noun_class": "9/6",
+    "english": "tumor"
   },
   {
     "awing": "mbaŋə",
-    "phonetic": "mbàŋə",
+    "phonetic": "mbâŋə̀",
     "pos": "n",
     "noun_class": "9/6",
-    "english": "tumor (2)",
-    "plural": "mambàŋə"
-  },
-  {
-    "awing": "mbaŋə",
-    "phonetic": "mbàŋə",
-    "pos": "n",
-    "noun_class": "9/6",
-    "english": "little cocoyams attached to the main one",
-    "plural": "mambàŋə"
+    "english": "little cocoyams attached to the main"
   },
   {
     "awing": "mbê",
     "phonetic": "mbê",
     "pos": "n",
     "noun_class": "1/6",
-    "english": "a knife used for tapping raffia palm",
-    "plural": "mambê"
+    "english": "a knife used for tapping raffia palm"
   },
   {
     "awing": "mbeelə",
-    "phonetic": "mbeèlə",
+    "phonetic": "mbêelə̌",
     "pos": "n",
     "noun_class": "1/6",
-    "english": "furrow between farm beds",
-    "plural": "mambeelə"
+    "english": "furrow between farm beds"
   },
   {
     "awing": "mbéenə",
-    "phonetic": "mbéenə",
+    "phonetic": "mbêenə̀",
     "pos": "n",
-    "noun_class": "1/6",
-    "english": "nail",
-    "plural": "mambéenə"
+    "noun_class": "9/6",
+    "english": "nail"
   },
   {
-    "awing": "mbe'nə̌",
-    "phonetic": "mbè?nə̌",
+    "awing": "mbe'nə",
+    "phonetic": "mbêʔnə̀",
     "pos": "n",
     "noun_class": "1/6",
-    "english": "the eighth day of the week",
-    "plural": "pəmbe'nə̌"
+    "english": "the eighth day of the week"
   },
   {
-    "awing": "mbéŋ ndzelə",
-    "phonetic": "mbéŋ ndzelə",
-    "pos": "n",
-    "english": "sheep",
-    "plural": "məmbéŋ má ndzelə"
-  },
-  {
-    "awing": "mbeŋə̌",
-    "phonetic": "mbeŋə̌",
+    "awing": "mbeŋ ndzelə",
+    "phonetic": "mbêŋ ndzélə̀",
     "pos": "n",
     "noun_class": "1/6",
-    "english": "cockroach",
-    "plural": "məmbeŋə̌"
+    "english": "sheep"
+  },
+  {
+    "awing": "mbenə",
+    "phonetic": "mbênə̀",
+    "pos": "n",
+    "noun_class": "1/6",
+    "english": "cockroach"
   },
   {
     "awing": "mbéŋə",
-    "phonetic": "mbéŋə",
+    "phonetic": "mbéŋə̌",
     "pos": "n",
     "noun_class": "1/6",
-    "english": "a short stick used for shooting",
-    "plural": "mambéŋə"
+    "english": "a short stick used for shooting"
   },
   {
-    "awing": "mbéŋə",
-    "phonetic": "mbéŋə",
+    "awing": "mbénə",
+    "phonetic": "mbénə̀",
     "pos": "n",
     "noun_class": "1/6",
-    "english": "goat",
-    "plural": "mambéŋə"
+    "english": "goat"
   },
   {
     "awing": "mbe'tə",
-    "phonetic": "mbè?tə",
+    "phonetic": "mbêʔtə̌",
     "pos": "n",
-    "english": "shoulder",
-    "plural": "mambe'tə"
+    "noun_class": "1/6",
+    "english": "shoulder"
   },
   {
     "awing": "mbe",
-    "phonetic": "mbè",
-    "pos": "voc",
-    "noun_class": "1/2",
-    "english": "name used only for the son or village chief",
-    "plural": "pəmbe"
+    "phonetic": "mbé",
+    "pos": "v",
+    "english": "be"
   },
   {
-    "awing": "mbe",
-    "phonetic": "mbè",
-    "pos": "int",
-    "english": "word used at the end of an expression to give more force to one's idea"
+    "awing": "mbé",
+    "phonetic": "mbé",
+    "pos": "n",
+    "english": "a name used only for the fon or village chief"
   },
   {
-    "awing": "mbê",
-    "phonetic": "mbê",
-    "pos": "num",
-    "noun_class": "3/2",
+    "awing": "mbé",
+    "phonetic": "mbé",
+    "pos": "n",
+    "english": "word used at the end of an expression to give more force to ones idea"
+  },
+  {
+    "awing": "mbé",
+    "phonetic": "mbé",
+    "pos": "n",
     "english": "two"
   },
   {
-    "awing": "mbê nduŋə",
-    "phonetic": "mbê nduŋə",
-    "pos": "n",
-    "english": "mule",
-    "plural": "mambê má nduŋə"
+    "awing": "mbe ndumə̌",
+    "phonetic": "mbêə̀ ndúmə̌",
+    "pos": "n.p",
+    "english": "mule"
   },
   {
-    "awing": "mbena",
-    "phonetic": "mbénə",
+    "awing": "mbenə̌",
+    "phonetic": "mbênə̌",
     "pos": "n",
     "noun_class": "1/6",
-    "english": "penis",
-    "plural": "mambena"
+    "english": "penis"
   },
   {
-    "awing": "mbena",
-    "phonetic": "mbénə",
-    "pos": "excl",
-    "english": "a word used at the beginning of an expression (phrase, sentence, etc) to mark surprise (exclamation)"
+    "awing": "mbénə̌",
+    "phonetic": "mbénə̌",
+    "pos": "n",
+    "english": "a word used at the beginning of an expression"
   },
   {
-    "awing": "mbenə̂ má nəyeŋə̌",
+    "awing": "mbenə má nəyeŋə̌",
+    "phonetic": "mbênə̀ má nə̀jè̌ŋə̌",
     "pos": "n.p",
     "english": "blade of grass"
   },
   {
-    "awing": "mbɔ́",
-    "phonetic": "mbə́",
+    "awing": "mbə̌",
+    "phonetic": "mbə̌",
     "pos": "n",
     "english": "people of"
   },
   {
-    "awing": "mbɔ́' nasáğə",
-    "phonetic": "mbɔ́?nəsáğə",
+    "awing": "mbə nəsəgə",
+    "phonetic": "mbə̀ nə̀sə̀gə̀",
     "pos": "c.n",
     "english": "buttock"
   },
   {
-    "awing": "mbɔ́'ə",
-    "phonetic": "mbɔ?ə",
-    "pos": "n",
-    "noun_class": "1/6",
-    "english": "lump (of clay or mud)"
-  },
-  {
-    "awing": "mbɔɔmə",
-    "phonetic": "mbɔ̀:mə",
+    "awing": "mbə'ə",
+    "phonetic": "mbə̌ʔə̀",
     "pos": "n",
     "noun_class": "9/6",
-    "english": "body",
-    "synonym": "mbɔ́ɔmə"
+    "english": "lump of clay or mud"
   },
   {
-    "awing": "mbɔɔmə apɔɔmə",
-    "phonetic": "mbɔ̀:mə apɔ̀:mə",
-    "pos": "n.p",
-    "english": "human person",
-    "plural": "mbɔɔmə apɔ̀:mə"
+    "awing": "mbəəmə",
+    "phonetic": "mbə̀ə̀mə̀",
+    "pos": "n",
+    "noun_class": "9/6",
+    "english": "body"
   },
   {
-    "awing": "mbɔɔmə atîə",
-    "phonetic": "mbɔ̀:mə atî:ə",
-    "pos": "n.p",
+    "awing": "mbəəmə",
+    "phonetic": "mbə̀ə̀mə̀",
+    "pos": "n",
+    "noun_class": "9/6",
+    "english": "whitewash"
+  },
+  {
+    "awing": "mbəəmə apəəmə",
+    "phonetic": "mbə̀ə̀mə̀ àpə̀ə̀mə̀",
+    "pos": "n",
+    "english": "hunters"
+  },
+  {
+    "awing": "mbəəmə atíə",
+    "phonetic": "mbə̀ə̀mə̀ àtíə̀",
+    "pos": "n",
     "english": "bark of tree"
   },
   {
-    "awing": "mbɔga atúə",
-    "phonetic": "mbɔ̀ga tûə",
+    "awing": "mbə́gə atúə",
+    "phonetic": "mbə́gə̀ àtúə̀",
     "pos": "n",
     "noun_class": "9/2",
-    "english": "unlucky person",
-    "plural": "pəpəg pə̀ atúə"
+    "english": "unlucky person"
   },
   {
-    "awing": "mbɔkə̌",
-    "phonetic": "mbɔ̀kə̌",
+    "awing": "mbəkə",
+    "phonetic": "mbə̀kə̀",
     "pos": "n",
-    "english": "people of where, people of what (a sort of phrasal expression). This word is always attached to names of places to signify the origin of"
+    "english": "which people, people of where, people of what (a sort of phrasal expression)"
   }
 ]

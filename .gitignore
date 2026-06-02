@@ -243,3 +243,6 @@ pad-assets.tar.gz
 
 # pad-assets.tar.gz absolute path (root-anchored)
 /pad-assets.tar.gz
+
+# Working artifacts — PDF page renders, intermediate files
+outputs/

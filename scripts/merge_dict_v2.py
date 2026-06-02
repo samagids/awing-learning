@@ -15,6 +15,9 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+from _strip_trailing_junk import strip_trailing_junk
 from collections import defaultdict
 
 VOCAB = Path("lib/data/awing_vocabulary.dart")
@@ -118,6 +121,9 @@ def main(dry_run=False):
     add_block = "\n  // === Session 61 v2 dictionary extraction ===\n" + "\n".join(additions) + "\n"
     new_content = content[:anchor.end(1)] + add_block + content[anchor.end(1):]
     VOCAB.write_text(new_content, encoding="utf-8")
+    removed = strip_trailing_junk(VOCAB)
+    if removed:
+        print(f"  Stripped {removed} bytes of trailing junk (NUL/whitespace)")
     print(f"\nAppended {len(new_entries)} entries to {VOCAB}")
 
 if __name__ == "__main__":
