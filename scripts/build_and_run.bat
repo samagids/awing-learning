@@ -209,6 +209,16 @@ echo [2/7] Generating Edge TTS character voice clips (incremental)...
 echo        6 voices: boy/girl (Beginner) + young_man/young_woman (Medium) + man/woman (Expert)
 echo        Output: %PAD_ASSETS%\audio\
 echo        Existing clips are SKIPPED. Pass --force-audio to regenerate everything.
+REM SKIP_TTS=1 escape hatch — set the env var to ship a build without
+REM regenerating any TTS clips. Useful when Microsoft's Edge TTS endpoint
+REM is throttling/down and you need to release. Stale clips for new
+REM vocabulary fall through to flutter_tts at runtime. Set with:
+REM     $env:SKIP_TTS="1"  (PowerShell)  or  set SKIP_TTS=1  (cmd)
+if defined SKIP_TTS (
+    echo        SKIP_TTS=%SKIP_TTS% set — skipping Edge TTS generation.
+    echo        Build will use existing audio clips on disk.
+    goto :step2_done
+)
 REM Only do the destructive pre-clean if explicitly asked. The default is
 REM incremental: generate_audio_edge.py skips files that already exist on
 REM disk. This turns audio gen from a 1-2 hour full regen into a few
@@ -226,9 +236,14 @@ if !ERRORLEVEL! neq 0 (
     echo          - edge-tts package not installed ^(pip install edge-tts^)
     echo          - No internet connection ^(Edge TTS needs Microsoft API^)
     echo          - ffmpeg missing ^(needed for per-syllable tonal concat^)
+    echo.
+    echo        WORKAROUND: To ship without regenerating audio:
+    echo          PowerShell:   $env:SKIP_TTS="1"; .\scripts\build_and_run.bat
+    echo          cmd.exe:      set SKIP_TTS=1 ^& scripts\build_and_run.bat
     exit /b 1
 )
 echo        Edge TTS clips generated.
+:step2_done
 echo.
 
 REM ---- Step 3: Regenerate Pronunciation-Fixed Words (overwrites specific clips) ----
@@ -239,6 +254,10 @@ REM regenerates ONLY those words across all 6 voices using the
 REM override. Abort on failure — approved pronunciation corrections
 REM are explicit developer intent and should never be silently dropped.
 echo [3/7] Checking for pronunciation fixes to regenerate...
+if defined SKIP_TTS (
+    echo        SKIP_TTS=%SKIP_TTS% set — skipping pronunciation regeneration too.
+    goto :step3_done
+)
 REM Prefer regenerate_words_v2.json (Session 58 pattern-mine output) when present;
 REM fall back to legacy regenerate_words.json (apply_contributions.py output).
 set "REGEN_FILE="
@@ -260,6 +279,7 @@ if defined REGEN_FILE (
 ) else (
     echo        No pronunciation fixes to regenerate. Skipping.
 )
+:step3_done
 echo.
 
 REM ---- Step 4: Vocabulary Images ----
@@ -281,6 +301,21 @@ if !ERRORLEVEL! neq 0 (
     exit /b 1
 )
 echo        Vocabulary images generated.
+echo.
+
+REM ---- Step 4b: Asset diet (MP3 -> OPUS) ----
+REM v1.17.1+ — Edge TTS and apply_recordings_as_audio.py still write
+REM MP3 because that's what ffmpeg / edge-tts emit natively. We then
+REM transcode the whole PAD audio tree to OPUS @ 32k mono voip before
+REM the AAB is built. OPUS files are ~50%% smaller; pronunciation_service
+REM .dart loads .opus directly. Skipping already-converted files keeps
+REM this fast (~3s on a warm pack, ~90s on a cold pack with 18k MP3s).
+echo [4b/7] Compressing audio (MP3 -> OPUS)...
+python scripts\cleanup_assets.py --tier 2
+if !ERRORLEVEL! neq 0 (
+    echo        WARNING: audio compression had errors. Continuing with mixed pack.
+    echo        Check ffmpeg is on PATH ^(winget install Gyan.FFmpeg^).
+)
 echo.
 
 REM ---- Step 5: Flutter Deps ----

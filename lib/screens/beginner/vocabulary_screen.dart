@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/screens/find_similar_sheet.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 
@@ -322,22 +323,50 @@ class _FlashCard extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 14),
-                          // Hear it button
-                          ElevatedButton.icon(
-                            onPressed: () =>
-                                pronunciation.speakAwing(word.awing),
-                            icon: const Icon(Icons.volume_up, size: 24),
-                            label: const Text('Hear it',
-                                style: TextStyle(fontSize: 17)),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFDAA520),
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 24, vertical: 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
+                          // Hear it + Find similar (v1.17.0 AI)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () =>
+                                    pronunciation.speakAwing(word.awing),
+                                icon: const Icon(Icons.volume_up, size: 24),
+                                label: const Text('Hear it',
+                                    style: TextStyle(fontSize: 17)),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFFDAA520),
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 10),
+                              OutlinedButton.icon(
+                                onPressed: () => showFindSimilarSheet(
+                                  context,
+                                  awing: word.awing,
+                                  english: word.english,
+                                ),
+                                icon: Icon(Icons.psychology_alt,
+                                    size: 22, color: Colors.deepPurple.shade400),
+                                label: Text('AI similar',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.deepPurple.shade700)),
+                                style: OutlinedButton.styleFrom(
+                                  side: BorderSide(
+                                      color: Colors.deepPurple.shade300),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 14, vertical: 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           // English translation (shown/hidden)
                           AnimatedOpacity(

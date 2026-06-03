@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:awing_ai_learning/data/awing_vocabulary.dart';
+import 'package:awing_ai_learning/screens/contribute/record_audio_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -129,6 +131,44 @@ class _ContributeScreenState extends State<ContributeScreen> {
     });
   }
 
+  /// v1.17.x — Build the profileName for a Contribute submission.
+  ///
+  /// Always prefixed with literal 'default ' so the sync pipeline
+  /// (sync_recordings.py::_recorder_to_kid_slug) routes the audio
+  /// into audio/native/ regardless of whether the submitter's first
+  /// name happens to match a registered kid slug (joel/janelle/...).
+  ///
+  /// The submitter's first name is still appended (informational —
+  /// visible in the Dev Mode review queue + Submissions sheet, but
+  /// NEVER shown to app users since the app never displays
+  /// profileName anywhere kid-facing).
+  ///
+  /// Examples:
+  ///   'Dr. Guidion Sama' -> 'default Guidion'
+  ///   'Joel Smith'       -> 'default Joel'   (still routes to native/)
+  ///   'sama'             -> 'default sama'
+  ///   null / ''          -> 'default'
+  String _firstNameForSubmission(String? displayName) {
+    String firstName = '';
+    if (displayName != null) {
+      final trimmed = displayName.trim();
+      if (trimmed.isNotEmpty) {
+        final parts = trimmed.split(RegExp(r'\s+'));
+        const titles = {
+          'dr', 'dr.', 'mr', 'mr.', 'mrs', 'mrs.', 'ms', 'ms.',
+          'prof', 'prof.', 'rev', 'rev.',
+        };
+        for (final p in parts) {
+          if (p.isEmpty) continue;
+          if (titles.contains(p.toLowerCase())) continue;
+          firstName = p;
+          break;
+        }
+      }
+    }
+    return firstName.isEmpty ? 'default' : 'default $firstName';
+  }
+
   // ==================== Submit ====================
 
   Contribution? _lastSubmitted;
@@ -157,7 +197,14 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
     final id = await contribService.submit(
       deviceId: analytics.isOptedOut ? 'anonymous' : 'contributor',
-      profileName: auth.currentProfile?.displayName ?? 'Anonymous',
+      // v1.17.x — Contribute recordings ALWAYS land in the canonical
+      // 'default voice' bucket (audio/native/) so they augment Dr. Sama's
+      // voice rather than being filed under a kid's tier. We send the
+      // contributor's first name (informational, shows up in the Dev Mode
+      // Review queue + submission sheet) but the value won't match any
+      // kid slug, so sync_recordings.py routes the audio to native/.
+      profileName: _firstNameForSubmission(
+          auth.currentProfile?.displayName),
       type: _type,
       targetWord: _wordController.text.trim(),
       correction: _correctionController.text.trim(),
@@ -324,6 +371,30 @@ class _ContributeScreenState extends State<ContributeScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Type selector
+          // v1.17.x — quick-record card. Opens a Dev-Mode-style
+          // dedicated record flow without leaving Contribute.
+          Card(
+            color: const Color(0xFF006432).withOpacity(0.08),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14)),
+            child: ListTile(
+              leading: const CircleAvatar(
+                backgroundColor: Color(0xFF006432),
+                child: Icon(Icons.mic, color: Colors.white),
+              ),
+              title: const Text('Record a word',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: const Text(
+                  'Pick a word, hear it, then record your version'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const RecordAudioScreen()),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           Text(
             'What would you like to contribute?',
             style: TextStyle(
@@ -349,23 +420,112 @@ class _ContributeScreenState extends State<ContributeScreen> {
           ),
           const SizedBox(height: 24),
 
-          // Target word
-          TextField(
-            controller: _wordController,
-            decoration: InputDecoration(
-              labelText: _type == ContributionType.newWord ||
-                      _type == ContributionType.newSentence
-                  ? 'Awing word or sentence'
-                  : 'Which word needs fixing?',
-              hintText: _type == ContributionType.newSentence
-                  ? 'e.g. Ko akwe pə nəgoomɔ́'
-                  : 'e.g. apô',
-              prefixIcon: const Icon(Icons.translate),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+          // Target word — v1.17.x: for existing-word corrections (spelling
+          // fix, pronunciation fix, gloss fix, etc.) show an Autocomplete
+          // dropdown over the full vocabulary so contributors PICK an
+          // existing entry instead of typing free-form. This guarantees
+          // their audio key matches what the app looks up at playback
+          // time. For NEW word/sentence contributions, keep a plain
+          // TextField since we WANT free-form input there.
+          if (_type == ContributionType.newWord ||
+              _type == ContributionType.newSentence) ...[
+            TextField(
+              controller: _wordController,
+              decoration: InputDecoration(
+                labelText: 'Awing word or sentence',
+                hintText: _type == ContributionType.newSentence
+                    ? 'e.g. Ko akwe pə nəgoomɔ́'
+                    : 'e.g. apô',
+                prefixIcon: const Icon(Icons.translate),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-          ),
+          ] else ...[
+            Autocomplete<AwingWord>(
+              displayStringForOption: (w) => '${w.awing} → ${w.english}',
+              optionsBuilder: (TextEditingValue tv) {
+                final q = tv.text.trim().toLowerCase();
+                if (q.isEmpty) return const Iterable<AwingWord>.empty();
+                final matches = <AwingWord>[];
+                final seenKeys = <String>{};
+                for (final w in allVocabulary) {
+                  if (matches.length >= 30) break;
+                  final key = '${w.awing}|${w.english}';
+                  if (seenKeys.contains(key)) continue;
+                  if (w.awing.toLowerCase().contains(q) ||
+                      w.english.toLowerCase().contains(q)) {
+                    matches.add(w);
+                    seenKeys.add(key);
+                  }
+                }
+                return matches;
+              },
+              onSelected: (AwingWord picked) {
+                _wordController.text = picked.awing;
+                // Auto-fill English so the dev review queue has both
+                // sides of the (awing, english) image+audio key.
+                if (_englishController.text.trim().isEmpty) {
+                  _englishController.text = picked.english;
+                }
+              },
+              fieldViewBuilder: (context, controller, focusNode, onSubmit) {
+                // Mirror the wordController so the submit() validation
+                // and existing usages still work unchanged.
+                controller.addListener(() {
+                  if (_wordController.text != controller.text) {
+                    _wordController.text = controller.text;
+                  }
+                });
+                return TextField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  decoration: InputDecoration(
+                    labelText: 'Pick the word to fix or record',
+                    hintText: 'Type a few letters (Awing or English)…',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                );
+              },
+              optionsViewBuilder: (context, onSelected, options) {
+                return Align(
+                  alignment: Alignment.topLeft,
+                  child: Material(
+                    elevation: 4,
+                    borderRadius: BorderRadius.circular(8),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxHeight: 280,
+                        maxWidth: 340,
+                      ),
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: options.length,
+                        itemBuilder: (_, i) {
+                          final w = options.elementAt(i);
+                          return ListTile(
+                            dense: true,
+                            title: Text(w.awing,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600)),
+                            subtitle: Text(w.english,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis),
+                            onTap: () => onSelected(w),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
           const SizedBox(height: 16),
 
           // Correction

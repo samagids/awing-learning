@@ -47,8 +47,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 RECORDINGS_DIR = REPO_ROOT / "training_data" / "recordings"
 MANIFEST = RECORDINGS_DIR / "manifest.json"
 PAD_AUDIO_ROOT = REPO_ROOT / "android" / "install_time_assets" / "src" / "main" / "assets" / "audio"
-NATIVE_OUT = PAD_AUDIO_ROOT / "native"
-KIDS_OUT   = PAD_AUDIO_ROOT / "native_kids"
+NATIVE_OUT    = PAD_AUDIO_ROOT / "native"
+KIDS_OUT      = PAD_AUDIO_ROOT / "native_kids"
+COMMUNITY_OUT = PAD_AUDIO_ROOT / "community"  # v1.17.x — contributor recordings
 
 # Algorithm-version sentinel for the silence-trim pipeline. Bump this
 # integer whenever the trim algorithm changes in a way that warrants a
@@ -110,6 +111,27 @@ _ADULT_ALIASES = {
     "dr. sama", "dr sama",
     "berlin", "berlin sama",
 }
+
+
+def _is_community_contributor(name) -> bool:
+    """Mirrors sync_recordings.py::_is_community_contributor. Returns
+    True when the manifest's recorder field signals a Contribute-screen
+    submission. Audio routes to audio/community/, NEVER overwrites
+    Dr. Sama's audio/native/ recording for the same word."""
+    if not name:
+        return False
+    return name.strip().lower().startswith('default')
+
+
+def _is_community_wav(wav_path) -> bool:
+    """Recognize WAV files that sync_recordings.py prefixed with
+    'community__'. Used as a secondary signal in case the manifest
+    entry's recorder field is missing."""
+    try:
+        from pathlib import Path as _P
+        return _P(wav_path).name.startswith('community__')
+    except Exception:
+        return False
 
 
 def _recorder_to_kid_slug(name: str | None) -> str | None:
@@ -358,9 +380,18 @@ def main() -> int:
         # missing words fall through to the canonical native path
         # below silently. Recordings by Dr. Sama / Berlin Sama /
         # unknown contributors only write the canonical path.
-        kid_slug = _recorder_to_kid_slug(entry.get("recorder"))
+        recorder_name = entry.get("recorder")
+        is_community = (
+            _is_community_contributor(recorder_name)
+            or _is_community_wav(entry.get("wav_path", ""))
+        )
+        kid_slug = (None if is_community
+                    else _recorder_to_kid_slug(recorder_name))
         kid_mp3_path = (KIDS_OUT / kid_slug / category / f"{key}.mp3"
                         if kid_slug else None)
+        community_mp3_path = (
+            COMMUNITY_OUT / category / f"{key}.mp3" if is_community else None
+        )
 
         # Routing rule (final architecture):
         #   kid_slug present (Joel/Janelle/Joyce/Jadyne):
@@ -377,7 +408,17 @@ def main() -> int:
         #   2. native/                     (Dr. Sama reference fallback)
         #   3. <character>/                (Edge TTS Swahili fallback)
         # cleanly delivers "Joyce's voice only, else Dr. Sama, else TTS".
-        target_path = kid_mp3_path if kid_slug else mp3_path
+        # Routing tiers (highest → lowest priority):
+        #   1. kid_slug present  → audio/native_kids/<slug>/  (kid-only)
+        #   2. is_community      → audio/community/   (contributor — does
+        #                          NOT overwrite Dr. Sama's audio/native/)
+        #   3. neither           → audio/native/      (Dr. Sama canonical)
+        if kid_slug:
+            target_path = kid_mp3_path
+        elif is_community:
+            target_path = community_mp3_path
+        else:
+            target_path = mp3_path
         wav_companion = target_path.with_suffix(".wav")
 
         wav_mtime = wav_path.stat().st_mtime
@@ -402,7 +443,12 @@ def main() -> int:
             continue
 
         rel_out = target_path.relative_to(REPO_ROOT)
-        kid_note = f"  [kid: {kid_slug}]" if kid_slug else "  [canonical]"
+        if kid_slug:
+            kid_note = f"  [kid: {kid_slug}]"
+        elif is_community:
+            kid_note = "  [community]"
+        else:
+            kid_note = "  [canonical]"
         print(f"  {awing!r:24s} ({source:11s}) -> {rel_out}{kid_note}")
         by_category[category] = by_category.get(category, 0) + 1
         if kid_slug:

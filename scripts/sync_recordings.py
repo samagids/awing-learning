@@ -155,6 +155,19 @@ def _display_name(name):
     return name or 'Unknown'
 
 
+
+def _is_community_contributor(name):
+    """Returns True when the profileName signals 'this submission came
+    via the Contribute screen and should land in audio/community/, not
+    audio/native/'. The Contribute screen sends 'default <FirstName>'
+    (or just 'default' when no name) so a single prefix check identifies
+    all such submissions, regardless of the contributor's actual name —
+    even if it accidentally matches a registered kid slug."""
+    if not name:
+        return False
+    return name.strip().lower().startswith('default')
+
+
 def _recorder_to_kid_slug(name):
     """Returns the KID slug only (joel/janelle/joyce/jadyne) for routing
     recordings to audio/native_kids/<slug>/. Adults (Dr. Sama, Berlin)
@@ -447,7 +460,7 @@ def _merge_manifest_entry(entries, new_entry):
 # Main flow
 # ---------------------------------------------------------------------------
 
-def sync_recordings(keep_all=False, dry_run=False, verbose=False):
+def sync_recordings(keep_all=False, dry_run=False, verbose=False, force: bool = False):
     print('=' * 64)
     print('sync_recordings.py — pull native audio into workflow folder')
     print('=' * 64)
@@ -551,6 +564,38 @@ def sync_recordings(keep_all=False, dry_run=False, verbose=False):
                   f'(from {c.get("profileName", "Unknown")})')
         return 0
 
+    # 3.5. Skip entries whose destination WAV already exists on disk.
+    # This is the BIG speedup for re-syncs — without it, every sync
+    # re-fetches and re-downloads the same 188 URLs. We compute the
+    # same wav_filename used below at write time (kid prefix when
+    # appropriate) and check existence + non-zero size.
+    if not force:
+        before = len(kept)
+        filtered = []
+        for c in kept:
+            target = c.get('targetWord', '')
+            recorder = c.get('profileName', 'Unknown')
+            key = audio_key(target)
+            kid_slug = _recorder_to_kid_slug(recorder)
+            is_community = _is_community_contributor(recorder)
+            if kid_slug:
+                wav_filename = f'{kid_slug}__{key}.wav'
+            elif is_community:
+                wav_filename = f'community__{key}.wav'
+            else:
+                wav_filename = f'{key}.wav'
+            wav_path = os.path.join(RECORDINGS_DIR, wav_filename)
+            if os.path.exists(wav_path) and os.path.getsize(wav_path) > 0:
+                continue
+            filtered.append(c)
+        skipped_existing = before - len(filtered)
+        if skipped_existing:
+            print(f'  ⤷ {skipped_existing} already on disk — skipping fetch+download')
+        kept = filtered
+        if not kept:
+            print('Nothing new to sync. Done.')
+            return 0
+
     # 4. fetch_audio
     ids = [c.get('id') for c in kept if c.get('id')]
     print(f'\n→ Fetching {len(ids)} audio URL(s) ...')
@@ -611,8 +656,12 @@ def sync_recordings(keep_all=False, dry_run=False, verbose=False):
 
             # Tempdir m4a uses the same prefixing so multiple kids in the
             # same batch don't overwrite each other's downloads in tmp.
-            m4a_filename = (f'{kid_slug}__{key}.m4a'
-                            if kid_slug else f'{key}.m4a')
+            if kid_slug:
+                m4a_filename = f'{kid_slug}__{key}.m4a'
+            elif is_community:
+                m4a_filename = f'community__{key}.m4a'
+            else:
+                m4a_filename = f'{key}.m4a'
             m4a_path = os.path.join(tmpdir, m4a_filename)
             ok, size = _download_to(url, m4a_path)
             if not ok:
@@ -688,14 +737,8 @@ def main():
              'the same audio_key. By default only newest-per-key is kept.')
     parser.add_argument('--verbose', action='store_true',
         help='Print per-item skip reasons.')
-    args = parser.parse_args()
-
-    return sync_recordings(
-        keep_all=args.keep_all,
-        dry_run=args.dry_run,
-        verbose=args.verbose,
-    )
-
-
-if __name__ == '__main__':
-    sys.exit(main())
+    parser.add_argument('--force', action='store_true',
+        help='Re-fetch + re-download every entry, even WAVs already on disk. '
+             'Default: skip entries whose target WAV already exists locally '
+             '(big speedup for re-syncs).')
+    args = parser.parse_a

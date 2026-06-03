@@ -799,8 +799,15 @@ async def _generate_clip_simple(voice_name, text, output_path, rate="-20%", pitc
     # Incremental: skip if a non-empty clip already exists at output_path.
     # This makes the whole audio pipeline incremental — re-running the
     # build for a vocab/sentence-only change touches only the new entries.
+    # v1.17.1+ — also recognize Tier-2-converted .opus next to the .mp3
+    # path so we don't redundantly regenerate clips that were already
+    # compressed (and whose source MP3 was then deleted).
     if not force and output_path.exists() and output_path.stat().st_size > 0:
         return True
+    if not force and output_path.suffix.lower() == '.mp3':
+        opus_alt = output_path.with_suffix('.opus')
+        if opus_alt.exists() and opus_alt.stat().st_size > 0:
+            return True
 
     speakable = awing_to_speakable(text)
     # Use a per-task temp file so concurrent calls don't stomp on each
@@ -959,12 +966,22 @@ async def _generate_character_clips(char_name, char_config, vocab_override=None,
         outdir.mkdir(parents=True, exist_ok=True)
         # Pre-filter: skip items that already exist on disk to reduce
         # the visible work-set and make incremental progress obvious.
+        # v1.17.1+ — also count .opus as "cached" since cleanup_assets
+        # Tier 2 converts MP3 → OPUS and deletes the source MP3. Without
+        # this OR check, every rebuild after a Tier 2 run would think
+        # nothing was cached and try to regenerate all 8k+ clips,
+        # hammering Microsoft's Edge TTS endpoint into rate-limiting us.
         pending = []
         for key, text in items.items():
             total += 1
             out = outdir / f"{key}.mp3"
+            opus_out = outdir / f"{key}.opus"
             if out.exists() and out.stat().st_size > 0:
                 # Already done — count as success without dispatching
+                success += 1
+                continue
+            if opus_out.exists() and opus_out.stat().st_size > 0:
+                # Tier 2 converted this clip to OPUS already — also a hit
                 success += 1
                 continue
             pending.append((key, text, out))

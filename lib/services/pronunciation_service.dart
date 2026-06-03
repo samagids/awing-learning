@@ -246,7 +246,7 @@ class PronunciationService {
     //     still hears the canonical native voice below.
     if (_kidOverride != null) {
       paths.add(
-          'assets/audio/native_kids/$_kidOverride/$category/$key.mp3');
+          'assets/audio/native_kids/$_kidOverride/$category/$key.opus');
     }
 
     // 0. Native speaker recording — highest priority across all voices.
@@ -254,15 +254,23 @@ class PronunciationService {
     //    training_data/recordings/ (Dr. Sama's recordings). When present,
     //    every character voice plays the authentic recording instead of
     //    the Edge TTS Swahili approximation.
-    paths.add('assets/audio/native/$category/$key.mp3');
+    paths.add('assets/audio/native/$category/$key.opus');
+
+    // 0.5. Community contributor recording (v1.17.x — new tier).
+    //      Anyone who submits audio via the Contribute screen (not
+    //      Dr. Sama, not a registered family kid) lands here. The
+    //      tier sits BELOW Dr. Sama's native recording, so any word
+    //      he's recorded plays HIS voice first — community audio is
+    //      only used as a fallback for words he hasn't covered yet.
+    paths.add('assets/audio/community/$category/$key.opus');
 
     // 1. Current character voice
-    paths.add('assets/audio/$_currentVoice/$category/$key.mp3');
+    paths.add('assets/audio/$_currentVoice/$category/$key.opus');
 
     // 2. Same-level alternate voice (e.g. girl if boy is selected)
     for (final v in _sameLevelVoices()) {
       if (v != _currentVoice) {
-        paths.add('assets/audio/$v/$category/$key.mp3');
+        paths.add('assets/audio/$v/$category/$key.opus');
       }
     }
 
