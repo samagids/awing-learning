@@ -71,6 +71,12 @@
 	     warning 90683 requires this key when ANY referenced API needs it. -->
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Awing AI Learning does not track your location. This permission is required only because the Wi-Fi network library (used by the classroom exam mode) references location APIs on iOS.</string>
+	<!-- v1.17.1+ — Builds 70 & 72 received ITMS-90683 specifically calling out
+	     NSLocationAlwaysAndWhenInUseUsageDescription. A transitive SDK (likely
+	     a Firebase or location-adjacent plugin) references the Always API even
+	     though the app never requests background location. Both keys required. -->
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Awing AI Learning does not track your location. This permission is required only because a third-party library bundled with the app references the Always location API on iOS. The app never requests background location access.</string>
 	<!-- Photo library + camera purpose strings — required by Apple even though
 	     the app does not directly use these APIs. file_picker / share_plus /
 	     image_picker pull in iOS frameworks that reference PhotoKit; Apple's
