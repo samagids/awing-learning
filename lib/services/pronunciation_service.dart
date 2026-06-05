@@ -264,7 +264,20 @@ class PronunciationService {
     //      only used as a fallback for words he hasn't covered yet.
     paths.add('assets/audio/community/$category/$key.opus');
 
-    // 1. Current character voice
+    // NOTE (Session 60+): bible_trained tier removed. The one-time
+    // RunPod A100 Coqui VITS fine-tune on 22.83 hrs of Bible audio
+    // technically converged (mel loss 47→25 over ~5 hrs of training),
+    // but inference output did not produce intelligible Awing vocab
+    // pronunciation. Root causes documented in CLAUDE.md Session 60+:
+    // (1) VITS doesn't model tones — Awing tone diacritics were
+    // treated as unconditioned vocabulary characters, (2) 22 hrs is
+    // marginal for single-speaker VITS, (3) Bible→vocab domain shift
+    // (full sentences to single words). ~$15 negative result. Do not
+    // retry without addressing tones explicitly (e.g. pitch-
+    // conditioned model or tone-aware text encoder).
+
+    // 1. Current character voice (Edge TTS Swahili — approximation,
+    //    used when none of the above tiers have a recording)
     paths.add('assets/audio/$_currentVoice/$category/$key.opus');
 
     // 2. Same-level alternate voice (e.g. girl if boy is selected)

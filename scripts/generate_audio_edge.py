@@ -450,6 +450,16 @@ def awing_to_speakable(text):
     text = text.replace("ŋk", "nk")
     text = text.replace("Ŋk", "Nk")
 
+    # Word-final ə → 'a' (Session 60+ Whisper-mined rule).
+    # Source: 352 native recordings transcribed via Whisper-Swahili
+    # consistently produced -a endings for words ending in /ə/ (e.g.
+    # lúmə → "luma", pɛ́nə → "pena", shǐ'ə → "shia"). Swahili almost
+    # never ends words in 'e', so our default ə→e mapping sounded
+    # unnatural in Edge TTS Swahili output for word-final positions.
+    # Mid-word ə continues to map to 'e' via the bulk-replace below.
+    text = re.sub(r"ə(?=$|[\s.,!?;:\"\-])", "a", text)
+    text = re.sub(r"Ə(?=$|[\s.,!?;:\"\-])", "A", text)
+
     replacements = [
         ("Ɛ", "E"), ("ɛ", "e"),
         ("Ɔ", "O"), ("ɔ", "o"),

@@ -1,0 +1,126 @@
+Awing → Swahili phonetic learning report
+======================================================================
+Source:  352 native recordings via Whisper-medium
+Recorded vocab (already play native audio):  352
+Unrecorded vocab (would benefit from rules): 4,823
+Native clips disagreeing with current rules: 295
+
+PROPOSED RULE CHANGES TO awing_to_speakable()
+Ranked by impact: how many unrecorded words each would affect
+----------------------------------------------------------------------
+     Current →    Whisper   NativeEvidence   UnrecordedAffected
+         'e' →        'a'              100                 4344
+         'e' →        'i'               17                 4344
+         'e' →        ' '               13                 4344
+         'e' →        'm'               13                 4344
+         'e' →        'u'               13                 4344
+         'e' →        't'               12                 4344
+         'e' →        'n'               10                 4344
+         'e' →        'h'                8                 4344
+         'e' →        's'                8                 4344
+         'e' →        'r'                7                 4344
+         'e' →        'l'                6                 4344
+         'e' →        'o'                6                 4344
+         'e' →        'w'                5                 4344
+         'e' →        'k'                5                 4344
+         'e' →        'f'                4                 4344
+         'e' →        'z'                4                 4344
+         'e' →        'g'                4                 4344
+         'e' →        'p'                3                 4344
+         'e' →        'y'                2                 4344
+         'e' →        '.'                2                 4344
+         'e' →        'c'                2                 4344
+         'e' →        'j'                2                 4344
+         'e' →        'd'                2                 4344
+         'a' →        'k'               10                 3294
+         'a' →        ' '                9                 3294
+         'a' →        'n'                9                 3294
+         'a' →        'i'                8                 3294
+         'a' →        'u'                8                 3294
+         'a' →        'e'                6                 3294
+         'a' →        'm'                6                 3294
+         'a' →        'l'                5                 3294
+         'a' →        'w'                5                 3294
+         'a' →        'h'                4                 3294
+         'a' →        'y'                4                 3294
+         'a' →        'o'                4                 3294
+         'a' →        'r'                4                 3294
+         'a' →        't'                2                 3294
+         'a' →        'f'                2                 3294
+         'a' →        'c'                2                 3294
+         'a' →        'p'                2                 3294
+
+DIAGNOSTIC: per-word disagreements (informational only)
+These words ARE played from native audio at runtime; this list
+shows where Whisper's transcription differs from current rules.
+----------------------------------------------------------------------
+  Awing                     Current              → Whisper
+  a                         a                    → былun kia
+  əshûə                     eshue                → fua
+  ghánə                     gane                 → dama
+  jágə                      jage                 → ja
+  kîə                       kie                  → aqурah
+  léŋə                      lenge                → linga
+  lóbtə                     lobte                → lopta
+  lúmə                      lume                 → luma
+  miə                       mie                  → mier
+  ŋá'ə                      ngae                 → na
+  nô                        no                   → no.
+  nɔ́ŋə                     nonge                → no.
+  pɛ́nə                     pene                 → pena
+  pímə                      pime                 → fima
+  sednô                     sedno                → sedna
+  shî'ə                     shie                 → shia
+  tógə                      toge                 → kwa?
+  tsó'ə                     tsoe                 → kal
+  wáako                     waako                → walker
+  yîkə                      yike                 → ika
+  zó'ə                      zoe                  → mwaook
+  achaaka                   achaaka              → athak
+  achaakə                   achaake              → ataka
+  acha'tə                   achate               → if위 aliront
+  acha'tésê                 achatese             → ane
+  acha'tésênjiə             achatesenjie         → k가지고 asap
+  achəkelə                  achekele             → a'cha ghulo
+  achíalúmə                 achialume            → a cheluma
+  achiatazə'ə               achiatazee           → aチャ tina
+  achíbə                    achibe               → achiba
+  achibəmóteenə             achibemoteene        → ...achara maten
+  achi'lə                   achile               → acha'wa.
+  achú'ə                    achue                → actual
+  achwinə                   achwine              → atana
+  adě                       ade                  → question 1 amy
+  afablə                    afable               → afaba
+  afa'ə                     afae                 → ahaha
+  afagə̌                    afage                → afaga
+  afaŋə                     afange               → afuna
+  afaŋŋə                    afangnge             → afalma
+  afankónuə                 afankonue            → apankano
+  afélə                     afele                → afana
+  afeŋə                     afenge               → afina
+  afì'nánkaŋə               afinankange          → as a o nekana
+  afi'nónkaŋə               afinonkange          → happy nickhaikut
+  afo'ə                     afoe                 → ee shel
+  afoonə                    afoone               → apana
+  afoopafo                  afoopafo             → uassu
+  afunə                     afune                → funa
+  afîna                     afina                → ako ye
+
+HOW TO APPLY (manual)
+----------------------------------------------------------------------
+1. Review the PROPOSED RULE CHANGES table above. A high-impact
+   row (e.g. 'ə' → 'a' with 2000 unrecorded_affected) means
+   updating one line of scripts/generate_audio_edge.py would
+   change ~2000 unrecorded words' Edge TTS output.
+
+2. Edit scripts/generate_audio_edge.py awing_to_speakable() to
+   incorporate the high-impact rules.
+
+3. Regenerate ONLY unrecorded words:
+   python scripts/generate_audio_edge.py generate
+   (the regenerate command's existing behaviour: native-recorded
+   words are skipped because the runtime fallback already plays
+   the native clip — Edge TTS output for those words is unused)
+
+4. No file in the app code is modified by this script. Recorded
+   words remain untouched.

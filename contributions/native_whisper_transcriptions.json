@@ -1,0 +1,2114 @@
+{
+  "a": {
+    "awing": "a",
+    "whisper_sw": "былun kia",
+    "current_speakable": "a",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/a.opus"
+  },
+  "eshue": {
+    "awing": "əshûə",
+    "whisper_sw": "fua",
+    "current_speakable": "eshue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/eshue.opus"
+  },
+  "ghane": {
+    "awing": "ghánə",
+    "whisper_sw": "dama",
+    "current_speakable": "gane",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/ghane.opus"
+  },
+  "jage": {
+    "awing": "jágə",
+    "whisper_sw": "ja",
+    "current_speakable": "jage",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/jage.opus"
+  },
+  "kie": {
+    "awing": "kîə",
+    "whisper_sw": "aqурah",
+    "current_speakable": "kie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/kie.opus"
+  },
+  "lenge": {
+    "awing": "léŋə",
+    "whisper_sw": "linga",
+    "current_speakable": "lenge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/lenge.opus"
+  },
+  "lobte": {
+    "awing": "lóbtə",
+    "whisper_sw": "lopta",
+    "current_speakable": "lobte",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/lobte.opus"
+  },
+  "lume": {
+    "awing": "lúmə",
+    "whisper_sw": "luma",
+    "current_speakable": "lume",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/lume.opus"
+  },
+  "mie": {
+    "awing": "miə",
+    "whisper_sw": "mier",
+    "current_speakable": "mie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/mie.opus"
+  },
+  "ngae": {
+    "awing": "ŋá'ə",
+    "whisper_sw": "na",
+    "current_speakable": "ngae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/ngae.opus"
+  },
+  "no": {
+    "awing": "nô",
+    "whisper_sw": "no.",
+    "current_speakable": "no",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/no.opus"
+  },
+  "nonge": {
+    "awing": "nɔ́ŋə",
+    "whisper_sw": "no.",
+    "current_speakable": "nonge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/nonge.opus"
+  },
+  "pene": {
+    "awing": "pɛ́nə",
+    "whisper_sw": "pena",
+    "current_speakable": "pene",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/pene.opus"
+  },
+  "pime": {
+    "awing": "pímə",
+    "whisper_sw": "fima",
+    "current_speakable": "pime",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/pime.opus"
+  },
+  "sedno": {
+    "awing": "sednô",
+    "whisper_sw": "sedna",
+    "current_speakable": "sedno",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/sedno.opus"
+  },
+  "shie": {
+    "awing": "shî'ə",
+    "whisper_sw": "shia",
+    "current_speakable": "shie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/shie.opus"
+  },
+  "toge": {
+    "awing": "tógə",
+    "whisper_sw": "kwa?",
+    "current_speakable": "toge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/toge.opus"
+  },
+  "tsoe": {
+    "awing": "tsó'ə",
+    "whisper_sw": "kal",
+    "current_speakable": "tsoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/tsoe.opus"
+  },
+  "waako": {
+    "awing": "wáako",
+    "whisper_sw": "walker",
+    "current_speakable": "waako",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/waako.opus"
+  },
+  "yike": {
+    "awing": "yîkə",
+    "whisper_sw": "ika",
+    "current_speakable": "yike",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/yike.opus"
+  },
+  "zoe": {
+    "awing": "zó'ə",
+    "whisper_sw": "mwaook",
+    "current_speakable": "zoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/alphabet/zoe.opus"
+  },
+  "achaaka": {
+    "awing": "achaaka",
+    "whisper_sw": "athak",
+    "current_speakable": "achaaka",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achaaka.opus"
+  },
+  "achaake": {
+    "awing": "achaakə",
+    "whisper_sw": "ataka",
+    "current_speakable": "achaake",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achaake.opus"
+  },
+  "achate": {
+    "awing": "acha'tə",
+    "whisper_sw": "if위 aliront",
+    "current_speakable": "achate",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achate.opus"
+  },
+  "achatese": {
+    "awing": "acha'tésê",
+    "whisper_sw": "ane",
+    "current_speakable": "achatese",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achatese.opus"
+  },
+  "achatesenjie": {
+    "awing": "acha'tésênjiə",
+    "whisper_sw": "k가지고 asap",
+    "current_speakable": "achatesenjie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achatesenjie.opus"
+  },
+  "achekele": {
+    "awing": "achəkelə",
+    "whisper_sw": "a'cha ghulo",
+    "current_speakable": "achekele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achekele.opus"
+  },
+  "achialume": {
+    "awing": "achíalúmə",
+    "whisper_sw": "a cheluma",
+    "current_speakable": "achialume",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achialume.opus"
+  },
+  "achiatazee": {
+    "awing": "achiatazə'ə",
+    "whisper_sw": "aチャ tina",
+    "current_speakable": "achiatazee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achiatazee.opus"
+  },
+  "achibe": {
+    "awing": "achíbə",
+    "whisper_sw": "achiba",
+    "current_speakable": "achibe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achibe.opus"
+  },
+  "achibemoteene": {
+    "awing": "achibəmóteenə",
+    "whisper_sw": "...achara maten",
+    "current_speakable": "achibemoteene",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achibemoteene.opus"
+  },
+  "achile": {
+    "awing": "achi'lə",
+    "whisper_sw": "acha'wa.",
+    "current_speakable": "achile",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achile.opus"
+  },
+  "achue": {
+    "awing": "achú'ə",
+    "whisper_sw": "actual",
+    "current_speakable": "achue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achue.opus"
+  },
+  "achwine": {
+    "awing": "achwinə",
+    "whisper_sw": "atana",
+    "current_speakable": "achwine",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/achwine.opus"
+  },
+  "ade": {
+    "awing": "adě",
+    "whisper_sw": "question 1 amy",
+    "current_speakable": "ade",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/ade.opus"
+  },
+  "afable": {
+    "awing": "afablə",
+    "whisper_sw": "afaba",
+    "current_speakable": "afable",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afable.opus"
+  },
+  "afae": {
+    "awing": "afa'ə",
+    "whisper_sw": "ahaha",
+    "current_speakable": "afae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afae.opus"
+  },
+  "afage": {
+    "awing": "afagə̌",
+    "whisper_sw": "afaga",
+    "current_speakable": "afage",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afage.opus"
+  },
+  "afana": {
+    "awing": "afana",
+    "whisper_sw": "afana",
+    "current_speakable": "afana",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afana.opus"
+  },
+  "afange": {
+    "awing": "afaŋə",
+    "whisper_sw": "afuna",
+    "current_speakable": "afange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afange.opus"
+  },
+  "afangnge": {
+    "awing": "afaŋŋə",
+    "whisper_sw": "afalma",
+    "current_speakable": "afangnge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afangnge.opus"
+  },
+  "afankonue": {
+    "awing": "afankónuə",
+    "whisper_sw": "apankano",
+    "current_speakable": "afankonue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afankonue.opus"
+  },
+  "afele": {
+    "awing": "afélə",
+    "whisper_sw": "afana",
+    "current_speakable": "afele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afele.opus"
+  },
+  "afenge": {
+    "awing": "afeŋə",
+    "whisper_sw": "afina",
+    "current_speakable": "afenge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afenge.opus"
+  },
+  "afinankange": {
+    "awing": "afì'nánkaŋə",
+    "whisper_sw": "as a o nekana",
+    "current_speakable": "afinankange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afinankange.opus"
+  },
+  "afinonkange": {
+    "awing": "afi'nónkaŋə",
+    "whisper_sw": "happy nickhaikut",
+    "current_speakable": "afinonkange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afinonkange.opus"
+  },
+  "afoe": {
+    "awing": "afo'ə",
+    "whisper_sw": "ee shel",
+    "current_speakable": "afoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afoe.opus"
+  },
+  "afoone": {
+    "awing": "afoonə",
+    "whisper_sw": "apana",
+    "current_speakable": "afoone",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afoone.opus"
+  },
+  "afoopafo": {
+    "awing": "afoopafo",
+    "whisper_sw": "uassu",
+    "current_speakable": "afoopafo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/boy/afoopafo.opus"
+  },
+  "afune": {
+    "awing": "afunə",
+    "whisper_sw": "funa",
+    "current_speakable": "afune",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/afune.opus"
+  },
+  "falendze": {
+    "awing": "Fáləndzə",
+    "whisper_sw": "",
+    "current_speakable": "falendze",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/falendze.opus"
+  },
+  "afina": {
+    "awing": "afîna",
+    "whisper_sw": "ako ye",
+    "current_speakable": "afina",
+    "file": "android/install_time_assets/src/main/assets/audio/native/girl/afina.opus"
+  },
+  "afae_apimne": {
+    "awing": "afa'ə apímnə",
+    "whisper_sw": "afaapinna",
+    "current_speakable": "afae apimne",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/afae_apimne.opus"
+  },
+  "afue_ndie": {
+    "awing": "afúə ndí'ə",
+    "whisper_sw": "afuwandea.",
+    "current_speakable": "afue ndie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/afue_ndie.opus"
+  },
+  "ajume_nekwae": {
+    "awing": "ajúmə nəkwa'ə",
+    "whisper_sw": "",
+    "current_speakable": "ajume nekwae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ajume_nekwae.opus"
+  },
+  "ajwigo_ngweo": {
+    "awing": "ajwigó ngwe'ó",
+    "whisper_sw": "",
+    "current_speakable": "ajwigo ngweo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ajwigo_ngweo.opus"
+  },
+  "akoe_ndenge": {
+    "awing": "akó'ə ndəŋə",
+    "whisper_sw": "komsiki",
+    "current_speakable": "akoe ndenge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/akoe_ndenge.opus"
+  },
+  "akone_leemo": {
+    "awing": "akǒ'nə ləəmó",
+    "whisper_sw": "ako aloma",
+    "current_speakable": "akone leemo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/akone_leemo.opus"
+  },
+  "akone_mbyangne": {
+    "awing": "akǒ'nə mbyâŋnə",
+    "whisper_sw": "ako ambiangna",
+    "current_speakable": "akone mbyangne",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/akone_mbyangne.opus"
+  },
+  "akone_menggye": {
+    "awing": "akǒ'nə məŋgyě",
+    "whisper_sw": "ako amenge",
+    "current_speakable": "akone menggye",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/akone_menggye.opus"
+  },
+  "akone_ndenge": {
+    "awing": "ako'nə ndəŋə",
+    "whisper_sw": "ako andeng",
+    "current_speakable": "akone ndenge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/akone_ndenge.opus"
+  },
+  "akone_nkeele": {
+    "awing": "akǒ'nə nkeelə",
+    "whisper_sw": "haku haukil",
+    "current_speakable": "akone nkeele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/akone_nkeele.opus"
+  },
+  "ako_ye_fie": {
+    "awing": "akó' yə fíə",
+    "whisper_sw": "ako ayofi",
+    "current_speakable": "ako ye fie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ako_ye_fie.opus"
+  },
+  "akwang_ye_eshine": {
+    "awing": "akwaŋ yə əshi'nə",
+    "whisper_sw": "",
+    "current_speakable": "akwang ye eshine",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/akwang_ye_eshine.opus"
+  },
+  "akwulo_atie": {
+    "awing": "akwu'ló atìə",
+    "whisper_sw": "",
+    "current_speakable": "akwulo atie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/akwulo_atie.opus"
+  },
+  "alae_akooba": {
+    "awing": "alá'ə akoobá",
+    "whisper_sw": "",
+    "current_speakable": "alae akooba",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/alae_akooba.opus"
+  },
+  "alae_pakwue": {
+    "awing": "alá'ə pakwûə",
+    "whisper_sw": "",
+    "current_speakable": "alae pakwue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/alae_pakwue.opus"
+  },
+  "alango_manggoe": {
+    "awing": "alaŋó maŋgo'ə",
+    "whisper_sw": "ala mungo",
+    "current_speakable": "alango manggoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/alango_manggoe.opus"
+  },
+  "alango_netsao": {
+    "awing": "alaŋó nətsa'ó",
+    "whisper_sw": "alamata",
+    "current_speakable": "alango netsao",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/alango_netsao.opus"
+  },
+  "alio_ghoke_ese": {
+    "awing": "ali'ó ghók'ə Əsê",
+    "whisper_sw": "ali ewa kasi",
+    "current_speakable": "alio goke ese",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/alio_ghoke_ese.opus"
+  },
+  "alio_ketange": {
+    "awing": "ali'ó kətaŋə",
+    "whisper_sw": "ali ya katang",
+    "current_speakable": "alio ketange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/alio_ketange.opus"
+  },
+  "alio_nefoone_ese": {
+    "awing": "ali'ó nəfoonə Əsê",
+    "whisper_sw": "katu",
+    "current_speakable": "alio nefoone ese",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/alio_nefoone_ese.opus"
+  },
+  "ali_gheno": {
+    "awing": "ali' ghenó",
+    "whisper_sw": "adi, agena.",
+    "current_speakable": "ali geno",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ali_gheno.opus"
+  },
+  "ali_yie": {
+    "awing": "ali' yîə",
+    "whisper_sw": "ali iye",
+    "current_speakable": "ali yie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ali_yie.opus"
+  },
+  "apago_atseo": {
+    "awing": "apagó atsə'ó",
+    "whisper_sw": "",
+    "current_speakable": "apago atseo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/apago_atseo.opus"
+  },
+  "apue_mejie": {
+    "awing": "apu'ə məjiə",
+    "whisper_sw": "apua rapi yanggu",
+    "current_speakable": "apue mejie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/apue_mejie.opus"
+  },
+  "atsae_mbo_nakanga": {
+    "awing": "atsa'ə mbó nakaŋá",
+    "whisper_sw": "",
+    "current_speakable": "atsae mbo nakanga",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/atsae_mbo_nakanga.opus"
+  },
+  "atsae_ndese": {
+    "awing": "atsa'ə ndəsê",
+    "whisper_sw": "atsaandisi.",
+    "current_speakable": "atsae ndese",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/atsae_ndese.opus"
+  },
+  "atsoe_ngesange": {
+    "awing": "atso'ə ngəsáŋə",
+    "whisper_sw": "atsuungasang",
+    "current_speakable": "atsoe ngesange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/atsoe_ngesange.opus"
+  },
+  "chie_asango": {
+    "awing": "chi'ə́ asaŋɔ́",
+    "whisper_sw": "k productos",
+    "current_speakable": "chie asango",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chie_asango.opus"
+  },
+  "chige_takoe": {
+    "awing": "chigə tákɔ'ə",
+    "whisper_sw": "",
+    "current_speakable": "chige takoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chige_takoe.opus"
+  },
+  "chi_myaa": {
+    "awing": "chǐ myā'â",
+    "whisper_sw": "usually",
+    "current_speakable": "chi myaa",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chi_myaa.opus"
+  },
+  "chi_no_nggee": {
+    "awing": "chî nó ŋgə́'ə",
+    "whisper_sw": "",
+    "current_speakable": "chi no nggee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chi_no_nggee.opus"
+  },
+  "chi_te_zee": {
+    "awing": "chî tə zə́'ə",
+    "whisper_sw": "",
+    "current_speakable": "chi te zee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chi_te_zee.opus"
+  },
+  "chu_eshune": {
+    "awing": "chú' əshunə́",
+    "whisper_sw": "nchoto shadedha",
+    "current_speakable": "chu eshune",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chu_eshune.opus"
+  },
+  "chu_moge": {
+    "awing": "chú' mógə",
+    "whisper_sw": "cha",
+    "current_speakable": "chu moge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chu_moge.opus"
+  },
+  "chwaala_afae": {
+    "awing": "chwaalâ afa'ə",
+    "whisper_sw": "nchwa alofa",
+    "current_speakable": "chwaala afae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chwaala_afae.opus"
+  },
+  "chwaala_apee": {
+    "awing": "chwaalâ ape'ə",
+    "whisper_sw": "trarapi",
+    "current_speakable": "chwaala apee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/chwaala_apee.opus"
+  },
+  "efeng_melae": {
+    "awing": "əfeŋ məlá'ə",
+    "whisper_sw": "案if promise",
+    "current_speakable": "efeng melae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/efeng_melae.opus"
+  },
+  "efo_nkie": {
+    "awing": "əfó' nkǐə",
+    "whisper_sw": "afuwantia.",
+    "current_speakable": "efo nkie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/efo_nkie.opus"
+  },
+  "egha_wao": {
+    "awing": "əghâ wá'ó",
+    "whisper_sw": "zawa",
+    "current_speakable": "ega wao",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/egha_wao.opus"
+  },
+  "ema_poe": {
+    "awing": "əma' pó'ə",
+    "whisper_sw": "mapo",
+    "current_speakable": "ema poe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ema_poe.opus"
+  },
+  "engwale_engwale": {
+    "awing": "əŋwa'lə əŋwa'lə",
+    "whisper_sw": "muwala muwala",
+    "current_speakable": "engwale engwale",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/engwale_engwale.opus"
+  },
+  "engwale_nkeebe": {
+    "awing": "əŋwa'lə nkeebə",
+    "whisper_sw": "okay umbo oracle",
+    "current_speakable": "engwale nkeebe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/engwale_nkeebe.opus"
+  },
+  "enumne_natue": {
+    "awing": "ənumnə natú'ə",
+    "whisper_sw": "",
+    "current_speakable": "enumne natue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/enumne_natue.opus"
+  },
+  "fele_alio": {
+    "awing": "felə ali'ó",
+    "whisper_sw": "se sa e",
+    "current_speakable": "fele alio",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/fele_alio.opus"
+  },
+  "fele_ndzoa": {
+    "awing": "felə ndzɔ'á",
+    "whisper_sw": "banzo",
+    "current_speakable": "fele ndzoa",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/fele_ndzoa.opus"
+  },
+  "fu_mbele": {
+    "awing": "fu' mbélə",
+    "whisper_sw": "",
+    "current_speakable": "fu mbele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/fu_mbele.opus"
+  },
+  "fyae_anue": {
+    "awing": "fya'ə̂ anuə",
+    "whisper_sw": "",
+    "current_speakable": "fyae anue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/fyae_anue.opus"
+  },
+  "ka_nesonga": {
+    "awing": "ká' nəsoŋá",
+    "whisper_sw": "kwad nasumen",
+    "current_speakable": "ka nesonga",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ka_nesonga.opus"
+  },
+  "kwing_nkie": {
+    "awing": "kwíŋ nkǐə",
+    "whisper_sw": "kwenkiya",
+    "current_speakable": "kwing nkie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/kwing_nkie.opus"
+  },
+  "kwud_nkae": {
+    "awing": "kwud nká'ə",
+    "whisper_sw": "kunkaa.",
+    "current_speakable": "kwud nkae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/kwud_nkae.opus"
+  },
+  "mang_chato": {
+    "awing": "maŋ cha'tô",
+    "whisper_sw": "ma na chata",
+    "current_speakable": "mang chato",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/mang_chato.opus"
+  },
+  "mao_atsee": {
+    "awing": "ma'ô atsə'ə",
+    "whisper_sw": "mata",
+    "current_speakable": "mao atsee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/mao_atsee.opus"
+  },
+  "ma_melonge": {
+    "awing": "ma' məlóŋə",
+    "whisper_sw": "",
+    "current_speakable": "ma melonge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ma_melonge.opus"
+  },
+  "mba_epume": {
+    "awing": "mbá' əpúmə",
+    "whisper_sw": "done",
+    "current_speakable": "mba epume",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/mba_epume.opus"
+  },
+  "mbi_tengkee": {
+    "awing": "mbi təŋkə̂'ə",
+    "whisper_sw": "bi tanka",
+    "current_speakable": "mbi tenkee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/mbi_tengkee.opus"
+  },
+  "mechina_nekaa": {
+    "awing": "məchína nəka'á",
+    "whisper_sw": "mechin nilika",
+    "current_speakable": "mechina nekaa",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/mechina_nekaa.opus"
+  },
+  "mechina_tezae": {
+    "awing": "məchína təzá'ə",
+    "whisper_sw": "mechineteza",
+    "current_speakable": "mechina tezae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/mechina_tezae.opus"
+  },
+  "megte_achate": {
+    "awing": "megtə acha'tə",
+    "whisper_sw": "williams un以上na",
+    "current_speakable": "megte achate",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/megte_achate.opus"
+  },
+  "nchate_ese": {
+    "awing": "ncha'tə əsê",
+    "whisper_sw": "",
+    "current_speakable": "nchate ese",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nchate_ese.opus"
+  },
+  "nde_meloe": {
+    "awing": "ndě melo'ə",
+    "whisper_sw": "demlo",
+    "current_speakable": "nde meloe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nde_meloe.opus"
+  },
+  "ndi_mejie": {
+    "awing": "ndí' məjíə",
+    "whisper_sw": "di mizi",
+    "current_speakable": "ndi mejie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ndi_mejie.opus"
+  },
+  "ndzable_mesae": {
+    "awing": "ndzâblə məsá'ə",
+    "whisper_sw": "zablama sa",
+    "current_speakable": "ndzable mesae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ndzable_mesae.opus"
+  },
+  "ndzoe_alae": {
+    "awing": "ndzɔ́'ə alá'ə",
+    "whisper_sw": "zola",
+    "current_speakable": "ndzoe alae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ndzoe_alae.opus"
+  },
+  "netu_enumne": {
+    "awing": "nətú' ənumnə",
+    "whisper_sw": "na tuanumna.",
+    "current_speakable": "netu enumne",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/netu_enumne.opus"
+  },
+  "nga_mee": {
+    "awing": "ngá mə'ə́",
+    "whisper_sw": "gambo",
+    "current_speakable": "nga mee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nga_mee.opus"
+  },
+  "nga_nkwume": {
+    "awing": "ŋá' nkwumə",
+    "whisper_sw": "",
+    "current_speakable": "nga nkwume",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nga_nkwume.opus"
+  },
+  "nji_netogle": {
+    "awing": "nji' nətôglə",
+    "whisper_sw": "junoatopna",
+    "current_speakable": "nji netogle",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nji_netogle.opus"
+  },
+  "nkang_nkie": {
+    "awing": "nkaŋ nkǐə",
+    "whisper_sw": "固. d zad.",
+    "current_speakable": "nkang nkie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nkang_nkie.opus"
+  },
+  "nka_meneeme": {
+    "awing": "nká' məneemə",
+    "whisper_sw": "kama nima.",
+    "current_speakable": "nka meneeme",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nka_meneeme.opus"
+  },
+  "nka_nepume": {
+    "awing": "nká' nəpumə́",
+    "whisper_sw": "unkarna puma.",
+    "current_speakable": "nka nepume",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nka_nepume.opus"
+  },
+  "nked_teele": {
+    "awing": "nked teelə́",
+    "whisper_sw": "katera",
+    "current_speakable": "nked teele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nked_teele.opus"
+  },
+  "nkenge_angwale": {
+    "awing": "nkəŋə aŋwa'lə",
+    "whisper_sw": "",
+    "current_speakable": "nkenge angwale",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nkenge_angwale.opus"
+  },
+  "nkengk_ole": {
+    "awing": "nkəŋk ô'lə",
+    "whisper_sw": "ng streaming",
+    "current_speakable": "nkenk ole",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nkengk_ole.opus"
+  },
+  "nkya_nefange": {
+    "awing": "nkya' nəfaŋə́",
+    "whisper_sw": "commenting",
+    "current_speakable": "nkya nefange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nkya_nefange.opus"
+  },
+  "nkya_sange": {
+    "awing": "nkya' sáŋə",
+    "whisper_sw": "its seven",
+    "current_speakable": "nkya sange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/nkya_sange.opus"
+  },
+  "ntang_ngoe": {
+    "awing": "ntaŋ ngɔ'ə́",
+    "whisper_sw": "dango",
+    "current_speakable": "ntang ngoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ntang_ngoe.opus"
+  },
+  "panko_akoe": {
+    "awing": "pánkó akɔ'ə",
+    "whisper_sw": "pankuko",
+    "current_speakable": "panko akoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/panko_akoe.opus"
+  },
+  "pa_eshia": {
+    "awing": "pá əshí'á",
+    "whisper_sw": "府 fve kaya kila shorthand",
+    "current_speakable": "pa eshia",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/pa_eshia.opus"
+  },
+  "pee_atue": {
+    "awing": "pe'ə atûə",
+    "whisper_sw": "",
+    "current_speakable": "pee atue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/pee_atue.opus"
+  },
+  "po_mbeebe": {
+    "awing": "pó' mbeebə",
+    "whisper_sw": "",
+    "current_speakable": "po mbeebe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/po_mbeebe.opus"
+  },
+  "po_mbo": {
+    "awing": "pó' mbô",
+    "whisper_sw": "",
+    "current_speakable": "po mbo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/po_mbo.opus"
+  },
+  "sea_alia": {
+    "awing": "sə'â ali'á",
+    "whisper_sw": "ulia",
+    "current_speakable": "sea alia",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/sea_alia.opus"
+  },
+  "sog_etsea": {
+    "awing": "sog ətsə'á",
+    "whisper_sw": "somose",
+    "current_speakable": "sog etsea",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/sog_etsea.opus"
+  },
+  "tako_ngwune": {
+    "awing": "táko' ŋwunə",
+    "whisper_sw": "",
+    "current_speakable": "tako ngwune",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/tako_ngwune.opus"
+  },
+  "tako_sange": {
+    "awing": "táko' sáŋə́",
+    "whisper_sw": "",
+    "current_speakable": "tako sange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/tako_sange.opus"
+  },
+  "tasa_moga": {
+    "awing": "tasa' móga",
+    "whisper_sw": "saka mubu",
+    "current_speakable": "tasa moga",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/tasa_moga.opus"
+  },
+  "ta_afae": {
+    "awing": "tä afa'ə",
+    "whisper_sw": "katha",
+    "current_speakable": "ta afae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ta_afae.opus"
+  },
+  "ta_nga": {
+    "awing": "tá' ngǎ",
+    "whisper_sw": "tanga",
+    "current_speakable": "ta nga",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/ta_nga.opus"
+  },
+  "toke_nkadte": {
+    "awing": "tó'kə nkadtə",
+    "whisper_sw": "tokungkata",
+    "current_speakable": "toke nkadte",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/toke_nkadte.opus"
+  },
+  "toke_nkone": {
+    "awing": "tó'kə nkonə",
+    "whisper_sw": "",
+    "current_speakable": "toke nkone",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/toke_nkone.opus"
+  },
+  "to_nkie": {
+    "awing": "tó' nkǐə",
+    "whisper_sw": "tokia",
+    "current_speakable": "to nkie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/to_nkie.opus"
+  },
+  "tso_etsea": {
+    "awing": "tsó' ətsə'á",
+    "whisper_sw": "itzuwana",
+    "current_speakable": "tso etsea",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/tso_etsea.opus"
+  },
+  "tso_mbiee": {
+    "awing": "tsó' mbîəə",
+    "whisper_sw": "what's up mbia?",
+    "current_speakable": "tso mbiee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/tso_mbiee.opus"
+  },
+  "tso_mbo": {
+    "awing": "tsó' mbô",
+    "whisper_sw": "sambu",
+    "current_speakable": "tso mbo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/tso_mbo.opus"
+  },
+  "tu_nkie": {
+    "awing": "tú nkǐə",
+    "whisper_sw": "four톱",
+    "current_speakable": "tu nkie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/tu_nkie.opus"
+  },
+  "we_atsea": {
+    "awing": "wê atsə'á",
+    "whisper_sw": "we at!]",
+    "current_speakable": "we atsea",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/we_atsea.opus"
+  },
+  "yeeka_elia": {
+    "awing": "yéeka əli'á",
+    "whisper_sw": "yue kalia",
+    "current_speakable": "yeeka elia",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/yeeka_elia.opus"
+  },
+  "zo_nkie": {
+    "awing": "zó' nkǐə",
+    "whisper_sw": "",
+    "current_speakable": "zo nkie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/man/zo_nkie.opus"
+  },
+  "achie": {
+    "awing": "achîə",
+    "whisper_sw": "",
+    "current_speakable": "achie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/achie.wav"
+  },
+  "afobla": {
+    "awing": "afɔ́bla",
+    "whisper_sw": "afabla",
+    "current_speakable": "afobla",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/afobla.wav"
+  },
+  "afue": {
+    "awing": "afûə",
+    "whisper_sw": "f4",
+    "current_speakable": "afue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/afue.wav"
+  },
+  "agha": {
+    "awing": "agha",
+    "whisper_sw": "yaa",
+    "current_speakable": "aga",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/agha.wav"
+  },
+  "agha_ghena": {
+    "awing": "agha ghena",
+    "whisper_sw": "ulan ulan",
+    "current_speakable": "aga gena",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/agha_ghena.wav"
+  },
+  "agha_yia": {
+    "awing": "agha yia",
+    "whisper_sw": "aja aja aja aja",
+    "current_speakable": "aga yia",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/agha_yia.wav"
+  },
+  "ajwie": {
+    "awing": "ajwíə",
+    "whisper_sw": "az yu",
+    "current_speakable": "ajwie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ajwie.wav"
+  },
+  "akangetue": {
+    "awing": "akáŋətûə",
+    "whisper_sw": "nkara natua",
+    "current_speakable": "akangetue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/akangetue.wav"
+  },
+  "ake": {
+    "awing": "aké",
+    "whisper_sw": "aka",
+    "current_speakable": "ake",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ake.wav"
+  },
+  "akemotogie": {
+    "awing": "akəmótógiə",
+    "whisper_sw": "aka motu jia",
+    "current_speakable": "akemotogie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/akemotogie.wav"
+  },
+  "akoole": {
+    "awing": "akoolə",
+    "whisper_sw": "akol",
+    "current_speakable": "akoole",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/akoole.wav"
+  },
+  "akwengo": {
+    "awing": "akwəŋó",
+    "whisper_sw": "kunga",
+    "current_speakable": "akwengo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/akwengo.wav"
+  },
+  "ale": {
+    "awing": "àlě",
+    "whisper_sw": "alee",
+    "current_speakable": "ale",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ale.wav"
+  },
+  "aleeme": {
+    "awing": "aləəmə",
+    "whisper_sw": "alema",
+    "current_speakable": "aleeme",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/aleeme.wav"
+  },
+  "alue": {
+    "awing": "alu'ə",
+    "whisper_sw": "allua",
+    "current_speakable": "alue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/alue.wav"
+  },
+  "anuetajie": {
+    "awing": "anuətájiə",
+    "whisper_sw": "anuwa tija",
+    "current_speakable": "anuetajie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/anuetajie.wav"
+  },
+  "anuetame": {
+    "awing": "anuətámə",
+    "whisper_sw": "un tunnels",
+    "current_speakable": "anuetame",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/anuetame.wav"
+  },
+  "apeeme": {
+    "awing": "apeemə",
+    "whisper_sw": "apeema",
+    "current_speakable": "apeeme",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/apeeme.wav"
+  },
+  "apene": {
+    "awing": "Apɛnə",
+    "whisper_sw": "apena",
+    "current_speakable": "apene",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/apene.wav"
+  },
+  "apengetue": {
+    "awing": "apəŋətûə",
+    "whisper_sw": "anpau watuwa",
+    "current_speakable": "apengetue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/apengetue.wav"
+  },
+  "apo": {
+    "awing": "apô",
+    "whisper_sw": "apo",
+    "current_speakable": "apo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/apo.wav"
+  },
+  "apue": {
+    "awing": "apúə",
+    "whisper_sw": "i'm poor",
+    "current_speakable": "apue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/apue.wav"
+  },
+  "ateele": {
+    "awing": "atéelə",
+    "whisper_sw": "atela",
+    "current_speakable": "ateele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ateele.wav"
+  },
+  "atie": {
+    "awing": "atǐə",
+    "whisper_sw": "atsia",
+    "current_speakable": "atie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/atie.wav"
+  },
+  "atogle": {
+    "awing": "àtɔ̂glə",
+    "whisper_sw": "atola",
+    "current_speakable": "atogle",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/atogle.wav"
+  },
+  "atue": {
+    "awing": "atûə",
+    "whisper_sw": "",
+    "current_speakable": "atue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/atue.wav"
+  },
+  "atuekeene": {
+    "awing": "atúəkeenə",
+    "whisper_sw": "twitter na maimiu",
+    "current_speakable": "atuekeene",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/atuekeene.wav"
+  },
+  "awe": {
+    "awing": "awɛ",
+    "whisper_sw": "we",
+    "current_speakable": "awe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/awe.wav"
+  },
+  "awenkie": {
+    "awing": "awěnkɨə",
+    "whisper_sw": "awen kia.",
+    "current_speakable": "awenkie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/awenkie.wav"
+  },
+  "bole": {
+    "awing": "bólə",
+    "whisper_sw": "bale",
+    "current_speakable": "bole",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/bole.wav"
+  },
+  "chwie": {
+    "awing": "chwíə",
+    "whisper_sw": "",
+    "current_speakable": "chwie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/chwie.wav"
+  },
+  "efe": {
+    "awing": "əfê",
+    "whisper_sw": "afey",
+    "current_speakable": "efe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/efe.wav"
+  },
+  "efele": {
+    "awing": "əfelə",
+    "whisper_sw": "infer",
+    "current_speakable": "efele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/efele.wav"
+  },
+  "efo": {
+    "awing": "əfó",
+    "whisper_sw": "afo",
+    "current_speakable": "efo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/efo.wav"
+  },
+  "eguere": {
+    "awing": "əgùərə",
+    "whisper_sw": "gura",
+    "current_speakable": "eguere",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/eguere.wav"
+  },
+  "ekwenkwange": {
+    "awing": "əkwə̌nkwáŋə̂",
+    "whisper_sw": "kwaikona?",
+    "current_speakable": "ekwenkwange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ekwenkwange.wav"
+  },
+  "ekwuno": {
+    "awing": "əkwunɔ́",
+    "whisper_sw": "kuna.",
+    "current_speakable": "ekwuno",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ekwuno.wav"
+  },
+  "ele": {
+    "awing": "əlě",
+    "whisper_sw": "later",
+    "current_speakable": "ele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ele.wav"
+  },
+  "elelo": {
+    "awing": "əleló",
+    "whisper_sw": "and then",
+    "current_speakable": "elelo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/elelo.wav"
+  },
+  "epume": {
+    "awing": "əpúmə",
+    "whisper_sw": "cha pooma",
+    "current_speakable": "epume",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/epume.wav"
+  },
+  "eshie": {
+    "awing": "əshîə",
+    "whisper_sw": "hii shi",
+    "current_speakable": "eshie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/eshie.wav"
+  },
+  "etse": {
+    "awing": "ətsê",
+    "whisper_sw": "tsu",
+    "current_speakable": "etse",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/etse.wav"
+  },
+  "fablo": {
+    "awing": "fablô",
+    "whisper_sw": "fadlo",
+    "current_speakable": "fablo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/fablo.wav"
+  },
+  "fange": {
+    "awing": "fáŋə",
+    "whisper_sw": "",
+    "current_speakable": "fange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/fange.wav"
+  },
+  "fe": {
+    "awing": "fê",
+    "whisper_sw": "",
+    "current_speakable": "fe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/fe.wav"
+  },
+  "fege": {
+    "awing": "fəgə̂",
+    "whisper_sw": "",
+    "current_speakable": "fege",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/fege.wav"
+  },
+  "fele": {
+    "awing": "felə",
+    "whisper_sw": "",
+    "current_speakable": "fele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/fele.wav"
+  },
+  "feme": {
+    "awing": "fəmə",
+    "whisper_sw": "forma",
+    "current_speakable": "feme",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/feme.wav"
+  },
+  "fia": {
+    "awing": "fía",
+    "whisper_sw": "yeah",
+    "current_speakable": "fia",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/fia.wav"
+  },
+  "file": {
+    "awing": "filə",
+    "whisper_sw": "fena",
+    "current_speakable": "file",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/file.wav"
+  },
+  "fine": {
+    "awing": "fínə",
+    "whisper_sw": "tena.",
+    "current_speakable": "fine",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/fine.wav"
+  },
+  "foa": {
+    "awing": "fo'â",
+    "whisper_sw": "않아",
+    "current_speakable": "foa",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/foa.wav"
+  },
+  "foga": {
+    "awing": "fóga",
+    "whisper_sw": "fuka",
+    "current_speakable": "foga",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/foga.wav"
+  },
+  "foome": {
+    "awing": "fóomə",
+    "whisper_sw": "form",
+    "current_speakable": "foome",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/foome.wav"
+  },
+  "ghange": {
+    "awing": "ghaŋə",
+    "whisper_sw": "leng",
+    "current_speakable": "gange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ghange.wav"
+  },
+  "ghelo": {
+    "awing": "ghɛlɔ́",
+    "whisper_sw": "ngera",
+    "current_speakable": "gelo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ghelo.wav"
+  },
+  "gheno": {
+    "awing": "ghɛnɔ́",
+    "whisper_sw": "gena",
+    "current_speakable": "geno",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/gheno.wav"
+  },
+  "gho": {
+    "awing": "ghǒ",
+    "whisper_sw": "go!",
+    "current_speakable": "go",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/gho.wav"
+  },
+  "gome": {
+    "awing": "gómə",
+    "whisper_sw": "goma",
+    "current_speakable": "gome",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/gome.wav"
+  },
+  "jie": {
+    "awing": "jíə",
+    "whisper_sw": "je",
+    "current_speakable": "jie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/jie.wav"
+  },
+  "june": {
+    "awing": "júnə",
+    "whisper_sw": "jonah",
+    "current_speakable": "june",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/june.wav"
+  },
+  "jwae": {
+    "awing": "jwa'ə",
+    "whisper_sw": "juwa",
+    "current_speakable": "jwae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/jwae.wav"
+  },
+  "ka": {
+    "awing": "kâ",
+    "whisper_sw": "ka?",
+    "current_speakable": "ka",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ka.wav"
+  },
+  "kake": {
+    "awing": "kakə̂",
+    "whisper_sw": "kaka",
+    "current_speakable": "kake",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/kake.wav"
+  },
+  "kaye": {
+    "awing": "káyé",
+    "whisper_sw": "kama",
+    "current_speakable": "kaye",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/kaye.wav"
+  },
+  "keene": {
+    "awing": "kəənə̂",
+    "whisper_sw": "ken",
+    "current_speakable": "keene",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/keene.wav"
+  },
+  "kele": {
+    "awing": "kélə",
+    "whisper_sw": "",
+    "current_speakable": "kele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/kele.wav"
+  },
+  "kiee": {
+    "awing": "kîəə",
+    "whisper_sw": "tia",
+    "current_speakable": "kiee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/kiee.wav"
+  },
+  "kong": {
+    "awing": "kóŋ",
+    "whisper_sw": "",
+    "current_speakable": "kong",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/kong.wav"
+  },
+  "konge": {
+    "awing": "koŋə",
+    "whisper_sw": "nkoma",
+    "current_speakable": "konge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/konge.wav"
+  },
+  "kongo": {
+    "awing": "kóŋɔ́",
+    "whisper_sw": "kama",
+    "current_speakable": "kongo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/kongo.wav"
+  },
+  "koo": {
+    "awing": "kó'ó",
+    "whisper_sw": "",
+    "current_speakable": "koo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/koo.wav"
+  },
+  "kwote": {
+    "awing": "kwɔ'tə",
+    "whisper_sw": "kwa tte",
+    "current_speakable": "kwote",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/kwote.wav"
+  },
+  "lae": {
+    "awing": "lá'ə̀",
+    "whisper_sw": "naa",
+    "current_speakable": "lae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/lae.wav"
+  },
+  "le": {
+    "awing": "Lɛ̌",
+    "whisper_sw": "le",
+    "current_speakable": "le",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/le.wav"
+  },
+  "leba": {
+    "awing": "ləba",
+    "whisper_sw": "napa",
+    "current_speakable": "leba",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/leba.wav"
+  },
+  "lebe": {
+    "awing": "ləbə",
+    "whisper_sw": "never",
+    "current_speakable": "lebe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/lebe.wav"
+  },
+  "lee": {
+    "awing": "lə'ə",
+    "whisper_sw": "mehh",
+    "current_speakable": "lee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/lee.wav"
+  },
+  "leere": {
+    "awing": "lɛ̀ərə",
+    "whisper_sw": "naa",
+    "current_speakable": "leere",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/leere.wav"
+  },
+  "lele": {
+    "awing": "lelə",
+    "whisper_sw": "nera",
+    "current_speakable": "lele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/lele.wav"
+  },
+  "lie": {
+    "awing": "lí'ə",
+    "whisper_sw": "lia",
+    "current_speakable": "lie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/lie.wav"
+  },
+  "loke": {
+    "awing": "lókə",
+    "whisper_sw": "loka",
+    "current_speakable": "loke",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/loke.wav"
+  },
+  "longne": {
+    "awing": "lóŋnə",
+    "whisper_sw": "lama",
+    "current_speakable": "longne",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/longne.wav"
+  },
+  "loooo": {
+    "awing": "looóɔ",
+    "whisper_sw": "lona",
+    "current_speakable": "loooo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/loooo.wav"
+  },
+  "lyange": {
+    "awing": "lyáŋə",
+    "whisper_sw": "lerwa",
+    "current_speakable": "lyange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/lyange.wav"
+  },
+  "ma": {
+    "awing": "ma",
+    "whisper_sw": "me",
+    "current_speakable": "ma",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ma.wav"
+  },
+  "mabna": {
+    "awing": "mábna",
+    "whisper_sw": "moona",
+    "current_speakable": "mabna",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mabna.wav"
+  },
+  "mafe": {
+    "awing": "mâfɛ",
+    "whisper_sw": "maafe",
+    "current_speakable": "mafe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mafe.wav"
+  },
+  "mame": {
+    "awing": "mámé",
+    "whisper_sw": "mama",
+    "current_speakable": "mame",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mame.wav"
+  },
+  "manggye": {
+    "awing": "maŋgyé",
+    "whisper_sw": "mingi",
+    "current_speakable": "manggye",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/manggye.wav"
+  },
+  "mata": {
+    "awing": "máta",
+    "whisper_sw": "mata!",
+    "current_speakable": "mata",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mata.wav"
+  },
+  "mbachi": {
+    "awing": "Mbá'chi",
+    "whisper_sw": "bachi, apisi",
+    "current_speakable": "mbachi",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mbachi.wav"
+  },
+  "mbe": {
+    "awing": "mbê",
+    "whisper_sw": "",
+    "current_speakable": "mbe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mbe.wav"
+  },
+  "mbeta": {
+    "awing": "mbe'ta",
+    "whisper_sw": "b.",
+    "current_speakable": "mbeta",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mbeta.wav"
+  },
+  "mbie": {
+    "awing": "mbi'ə",
+    "whisper_sw": "beer",
+    "current_speakable": "mbie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mbie.wav"
+  },
+  "mbifue": {
+    "awing": "mbifúə",
+    "whisper_sw": "bifu",
+    "current_speakable": "mbifue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mbifue.wav"
+  },
+  "mbo": {
+    "awing": "mbô",
+    "whisper_sw": "",
+    "current_speakable": "mbo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mbo.wav"
+  },
+  "mbwange": {
+    "awing": "mbwáŋə",
+    "whisper_sw": "wer",
+    "current_speakable": "mbwange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mbwange.wav"
+  },
+  "mbyaabe": {
+    "awing": "mbyáabə",
+    "whisper_sw": "biya",
+    "current_speakable": "mbyaabe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mbyaabe.wav"
+  },
+  "mese": {
+    "awing": "məse",
+    "whisper_sw": "nuse",
+    "current_speakable": "mese",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mese.wav"
+  },
+  "meteeno": {
+    "awing": "məteenɔ́",
+    "whisper_sw": "",
+    "current_speakable": "meteeno",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/meteeno.wav"
+  },
+  "metwe": {
+    "awing": "mətwê",
+    "whisper_sw": "mit wtedy",
+    "current_speakable": "metwe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/metwe.wav"
+  },
+  "miee": {
+    "awing": "mîəə",
+    "whisper_sw": "mie",
+    "current_speakable": "miee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/miee.wav"
+  },
+  "mo": {
+    "awing": "mɔ́",
+    "whisper_sw": "ma",
+    "current_speakable": "mo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/mo.wav"
+  },
+  "moga": {
+    "awing": "móga",
+    "whisper_sw": "moga!",
+    "current_speakable": "moga",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/moga.wav"
+  },
+  "moone": {
+    "awing": "móonə",
+    "whisper_sw": "mona",
+    "current_speakable": "moone",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/moone.wav"
+  },
+  "muto": {
+    "awing": "múto",
+    "whisper_sw": "mato",
+    "current_speakable": "muto",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/muto.wav"
+  },
+  "na": {
+    "awing": "nâ",
+    "whisper_sw": "n",
+    "current_speakable": "na",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/na.wav"
+  },
+  "nae": {
+    "awing": "ná'ə",
+    "whisper_sw": "nah",
+    "current_speakable": "nae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nae.wav"
+  },
+  "nalano": {
+    "awing": "nalanɔ́",
+    "whisper_sw": "blelele",
+    "current_speakable": "nalano",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nalano.wav"
+  },
+  "nangke": {
+    "awing": "náŋkə",
+    "whisper_sw": "nanka",
+    "current_speakable": "nanke",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nangke.wav"
+  },
+  "nda": {
+    "awing": "nda",
+    "whisper_sw": "nda",
+    "current_speakable": "nda",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nda.wav"
+  },
+  "ndange": {
+    "awing": "ndaŋə",
+    "whisper_sw": "ndunga",
+    "current_speakable": "ndange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ndange.wav"
+  },
+  "nde": {
+    "awing": "ndě",
+    "whisper_sw": "nde",
+    "current_speakable": "nde",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nde.wav"
+  },
+  "ndo": {
+    "awing": "ndo",
+    "whisper_sw": "ndo",
+    "current_speakable": "ndo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ndo.wav"
+  },
+  "ndua": {
+    "awing": "ndua",
+    "whisper_sw": "ndua",
+    "current_speakable": "ndua",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ndua.wav"
+  },
+  "ndze": {
+    "awing": "ndzě",
+    "whisper_sw": "ndze?",
+    "current_speakable": "ndze",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ndze.wav"
+  },
+  "nebange": {
+    "awing": "nəbâŋə",
+    "whisper_sw": "na bang",
+    "current_speakable": "nebange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nebange.wav"
+  },
+  "nefyane": {
+    "awing": "nəfyânə",
+    "whisper_sw": "mafiana",
+    "current_speakable": "nefyane",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nefyane.wav"
+  },
+  "nekyeele": {
+    "awing": "nəkyéelə",
+    "whisper_sw": "ni kera",
+    "current_speakable": "nekyeele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nekyeele.wav"
+  },
+  "nelage": {
+    "awing": "nəlágə",
+    "whisper_sw": "",
+    "current_speakable": "nelage",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nelage.wav"
+  },
+  "nele": {
+    "awing": "nélə",
+    "whisper_sw": "nah",
+    "current_speakable": "nele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nele.wav"
+  },
+  "nelwei": {
+    "awing": "nəlwɛ̂ɨ",
+    "whisper_sw": "nee alote",
+    "current_speakable": "nelwei",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nelwei.wav"
+  },
+  "nelwie": {
+    "awing": "nəlwîə",
+    "whisper_sw": "",
+    "current_speakable": "nelwie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nelwie.wav"
+  },
+  "nenonge": {
+    "awing": "nənoŋə",
+    "whisper_sw": "no , 7 pen es",
+    "current_speakable": "nenonge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nenonge.wav"
+  },
+  "nepe": {
+    "awing": "nəpe",
+    "whisper_sw": "nipe",
+    "current_speakable": "nepe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nepe.wav"
+  },
+  "nepeene": {
+    "awing": "nəpéenə",
+    "whisper_sw": "napina",
+    "current_speakable": "nepeene",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nepeene.wav"
+  },
+  "nepeme": {
+    "awing": "nəpəmə",
+    "whisper_sw": "nepama",
+    "current_speakable": "nepeme",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nepeme.wav"
+  },
+  "nese": {
+    "awing": "nəse",
+    "whisper_sw": "nisi",
+    "current_speakable": "nese",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nese.wav"
+  },
+  "nesonge": {
+    "awing": "nəsoŋə",
+    "whisper_sw": "nesama",
+    "current_speakable": "nesonge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nesonge.wav"
+  },
+  "netee": {
+    "awing": "nətə'ə",
+    "whisper_sw": "naddo",
+    "current_speakable": "netee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/netee.wav"
+  },
+  "neto": {
+    "awing": "nətô",
+    "whisper_sw": "neto",
+    "current_speakable": "neto",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/neto.wav"
+  },
+  "netogle": {
+    "awing": "nətôglə",
+    "whisper_sw": "netukla",
+    "current_speakable": "netogle",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/netogle.wav"
+  },
+  "netonge": {
+    "awing": "nətoŋə́",
+    "whisper_sw": "mut glaire nda",
+    "current_speakable": "netonge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/netonge.wav"
+  },
+  "netue": {
+    "awing": "nətú'ə",
+    "whisper_sw": "netuo",
+    "current_speakable": "netue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/netue.wav"
+  },
+  "nggwenge": {
+    "awing": "ŋgwɛ̂ŋə",
+    "whisper_sw": "nboards",
+    "current_speakable": "nggwenge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nggwenge.wav"
+  },
+  "ngwumne": {
+    "awing": "ngwumnə́",
+    "whisper_sw": "buena",
+    "current_speakable": "ngwumne",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ngwumne.wav"
+  },
+  "ngye": {
+    "awing": "ngye",
+    "whisper_sw": "new destuti",
+    "current_speakable": "ngye",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ngye.wav"
+  },
+  "ngyie": {
+    "awing": "ngyǐə",
+    "whisper_sw": "ndiye",
+    "current_speakable": "ngyie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ngyie.wav"
+  },
+  "nja": {
+    "awing": "njá",
+    "whisper_sw": "ja",
+    "current_speakable": "nja",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nja.wav"
+  },
+  "njie": {
+    "awing": "njiə",
+    "whisper_sw": "ndiya?",
+    "current_speakable": "njie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/njie.wav"
+  },
+  "nkadte": {
+    "awing": "nkadtə",
+    "whisper_sw": "nukata",
+    "current_speakable": "nkadte",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nkadte.wav"
+  },
+  "nkange": {
+    "awing": "nkaŋə",
+    "whisper_sw": "kama",
+    "current_speakable": "nkange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nkange.wav"
+  },
+  "nkie": {
+    "awing": "nkǐə",
+    "whisper_sw": "kiya?",
+    "current_speakable": "nkie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nkie.wav"
+  },
+  "nkoe": {
+    "awing": "nkɔ́'ə",
+    "whisper_sw": "mkwa",
+    "current_speakable": "nkoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nkoe.wav"
+  },
+  "nkwa": {
+    "awing": "nkwa",
+    "whisper_sw": "ngoa",
+    "current_speakable": "nkwa",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nkwa.wav"
+  },
+  "nkwenge": {
+    "awing": "nkwə̂ŋə",
+    "whisper_sw": "mkwenya",
+    "current_speakable": "nkwenge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nkwenge.wav"
+  },
+  "nonno": {
+    "awing": "nonnɔ́",
+    "whisper_sw": "nung na",
+    "current_speakable": "nonno",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nonno.wav"
+  },
+  "nteeme": {
+    "awing": "ntéəmə",
+    "whisper_sw": "ntema",
+    "current_speakable": "nteeme",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nteeme.wav"
+  },
+  "ntie": {
+    "awing": "ntîə",
+    "whisper_sw": "siye",
+    "current_speakable": "ntie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ntie.wav"
+  },
+  "ntoe": {
+    "awing": "ntó'ə",
+    "whisper_sw": "natawa",
+    "current_speakable": "ntoe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ntoe.wav"
+  },
+  "ntsedndzeme": {
+    "awing": "ntsêdndzəmə",
+    "whisper_sw": "zaunin dama",
+    "current_speakable": "ntsedndzeme",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ntsedndzeme.wav"
+  },
+  "ntsonge": {
+    "awing": "ntsɔ̂ŋə",
+    "whisper_sw": "nesang",
+    "current_speakable": "ntsonge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ntsonge.wav"
+  },
+  "ntsoole": {
+    "awing": "ntsoolə",
+    "whisper_sw": "tora",
+    "current_speakable": "ntsoole",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ntsoole.wav"
+  },
+  "ntue": {
+    "awing": "ntûə",
+    "whisper_sw": "tua",
+    "current_speakable": "ntue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ntue.wav"
+  },
+  "nue": {
+    "awing": "nûə",
+    "whisper_sw": "no",
+    "current_speakable": "nue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nue.wav"
+  },
+  "nwa": {
+    "awing": "nwâ",
+    "whisper_sw": "noi",
+    "current_speakable": "nwa",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/nwa.wav"
+  },
+  "panapeele": {
+    "awing": "panápəələ",
+    "whisper_sw": "hah!",
+    "current_speakable": "panapeele",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/panapeele.wav"
+  },
+  "pange": {
+    "awing": "paŋə",
+    "whisper_sw": "bye!",
+    "current_speakable": "pange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pange.wav"
+  },
+  "pangpange": {
+    "awing": "paŋpaŋə",
+    "whisper_sw": "pama",
+    "current_speakable": "pangpange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pangpange.wav"
+  },
+  "pano": {
+    "awing": "panô",
+    "whisper_sw": "vana",
+    "current_speakable": "pano",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pano.wav"
+  },
+  "panpange": {
+    "awing": "panpaŋə",
+    "whisper_sw": "pam pam",
+    "current_speakable": "panpange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/panpange.wav"
+  },
+  "pe": {
+    "awing": "pə",
+    "whisper_sw": "",
+    "current_speakable": "pe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pe.wav"
+  },
+  "pee": {
+    "awing": "pèe",
+    "whisper_sw": "deal...",
+    "current_speakable": "pee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pee.wav"
+  },
+  "pege": {
+    "awing": "pegə",
+    "whisper_sw": "baka",
+    "current_speakable": "pege",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pege.wav"
+  },
+  "pie": {
+    "awing": "pìə",
+    "whisper_sw": "yeah",
+    "current_speakable": "pie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pie.wav"
+  },
+  "pimne": {
+    "awing": "pímnə",
+    "whisper_sw": "bimna",
+    "current_speakable": "pimne",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pimne.wav"
+  },
+  "pita": {
+    "awing": "píta",
+    "whisper_sw": "bita",
+    "current_speakable": "pita",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pita.wav"
+  },
+  "pite": {
+    "awing": "pítə",
+    "whisper_sw": "pita",
+    "current_speakable": "pite",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pite.wav"
+  },
+  "poa": {
+    "awing": "po'á",
+    "whisper_sw": "far",
+    "current_speakable": "poa",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/poa.wav"
+  },
+  "poe": {
+    "awing": "pó'ə",
+    "whisper_sw": "bwah",
+    "current_speakable": "poe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/poe.wav"
+  },
+  "pwodke": {
+    "awing": "pwódkə",
+    "whisper_sw": "gwanka",
+    "current_speakable": "pwodke",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pwodke.wav"
+  },
+  "pya": {
+    "awing": "pyâ",
+    "whisper_sw": "yeah",
+    "current_speakable": "pya",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/pya.wav"
+  },
+  "sae": {
+    "awing": "sa'ə",
+    "whisper_sw": "fra",
+    "current_speakable": "sae",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/sae.wav"
+  },
+  "sake": {
+    "awing": "sakə",
+    "whisper_sw": "sana",
+    "current_speakable": "sake",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/sake.wav"
+  },
+  "sama": {
+    "awing": "sáma",
+    "whisper_sw": "sema",
+    "current_speakable": "sama",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/sama.wav"
+  },
+  "sane": {
+    "awing": "sá'nə",
+    "whisper_sw": "",
+    "current_speakable": "sane",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/sane.wav"
+  },
+  "sange": {
+    "awing": "sáŋə",
+    "whisper_sw": "sang.",
+    "current_speakable": "sange",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/sange.wav"
+  },
+  "seeke": {
+    "awing": "séekə",
+    "whisper_sw": "fukka",
+    "current_speakable": "seeke",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/seeke.wav"
+  },
+  "sene": {
+    "awing": "sénə",
+    "whisper_sw": "",
+    "current_speakable": "sene",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/sene.wav"
+  },
+  "so": {
+    "awing": "sô",
+    "whisper_sw": "so",
+    "current_speakable": "so",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/so.wav"
+  },
+  "soge": {
+    "awing": "sogə",
+    "whisper_sw": "suga",
+    "current_speakable": "soge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/soge.wav"
+  },
+  "songe": {
+    "awing": "sóŋə",
+    "whisper_sw": "sore",
+    "current_speakable": "songe",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/songe.wav"
+  },
+  "ta": {
+    "awing": "tǎ",
+    "whisper_sw": "ta",
+    "current_speakable": "ta",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ta.wav"
+  },
+  "tamto": {
+    "awing": "tâmto",
+    "whisper_sw": "tamto",
+    "current_speakable": "tamto",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/tamto.wav"
+  },
+  "tate": {
+    "awing": "tátə",
+    "whisper_sw": "tata",
+    "current_speakable": "tate",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/tate.wav"
+  },
+  "teka": {
+    "awing": "təká",
+    "whisper_sw": "tuka",
+    "current_speakable": "teka",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/teka.wav"
+  },
+  "tie": {
+    "awing": "tɨ̂ə",
+    "whisper_sw": "",
+    "current_speakable": "tie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/tie.wav"
+  },
+  "tome": {
+    "awing": "tómə",
+    "whisper_sw": "tama.",
+    "current_speakable": "tome",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/tome.wav"
+  },
+  "tue": {
+    "awing": "tûə",
+    "whisper_sw": "tua",
+    "current_speakable": "tue",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/tue.wav"
+  },
+  "tuga": {
+    "awing": "túga",
+    "whisper_sw": "xukur",
+    "current_speakable": "tuga",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/tuga.wav"
+  },
+  "tume": {
+    "awing": "túmə",
+    "whisper_sw": "tumma",
+    "current_speakable": "tume",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/tume.wav"
+  },
+  "tyanto": {
+    "awing": "tyantɔ̌",
+    "whisper_sw": "sianta",
+    "current_speakable": "tyanto",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/tyanto.wav"
+  },
+  "wuee": {
+    "awing": "wǔəə",
+    "whisper_sw": "woi",
+    "current_speakable": "wuee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/wuee.wav"
+  },
+  "ye": {
+    "awing": "yə",
+    "whisper_sw": "yeah",
+    "current_speakable": "ye",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/ye.wav"
+  },
+  "yie": {
+    "awing": "yǐə",
+    "whisper_sw": "yeah",
+    "current_speakable": "yie",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/yie.wav"
+  },
+  "yila": {
+    "awing": "yɨ̌la",
+    "whisper_sw": "yira",
+    "current_speakable": "yila",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/yila.wav"
+  },
+  "yo": {
+    "awing": "yó",
+    "whisper_sw": "yuh",
+    "current_speakable": "yo",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/yo.wav"
+  },
+  "za": {
+    "awing": "zá",
+    "whisper_sw": "za",
+    "current_speakable": "za",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/za.wav"
+  },
+  "zee": {
+    "awing": "zé'ə",
+    "whisper_sw": "ya",
+    "current_speakable": "zee",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/zee.wav"
+  },
+  "zi": {
+    "awing": "zí",
+    "whisper_sw": "zu",
+    "current_speakable": "zi",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/zi.wav"
+  },
+  "zonge": {
+    "awing": "zòŋə́",
+    "whisper_sw": "zuma",
+    "current_speakable": "zonge",
+    "file": "android/install_time_assets/src/main/assets/audio/native/vocabulary/zonge.wav"
+  }
+}
