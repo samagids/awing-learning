@@ -793,6 +793,27 @@ class _RecordTabState extends State<_RecordTab> {
   // ==================== Recording ====================
 
   Future<void> _startRecording(_RecordableItem item) async {
+    // Session 60+ block-duplicate-recordings rule. Refuse to record
+    // over a word that already has an approved canonical native
+    // recording in the AAB. Dev Mode users (developer/admins) follow
+    // the same rule as public Contribute screen — if a re-record is
+    // genuinely needed, replace the file in assets/audio/native/
+    // directly and rebuild.
+    if (NativeAudioInventory.instance.hasCanonical(item.audioKey)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '"${item.awing}" already has an approved native '
+              'recording. To replace it, swap the file in '
+              'assets/audio/native/ and rebuild.',
+            ),
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      }
+      return;
+    }
     if (!await _recorder.hasPermission()) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

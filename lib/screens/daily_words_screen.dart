@@ -29,6 +29,7 @@ class DailyWordsScreen extends StatefulWidget {
 
 class _DailyWordsScreenState extends State<DailyWordsScreen> {
   List<DailyWord> _picks = [];
+  int _learnedCount = 0;
   bool _loading = true;
   bool _notificationEnabled = false;
   int _hour = DailySuggestionService.defaultHour;
@@ -42,11 +43,41 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
     _load();
   }
 
+  /// Resolve the currently-active profile id, with a stable fallback
+  /// so the screen still works in edge cases (e.g. notification preview
+  /// before sign-in, profile selection mid-render).
+  String _profileId() {
+    final auth = context.read<AuthService>();
+    final id = auth.currentProfile?.id;
+    if (id == null || id.isEmpty) {
+      return DailySuggestionService.defaultProfileId;
+    }
+    return id;
+  }
+
   Future<void> _load() async {
     final auth = context.read<AuthService>();
-    final level = widget.levelOverride ?? auth.currentProfile?.currentLevel ?? 'beginner';
+    final level = widget.levelOverride ??
+        auth.currentProfile?.currentLevel ??
+        'beginner';
+    final profileId = _profileId();
     final picks = await DailySuggestionService.pickTodayItems(
       learnerLevel: level,
+      contentType: widget.contentType,
+      profileId: profileId,
+    );
+
+    // Opening this screen = the profile has VIEWED today's picks.
+    // Record them so the wordsLearnedCount tracks engagement (Session
+    // 60+ refactor — picks alone no longer count as "seen").
+    await DailySuggestionService.recordViewed(
+      profileId: profileId,
+      contentType: widget.contentType,
+      picks: picks,
+    );
+
+    final learnedCount = await DailySuggestionService.wordsLearnedCount(
+      profileId: profileId,
       contentType: widget.contentType,
     );
     final enabled = await DailySuggestionService.isEnabled();
@@ -55,6 +86,7 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
     if (!mounted) return;
     setState(() {
       _picks = picks;
+      _learnedCount = learnedCount;
       _notificationEnabled = enabled;
       _hour = h;
       _minute = m;
@@ -152,7 +184,10 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
       ),
     );
     if (ok != true) return;
-    await DailySuggestionService.resetSeenWords();
+    await DailySuggestionService.resetSeenWords(
+      profileId: _profileId(),
+      contentType: widget.contentType,
+    );
     await _load();
   }
 
@@ -224,6 +259,25 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
             Text(
               'Chosen for $tod, ${season == "wet" ? "rainy" : "dry"} season',
               style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+            ),
+            const SizedBox(height: 10),
+            // v1.17.4+ — per-profile learned counter. Increments when
+            // the profile opens this screen (recordViewed in _load).
+            // Pattern matches the games' seen-words coverage tracker
+            // from Session 113.
+            Row(
+              children: [
+                Icon(Icons.emoji_events, size: 18, color: _accentColor),
+                const SizedBox(width: 6),
+                Text(
+                  '$_learnedCount $_itemNoun learned',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: _accentColor,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

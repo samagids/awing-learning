@@ -25,6 +25,7 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
+import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 
 class RecordAudioScreen extends StatefulWidget {
   const RecordAudioScreen({super.key});
@@ -51,6 +52,23 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
   void initState() {
     super.initState();
     _pronunciation.init();
+    // v1.17.4+ — Session 60+ block-duplicate-recordings rule. Ensure the
+    // native-audio inventory is loaded so `_alreadyRecorded` can answer
+    // synchronously when the user picks a word from the autocomplete.
+    NativeAudioInventory.instance.load().then((_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  /// True if the currently-selected word has an approved canonical
+  /// native recording shipped in the AAB. Used to block duplicate
+  /// contributions per Session 60+ rule: "users cannot contribute for
+  /// words or sentences that already have a native recording and
+  /// approved."
+  bool get _alreadyRecorded {
+    if (_selected == null) return false;
+    final key = PronunciationService.audioKey(_selected!.awing);
+    return NativeAudioInventory.instance.hasCanonical(key);
   }
 
   @override
@@ -63,6 +81,22 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
 
   Future<void> _startRecording() async {
     if (_selected == null) return;
+    // Hard guard: refuse to record over a word that already has an
+    // approved native recording (Session 60+ block-duplicates rule).
+    // The UI also hides the record button in this case, but we
+    // defensively check here in case the build state was stale.
+    if (_alreadyRecorded) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'This word already has a native recording approved. '
+            'Please pick a different word.',
+          ),
+        ),
+      );
+      return;
+    }
     if (!await _recorder.hasPermission()) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -140,6 +174,18 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
 
   Future<void> _submit() async {
     if (_selected == null || !_hasRecording || _submitting) return;
+    // Defensive: if somehow the user got past the UI and recorded over
+    // a canonical-recorded word, bail before hitting the server.
+    if (_alreadyRecorded) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'This word already has a native recording — submission blocked.',
+          ),
+        ),
+      );
+      return;
+    }
     setState(() => _submitting = true);
 
     final auth = context.read<AuthService>();
@@ -222,9 +268,20 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
             const SizedBox(height: 16),
             if (_selected != null) _buildSelectedCard(),
             const SizedBox(height: 16),
-            if (_selected != null) _buildRecordControls(),
+            // Session 60+ — block duplicate recordings. When the picked
+            // word already has an approved native recording in the AAB
+            // (NativeAudioInventory.hasCanonical), we hide the record
+            // controls and show a clear "already recorded" panel
+            // instead. Users can pick a different word from the picker.
+            if (_selected != null && _alreadyRecorded)
+              _buildAlreadyRecordedBanner(),
+            if (_selected != null && !_alreadyRecorded)
+              _buildRecordControls(),
             const SizedBox(height: 24),
-            if (_selected != null && _hasRecording && !_submitted)
+            if (_selected != null &&
+                !_alreadyRecorded &&
+                _hasRecording &&
+                !_submitted)
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
@@ -350,6 +407,51 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
                   color: Color(0xFFDAA520), size: 30),
               onPressed: _playReference,
               tooltip: "Hear current pronunciation",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Shown in place of the record controls when the selected word
+  /// already has an approved native recording (Session 60+ rule).
+  Widget _buildAlreadyRecordedBanner() {
+    return Card(
+      color: Colors.amber.shade50,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: BorderSide(color: Colors.amber.shade400, width: 1.5)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(Icons.check_circle, color: Colors.amber.shade800, size: 26),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Already recorded",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amber.shade900,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    "This word already has an approved native recording. "
+                    "Please pick a different word from the search above.",
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.amber.shade900,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

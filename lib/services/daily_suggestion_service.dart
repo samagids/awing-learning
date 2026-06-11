@@ -1,42 +1,42 @@
 // daily_suggestion_service.dart
 // ---------------------------------------------------------------
-// v1.15.0 — On-device, rule-based "AI" that picks 3 Awing words to
+// v1.15.0 — On-device, rule-based "AI" that picks Awing words to
 // suggest to the learner each day and schedules a local
 // notification reminding them.
 //
-// No actual machine-learning model is shipped — the rules below are
-// hand-crafted heuristics tuned for kids learning a Cameroon
-// Grassfields Bantu language. The result is deterministic and
-// debuggable; nothing leaves the device.
+// v1.17.4+ refactor (Session 60+):
+//   - PER-PROFILE state. Picks, seen-words list, and learned-count
+//     are scoped by AuthService profile ID, so two kids on the same
+//     account (and the same device) each get their own daily words.
+//   - STRICT NO-REPEAT. Once a word is in the profile's seen set,
+//     it never returns until the profile resets history OR the pool
+//     is exhausted (then we re-roll).
+//   - OPEN-GATED COUNTER. Picks no longer count as "seen" until the
+//     profile actually opens the daily-words screen
+//     (recordViewed()). Then the wordsLearnedCount() returns the
+//     size of the seen set — matches the games' coverage tracker
+//     pattern from Session 113.
+//   - Notification settings (enable/time) remain DEVICE-GLOBAL —
+//     one daily reminder per device, not per profile.
 //
-// Scoring inputs:
-//   1. CURRENT LEVEL — picks only from words the learner can see in
-//      their current mode (Beginner / Medium / Expert). So a kid in
-//      Beginner mode never gets suggested an Expert-only word.
-//   2. SEASON — Awing region (Cameroon NW) has two seasons:
-//        - Dry: November-March (cool, harmattan winds)
-//        - Wet/rainy: April-October (peak May-September)
-//      Words tagged with seasonal categories get +season boost.
-//   3. TIME OF DAY — different categories suit different times:
-//        Morning (5-11): greetings, body parts, food (breakfast)
-//        Midday  (11-14): food, things, meals
-//        Afternoon (14-18): actions, family, school
-//        Evening (18-22): family, animals, home
-//   4. NOT SEEN BEFORE — words already shown to this learner get a
-//      heavy penalty so daily suggestions surface variety.
-//   5. CATEGORY ROTATION — within a week, try to cover different
-//      categories so the kid hears greetings on Monday, food on
-//      Tuesday, etc.
+// Scoring inputs (unchanged):
+//   1. CURRENT LEVEL, 2. SEASON, 3. TIME OF DAY, 4. NOT-SEEN BIAS,
+//   5. WEEKLY CATEGORY ROTATION, 6. AI semantic boost when
+//   embeddings blob is loaded.
 //
-// Persistence:
-//   - SharedPreferences key `daily_seen_words` — list of base keys
-//     already suggested to this learner.
-//   - SharedPreferences key `daily_last_suggestion` — yesterday's 3
-//     picks + the date they were shown (to avoid re-running scoring
-//     if the user re-opens the app on the same day).
-//   - SharedPreferences key `daily_notification_enabled` — bool.
-//   - SharedPreferences key `daily_notification_hour` — 0-23.
-//   - SharedPreferences key `daily_notification_minute` — 0-59.
+// Persistence (per profile, keys built via _profileKey()):
+//   - `daily_seen_words__<profileId>` — list of (awing|english)
+//     keys this profile has actually VIEWED (not just been picked).
+//   - `daily_seen_sentences__<profileId>` / `..._conversations__...`
+//   - `daily_last_suggestion_words__<profileId>` — today's picks +
+//     pick date (so re-opening the screen on the same day shows the
+//     same words rather than re-rolling).
+//   - `daily_last_suggestion_sentences__...` / `..._conversations...`
+//
+// Device-global (no profile suffix):
+//   - `daily_notification_enabled` — bool
+//   - `daily_notification_hour` — 0-23
+//   - `daily_notification_minute` — 0-59
 // ---------------------------------------------------------------
 
 import 'dart:convert';
@@ -84,23 +84,29 @@ class DailyWord {
 enum DailyContentType { words, sentences, conversations }
 
 class DailySuggestionService {
-  static const _kSeenWordsKey = 'daily_seen_words';
-  static const _kSeenSentencesKey = 'daily_seen_sentences';
-  static const _kSeenConversationsKey = 'daily_seen_conversations';
+  // ===== Per-profile storage key BASES (profileId is appended via
+  // _profileKey()). Old non-scoped keys preserved at end for one-time
+  // migration in pickTodayItems().
+  static const _kSeenWordsBase = 'daily_seen_words';
+  static const _kSeenSentencesBase = 'daily_seen_sentences';
+  static const _kSeenConversationsBase = 'daily_seen_conversations';
 
-  static const _kLastSuggestionWordsKey = 'daily_last_suggestion_words';
-  static const _kLastSuggestionSentencesKey =
+  static const _kLastSuggestionWordsBase = 'daily_last_suggestion_words';
+  static const _kLastSuggestionSentencesBase =
       'daily_last_suggestion_sentences';
-  static const _kLastSuggestionConversationsKey =
+  static const _kLastSuggestionConversationsBase =
       'daily_last_suggestion_conversations';
 
-  // Old keys (back-compat with v1.15.0 single-content version)
-  static const _kSeenWords = 'daily_seen_words';
-  static const _kLastSuggestion = 'daily_last_suggestion';
-
+  // ===== Device-global keys (one notification setting per device).
   static const _kEnabled = 'daily_notification_enabled';
   static const _kHour = 'daily_notification_hour';
   static const _kMinute = 'daily_notification_minute';
+
+  /// Default profile id used when caller does not pass one (e.g. the
+  /// notification scheduler runs outside any profile context). Keeps the
+  /// pre-refactor data accessible until the first opened-with-profile
+  /// run migrates it.
+  static const String defaultProfileId = '_default';
 
   /// Default time for daily notification (8:00 AM local).
   static const int defaultHour = 8;
@@ -109,19 +115,83 @@ class DailySuggestionService {
   /// How many items to pick per day. v1.16.0+: bumped 3 → 10 per Dr. Sama.
   static const int picksPerDay = 10;
 
-  static String _seenKeyFor(DailyContentType t) {
+  /// Build a profile-scoped SharedPreferences key.
+  /// Format: `<base>__<profileId>` — double underscore avoids collisions
+  /// with any underscored content type names.
+  static String _profileKey(String base, String profileId) =>
+      '${base}__$profileId';
+
+  static String _seenKeyFor(DailyContentType t, String profileId) {
     switch (t) {
-      case DailyContentType.words: return _kSeenWordsKey;
-      case DailyContentType.sentences: return _kSeenSentencesKey;
-      case DailyContentType.conversations: return _kSeenConversationsKey;
+      case DailyContentType.words:
+        return _profileKey(_kSeenWordsBase, profileId);
+      case DailyContentType.sentences:
+        return _profileKey(_kSeenSentencesBase, profileId);
+      case DailyContentType.conversations:
+        return _profileKey(_kSeenConversationsBase, profileId);
     }
   }
-  static String _lastSuggestionKeyFor(DailyContentType t) {
+
+  static String _lastSuggestionKeyFor(
+      DailyContentType t, String profileId) {
     switch (t) {
-      case DailyContentType.words: return _kLastSuggestionWordsKey;
-      case DailyContentType.sentences: return _kLastSuggestionSentencesKey;
+      case DailyContentType.words:
+        return _profileKey(_kLastSuggestionWordsBase, profileId);
+      case DailyContentType.sentences:
+        return _profileKey(_kLastSuggestionSentencesBase, profileId);
       case DailyContentType.conversations:
-        return _kLastSuggestionConversationsKey;
+        return _profileKey(_kLastSuggestionConversationsBase, profileId);
+    }
+  }
+
+  /// One-time migration: copy data from the OLD non-profile-scoped keys
+  /// into the given profile's scope, then delete the old keys. Only
+  /// runs if the profile-scoped key has no data yet AND the old key has
+  /// data. Safe to call multiple times — becomes a no-op after migration.
+  static Future<void> _maybeMigrateLegacyKeys(
+      SharedPreferences prefs, DailyContentType t, String profileId) async {
+    // Old "seen" key
+    final newSeenKey = _seenKeyFor(t, profileId);
+    if (!prefs.containsKey(newSeenKey)) {
+      // Pick the legacy key matching this content type
+      String? legacySeen;
+      switch (t) {
+        case DailyContentType.words:
+          legacySeen = _kSeenWordsBase; break;
+        case DailyContentType.sentences:
+          legacySeen = _kSeenSentencesBase; break;
+        case DailyContentType.conversations:
+          legacySeen = _kSeenConversationsBase; break;
+      }
+      if (prefs.containsKey(legacySeen)) {
+        final legacy = prefs.getStringList(legacySeen) ?? const [];
+        if (legacy.isNotEmpty) {
+          await prefs.setStringList(newSeenKey, legacy);
+        }
+        // Only delete legacy if migrating into the FIRST profile that
+        // ever runs — a fresh second profile shouldn't inherit the
+        // first profile's data. To stay safe we keep the legacy key
+        // around; new profiles start empty.
+      }
+    }
+    // Old "last suggestion" key — same deal
+    final newLastKey = _lastSuggestionKeyFor(t, profileId);
+    if (!prefs.containsKey(newLastKey)) {
+      String? legacyLast;
+      switch (t) {
+        case DailyContentType.words:
+          legacyLast = _kLastSuggestionWordsBase; break;
+        case DailyContentType.sentences:
+          legacyLast = _kLastSuggestionSentencesBase; break;
+        case DailyContentType.conversations:
+          legacyLast = _kLastSuggestionConversationsBase; break;
+      }
+      if (prefs.containsKey(legacyLast)) {
+        final legacy = prefs.getString(legacyLast);
+        if (legacy != null && legacy.isNotEmpty) {
+          await prefs.setString(newLastKey, legacy);
+        }
+      }
     }
   }
 
@@ -200,29 +270,51 @@ class DailySuggestionService {
   /// New callers should use [pickTodayItems] with an explicit type.
   static Future<List<DailyWord>> pickToday({
     required String learnerLevel,
+    String profileId = defaultProfileId,
     DateTime? now,
   }) =>
       pickTodayItems(
         learnerLevel: learnerLevel,
         contentType: DailyContentType.words,
+        profileId: profileId,
         now: now,
       );
 
-  /// Pick today's 10 items for the given content type.
-  /// Deterministic for a given (date, learnerLevel, seen-set, type).
+  /// Pick today's 10 items for the given content type AND profile.
+  /// Deterministic for a given (date, learnerLevel, seen-set, type,
+  /// profileId).
   ///
+  /// `profileId` MUST identify the currently-active profile (typically
+  /// `AuthService.currentProfile?.id`). If callers omit it, picks fall
+  /// back to a "default" profile bucket so the feature still works in
+  /// edge cases (e.g. notification preview before sign-in).
+  ///
+  /// IMPORTANT — Session 60+ behavior change:
+  /// This method NO LONGER auto-adds the picks to the profile's
+  /// "seen" set. Callers MUST invoke [recordViewed] after the picks
+  /// have actually been displayed to the user. This ensures the
+  /// "words learned" counter only counts what the profile actually
+  /// engaged with.
+  ///
+  /// Content types:
   /// - `words`: 10 vocab AwingWord entries
   /// - `sentences`: 10 short AwingPhrase entries (≤8 awing tokens)
   /// - `conversations`: 10 longer AwingPhrase entries (≥4 awing tokens)
   static Future<List<DailyWord>> pickTodayItems({
     required String learnerLevel,
     required DailyContentType contentType,
+    String profileId = defaultProfileId,
     DateTime? now,
   }) async {
     final clock = now ?? DateTime.now();
     final prefs = await SharedPreferences.getInstance();
-    final lastKey = _lastSuggestionKeyFor(contentType);
-    final seenKey = _seenKeyFor(contentType);
+
+    // Migrate legacy (pre-refactor) non-scoped data into this profile
+    // on first access. Idempotent.
+    await _maybeMigrateLegacyKeys(prefs, contentType, profileId);
+
+    final lastKey = _lastSuggestionKeyFor(contentType, profileId);
+    final seenKey = _seenKeyFor(contentType, profileId);
 
     // Check if we already picked today
     final lastRaw = prefs.getString(lastKey);
@@ -280,6 +372,24 @@ class DailySuggestionService {
 
     final seenJson = prefs.getStringList(seenKey) ?? const [];
     final seen = seenJson.toSet();
+
+    // STRICT NO-REPEAT: if there are enough unseen candidates to fill a
+    // full day's pick, exclude already-seen words from the pool entirely.
+    // Only when the profile has nearly exhausted the level's vocabulary
+    // do we fall back to allowing repeats (the existing -3 penalty
+    // applies in that case).
+    if (seen.isNotEmpty) {
+      final unseen = pool
+          .where((c) => !seen.contains('${c.awing}|${c.english}'))
+          .toList();
+      if (unseen.length >= picksPerDay) {
+        pool
+          ..clear()
+          ..addAll(unseen);
+      }
+      // else: too few unseen — keep full pool, let scoring penalize seen
+    }
+
     final season = seasonFor(clock);
     final tod = timeOfDayFor(clock);
     final weekdayCat = _weeklyRotation[clock.weekday] ?? '';
@@ -396,11 +506,14 @@ class DailySuggestionService {
       usedCategories.add(s.word.category);
     }
 
-    final newSeen = {
-      ...seen,
-      for (final p in picked) '${p.awing}|${p.english}',
-    };
-    await prefs.setStringList(seenKey, newSeen.toList());
+    // NOTE: we deliberately do NOT mutate the seen-set here. The
+    // profile has only had words PICKED — not necessarily seen.
+    // `recordViewed()` is the explicit gate for that, called by the
+    // UI after the user actually opens the daily-words screen.
+    //
+    // We DO cache today's picks so re-opening the screen the same day
+    // shows the same picks (rather than re-rolling and showing
+    // different words to a confused kid).
     await prefs.setString(
       lastKey,
       jsonEncode({
@@ -412,12 +525,50 @@ class DailySuggestionService {
     return picked;
   }
 
-  /// Get yesterday's persisted picks for re-display without re-scoring.
-  static Future<List<DailyWord>> getCachedTodayPicks({
+  /// Record that the given profile has actually OPENED the daily-words
+  /// screen and seen these picks. This is what increments the
+  /// "words learned" counter — picking alone does not.
+  ///
+  /// Idempotent: re-calling with the same picks is a no-op.
+  static Future<void> recordViewed({
+    required String profileId,
+    required DailyContentType contentType,
+    required List<DailyWord> picks,
+  }) async {
+    if (picks.isEmpty) return;
+    final prefs = await SharedPreferences.getInstance();
+    await _maybeMigrateLegacyKeys(prefs, contentType, profileId);
+    final seenKey = _seenKeyFor(contentType, profileId);
+    final existing = (prefs.getStringList(seenKey) ?? const []).toSet();
+    final before = existing.length;
+    for (final p in picks) {
+      existing.add('${p.awing}|${p.english}');
+    }
+    if (existing.length == before) return; // nothing new
+    await prefs.setStringList(seenKey, existing.toList());
+  }
+
+  /// How many items of the given content type this profile has VIEWED
+  /// across all days. Mirrors the games' seen-words coverage tracker
+  /// from Session 113.
+  static Future<int> wordsLearnedCount({
+    required String profileId,
     DailyContentType contentType = DailyContentType.words,
   }) async {
     final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString(_lastSuggestionKeyFor(contentType));
+    await _maybeMigrateLegacyKeys(prefs, contentType, profileId);
+    final seenKey = _seenKeyFor(contentType, profileId);
+    return (prefs.getStringList(seenKey) ?? const []).length;
+  }
+
+  /// Get today's persisted picks for re-display without re-scoring.
+  static Future<List<DailyWord>> getCachedTodayPicks({
+    String profileId = defaultProfileId,
+    DailyContentType contentType = DailyContentType.words,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    await _maybeMigrateLegacyKeys(prefs, contentType, profileId);
+    final raw = prefs.getString(_lastSuggestionKeyFor(contentType, profileId));
     if (raw == null) return [];
     try {
       final j = jsonDecode(raw) as Map<String, dynamic>;
@@ -435,13 +586,16 @@ class DailySuggestionService {
     }
   }
 
-  /// Reset the seen-words history for the given content type.
+  /// Reset the seen-words history for the given content type AND profile.
+  /// Only clears the calling profile's state — other profiles on the
+  /// same account/device keep theirs.
   static Future<void> resetSeenWords({
+    required String profileId,
     DailyContentType contentType = DailyContentType.words,
   }) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_seenKeyFor(contentType));
-    await prefs.remove(_lastSuggestionKeyFor(contentType));
+    await prefs.remove(_seenKeyFor(contentType, profileId));
+    await prefs.remove(_lastSuggestionKeyFor(contentType, profileId));
   }
 
   /// Settings: notification enabled?

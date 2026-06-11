@@ -8,6 +8,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/services/native_audio_inventory.dart';
+import 'package:awing_ai_learning/services/pronunciation_service.dart';
 
 /// User-facing screen for submitting word corrections, pronunciation
 /// recordings, new words, and general suggestions.
@@ -59,6 +61,28 @@ class _ContributeScreenState extends State<ContributeScreen> {
     if (widget.prefillCategory != null) {
       _category = widget.prefillCategory!;
     }
+    // v1.17.4+ — Session 60+ block-duplicate-recordings rule.
+    // Ensure the native-audio inventory is loaded so we can detect when
+    // the user types a word that already has an approved recording.
+    NativeAudioInventory.instance.load().then((_) {
+      if (mounted) setState(() {});
+    });
+    // Rebuild whenever the user types into the word field so the
+    // "already recorded" warning + record-button disable react live.
+    _wordController.addListener(() {
+      if (mounted) setState(() {});
+    });
+  }
+
+  /// True if the currently-typed Awing word already has an approved
+  /// native recording shipped in the AAB. Used to (a) show a warning
+  /// banner near the audio section and (b) block submission when the
+  /// user has attached audio for an already-recorded word.
+  bool get _alreadyRecorded {
+    final word = _wordController.text.trim();
+    if (word.isEmpty) return false;
+    return NativeAudioInventory.instance
+        .hasCanonical(PronunciationService.audioKey(word));
   }
 
   @override
@@ -77,6 +101,23 @@ class _ContributeScreenState extends State<ContributeScreen> {
   // ==================== Audio Recording ====================
 
   Future<void> _startRecording() async {
+    // Session 60+ — block duplicate recordings. If the user has typed
+    // a word that already has an approved native recording in the AAB,
+    // refuse to start the mic at all. The UI also disables the button
+    // in this case; this is the defensive backstop.
+    if (_alreadyRecorded) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'This word already has an approved native recording. '
+              'Please pick a different word.',
+            ),
+          ),
+        );
+      }
+      return;
+    }
     if (!await _recorder.hasPermission()) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -190,6 +231,24 @@ class _ContributeScreenState extends State<ContributeScreen> {
       );
       return;
     }
+    // Session 60+ — block duplicate recordings. If the user has
+    // attached audio OR is submitting a pronunciation fix for a word
+    // that already has an approved native recording, refuse.
+    // Spelling corrections and new-word/new-sentence text-only
+    // submissions are NOT blocked — only audio paths are.
+    final isAudioContribution = _hasRecording ||
+        _type == ContributionType.pronunciationFix;
+    if (isAudioContribution && _alreadyRecorded) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'This word already has an approved native recording — '
+            'audio contributions blocked. Please pick a different word.',
+          ),
+        ),
+      );
+      return;
+    }
 
     final auth = context.read<AuthService>();
     final contribService = context.read<ContributionService>();
@@ -266,6 +325,58 @@ class _ContributeScreenState extends State<ContributeScreen> {
         foregroundColor: Colors.white,
       ),
       body: _submitted ? _buildThankYou() : _buildForm(),
+    );
+  }
+
+  /// Session 60+ banner shown in place of the audio recording UI when
+  /// the typed word already has an approved canonical native
+  /// recording (NativeAudioInventory.hasCanonical). Blocks duplicate
+  /// pronunciation contributions per developer directive.
+  Widget _buildAlreadyRecordedBanner() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.amber.shade50,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.amber.shade400, width: 1.5),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.check_circle,
+              color: Colors.amber.shade800, size: 26),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Already recorded',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber.shade900,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  '"${_wordController.text.trim()}" already has an '
+                  'approved native recording. New pronunciation '
+                  'recordings are not needed for this word — please '
+                  'pick a different word, or use a text-based '
+                  'contribution type (spelling correction or '
+                  'feedback).',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.amber.shade900,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -608,8 +719,16 @@ class _ContributeScreenState extends State<ContributeScreen> {
             const SizedBox(height: 16),
           ],
 
-          // Audio recording section
-          Container(
+          // Session 60+ — block duplicate recordings. When the typed
+          // word already has an approved canonical native recording,
+          // swap the entire audio recording section for a warning
+          // banner. The user can change the word in the field above
+          // to re-enable the recording UI.
+          if (_alreadyRecorded) _buildAlreadyRecordedBanner(),
+
+          // Audio recording section (only when the word doesn't
+          // already have an approved recording).
+          if (!_alreadyRecorded) Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: _isRecording
