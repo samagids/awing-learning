@@ -70,7 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       if (profile != null)
                         Text(
-                          'Hi, ${profile.displayName}! ${profile.avatarEmoji}',
+                          // Awing greeting: cha'tô (from PDF-verified
+                          // maŋ cha'tô = "I am greeting"; cha'tô alone
+                          // is the salutation form, equivalent to
+                          // "Greetings"). Verified by Dr. Sama directly
+                          // on 2026-06-05 per Session 30 no-fabrication rule.
+                          "cha'tô, ${profile.displayName}! ${profile.avatarEmoji}",
                           style: TextStyle(
                             fontSize: 18,
                             color: const Color(0xFFDAA520),
