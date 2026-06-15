@@ -147,8 +147,10 @@ if ($nulCount -gt 0) {
 }
 
 $awingWordCount = ([regex]::Matches($vocab, 'AwingWord\(')).Count
-if ($awingWordCount -lt 20000) {
-    Warn "AwingWord count = $awingWordCount (expected ~21,330) -- vocab.dart may be truncated"
+# Post-dedupe (Session 60): expect ~9,451 entries. Below 5,000
+# suggests real truncation; above 5,000 is fine.
+if ($awingWordCount -lt 5000) {
+    Warn "AwingWord count = $awingWordCount (expected ~9,400) -- vocab.dart may be truncated"
 } else {
     Pass "AwingWord literals: $awingWordCount"
 }
