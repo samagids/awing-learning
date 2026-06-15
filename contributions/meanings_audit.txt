@@ -1,0 +1,202 @@
+TOP 50 OFFENDERS BY GLOSS LENGTH
+======================================================================
+
+  L3381   [diff=3] atúəsê
+    flags: long_18w
+    en: bag containing a dead close relation\'s (father, mother, grand mother, grand father etc) hair, worshipped periodically for appeasement
+
+  L13985  [diff=3] achíbə
+    flags: long_18w
+    en: food, drinks or anything given to somebody in difficulties to console the dead. Done especially during death celebrations
+
+  L5157   [diff=3] atúəsê
+    flags: long_17w
+    en: hair of a dead close relation (father, mother, grand mother, grand father etc) worshipped periodically for appeasement
+
+  L18806  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L19163  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L19535  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L19917  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L20296  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L20736  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L21145  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L21616  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L22061  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L22514  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L22992  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L23430  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L23919  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L24416  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L24893  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L25337  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L25788  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L26282  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L26774  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L27275  [diff=3] alələ̌\'ə̌
+    flags: long_18w
+    en: resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)
+
+  L3781   [diff=3] atsə\'kə
+    flags: long_17w
+    en: criticism, the act of deminishing the value of something, the act of making something appear less important
+
+  L27516  [diff=3] kəəkə
+    flags: long_17w
+    en: Run (referring to many things or people running); during wars some people run and abandon their children
+
+  L2393   [diff=3] təwélakámə
+    flags: long_15w
+    en: A sharp flute used for rallying people for emergenncies (example war, serious development projects etc)
+
+  L27430  [diff=3] əwaglápənêmə
+    flags: long_17w
+    en: a boundary stick which its leaves are used for making a public announcement; a Baminyam boundary stick
+
+  L13984  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L14064  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L14169  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L14297  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L14453  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L14609  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L14776  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L14923  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L15103  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L15314  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L15563  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L15836  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L16121  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L16414  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L16707  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L17012  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L17342  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L17674  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L18011  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L18361  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L18714  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L19085  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person
+
+  L19457  [diff=3] achí yə əshí\'nə
+    flags: long_16w
+    en: good sign, happening when blood twitches somebody\'s eye in a particular spot depending on the person

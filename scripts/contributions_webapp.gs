@@ -785,6 +785,15 @@ function recorderSlugOf(name) {
   if (!name) return '_default';
   var norm = String(name).trim().toLowerCase();
   if (!norm) return '_default';
+  // v1.17.6 (Session 60+) — strip the "default " prefix that
+  // _firstNameForSubmission in contribute_screen.dart prepends so
+  // audio routes to native/ tier. Without this, every public-Contribute
+  // submission slugged to '_default' and overwrote each other. Strip
+  // the prefix and slug by the actual first name instead.
+  if (norm.indexOf('default ') === 0) {
+    norm = norm.substring(8).trim();
+  }
+  if (norm === 'default') norm = '';
   var aliases = {
     'joel': 'joel', 'janelle': 'janelle',
     'joyce': 'joyce', 'jadyne': 'jadyne',
@@ -799,6 +808,13 @@ function recorderSlugOf(name) {
   if (aliases.hasOwnProperty(norm)) return aliases[norm];
   var first = norm.split(/\s+/)[0];
   if (aliases.hasOwnProperty(first)) return aliases[first];
+  // v1.17.6 — fallback: use the first name itself as the slug instead
+  // of forcing every unknown contributor onto '_default'. Two different
+  // external contributors (Ephraim, Bertrand, ...) get distinct slugs
+  // and don't collide. Same-first-name edge case is acceptable.
+  if (first && /^[a-z0-9_\-]+$/.test(first)) {
+    return first;
+  }
   return '_default';
 }
 

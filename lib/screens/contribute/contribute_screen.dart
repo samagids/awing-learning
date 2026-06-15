@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
-import 'package:awing_ai_learning/screens/contribute/record_audio_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -10,9 +9,19 @@ import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/screens/contribute/record_picker_screen.dart';
 
-/// User-facing screen for submitting word corrections, pronunciation
-/// recordings, new words, and general suggestions.
+/// User-facing screen for submitting contributions.
+///
+/// v1.18.0+ — 5 top-level tabs, one per contribution mode:
+///   1. Record           → discovery-first picker (RecordPickerScreen)
+///   2. Fix spelling     → existing-word picker + correction
+///   3. Fix pronunciation→ existing-word picker + pronunciation guide
+///   4. Add new word     → free-form Awing + English + category
+///   5. Add new sentence → free-form Awing + English translation
+///
+/// Each form tab pre-selects the matching ContributionType, so users
+/// don't need to pick the type with chips anymore — the tab IS the type.
 class ContributeScreen extends StatefulWidget {
   /// Optional pre-filled word (when user taps "Report" on a specific word)
   final String? prefillWord;
@@ -32,11 +41,14 @@ class _ContributeScreenState extends State<ContributeScreen> {
   final _pronunciationController = TextEditingController();
   final _notesController = TextEditingController();
 
-  ContributionType _type = ContributionType.spellingCorrection;
   String _category = 'body';
   bool _submitted = false;
   bool _emailSent = false;
   bool _emailFailed = false;
+
+  /// The type of the most recent submission — used by the thank-you
+  /// screen to copy back the right reset state.
+  ContributionType _submittedType = ContributionType.spellingCorrection;
 
   // Audio recording
   final AudioRecorder _recorder = AudioRecorder();
@@ -62,27 +74,23 @@ class _ContributeScreenState extends State<ContributeScreen> {
       _category = widget.prefillCategory!;
     }
     // v1.17.4+ — Session 60+ block-duplicate-recordings rule.
-    // Ensure the native-audio inventory is loaded so we can detect when
-    // the user types a word that already has an approved recording.
     NativeAudioInventory.instance.load().then((_) {
       if (mounted) setState(() {});
     });
-    // Rebuild whenever the user types into the word field so the
-    // "already recorded" warning + record-button disable react live.
+    // Rebuild whenever the word changes so the "already recorded"
+    // warning + record-button disable react live.
     _wordController.addListener(() {
       if (mounted) setState(() {});
     });
   }
 
-  /// True if the currently-typed Awing word already has an approved
-  /// native recording shipped in the AAB. Used to (a) show a warning
-  /// banner near the audio section and (b) block submission when the
-  /// user has attached audio for an already-recorded word.
+  /// True if the currently-typed Awing word already has ANY approved
+  /// native recording shipped in the AAB — canonical adult OR any kid.
   bool get _alreadyRecorded {
     final word = _wordController.text.trim();
     if (word.isEmpty) return false;
     return NativeAudioInventory.instance
-        .hasCanonical(PronunciationService.audioKey(word));
+        .hasAnyRecording(PronunciationService.audioKey(word));
   }
 
   @override
@@ -101,10 +109,6 @@ class _ContributeScreenState extends State<ContributeScreen> {
   // ==================== Audio Recording ====================
 
   Future<void> _startRecording() async {
-    // Session 60+ — block duplicate recordings. If the user has typed
-    // a word that already has an approved native recording in the AAB,
-    // refuse to start the mic at all. The UI also disables the button
-    // in this case; this is the defensive backstop.
     if (_alreadyRecorded) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -172,23 +176,10 @@ class _ContributeScreenState extends State<ContributeScreen> {
     });
   }
 
-  /// v1.17.x — Build the profileName for a Contribute submission.
-  ///
   /// Always prefixed with literal 'default ' so the sync pipeline
-  /// (sync_recordings.py::_recorder_to_kid_slug) routes the audio
-  /// into audio/native/ regardless of whether the submitter's first
-  /// name happens to match a registered kid slug (joel/janelle/...).
-  ///
-  /// The submitter's first name is still appended (informational —
-  /// visible in the Dev Mode review queue + Submissions sheet, but
-  /// NEVER shown to app users since the app never displays
-  /// profileName anywhere kid-facing).
-  ///
-  /// Examples:
-  ///   'Dr. Guidion Sama' -> 'default Guidion'
-  ///   'Joel Smith'       -> 'default Joel'   (still routes to native/)
-  ///   'sama'             -> 'default sama'
-  ///   null / ''          -> 'default'
+  /// (sync_recordings.py::_recorder_to_kid_slug) routes audio into
+  /// audio/native/ regardless of whether the submitter's first name
+  /// matches a registered kid slug.
   String _firstNameForSubmission(String? displayName) {
     String firstName = '';
     if (displayName != null) {
@@ -214,30 +205,46 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
   Contribution? _lastSubmitted;
 
-  Future<void> _submit() async {
+  Future<void> _submit(ContributionType type) async {
     if (_wordController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter the Awing word')),
       );
       return;
     }
-    if (_type != ContributionType.generalFeedback &&
-        _correctionController.text.trim().isEmpty &&
-        !_hasRecording) {
+    final needsTextCorrection =
+        type == ContributionType.spellingCorrection ||
+        type == ContributionType.newWord ||
+        type == ContributionType.newSentence;
+    if (needsTextCorrection && _correctionController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please provide a correction or record the pronunciation'),
+        SnackBar(
+          content: Text(
+            type == ContributionType.spellingCorrection
+                ? 'Please enter the correct spelling'
+                : type == ContributionType.newSentence
+                    ? 'Please enter the English translation'
+                    : 'Please enter the Awing word',
+          ),
         ),
       );
       return;
     }
-    // Session 60+ — block duplicate recordings. If the user has
-    // attached audio OR is submitting a pronunciation fix for a word
-    // that already has an approved native recording, refuse.
-    // Spelling corrections and new-word/new-sentence text-only
-    // submissions are NOT blocked — only audio paths are.
-    final isAudioContribution = _hasRecording ||
-        _type == ContributionType.pronunciationFix;
+    if (type == ContributionType.pronunciationFix &&
+        !_hasRecording &&
+        _pronunciationController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Please record audio OR write a pronunciation guide',
+          ),
+        ),
+      );
+      return;
+    }
+    // Block duplicate recordings — only for audio paths.
+    final isAudioContribution =
+        _hasRecording || type == ContributionType.pronunciationFix;
     if (isAudioContribution && _alreadyRecorded) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -256,15 +263,9 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
     final id = await contribService.submit(
       deviceId: analytics.isOptedOut ? 'anonymous' : 'contributor',
-      // v1.17.x — Contribute recordings ALWAYS land in the canonical
-      // 'default voice' bucket (audio/native/) so they augment Dr. Sama's
-      // voice rather than being filed under a kid's tier. We send the
-      // contributor's first name (informational, shows up in the Dev Mode
-      // Review queue + submission sheet) but the value won't match any
-      // kid slug, so sync_recordings.py routes the audio to native/.
       profileName: _firstNameForSubmission(
           auth.currentProfile?.displayName),
-      type: _type,
+      type: type,
       targetWord: _wordController.text.trim(),
       correction: _correctionController.text.trim(),
       englishMeaning: _englishController.text.trim().isNotEmpty
@@ -280,19 +281,17 @@ class _ContributeScreenState extends State<ContributeScreen> {
           : null,
     );
 
-    // Keep a reference to the submitted contribution for sharing
     if (id != null) {
       _lastSubmitted = contribService.contributions
           .firstWhere((c) => c.id == id);
     }
 
     analytics.logFeedback(
-      type: 'contribution_${_type.name}',
+      type: 'contribution_${type.name}',
       message: '${_wordController.text} → ${_correctionController.text}',
       screen: 'contribute_screen',
     );
 
-    // Auto-email to developer
     bool emailSuccess = false;
     if (_lastSubmitted != null) {
       emailSuccess = await contribService.emailContribution(
@@ -305,6 +304,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
     if (!mounted) return;
     setState(() {
       _submitted = true;
+      _submittedType = type;
       _emailSent = emailSuccess;
       _emailFailed = !emailSuccess;
     });
@@ -317,21 +317,58 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contribute'),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF006432),
-        foregroundColor: Colors.white,
+    // v1.18.0+ — 5 top-level tabs. Each non-Record tab is dedicated
+    // to ONE ContributionType, so the user doesn't have to pick the
+    // type with chips. Tabs are scrollable to fit narrow phones.
+    return DefaultTabController(
+      length: 5,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Contribute'),
+          centerTitle: true,
+          backgroundColor: const Color(0xFF006432),
+          foregroundColor: Colors.white,
+          bottom: const TabBar(
+            isScrollable: true,
+            indicatorColor: Colors.white,
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.white70,
+            tabs: [
+              Tab(icon: Icon(Icons.mic), text: 'Record'),
+              Tab(icon: Icon(Icons.spellcheck), text: 'Spelling'),
+              Tab(icon: Icon(Icons.record_voice_over),
+                  text: 'Pronunciation'),
+              Tab(icon: Icon(Icons.add_circle_outline),
+                  text: 'New word'),
+              Tab(icon: Icon(Icons.short_text), text: 'New sentence'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          // Lock swipes — accidental swipes destroy in-progress text /
+          // recording. The TabBar at the top is the explicit switcher.
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            const RecordPickerScreen(),
+            _wrapTab(ContributionType.spellingCorrection),
+            _wrapTab(ContributionType.pronunciationFix),
+            _wrapTab(ContributionType.newWord),
+            _wrapTab(ContributionType.newSentence),
+          ],
+        ),
       ),
-      body: _submitted ? _buildThankYou() : _buildForm(),
     );
   }
 
-  /// Session 60+ banner shown in place of the audio recording UI when
-  /// the typed word already has an approved canonical native
-  /// recording (NativeAudioInventory.hasCanonical). Blocks duplicate
-  /// pronunciation contributions per developer directive.
+  /// If the user just submitted via this tab's type, render the
+  /// thank-you screen. Otherwise render the form for this type.
+  Widget _wrapTab(ContributionType type) {
+    if (_submitted && _submittedType == type) {
+      return _buildThankYou();
+    }
+    return _buildForm(type);
+  }
+
   Widget _buildAlreadyRecordedBanner() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -361,11 +398,8 @@ class _ContributeScreenState extends State<ContributeScreen> {
                 const SizedBox(height: 6),
                 Text(
                   '"${_wordController.text.trim()}" already has an '
-                  'approved native recording. New pronunciation '
-                  'recordings are not needed for this word — please '
-                  'pick a different word, or use a text-based '
-                  'contribution type (spelling correction or '
-                  'feedback).',
+                  'approved native recording. Pick a different word, '
+                  'or switch to a text-only tab (Spelling / New word).',
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.amber.shade900,
@@ -409,17 +443,17 @@ class _ContributeScreenState extends State<ContributeScreen> {
             Text(
               _emailSent
                   ? 'Your contribution has been emailed to the developer '
-                    'for review. Thank you for helping grow the Awing language app!'
+                    'for review. Thank you for helping grow the Awing '
+                    'language app!'
                   : _emailFailed
-                      ? 'Your contribution was saved locally. '
-                        'We could not open your email app automatically. '
-                        'You can share it manually below.'
+                      ? 'Your contribution was saved locally. We could '
+                        'not open your email app automatically. You can '
+                        'share it manually below.'
                       : 'Your contribution was saved successfully.',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
             ),
             const SizedBox(height: 24),
-            // Show manual share button only if auto-email failed
             if (_emailFailed) ...[
               ElevatedButton.icon(
                 onPressed: _shareSubmission,
@@ -475,76 +509,43 @@ class _ContributeScreenState extends State<ContributeScreen> {
     );
   }
 
-  Widget _buildForm() {
+  /// Type-specific form. Hides irrelevant fields per tab.
+  ///
+  /// Field matrix:
+  ///   spellingCorrection : autocomplete picker + correction
+  ///   pronunciationFix   : autocomplete picker + audio recorder +
+  ///                        optional pronunciation guide
+  ///   newWord            : free-form awing + english + category +
+  ///                        optional pronunciation guide
+  ///   newSentence        : free-form awing + english translation +
+  ///                        optional pronunciation guide
+  Widget _buildForm(ContributionType type) {
+    final isExistingWordTab =
+        type == ContributionType.spellingCorrection ||
+        type == ContributionType.pronunciationFix;
+    final isPronunciation = type == ContributionType.pronunciationFix;
+    final isNewWord = type == ContributionType.newWord;
+    final isNewSentence = type == ContributionType.newSentence;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Type selector
-          // v1.17.x — quick-record card. Opens a Dev-Mode-style
-          // dedicated record flow without leaving Contribute.
-          Card(
-            color: const Color(0xFF006432).withOpacity(0.08),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14)),
-            child: ListTile(
-              leading: const CircleAvatar(
-                backgroundColor: Color(0xFF006432),
-                child: Icon(Icons.mic, color: Colors.white),
-              ),
-              title: const Text('Record a word',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: const Text(
-                  'Pick a word, hear it, then record your version'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => const RecordAudioScreen()),
-              ),
-            ),
-          ),
+          _buildTabHeader(type),
           const SizedBox(height: 16),
-          Text(
-            'What would you like to contribute?',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey.shade800,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              _typeChip('Fix Spelling', Icons.spellcheck,
-                  ContributionType.spellingCorrection),
-              _typeChip('Fix Pronunciation', Icons.record_voice_over,
-                  ContributionType.pronunciationFix),
-              _typeChip('Add New Word', Icons.add_circle_outline,
-                  ContributionType.newWord),
-              _typeChip('Add Sentence', Icons.short_text,
-                  ContributionType.newSentence),
-            ],
-          ),
-          const SizedBox(height: 24),
 
-          // Target word — v1.17.x: for existing-word corrections (spelling
-          // fix, pronunciation fix, gloss fix, etc.) show an Autocomplete
-          // dropdown over the full vocabulary so contributors PICK an
-          // existing entry instead of typing free-form. This guarantees
-          // their audio key matches what the app looks up at playback
-          // time. For NEW word/sentence contributions, keep a plain
-          // TextField since we WANT free-form input there.
-          if (_type == ContributionType.newWord ||
-              _type == ContributionType.newSentence) ...[
+          // Word picker / free-form field
+          if (isExistingWordTab)
+            _buildExistingWordPicker()
+          else
             TextField(
               controller: _wordController,
               decoration: InputDecoration(
-                labelText: 'Awing word or sentence',
-                hintText: _type == ContributionType.newSentence
+                labelText: isNewSentence
+                    ? 'Awing sentence'
+                    : 'Awing word',
+                hintText: isNewSentence
                     ? 'e.g. Ko akwe pə nəgoomɔ́'
                     : 'e.g. apô',
                 prefixIcon: const Icon(Icons.translate),
@@ -553,102 +554,15 @@ class _ContributeScreenState extends State<ContributeScreen> {
                 ),
               ),
             ),
-          ] else ...[
-            Autocomplete<AwingWord>(
-              displayStringForOption: (w) => '${w.awing} → ${w.english}',
-              optionsBuilder: (TextEditingValue tv) {
-                final q = tv.text.trim().toLowerCase();
-                if (q.isEmpty) return const Iterable<AwingWord>.empty();
-                final matches = <AwingWord>[];
-                final seenKeys = <String>{};
-                for (final w in allVocabulary) {
-                  if (matches.length >= 30) break;
-                  final key = '${w.awing}|${w.english}';
-                  if (seenKeys.contains(key)) continue;
-                  if (w.awing.toLowerCase().contains(q) ||
-                      w.english.toLowerCase().contains(q)) {
-                    matches.add(w);
-                    seenKeys.add(key);
-                  }
-                }
-                return matches;
-              },
-              onSelected: (AwingWord picked) {
-                _wordController.text = picked.awing;
-                // Auto-fill English so the dev review queue has both
-                // sides of the (awing, english) image+audio key.
-                if (_englishController.text.trim().isEmpty) {
-                  _englishController.text = picked.english;
-                }
-              },
-              fieldViewBuilder: (context, controller, focusNode, onSubmit) {
-                // Mirror the wordController so the submit() validation
-                // and existing usages still work unchanged.
-                controller.addListener(() {
-                  if (_wordController.text != controller.text) {
-                    _wordController.text = controller.text;
-                  }
-                });
-                return TextField(
-                  controller: controller,
-                  focusNode: focusNode,
-                  decoration: InputDecoration(
-                    labelText: 'Pick the word to fix or record',
-                    hintText: 'Type a few letters (Awing or English)…',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                );
-              },
-              optionsViewBuilder: (context, onSelected, options) {
-                return Align(
-                  alignment: Alignment.topLeft,
-                  child: Material(
-                    elevation: 4,
-                    borderRadius: BorderRadius.circular(8),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxHeight: 280,
-                        maxWidth: 340,
-                      ),
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemCount: options.length,
-                        itemBuilder: (_, i) {
-                          final w = options.elementAt(i);
-                          return ListTile(
-                            dense: true,
-                            title: Text(w.awing,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w600)),
-                            subtitle: Text(w.english,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis),
-                            onTap: () => onSelected(w),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
           const SizedBox(height: 16),
 
-          // Correction
-          if (_type != ContributionType.pronunciationFix) ...[
+          // Correction field
+          if (type == ContributionType.spellingCorrection) ...[
             TextField(
               controller: _correctionController,
               decoration: InputDecoration(
-                labelText: _type == ContributionType.spellingCorrection
-                    ? 'Correct spelling'
-                    : _type == ContributionType.newSentence
-                        ? 'English translation'
-                        : 'The Awing word',
+                labelText: 'Correct spelling',
+                hintText: 'How should it actually be written?',
                 prefixIcon: const Icon(Icons.edit),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -658,8 +572,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
             const SizedBox(height: 16),
           ],
 
-          // English meaning (for new words)
-          if (_type == ContributionType.newWord) ...[
+          if (isNewWord) ...[
             TextField(
               controller: _englishController,
               decoration: InputDecoration(
@@ -672,33 +585,21 @@ class _ContributeScreenState extends State<ContributeScreen> {
               ),
             ),
             const SizedBox(height: 16),
-          ],
-
-          // Pronunciation guide (for new words and sentences)
-          if (_type == ContributionType.newWord ||
-              _type == ContributionType.newSentence ||
-              _type == ContributionType.pronunciationFix) ...[
+            // Reuses _correctionController as a hidden "category"
+            // sentinel? No — newWord stores english separately. Keep
+            // the correction field optional for additional context.
             TextField(
-              controller: _pronunciationController,
+              controller: _correctionController,
               decoration: InputDecoration(
-                labelText: 'How to pronounce it',
-                hintText: _type == ContributionType.newSentence
-                    ? 'e.g. koh ah-kweh puh nuh-goh-maw'
-                    : 'e.g. ah-POH (describe the sounds)',
-                helperText: 'Write how it sounds using simple English letters. '
-                    'Use CAPS for the stressed/high-tone syllable.',
-                helperMaxLines: 2,
-                prefixIcon: const Icon(Icons.record_voice_over),
+                labelText: 'Alternate forms / plural (optional)',
+                hintText: 'e.g. plural form, related variant…',
+                prefixIcon: const Icon(Icons.format_list_bulleted),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
             ),
             const SizedBox(height: 16),
-          ],
-
-          // Category selector
-          if (_type == ContributionType.newWord) ...[
             DropdownButtonFormField<String>(
               value: _category,
               decoration: InputDecoration(
@@ -714,140 +615,68 @@ class _ContributeScreenState extends State<ContributeScreen> {
                   child: Text(c[0].toUpperCase() + c.substring(1)),
                 );
               }).toList(),
-              onChanged: (v) => setState(() => _category = v ?? 'other'),
+              onChanged: (v) =>
+                  setState(() => _category = v ?? 'other'),
             ),
             const SizedBox(height: 16),
           ],
 
-          // Session 60+ — block duplicate recordings. When the typed
-          // word already has an approved canonical native recording,
-          // swap the entire audio recording section for a warning
-          // banner. The user can change the word in the field above
-          // to re-enable the recording UI.
-          if (_alreadyRecorded) _buildAlreadyRecordedBanner(),
-
-          // Audio recording section (only when the word doesn't
-          // already have an approved recording).
-          if (!_alreadyRecorded) Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: _isRecording
-                  ? Colors.red.shade50
-                  : const Color(0xFFE8F5E9),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: _isRecording
-                    ? Colors.red.shade200
-                    : const Color(0xFFA5D6A7),
+          if (isNewSentence) ...[
+            TextField(
+              controller: _correctionController,
+              decoration: InputDecoration(
+                labelText: 'English translation',
+                hintText: 'What does the sentence mean?',
+                prefixIcon: const Icon(Icons.translate),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-            child: Column(
-              children: [
-                Text(
-                  'Record the correct pronunciation',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF006432),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Tap and hold to record how this word should sound',
-                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Record button
-                    GestureDetector(
-                      onTap: _isRecording ? _stopRecording : _startRecording,
-                      child: Container(
-                        width: 72,
-                        height: 72,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _isRecording ? Colors.red : const Color(0xFF006432),
-                          boxShadow: [
-                            BoxShadow(
-                              color: (_isRecording
-                                      ? Colors.red
-                                      : const Color(0xFF006432))
-                                  .withOpacity(0.3),
-                              blurRadius: 12,
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
-                        child: Icon(
-                          _isRecording ? Icons.stop : Icons.mic,
-                          color: Colors.white,
-                          size: 36,
-                        ),
-                      ),
-                    ),
-                    if (_hasRecording) ...[
-                      const SizedBox(width: 16),
-                      // Play button
-                      IconButton(
-                        onPressed: _playRecording,
-                        icon: const Icon(Icons.play_circle_fill),
-                        iconSize: 48,
-                        color: const Color(0xFF006432),
-                      ),
-                      // Delete button
-                      IconButton(
-                        onPressed: _deleteRecording,
-                        icon: const Icon(Icons.delete),
-                        iconSize: 32,
-                        color: Colors.red.shade400,
-                      ),
-                    ],
-                  ],
-                ),
-                if (_isRecording) ...[
-                  const SizedBox(height: 8),
-                  Text(
-                    _formatDuration(_recordingDuration),
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red.shade700,
-                    ),
-                  ),
-                ],
-                if (_hasRecording && !_isRecording) ...[
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.check_circle,
-                          color: Colors.green, size: 18),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Recording saved (${_formatDuration(_recordingDuration)})',
-                        style: TextStyle(
-                          color: Colors.green.shade700,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
+          ],
 
-          // Notes
+          if (isPronunciation || isNewWord || isNewSentence) ...[
+            TextField(
+              controller: _pronunciationController,
+              decoration: InputDecoration(
+                labelText: isPronunciation
+                    ? 'Pronunciation guide (optional)'
+                    : 'How to pronounce it (optional)',
+                hintText: isNewSentence
+                    ? 'e.g. koh ah-kweh puh nuh-goh-maw'
+                    : 'e.g. ah-POH (describe the sounds)',
+                helperText: 'Use CAPS for the stressed/high-tone '
+                    'syllable.',
+                helperMaxLines: 2,
+                prefixIcon: const Icon(Icons.record_voice_over),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+
+          // Audio recorder: ONLY on the pronunciation-fix tab. Recording
+          // a brand-new word should happen via the Record tab (which
+          // routes through RecordPickerScreen → RecordAudioScreen).
+          if (isPronunciation) ...[
+            if (_alreadyRecorded)
+              _buildAlreadyRecordedBanner()
+            else
+              _buildAudioRecorder(),
+            const SizedBox(height: 16),
+          ],
+
+          // Notes (universal optional field)
           TextField(
             controller: _notesController,
             maxLines: 3,
             maxLength: 300,
             decoration: InputDecoration(
               labelText: 'Additional notes (optional)',
-              hintText: 'Any context or explanation...',
+              hintText: 'Any context or explanation…',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -855,13 +684,13 @@ class _ContributeScreenState extends State<ContributeScreen> {
           ),
           const SizedBox(height: 24),
 
-          // Submit button
           ElevatedButton.icon(
-            onPressed: _submit,
+            onPressed: () => _submit(type),
             icon: const Icon(Icons.send),
             label: const Text(
               'Submit Contribution',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              style:
+                  TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF006432),
@@ -874,7 +703,6 @@ class _ContributeScreenState extends State<ContributeScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Your name will be shown as the contributor. '
             'The developer will review and approve your submission.',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
@@ -884,25 +712,277 @@ class _ContributeScreenState extends State<ContributeScreen> {
     );
   }
 
-  Widget _typeChip(String label, IconData icon, ContributionType type) {
-    final selected = _type == type;
-    return FilterChip(
-      label: Row(
-        mainAxisSize: MainAxisSize.min,
+  /// Per-tab short blurb at the top of each form, so users know which
+  /// flow they're in even mid-scroll.
+  Widget _buildTabHeader(ContributionType type) {
+    String title;
+    String blurb;
+    IconData icon;
+    switch (type) {
+      case ContributionType.spellingCorrection:
+        title = 'Fix a spelling';
+        blurb = 'Found a typo? Pick the word and write the correct '
+            'spelling.';
+        icon = Icons.spellcheck;
+        break;
+      case ContributionType.pronunciationFix:
+        title = 'Fix a pronunciation';
+        blurb = 'Hear how a word is pronounced today, then record a '
+            'better version or write a guide.';
+        icon = Icons.record_voice_over;
+        break;
+      case ContributionType.newWord:
+        title = 'Add a new word';
+        blurb = 'Share an Awing word the app is missing. Include its '
+            'English meaning and category.';
+        icon = Icons.add_circle_outline;
+        break;
+      case ContributionType.newSentence:
+        title = 'Add a new sentence';
+        blurb = 'Share a useful Awing sentence and its English '
+            'translation.';
+        icon = Icons.short_text;
+        break;
+      default:
+        title = 'Contribute';
+        blurb = '';
+        icon = Icons.help_outline;
+    }
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFF006432).withOpacity(0.06),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFF006432).withOpacity(0.15)),
+      ),
+      child: Row(
         children: [
-          Icon(icon, size: 16,
-              color: selected ? Colors.white : Colors.grey.shade700),
-          const SizedBox(width: 4),
-          Text(label),
+          CircleAvatar(
+            backgroundColor: const Color(0xFF006432),
+            child: Icon(icon, color: Colors.white),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF006432),
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  blurb,
+                  style: TextStyle(
+                      fontSize: 12.5, color: Colors.grey.shade800),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
-      selected: selected,
-      onSelected: (_) => setState(() => _type = type),
-      selectedColor: const Color(0xFF006432),
-      labelStyle: TextStyle(
-        color: selected ? Colors.white : Colors.grey.shade700,
+    );
+  }
+
+  /// Autocomplete picker over the full vocabulary for "fix existing
+  /// word" tabs. Tap-to-select sets _wordController.text and optionally
+  /// auto-fills English.
+  Widget _buildExistingWordPicker() {
+    return Autocomplete<AwingWord>(
+      displayStringForOption: (w) => '${w.awing} → ${w.english}',
+      optionsBuilder: (TextEditingValue tv) {
+        final q = tv.text.trim().toLowerCase();
+        if (q.isEmpty) return const Iterable<AwingWord>.empty();
+        final matches = <AwingWord>[];
+        final seenKeys = <String>{};
+        for (final w in allVocabulary) {
+          if (matches.length >= 30) break;
+          final key = '${w.awing}|${w.english}';
+          if (seenKeys.contains(key)) continue;
+          if (w.awing.toLowerCase().contains(q) ||
+              w.english.toLowerCase().contains(q)) {
+            matches.add(w);
+            seenKeys.add(key);
+          }
+        }
+        return matches;
+      },
+      onSelected: (AwingWord picked) {
+        _wordController.text = picked.awing;
+        if (_englishController.text.trim().isEmpty) {
+          _englishController.text = picked.english;
+        }
+      },
+      fieldViewBuilder: (context, controller, focusNode, onSubmit) {
+        controller.addListener(() {
+          if (_wordController.text != controller.text) {
+            _wordController.text = controller.text;
+          }
+        });
+        return TextField(
+          controller: controller,
+          focusNode: focusNode,
+          decoration: InputDecoration(
+            labelText: 'Pick the word',
+            hintText: 'Type a few letters (Awing or English)…',
+            prefixIcon: const Icon(Icons.search),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        );
+      },
+      optionsViewBuilder: (context, onSelected, options) {
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Material(
+            elevation: 4,
+            borderRadius: BorderRadius.circular(8),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxHeight: 280,
+                maxWidth: 340,
+              ),
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemCount: options.length,
+                itemBuilder: (_, i) {
+                  final w = options.elementAt(i);
+                  return ListTile(
+                    dense: true,
+                    title: Text(w.awing,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600)),
+                    subtitle: Text(w.english,
+                        maxLines: 1, overflow: TextOverflow.ellipsis),
+                    onTap: () => onSelected(w),
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// Self-contained audio-recorder block (only shown on the
+  /// pronunciation-fix tab when the word doesn't already have an
+  /// approved native recording).
+  Widget _buildAudioRecorder() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: _isRecording
+            ? Colors.red.shade50
+            : const Color(0xFFE8F5E9),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: _isRecording
+              ? Colors.red.shade200
+              : const Color(0xFFA5D6A7),
+        ),
       ),
-      checkmarkColor: Colors.white,
+      child: Column(
+        children: [
+          const Text(
+            'Record the correct pronunciation',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF006432),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Tap the mic to record. Tap again to stop.',
+            style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: _isRecording ? _stopRecording : _startRecording,
+                child: Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _isRecording
+                        ? Colors.red
+                        : const Color(0xFF006432),
+                    boxShadow: [
+                      BoxShadow(
+                        color: (_isRecording
+                                ? Colors.red
+                                : const Color(0xFF006432))
+                            .withOpacity(0.3),
+                        blurRadius: 12,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    _isRecording ? Icons.stop : Icons.mic,
+                    color: Colors.white,
+                    size: 36,
+                  ),
+                ),
+              ),
+              if (_hasRecording) ...[
+                const SizedBox(width: 16),
+                IconButton(
+                  onPressed: _playRecording,
+                  icon: const Icon(Icons.play_circle_fill),
+                  iconSize: 48,
+                  color: const Color(0xFF006432),
+                ),
+                IconButton(
+                  onPressed: _deleteRecording,
+                  icon: const Icon(Icons.delete),
+                  iconSize: 32,
+                  color: Colors.red.shade400,
+                ),
+              ],
+            ],
+          ),
+          if (_isRecording) ...[
+            const SizedBox(height: 8),
+            Text(
+              _formatDuration(_recordingDuration),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.red.shade700,
+              ),
+            ),
+          ],
+          if (_hasRecording && !_isRecording) ...[
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.check_circle,
+                    color: Colors.green, size: 18),
+                const SizedBox(width: 4),
+                Text(
+                  'Recording saved (${_formatDuration(_recordingDuration)})',
+                  style: TextStyle(
+                    color: Colors.green.shade700,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
     );
   }
 

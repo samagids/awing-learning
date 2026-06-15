@@ -1,0 +1,114 @@
+37 UNIQUE Beginner-flagged glosses (deduped, sorted by Awing)
+======================================================================
+
+  ajía           → his/hers, used for class 7 nouns (possessive)
+                 flags: class_marker
+
+  apenə          → possessive adjective ours (inclusive), used for nouns of class 8
+                 flags: class_marker,noun_class
+
+  apó            → possessive singular adjective yours, used for nouns of class 8
+                 flags: class_marker,noun_class
+
+  apóənə         → possessive plural adjective yours used for nouns of class 8
+                 flags: class_marker,noun_class
+
+  apóənə̌        → possessive plural adjective \'yours\', used for nouns of class 8
+                 flags: class_marker,noun_class
+
+  apə̌           → possessive adjective ours (exclusive), used for nouns of class 8
+                 flags: class_marker,noun_class
+
+  ayîə           → possessive pronoun \'hers\' used for class 1 nouns
+                 flags: class_marker,possessive_marker
+
+  ayîə           → possessive pronoun \'his\' used for class 1 nouns
+                 flags: class_marker,possessive_marker
+
+  azeemə̌        → possessive pronoun \'mine\' used for class 9 nouns
+                 flags: class_marker,possessive_marker
+
+  azoobə̌        → possessive pronoun \'theirs\' used for class 9 nouns
+                 flags: class_marker,possessive_marker
+
+  azénə          → possessive pronoun \'ours\' for class 7
+                 flags: class_marker,possessive_marker
+
+  azó            → possessive singular pronoun \'yours\' used for class 9 nouns
+                 flags: class_marker
+
+  azə̌           → possessive pronoun \'yours\' used for class 9 nouns
+                 flags: class_marker,possessive_marker
+
+  maanə̌         → demonstrative adj \'this\', used for nouns of class six
+                 flags: noun_class
+
+  matsə̌         → attribute \'certain\', modifying nouns of
+                 flags: attribute_marker
+
+  máələ̌         → demonstrative pronoun \'it\' used for nouns of class six
+                 flags: noun_class
+
+  míə            → this, demonstrative adj \'those\', modifies nouns of class six
+                 flags: noun_class
+
+  míə            → demonstrative adjective those, modifies nouns of class six
+                 flags: noun_class
+
+  məméema        → possessive pronoun \'mine\' used for class 6 nouns
+                 flags: class_marker,possessive_marker
+
+  məmía          → 1) possessive pronoun \'his\' used for class 6 nouns
+                 flags: class_marker,possessive_marker
+
+  məmóoba        → possessive pronoun \'theirs\' used for class 6 nouns
+                 flags: class_marker,possessive_marker
+
+  mətsá          → 1) attribute \'certain\', modifying nouns of class 6
+                 flags: class_marker,noun_class
+
+  najíə          → possessive pronoun his used for class 5 nouns
+                 flags: class_marker,possessive_marker
+
+  nazeemə̌       → possessive pronoun \'mine\' used for class 5 nouns
+                 flags: class_marker,possessive_marker
+
+  nazó           → possessive singular pronoun \'yours\' used for class 5 nouns
+                 flags: class_marker
+
+  nəzəobə        → possessive pronoun theirs used for nouns of class 5
+                 flags: class_marker,noun_class,possessive_marker
+
+  nəzəobə        → possessive pronoun theirs for class 5 nouns
+                 flags: class_marker,possessive_marker
+
+  papoóbə̌       → possessive pronoun \'theirs\' used for nouns of class 2
+                 flags: class_marker,noun_class,possessive_marker
+
+  patsə̌         → attribute \'certain\', modifying classes two and eight nouns
+                 flags: attribute_marker
+
+  pətsá          → attribute \'some\', modifying classes 2 and 8 nouns
+                 flags: attribute_marker
+
+  pəənə̂         → which, class 2 and 8 inter inter
+                 flags: class_marker
+
+  əghoobá        → possessive pronoun \'theirs\' used for class 1 nouns
+                 flags: class_marker,possessive_marker
+
+  əwagə̌         → yours, used to modify nouns of class 1
+                 flags: class_marker,noun_class
+
+  əyîə           → possessive pronoun \'hers\' used for class 1 nouns
+                 flags: class_marker,possessive_marker
+
+  əyîə           → possessive pronoun \'his\' used for class 1 nouns
+                 flags: class_marker,possessive_marker
+
+  əzeemə         → possessive pronoun \'mine\' used for class 9 nouns
+                 flags: class_marker,possessive_marker
+
+  əzoobá         → possessive pronoun \'theirs\' used for class 9 nouns
+                 flags: class_marker,possessive_marker
+

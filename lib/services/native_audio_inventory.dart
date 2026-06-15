@@ -74,6 +74,22 @@ class NativeAudioInventory {
     return false;
   }
 
+  /// True if ANY native speaker (canonical adult OR any kid slug) has
+  /// recorded [audioKey]. Used by the Contribute > Record picker to
+  /// hide every word that's already covered by SOMEONE, regardless of
+  /// which tier. This prevents asking contributors to re-record words
+  /// that Joel/Janelle/Joyce already nailed even though Dr. Sama
+  /// hasn't recorded them yet.
+  bool hasAnyRecording(String audioKey) {
+    if (!_loaded) return false;
+    for (final cat in _byCategory.values) {
+      final entry = cat[audioKey];
+      if (entry == null) continue;
+      return entry.canonical || entry.kids.isNotEmpty;
+    }
+    return false;
+  }
+
   /// Which adult slug owns the canonical recording for [audioKey], or
   /// null if there's no canonical recording / no manifest entry records
   /// the owner. Used by the Record tab to show distinct S (Dr. Sama)

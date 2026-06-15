@@ -26,9 +26,16 @@ import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
+import 'package:awing_ai_learning/services/local_pending_service.dart';
 
 class RecordAudioScreen extends StatefulWidget {
-  const RecordAudioScreen({super.key});
+  /// v1.18.0+ — When set, the screen opens already-locked on this word
+  /// and the autocomplete picker is hidden. Used by RecordPickerScreen
+  /// so tapping a word in the unrecorded-list goes straight into the
+  /// record flow without re-typing.
+  final AwingWord? preSelectedWord;
+
+  const RecordAudioScreen({super.key, this.preSelectedWord});
 
   @override
   State<RecordAudioScreen> createState() => _RecordAudioScreenState();
@@ -52,6 +59,10 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
   void initState() {
     super.initState();
     _pronunciation.init();
+    // v1.18.0+ — accept pre-selected word from RecordPickerScreen.
+    if (widget.preSelectedWord != null) {
+      _selected = widget.preSelectedWord;
+    }
     // v1.17.4+ — Session 60+ block-duplicate-recordings rule. Ensure the
     // native-audio inventory is loaded so `_alreadyRecorded` can answer
     // synchronously when the user picks a word from the autocomplete.
@@ -60,15 +71,15 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
     });
   }
 
-  /// True if the currently-selected word has an approved canonical
-  /// native recording shipped in the AAB. Used to block duplicate
-  /// contributions per Session 60+ rule: "users cannot contribute for
-  /// words or sentences that already have a native recording and
-  /// approved."
+  /// True if the currently-selected word has ANY approved native
+  /// recording shipped in the AAB — canonical adult (Dr. Sama /
+  /// Berlin) OR any kid (Joel / Janelle / Joyce / Jadyne / etc.).
+  /// Used to block duplicate contributions: "users cannot contribute
+  /// audio for words or sentences that already have a native recording."
   bool get _alreadyRecorded {
     if (_selected == null) return false;
     final key = PronunciationService.audioKey(_selected!.awing);
-    return NativeAudioInventory.instance.hasCanonical(key);
+    return NativeAudioInventory.instance.hasAnyRecording(key);
   }
 
   @override
@@ -218,6 +229,10 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
       screen: "record_audio_screen",
     );
 
+    // v1.18.0+ — mark locally as pending so RecordPickerScreen filters
+    // this word out of "still needs a voice" for the next 30 days.
+    await LocalPendingService.markSubmitted(_selected!.awing);
+
     if (!mounted) return;
     setState(() {
       _submitting = false;
@@ -228,6 +243,14 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
         ? "Thanks! Your recording is on its way."
         : "Saved locally — will sync when online.";
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+
+    // v1.18.0+ — if we got here from RecordPickerScreen (preSelectedWord
+    // was set), pop back automatically so the user lands on the picker
+    // and can chain more recordings without tapping Back.
+    if (widget.preSelectedWord != null && mounted) {
+      await Future<void>.delayed(const Duration(milliseconds: 800));
+      if (mounted) Navigator.of(context).pop(true);
+    }
   }
 
   void _reset() {
@@ -254,9 +277,12 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Pick a word, then record it.",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            Text(
+              widget.preSelectedWord != null
+                  ? "Record this word."
+                  : "Pick a word, then record it.",
+              style: const TextStyle(
+                fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 4),
             Text(
@@ -264,8 +290,11 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
               style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
             ),
             const SizedBox(height: 16),
-            _buildPicker(),
-            const SizedBox(height: 16),
+            // v1.18.0+ — hide the autocomplete picker when a word was
+            // pre-selected by RecordPickerScreen; the selected card +
+            // record controls below are all the user needs.
+            if (widget.preSelectedWord == null) _buildPicker(),
+            if (widget.preSelectedWord == null) const SizedBox(height: 16),
             if (_selected != null) _buildSelectedCard(),
             const SizedBox(height: 16),
             // Session 60+ — block duplicate recordings. When the picked
