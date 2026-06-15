@@ -17,6 +17,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Free up ~25 GB of pre-installed software we don't need
+      # (dotnet, haskell, agents, swap). Without this the runner can hit
+      # disk exhaustion when extracting the 945 MB PAD asset tarball +
+      # Gradle build outputs + Android SDK + Flutter cache, which causes
+      # the kernel OOM killer to nuke Gradle with SIGTERM (exit 143)
+      # even though heap memory is fine.
+      - name: Free disk space on runner
+        run: |
+          echo "Disk before cleanup:"
+          df -h /
+          sudo rm -rf /opt/hostedtoolcache/CodeQL \
+                      /opt/hostedtoolcache/Java_Adopt_jdk \
+                      /opt/hostedtoolcache/PyPy \
+                      /usr/local/lib/android/sdk/ndk \
+                      /usr/share/dotnet \
+                      /usr/local/.ghcup \
+                      /opt/ghc \
+                      /usr/local/share/boost \
+                      /opt/microsoft \
+                      "$AGENT_TOOLSDIRECTORY" 2>/dev/null || true
+          docker system prune -af 2>/dev/null || true
+          echo "Disk after cleanup:"
+          df -h /
+
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
