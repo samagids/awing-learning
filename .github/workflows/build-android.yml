@@ -110,11 +110,19 @@ jobs:
         run: flutter test
         continue-on-error: true
 
-      # === SIGNED APK (every push) ===
+      # === SIGNED APK (only on main pushes, NOT tags) ===
+      # On TAG pushes we skip the APK build to avoid two back-to-back
+      # Gradle invocations in the same job — the second one runs out
+      # of memory on the 7 GB ubuntu-latest runner because the first
+      # one's Gradle daemon caches still consume heap. The APK is just
+      # a sideloading convenience anyway; the Play Store only needs
+      # the AAB built below.
       - name: Build APK
+        if: "!startsWith(github.ref, 'refs/tags/v')"
         run: flutter build apk --release
 
       - name: Rename APK
+        if: "!startsWith(github.ref, 'refs/tags/v')"
         run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/awing-1.2.0.apk
 
       - name: Upload APK artifact
@@ -124,12 +132,21 @@ jobs:
         # fails and — without continue-on-error — would short-circuit
         # the AAB build + Play Console upload. Distribution must NOT
         # depend on the artifact archive succeeding.
+        if: "!startsWith(github.ref, 'refs/tags/v')"
         continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: awing-android-apk
           path: build/app/outputs/flutter-apk/awing-1.2.0.apk
           retention-days: 30
+
+      # Reset Gradle daemon between main-build APK and tag-build AAB.
+      # On TAG pushes (when the APK build above was skipped) this is a
+      # no-op, but harmless. On main pushes it stops any lingering
+      # daemon process before the workflow finishes.
+      - name: Stop Gradle daemon
+        if: "!startsWith(github.ref, 'refs/tags/v')"
+        run: cd android && ./gradlew --stop || true
 
       # === SIGNED APP BUNDLE for Play Store (only on tags) ===
       - name: Build signed App Bundle
