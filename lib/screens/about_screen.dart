@@ -885,4 +885,103 @@ class _AboutScreenState extends State<AboutScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              final error = auth.ver
+              final error = auth.verifyDevCode(verifyController.text);
+              Navigator.pop(ctx);
+              if (error != null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(error),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Developer mode activated!'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
+            },
+            child: const Text('Verify'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CreditRow extends StatelessWidget {
+  final String title;
+  final String author;
+  final bool isDark;
+
+  const _CreditRow({
+    required this.title,
+    required this.author,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: isDark ? Colors.grey.shade200 : Colors.black87,
+            ),
+          ),
+          Text(
+            author,
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.grey.shade600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TechRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isDark;
+
+  const _TechRow({
+    required this.icon,
+    required this.label,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 18,
+            color: isDark ? const Color(0xFF81C784) : const Color(0xFF006432),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: isDark ? Colors.grey.shade300 : Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
