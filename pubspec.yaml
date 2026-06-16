@@ -105,6 +105,10 @@ flutter:
   assets:
     - config/webhooks.json
     - assets/images/app_icon.png
+    # NACDA emblem -- shown in the About screen's "With Support From"
+    # section above the NACDA chapter credits. Source: WhatsApp image
+    # provided by Dr. Sama on 2026-06-11. Format: JPEG, ~13 KB.
+    - assets/images/nacda_logo.jpg
     # Session 61c — list of bundled vocabulary image keys, used by
     # ImageService.hasImageSync() to filter game/quiz/exam vocab to
     # entries with a real illustration (no green placeholder fallback).

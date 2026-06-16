@@ -256,9 +256,27 @@ class _AboutScreenState extends State<AboutScreen> {
                     ],
                   ),
                   const SizedBox(height: 12),
+                  // NACDA emblem centered above the credits. Tap-to-zoom
+                  // for users who want a closer look at the design.
+                  Center(
+                    child: GestureDetector(
+                      onTap: () => _showNacdaLogo(context),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          'assets/images/nacda_logo.jpg',
+                          width: 96,
+                          height: 96,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   Text(
-                    'This project is made possible by the generous support '
-                    'of the Awing community:',
+                    'This project is made possible with support from the '
+                    'Ndong Awing Cultural and Development Association '
+                    '(NACDA) and the wider Awing community:',
                     style: TextStyle(
                       fontSize: 13,
                       height: 1.4,
@@ -267,13 +285,13 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   const SizedBox(height: 12),
                   _CreditRow(
-                    title: 'Ndong Awing Cultural and Development Association (NACDA)',
+                    title: 'With support from NACDA (Ndong Awing Cultural and Development Association)',
                     author: 'NACDA-DMV',
                     isDark: isDark,
                   ),
                   const SizedBox(height: 8),
                   _CreditRow(
-                    title: 'Virginia NACDA Group',
+                    title: 'With support from the Virginia NACDA chapter',
                     author: 'NACDA-DMV-Virginia',
                     isDark: isDark,
                   ),
@@ -475,6 +493,52 @@ class _AboutScreenState extends State<AboutScreen> {
             child: const Text('Close'),
           ),
         ],
+      ),
+    );
+  }
+
+  /// Show the NACDA emblem in a full-screen-ish dialog so users can see
+  /// the detail of the traditional Bamileke-pattern sleeve + open palm
+  /// design. Tap-to-dismiss.
+  void _showNacdaLogo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(24),
+        child: GestureDetector(
+          onTap: () => Navigator.pop(ctx),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(
+                  'assets/images/nacda_logo.jpg',
+                  fit: BoxFit.contain,
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Ndong Awing Cultural and\nDevelopment Association',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Tap anywhere to close',
+                style: TextStyle(
+                  color: Colors.white.withAlpha(180),
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
