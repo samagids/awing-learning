@@ -118,16 +118,27 @@ Section "Dart analyze"
 if (Get-Command flutter -ErrorAction SilentlyContinue) {
     Write-Host "  Running flutter analyze (may take 30s)..."
     $analyzeOutput = cmd /c "flutter analyze --no-fatal-infos --no-fatal-warnings 2>&1"
-    # Count error-level issues only. info/warning are non-fatal in CI
-    # (which uses continue-on-error: true on this step).
-    $errorLines = $analyzeOutput | Select-String -Pattern "^\s*error - " -CaseSensitive
-    $infoCount  = ($analyzeOutput | Select-String -Pattern "^\s*info - "    -CaseSensitive).Count
-    $warnCount  = ($analyzeOutput | Select-String -Pattern "^\s*warning - " -CaseSensitive).Count
-    if ($errorLines.Count -gt 0) {
-        Fail "flutter analyze found $($errorLines.Count) error-level issue(s):"
-        $errorLines | Select-Object -First 10 | ForEach-Object { Write-Host "      $_" }
+    $analyzeExit = $LASTEXITCODE
+    # Detect "Dart SDK download failed" and similar bootstrap errors --
+    # those indicate the analyzer never actually ran, so we cannot trust
+    # the 0-errors result.
+    $bootFailed = $analyzeOutput | Select-String -Pattern "Unable to update Dart SDK|Could Not Find|FileSystemException" -Quiet
+    if ($bootFailed) {
+        Fail "flutter analyze did not run (Dart SDK download or filesystem error). Run 'flutter doctor' to diagnose."
+        $analyzeOutput | Select-Object -First 10 | ForEach-Object { Write-Host "      $_" }
     } else {
-        Pass "flutter analyze: 0 errors ($infoCount infos, $warnCount warnings -- non-fatal)"
+        $errorLines = $analyzeOutput | Select-String -Pattern "^\s*error - " -CaseSensitive
+        $infoCount  = ($analyzeOutput | Select-String -Pattern "^\s*info - "    -CaseSensitive).Count
+        $warnCount  = ($analyzeOutput | Select-String -Pattern "^\s*warning - " -CaseSensitive).Count
+        if ($errorLines.Count -gt 0) {
+            Fail "flutter analyze found $($errorLines.Count) error-level issue(s):"
+            $errorLines | Select-Object -First 10 | ForEach-Object { Write-Host "      $_" }
+        } elseif ($analyzeExit -ne 0 -and $infoCount -eq 0 -and $warnCount -eq 0) {
+            # Exit != 0 with no diagnostics = invocation error, treat as failure.
+            Fail "flutter analyze exited non-zero with no diagnostic output (exit $analyzeExit). Run 'flutter analyze' manually."
+        } else {
+            Pass "flutter analyze: 0 errors ($infoCount infos, $warnCount warnings -- non-fatal)"
+        }
     }
 } else {
     Warn "flutter not on PATH -- skipping analyze"
