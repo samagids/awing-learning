@@ -66,13 +66,27 @@ if ($build -le $maxPrevBuild) {
     Pass "Build $build > previous max +$maxPrevBuild"
 }
 
-$aboutScreen = Get-Content lib/screens/about_screen.dart -Raw -ErrorAction SilentlyContinue
-if ($aboutScreen -and ($aboutScreen -match "appVersion\s*=\s*'([\d.]+)'")) {
-    if ($matches[1] -ne $semver) {
-        Warn "about_screen.dart appVersion = '$($matches[1])' but pubspec = $semver"
-    } else {
-        Pass "about_screen.dart appVersion in sync"
+# Auto-sync the three in-app version mirrors from pubspec.yaml.
+# Idempotent -- writes only if there's drift. Then a strict --check
+# pass verifies the auto-sync succeeded and FAILS the preflight if
+# any file is still out of sync (catches script bugs).
+if (Get-Command python -ErrorAction SilentlyContinue) {
+    Write-Host "  Auto-syncing in-app version constants..."
+    $syncOutput = python scripts/sync_version.py 2>&1
+    $syncOutput | ForEach-Object {
+        if ($_ -match "fixed") { Write-Host "    $_" -ForegroundColor Yellow }
+        elseif ($_ -match "ok") { Write-Host "    $_" -ForegroundColor DarkGray }
+        elseif ($_ -match "DRIFT|warn|skip") { Write-Host "    $_" -ForegroundColor Yellow }
     }
+    $checkOutput = python scripts/sync_version.py --check 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Fail "Version constants STILL out of sync with pubspec.yaml after auto-sync. Inspect scripts/sync_version.py."
+        $checkOutput | ForEach-Object { Write-Host "      $_" }
+    } else {
+        Pass "All in-app version constants match pubspec.yaml ($semver+$build)"
+    }
+} else {
+    Warn "python not on PATH -- cannot auto-sync version mirrors"
 }
 
 # ---------------- 2. Gradle memory settings (CI-safe) ----------------

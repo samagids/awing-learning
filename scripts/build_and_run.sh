@@ -157,6 +157,17 @@ else
 fi
 echo
 
+# ---- Step 0b: Sync in-app version constants from pubspec.yaml --------
+# Idempotent: rewrites about_screen.dart, analytics_service.dart and
+# cloud_backup_service.dart only if they drift. Prevents the
+# pubspec.yaml-says-1.18.1-but-app-still-shows-1.17.4 footgun.
+echo "[0b]  Syncing in-app version constants from pubspec.yaml..."
+if ! python3 scripts/sync_version.py; then
+    echo "        ERROR: sync_version.py failed. Build aborted."
+    exit 1
+fi
+echo
+
 # ---- Step 1: Apply Approved Contributions ----------------------------
 echo "[1/8] Applying approved contributions..."
 if ! python3 scripts/apply_contributions.py; then
