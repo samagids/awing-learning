@@ -184,9 +184,97 @@ if ($awingWordCount -lt 5000) {
 # apostrophes and parens which make this metric unreliable. The Dart
 # analyzer above is the real syntactic gate.
 
+# ---------------- 6b. Clasp Code.js mirror + NUL check ----------------
+# Session 49b: contributions_webapp.gs (human-readable) and
+# clasp_contributions/Code.js (what clasp actually uploads) MUST mirror
+# each other before any clasp push. If they drift, the deployed webhook
+# runs stale code regardless of how many times you push.
+# Session 49c: the Edit tool occasionally leaves trailing NUL bytes when
+# shrinking files; clasp push then errors with "Invalid or unexpected
+# token line N+1" past the visible EOF.
+Section "Clasp webhook mirror + NUL bytes"
+
+# .NET file methods (System.IO.File) use the process working directory,
+# not PowerShell's $PWD -- they're different on Windows. Resolve paths
+# via $PSScriptRoot (always points at scripts/ where this script lives)
+# so the check works regardless of where the user invoked preflight.
+$gsPath = Join-Path $PSScriptRoot "contributions_webapp.gs"
+$jsPath = Join-Path $PSScriptRoot "clasp_contributions\Code.js"
+
+if (-not (Test-Path $gsPath)) {
+    Warn "Skipping clasp check -- $gsPath not found"
+} elseif (-not (Test-Path $jsPath)) {
+    Warn "Skipping clasp check -- $jsPath not found"
+} else {
+    try {
+        $gsBytes = [System.IO.File]::ReadAllBytes($gsPath)
+        $jsBytes = [System.IO.File]::ReadAllBytes($jsPath)
+        $gsNul = ($gsBytes | Where-Object { $_ -eq 0 }).Count
+        $jsNul = ($jsBytes | Where-Object { $_ -eq 0 }).Count
+        if ($gsNul -gt 0) {
+            Fail "contributions_webapp.gs has $gsNul NUL bytes (Edit-tool truncation). Strip before clasp push."
+        } else {
+            Pass "contributions_webapp.gs has no NUL bytes"
+        }
+        if ($jsNul -gt 0) {
+            Fail "clasp_contributions/Code.js has $jsNul NUL bytes (Edit-tool truncation). Strip before clasp push."
+        } else {
+            Pass "clasp_contributions/Code.js has no NUL bytes"
+        }
+
+        # Per-function parity check for the four functions Session 49b
+        # documents as MUST-mirror. Whole-file diff is too noisy (comments
+        # + whitespace drift legitimately); function-level catches the
+        # actually-deploys-different-code case.
+        $gsText = [System.IO.File]::ReadAllText($gsPath)
+        $jsText = ([System.IO.File]::ReadAllText($jsPath)) -replace [char]0,""
+        $functions = @("recorderSlugOf", "handleApproval", "handleFetchAudio", "handleVersionCheck")
+        $driftCount = 0
+        $skipCount  = 0
+        foreach ($fn in $functions) {
+            $pattern = "function $fn\([\s\S]*?\n\}"
+            $gsMatch = [regex]::Match($gsText, $pattern)
+            $jsMatch = [regex]::Match($jsText, $pattern)
+            if (-not $gsMatch.Success -or -not $jsMatch.Success) {
+                Warn "Cannot locate function $fn in one of the two files (skipping)"
+                $skipCount++
+                continue
+            }
+            if ($gsMatch.Value -ne $jsMatch.Value) {
+                Fail "Function $fn DRIFT between .gs and Code.js -- mirror before clasp push"
+                $driftCount++
+            }
+        }
+        $checked = $functions.Count - $skipCount
+        if ($driftCount -eq 0 -and $checked -gt 0) {
+            Pass "$checked of $($functions.Count) critical webhook functions match .gs <-> Code.js"
+        } elseif ($checked -eq 0) {
+            Warn "Could not locate ANY of the 4 critical functions -- regex pattern may need updating"
+        }
+    } catch {
+        Fail "Clasp mirror check failed: $($_.Exception.Message)"
+    }
+}
+
 # ---------------- 6. Local AAB smoke build ----------------
 if (-not $SkipBuild) {
     Section "Local AAB smoke build"
+    # OneDrive lock recovery: stale Gradle daemons + OneDrive file sync
+    # routinely leave build/ in a partially-locked state where the next
+    # AAB build dies trying to delete intermediates. Pre-clean removes
+    # the problem before it starts.
+    if (Test-Path build) {
+        Write-Host "  Pre-cleaning build/ (OneDrive lock prevention)..."
+        Get-Process -ErrorAction SilentlyContinue |
+            Where-Object { $_.ProcessName -match "^(java|gradle|kotlin|dart)$" } |
+            Stop-Process -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Milliseconds 500
+        Remove-Item build -Recurse -Force -ErrorAction SilentlyContinue
+        if (Test-Path build) {
+            Start-Sleep -Seconds 1
+            Remove-Item build -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
     Write-Host "  flutter build appbundle --release (5-10 min)..."
     $buildOutput = cmd /c "flutter build appbundle --release 2>&1"
     $buildExit = $LASTEXITCODE
