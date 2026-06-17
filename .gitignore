@@ -99,6 +99,13 @@ contributions/approved_contributions.json
 contributions/applied/
 contributions/last_version.txt
 contributions/regenerate_words.json
+# Per-build, per-machine artifacts from scripts/check_speakable_drift.py.
+# The cache stores last-build awing_to_speakable() output for every Awing
+# string; the drift list is its per-build diff feeding the targeted
+# regenerate in build_and_run.sh Step 1b. Both regenerate on every build;
+# tracking them would cause spurious diffs and break drift detection.
+contributions/rule_drift_words.json
+scripts/_speakable_cache.json
 
 # Clasp project dirs (mostly local — .clasp.json holds private script
 # IDs and Code.js is auto-mirrored from the .gs source by

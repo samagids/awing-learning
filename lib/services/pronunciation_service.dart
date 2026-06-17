@@ -25,6 +25,20 @@ class PronunciationService {
   bool _initialized = false;
   bool _audioPlayerConfigured = false;
 
+  /// Active flutter_tts locale code. Set by init() based on what the OS
+  /// has installed. Drives the choice between awingToSpeakable() (Swahili
+  /// path -- matches the build-time Edge TTS pipeline) and the older
+  /// awingToPhonetic() English-approximation path.
+  String _ttsLocale = 'en-US';
+
+  /// True when flutter_tts is currently configured to speak Swahili.
+  /// Most Awing words contain ɛ/ɔ/ə/ɨ/ŋ/ɣ and prenasalized clusters that
+  /// English TTS cannot pronounce, so when a Swahili voice IS installed
+  /// the speakable rules from the build-time pipeline produce far closer
+  /// output. When no Swahili voice exists, awingToPhonetic() (English
+  /// approximation) is used instead.
+  bool _swahiliAvailable = false;
+
   /// Current voice character. Screens set this based on difficulty level.
   String _currentVoice = 'boy';
 
@@ -110,7 +124,28 @@ class PronunciationService {
   Future<void> init() async {
     if (_initialized) return;
 
-    await _tts.setLanguage('en-US');
+    // Prefer Swahili (matches build-time Edge TTS sw-KE / sw-TZ neural
+    // voices). Fall back to English if no Swahili voice is installed on
+    // the device. The selected locale drives awingToSpeakable vs
+    // awingToPhonetic in speakAwing() and speakSentence().
+    _swahiliAvailable = false;
+    _ttsLocale = 'en-US';
+    for (final locale in const ['sw-KE', 'sw-TZ', 'sw']) {
+      try {
+        final ok = await _tts.isLanguageAvailable(locale);
+        if (ok == true) {
+          await _tts.setLanguage(locale);
+          _ttsLocale = locale;
+          _swahiliAvailable = true;
+          break;
+        }
+      } catch (_) {
+        // isLanguageAvailable can throw on some devices; try next.
+      }
+    }
+    if (!_swahiliAvailable) {
+      await _tts.setLanguage('en-US');
+    }
     await _tts.setSpeechRate(0.35);
     await _tts.setPitch(1.0);
     await _tts.setVolume(1.0);
@@ -305,9 +340,13 @@ class PronunciationService {
       }
     }
 
-    // Fallback to TTS with phonetic conversion.
-    // Use a slightly faster rate so it sounds like a single word, not spelled out.
-    final phonetic = awingToPhonetic(awingWord);
+    // Fallback to TTS. On Swahili-capable devices, use the same
+    // awing_to_speakable() rules the build-time Edge TTS pipeline uses
+    // (so runtime-synthesized Awing matches pre-baked clips). On English-
+    // only devices, use the older awingToPhonetic English approximation.
+    final phonetic = _swahiliAvailable
+        ? awingToSpeakable(awingWord)
+        : awingToPhonetic(awingWord);
     await _tts.setSpeechRate(0.4);
     await _tts.speak(phonetic);
     await _tts.setSpeechRate(0.35);
@@ -351,7 +390,10 @@ class PronunciationService {
       }
 
       if (!played) {
-        final phonetic = awingToPhonetic(cleanWord);
+        // Same Swahili-vs-English choice as speakAwing.
+        final phonetic = _swahiliAvailable
+            ? awingToSpeakable(cleanWord)
+            : awingToPhonetic(cleanWord);
         await _tts.speak(phonetic);
         await Future.delayed(const Duration(milliseconds: 300));
       } else {
@@ -514,6 +556,75 @@ class PronunciationService {
     key = key.replaceAll(RegExp(r'[^a-z0-9]'), '');
 
     return key;
+  }
+
+  /// Convert Awing text to a Swahili-pronounceable spelling for
+  /// flutter_tts. Direct Dart port of awing_to_speakable() in
+  /// scripts/generate_audio_edge.py -- same rules the build-time Edge
+  /// TTS pipeline uses, so runtime fallback TTS sounds consistent with
+  /// pre-baked clips when the device has a Swahili voice installed.
+  ///
+  /// Note on Unicode: the Python source NFD-decomposes pre-composed
+  /// characters then drops 5 specific tone marks. Our app content uses
+  /// combining-mark sequences (not pre-composed Latin diacritics), so
+  /// iterating runes and skipping the U+0300-U+036F combining-mark
+  /// block is equivalent for every Awing string in vocab/phrases/
+  /// sentences/stories.
+  static String awingToSpeakable(String text) {
+    if (text.isEmpty) return text;
+
+    // 1. Strip tone-bearing combining marks (acute, grave, circumflex,
+    //    caron, tilde, etc.) -- TTS handles its own prosody.
+    final stripped = StringBuffer();
+    for (final rune in text.runes) {
+      if (rune >= 0x0300 && rune <= 0x036F) continue;
+      stripped.writeCharCode(rune);
+    }
+    String result = stripped.toString();
+
+    // 2. ŋg / ŋk cluster handling BEFORE isolated ŋ becomes "ng".
+    result = result
+        .replaceAll('ŋg', 'ngg')
+        .replaceAll('Ŋg', 'Ngg')
+        .replaceAll('ŋk', 'nk')
+        .replaceAll('Ŋk', 'Nk');
+
+    // 3. Word-final "a + glottal-stop + ə" -> "a" (Whisper-mined rule).
+    //    Source: 4 native recordings ending in /a'ə/ all produced "-a"
+    //    via Whisper-Swahili, not "-a'a" or "-aa". Fires BEFORE the
+    //    generic word-final schwa rule so the apostrophe context is
+    //    still available to distinguish from long vowels like "naa".
+    final aGlottalSchwa = RegExp("a['’‘ʼ]ə"
+        r'(?=$|[\s.,!?;:"\-])');
+    result = result.replaceAll(aGlottalSchwa, 'a');
+    final upperAGlottalSchwa = RegExp("A['’‘ʼ]Ə"
+        r'(?=$|[\s.,!?;:"\-])');
+    result = result.replaceAll(upperAGlottalSchwa, 'A');
+
+    // 4. Word-final ə -> 'a'. Swahili almost never ends words in 'e',
+    //    so our default ə->e for mid-word doesn't apply word-finally.
+    result = result.replaceAll(
+        RegExp(r'ə(?=$|[\s.,!?;:"\-])'), 'a');
+    result = result.replaceAll(
+        RegExp(r'Ə(?=$|[\s.,!?;:"\-])'), 'A');
+
+    // 5. Bulk Awing-only graphemes -> Latin equivalents.
+    const replacements = <List<String>>[
+      ['Ɛ', 'E'], ['ɛ', 'e'],
+      ['Ɔ', 'O'], ['ɔ', 'o'],
+      ['Ə', 'E'], ['ə', 'e'],
+      ['Ɨ', 'I'], ['ɨ', 'i'],
+      ['Ŋ', 'Ng'], ['ŋ', 'ng'],
+      ['ɣ', 'gh'],
+      ['ʼ', ''], ['’', ''], ['‘', ''], ["'", ''],
+    ];
+    for (final pair in replacements) {
+      result = result.replaceAll(pair[0], pair[1]);
+    }
+
+    // 6. Collapse runs of whitespace.
+    result = result.replaceAll(RegExp(r'\s+'), ' ').trim();
+    return result;
   }
 
   /// Convert Awing orthography to English phonetic approximation for TTS fallback.

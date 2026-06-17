@@ -179,6 +179,40 @@ fi
 echo "        Contributions applied successfully."
 echo
 
+# ---- Step 1b: Detect TTS-rule drift -> regenerate just those words ---
+# When awing_to_speakable() in generate_audio_edge.py changes (new
+# Whisper-mined rule, manual tweak, etc.), the audio MP3s already in
+# the PAD pack were baked with the OLD rules. check_speakable_drift.py
+# walks every Awing string in vocab + phrases, compares the current
+# speakable output to a cache of the last build's outputs, and writes
+# drifted words to contributions/rule_drift_words.json. If non-empty,
+# we trigger a targeted regenerate so the drifted clips get the new
+# rules without a full --force regen of all 9k+ words.
+#
+# On first adoption (cache empty) the bootstrap branch in
+# check_speakable_drift.py populates the cache without flagging
+# anything -- existing audio is assumed valid for whatever rules were
+# in effect when it was generated.
+echo "[1b]  Detecting TTS-rule drift since last build..."
+if ! python3 scripts/check_speakable_drift.py; then
+    echo "        WARNING: drift detection failed (non-fatal). Continuing."
+elif [ -f contributions/rule_drift_words.json ]; then
+    # Non-empty drift list -> targeted regenerate.
+    DRIFT_COUNT=$(python3 -c "import json; print(len(json.load(open('contributions/rule_drift_words.json'))))" 2>/dev/null || echo 0)
+    if [ "$DRIFT_COUNT" -gt 0 ]; then
+        echo "        $DRIFT_COUNT word(s) drifted -- regenerating..."
+        if ! python3 scripts/generate_audio_edge.py --output-dir "$PAD_AUDIO" \
+                regenerate --regenerate-file contributions/rule_drift_words.json; then
+            echo "        ERROR: drift regenerate failed. Build aborted."
+            exit 1
+        fi
+        echo "        Drifted clips regenerated with current rules."
+    else
+        echo "        No drift detected. Skipping targeted regen."
+    fi
+fi
+echo
+
 # ---- Step 2: Edge TTS character voices --------------------------------
 echo "[2/8] Generating Edge TTS character voice clips..."
 echo "        6 voices: boy/girl + young_man/young_woman + man/woman"
@@ -278,15 +312,4 @@ echo "        AAB + APK built successfully."
 echo
 
 # ---- Step 8: Install on device ---------------------------------------
-echo "[8/8] Installing on connected device..."
-if [ -f "scripts/setup_and_deploy.py" ]; then
-    python3 scripts/setup_and_deploy.py --install || \
-        echo "        (install best-effort; device may be disconnected)"
-else
-    flutter_cmd run || echo "        (flutter run best-effort; device may be disconnected)"
-fi
-
 echo
-echo "============================================"
-echo "  Build and run completed."
-echo "============================================"

@@ -450,6 +450,16 @@ def awing_to_speakable(text):
     text = text.replace("ŋk", "nk")
     text = text.replace("Ŋk", "Nk")
 
+    # Word-final "a + glottal-stop + ə" -> "a" (Session 60+ Round 2
+    # Whisper-mined). Source: 4 distinct native recordings ending in
+    # /a'ə/ (nga'ə, anuenda'ə, sa'ə, jwa'ə) all produced "-a" via
+    # Whisper-Swahili, not "-a'a" or "-aa". Drops both glottal and
+    # schwa when preceded by 'a'. Fires BEFORE the generic word-final
+    # schwa rule so the apostrophe context is still available to
+    # distinguish from genuine long-vowel words like "naa".
+    text = re.sub(r"a[\'’‘ʼ]ə(?=$|[\s.,!?;:\"\-])", "a", text)
+    text = re.sub(r"A[\'’‘ʼ]Ə(?=$|[\s.,!?;:\"\-])", "A", text)
+
     # Word-final ə → 'a' (Session 60+ Whisper-mined rule).
     # Source: 352 native recordings transcribed via Whisper-Swahili
     # consistently produced -a endings for words ending in /ə/ (e.g.
@@ -1309,13 +1319,20 @@ def cmd_speak(args):
                 cfg["voice"],
                 "female" if char_name in ("girl", "young_woman", "woman") else "male"
             )
-            ok = await _generate_clip(actual, text, output, rate=cfg["rate"], pitch=cfg["pitch"])
+            # force=True -- speak ALWAYS regenerates. Without this, the
+            # skip-if-exists shortcut in _generate_clip_simple returns the
+            # PREVIOUS word's audio (output paths are per-voice, not per-text)
+            # which is why speak produced silence on every call after the first.
+            ok = await _generate_clip(actual, text, output, rate=cfg["rate"],
+                                       pitch=cfg["pitch"], force=True)
             size = output.stat().st_size if output.exists() else 0
             status = "✓" if ok else "✗"
             print(f"  {status} {char_name:6s} ({cfg['description']:30s}) → {size}b")
-            if ok and sys.platform == "win32":
+            if ok and size > 1000 and sys.platform == "win32":
                 os.startfile(str(output))
                 await asyncio.sleep(2)
+            elif ok and size <= 1000:
+                print(f"     WARNING: clip is {size}b -- Edge TTS likely returned empty audio")
         return True
 
     return asyncio.run(run())
