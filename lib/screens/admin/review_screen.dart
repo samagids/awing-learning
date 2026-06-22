@@ -29,6 +29,12 @@ class _ReviewScreenState extends State<ReviewScreen>
   final AudioPlayer _player = AudioPlayer();
   bool _isFetching = false;
 
+  /// Drive-hosted audio URLs keyed by contribution id. Populated by
+  /// _fetchAudioUrlsForVisible() so the play button can stream audio
+  /// for contributions submitted from a DIFFERENT device (where the
+  /// local audioPath doesn't exist on this Samsung).
+  final Map<String, String> _audioUrls = {};
+
   @override
   void initState() {
     super.initState();
@@ -61,10 +67,51 @@ class _ReviewScreenState extends State<ReviewScreen>
           ),
         );
       }
+      // After fetching the contribution rows themselves, ask the
+      // webhook for the Drive-hosted audio URLs for every pending
+      // contribution that has an audio recording but whose audioPath
+      // doesn't exist locally (i.e. submitted from another device).
+      await _fetchAudioUrlsForVisible();
     } catch (_) {
       // Silently fail on auto-fetch
     } finally {
       if (mounted) setState(() => _isFetching = false);
+    }
+  }
+
+  /// Asks the webhook for {contributionId -> audioUrl} for every
+  /// pending contribution that (a) claims to have audio, (b) doesn't
+  /// have a local file on THIS device, and (c) we haven't already
+  /// resolved a URL for. Batched into one network call.
+  Future<void> _fetchAudioUrlsForVisible() async {
+    final service = context.read<ContributionService>();
+    if (!service.hasWebhook) return;
+    final pending = service.pendingContributions;
+    final needIds = <String>[];
+    for (final c in pending) {
+      if (_audioUrls.containsKey(c.id)) continue;
+      // If audioPath IS set and the file exists locally, we're on the
+      // submitter's own device -- no URL needed, the local file plays.
+      if (c.audioPath != null) {
+        final f = File(c.audioPath!);
+        if (await f.exists()) continue;
+      }
+      // Either no audioPath (cross-device case) or audioPath but the
+      // file is missing on this device -- ask the webhook for the
+      // Drive URL. The webhook returns empty for contributions without
+      // any audio (text-only spelling fixes, etc.), so this is safe to
+      // batch over ALL pending IDs.
+      needIds.add(c.id);
+    }
+    if (needIds.isEmpty) return;
+    try {
+      final urls = await service.fetchAudioUrls(needIds);
+      if (mounted && urls.isNotEmpty) {
+        setState(() => _audioUrls.addAll(urls));
+      }
+    } catch (_) {
+      // Silently fail -- play button will surface a clearer error if
+      // the user actually taps a contribution whose URL we couldn't fetch
     }
   }
 
@@ -312,6 +359,7 @@ class _ReviewScreenState extends State<ReviewScreen>
           contribution: items[index],
           showActions: showActions,
           player: _player,
+          audioUrl: _audioUrls[items[index].id],
           onApprove: () => _approveDialog(items[index]),
           onReject: () => _rejectDialog(items[index]),
         );
@@ -443,6 +491,7 @@ class _ReviewScreenState extends State<ReviewScreen>
               return _ContributionCard(
                 contribution: items[index],
                 player: _player,
+                audioUrl: _audioUrls[items[index].id],
               );
             },
           ),
@@ -599,6 +648,11 @@ class _ContributionCard extends StatelessWidget {
   final Contribution contribution;
   final bool showActions;
   final AudioPlayer player;
+
+  /// Optional Drive-hosted audio URL. Used as a fallback when the
+  /// contribution's audioPath points to a file that doesn't exist on
+  /// THIS device (i.e. the submission came from someone else's phone).
+  final String? audioUrl;
   final VoidCallback? onApprove;
   final VoidCallback? onReject;
 
@@ -606,6 +660,7 @@ class _ContributionCard extends StatelessWidget {
     required this.contribution,
     this.showActions = false,
     required this.player,
+    this.audioUrl,
     this.onApprove,
     this.onReject,
   });
@@ -772,8 +827,11 @@ class _ContributionCard extends StatelessWidget {
               ),
             ],
 
-            // Audio recording
-            if (c.audioPath != null) ...[
+            // Audio recording -- show if EITHER a local file path is set
+            // (submitter's own device) OR a Drive URL was fetched by the
+            // review screen (cross-device review on the developer's phone).
+            if (c.audioPath != null ||
+                (audioUrl != null && audioUrl!.isNotEmpty)) ...[
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -792,29 +850,49 @@ class _ContributionCard extends StatelessWidget {
                       icon: const Icon(Icons.play_circle_fill,
                           color: Colors.blue, size: 32),
                       onPressed: () async {
-                        final file = File(c.audioPath!);
-                        if (await file.exists()) {
+                        // 1. Try local file first (works when reviewing
+                        //    a contribution submitted from THIS device).
+                        if (c.audioPath != null) {
+                          final file = File(c.audioPath!);
+                          if (await file.exists()) {
+                            try {
+                              await player
+                                  .play(DeviceFileSource(c.audioPath!));
+                              return;
+                            } catch (_) {
+                              // fall through to URL fallback
+                            }
+                          }
+                        }
+                        // 2. Fall back to Drive-hosted URL (works when
+                        //    the contribution was submitted from a
+                        //    different device — common case on the
+                        //    developer's reviewing phone).
+                        if (audioUrl != null && audioUrl!.isNotEmpty) {
                           try {
-                            await player.play(DeviceFileSource(c.audioPath!));
+                            await player.play(UrlSource(audioUrl!));
+                            return;
                           } catch (e) {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Playback error: $e'),
+                                  content: Text('Streaming error: $e'),
                                   backgroundColor: Colors.red,
                                 ),
                               );
                             }
+                            return;
                           }
-                        } else {
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Audio file not found — it may be on another device'),
-                                backgroundColor: Colors.orange,
-                              ),
-                            );
-                          }
+                        }
+                        // 3. Neither local file nor URL -- truly missing.
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  'Audio not available. Try Fetch from Cloud first.'),
+                              backgroundColor: Colors.orange,
+                            ),
+                          );
                         }
                       },
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:awing_ai_learning/data/audio_contributors.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
@@ -11,7 +12,7 @@ class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
   static const String appVersion = '1.18.1';
-  static const String buildNumber = '86';
+  static const String buildNumber = '87';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
   static const String appDescription =
@@ -294,6 +295,93 @@ class _AboutScreenState extends State<AboutScreen> {
                     title: 'With support from the Virginia NACDA chapter',
                     author: 'NACDA-DMV-Virginia',
                     isDark: isDark,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Audio Contributors section -- credits every native voice
+            // that has recorded audio shipped in the app. Core voices
+            // (Dr. Sama + family) are hard-coded in
+            // lib/data/audio_contributors.dart; approved external
+            // contributors are auto-appended by
+            // scripts/apply_contributions.py during the build pipeline.
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF252525) : Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isDark ? Colors.grey.shade700 : Colors.grey.shade200,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.mic,
+                        size: 20,
+                        color: isDark ? AboutScreen._awingGold : AboutScreen._awingDarkGreen,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Audio Contributors',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.grey.shade200 : AboutScreen._awingDarkGreen,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Native speakers whose voices bring this app to life. '
+                    'Their recordings power the Awing pronunciation you hear '
+                    'in lessons, quizzes, and stories.',
+                    style: TextStyle(
+                      fontSize: 13,
+                      height: 1.4,
+                      color: isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      for (final name in audioContributors)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: isDark
+                                ? Colors.green.shade900.withOpacity(0.4)
+                                : AboutScreen._awingDarkGreen.withOpacity(0.08),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: isDark
+                                  ? Colors.green.shade700
+                                  : AboutScreen._awingDarkGreen.withOpacity(0.3),
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(
+                            name,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: isDark
+                                  ? Colors.green.shade100
+                                  : AboutScreen._awingDarkGreen,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ],
               ),
