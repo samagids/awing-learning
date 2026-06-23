@@ -7,6 +7,60 @@ This file contains guidance for Claude Code when working with the **Awing AI Lea
 **Dr. Guidion Sama, DIT** — Creator and lead developer of Awing AI Learning.
 Contact: samagids@gmail.com
 
+## VERSION CODE LEDGER — read this BEFORE bumping pubspec.yaml
+
+The recurring "Version code N has already been used" failure (Sessions
+58, 60, 61) happens when Play Console or TestFlight reserved a code
+server-side and we picked the same one locally. To avoid it:
+
+**Rule:** Before tagging, pubspec.yaml's `+N` must be STRICTLY GREATER
+than every code below.
+
+### Highest shipped + last known reservations
+
+| Code | Tag | Status | Date | Notes |
+|-----:|-----|--------|------|-------|
+| **+87** | `v1.18.1+87` | ✅ pushed | 2026-06-23 | Contribute UX + cross-device audio + auto-credit. Play accepted. |
+| +86 | `v1.18.2+86` | ⚠️ tag-only | — | Mistag — tag points but no successful upload. Code may still be burned on Play. |
+| +86 | `v1.18.1+86` | ✅ pushed | 2026-06-22 | Earlier today's push. |
+| +85 | `v1.18.1+85` | ✅ pushed | — | |
+| +84 | `v1.18.1+84` | ✅ pushed | — | |
+
+**Next safe build code: +88** (or higher if Play/TestFlight rejects).
+
+### Update protocol (do this AT EACH TAG PUSH)
+
+1. **Before tag push:** confirm pubspec.yaml `+N` > the highest row above.
+2. **Bump pubspec.yaml + 3 Dart mirrors** via:
+   `python scripts\sync_version.py` (after editing pubspec).
+3. **Push tag.**
+4. **Once CI completes**, append a new row to the table above:
+   - If both Play AND TestFlight upload succeeded → status ✅ pushed.
+   - If CI was yellow (one side rejected as duplicate) → status ⚠️
+     and BUMP +1 before next push (the rejected side may have burned
+     the code anyway, can't tell for sure).
+   - If CI was red (real failure unrelated to versioning) → status ❌
+     and note the cause. May reuse the code only if a re-tag at
+     HEAD is the fix.
+5. **Commit + push CLAUDE.md.**
+
+### If CI rejects "version code N has already been used"
+
+- Treat N as **burned**. Do NOT retry with N — bump pubspec +1 and
+  add a row: status ❌ burned. Always bump above the burned code.
+- Common causes Session 58/60/61 documented: retag at new HEAD,
+  partial upload, manual draft on Play Console.
+
+### Escape hatch — if the ledger drifts from reality
+
+`scripts/check_version_codes.py` exists for emergency use. It queries
+Play + ASC live to find the actual highest reserved code. Requires
+`config/play-service-account.json` + `config/asc-credentials.json`
+(both gitignored, see `.gitignore`). Skip for daily flow; reach for
+it only when CI repeatedly rejects despite the ledger looking right.
+
+---
+
 ## App Overview
 
 The repository hosts **Awing AI Learning**, a lightweight on-device AI application designed to teach the **Awing language** — a Grassfields Bantu language spoken by about 19,000 people in the Mezam division, North West Province, Republic of Cameroon. The app targets **kids and beginners** with interactive, AI-powered lessons across three proficiency levels: **Beginner, Medium, Expert**.
