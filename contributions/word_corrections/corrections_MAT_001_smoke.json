@@ -1,0 +1,34 @@
+{
+  "chapter_id": "MAT_001",
+  "reviewer": "Dr. Sama (smoke test)",
+  "exported_at": "2026-06-21T20:00:00Z",
+  "corrections": [
+    {
+      "id": "MAT_001_001_01",
+      "usfm": "MAT_001_001",
+      "awing": "ndzaŋ",
+      "english": "story; account; manner",
+      "status": "added",
+      "notes": "Bible-context usage: how genealogy is introduced",
+      "reviewer": "Dr. Sama",
+      "verified_at": "2026-06-21T20:00:00Z"
+    },
+    {
+      "id": "MAT_001_001_03",
+      "usfm": "MAT_001_001",
+      "awing": "pətǎ",
+      "english": "fathers",
+      "status": "verified",
+      "notes": "plural of tǎ; vocab L574 is correct",
+      "reviewer": "Dr. Sama",
+      "verified_at": "2026-06-21T20:00:00Z"
+    },
+    {
+      "id": "MAT_001_001_99",
+      "usfm": "MAT_001_001",
+      "awing": "x'); print('pwn",
+      "english": "anything",
+      "status": "added"
+    }
+  ]
+}
