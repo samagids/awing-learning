@@ -118,4 +118,10 @@ flutter:
     # Native audio inventory — lists which (audioKey, recorder) pairs
     # have a clip in audio/native/ vs audio/native_kids/<slug>/. Used by
     # the Dev Mode Record tab to show per-item per-recorder status badges
-    # and power the "Miss
+    # and power the "Missing native voice" filter in the Record tab. Without
+    # this in the assets block, rootBundle.loadString() in
+    # NativeAudioInventory.load() fails silently, the inventory stays
+    # un-loaded, and EVERY caller of hasAnyRecording() returns false --
+    # which is why recorded words (apo, agha, ...) were leaking back
+    # into the Contribute pickers.
+    - assets/native_audio_manifest.json

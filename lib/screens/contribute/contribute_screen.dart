@@ -43,8 +43,10 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
   String _category = 'body';
   bool _submitted = false;
+  /// Set to true once a submission has been posted to the webhook.
+  /// Drives the "Sent to Developer" success message. No longer means
+  /// "email app opened" -- the webhook sends the email server-side now.
   bool _emailSent = false;
-  bool _emailFailed = false;
 
   /// The type of the most recent submission — used by the thank-you
   /// screen to copy back the right reset state.
@@ -292,27 +294,19 @@ class _ContributeScreenState extends State<ContributeScreen> {
       screen: 'contribute_screen',
     );
 
-    bool emailSuccess = false;
-    if (_lastSubmitted != null) {
-      emailSuccess = await contribService.emailContribution(
-        _lastSubmitted!,
-        senderName: auth.currentProfile?.displayName ?? 'Anonymous',
-        senderEmail: auth.currentEmail ?? 'no-reply@awing-app.local',
-      );
-    }
-
+    // No client-side email-app prompt anymore. The submission posted
+    // directly to the contributions webhook above; the webhook
+    // server-side sends a notification email to the developer
+    // (contributions_webapp.gs handleSubmit -> MailApp.sendEmail).
+    // Contributors just see "Submitted!" -- they don't have to pick
+    // an email or share app.
     if (!mounted) return;
     setState(() {
       _submitted = true;
       _submittedType = type;
-      _emailSent = emailSuccess;
-      _emailFailed = !emailSuccess;
+      _emailSent = true; // success badge always shows; kept the field
+                         // to avoid widening the diff into the build()
     });
-  }
-
-  Future<void> _shareSubmission() async {
-    if (_lastSubmitted == null) return;
-    await context.read<ContributionService>().shareContribution(_lastSubmitted!);
   }
 
   @override
@@ -422,58 +416,28 @@ class _ContributeScreenState extends State<ContributeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              _emailSent ? Icons.mark_email_read : Icons.check_circle,
+              Icons.mark_email_read,
               size: 64,
-              color: _emailSent ? Colors.green : const Color(0xFF006432),
+              color: Colors.green,
             ),
             const SizedBox(height: 16),
             Text(
-              _emailSent
-                  ? 'Sent to Developer!'
-                  : 'Submission Saved!',
+              'Sent to Developer!',
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
-                color: _emailSent
-                    ? Colors.green.shade700
-                    : const Color(0xFF006432),
+                color: Colors.green.shade700,
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              _emailSent
-                  ? 'Your contribution has been emailed to the developer '
-                    'for review. Thank you for helping grow the Awing '
-                    'language app!'
-                  : _emailFailed
-                      ? 'Your contribution was saved locally. We could '
-                        'not open your email app automatically. You can '
-                        'share it manually below.'
-                      : 'Your contribution was saved successfully.',
+            const Text(
+              'Your contribution has been sent to the developer for '
+              'review. Thank you for helping grow the Awing language '
+              'app!',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 15, color: Colors.grey),
             ),
             const SizedBox(height: 24),
-            if (_emailFailed) ...[
-              ElevatedButton.icon(
-                onPressed: _shareSubmission,
-                icon: const Icon(Icons.share),
-                label: const Text(
-                  'Share Manually',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF006432),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 32, vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-            ],
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -482,7 +446,6 @@ class _ContributeScreenState extends State<ContributeScreen> {
                     setState(() {
                       _submitted = false;
                       _emailSent = false;
-                      _emailFailed = false;
                       _lastSubmitted = null;
                       _wordController.clear();
                       _correctionController.clear();
@@ -792,6 +755,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
   /// word" tabs. Tap-to-select sets _wordController.text and optionally
   /// auto-fills English.
   Widget _buildExistingWordPicker() {
+    final inv = NativeAudioInventory.instance;
     return Autocomplete<AwingWord>(
       displayStringForOption: (w) => '${w.awing} → ${w.english}',
       optionsBuilder: (TextEditingValue tv) {
@@ -803,6 +767,14 @@ class _ContributeScreenState extends State<ContributeScreen> {
           if (matches.length >= 30) break;
           final key = '${w.awing}|${w.english}';
           if (seenKeys.contains(key)) continue;
+          // Hide words that already have ANY native recording (canonical
+          // adult OR any kid). Same rule as RecordPickerScreen -- a word
+          // covered by SOMEONE shouldn't be re-recordable through the
+          // Pronunciation/Spelling autocomplete either. Prevents
+          // contributors from re-recording apô, agha, etc. that are
+          // already in the native_audio_manifest.json.
+          final audioKey = PronunciationService.audioKey(w.awing);
+          if (inv.hasAnyRecording(audioKey)) continue;
           if (w.awing.toLowerCase().contains(q) ||
               w.english.toLowerCase().contains(q)) {
             matches.add(w);

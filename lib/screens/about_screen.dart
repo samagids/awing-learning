@@ -292,7 +292,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   const SizedBox(height: 8),
                   _CreditRow(
-                    title: 'With support from the Virginia NACDA chapter',
+                    title: 'With support from the Virginia NACDA',
                     author: 'NACDA-DMV-Virginia',
                     isDark: isDark,
                   ),

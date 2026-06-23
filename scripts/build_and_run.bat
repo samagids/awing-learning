@@ -333,6 +333,28 @@ if !ERRORLEVEL! neq 0 (
 echo        Flutter dependencies resolved.
 echo.
 
+REM ---- Step 5b: Dart analyze (fast fail on truncations) ----
+REM ~10-second guard against the recurring Edit-tool truncation pattern
+REM (Sessions 49c / 60 / 61+ documented). Catches mid-string truncations,
+REM unbalanced braces, and missing identifiers BEFORE Gradle wastes
+REM 60+ seconds compiling the same broken file. Errors-only -- info
+REM hints and lint warnings are non-fatal so build doesn't regress
+REM over stylistic noise.
+echo [5b/7] Pre-build Dart analyze (fast truncation guard)...
+call flutter analyze --no-fatal-infos --no-fatal-warnings
+if !ERRORLEVEL! neq 0 (
+    echo.
+    echo        ERROR: flutter analyze found errors. Build aborted.
+    echo        Usually a file truncation in lib\ ^(edit-tool dropped
+    echo        trailing bytes^). Check the error location above.
+    echo        Common recovery: open the named file and look for an
+    echo        unterminated string, missing closing brace, or mid-
+    echo        method cutoff at EOF.
+    exit /b 1
+)
+echo        Dart analyze clean.
+echo.
+
 REM ---- Step 6: Build AAB + APK ----
 echo [6/7] Building Android App Bundle (release)...
 call flutter build appbundle --release

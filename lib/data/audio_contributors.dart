@@ -26,11 +26,12 @@ const List<String> _coreContributors = [
 ];
 
 /// Approved external audio contributors.
-/// AUTO-MAINTAINED by scripts/apply_contributions.py.
+/// AUTO-MAINTAINED by scripts/apply_contributions.py during build.
 /// Sort order: insertion order (first approval first). Don't sort
 /// alphabetically -- chronological credit order tells a small story.
 const List<String> approvedContributors = [
   'Apongnde Emmanuel',
+  'Berlin Sama',
 ];
 
 /// Full ordered list rendered on the About screen. Core voices first,

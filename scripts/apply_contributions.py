@@ -63,6 +63,10 @@ from datetime import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
+
+# Newline literal — used by helpers that build multi-line strings
+# without relying on f-strings (heredoc-safe).
+NL = chr(10)
 CONTRIBUTIONS_DIR = os.path.join(PROJECT_DIR, 'contributions')
 APPROVED_FILE = os.path.join(CONTRIBUTIONS_DIR, 'approved_contributions.json')
 APPLIED_DIR = os.path.join(CONTRIBUTIONS_DIR, 'applied')
@@ -546,6 +550,145 @@ def _whisper_transcribe(m4a_path, awing_hint=''):
     except Exception as e:
         print(f"    ⚠ Whisper transcription failed: {e}")
         return None
+
+
+# ============================================================
+# Audio-contributors auto-update
+# ============================================================
+# When a pronunciationFix or newWord-with-audio is applied, the
+# submitter's profileName goes into this set. After all contributions
+# are processed, _flush_audio_contributors() appends any new names to
+# lib/data/audio_contributors.dart's approvedContributors list. The
+# About screen reads that list, so testers see new contributors
+# credited on the next build without anyone touching the Dart file.
+_audio_contributors_collected = set()
+
+# Profile-name aliases. Lowercased lookup. Used when the submitter's
+# typed profileName isn't the form we want displayed in the About
+# screen credit list. Add entries here as needed.
+_AUDIO_CONTRIBUTOR_ALIASES = {
+    'bb': 'Berlin Sama',
+}
+
+# Profile names to NEVER credit (core voices already hard-coded, fake
+# placeholders, server-side sentinels). Lowercased.
+_AUDIO_CONTRIBUTOR_SKIPLIST = {
+    '', 'anonymous', 'unknown', 'developer', 'default',
+    'dr. guidion sama', 'dr guidion sama', 'guidion sama',
+    'dr. sama', 'dr sama', 'guidion', 'sama',
+    'joel sama', 'joel',
+    'joyce sama', 'joyce',
+    'jadyne sama', 'jadyne',
+    'janelle sama', 'janelle',
+}
+
+
+def _canonicalize_contributor_name(profile):
+    """Return the display name for a profileName, or None to skip.
+    Handles 'default <name>' (Session 49 recorderSlugOf bug pattern),
+    aliases, core-voice dedup, and basic title-case fallback."""
+    if not profile or not isinstance(profile, str):
+        return None
+    name = profile.strip()
+    if name.lower().startswith('default '):
+        name = name[8:].strip()
+    if not name:
+        return None
+    lname = name.lower()
+    if lname in _AUDIO_CONTRIBUTOR_SKIPLIST:
+        return None
+    if lname in _AUDIO_CONTRIBUTOR_ALIASES:
+        return _AUDIO_CONTRIBUTOR_ALIASES[lname]
+    if not any(c.isalpha() for c in name):
+        return None
+    if name == name.lower() or name == name.upper():
+        name = ' '.join(p.capitalize() for p in name.split())
+    return name
+
+
+def _collect_audio_contributor(profile, ctype, has_audio):
+    """Add a contributor to the pending list if their submission was
+    audio-bearing. Called from the apply loop after a successful
+    print of the contribution header."""
+    if ctype not in ('pronunciationFix', 'newWord'):
+        return
+    if not has_audio:
+        return
+    canon = _canonicalize_contributor_name(profile)
+    if canon:
+        _audio_contributors_collected.add(canon)
+
+
+def _flush_audio_contributors():
+    """If any new contributors were collected during this run, append
+    them to lib/data/audio_contributors.dart's approvedContributors
+    list. Idempotent -- skips names already in the list. Preserves
+    insertion order (new names appear AFTER existing ones)."""
+    if not _audio_contributors_collected:
+        return 0
+    dart_path = os.path.join(
+        PROJECT_DIR, 'lib', 'data', 'audio_contributors.dart')
+    if not os.path.exists(dart_path):
+        print(NL + '  [contributors] ' + dart_path
+              + ' not found, skipping auto-update')
+        return 0
+    text = open(dart_path, encoding='utf-8').read()
+
+    import re as _re
+    pat = _re.compile(
+        r'(const\s+List<String>\s+approvedContributors\s*=\s*\[)'
+        r'(.*?)'
+        r'(\];)',
+        _re.S,
+    )
+    m = pat.search(text)
+    if not m:
+        print(NL + "  [contributors] couldn't find approvedContributors "
+              "list, skipping")
+        return 0
+
+    body = m.group(2)
+    existing = [n for n in _re.findall(r"['" + '"' + r"]([^'" + '"' + r"]+)['" + '"' + r"]", body)]
+    existing_lower = {n.lower() for n in existing}
+
+    new_names = []
+    for name in sorted(_audio_contributors_collected):
+        if name.lower() not in existing_lower:
+            new_names.append(name)
+            existing_lower.add(name.lower())
+
+    if not new_names:
+        return 0
+
+    indent = '  '
+    additions = ''.join(
+        NL + indent + "'" + n + "',  // auto-added by apply_contributions.py"
+        for n in new_names
+    )
+    new_body = body.rstrip()
+    if not new_body.endswith(','):
+        new_body += ','
+    new_body += additions + NL
+
+    text = text[:m.start(2)] + new_body + text[m.end(2):]
+    open(dart_path, 'w', encoding='utf-8', newline='\n').write(text)
+
+    print(NL + '  [contributors] Added ' + str(len(new_names))
+          + ' new contributor(s) to audio_contributors.dart:')
+    for n in new_names:
+        print('    + ' + n)
+    return len(new_names)
+
+
+def _flush_and_exit(rc):
+    """Run _flush_audio_contributors() at the very end of apply, just
+    before the process exits. Non-fatal if flush fails."""
+    try:
+        _flush_audio_contributors()
+    except Exception as _e:
+        print('  [contributors] auto-update failed (non-fatal): '
+              + str(_e))
+    return rc
 
 
 def reset_version():
@@ -1048,6 +1191,7 @@ def apply_contributions(contributions, dry_run=False):
                 audio_url = ''  # don't fetch, but allow non-audio fields to proceed
 
         print(f"\nApplying: [{ctype}] '{target}' → '{correction}' (from {profile})")
+        _collect_audio_contributor(profile, ctype, bool(audio_url))
 
         # SECURITY: every branch below that mutates a Dart file delegates
         # input validation to its helper (apply_*). If a helper raises
@@ -1662,4 +1806,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    _flush_and_exit(main())

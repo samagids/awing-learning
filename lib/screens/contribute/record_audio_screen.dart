@@ -349,10 +349,16 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
         if (q.isEmpty) return const Iterable<AwingWord>.empty();
         final matches = <AwingWord>[];
         final seen = <String>{};
+        final inv = NativeAudioInventory.instance;
         for (final w in allVocabulary) {
           if (matches.length >= 30) break;
           final key = "${w.awing}|${w.english}";
           if (seen.contains(key)) continue;
+          // Skip words with any existing native recording -- per
+          // Dr. Sama, words already covered by SOMEONE (canonical adult
+          // or kid) should not be re-recordable.
+          final audioKey = PronunciationService.audioKey(w.awing);
+          if (inv.hasAnyRecording(audioKey)) continue;
           if (w.awing.toLowerCase().contains(q) ||
               w.english.toLowerCase().contains(q)) {
             matches.add(w);
