@@ -35,6 +35,18 @@ private_key.pem
 # AWING_SCRIPT_SECRET env var or ~/.awing_script_secret instead.
 .awing_script_secret
 
+# Play Console + App Store Connect credentials for
+# scripts/check_version_codes.py. Private — service-account JSON / .p8
+# keys that grant API access to the same Play / ASC orgs CI uses for
+# upload. Never commit. CI uses its own secrets (PLAY_SERVICE_ACCOUNT_JSON,
+# ASC_KEY_ID / ASC_ISSUER_ID / ASC_KEY_BASE64); these files are the
+# LOCAL equivalent for running the pre-tag version check from your dev
+# machine. config/webhooks.json above remains tracked — those URLs are
+# public.
+config/play-service-account.json
+config/asc-credentials.json
+config/*.p8
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -253,3 +265,15 @@ pad-assets.tar.gz
 
 # Working artifacts — PDF page renders, intermediate files
 outputs/
+
+# Session 62+ experimental TTS / VC infrastructure (Bible-source VC and
+# rule-mining beyond a'ə→a). Conclusion: rule mining on 368 recordings
+# converged at one rule; VC on Bible source can't overcome forced-
+# alignment artifacts; both lines dropped. Tools stay on disk for
+# future reference but are NOT shipped.
+tools/OpenVoice/
+checkpoints_v2/
+venv_openvoice/
+corpus/word_level/
+contributions/phonetic_rules_report.md
+contributions/phonetic_rules_candidates.csv

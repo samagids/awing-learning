@@ -29,3 +29,12 @@ openai-whisper>=20231117
 # Microphone recording (used by scripts/record_audio.py)
 sounddevice>=0.4.6
 soundfile>=0.12.1
+
+# JWT signing for Play Console + App Store Connect API queries
+# (used by scripts/check_version_codes.py to pre-detect duplicate
+# version codes before tag push, eliminating the Sessions 58/60/61
+# pattern where retag-at-HEAD or partial uploads reserved a code
+# server-side and CI then rejected the new push). cryptography
+# handles RS256 for the Google service account JWT and ES256 for
+# the ASC .p8 key — no third-party JWT library needed.
+cryptography>=42.0.0

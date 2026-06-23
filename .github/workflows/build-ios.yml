@@ -353,7 +353,15 @@ jobs:
       # are configured. The build still succeeds (and the IPA is still
       # uploaded as a workflow artifact) if the upload is skipped.
       - name: Upload to TestFlight
+        id: testflight_upload
         if: startsWith(github.ref, 'refs/tags/v')
+        # Session 61: soft-fail on duplicate bundle versions. TestFlight
+        # rejects any bundle version it has already seen — even from a
+        # failed upload or a retagged-at-HEAD rebuild. continue-on-error
+        # keeps the workflow green; the next step explains the outcome.
+        # The signed IPA artifact is still in the workflow run, so manual
+        # upload via Transporter remains possible.
+        continue-on-error: true
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
@@ -428,6 +436,15 @@ jobs:
             --skip_waiting_for_build_processing \
             --skip_submission
           echo "✓ Build uploaded — Apple processes for 10-15 min before TestFlight install becomes available."
+
+      - name: TestFlight upload outcome
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          if [ "${{ steps.testflight_upload.outcome }}" = "success" ]; then
+            echo "::notice::IPA uploaded to TestFlight."
+          else
+            echo "::warning::TestFlight upload skipped or failed (most often: bundle version already uploaded or build still processing). The signed IPA artifact is still in this workflow run if you need to upload manually via Transporter."
+          fi
 
       - name: Cleanup keychain
         if: always()

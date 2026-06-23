@@ -89,6 +89,38 @@ if (Get-Command python -ErrorAction SilentlyContinue) {
     Warn "python not on PATH -- cannot auto-sync version mirrors"
 }
 
+# ---------------- 1b. Remote version-code check (Play + ASC) ----------------
+# Eliminates the Sessions 58/60/61 "Version code N has already been used"
+# rejection at upload time. Queries Play Console + App Store Connect to
+# learn what build numbers they already have, compares to pubspec.yaml,
+# and either:
+#   - reports OK (local +N is greater than every remote +N, safe to push)
+#   - fails preflight with a precise suggested bump (exit code 2 from
+#     check_version_codes.py is translated into a Fail here)
+#   - skips gracefully if credentials aren't configured locally
+#
+# Credentials (place locally, gitignored):
+#   config/play-service-account.json  -- Play Console service account
+#   config/asc-credentials.json       -- ASC API key (id/issuer/p8 base64)
+# OR set env vars PLAY_SERVICE_ACCOUNT_JSON / ASC_KEY_ID / ASC_ISSUER_ID
+# / ASC_KEY_BASE64. Skipped silently if both are absent.
+if ($Tag -and (Get-Command python -ErrorAction SilentlyContinue)) {
+    Section "Remote version-code check (Play + ASC)"
+    $remoteCheck = python scripts/check_version_codes.py 2>&1
+    $remoteCheck | ForEach-Object { Write-Host "    $_" }
+    if ($LASTEXITCODE -eq 0) {
+        Pass "Local build +$build is higher than every remote version code (no collision)"
+    } elseif ($LASTEXITCODE -eq 2) {
+        Fail "Remote already has a build code >= +$build. Run: python scripts\check_version_codes.py --auto"
+    } elseif ($LASTEXITCODE -eq 3) {
+        Warn "Play/ASC credentials missing -- skipping remote check (set up config/play-service-account.json + config/asc-credentials.json to enable)"
+    } elseif ($LASTEXITCODE -eq 4) {
+        Warn "Network error reaching Play/ASC -- skipping remote check"
+    } else {
+        Warn "check_version_codes.py exited with code $LASTEXITCODE -- inspect output above"
+    }
+}
+
 # ---------------- 2. Gradle memory settings (CI-safe) ----------------
 Section "Gradle memory (CI-safe)"
 
