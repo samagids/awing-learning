@@ -20,13 +20,15 @@ than every code below.
 
 | Code | Tag | Status | Date | Notes |
 |-----:|-----|--------|------|-------|
-| **+87** | `v1.18.1+87` | ✅ pushed | 2026-06-23 | Contribute UX + cross-device audio + auto-credit. Play accepted. |
+| **+88** | `v1.18.2+88` | ✅ pushed | 2026-06-23 | Catch-up (25 native recordings + new webhook URL + ml scripts) + Android soft-fail. Recovery from the failed initial push that forgot to bump pubspec. |
+| +87 | `v1.18.2+88` initial | ❌ burned | 2026-06-23 | First push of tag v1.18.2+88 left pubspec at +87 — AAB built with versionCode 87, Play rejected as duplicate of v1.18.1+87. Recovered by bumping to +88 + adding Android soft-fail. |
+| +87 | `v1.18.1+87` | ✅ pushed | 2026-06-23 | Contribute UX + cross-device audio + auto-credit. Play accepted. |
 | +86 | `v1.18.2+86` | ⚠️ tag-only | — | Mistag — tag points but no successful upload. Code may still be burned on Play. |
-| +86 | `v1.18.1+86` | ✅ pushed | 2026-06-22 | Earlier today's push. |
+| +86 | `v1.18.1+86` | ✅ pushed | 2026-06-22 | Earlier same day's push. |
 | +85 | `v1.18.1+85` | ✅ pushed | — | |
 | +84 | `v1.18.1+84` | ✅ pushed | — | |
 
-**Next safe build code: +88** (or higher if Play/TestFlight rejects).
+**Next safe build code: +89** (or higher if Play/TestFlight rejects).
 
 ### Update protocol (do this AT EACH TAG PUSH)
 
