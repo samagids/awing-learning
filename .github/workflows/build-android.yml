@@ -209,7 +209,15 @@ jobs:
       # @v1.1.3 uses chunked upload + retry, which handles large bundles
       # reliably. Failed run example: Actions run 26245053566 (2026-05-21).
       - name: Upload to Play Closed Testing
+        id: play_upload
         if: startsWith(github.ref, 'refs/tags/v')
+        # Session 61: soft-fail on duplicate version codes. When a tag is
+        # retagged-at-HEAD or a previous run already reserved the version
+        # code on Play Console (including drafts), this step would
+        # otherwise turn the entire workflow red even though the AAB
+        # artifact is fine. continue-on-error lets the next step explain
+        # the actual outcome without failing CI overall.
+        continue-on-error: true
         uses: r0adkll/upload-google-play@v1.1.3
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
@@ -217,3 +225,12 @@ jobs:
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: alpha
           status: completed
+
+      - name: Play upload outcome
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          if [ "${{ steps.play_upload.outcome }}" = "success" ]; then
+            echo "::notice::AAB uploaded to Play Console closed-testing track."
+          else
+            echo "::warning::Play upload skipped or failed (most often: version code already reserved by an earlier run or draft). The AAB artifact is still in this workflow run if you need to upload manually via Play Console."
+          fi
