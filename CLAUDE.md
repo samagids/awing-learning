@@ -20,7 +20,7 @@ than every code below.
 
 | Code | Tag | Status | Date | Notes |
 |-----:|-----|--------|------|-------|
-| **+88** | `v1.18.2+88` | ✅ pushed | 2026-06-23 | Catch-up (25 native recordings + new webhook URL + ml scripts) + Android soft-fail. Recovery from the failed initial push that forgot to bump pubspec. |
+| **+88** | `v1.18.2+88` | ⚠️ partial | 2026-06-23 | Android ✅ uploaded to Play closed testing. iOS ❌ failed: "A required agreement is missing or has expired" — Apple needs accepted T&Cs in App Store Connect, then re-run Build iOS #170 to retry the TestFlight upload (no new tag needed). |
 | +87 | `v1.18.2+88` initial | ❌ burned | 2026-06-23 | First push of tag v1.18.2+88 left pubspec at +87 — AAB built with versionCode 87, Play rejected as duplicate of v1.18.1+87. Recovered by bumping to +88 + adding Android soft-fail. |
 | +87 | `v1.18.1+87` | ✅ pushed | 2026-06-23 | Contribute UX + cross-device audio + auto-credit. Play accepted. |
 | +86 | `v1.18.2+86` | ⚠️ tag-only | — | Mistag — tag points but no successful upload. Code may still be burned on Play. |
