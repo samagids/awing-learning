@@ -7,6 +7,26 @@ This file contains guidance for Claude Code when working with the **Awing AI Lea
 **Dr. Guidion Sama, DIT** — Creator and lead developer of Awing AI Learning.
 Contact: samagids@gmail.com
 
+## Production launch - 2026-06-25
+
+**Awing AI Learning is now publicly live on both stores.** No more
+closed testing; anyone in the world can install.
+
+- **Play Store**: https://play.google.com/store/apps/details?id=com.awing.learning
+- **App Store**: https://apps.apple.com/app/id6764426877
+
+Implications for future sessions:
+- Tester recruitment / re-engagement work (Sessions 59-60 Versions
+  A-G) is now obsolete. Drop from queue.
+- Real-user reviews on both stores become the primary signal source.
+  Monitor for content corrections, voice quality complaints,
+  crash reports.
+- Every version push now affects real users globally - version
+  ledger discipline matters even more.
+
+Last app version shipped at public launch: v1.18.2+88 (Android live
+on Play; iOS uploaded to TestFlight, processing).
+
 ## VERSION CODE LEDGER — read this BEFORE bumping pubspec.yaml
 
 The recurring "Version code N has already been used" failure (Sessions
@@ -20,7 +40,7 @@ than every code below.
 
 | Code | Tag | Status | Date | Notes |
 |-----:|-----|--------|------|-------|
-| **+88** | `v1.18.2+88` | ⚠️ partial | 2026-06-23 | Android ✅ uploaded to Play closed testing. iOS ❌ failed: "A required agreement is missing or has expired" — Apple needs accepted T&Cs in App Store Connect, then re-run Build iOS #170 to retry the TestFlight upload (no new tag needed). |
+| **+88** | `v1.18.2+88` | ✅ pushed | 2026-06-23 | Android ✅ uploaded to Play closed testing. iOS ✅ uploaded to TestFlight on retry after Apple agreement was accepted. Last build before public launch. |
 | +87 | `v1.18.2+88` initial | ❌ burned | 2026-06-23 | First push of tag v1.18.2+88 left pubspec at +87 — AAB built with versionCode 87, Play rejected as duplicate of v1.18.1+87. Recovered by bumping to +88 + adding Android soft-fail. |
 | +87 | `v1.18.1+87` | ✅ pushed | 2026-06-23 | Contribute UX + cross-device audio + auto-credit. Play accepted. |
 | +86 | `v1.18.2+86` | ⚠️ tag-only | — | Mistag — tag points but no successful upload. Code may still be burned on Play. |
