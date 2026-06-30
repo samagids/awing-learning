@@ -197,10 +197,16 @@ jobs:
 
       # === AUTO-UPLOAD TO GOOGLE PLAY CLOSED TESTING - ALPHA ===
       # Pushes the signed AAB to the alpha (closed testing) track via the
-      # Google Play Developer API. The 12 active testers on this track
-      # automatically receive the new build. Track choice rationale:
-      # internal-testing has no opted-in testers; alpha = Closed testing
-      # - Alpha which already has 12 testers from prior manual uploads.
+      # Google Play Developer API. Alpha track opt-ins automatically
+      # receive the new build for testing.
+      #
+      # IMPORTANT: this step ONLY publishes to alpha. Public production
+      # release is gated by .github/workflows/release-gate.yml — that
+      # cron job promotes alpha -> production once the tag is 72h+ old
+      # AND no newer tag has superseded it. The 72h canary period lets
+      # testers + Dr. Sama validate the build on real devices before
+      # rolling to the world. Per spec 2026-06-25.
+      #
       # Runs only on tags AND only when PLAY_SERVICE_ACCOUNT_JSON is set.
       # IMPORTANT: pinned to @v1.1.3 (not rolling @v1) because the rolling
       # tag pulled an older release that timed out on the 934 MB AAB with

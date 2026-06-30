@@ -27,6 +27,35 @@ Implications for future sessions:
 Last app version shipped at public launch: v1.18.2+88 (Android live
 on Play; iOS uploaded to TestFlight, processing).
 
+## 72-hour public release gate
+
+Tag pushes upload to **tester channels only** (TestFlight + Play alpha).
+Public release on App Store + Play production is gated by 72 hours of
+quiet — implemented by `.github/workflows/release-gate.yml` running on
+a 6h cron + `scripts/release_gate.py`.
+
+Behavior per spec 2026-06-25 (Dr. Sama):
+- Each tag push gives testers the build immediately.
+- A separate cron checks: is the most recent tag >=72h old? If yes,
+  release that tag to the public. If a newer tag arrived in the
+  window, the older one is superseded (skipped forever) and the
+  newer tag starts its own 72h countdown.
+- Apple-rejected builds are skipped — the next eligible tag wins.
+
+What this means for me when tagging:
+- Don't expect the tag to reach the App Store/Play production
+  immediately. It will after 3 days, unless you tag something new.
+- If you spot a bug in the first 3 days, just tag a fix — the bad
+  build never reaches the public.
+- Manual override is possible: workflow_dispatch on the Release Gate
+  workflow lets you force-run with `dry_run: true` to inspect, or
+  `dry_run: false` to release whatever is currently the latest tag
+  (still respects the 72h gate; for emergency same-day pushes use
+  App Store Connect / Play Console manually).
+
+Required CI secrets (already configured): PLAY_SERVICE_ACCOUNT_JSON,
+ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_BASE64.
+
 ## VERSION CODE LEDGER — read this BEFORE bumping pubspec.yaml
 
 The recurring "Version code N has already been used" failure (Sessions

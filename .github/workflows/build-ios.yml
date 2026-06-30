@@ -429,14 +429,60 @@ jobs:
             echo "::error::No IPA found at build/ios/ipa/*.ipa"
             exit 1
           fi
-          echo "Uploading $IPA to TestFlight via fastlane pilot..."
+
+          # === Phase 1: TestFlight upload (instant for testers) ===
+          # pilot still does the binary upload itself. Skip waiting +
+          # skip submission — App Store submission is phase 2.
+          echo "[1/2] Uploading $IPA to TestFlight via fastlane pilot..."
           fastlane pilot upload \
             --api_key_path "$JSON_PATH" \
             --ipa "$IPA" \
             --app_identifier "com.awing.awingAiLearning" \
             --skip_waiting_for_build_processing \
             --skip_submission
-          echo "✓ Build uploaded — Apple processes for 10-15 min before TestFlight install becomes available."
+          echo "✓ Phase 1: Build uploaded to TestFlight — testers see it after Apple processing (~10-15 min)."
+
+          # === Phase 2: App Store submission with held release ===
+          # fastlane deliver creates/updates an App Store Version pointed
+          # at this build, submits it for App Review, and stops Apple
+          # from auto-releasing on approval. Release happens later via
+          # the 72-hour release-gate.yml workflow.
+          #
+          # --automatic_release false  -> sits in PENDING_DEVELOPER_RELEASE
+          # --submit_for_review true   -> goes into Apple's review queue
+          # --skip_metadata true       -> don't touch description/keywords
+          # --skip_screenshots true    -> don't reupload screenshots
+          # --skip_app_version_update false -> create new app version if needed
+          # --force true               -> no interactive confirmation
+          # --precheck_include_in_app_purchases false -> we have none
+          echo "[2/2] Submitting $IPA to App Store Review (held release)..."
+          fastlane deliver \
+            --api_key_path "$JSON_PATH" \
+            --ipa "$IPA" \
+            --app_identifier "com.awing.awingAiLearning" \
+            --skip_metadata true \
+            --skip_screenshots true \
+            --skip_app_version_update false \
+            --submit_for_review true \
+            --automatic_release false \
+            --force true \
+            --precheck_include_in_app_purchases false || {
+              echo "::warning::fastlane deliver --submit_for_review failed."
+              echo "Possible causes:"
+              echo "  - A previous App Store version is still in WAITING_FOR_REVIEW."
+              echo "    (Apple only allows one in-review version at a time.)"
+              echo "  - First-time deliver may need extra metadata (review notes,"
+              echo "    demo account) configured in App Store Connect."
+              echo "  - 'What's New' text empty for this version."
+              echo "The IPA is already on TestFlight and Apple processing won't be"
+              echo "harmed. Resubmit manually from App Store Connect OR fix the"
+              echo "blocking item and re-run this workflow."
+              exit 1
+            }
+          echo "✓ Phase 2: Submitted to Apple Review with held release."
+          echo "  When Apple approves, the build sits in PENDING_DEVELOPER_RELEASE."
+          echo "  release-gate.yml will release it once the tag is 72h+ old AND"
+          echo "  no newer tag has superseded it."
 
       - name: Cleanup keychain
         if: always()
