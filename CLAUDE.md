@@ -69,7 +69,9 @@ than every code below.
 
 | Code | Tag | Status | Date | Notes |
 |-----:|-----|--------|------|-------|
-| **+88** | `v1.18.2+88` | ✅ pushed | 2026-06-23 | Android ✅ uploaded to Play closed testing. iOS ✅ uploaded to TestFlight on retry after Apple agreement was accepted. Last build before public launch. |
+| **+90** | `v1.18.3+90` | ⏳ ready | 2026-06-26 | Daily notification fix v2: dropped SCHEDULE_EXACT_ALARM permission (Play rejects upload without a "Sensitive permissions declaration" form that isn't surfaced via API path). Kept USE_EXACT_ALARM — Android 14+ auto-grants. Android 12-13 falls back to inexact in code. BOOT_COMPLETED receiver still ships and is the dominant fix. Pending tag push. |
+| +89 | `v1.18.3+89` | ❌ burned | 2026-06-26 | First push of v1.18.3 — Play rejected: "You must let us know whether your app uses any exact alarm permissions." Form not visible in App content (only appears in active edits, which CI rolls back on failure). iOS bundle 89 likely uploaded to TestFlight via pilot step before deliver step failed. Recovered by switching to USE_EXACT_ALARM-only as +90. |
+| +88 | `v1.18.2+88` | ✅ pushed | 2026-06-23 | Android ✅ uploaded to Play closed testing. iOS ✅ uploaded to TestFlight on retry after Apple agreement was accepted. Last build before public launch. |
 | +87 | `v1.18.2+88` initial | ❌ burned | 2026-06-23 | First push of tag v1.18.2+88 left pubspec at +87 — AAB built with versionCode 87, Play rejected as duplicate of v1.18.1+87. Recovered by bumping to +88 + adding Android soft-fail. |
 | +87 | `v1.18.1+87` | ✅ pushed | 2026-06-23 | Contribute UX + cross-device audio + auto-credit. Play accepted. |
 | +86 | `v1.18.2+86` | ⚠️ tag-only | — | Mistag — tag points but no successful upload. Code may still be burned on Play. |
@@ -77,7 +79,7 @@ than every code below.
 | +85 | `v1.18.1+85` | ✅ pushed | — | |
 | +84 | `v1.18.1+84` | ✅ pushed | — | |
 
-**Next safe build code: +89** (or higher if Play/TestFlight rejects).
+**Next safe build code: +91** (or higher if Play/TestFlight rejects).
 
 ### Update protocol (do this AT EACH TAG PUSH)
 
