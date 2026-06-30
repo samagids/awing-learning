@@ -18,6 +18,7 @@ import 'package:awing_ai_learning/services/recordings_service.dart';
 import 'package:awing_ai_learning/services/image_service.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/notification_service.dart';
+import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
 import 'package:awing_ai_learning/services/vocab_embeddings.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async' show unawaited;
@@ -160,6 +161,23 @@ void main() async {
       const Duration(seconds: 3),
       onTimeout: () => debugPrint('NotificationService init timed out'),
     );
+    // v1.18.3 fix: re-schedule the daily notification on every cold start
+    // if the user has enabled it. Older builds used inexactAllowWhileIdle
+    // which Doze drops; the new schedule below uses exactAllowWhileIdle,
+    // fixing the "kids don't get reminders" report on Samsung S24 Ultra.
+    // Some OEMs also wipe scheduled alarms on app updates or reboots
+    // despite RECEIVE_BOOT_COMPLETED; this self-heals on next open.
+    // Cheap (~10 ms) and idempotent: scheduleDaily cancels first.
+    try {
+      if (await DailySuggestionService.isEnabled()) {
+        final h = await DailySuggestionService.notificationHour();
+        final m = await DailySuggestionService.notificationMinute();
+        await NotificationService.instance.scheduleDaily(hour: h, minute: m);
+        debugPrint('Daily notification re-scheduled at $h:$m');
+      }
+    } catch (e) {
+      debugPrint('Daily notification re-schedule failed (non-fatal): $e');
+    }
   } catch (e) {
     debugPrint('NotificationService init failed: $e');
   }

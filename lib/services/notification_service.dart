@@ -104,6 +104,16 @@ class NotificationService {
 
   /// Schedule the daily notification at [hour]:[minute] local time.
   /// Cancels any existing schedule first.
+  ///
+  /// v1.18.3 fix: use exactAllowWhileIdle (not inexact). Inexact alarms
+  /// get coalesced and drifted by hours on modern Android Doze mode and
+  /// are silently dropped by aggressive-battery OEMs (Samsung, Xiaomi,
+  /// Oppo) — exactly Dr. Sama's report on S24 Ultra. Exact requires
+  /// the USE_EXACT_ALARM (Android 14+) or SCHEDULE_EXACT_ALARM
+  /// (Android 12-13) permission, both now declared in AndroidManifest.
+  /// If the exact schedule throws (e.g. user revoked the permission on
+  /// Android 12-13), we fall back to inexact so the user at least gets
+  /// SOMETHING rather than complete silence.
   Future<void> scheduleDaily({required int hour, required int minute}) async {
     await initialize();
     await _plugin.cancel(_dailyNotificationId);
@@ -139,20 +149,34 @@ class NotificationService {
       iOS: iosDetails,
     );
 
-    await _plugin.zonedSchedule(
-      _dailyNotificationId,
-      "Today's Awing Words",
-      'Open the app to learn 3 new words today!',
-      scheduled,
-      details,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      // iOS requires this even though Android ignores it — plugin enforces
-      // it at compile time on flutter_local_notifications 17.x.
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time, // repeats daily
-      payload: 'daily_words',
-    );
+    Future<void> doSchedule(AndroidScheduleMode mode) {
+      return _plugin.zonedSchedule(
+        _dailyNotificationId,
+        "Today's Awing Words",
+        'Open the app to learn 3 new words today!',
+        scheduled,
+        details,
+        androidScheduleMode: mode,
+        // iOS requires this even though Android ignores it — plugin
+        // enforces it at compile time on flutter_local_notifications 17.x.
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time, // repeats daily
+        payload: 'daily_words',
+      );
+    }
+
+    try {
+      await doSchedule(AndroidScheduleMode.exactAllowWhileIdle);
+    } catch (e) {
+      if (kDebugMode) {
+        print(
+            'Exact alarm refused ($e); falling back to inexact. User may '
+            'need to grant "Alarms & reminders" in Android Settings for '
+            'reliable daily timing.');
+      }
+      await doSchedule(AndroidScheduleMode.inexactAllowWhileIdle);
+    }
   }
 
   /// Cancel the daily notification.
