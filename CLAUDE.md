@@ -69,7 +69,8 @@ than every code below.
 
 | Code | Tag | Status | Date | Notes |
 |-----:|-----|--------|------|-------|
-| **+90** | `v1.18.3+90` | ⏳ ready | 2026-06-26 | Daily notification fix v2: dropped SCHEDULE_EXACT_ALARM permission (Play rejects upload without a "Sensitive permissions declaration" form that isn't surfaced via API path). Kept USE_EXACT_ALARM — Android 14+ auto-grants. Android 12-13 falls back to inexact in code. BOOT_COMPLETED receiver still ships and is the dominant fix. Pending tag push. |
+| **+91** | `v1.18.3+91` | ⏳ ready | 2026-06-26 | Daily notification fix v3 (durable). Plugin's OWN manifest declares SCHEDULE_EXACT_ALARM, so Gradle's manifest merger added it back to the AAB regardless of what our manifest said. Real fix: `tools:node="remove"` on both SCHEDULE_EXACT_ALARM and USE_EXACT_ALARM — explicitly strips them from the merged manifest. Play sees no exact-alarm perms, no declaration form needed. Inexact-only daily notifications + BOOT_COMPLETED receiver still survives reboots. Pending tag push. |
+| +90 | `v1.18.3+90` | ❌ burned | 2026-06-26 | Dropped SCHEDULE_EXACT_ALARM from OUR manifest but kept USE_EXACT_ALARM. Play rejected anyway — both permissions trigger the declaration form, AND the plugin's manifest also re-adds SCHEDULE_EXACT_ALARM during merge. Recovered as +91 with tools:node="remove" on both. |
 | +89 | `v1.18.3+89` | ❌ burned | 2026-06-26 | First push of v1.18.3 — Play rejected: "You must let us know whether your app uses any exact alarm permissions." Form not visible in App content (only appears in active edits, which CI rolls back on failure). iOS bundle 89 likely uploaded to TestFlight via pilot step before deliver step failed. Recovered by switching to USE_EXACT_ALARM-only as +90. |
 | +88 | `v1.18.2+88` | ✅ pushed | 2026-06-23 | Android ✅ uploaded to Play closed testing. iOS ✅ uploaded to TestFlight on retry after Apple agreement was accepted. Last build before public launch. |
 | +87 | `v1.18.2+88` initial | ❌ burned | 2026-06-23 | First push of tag v1.18.2+88 left pubspec at +87 — AAB built with versionCode 87, Play rejected as duplicate of v1.18.1+87. Recovered by bumping to +88 + adding Android soft-fail. |
@@ -79,7 +80,7 @@ than every code below.
 | +85 | `v1.18.1+85` | ✅ pushed | — | |
 | +84 | `v1.18.1+84` | ✅ pushed | — | |
 
-**Next safe build code: +91** (or higher if Play/TestFlight rejects).
+**Next safe build code: +92** (or higher if Play/TestFlight rejects).
 
 ### Update protocol (do this AT EACH TAG PUSH)
 

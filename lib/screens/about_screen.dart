@@ -12,7 +12,7 @@ class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
   static const String appVersion = '1.18.3';
-  static const String buildNumber = '90';
+  static const String buildNumber = '91';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
   static const String appDescription =

@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
     <!-- Required for speech_to_text plugin (pronunciation practice) -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <!-- Required for downloading model updates (future) -->
@@ -12,7 +13,22 @@
     <!-- ===== v1.15.0+ Daily-word local notifications ===== -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <!-- v1.18.3 daily reminder fix: explicitly REMOVE the exact-alarm
+         permissions that flutter_local_notifications 17.x declares in its
+         own AndroidManifest. Without this, Gradle's manifest merger adds
+         them back into the final AAB, and Play rejects upload demanding a
+         "Sensitive permissions declaration" form that is NOT surfaced via
+         the CI upload path (only appears in active manual edits — chicken
+         and egg with the API-only flow). Confirmed: dropped from our
+         manifest alone is NOT enough; need tools:node="remove" to win the
+         merger. Daily notifications fall back to inexactAllowWhileIdle
+         in notification_service.dart — drifts up to 30-60 min under Doze
+         on aggressive-battery OEMs but SURVIVES reboots thanks to the
+         BOOT_COMPLETED receiver below (which is the dominant bug fix). -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
+                     tools:node="remove" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"
+                     tools:node="remove" />
     <application
         android:label="Awing"
         android:name="${applicationName}"
