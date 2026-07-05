@@ -27,34 +27,40 @@ Implications for future sessions:
 Last app version shipped at public launch: v1.18.2+88 (Android live
 on Play; iOS uploaded to TestFlight, processing).
 
-## 72-hour public release gate
+## Auto-promote alpha -> production (Play)
 
-Tag pushes upload to **tester channels only** (TestFlight + Play alpha).
-Public release on App Store + Play production is gated by 72 hours of
-quiet — implemented by `.github/workflows/release-gate.yml` running on
-a 6h cron + `scripts/release_gate.py`.
+Tag pushes upload to **tester channels only** (TestFlight + Play alpha
+closed testing). Public release on Play production is auto-promoted by
+`.github/workflows/promote-alpha-to-production.yml` — daily cron at
+09:00 UTC that walks v*+N tags and promotes any older than
+`ALPHA_SOAK_DAYS` (default 7 days) at `PROMOTE_ROLLOUT` (default 20%)
+staged rollout. Written by Dr. Sama 2026-04, running daily since.
 
-Behavior per spec 2026-06-25 (Dr. Sama):
-- Each tag push gives testers the build immediately.
-- A separate cron checks: is the most recent tag >=72h old? If yes,
-  release that tag to the public. If a newer tag arrived in the
-  window, the older one is superseded (skipped forever) and the
-  newer tag starts its own 72h countdown.
-- Apple-rejected builds are skipped — the next eligible tag wins.
+Safety knobs already in place inside that workflow:
+1. Won't promote tags younger than the soak threshold.
+2. Won't promote a version already in production.
+3. Won't promote alpha releases whose status isn't 'completed'.
+4. Staged rollout (20% default) limits blast radius on first-day traffic.
+5. Google review queue still moderates (managed publishing off).
 
-What this means for me when tagging:
-- Don't expect the tag to reach the App Store/Play production
-  immediately. It will after 3 days, unless you tag something new.
-- If you spot a bug in the first 3 days, just tag a fix — the bad
-  build never reaches the public.
-- Manual override is possible: workflow_dispatch on the Release Gate
-  workflow lets you force-run with `dry_run: true` to inspect, or
-  `dry_run: false` to release whatever is currently the latest tag
-  (still respects the 72h gate; for emergency same-day pushes use
-  App Store Connect / Play Console manually).
+Manual override: Actions -> "Promote Alpha -> Production" -> "Run
+workflow" with optional `soak_days` / `rollout` / `dry_run` inputs.
 
-Required CI secrets (already configured): PLAY_SERVICE_ACCOUNT_JSON,
-ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_BASE64.
+**iOS side is manual** — after CI submits via `fastlane deliver
+--submit_for_review true --automatic_release false`, Apple queues the
+review; once approved you get an email and click "Release This
+Version" in App Store Connect. There is intentionally no cron
+auto-releaser for iOS because Apple's review timing is unpredictable
+and mixing that with a rigid soak window creates edge cases (rejected
+builds, review-in-progress collisions with new tags). Manual click,
+one-time, ~5 seconds per release.
+
+Historical note (2026-06-30): a redundant `release-gate.yml` +
+`scripts/release_gate.py` was accidentally created that duplicated the
+promoter above with a wrong soak time (72h vs 7-day) and full-100%
+rollout. It failed on every scheduled run with HTTP 403 on the Play
+`edits:commit` endpoint. Deleted 2026-07-05; the promoter above is
+the sole and correct auto-promote path.
 
 ## VERSION CODE LEDGER — read this BEFORE bumping pubspec.yaml
 
