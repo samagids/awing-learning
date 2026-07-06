@@ -12,7 +12,7 @@ class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
   static const String appVersion = '1.18.4';
-  static const String buildNumber = '92';
+  static const String buildNumber = '93';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
   static const String appDescription =
@@ -1022,54 +1022,4 @@ class _CreditRow extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: isDark ? Colors.grey.shade200 : Colors.black87,
-            ),
-          ),
-          Text(
-            author,
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.grey.shade600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TechRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool isDark;
-
-  const _TechRow({
-    required this.icon,
-    required this.label,
-    required this.isDark,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            size: 18,
-            color: isDark ? const Color(0xFF81C784) : const Color(0xFF006432),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              color: isDark ? Colors.grey.shade300 : Colors.black87,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+              color: isDark ? Colors.grey.shade200 : C

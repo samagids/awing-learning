@@ -12,7 +12,7 @@ const Duration _autoSyncDebounce = Duration(minutes: 2);
 /// Keep in sync with AboutScreen.appVersion and AboutScreen.buildNumber.
 /// Stamped on every Firestore doc so Developer Mode can see which client
 /// last wrote a given user's data.
-const String _kAppVersion = '1.18.4+92';
+const String _kAppVersion = '1.18.4+93';
 
 /// Cloud backup service using Firebase Firestore.
 ///
@@ -463,22 +463,4 @@ class CloudBackupService extends ChangeNotifier {
       return result;
     } catch (e) {
       debugPrint('Auto-restore error: $e');
-      return false;
-    }
-  }
-
-  /// Called when data changes — auto-backup if enabled.
-  /// Debounced: skips if last auto-sync was less than 2 minutes ago.
-  Future<void> onDataChanged() async {
-    if (!_autoSync || !_isSignedIn || _isSyncing) return;
-
-    final now = DateTime.now();
-    if (_lastAutoSyncTime != null &&
-        now.difference(_lastAutoSyncTime!) < _autoSyncDebounce) {
-      return;
-    }
-
-    _lastAutoSyncTime = now;
-    await backupAll();
-  }
-}
+      r
