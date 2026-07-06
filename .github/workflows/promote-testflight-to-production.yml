@@ -1,0 +1,101 @@
+name: Promote TestFlight → App Store Production
+
+# ============================================================================
+# Time-delayed auto-release of soaked TestFlight builds to the App Store.
+#
+# The iOS twin of promote-alpha-to-production.yml. Runs daily at 09:30 UTC,
+# 30 min after the Android promoter so both platforms land on the same date
+# for any given tag (7-day default soak on both sides).
+#
+# Session 61 said "intentionally no cron auto-releaser for iOS because
+# Apple's review timing is unpredictable and mixing that with a rigid soak
+# window creates edge cases." This workflow addresses those concerns by
+# ONLY touching versions Apple has ALREADY APPROVED (state ==
+# PENDING_DEVELOPER_RELEASE). Rejected builds, in-review builds, and
+# mid-processing builds all have different states and are skipped.
+#
+# Manual override:
+#   GitHub → Actions → "Promote TestFlight → App Store Production" →
+#     "Run workflow"
+#   Inputs:
+#     soak_days   override the default soak time (e.g. '2' for a faster
+#                 release of v1.18.4+92 specifically)
+#     dry_run     'true' to log decisions without touching App Store Connect
+#
+# Safety knobs already in place:
+#   1. Won't release versions whose git tag is younger than soak threshold
+#   2. Won't release versions unless their state == PENDING_DEVELOPER_RELEASE
+#      (Apple approved, only our click blocks live)
+#   3. Won't release versions whose (semver, buildNumber) tuple doesn't
+#      correspond to a git tag — protects against sideloaded / manually
+#      submitted versions we didn't consciously tag
+#   4. Only releases ONE version per run (newest first) — a backlog of
+#      stuck-PENDING versions doesn't all fire at once
+#
+# When you want to STOP an auto-release that's in flight:
+#   - Before the cron fires: App Store Connect → Distribution → tap the
+#     approved version → "Reject" (or wait, and manually release earlier
+#     than the cron would)
+#   - After it's released: App Store Connect → phased release controls
+#     (you can pause/resume phased release manually)
+# ============================================================================
+
+on:
+  schedule:
+    # Daily at 09:30 UTC — 30 min after the Android promoter's 09:00 UTC.
+    # Ensures both platforms move on the same date for a given tag.
+    - cron: '30 9 * * *'
+
+  workflow_dispatch:
+    inputs:
+      soak_days:
+        description: 'Minimum tag age in days before a PENDING version is eligible (default 7)'
+        required: false
+        default: '7'
+      dry_run:
+        description: 'Log decisions without calling ASC release endpoint'
+        required: false
+        type: boolean
+        default: false
+
+# Cancel any in-flight run on collision (workflow_dispatch during a cron)
+# to avoid two parallel promoter runs racing on the same release request.
+concurrency:
+  group: promote-testflight-to-production
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository (with tags)
+        uses: actions/checkout@v4
+        with:
+          # Need full tag history so the git-tag-age scan can see every
+          # v*+N tag from the last 90 days.
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ASC JWT dependency
+        run: |
+          python -m pip install --upgrade pip
+          pip install cryptography
+
+      - name: Run promotion script
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_BASE64: ${{ secrets.ASC_KEY_BASE64 }}
+          IOS_SOAK_DAYS: ${{ inputs.soak_days || '7' }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: |
+          if [ -z "$ASC_KEY_ID" ] || [ -z "$ASC_ISSUER_ID" ] || [ -z "$ASC_KEY_BASE64" ]; then
+            echo "::error::ASC_KEY_ID / ASC_ISSUER_ID / ASC_KEY_BASE64 secrets are not all set"
+            exit 1
+          fi
+          python scripts/promote_testflight_to_production.py

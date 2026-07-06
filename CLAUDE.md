@@ -46,14 +46,29 @@ Safety knobs already in place inside that workflow:
 Manual override: Actions -> "Promote Alpha -> Production" -> "Run
 workflow" with optional `soak_days` / `rollout` / `dry_run` inputs.
 
-**iOS side is manual** — after CI submits via `fastlane deliver
---submit_for_review true --automatic_release false`, Apple queues the
-review; once approved you get an email and click "Release This
-Version" in App Store Connect. There is intentionally no cron
-auto-releaser for iOS because Apple's review timing is unpredictable
-and mixing that with a rigid soak window creates edge cases (rejected
-builds, review-in-progress collisions with new tags). Manual click,
-one-time, ~5 seconds per release.
+**iOS auto-release** (added 2026-07-05, reverses the earlier "iOS is
+manual" decision): CI submits via `fastlane deliver --submit_for_review
+true --automatic_release false`, Apple queues the review; once approved
+the version sits in `PENDING_DEVELOPER_RELEASE` state until the
+`.github/workflows/promote-testflight-to-production.yml` cron picks it
+up. Daily at 09:30 UTC (30 min after the Android promoter), 7-day
+default soak from git-tag age. Both platforms now land publicly on the
+same date for any given tag.
+
+Session 61's original concern was "Apple's review timing is
+unpredictable → mixing with rigid soak creates edge cases (rejected
+builds, review-in-progress collisions with new tags)." Defused by
+`scripts/promote_testflight_to_production.py` ONLY touching versions
+already in `PENDING_DEVELOPER_RELEASE` state — rejected builds are in
+different states and are skipped, in-review builds are in different
+states and are skipped, and only one release fires per cron run so a
+backlog can't cascade. Manual override via Actions → "Promote
+TestFlight → App Store Production" → "Run workflow" with
+`soak_days` / `dry_run` inputs.
+
+Secrets required (identical to what `fastlane pilot` / `fastlane
+deliver` already use in `build-ios.yml`): `ASC_KEY_ID`,
+`ASC_ISSUER_ID`, `ASC_KEY_BASE64`.
 
 Historical note (2026-06-30): a redundant `release-gate.yml` +
 `scripts/release_gate.py` was accidentally created that duplicated the
@@ -75,7 +90,7 @@ than every code below.
 
 | Code | Tag | Status | Date | Notes |
 |-----:|-----|--------|------|-------|
-| **+92** | `v1.18.4+92` | ⏳ ready | 2026-07-05 | Ship 368 native recordings + KGP → Built-in Kotlin migration. apply_recordings_as_audio.py wired all recordings on disk into PAD tree: canonical 249 (Dr. Sama), joel 29, joyce 45, janelle 45. Kids picking Joel/Joyce/Janelle voices in the app now hear real family voices on those words instead of Edge TTS. Also cleaned up: removed `id("kotlin-android")` from settings + app gradle, set `android.builtInKotlin=true` + `android.newDsl=true`. App-level KGP deprecation warning gone (9 plugin-level warnings remain — 3rd party). PAD tarball 857 MB uploaded to `pad-assets` release. Pending tag push. |
+| **+92** | `v1.18.4+92` | ✅ pushed | 2026-07-05 | Ship 368 native recordings. apply_recordings_as_audio.py wired all recordings on disk into PAD tree: canonical 249 (Dr. Sama), joel 29, joyce 45, janelle 45. Kids picking Joel/Joyce/Janelle voices in the app now hear real family voices on those words instead of Edge TTS. PAD tarball 857 MB uploaded to `pad-assets` release. **Android**: Build #188 (tag, commit 17443a8) uploaded AAB to Play alpha with `status: completed` ✅. **iOS**: Build #188 red on TestFlight duplicate-bundle rejection ("previously uploaded version: 92") — but bundle 92 is ON TestFlight already from Build #186's earlier pilot upload (rejected error message confirms it). Per Session 60 Option 1: iOS is functionally shipped, no bump needed. KGP → Built-in Kotlin migration attempted mid-session then REVERTED — Flutter 3.44.2 does NOT support built-in Kotlin in the release build path (Gradle assembleRelease still requires the plugin declared). Reverted `android.builtInKotlin=true` and `android.newDsl=true` back to false; restored `id("kotlin-android")` in settings + app gradle. Plugin-level KGP warnings remain (9 warnings, 3rd party). |
 | +91 | `v1.18.3+91` | ✅ pushed | 2026-06-26 | Daily notification fix v3 (durable). Plugin's OWN manifest declares SCHEDULE_EXACT_ALARM, so Gradle's manifest merger added it back to the AAB regardless of what our manifest said. Real fix: `tools:node="remove"` on both SCHEDULE_EXACT_ALARM and USE_EXACT_ALARM — explicitly strips them from the merged manifest. Play sees no exact-alarm perms, no declaration form needed. Inexact-only daily notifications + BOOT_COMPLETED receiver still survives reboots. |
 | +90 | `v1.18.3+90` | ❌ burned | 2026-06-26 | Dropped SCHEDULE_EXACT_ALARM from OUR manifest but kept USE_EXACT_ALARM. Play rejected anyway — both permissions trigger the declaration form, AND the plugin's manifest also re-adds SCHEDULE_EXACT_ALARM during merge. Recovered as +91 with tools:node="remove" on both. |
 | +89 | `v1.18.3+89` | ❌ burned | 2026-06-26 | First push of v1.18.3 — Play rejected: "You must let us know whether your app uses any exact alarm permissions." Form not visible in App content (only appears in active edits, which CI rolls back on failure). iOS bundle 89 likely uploaded to TestFlight via pilot step before deliver step failed. Recovered by switching to USE_EXACT_ALARM-only as +90. |
