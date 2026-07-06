@@ -447,20 +447,35 @@ jobs:
           # fastlane deliver creates/updates an App Store Version pointed
           # at this build, submits it for App Review, and stops Apple
           # from auto-releasing on approval. Release happens later via
-          # the 72-hour release-gate.yml workflow.
+          # promote-testflight-to-production.yml (7-day soak cron).
           #
+          # --skip_binary_upload true  -> CRITICAL: pilot already uploaded
+          #                              the .ipa to TestFlight in phase 1.
+          #                              Without this flag, deliver tries
+          #                              to upload the SAME binary again
+          #                              and Apple rejects with HTTP 409
+          #                              "Redundant Binary Upload" (Session
+          #                              62 v1.18.4+93 incident, 2026-07-06).
           # --automatic_release false  -> sits in PENDING_DEVELOPER_RELEASE
           # --submit_for_review true   -> goes into Apple's review queue
           # --skip_metadata true       -> don't touch description/keywords
           # --skip_screenshots true    -> don't reupload screenshots
           # --skip_app_version_update false -> create new app version if needed
+          # --build_number "$BUILD_NO" -> tell deliver which existing build
+          #                              on ASC to attach to the submission
           # --force true               -> no interactive confirmation
           # --precheck_include_in_app_purchases false -> we have none
-          echo "[2/2] Submitting $IPA to App Store Review (held release)..."
+          BUILD_NO="$(defaults read "$PWD/ios/Flutter/Generated.xcconfig" FLUTTER_BUILD_NUMBER 2>/dev/null || echo '')"
+          if [ -z "$BUILD_NO" ]; then
+            # Fallback: parse pubspec.yaml +N directly
+            BUILD_NO="$(grep '^version:' pubspec.yaml | sed -E 's/.*\+([0-9]+).*/\1/')"
+          fi
+          echo "[2/2] Submitting build $BUILD_NO to App Store Review (held release)..."
           fastlane deliver \
             --api_key_path "$JSON_PATH" \
-            --ipa "$IPA" \
             --app_identifier "com.awing.awingAiLearning" \
+            --build_number "$BUILD_NO" \
+            --skip_binary_upload true \
             --skip_metadata true \
             --skip_screenshots true \
             --skip_app_version_update false \
