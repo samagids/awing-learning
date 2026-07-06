@@ -83,9 +83,36 @@ def main() -> int:
         else:
             new_src = regex.sub(lambda m: m.group(1) + wanted + m.group(3),
                                 src, count=1)
+            # Guard: sync_version.py must NEVER shrink a file. If the new
+            # source has fewer lines than the source we read, something
+            # went wrong (OneDrive delivered a truncated file for read,
+            # regex captured too much, etc.). Refuse the write and let
+            # the caller investigate. Prevents the v1.18.4+93 truncation
+            # incident (2026-07-05) from ever recurring silently.
+            old_lines = src.count("\n")
+            new_lines = new_src.count("\n")
+            if new_lines < old_lines:
+                raise SystemExit(
+                    f"ERROR: sync_version.py would shrink "
+                    f"{path.relative_to(REPO)} from {old_lines} lines "
+                    f"to {new_lines} lines. Refusing to write. "
+                    f"Check the file for truncation (likely OneDrive "
+                    f"sync race or Edit-tool corruption) and restore "
+                    f"from git before re-running."
+                )
             path.write_text(new_src, encoding="utf-8")
             # Strip any trailing NULs from Edit-tool truncation regressions
             raw = path.read_bytes().rstrip(b"\x00 \t\r\n") + b"\n"
+            # Second guard on the round-tripped file: if read_bytes came
+            # back short of what we just wrote, refuse the write.
+            if raw.count(b"\n") < new_lines:
+                raise SystemExit(
+                    f"ERROR: {path.relative_to(REPO)} shrank on "
+                    f"read-after-write (wrote {new_lines} lines, read "
+                    f"back {raw.count(b'/n')} lines). Likely OneDrive "
+                    f"partial write. File may be corrupt — restore from "
+                    f"git and re-run."
+                )
             path.write_bytes(raw)
             print(f"  [fixed] {path.relative_to(REPO)}: {current} -> {wanted}")
 

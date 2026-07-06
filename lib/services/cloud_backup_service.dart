@@ -463,4 +463,22 @@ class CloudBackupService extends ChangeNotifier {
       return result;
     } catch (e) {
       debugPrint('Auto-restore error: $e');
-      r
+      return false;
+    }
+  }
+
+  /// Called when data changes — auto-backup if enabled.
+  /// Debounced: skips if last auto-sync was less than 2 minutes ago.
+  Future<void> onDataChanged() async {
+    if (!_autoSync || !_isSignedIn || _isSyncing) return;
+
+    final now = DateTime.now();
+    if (_lastAutoSyncTime != null &&
+        now.difference(_lastAutoSyncTime!) < _autoSyncDebounce) {
+      return;
+    }
+
+    _lastAutoSyncTime = now;
+    await backupAll();
+  }
+}
