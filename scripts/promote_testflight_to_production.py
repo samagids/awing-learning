@@ -266,7 +266,6 @@ def list_pending_versions(jwt_token: str, app_id: str) -> list[dict]:
         f"?filter[platform]=IOS"
         f"&filter[appStoreState]={STATE_PENDING}"
         f"&include=build"
-        f"&sort=-createdDate"
         f"&limit=20"
     )
     data = _http_get(url, jwt_token)
@@ -369,6 +368,16 @@ def main() -> int:
         print("Nothing to release. Exiting cleanly.")
         return 0
     print(f"[asc] {len(pending)} version(s) awaiting developer release")
+
+    # Server-side sort was rejected by Apple with HTTP 400
+    # PARAMETER_ERROR.ILLEGAL "The parameter 'sort' can not be used
+    # with this request" (Session 62 first cron tick, 2026-07-06).
+    # Sort client-side by createdDate desc so the "release newest
+    # first, one per run" semantic below is preserved.
+    pending.sort(
+        key=lambda v: v.get("created_dt") or datetime.min.replace(tzinfo=timezone.utc),
+        reverse=True,
+    )
 
     now = datetime.now(timezone.utc)
     released_any = False
