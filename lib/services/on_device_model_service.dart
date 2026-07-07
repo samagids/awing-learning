@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_gemma/flutter_gemma.dart';
+// flutter_gemma NOT imported — see class-header comment on why C3 is stubbed.
 
 /// Download / lifecycle states for the on-device Gemma 3 1B model.
 enum ModelStatus {
@@ -245,12 +245,13 @@ class OnDeviceModelService extends ChangeNotifier {
   }
 
   // ============================================================
-  // Phase C3 — flutter_gemma inference
+  // Phase C3 — Inference (stubbed)
   // ============================================================
-
-  InferenceModel? _inferenceModel;
-  bool _inferenceLoaded = false;
-  bool _inferenceLoadFailed = false;
+  //
+  // flutter_gemma tried on 0.9.0 and 1.2.2. Both crashed the Gradle build
+  // JVM on Windows AND 1.2.2 requires iOS 16.0 minimum. Until we bump
+  // iOS target AND find a Windows-compatible flutter_gemma, C3 stays
+  // stubbed — download UI works, inference falls back to Cloud.
 
   Future<String?> generateEnglishSentence({
     required String word,
@@ -258,70 +259,12 @@ class OnDeviceModelService extends ChangeNotifier {
     String level = 'beginner',
   }) async {
     if (!isReady) return null;
-    final ready = await _ensureInferenceLoaded();
-    if (!ready || _inferenceModel == null) return null;
-
-    try {
-      final prompt = 'Write a short, simple English sentence (5-8 words) '
-          'that naturally uses the word "$word". '
-          'Category: $category. Level: $level. '
-          'Reply with only the sentence — no quotes, no explanation.';
-
-      final session = await _inferenceModel!.createSession(
-        temperature: 0.7,
-        topK: 40,
-      );
-      try {
-        await session.addQueryChunk(Message.text(text: prompt, isUser: true));
-        final response = await session.getResponse();
-        var cleaned = response.trim();
-        while (cleaned.startsWith('"') || cleaned.startsWith("'")) {
-          cleaned = cleaned.substring(1);
-        }
-        while (cleaned.endsWith('"') || cleaned.endsWith("'")) {
-          cleaned = cleaned.substring(0, cleaned.length - 1);
-        }
-        cleaned = cleaned.trim();
-        if (cleaned.isEmpty) return null;
-        return cleaned;
-      } finally {
-        try {
-          await session.close();
-        } catch (_) {}
-      }
-    } catch (e) {
-      debugPrint('OnDeviceModelService generation failed: $e');
-      return null;
-    }
+    debugPrint(
+        'OnDeviceModelService.generateEnglishSentence: not wired (C3 pending)');
+    return null;
   }
 
-  Future<bool> _ensureInferenceLoaded() async {
-    if (_inferenceLoaded) return true;
-    if (_inferenceLoadFailed) return false;
-    if (_modelFilePath == null) return false;
-
-    try {
-      final gemma = FlutterGemmaPlugin.instance;
-      await gemma.modelManager.setModelPath(_modelFilePath!);
-      _inferenceModel = await gemma.createModel(
-        modelType: ModelType.gemmaIt,
-        preferredBackend: PreferredBackend.cpu,
-        maxTokens: 256,
-      );
-      _inferenceLoaded = true;
-      debugPrint('OnDeviceModelService: inference model loaded');
-      notifyListeners();
-      return true;
-    } catch (e) {
-      _inferenceLoadFailed = true;
-      debugPrint('OnDeviceModelService inference load failed: $e');
-      notifyListeners();
-      return false;
-    }
-  }
-
-  bool get isInferenceReady =>
-      _status == ModelStatus.ready && _inferenceLoaded && _inferenceModel != null;
+  bool get isInferenceReady => false;
 
   void _fail(String msg) {
     _status = ModelStatus.failed;

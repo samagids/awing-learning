@@ -61,7 +61,11 @@ dependencies:
   nsd: ^5.0.1
   network_info_plus: ^6.1.1
   # Phase C — On-device Gemma 3 1B via MediaPipe (flutter_gemma).
-  flutter_gemma: ^1.2.2
+  # DISABLED (Session 62): 1.2.2 crashes the Gradle build JVM on Windows AND
+  # requires iOS 16.0 minimum (project targets iOS 13.0). C2 (download) works
+  # fully without this dep. C3 (inference) revisits when we bump iOS target
+  # AND find a Windows-compatible flutter_gemma. See CLAUDE.md Session 62.
+  # flutter_gemma: ^1.2.2
   # Detects WiFi vs cellular so silent model download stays on WiFi
   # only. network_info_plus above only tells us IP/SSID; this tells us
   # the connection TYPE.

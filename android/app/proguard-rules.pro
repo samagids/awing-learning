@@ -149,15 +149,17 @@
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 
-# ---------- flutter_gemma + MediaPipe Tasks GenAI (Session 62 Phase C3) ----
--keep class com.google.mediapipe.** { *; }
--keep interface com.google.mediapipe.** { *; }
--dontwarn com.google.mediapipe.**
--dontwarn javax.lang.model.**
--dontwarn javax.annotation.processing.**
--dontwarn autovalue.shaded.**
--dontwarn com.google.auto.value.**
--keep class dev.flutterberlin.flutter_gemma.** { *; }
--keep class com.tommihirvonen.large_file_handler.** { *; }
--dontwarn dev.flutterberlin.flutter_gemma.**
--dontwarn com.tommihirvonen.large_file_handler.**
+# ---------- flutter_gemma + MediaPipe Tasks GenAI (DORMANT) ----------------
+# flutter_gemma disabled in pubspec.yaml (iOS 16 requirement + Windows JVM
+# crash). Uncomment BOTH pubspec + this block when re-enabling for C3.
+# -keep class com.google.mediapipe.** { *; }
+# -keep interface com.google.mediapipe.** { *; }
+# -dontwarn com.google.mediapipe.**
+# -dontwarn javax.lang.model.**
+# -dontwarn javax.annotation.processing.**
+# -dontwarn autovalue.shaded.**
+# -dontwarn com.google.auto.value.**
+# -keep class dev.flutterberlin.flutter_gemma.** { *; }
+# -keep class com.tommihirvonen.large_file_handler.** { *; }
+# -dontwarn dev.flutterberlin.flutter_gemma.**
+# -dontwarn com.tommihirvonen.large_file_handler.**
