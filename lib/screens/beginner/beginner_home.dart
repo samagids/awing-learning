@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awing_ai_learning/screens/beginner/alphabet_screen.dart';
+import 'package:awing_ai_learning/screens/translate/word_translate.dart';
 import 'package:awing_ai_learning/screens/beginner/vocabulary_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/quiz_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/tone_screen.dart';
@@ -190,6 +191,17 @@ class _BeginnerHomeState extends State<BeginnerHome> {
                     levelOverride: 'beginner',
                   ),
                 ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Translate Words',
+              subtitle: 'English ↔ Awing word lookup with pronunciation',
+              icon: Icons.translate,
+              color: Colors.teal.shade400,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const WordTranslateScreen()),
               ),
             ),
             const SizedBox(height: 12),

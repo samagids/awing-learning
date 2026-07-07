@@ -27,6 +27,29 @@ import FirebaseCore
     }
     FirebaseApp.configure()
     NSSetUncaughtExceptionHandler(nil)
+    // Device capability channel — Phase C RAM gate (see MainActivity.kt).
+    if let controller = window?.rootViewController as? FlutterViewController {
+      let deviceChannel = FlutterMethodChannel(
+        name: "com.awing.learning/device_capability",
+        binaryMessenger: controller.binaryMessenger
+      )
+      deviceChannel.setMethodCallHandler { (call, result) in
+        if call.method == "getMemoryInfo" {
+          let total = ProcessInfo.processInfo.physicalMemory
+          let totalMb = Int64(total / (1024 * 1024))
+          // iOS doesn't easily expose "available" RAM — return total for both
+          // and let the Dart side use a conservative threshold.
+          result([
+            "totalRamMb": totalMb,
+            "availableRamMb": totalMb,
+            "lowMemory": false,
+            "platform": "ios"
+          ])
+        } else {
+          result(FlutterMethodNotImplemented)
+        }
+      }
+    }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 

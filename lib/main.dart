@@ -20,6 +20,9 @@ import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/notification_service.dart';
 import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
 import 'package:awing_ai_learning/services/vocab_embeddings.dart';
+import 'package:awing_ai_learning/services/ai_toggle_service.dart';
+import 'package:awing_ai_learning/services/device_capability_service.dart';
+import 'package:awing_ai_learning/services/on_device_model_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async' show unawaited;
 
@@ -333,6 +336,25 @@ class AwingApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => RecordingsService()..initialize(),
+        ),
+        // Session 63 — Global AI toggle. Default OFF (on-device).
+        // Applies to translation, Word of the Day, and all future AI features.
+        ChangeNotifierProvider(
+          create: (_) => AIToggleService()..initialize(),
+        ),
+        // Session 63 Phase C — RAM check for on-device Gemma 3 1B.
+        // If the device doesn't have enough memory (~3 GB total), the
+        // service reports isEligibleForOnDeviceModel=false and offline
+        // AI falls back to dictionary-only mode.
+        ChangeNotifierProvider(
+          create: (_) => DeviceCapabilityService()..initialize(),
+        ),
+        // Session 63 Phase C2/C3 — Gemma 3 1B model download + inference.
+        // Singleton service (OnDeviceModelService.instance) so the same
+        // download state survives navigation. .initialize() checks disk
+        // for an already-downloaded model file.
+        ChangeNotifierProvider.value(
+          value: OnDeviceModelService.instance..initialize(),
         ),
         ProxyProvider2<AuthService, ProgressService, ParentNotificationService>(
           update: (_, auth, progress, previous) {

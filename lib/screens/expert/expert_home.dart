@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/screens/expert/tone_mastery_screen.dart';
+import 'package:awing_ai_learning/screens/translate/grade_attempt.dart';
 import 'package:awing_ai_learning/screens/expert/allophones_screen.dart';
 import 'package:awing_ai_learning/screens/expert/elision_screen.dart';
 import 'package:awing_ai_learning/screens/expert/conversation_screen.dart';
@@ -102,6 +103,18 @@ class _ExpertHomeState extends State<ExpertHome> {
                     levelOverride: 'expert',
                   ),
                 ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Grade My Translation',
+              subtitle: 'Type your Awing translation, get instant feedback',
+              icon: Icons.translate,
+              color: Colors.teal.shade400,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const GradeAttemptScreen()),
               ),
             ),
             const SizedBox(height: 12),

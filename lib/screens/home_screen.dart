@@ -317,6 +317,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 12),
                       // v1.16.0: "Today's Words/Sentences/Conversations" moved
                       // into each mode's lesson list so content matches level.
+                      // Session 63: Translate lives inside each mode too
+                      // (Beginner → Word Translate, Medium → Sentence
+                      // Translate, Expert → Grade My Translation). No
+                      // top-level Translate tile — keeps the home screen
+                      // simple and forces users through their level.
                       // Contribute — parent-gated so kids can't submit
                       // random/inappropriate recordings to the webhook
                       // without an adult's knowledge. Uses the same

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/screens/medium/clusters_screen.dart';
+import 'package:awing_ai_learning/screens/translate/sentence_translate.dart';
 import 'package:awing_ai_learning/screens/medium/vowels_screen.dart';
 import 'package:awing_ai_learning/screens/medium/noun_classes_screen.dart';
 import 'package:awing_ai_learning/screens/medium/sentences_screen.dart';
@@ -102,6 +103,18 @@ class _MediumHomeState extends State<MediumHome> {
                     levelOverride: 'medium',
                   ),
                 ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Translate Sentences',
+              subtitle: 'Type a sentence, get word-by-word Awing',
+              icon: Icons.translate,
+              color: Colors.teal.shade400,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const SentenceTranslateScreen()),
               ),
             ),
             const SizedBox(height: 12),

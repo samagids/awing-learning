@@ -1,0 +1,35 @@
+# CloudFlare Worker for Awing AI Learning — cloud AI backend.
+#
+# Deploy:
+#   npm install -g wrangler   # one-time
+#   wrangler login             # one-time (opens browser)
+#   wrangler deploy            # after every code change
+#
+# Free tier limits (2026):
+#   - 100,000 requests/day (Worker invocations)
+#   - 10,000 neurons/day (Workers AI usage)
+#     Llama 3.1 8B costs ~11 neurons per translation, so ~900/day free.
+#   - Once you exceed either, requests just fail — no automatic billing.
+
+name = "awing-ai"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+account_id = "1e8b4f94f21aa50d068dae87b779d9db"
+
+# Workers AI binding — gives the Worker access to LLM models.
+[ai]
+binding = "AI"
+
+# Optional KV binding for response cache (deduplicates identical queries
+# across users so you don't burn neurons on repeats). Uncomment after
+# you create the KV namespace with:
+#   wrangler kv namespace create AWING_CACHE
+# then paste the returned id into the `id = "..."` field below.
+#
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Per-endpoint observability + errors visible in the CloudFlare dashboard.
+[observability]
+enabled = true

@@ -17,6 +17,7 @@ enum ContributionType {
   newSentence,          // "Add this sentence/phrase"
   newPhrase,            // "Add this greeting/phrase"
   generalFeedback,      // "General suggestion"
+  translationCorrection, // "This translation is wrong — here's the fix"
 }
 
 /// Status of a contribution in the review pipeline.

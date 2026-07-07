@@ -675,6 +675,7 @@ class _ContributionCard extends StatelessWidget {
       ContributionType.newSentence => 'New Sentence',
       ContributionType.newPhrase => 'New Phrase',
       ContributionType.generalFeedback => 'Feedback',
+      ContributionType.translationCorrection => 'Wrong Translation',
     };
     final typeColor = switch (c.type) {
       ContributionType.spellingCorrection => Colors.orange,
@@ -683,6 +684,7 @@ class _ContributionCard extends StatelessWidget {
       ContributionType.newSentence => Colors.teal,
       ContributionType.newPhrase => Colors.purple,
       ContributionType.generalFeedback => Colors.grey,
+      ContributionType.translationCorrection => Colors.deepOrange,
     };
     final typeIcon = switch (c.type) {
       ContributionType.spellingCorrection => Icons.spellcheck,
@@ -691,6 +693,7 @@ class _ContributionCard extends StatelessWidget {
       ContributionType.newSentence => Icons.short_text,
       ContributionType.newPhrase => Icons.chat_bubble,
       ContributionType.generalFeedback => Icons.feedback,
+      ContributionType.translationCorrection => Icons.flag,
     };
 
     return Card(

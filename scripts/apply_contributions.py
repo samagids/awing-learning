@@ -1287,6 +1287,73 @@ def apply_contributions(contributions, dry_run=False):
                     rejected_count += 1
                     continue
 
+        elif ctype == 'translationCorrection':
+            # User reported a wrong translation via the flag button in the
+            # Translate screens. Payload:
+            #   - target       = the wrong Awing the app showed
+            #   - correction   = the correct Awing per the reporter
+            #   - english      = the English source (via englishMeaning)
+            #   - notes (JSON) = { wrong, context, wordByWord: {en:aw,...}, freeText }
+            # We add the correction as a new dictionary entry AND every
+            # word-by-word pair as additional entries (each pair also
+            # improves LLM retrieval context on next Worker deploy).
+            try:
+                import json as _json
+                notes_json = c.get('notes', '') or ''
+                structured = {}
+                try:
+                    structured = _json.loads(notes_json)
+                except Exception:
+                    structured = {}
+                pairs = []
+                # Main correction pair
+                if correction and english:
+                    pairs.append((correction, english))
+                # Word-by-word pairs
+                wbw = structured.get('wordByWord', {}) if isinstance(structured, dict) else {}
+                if isinstance(wbw, dict):
+                    for en, aw in wbw.items():
+                        en = str(en).strip()
+                        aw = str(aw).strip()
+                        if en and aw:
+                            pairs.append((aw, en))
+                # Apply each pair via apply_new_word
+                added_here = 0
+                for aw, en in pairs:
+                    try:
+                        vocab_content, added = apply_new_word(
+                            vocab_content, aw, en,
+                            category or 'general')
+                        if added:
+                            vocab_modified = True
+                            added_here += 1
+                            # Queue new word for audio generation.
+                            regenerate_words.append({
+                                'awing': aw,
+                                'english': en,
+                                'category': category if category in ('body',
+                                    'animals', 'nature', 'actions', 'things',
+                                    'family', 'daily', 'greeting', 'question',
+                                    'farewell', 'food', 'descriptive',
+                                    'numbers', 'pronouns', 'time',
+                                    'classroom', 'general') else 'general',
+                            })
+                    except ContributionRejected as e:
+                        print(f"  ⛔ REJECTED (pair {aw}/{en}): {e}")
+                        # keep going with other pairs
+                if added_here:
+                    applied_count += 1
+                    print(f"  ✓ Added {added_here} corrected pair(s) to awing_vocabulary.dart")
+                    if structured.get('freeText'):
+                        print(f"    Reporter notes: {structured.get('freeText')[:120]}")
+                else:
+                    print(f"  ⚠ Translation correction produced no dictionary additions "
+                          f"(all pairs may already exist)")
+            except Exception as e:
+                print(f"  ⛔ REJECTED: {e}")
+                rejected_count += 1
+                continue
+
         elif ctype == 'pronunciationFix':
             # Reference-only pronunciation fixes (v2 design):
             # The developer's recording is NEVER played in the app. Instead:

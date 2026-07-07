@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.18.4+93
+version: 1.19.0+94
 environment:
   sdk: ">=3.4.0 <4.0.0"
 
@@ -60,6 +60,12 @@ dependencies:
   firebase_app_check: ^0.3.1+7
   nsd: ^5.0.1
   network_info_plus: ^6.1.1
+  # Phase C — On-device Gemma 3 1B via MediaPipe (flutter_gemma).
+  flutter_gemma: ^1.2.2
+  # Detects WiFi vs cellular so silent model download stays on WiFi
+  # only. network_info_plus above only tells us IP/SSID; this tells us
+  # the connection TYPE.
+  connectivity_plus: ^6.1.0
   # v1.15.0 — Daily word suggestion notifier. Schedules a local notification
   # at the user-chosen time (default 8 AM) with 3 hand-picked words for the
   # day, scored by season, time-of-day and weekly category rotation. No

@@ -1,5 +1,7 @@
 package com.awing.awing_ai_learning
 
+import android.app.ActivityManager
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import io.flutter.embedding.android.FlutterFragmentActivity
@@ -15,6 +17,7 @@ import java.io.FileOutputStream
 // extends android.app.Activity directly, which would fail to resolve.
 class MainActivity : FlutterFragmentActivity() {
     private val CHANNEL = "com.awing.learning/asset_pack"
+    private val DEVICE_CAPABILITY_CHANNEL = "com.awing.learning/device_capability"
 
     // Android 15 (SDK 35) requires apps to opt into edge-to-edge display.
     // enableEdgeToEdge() is the AndroidX-provided backwards-compatible API
@@ -61,6 +64,36 @@ class MainActivity : FlutterFragmentActivity() {
                             result.success(true)
                         } catch (e: Exception) {
                             result.success(false)
+                        }
+                    }
+                    else -> result.notImplemented()
+                }
+            }
+
+        // === Device capability channel — Phase C RAM gate ===
+        // Returns total + available RAM in MB so the Dart side can decide
+        // whether to enable on-device Gemma 3 1B (needs ~1.2 GB free +
+        // ~3 GB total device). Kids' phones in Cameroon often have 2-4 GB
+        // and we refuse to download the model if the device can't run it.
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, DEVICE_CAPABILITY_CHANNEL)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "getMemoryInfo" -> {
+                        try {
+                            val am = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+                            val info = ActivityManager.MemoryInfo()
+                            am.getMemoryInfo(info)
+                            val totalMb = info.totalMem / (1024 * 1024)
+                            val availMb = info.availMem / (1024 * 1024)
+                            val lowMemory = info.lowMemory
+                            result.success(mapOf(
+                                "totalRamMb" to totalMb,
+                                "availableRamMb" to availMb,
+                                "lowMemory" to lowMemory,
+                                "platform" to "android"
+                            ))
+                        } catch (e: Exception) {
+                            result.error("MEM_INFO_FAILED", e.message, null)
                         }
                     }
                     else -> result.notImplemented()
