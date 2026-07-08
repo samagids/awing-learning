@@ -15,7 +15,7 @@ jobs:
     # If the self-hosted runner is offline for >30 min, GitHub queues the
     # job — jobs don't auto-fall-back to ubuntu-latest. Manual fallback:
     # temporarily switch this line to `runs-on: ubuntu-latest` and re-push.
-    runs-on: [self-hosted, linux, wsl-ubuntu]
+    runs-on: [self-hosted, Linux, X64]
     timeout-minutes: 45
 
     steps:
