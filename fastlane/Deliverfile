@@ -1,0 +1,27 @@
+# Awing AI Learning — fastlane deliver stub configuration.
+#
+# .github/workflows/build-ios.yml Phase 2 "auto-submit for App Store
+# Review" calls `fastlane deliver` from the repo root. Without a
+# Deliverfile present, deliver refuses to run and exits with:
+#
+#   No deliver configuration found in the current directory.
+#   Do you want to setup deliver?
+#   Could not retrieve response as fastlane runs in non-interactive mode
+#
+# Session 63 (2026-07-08) discovery: the entire deliver auto-submit
+# has been silently broken since Session 61's cactus_util blockage —
+# every tag from +94 through +99 failed at cactus_util before ever
+# reaching this step, so the missing Deliverfile went unnoticed. Now
+# that v1.19.2+100 clears the cactus block and pilot uploads to
+# TestFlight successfully, deliver is the next thing to fix.
+#
+# All actual settings — app_identifier, build_number, submit_for_review,
+# automatic_release, skip_binary_upload, skip_metadata, skip_screenshots,
+# force — are passed as CLI flags in the workflow file. Values are the
+# source of truth there, not here, so we don't duplicate settings in
+# both places (drift risk).
+#
+# The single line below satisfies deliver's config-file-must-exist
+# check. app_identifier matches what the workflow already passes on the
+# CLI, so setting it here doesn't introduce new behavior.
+app_identifier "com.awing.awingAiLearning"
