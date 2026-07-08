@@ -604,10 +604,25 @@ jobs:
             # Fallback: parse pubspec.yaml +N directly
             BUILD_NO="$(grep '^version:' pubspec.yaml | sed -E 's/.*\+([0-9]+).*/\1/')"
           fi
-          echo "[2/2] Submitting build $BUILD_NO to App Store Review (held release)..."
+          # Extract X.Y.Z app version from pubspec.yaml (the part before "+N").
+          # Without --app_version, deliver looks for an already-editable draft
+          # in ASC. When no draft exists (the normal case after a live release
+          # ships), deliver exits with:
+          #   [!] Cannot submit for review - could not find an editable version
+          # Passing --app_version explicitly lets deliver CREATE the version
+          # if it doesn't exist (Session 63 v1.19.2+101 discovery — hit in
+          # first successful fastlane-load run after Deliverfile fix).
+          APP_VER="$(grep '^version:' pubspec.yaml | sed -E 's/version:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+)\+.*/\1/')"
+          if [ -z "$APP_VER" ]; then
+            echo "::error::Could not parse app version (X.Y.Z) from pubspec.yaml"
+            grep '^version:' pubspec.yaml
+            exit 1
+          fi
+          echo "[2/2] Submitting version $APP_VER build $BUILD_NO to App Store Review (held release)..."
           fastlane deliver \
             --api_key_path "$JSON_PATH" \
             --app_identifier "com.awing.awingAiLearning" \
+            --app_version "$APP_VER" \
             --build_number "$BUILD_NO" \
             --skip_binary_upload true \
             --skip_metadata true \
