@@ -565,17 +565,27 @@ jobs:
             exit 1
           fi
 
-          # === Phase 1: TestFlight upload (instant for testers) ===
-          # pilot still does the binary upload itself. Skip waiting +
-          # skip submission — App Store submission is phase 2.
+          # === Phase 1: TestFlight upload ===
+          # pilot uploads the binary AND waits for Apple to finish
+          # processing before returning. Waiting is required so Phase 2
+          # deliver can attach build $BUILD_NO to the App Store version:
+          # run #227 (2026-07-08) failed line 259 with 'Build number:
+          # 102 does not exist' because pilot returned after 10 seconds
+          # (skip_waiting_for_build_processing was set) but Apple hadn't
+          # finished processing the binary yet, so deliver's build lookup
+          # came up empty. Adds ~5-15 min to CI per tag but eliminates
+          # the pilot→deliver race and makes App Store submission fully
+          # automatic.
+          # --skip_submission stays: pilot's "submission" flag is for
+          # TestFlight external-tester review, which is separate from
+          # App Store review (phase 2 handles that via deliver).
           echo "[1/2] Uploading $IPA to TestFlight via fastlane pilot..."
           fastlane pilot upload \
             --api_key_path "$JSON_PATH" \
             --ipa "$IPA" \
             --app_identifier "com.awing.awingAiLearning" \
-            --skip_waiting_for_build_processing \
             --skip_submission
-          echo "✓ Phase 1: Build uploaded to TestFlight — testers see it after Apple processing (~10-15 min)."
+          echo "✓ Phase 1: Build uploaded to TestFlight AND processed by Apple."
 
           # === Phase 2: App Store submission with held release ===
           # fastlane deliver creates/updates an App Store Version pointed
