@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.19.0+94
+version: 1.19.1+95
 environment:
   sdk: ">=3.4.0 <4.0.0"
 
@@ -60,11 +60,13 @@ dependencies:
   firebase_app_check: ^0.3.1+7
   nsd: ^5.0.1
   network_info_plus: ^6.1.1
-  # Phase C — On-device Gemma 3 1B via MediaPipe (flutter_gemma).
-  # DISABLED (Session 62): 1.2.2 crashes the Gradle build JVM on Windows AND
-  # requires iOS 16.0 minimum (project targets iOS 13.0). C2 (download) works
-  # fully without this dep. C3 (inference) revisits when we bump iOS target
-  # AND find a Windows-compatible flutter_gemma. See CLAUDE.md Session 62.
+  # Phase C — On-device LLM via cactus (llama.cpp wrapper, iOS 12+ compatible).
+  # Replaces flutter_gemma which required iOS 16 + crashed Windows Gradle.
+  # Runs GGUF-format quantized models entirely on-device. Model = TinyLlama-
+  # 1.1B-Chat Q4_K_M (~668 MB), hosted on CloudFlare R2, downloaded silently
+  # in background after app install on WiFi (or with warning on mobile data).
+  cactus: ^0.2.0
+  # flutter_gemma stayed commented after Session 62 iOS 16 requirement fail.
   # flutter_gemma: ^1.2.2
   # Detects WiFi vs cellular so silent model download stays on WiFi
   # only. network_info_plus above only tells us IP/SSID; this tells us

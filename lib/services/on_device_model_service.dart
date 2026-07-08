@@ -5,41 +5,28 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-// flutter_gemma NOT imported — see class-header comment on why C3 is stubbed.
+import 'package:cactus/cactus.dart';
 
-/// Download / lifecycle states for the on-device Gemma 3 1B model.
+/// Download / lifecycle states for the on-device TinyLlama-1.1B model.
 enum ModelStatus {
-  /// Never downloaded on this device.
   notStarted,
-
-  /// Waiting on a WiFi connection.
   awaitingWifi,
-
-  /// Actively downloading.
   downloading,
-
-  /// Model file present on disk, ready to load.
   ready,
-
-  /// Something failed. See [OnDeviceModelService.lastError].
   failed,
 }
 
-/// Manages the on-device Gemma 3 1B model.
+/// Manages the on-device TinyLlama-1.1B-Chat Q4_K_M model (~668 MB).
 ///
-/// Responsibilities (Phase C2):
-///   • Determine if a downloaded model file exists locally
-///   • Stream-download the .task file from a configured URL when the
-///     user taps "Download Offline AI"
-///   • Enforce WiFi-only by default (a "download on cellular anyway"
-///     toggle will land in a future iteration)
-///   • Report progress + status via ChangeNotifier
+/// C2 (download):
+///   * Silent background download on WiFi after app start
+///   * Manual download button in Settings with mobile-data warning dialog
+///   * Progress reporting + cancel/delete via ChangeNotifier
 ///
-/// Responsibilities (Phase C3 — inference):
-///   • Lazy-load the model into flutter_gemma when first needed
-///   • Provide [generateEnglishSentence] used by CloudAIService as a
-///     drop-in offline replacement for the CloudFlare Worker's
-///     English-sentence-generation call
+/// C3 (inference via cactus / llama.cpp):
+///   * Lazy-loads model into `cactus` on first `generateEnglishSentence` call
+///   * CloudAIService.generateExample routes here when `preferOffline=true`.
+///     Returns null on any failure — upstream falls back to dictionary mode.
 ///
 /// Guard: never runs on ineligible devices (RAM check via
 /// DeviceCapabilityService is the gate — CloudAIService is responsible
@@ -48,31 +35,19 @@ class OnDeviceModelService extends ChangeNotifier {
   static final OnDeviceModelService instance = OnDeviceModelService._();
   OnDeviceModelService._();
 
-  /// Public URL of the .task model file. This is a CONFIGURATION
-  /// constant — the developer hosts the file on their own CloudFlare
-  /// R2 bucket (or equivalent) and updates this string. The URL is
-  /// visible in the APK so hosting must be free-tier-friendly.
-  ///
-  /// SMOKE-TEST DEFAULT (Session 62): whisper-tiny (~151 MB) is used
-  /// to validate the download + progress + sanity-check pipeline
-  /// end-to-end BEFORE the real 800 MB Gemma 3 1B file lands in the
-  /// R2 bucket. Replace this URL with the real Gemma `.task` file
-  /// URL before shipping to end users.
-  ///
-  /// Real model download URL will be:
-  ///   `https://pub-<hash>.r2.dev/gemma-3-1b-it-int4.task`
+  /// Public URL of the GGUF model file. Update to R2 URL when uploaded.
+  /// Currently HuggingFace so testers can install and it just works.
   static const String modelUrl =
-      'https://huggingface.co/openai/whisper-tiny/resolve/main/model.safetensors';
+      'https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF/resolve/main/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf';
 
-  /// Filename used on disk. Keep stable — the app checks for this
-  /// specific name when detecting whether the model is already
-  /// downloaded.
-  static const String modelFileName = 'gemma_3_1b_it_int4.task';
+  static const String modelFileName = 'tinyllama-chat-q4.gguf';
 
-  /// SharedPreferences key storing the "download completed at" ms
-  /// timestamp. Presence + valid file at [_modelFile] path together
-  /// mean the model is ready.
+  /// Minimum valid file size — anything smaller is treated as partial and
+  /// deleted on init. TinyLlama Q4_K_M is ~668 MB, so 500 MB is safe floor.
+  static const int minValidSizeBytes = 500 * 1024 * 1024;
+
   static const String _keyDownloadedAt = 'on_device_model_downloaded_at';
+  static const String _keyAutoDownloadDisabled = 'on_device_model_auto_disabled';
 
   ModelStatus _status = ModelStatus.notStarted;
   double _progress = 0.0;
@@ -84,7 +59,18 @@ class OnDeviceModelService extends ChangeNotifier {
   double get progress => _progress;
   String? get lastError => _lastError;
   bool get isReady => _status == ModelStatus.ready && _modelFilePath != null;
-  bool get isConfigured => !modelUrl.endsWith('CONFIGURE_MODEL_URL');
+  bool get isConfigured => true; // Real URL is baked in.
+
+  Future<bool> get autoDownloadEnabled async {
+    final prefs = await SharedPreferences.getInstance();
+    return !(prefs.getBool(_keyAutoDownloadDisabled) ?? false);
+  }
+
+  Future<void> setAutoDownloadEnabled(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyAutoDownloadDisabled, !enabled);
+    notifyListeners();
+  }
 
   Future<void> initialize() async {
     if (_initialized) return;
@@ -94,15 +80,12 @@ class OnDeviceModelService extends ChangeNotifier {
       final file = File('${dir.path}/$modelFileName');
       if (await file.exists()) {
         final size = await file.length();
-        // Sanity — a partially-downloaded file might exist but be
-        // truncated. Require at least 100 MB to consider it complete.
-        if (size > 100 * 1024 * 1024) {
+        if (size >= minValidSizeBytes) {
           _modelFilePath = file.path;
           _status = ModelStatus.ready;
           debugPrint(
               'OnDeviceModelService: found ${size ~/ 1024 ~/ 1024} MB model at ${file.path}');
         } else {
-          // Stale/partial file — delete so a fresh download starts clean.
           try {
             await file.delete();
           } catch (_) {}
@@ -113,6 +96,32 @@ class OnDeviceModelService extends ChangeNotifier {
       debugPrint('OnDeviceModelService init failed: $e');
     }
     notifyListeners();
+    // Kick off background auto-download check.
+    unawaited(_maybeAutoDownload());
+  }
+
+  /// Silently start a WiFi download if:
+  ///   * model isn't already downloaded
+  ///   * not already downloading
+  ///   * user hasn't opted out via setAutoDownloadEnabled(false)
+  ///   * currently on WiFi (never touches cellular on its own)
+  Future<void> _maybeAutoDownload() async {
+    if (isReady) return;
+    if (_status == ModelStatus.downloading) return;
+    if (!await autoDownloadEnabled) return;
+    try {
+      final result = await Connectivity().checkConnectivity();
+      final onWifi = result.contains(ConnectivityResult.wifi) ||
+          result.contains(ConnectivityResult.ethernet);
+      if (!onWifi) {
+        debugPrint('OnDeviceModelService: auto-download waiting for WiFi');
+        return;
+      }
+      debugPrint('OnDeviceModelService: auto-download starting (WiFi)');
+      await startDownload();
+    } catch (e) {
+      debugPrint('OnDeviceModelService auto-download check failed: $e');
+    }
   }
 
   /// Start downloading the model. WiFi-only by default; if [allowCellular]
@@ -120,20 +129,14 @@ class OnDeviceModelService extends ChangeNotifier {
   Future<void> startDownload({bool allowCellular = false}) async {
     await initialize();
     if (_status == ModelStatus.downloading) return;
-    if (!isConfigured) {
-      _fail(
-          'Model URL is not configured yet. See OnDeviceModelService.modelUrl.');
-      return;
-    }
 
-    // Check network type.
     final result = await Connectivity().checkConnectivity();
     final onWifi = result.contains(ConnectivityResult.wifi) ||
         result.contains(ConnectivityResult.ethernet);
     if (!onWifi && !allowCellular) {
       _status = ModelStatus.awaitingWifi;
       _lastError = 'Connect to WiFi to download the offline AI model '
-          '(~800 MB). You can override this and use cellular data '
+          '(~670 MB). You can override this and use cellular data '
           'from Settings.';
       notifyListeners();
       return;
@@ -148,11 +151,7 @@ class OnDeviceModelService extends ChangeNotifier {
       final dir = await getApplicationDocumentsDirectory();
       final tempFile = File('${dir.path}/$modelFileName.partial');
       final finalFile = File('${dir.path}/$modelFileName');
-
-      // Clean up any prior partial download.
-      if (await tempFile.exists()) {
-        await tempFile.delete();
-      }
+      if (await tempFile.exists()) await tempFile.delete();
 
       final client = http.Client();
       final request = http.Request('GET', Uri.parse(modelUrl));
@@ -172,14 +171,12 @@ class OnDeviceModelService extends ChangeNotifier {
           received += chunk.length;
           if (total > 0) {
             _progress = received / total;
-            // Only notify every ~1% so the UI doesn't get hammered.
             if ((_progress * 100).floor() !=
                 ((received - chunk.length) / total * 100).floor()) {
               notifyListeners();
             }
           }
           if (_status != ModelStatus.downloading) {
-            // User cancelled mid-stream.
             await sink.close();
             client.close();
             await tempFile.delete();
@@ -191,10 +188,7 @@ class OnDeviceModelService extends ChangeNotifier {
         client.close();
       }
 
-      // Rename .partial → final. If a previous file existed, replace it.
-      if (await finalFile.exists()) {
-        await finalFile.delete();
-      }
+      if (await finalFile.exists()) await finalFile.delete();
       await tempFile.rename(finalFile.path);
 
       _modelFilePath = finalFile.path;
@@ -202,16 +196,14 @@ class OnDeviceModelService extends ChangeNotifier {
       _progress = 1.0;
 
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt(
-          _keyDownloadedAt, DateTime.now().millisecondsSinceEpoch);
+      await prefs.setInt(_keyDownloadedAt, DateTime.now().millisecondsSinceEpoch);
       notifyListeners();
-      debugPrint('OnDeviceModelService: download complete → ${finalFile.path}');
+      debugPrint('OnDeviceModelService: download complete -> ${finalFile.path}');
     } catch (e) {
       _fail('Download failed: $e');
     }
   }
 
-  /// User-visible "Cancel download" — safe to call any time.
   void cancelDownload() {
     if (_status == ModelStatus.downloading) {
       _status = ModelStatus.notStarted;
@@ -220,18 +212,24 @@ class OnDeviceModelService extends ChangeNotifier {
     }
   }
 
-  /// Delete the downloaded model to free ~800 MB of storage.
+  /// Delete the downloaded model to free ~668 MB of storage. Also unloads
+  /// the LM from memory. User can toggle auto-download off to prevent
+  /// re-download on next app start.
   Future<void> deleteModel() async {
     try {
+      try {
+        await _lm?.dispose();
+      } catch (_) {}
+      _lm = null;
+      _lmLoaded = false;
+      _lmLoadFailed = false;
+      _lmLoadStarted = false;
+
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/$modelFileName');
-      if (await file.exists()) {
-        await file.delete();
-      }
+      if (await file.exists()) await file.delete();
       final partial = File('${dir.path}/$modelFileName.partial');
-      if (await partial.exists()) {
-        await partial.delete();
-      }
+      if (await partial.exists()) await partial.delete();
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_keyDownloadedAt);
       _modelFilePath = null;
@@ -245,26 +243,93 @@ class OnDeviceModelService extends ChangeNotifier {
   }
 
   // ============================================================
-  // Phase C3 — Inference (stubbed)
+  // Phase C3 — Inference via cactus (llama.cpp wrapper)
   // ============================================================
-  //
-  // flutter_gemma tried on 0.9.0 and 1.2.2. Both crashed the Gradle build
-  // JVM on Windows AND 1.2.2 requires iOS 16.0 minimum. Until we bump
-  // iOS target AND find a Windows-compatible flutter_gemma, C3 stays
-  // stubbed — download UI works, inference falls back to Cloud.
 
+  CactusLM? _lm;
+  bool _lmLoaded = false;
+  bool _lmLoadFailed = false;
+  final Completer<void> _lmLoadLock = Completer<void>();
+  bool _lmLoadStarted = false;
+
+  /// Generate a short English example sentence using on-device TinyLlama.
+  /// Returns null on any failure — caller falls back to dictionary mode.
   Future<String?> generateEnglishSentence({
     required String word,
     required String category,
     String level = 'beginner',
   }) async {
     if (!isReady) return null;
-    debugPrint(
-        'OnDeviceModelService.generateEnglishSentence: not wired (C3 pending)');
-    return null;
+    final ok = await _ensureLmLoaded();
+    if (!ok || _lm == null) return null;
+
+    try {
+      final prompt = 'Write ONE short English sentence (5 to 8 words) '
+          'that naturally uses the word "$word". '
+          'Category: $category. Level: $level. '
+          'Reply with only the sentence itself — no quotes, no explanation.';
+
+      final result = await _lm!.completion(
+        [ChatMessage(role: 'user', content: prompt)],
+        maxTokens: 64,
+        temperature: 0.7,
+        topK: 40,
+      );
+
+      final text = result.result;
+      if (text.trim().isEmpty) return null;
+
+      var cleaned = text.trim();
+      while (cleaned.startsWith('"') || cleaned.startsWith("'")) {
+        cleaned = cleaned.substring(1);
+      }
+      while (cleaned.endsWith('"') || cleaned.endsWith("'")) {
+        cleaned = cleaned.substring(0, cleaned.length - 1);
+      }
+      cleaned = cleaned.trim();
+      if (cleaned.isEmpty) return null;
+      return cleaned;
+    } catch (e) {
+      debugPrint('OnDeviceModelService cactus generation failed: $e');
+      return null;
+    }
   }
 
-  bool get isInferenceReady => false;
+  Future<bool> _ensureLmLoaded() async {
+    if (_lmLoaded) return true;
+    if (_lmLoadFailed) return false;
+    if (_modelFilePath == null) return false;
+
+    if (_lmLoadStarted) {
+      await _lmLoadLock.future;
+      return _lmLoaded;
+    }
+    _lmLoadStarted = true;
+
+    try {
+      final lm = await CactusLM.init(
+        modelPath: _modelFilePath!,
+        contextSize: 2048,
+        threads: 4,
+        gpuLayers: 0,
+      );
+      _lm = lm;
+      _lmLoaded = true;
+      debugPrint('OnDeviceModelService: cactus LM loaded');
+      if (!_lmLoadLock.isCompleted) _lmLoadLock.complete();
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _lmLoadFailed = true;
+      debugPrint('OnDeviceModelService cactus load failed: $e');
+      if (!_lmLoadLock.isCompleted) _lmLoadLock.complete();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  bool get isInferenceReady =>
+      _status == ModelStatus.ready && _lmLoaded && _lm != null;
 
   void _fail(String msg) {
     _status = ModelStatus.failed;
