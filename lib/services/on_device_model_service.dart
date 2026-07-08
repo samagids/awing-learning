@@ -215,7 +215,7 @@ class OnDeviceModelService extends ChangeNotifier {
 
       final result = await _lm.generateCompletion(
         messages: [ChatMessage(content: prompt, role: 'user')],
-        params: const CactusCompletionParams(
+        params: CactusCompletionParams(
           maxTokens: 64,
           temperature: 0.7,
         ),
@@ -243,7 +243,7 @@ class OnDeviceModelService extends ChangeNotifier {
     if (_lmLoadFailed) return false;
     try {
       await _lm.initializeModel(
-        params: const CactusInitParams(model: modelSlug, contextSize: 1024),
+        params: CactusInitParams(model: modelSlug, contextSize: 1024),
       );
       _lmLoaded = true;
       notifyListeners();

@@ -78,10 +78,10 @@ dependencies:
   # network calls; entirely on-device rule-based "AI".
   flutter_local_notifications: ^17.2.3
   timezone: ^0.9.4
-  permission_handler: ^11.3.1
+  permission_handler: ^12.0.1
 
 dependency_overrides:
-  record_linux: ^2.1.1
+  # (record_linux override removed — record 6.x manages its own linux dep)
 
 dev_dependencies:
   flutter_test:
