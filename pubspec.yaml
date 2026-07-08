@@ -65,7 +65,7 @@ dependencies:
   # Runs GGUF-format quantized models entirely on-device. Model = TinyLlama-
   # 1.1B-Chat Q4_K_M (~668 MB), hosted on CloudFlare R2, downloaded silently
   # in background after app install on WiFi (or with warning on mobile data).
-  cactus: ^0.2.0
+  cactus: ^1.3.0
   # flutter_gemma stayed commented after Session 62 iOS 16 requirement fail.
   # flutter_gemma: ^1.2.2
   # Detects WiFi vs cellular so silent model download stays on WiFi
