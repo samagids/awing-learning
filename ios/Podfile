@@ -45,4 +45,21 @@ post_install do |installer|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
     end
   end
+
+  # Bug workaround for cactus 1.3.0: cactus_util.xcframework ships with an
+  # EMPTY MinimumOSVersion in every slice's Info.plist. Apple's altool
+  # rejects the IPA during TestFlight upload with:
+  #   Validation failed (409) Invalid MinimumOSVersion. MinimumOSVersion in
+  #   'Runner.app/Frameworks/cactus_util.framework' is ''.
+  # xcodebuild copies the framework verbatim into the app bundle, so we
+  # patch each slice's Info.plist here — before xcodebuild archives.
+  # If/when cactus fixes this upstream, remove this block.
+  Dir.glob(File.join(installer.sandbox.root, '**', 'cactus_util.framework', 'Info.plist')).each do |plist|
+    # Try to set, fall back to add if the key doesn't exist yet.
+    result = system("/usr/libexec/PlistBuddy -c 'Set :MinimumOSVersion 15.0' '#{plist}' 2>/dev/null")
+    unless result
+      system("/usr/libexec/PlistBuddy -c 'Add :MinimumOSVersion string 15.0' '#{plist}'")
+    end
+    puts "[cactus patch] Set MinimumOSVersion=15.0 in #{plist}"
+  end
 end
