@@ -10,8 +10,13 @@ on:
 
 jobs:
   build-android:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Session 62: switched from ubuntu-latest to self-hosted WSL runner so
+    # this repo can go private without paying for GitHub Actions minutes.
+    # If the self-hosted runner is offline for >30 min, GitHub queues the
+    # job — jobs don't auto-fall-back to ubuntu-latest. Manual fallback:
+    # temporarily switch this line to `runs-on: ubuntu-latest` and re-push.
+    runs-on: [self-hosted, linux, wsl-ubuntu]
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository
