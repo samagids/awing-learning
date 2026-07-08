@@ -100,25 +100,33 @@ class OnDeviceModelService extends ChangeNotifier {
     unawaited(_maybeAutoDownload());
   }
 
-  /// Silently start a WiFi download if:
-  ///   * model isn't already downloaded
-  ///   * not already downloading
-  ///   * user hasn't opted out via setAutoDownloadEnabled(false)
-  ///   * currently on WiFi (never touches cellular on its own)
+  /// Silently start a background download if any network is available
+  /// (WiFi OR mobile data). We use mobile data because most Awing-speaking
+  /// users in Cameroon don't have reliable WiFi. The user can:
+  ///   * cancel from Settings while it's in progress, or
+  ///   * turn off auto-download entirely via setAutoDownloadEnabled(false).
   Future<void> _maybeAutoDownload() async {
     if (isReady) return;
     if (_status == ModelStatus.downloading) return;
     if (!await autoDownloadEnabled) return;
     try {
       final result = await Connectivity().checkConnectivity();
-      final onWifi = result.contains(ConnectivityResult.wifi) ||
-          result.contains(ConnectivityResult.ethernet);
-      if (!onWifi) {
-        debugPrint('OnDeviceModelService: auto-download waiting for WiFi');
+      final hasNetwork = result.contains(ConnectivityResult.wifi) ||
+          result.contains(ConnectivityResult.ethernet) ||
+          result.contains(ConnectivityResult.mobile);
+      if (!hasNetwork) {
+        debugPrint('OnDeviceModelService: auto-download waiting for any network');
         return;
       }
-      debugPrint('OnDeviceModelService: auto-download starting (WiFi)');
-      await startDownload();
+      final onWifi = result.contains(ConnectivityResult.wifi) ||
+          result.contains(ConnectivityResult.ethernet);
+      debugPrint(
+          'OnDeviceModelService: auto-download starting (${onWifi ? "WiFi" : "mobile"})');
+      // Bypass the WiFi-only guard inside startDownload — user has already
+      // consented to auto-download via the (default-on) autoDownloadEnabled
+      // preference. If they don't want cellular data used, they turn off
+      // auto-download in Settings.
+      await startDownload(allowCellular: true);
     } catch (e) {
       debugPrint('OnDeviceModelService auto-download check failed: $e');
     }
