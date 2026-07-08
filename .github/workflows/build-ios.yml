@@ -145,6 +145,41 @@ jobs:
         working-directory: ios
         run: pod install
 
+      # Cactus 1.3.0 packaging bug: cactus_util.xcframework ships with an
+      # empty MinimumOSVersion in every slice's Info.plist. Apple altool
+      # rejects the IPA with "Validation failed (409) Invalid
+      # MinimumOSVersion. ... MinimumOSVersion is ''."
+      #
+      # We patch every slice's Info.plist BEFORE xcodebuild archives the
+      # app, so the copy that lands in Runner.app/Frameworks/ has a valid
+      # value. Deployment target 15.0 matches ios/Podfile line 2.
+      #
+      # If/when cactus 1.3.x fixes this upstream, this step becomes a no-op
+      # (the find will just find already-good plists).
+      - name: Patch cactus_util.framework MinimumOSVersion (cactus 1.3.0 bug)
+        working-directory: ios
+        run: |
+          set -e
+          echo "=== Searching for cactus_util.framework Info.plist files ==="
+          plists=$(find Pods -type f -name 'Info.plist' -path '*/cactus_util.framework/*' 2>/dev/null || true)
+          if [ -z "$plists" ]; then
+            echo "WARNING: no cactus_util.framework Info.plist files found under Pods/"
+            echo "This might mean cactus's file layout changed. Continuing anyway."
+            exit 0
+          fi
+          echo "$plists" | while read plist; do
+            echo ""
+            echo "== $plist =="
+            before=$(/usr/libexec/PlistBuddy -c "Print :MinimumOSVersion" "$plist" 2>&1 || echo "(missing)")
+            echo "  before: $before"
+            /usr/libexec/PlistBuddy -c "Set :MinimumOSVersion 15.0" "$plist" 2>/dev/null || \
+              /usr/libexec/PlistBuddy -c "Add :MinimumOSVersion string 15.0" "$plist"
+            after=$(/usr/libexec/PlistBuddy -c "Print :MinimumOSVersion" "$plist" 2>&1)
+            echo "  after:  $after"
+          done
+          echo ""
+          echo "=== Patch complete ==="
+
       - name: Run Flutter analyze
         run: flutter analyze --no-fatal-infos
         continue-on-error: true
