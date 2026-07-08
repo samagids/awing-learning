@@ -1,0 +1,11 @@
+What's new in 1.19.2:
+
+• On-device AI: Word Translate can now generate example sentences
+  offline once the language model is downloaded on Wi-Fi. Turn off
+  the "Cloud AI" toggle in Settings to keep everything local.
+
+• Full-screen support for Android 15+ (edge-to-edge display).
+
+• Improved character voice tuning and assorted bug fixes.
+
+Built with love for the Awing community.

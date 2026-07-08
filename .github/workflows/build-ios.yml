@@ -619,13 +619,22 @@ jobs:
             exit 1
           fi
           echo "[2/2] Submitting version $APP_VER build $BUILD_NO to App Store Review (held release)..."
+          # --skip_metadata false lets deliver upload text metadata
+          # from fastlane/metadata/. We keep the directory minimal —
+          # only release_notes.txt lives there. Deliver copies existing
+          # description/keywords/support-URL/etc from the previous live
+          # App Store version, so we don't have to duplicate them in
+          # source control (drift risk with ASC).
+          #
+          # Screenshots stay skipped — the ones on ASC from earlier
+          # releases carry forward automatically.
           fastlane deliver \
             --api_key_path "$JSON_PATH" \
             --app_identifier "com.awing.awingAiLearning" \
             --app_version "$APP_VER" \
             --build_number "$BUILD_NO" \
             --skip_binary_upload true \
-            --skip_metadata true \
+            --skip_metadata false \
             --skip_screenshots true \
             --skip_app_version_update false \
             --submit_for_review true \
