@@ -145,41 +145,6 @@ jobs:
         working-directory: ios
         run: pod install
 
-      # Cactus 1.3.0 packaging bug: cactus_util.xcframework ships with an
-      # empty MinimumOSVersion in every slice's Info.plist. Apple altool
-      # rejects the IPA with "Validation failed (409) Invalid
-      # MinimumOSVersion. ... MinimumOSVersion is ''."
-      #
-      # We patch every slice's Info.plist BEFORE xcodebuild archives the
-      # app, so the copy that lands in Runner.app/Frameworks/ has a valid
-      # value. Deployment target 15.0 matches ios/Podfile line 2.
-      #
-      # If/when cactus 1.3.x fixes this upstream, this step becomes a no-op
-      # (the find will just find already-good plists).
-      - name: Patch cactus_util.framework MinimumOSVersion (cactus 1.3.0 bug)
-        working-directory: ios
-        run: |
-          set -e
-          echo "=== Searching for cactus_util.framework Info.plist files ==="
-          plists=$(find Pods -type f -name 'Info.plist' -path '*/cactus_util.framework/*' 2>/dev/null || true)
-          if [ -z "$plists" ]; then
-            echo "WARNING: no cactus_util.framework Info.plist files found under Pods/"
-            echo "This might mean cactus's file layout changed. Continuing anyway."
-            exit 0
-          fi
-          echo "$plists" | while read plist; do
-            echo ""
-            echo "== $plist =="
-            before=$(/usr/libexec/PlistBuddy -c "Print :MinimumOSVersion" "$plist" 2>&1 || echo "(missing)")
-            echo "  before: $before"
-            /usr/libexec/PlistBuddy -c "Set :MinimumOSVersion 15.0" "$plist" 2>/dev/null || \
-              /usr/libexec/PlistBuddy -c "Add :MinimumOSVersion string 15.0" "$plist"
-            after=$(/usr/libexec/PlistBuddy -c "Print :MinimumOSVersion" "$plist" 2>&1)
-            echo "  after:  $after"
-          done
-          echo ""
-          echo "=== Patch complete ==="
-
       - name: Run Flutter analyze
         run: flutter analyze --no-fatal-infos
         continue-on-error: true
@@ -382,6 +347,140 @@ jobs:
           path: build/ios/ipa/*.ipa
           retention-days: 90
           if-no-files-found: ignore
+
+      # Cactus 1.3.0 packaging bug: cactus_util.xcframework ships with an
+      # empty MinimumOSVersion in every slice's Info.plist. Apple altool
+      # rejects the IPA at upload time with:
+      #   Validation failed (409) Invalid MinimumOSVersion. MinimumOSVersion
+      #   in 'Runner.app/Frameworks/cactus_util.framework' is ''.
+      #
+      # We tried patching Pods/ before build (Podfile post_install + workflow
+      # step): both silently no-op'd — the source Info.plist we found isn't
+      # the one that lands in the app bundle. So we do it POST-signing: unzip
+      # the built IPA, patch cactus_util.framework/Info.plist directly, re-sign
+      # the framework then the app (nested code MUST be signed before its
+      # container per Apple's codesign rules), re-zip.
+      #
+      # Deployment target 15.0 matches ios/Podfile.
+      # Once cactus fixes this upstream, this step becomes a no-op idempotent
+      # patch (before value will already be "15.0").
+      - name: Patch cactus_util.framework MinimumOSVersion in signed IPA
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          IPA=$(ls build/ios/ipa/*.ipa 2>/dev/null | head -1)
+          if [ -z "$IPA" ]; then
+            echo "::error::No IPA found under build/ios/ipa/. Check the Build signed IPA step."
+            ls -la build/ios/ipa/ 2>&1 || true
+            exit 1
+          fi
+          echo "IPA to patch: $IPA"
+          IPA_ABS="$GITHUB_WORKSPACE/$IPA"
+
+          # 1. Unzip
+          WORK="$RUNNER_TEMP/ipa_patch"
+          rm -rf "$WORK"
+          mkdir -p "$WORK"
+          (cd "$WORK" && unzip -q "$IPA_ABS")
+
+          APP="$WORK/Payload/Runner.app"
+          if [ ! -d "$APP" ]; then
+            echo "::error::Payload/Runner.app not found inside IPA."
+            ls -la "$WORK/Payload/" 2>&1 || true
+            exit 1
+          fi
+
+          # 2. Locate cactus_util.framework
+          FW="$APP/Frameworks/cactus_util.framework"
+          if [ ! -d "$FW" ]; then
+            echo "::error::cactus_util.framework not found in Runner.app/Frameworks/."
+            echo "Frameworks present:"
+            ls -la "$APP/Frameworks/" 2>&1 || true
+            exit 1
+          fi
+          PLIST="$FW/Info.plist"
+          if [ ! -f "$PLIST" ]; then
+            echo "::error::Info.plist missing inside cactus_util.framework."
+            ls -la "$FW" 2>&1 || true
+            exit 1
+          fi
+
+          # 3. Show before, patch, show after
+          before=$(/usr/libexec/PlistBuddy -c "Print :MinimumOSVersion" "$PLIST" 2>&1 || echo "(read failed)")
+          echo "MinimumOSVersion before: '$before'"
+          /usr/libexec/PlistBuddy -c "Set :MinimumOSVersion 15.0" "$PLIST" 2>/dev/null || \
+            /usr/libexec/PlistBuddy -c "Add :MinimumOSVersion string 15.0" "$PLIST"
+          after=$(/usr/libexec/PlistBuddy -c "Print :MinimumOSVersion" "$PLIST" 2>&1)
+          echo "MinimumOSVersion after:  '$after'"
+          if [ "$after" != "15.0" ]; then
+            echo "::error::MinimumOSVersion not set correctly after patch (got '$after')."
+            exit 1
+          fi
+
+          # 4. Unlock the keychain from step "Install Apple certificate"
+          KEYCHAIN_PATH="$RUNNER_TEMP/app-signing.keychain-db"
+          if [ ! -f "$KEYCHAIN_PATH" ]; then
+            echo "::error::Signing keychain not found at $KEYCHAIN_PATH — was 'Install Apple certificate' skipped?"
+            exit 1
+          fi
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          # 5. Discover the signing identity by name. Distribution certs are
+          # labelled either "Apple Distribution: ..." (modern) or
+          # "iPhone Distribution: ..." (legacy). Prefer the first available.
+          echo "Codesigning identities in keychain:"
+          security find-identity -v -p codesigning "$KEYCHAIN_PATH" || true
+          IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" \
+            | grep -oE '"(Apple|iPhone) Distribution:[^"]+"' | head -1 | tr -d '"')
+          if [ -z "$IDENTITY" ]; then
+            echo "::error::No Apple/iPhone Distribution identity found in $KEYCHAIN_PATH."
+            exit 1
+          fi
+          echo "Using signing identity: $IDENTITY"
+
+          # 6. Re-sign the FRAMEWORK first — Apple requires nested code to be
+          # signed before its container. preserve-metadata keeps the original
+          # identifier, requirements, and runtime so we don't change signing
+          # semantics.
+          /usr/bin/codesign --force \
+            --sign "$IDENTITY" \
+            --keychain "$KEYCHAIN_PATH" \
+            --preserve-metadata=identifier,requirements,flags,runtime \
+            "$FW"
+          echo "cactus_util.framework re-signed."
+
+          # 7. Re-sign the app so its embedded signatures over Frameworks/*
+          # reflect the new framework hashes.
+          /usr/bin/codesign --force \
+            --sign "$IDENTITY" \
+            --keychain "$KEYCHAIN_PATH" \
+            --preserve-metadata=identifier,entitlements,requirements,flags,runtime \
+            "$APP"
+          echo "Runner.app re-signed."
+
+          # 8. Verify — Apple's own strict-verify catches the class of bugs
+          # altool complains about, so run it locally before uploading.
+          /usr/bin/codesign --verify --deep --strict --verbose=2 "$APP"
+          echo "codesign verification passed."
+
+          # 9. Repack IPA in place. ditto -c -k --keepParent gives us Apple's
+          # canonical zip format; regular `zip` would work too but ditto is
+          # what Xcode uses.
+          rm -f "$IPA_ABS"
+          (cd "$WORK" && /usr/bin/ditto -c -k --sequesterRsrc --keepParent Payload "$IPA_ABS")
+
+          if [ ! -f "$IPA_ABS" ]; then
+            echo "::error::Repacked IPA not found at $IPA_ABS."
+            exit 1
+          fi
+          echo "Patched IPA repacked at: $IPA_ABS"
+          ls -la "$IPA_ABS"
+
+          # Cleanup
+          rm -rf "$WORK"
 
       # === AUTO-UPLOAD TO TESTFLIGHT ===
       # Pushes the signed IPA to App Store Connect via fastlane pilot.
