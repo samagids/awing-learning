@@ -28,12 +28,20 @@ import 'package:awing_ai_learning/services/awing_keyboard_controller.dart';
 class AwingKeyboard extends StatelessWidget {
   const AwingKeyboard({super.key});
 
-  static const List<String> _toneKeys = [
-    '', // "plain vowel" - clears any armed tone
-    '́', // combining acute (high)
-    '̀', // combining grave (low)
-    '̂', // combining circumflex (falling)
-    '̌', // combining caron (rising)
+  // Each tone key is (display label, combining mark to insert).
+  // We display pre-composed 'á à â ǎ' on the keys because standalone
+  // combining marks (U+0301 etc.) attached to a dotted circle U+25CC
+  // don't render cleanly on Android's default font — they came out as
+  // empty boxes on Dr. Sama's screenshot 3. Pre-composed vowels
+  // render everywhere and communicate the tone at a glance. The
+  // insert operation still adds the pure combining mark to whatever
+  // vowel the user types next.
+  static const List<(String, String)> _toneKeys = [
+    ('a', ''), // plain / clear-armed-tone
+    ('á', '́'), // combining acute (high)
+    ('à', '̀'), // combining grave (low)
+    ('â', '̂'), // combining circumflex (falling)
+    ('ǎ', '̌'), // combining caron (rising)
   ];
   static const String _glottal = '’'; // curly apostrophe
 
@@ -88,17 +96,17 @@ class AwingKeyboard extends StatelessWidget {
       child: Row(
         children: [
           // 5 tone keys
-          for (final tone in _toneKeys)
+          for (final (label, mark) in _toneKeys)
             Expanded(
               child: _ToneKey(
-                display: tone.isEmpty ? '◌' : '◌$tone',
-                armed: ctrl.armedTone == tone && tone.isNotEmpty,
+                display: label,
+                armed: ctrl.armedTone == mark && mark.isNotEmpty,
                 onTap: () {
-                  if (tone.isEmpty) {
-                    // "plain" key clears any armed tone
+                  if (mark.isEmpty) {
+                    // "plain a" clears any armed tone
                     if (ctrl.armedTone != null) ctrl.armTone(ctrl.armedTone!);
                   } else {
-                    ctrl.armTone(tone);
+                    ctrl.armTone(mark);
                   }
                 },
               ),

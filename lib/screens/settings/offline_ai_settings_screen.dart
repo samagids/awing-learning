@@ -15,7 +15,7 @@ import 'package:awing_ai_learning/services/on_device_model_service.dart';
 /// Download flow (Phase C2):
 ///   • On WiFi: silent download starts immediately.
 ///   • On mobile data: shows a data-cost warning first ("this will use
-///     ~670 MB of your mobile data plan"); user has to explicitly
+///     ~500 MB of your mobile data plan"); user has to explicitly
 ///     confirm before the download starts. This matters because most
 ///     Awing-speaking users in Cameroon don't have reliable WiFi and
 ///     mobile data is metered, but we still want to give them the
@@ -279,11 +279,11 @@ class OfflineAISettingsScreen extends StatelessWidget {
   String _subtitleForStatus(OnDeviceModelService m) {
     switch (m.status) {
       case ModelStatus.ready:
-        return 'The TinyLlama model is on your device. Offline AI features '
+        return 'The offline AI language model model is on your device. Offline AI features '
             'will work without an internet connection.';
       case ModelStatus.downloading:
         final pct = (m.progress * 100).toStringAsFixed(0);
-        return 'Downloading TinyLlama (~670 MB). $pct% done. '
+        return 'Downloading offline AI language model (~500 MB). $pct% done. '
             'You can use the app while it downloads.';
       case ModelStatus.awaitingWifi:
         return m.lastError ??
@@ -291,7 +291,7 @@ class OfflineAISettingsScreen extends StatelessWidget {
       case ModelStatus.failed:
         return m.lastError ?? 'Something went wrong. Please try again.';
       case ModelStatus.notStarted:
-        return 'Downloads the TinyLlama language model (~670 MB, one-time). '
+        return 'Downloads the offline AI language model language model (~500 MB, one-time). '
             'WiFi is recommended, but mobile data works too — you\'ll get '
             'a warning about data cost first. Runs in the background.';
     }
@@ -299,7 +299,7 @@ class OfflineAISettingsScreen extends StatelessWidget {
 
   /// Detect current connection type and start the download. On WiFi we
   /// start silently. On mobile data we show a data-cost warning first —
-  /// the user has to explicitly confirm before ~670 MB gets pulled over
+  /// the user has to explicitly confirm before ~500 MB gets pulled over
   /// their data plan.
   Future<void> _startDownloadFlow(
       BuildContext context, OnDeviceModelService m) async {
@@ -348,7 +348,7 @@ class OfflineAISettingsScreen extends StatelessWidget {
           children: const [
             Text(
               'You\'re not on WiFi. Downloading Offline AI will use about '
-              '670 MB of your mobile data plan.',
+              '500 MB of your mobile data plan.',
               style: TextStyle(fontSize: 15),
             ),
             SizedBox(height: 12),
@@ -387,7 +387,7 @@ class OfflineAISettingsScreen extends StatelessWidget {
             onPressed: m.isConfigured ? () => _startDownloadFlow(context, m) : null,
             icon: const Icon(Icons.download),
             label: Text(m.isConfigured
-                ? 'Download offline AI (~670 MB)'
+                ? 'Download offline AI (~500 MB)'
                 : 'Not configured yet'),
           ),
         );
@@ -420,7 +420,7 @@ class OfflineAISettingsScreen extends StatelessWidget {
                 builder: (ctx) => AlertDialog(
                   title: const Text('Delete Offline AI?'),
                   content: const Text(
-                      'This frees ~670 MB of storage. You can download it '
+                      'This frees ~500 MB of storage. You can download it '
                       'again later when you have WiFi.'),
                   actions: [
                     TextButton(

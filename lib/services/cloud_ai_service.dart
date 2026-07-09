@@ -199,25 +199,31 @@ class CloudAIService {
     bool preferOffline = false,
   }) async {
     // Path C3: use the on-device model when the user's toggle prefers
-    // offline AND the model is downloaded + inference is wired up.
+    // offline. We call generateEnglishSentence unconditionally when
+    // preferOffline is true - that method internally checks
+    // isReady (model file present) and lazy-loads the cactus runtime
+    // via _ensureLmLoaded on first call. Previously this wrapper
+    // guarded the call behind isInferenceReady (isReady && _lmLoaded),
+    // which was a chicken-and-egg: _lmLoaded only flips inside
+    // _ensureLmLoaded, and _ensureLmLoaded only runs when
+    // generateEnglishSentence is called, so the guard prevented the
+    // guarded call from ever running.
     if (preferOffline) {
       final onDevice = OnDeviceModelService.instance;
-      if (onDevice.isInferenceReady) {
-        final englishText = await onDevice.generateEnglishSentence(
-          word: awingWord,
-          category: category,
-          level: level,
-        );
-        if (englishText != null && englishText.trim().isNotEmpty) {
-          // On-device returns English only, just like the Worker.
-          // WordGloss on the widget side turns it into a word-by-word
-          // Awing translation the same way it does for cloud responses.
-          return CloudExampleSentence(awing: '', english: englishText);
-        }
+      final englishText = await onDevice.generateEnglishSentence(
+        word: awingWord,
+        category: category,
+        level: level,
+      );
+      if (englishText != null && englishText.trim().isNotEmpty) {
+        // On-device returns English only, just like the Worker.
+        // WordGloss on the widget side turns it into a word-by-word
+        // Awing translation the same way it does for cloud responses.
+        return CloudExampleSentence(awing: '', english: englishText);
       }
-      // Fall through — if inference isn't ready yet, and the user
-      // explicitly chose offline, don't secretly call the Cloud. Return
-      // null and let the widget fall back to dictionary-only mode.
+      // Model isn't ready OR generation failed. Don't secretly call
+      // the Cloud when the user picked Offline - return null so the
+      // UI shows the diagnostic message.
       return null;
     }
 

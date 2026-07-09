@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cactus/cactus.dart';
@@ -36,7 +38,14 @@ class OnDeviceModelService extends ChangeNotifier {
   /// Cactus model slug. See lm.getModels() for the current list.
   ///   gemma3-270m — 270 MB, tiny but decent
   ///   qwen3-0.6   — 600 MB, better quality
-  static const String modelSlug = 'gemma3-270m';
+  // Switched from 'gemma3-270m' -> 'qwen3-0.6' 2026-07-08 (Session 63):
+  // cactus 1.3's downloadModel for gemma3-270m completed without error
+  // but initializeModel then failed with "Failed to initialize model
+  // context with model at .../models/gemma3-270m" and the file itself
+  // was missing from disk. qwen3-0.6 is cactus's own documented default
+  // (see pub.dev/packages/cactus README) and is the most likely to
+  // actually work through their storage layer.
+  static const String modelSlug = 'qwen3-0.6';
 
   static const String _keyAutoDownloadDisabled = 'on_device_model_auto_disabled';
   static const String _keyDownloadedAt = 'on_device_model_downloaded_at';
@@ -141,13 +150,22 @@ class OnDeviceModelService extends ChangeNotifier {
     _lastError = null;
     notifyListeners();
 
+    // Track whether the callback saw any error during the download.
+    // Previously we only logged callback errors — the outer flow still
+    // set status = ready even after cactus reported a mid-download
+    // failure. That's why "97% done" transitioned to "ready" while the
+    // file was never fully written to disk.
+    var callbackReportedError = false;
+    String? callbackError;
+
     try {
       await _lm.downloadModel(
         model: modelSlug,
         downloadProcessCallback: (double? progress, String status, bool isError) {
           if (isError) {
+            callbackReportedError = true;
+            callbackError = status;
             debugPrint('OnDeviceModelService download err: $status');
-            _lastError = status;
           } else {
             if (progress != null) {
               _progress = progress;
@@ -158,6 +176,10 @@ class OnDeviceModelService extends ChangeNotifier {
           }
         },
       );
+      if (callbackReportedError) {
+        _fail('Download reported error: ${callbackError ?? "unknown"}');
+        return;
+      }
       _status = ModelStatus.ready;
       _progress = 1.0;
       final prefs = await SharedPreferences.getInstance();
@@ -185,9 +207,36 @@ class OnDeviceModelService extends ChangeNotifier {
       } catch (_) {}
       _lmLoaded = false;
       _lmLoadFailed = false;
+      _lastError = null;
 
-      // cactus 1.3 doesn't expose a per-slug delete API. Reset only in-memory
-      // state; the user can clear the download from OS-level storage settings.
+      // cactus 1.3 doesn't expose a per-slug delete API. We delete the
+      // model file directly from disk so a subsequent downloadModel call
+      // pulls fresh bytes instead of trusting an existing (possibly-
+      // corrupted or wrong-format) file. Without this the "delete + re-
+      // download" cycle appears too fast because cactus sees the file
+      // already exists and skips the network fetch, reusing the same
+      // broken bytes. Path shape came from the cactus initializeModel
+      // error message: /data/user/0/<pkg>/app_flutter/models/<slug>
+      // which is Flutter's getApplicationDocumentsDirectory() on
+      // Android.
+      try {
+        final docsDir = await getApplicationDocumentsDirectory();
+        final modelFile = File('${docsDir.path}/models/$modelSlug');
+        if (await modelFile.exists()) {
+          final sizeBytes = await modelFile.length();
+          debugPrint(
+              'OnDeviceModelService: deleting model file '
+              '(${(sizeBytes / (1024 * 1024)).toStringAsFixed(1)} MB) at '
+              '${modelFile.path}');
+          await modelFile.delete();
+        } else {
+          debugPrint(
+              'OnDeviceModelService: no model file at ${modelFile.path}');
+        }
+      } catch (e) {
+        debugPrint('OnDeviceModelService: file delete failed: $e');
+      }
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_keyDownloadedAt);
       _status = ModelStatus.notStarted;
@@ -242,14 +291,25 @@ class OnDeviceModelService extends ChangeNotifier {
     if (_lmLoaded) return true;
     if (_lmLoadFailed) return false;
     try {
-      await _lm.initializeModel(
-        params: CactusInitParams(model: modelSlug, contextSize: 1024),
-      );
+      // Call initializeModel WITHOUT params - cactus's own docs show
+      // this pattern (auto-picks the most-recently-downloaded model).
+      // Passing CactusInitParams(model: slug) previously caused cactus
+      // to look up a path derived from the slug string, which didn't
+      // match where cactus actually stored the download - hence the
+      // "Failed to initialize model context with model at .../gemma3-
+      // 270m" error even though downloadModel completed. Let cactus
+      // resolve the path from its own internal state.
+      await _lm.initializeModel();
       _lmLoaded = true;
       notifyListeners();
       return true;
     } catch (e) {
       _lmLoadFailed = true;
+      // Surface the actual cactus error so diagnosticSummary can
+      // display it. Without this the user sees 'Last error: unknown'
+      // and we have no idea whether it's a slug mismatch, corrupted
+      // GGUF file, insufficient RAM, unsupported quantization, etc.
+      _lastError = e.toString();
       debugPrint('OnDeviceModelService init model failed: $e');
       notifyListeners();
       return false;

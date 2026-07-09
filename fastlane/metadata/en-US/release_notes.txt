@@ -6,9 +6,11 @@ What's new in 1.19.3:
   the curly glottal stop, and tone marks (á à â ǎ). No more fighting
   with the English keyboard.
 
-• On-device AI: Word Translate can generate example sentences
-  offline once the language model is downloaded on Wi-Fi. Turn off
-  the "Cloud AI" toggle in Settings to keep everything local.
+• Better offline AI feedback: the download and generation flow now
+  reports the actual reason when something goes wrong (previously it
+  showed "Cloud AI did not return..." even when you had Cloud OFF).
+  Delete + re-download the model in Settings actually clears the
+  file from disk now.
 
 • Full-screen support for Android 15+ (edge-to-edge display).
 

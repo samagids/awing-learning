@@ -658,9 +658,15 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
     }
 
     // Watch the on-device model too — its Generate button appears
-    // whenever inference is ready, even if Cloud is OFF.
+    // whenever the model FILE is downloaded and ready, even if the
+    // cactus runtime hasn't loaded it into memory yet. Loading is
+    // deferred to the first tap of Generate (isInferenceReady =
+    // isReady && _lmLoaded, and _lmLoaded is only flipped by
+    // _ensureLmLoaded() which runs inside generateEnglishSentence).
+    // Gating on isInferenceReady would be a chicken-and-egg —
+    // button never shows so lazy-load never runs.
     final onDevice = context.watch<OnDeviceModelService>();
-    final offlineReady = onDevice.isInferenceReady;
+    final offlineReady = onDevice.isReady;
 
     // Cloud OFF + on-device model NOT ready: hint pointing at the toggle.
     if (!toggle.cloudEnabled && !offlineReady) {
