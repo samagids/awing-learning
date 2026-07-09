@@ -1,11 +1,17 @@
-What's new in 1.19.2:
+What's new in 1.19.3:
 
-• On-device AI: Word Translate can now generate example sentences
+• New Awing keyboard: when you type in a text field that needs Awing
+  (Contribute, Translate, Report a wrong translation), the app now
+  shows an in-app keyboard with all the Awing letters (ɛ ɔ ə ɨ ŋ),
+  the curly glottal stop, and tone marks (á à â ǎ). No more fighting
+  with the English keyboard.
+
+• On-device AI: Word Translate can generate example sentences
   offline once the language model is downloaded on Wi-Fi. Turn off
   the "Cloud AI" toggle in Settings to keep everything local.
 
 • Full-screen support for Android 15+ (edge-to-edge display).
 
-• Improved character voice tuning and assorted bug fixes.
+• Assorted bug fixes and voice tuning.
 
 Built with love for the Awing community.

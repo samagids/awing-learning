@@ -8,6 +8,7 @@ import 'package:awing_ai_learning/services/ai_toggle_service.dart';
 import 'package:awing_ai_learning/services/cloud_ai_service.dart';
 import 'package:awing_ai_learning/services/on_device_model_service.dart';
 import 'package:awing_ai_learning/services/retrieval_service.dart';
+import 'package:awing_ai_learning/components/awing_text_field.dart';
 import 'package:awing_ai_learning/services/word_gloss.dart';
 import 'package:awing_ai_learning/widgets/wrong_translation_reporter.dart';
 
@@ -94,33 +95,59 @@ class _WordTranslateScreenState extends State<WordTranslateScreen> {
               children: [
                 _buildDirectionRow(),
                 const SizedBox(height: 12),
-                TextField(
-                  controller: _controller,
-                  autofocus: true,
-                  textInputAction: TextInputAction.done,
-                  onSubmitted: (_) => _generate(),
-                  decoration: InputDecoration(
-                    hintText: _englishToAwing
-                        ? 'Type an English word...'
-                        : 'Type an Awing word...',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: _controller.text.isEmpty
-                        ? null
-                        : IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () {
-                              setState(() {
-                                _controller.clear();
-                                _results = const [];
-                                _generated = false;
-                              });
-                            },
+                // Use Awing on-screen keyboard when typing Awing;
+                // system keyboard when typing English.
+                _englishToAwing
+                    ? TextField(
+                        controller: _controller,
+                        autofocus: true,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => _generate(),
+                        decoration: InputDecoration(
+                          hintText: 'Type an English word...',
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: _controller.text.isEmpty
+                              ? null
+                              : IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      _controller.clear();
+                                      _results = const [];
+                                      _generated = false;
+                                    });
+                                  },
+                                ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
+                        ),
+                      )
+                    : AwingTextField(
+                        controller: _controller,
+                        autofocus: true,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => _generate(),
+                        decoration: InputDecoration(
+                          hintText: 'Type an Awing word...',
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: _controller.text.isEmpty
+                              ? null
+                              : IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      _controller.clear();
+                                      _results = const [];
+                                      _generated = false;
+                                    });
+                                  },
+                                ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
                 const SizedBox(height: 8),
                 ElevatedButton.icon(
                   onPressed: _generate,
@@ -530,7 +557,16 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
         _example = finalResult;
         _hallucinated = const [];
         if (finalResult == null) {
-          _error = 'Cloud AI did not return a usable example. Try again.';
+          // Route the message to reality: if the user chose Offline
+          // (Cloud toggle OFF), tell them exactly WHY offline didn't
+          // produce anything - was the model not downloaded, still
+          // downloading, failed to load, etc.
+          if (!toggle.cloudEnabled) {
+            _error = OnDeviceModelService.instance.diagnosticSummary;
+          } else {
+            _error = 'Cloud AI did not return a usable example. '
+                'Check your internet connection and try again.';
+          }
         }
       });
     } catch (e) {

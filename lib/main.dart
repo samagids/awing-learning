@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:awing_ai_learning/components/awing_keyboard.dart';
+import 'package:awing_ai_learning/services/awing_keyboard_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
@@ -379,6 +381,30 @@ class AwingApp extends StatelessWidget {
             themeMode:
                 themeNotifier.isDarkMode ? ThemeMode.dark : ThemeMode.light,
             home: const _AuthGate(),
+            // Awing on-screen keyboard overlay. Renders at the app root
+            // so it can float above any screen. Only appears when an
+            // AwingTextField gains focus (see AwingKeyboardController).
+            builder: (context, child) {
+              return Stack(
+                children: [
+                  child ?? const SizedBox.shrink(),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: AnimatedBuilder(
+                      animation: AwingKeyboardController.instance,
+                      builder: (context, _) {
+                        if (!AwingKeyboardController.instance.isVisible) {
+                          return const SizedBox.shrink();
+                        }
+                        return const AwingKeyboard();
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
           );
         },
       ),

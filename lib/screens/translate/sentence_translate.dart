@@ -3,6 +3,7 @@ import 'package:awing_ai_learning/services/word_gloss.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/widgets/ai_mode_toggle.dart';
 import 'package:awing_ai_learning/widgets/wrong_translation_reporter.dart';
+import 'package:awing_ai_learning/components/awing_text_field.dart';
 
 /// Medium-tier translation: sentence-level, word-by-word gloss.
 ///
@@ -78,22 +79,35 @@ class _SentenceTranslateScreenState extends State<SentenceTranslateScreen> {
               children: [
                 _buildDirectionRow(),
                 const SizedBox(height: 12),
-                TextField(
-                  controller: _controller,
-                  autofocus: true,
-                  minLines: 1,
-                  maxLines: 4,
-                  textInputAction: TextInputAction.done,
-                  onSubmitted: (_) => _runGloss(),
-                  decoration: InputDecoration(
-                    hintText: _englishToAwing
-                        ? 'Type an English sentence...'
-                        : 'Type an Awing sentence...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
+                _englishToAwing
+                    ? TextField(
+                        controller: _controller,
+                        autofocus: true,
+                        minLines: 1,
+                        maxLines: 4,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => _runGloss(),
+                        decoration: InputDecoration(
+                          hintText: 'Type an English sentence...',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      )
+                    : AwingTextField(
+                        controller: _controller,
+                        autofocus: true,
+                        minLines: 1,
+                        maxLines: 4,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => _runGloss(),
+                        decoration: InputDecoration(
+                          hintText: 'Type an Awing sentence...',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
                 const SizedBox(height: 8),
                 Row(
                   children: [

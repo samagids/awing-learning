@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:awing_ai_learning/components/awing_text_field.dart';
 import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
@@ -206,7 +207,7 @@ class _ReportDialogState extends State<_ReportDialog> {
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 4),
-            TextField(
+            AwingTextField(
               controller: _correctionController,
               minLines: 1,
               maxLines: 2,
@@ -232,7 +233,7 @@ class _ReportDialogState extends State<_ReportDialog> {
                 style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
               ),
               const SizedBox(height: 4),
-              TextField(
+              AwingTextField(
                 controller: _wordByWordController,
                 minLines: 3,
                 maxLines: 6,

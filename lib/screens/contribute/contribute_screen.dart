@@ -10,6 +10,7 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/screens/contribute/record_picker_screen.dart';
+import 'package:awing_ai_learning/components/awing_text_field.dart';
 
 /// User-facing screen for submitting contributions.
 ///
@@ -502,7 +503,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
           if (isExistingWordTab)
             _buildExistingWordPicker()
           else
-            TextField(
+            AwingTextField(
               controller: _wordController,
               decoration: InputDecoration(
                 labelText: isNewSentence
@@ -521,7 +522,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
           // Correction field
           if (type == ContributionType.spellingCorrection) ...[
-            TextField(
+            AwingTextField(
               controller: _correctionController,
               decoration: InputDecoration(
                 labelText: 'Correct spelling',
@@ -551,7 +552,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
             // Reuses _correctionController as a hidden "category"
             // sentinel? No — newWord stores english separately. Keep
             // the correction field optional for additional context.
-            TextField(
+            AwingTextField(
               controller: _correctionController,
               decoration: InputDecoration(
                 labelText: 'Alternate forms / plural (optional)',

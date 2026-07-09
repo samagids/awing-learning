@@ -3,6 +3,7 @@ import 'package:awing_ai_learning/services/word_gloss.dart';
 import 'package:awing_ai_learning/services/dictionary_lookup.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/widgets/ai_mode_toggle.dart';
+import 'package:awing_ai_learning/components/awing_text_field.dart';
 import 'package:awing_ai_learning/widgets/wrong_translation_reporter.dart';
 
 /// Expert-tier translation: "Grade My Translation".
@@ -140,7 +141,7 @@ class _GradeAttemptScreenState extends State<GradeAttemptScreen> {
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 6),
-                TextField(
+                AwingTextField(
                   controller: _awingAttemptController,
                   minLines: 1,
                   maxLines: 3,

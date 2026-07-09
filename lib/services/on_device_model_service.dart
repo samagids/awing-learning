@@ -258,6 +258,38 @@ class OnDeviceModelService extends ChangeNotifier {
 
   bool get isInferenceReady => isReady && _lmLoaded;
 
+  /// Human-readable one-line description of what state on-device AI is
+  /// currently in. Used by UI to tell the user WHY offline generation
+  /// didn't produce anything, instead of a generic "Cloud AI did not
+  /// return..." message that confuses users who have Cloud OFF.
+  String get diagnosticSummary {
+    if (_lmLoadFailed) {
+      return 'Offline AI is downloaded but failed to load. '
+          'Model: $modelSlug. Last error: ${_lastError ?? "unknown"}. '
+          'Try deleting the model in Settings and re-downloading.';
+    }
+    switch (_status) {
+      case ModelStatus.notStarted:
+        return 'Offline AI is not downloaded yet. '
+            'Open Cloud AI toggle → info icon → download the model.';
+      case ModelStatus.awaitingWifi:
+        return 'Offline AI is waiting for Wi-Fi to download automatically. '
+            'Open Cloud AI toggle → info icon to force download on mobile data.';
+      case ModelStatus.downloading:
+        return 'Offline AI is still downloading (${(_progress * 100).toStringAsFixed(0)}%). '
+            'Wait for it to finish.';
+      case ModelStatus.failed:
+        return 'Offline AI download failed: ${_lastError ?? "unknown error"}. '
+            'Open Cloud AI toggle → info icon and try again.';
+      case ModelStatus.ready:
+        if (!_lmLoaded) {
+          return 'Offline AI is downloaded but hasn\'t loaded yet. '
+              'Tap Generate again in a few seconds.';
+        }
+        return 'Offline AI is ready.';
+    }
+  }
+
   void _fail(String msg) {
     _status = ModelStatus.failed;
     _lastError = msg;
