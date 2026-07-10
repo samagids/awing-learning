@@ -280,40 +280,83 @@ class OnDeviceModelService extends ChangeNotifier {
       );
 
       if (!result.success) return null;
-      var cleaned = result.response.trim();
-
-      // Strip any <think>...</think> blocks that leak through despite
-      // /no_think. Some Qwen3 variants dump the entire reasoning as
-      // "<think>...</think>ACTUAL ANSWER". Handle both fully-closed and
-      // open-ended tags.
-      cleaned = cleaned.replaceAll(
-        RegExp(r'<think>.*?</think>', dotAll: true),
-        '',
-      );
-      cleaned = cleaned.replaceAll(
-        RegExp(r'<think>.*\$', dotAll: true),
-        '',
-      );
-      cleaned = cleaned.replaceAll(RegExp(r'</?think>'), '');
-      cleaned = cleaned.trim();
-
-      // Strip em-dash prefixes qwen3 sometimes uses to structure output.
-      cleaned = cleaned.replaceAll(RegExp(r'^[\s—–\-]+'), '');
-
-      // Strip surrounding quotes.
-      while (cleaned.startsWith('"') || cleaned.startsWith("'")) {
-        cleaned = cleaned.substring(1);
-      }
-      while (cleaned.endsWith('"') || cleaned.endsWith("'")) {
-        cleaned = cleaned.substring(0, cleaned.length - 1);
-      }
-      cleaned = cleaned.trim();
-      if (cleaned.isEmpty) return null;
-      return cleaned;
+      final extracted = _extractSentence(result.response, word);
+      if (extracted == null || extracted.trim().isEmpty) return null;
+      return extracted;
     } catch (e) {
       debugPrint('OnDeviceModelService generation failed: $e');
       return null;
     }
+  }
+
+  /// Salvage a usable example sentence from qwen3-0.6's rambling output.
+  ///
+  /// Qwen3-0.6 (a 0.6B chat model) mostly ignores /no_think and
+  /// instructions to reply with only a sentence. It writes chain-of-
+  /// thought reasoning, uses em-dash bullet points, quotes the prompt
+  /// verbatim, and occasionally emits pseudo-reasoning as natural
+  /// language ("Okay, let's see. The user wants..."). Rather than
+  /// trust the model to obey the prompt, we extract candidate sentences
+  /// from whatever it produced and pick the first one that looks like
+  /// a real English sentence:
+  ///
+  ///   1. Split on sentence-ending punctuation (. ! ?)
+  ///   2. Reject anything containing meta-reasoning tokens
+  ///      ("user", "the word", "let's", "reasoning", "sentence", etc.)
+  ///   3. Reject anything shorter than 3 or longer than 15 words
+  ///   4. Prefer sentences that mention the target [word] naturally
+  ///   5. Fall back to any valid-looking sentence
+  ///
+  /// Returns null if nothing salvageable.
+  String? _extractSentence(String raw, String targetWord) {
+    var text = raw.trim();
+
+    // Strip any <think>...</think> blocks first (belt + suspenders,
+    // some Qwen3 fine-tunes DO emit these tags).
+    text = text.replaceAll(
+      RegExp(r'<think>.*?</think>', dotAll: true),
+      ' ',
+    );
+    text = text.replaceAll(RegExp(r'</?think>'), ' ');
+
+    // Strip surrounding markdown quote markers.
+    text = text.replaceAll(RegExp(r'^["\'`]+'), '');
+    text = text.replaceAll(RegExp(r'["\'`]+\$'), '');
+
+    // Split on sentence enders while keeping the terminal punctuation.
+    final chunks = RegExp(r'[^.!?\n]+[.!?]')
+        .allMatches(text)
+        .map((m) => m.group(0)!.trim())
+        .toList();
+
+    final metaTokens = RegExp(
+      r'\b(user|users|the word|thinking|reasoning|let me|let\x27s|'
+      r'first,? i|first,? we|first,? let|okay,? let|okay,? so|'
+      r'here\x27s a|here is a|sure,?|alright|as an ai|instructions?|'
+      r'i need to|i should|i can|i will|as requested|as asked)\b',
+      caseSensitive: false,
+    );
+    final targetLc = targetWord.toLowerCase();
+    String? fallback;
+
+    for (final chunk in chunks) {
+      var s = chunk.replaceAll(RegExp(r'^[\s—–\-]+'), '').trim();
+      if (s.isEmpty) continue;
+      // Must start with a capital letter (real sentence).
+      if (!RegExp(r'^[A-Z]').hasMatch(s)) continue;
+      // Reject reasoning.
+      if (metaTokens.hasMatch(s)) continue;
+      // Length window.
+      final words = s.split(RegExp(r'\s+')).length;
+      if (words < 3 || words > 18) continue;
+      // Reject if it's basically a list of em-dashes and single letters.
+      final dashCount = RegExp(r'—|--').allMatches(s).length;
+      if (dashCount > 1) continue;
+      // Prefer sentences containing the target word.
+      if (s.toLowerCase().contains(targetLc)) return s;
+      fallback ??= s;
+    }
+    return fallback;
   }
 
   Future<bool> _ensureLmLoaded() async {

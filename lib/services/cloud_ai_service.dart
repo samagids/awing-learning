@@ -216,8 +216,35 @@ class CloudAIService {
       // sounding nonsense ("It sounds like Scottish..."). We give it the
       // English gloss "child" and let WordGloss upstream translate each
       // English token back to Awing where possible.
+      //
+      // Some dictionary entries have long descriptive glosses like
+      // "relation's (father, mother, grand mother, ...) hair, worshipped
+      // periodically for appeasement". Qwen3-0.6 can't use a 20-word
+      // definition as "the target word" for a 5-8 word sentence. Extract
+      // the primary noun/verb by cutting at first parenthesis, comma, or
+      // semicolon, then capping at 40 chars.
+      String primaryWord = english.trim();
+      final firstParen = primaryWord.indexOf('(');
+      if (firstParen > 0) {
+        primaryWord = primaryWord.substring(0, firstParen).trim();
+      }
+      final firstComma = primaryWord.indexOf(',');
+      if (firstComma > 0) {
+        primaryWord = primaryWord.substring(0, firstComma).trim();
+      }
+      final firstSemi = primaryWord.indexOf(';');
+      if (firstSemi > 0) {
+        primaryWord = primaryWord.substring(0, firstSemi).trim();
+      }
+      // Strip trailing possessive 's so "relation's" -> "relation".
+      primaryWord = primaryWord.replaceAll(RegExp(r"'s$"), '');
+      if (primaryWord.length > 40) {
+        primaryWord = primaryWord.substring(0, 40).trim();
+      }
+      if (primaryWord.isEmpty) primaryWord = english;
+
       final englishText = await onDevice.generateEnglishSentence(
-        word: english,
+        word: primaryWord,
         category: category,
         level: level,
       );
