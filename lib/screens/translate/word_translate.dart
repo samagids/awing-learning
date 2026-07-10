@@ -594,19 +594,40 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Icon(Icons.cloud, size: 16, color: Colors.blue.shade700),
-                const SizedBox(width: 6),
-                Text(
-                  'Example (Cloud AI):',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blue.shade900,
-                  ),
-                ),
-              ],
+            Builder(
+              builder: (context) {
+                // When the example came from the on-device model (Cloud
+                // toggle OFF), the awing field is empty (WordGloss on
+                // the widget side fills it) and the label + color should
+                // read "Offline AI" in green. Cloud path leaves the
+                // original blue "Cloud AI" cloud icon.
+                final toggle = context.read<AIToggleService>();
+                final isOffline = !toggle.cloudEnabled;
+                return Row(
+                  children: [
+                    Icon(
+                      isOffline ? Icons.smartphone : Icons.cloud,
+                      size: 16,
+                      color: isOffline
+                          ? Colors.green.shade700
+                          : Colors.blue.shade700,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      isOffline
+                          ? 'Example (Offline AI):'
+                          : 'Example (Cloud AI):',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: isOffline
+                            ? Colors.green.shade900
+                            : Colors.blue.shade900,
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
             const SizedBox(height: 6),
             Text(

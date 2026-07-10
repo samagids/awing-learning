@@ -210,8 +210,14 @@ class CloudAIService {
     // guarded call from ever running.
     if (preferOffline) {
       final onDevice = OnDeviceModelService.instance;
+      // IMPORTANT: pass the ENGLISH translation, not the Awing word.
+      // Qwen3 (or any general-purpose LLM) has zero knowledge of Awing.
+      // If we hand it the Awing spelling "mónkə" it makes up plausible-
+      // sounding nonsense ("It sounds like Scottish..."). We give it the
+      // English gloss "child" and let WordGloss upstream translate each
+      // English token back to Awing where possible.
       final englishText = await onDevice.generateEnglishSentence(
-        word: awingWord,
+        word: english,
         category: category,
         level: level,
       );

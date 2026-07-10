@@ -257,21 +257,50 @@ class OnDeviceModelService extends ChangeNotifier {
     if (!ok) return null;
 
     try {
-      final prompt = 'Write ONE short English sentence (5 to 8 words) '
+      // Prompt is calibrated for Qwen3 and similar small chat models.
+      // Word passed is the ENGLISH gloss - the model has no knowledge of
+      // Awing so we ask it to write in its native language and let the
+      // dictionary layer above translate token-by-token.
+      // "/no_think" is Qwen3's official switch to skip chain-of-thought
+      // output - without it the model emits <think>...</think> blocks
+      // full of reasoning that we'd have to filter.
+      final prompt = '/no_think Write ONE short English sentence '
+          '(5 to 8 words, simple grammar suitable for a $level learner) '
           'that naturally uses the word "$word". '
-          'Category: $category. Level: $level. '
-          'Reply with only the sentence itself, no quotes, no explanation.';
+          'Category: $category. '
+          'Reply with ONLY the sentence itself. '
+          'No quotes, no explanation, no thinking, no <think> tags.';
 
       final result = await _lm.generateCompletion(
         messages: [ChatMessage(content: prompt, role: 'user')],
         params: CactusCompletionParams(
-          maxTokens: 64,
+          maxTokens: 96,
           temperature: 0.7,
         ),
       );
 
       if (!result.success) return null;
       var cleaned = result.response.trim();
+
+      // Strip any <think>...</think> blocks that leak through despite
+      // /no_think. Some Qwen3 variants dump the entire reasoning as
+      // "<think>...</think>ACTUAL ANSWER". Handle both fully-closed and
+      // open-ended tags.
+      cleaned = cleaned.replaceAll(
+        RegExp(r'<think>.*?</think>', dotAll: true),
+        '',
+      );
+      cleaned = cleaned.replaceAll(
+        RegExp(r'<think>.*\$', dotAll: true),
+        '',
+      );
+      cleaned = cleaned.replaceAll(RegExp(r'</?think>'), '');
+      cleaned = cleaned.trim();
+
+      // Strip em-dash prefixes qwen3 sometimes uses to structure output.
+      cleaned = cleaned.replaceAll(RegExp(r'^[\s—–\-]+'), '');
+
+      // Strip surrounding quotes.
       while (cleaned.startsWith('"') || cleaned.startsWith("'")) {
         cleaned = cleaned.substring(1);
       }

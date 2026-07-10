@@ -4,15 +4,19 @@ What's new in 1.19.3:
   (Contribute, Translate, Report a wrong translation), the app now
   shows an in-app keyboard with all the Awing letters (ɛ ɔ ə ɨ ŋ),
   the curly glottal stop, and tone marks (á à â ǎ). No more fighting
-  with the English keyboard.
+  with the phone's default keyboard.
 
-• Better offline AI feedback: the download and generation flow now
-  reports the actual reason when something goes wrong (previously it
-  showed "Cloud AI did not return..." even when you had Cloud OFF).
-  Delete + re-download the model in Settings actually clears the
-  file from disk now.
+• On-device AI: when you turn off Cloud AI in settings, example
+  sentences are now generated locally by a small language model on
+  your device. Correct label and colour show which AI is being used.
+  No internet needed once the model is downloaded.
 
-• Full-screen support for Android 15+ (edge-to-edge display).
+• Fresh-download reliability: deleting the offline AI model in
+  Settings now actually removes the file from disk. The re-download
+  after that fetches a clean copy instead of trusting the previous
+  cache.
+
+• Full-screen support for newer Android versions (edge-to-edge).
 
 • Assorted bug fixes and voice tuning.
 
