@@ -320,8 +320,10 @@ class OnDeviceModelService extends ChangeNotifier {
     text = text.replaceAll(RegExp(r'</?think>'), ' ');
 
     // Strip surrounding markdown quote markers.
-    text = text.replaceAll(RegExp(r'^["\'`]+'), '');
-    text = text.replaceAll(RegExp(r'["\'`]+\$'), '');
+    // Use double-quoted non-raw string so the apostrophe is safe;
+    // \" escapes the double-quote delimiter, \$ escapes Dart interpolation.
+    text = text.replaceAll(RegExp("^[\"'`]+"), '');
+    text = text.replaceAll(RegExp("[\"'`]+\$"), '');
 
     // Split on sentence enders while keeping the terminal punctuation.
     final chunks = RegExp(r'[^.!?\n]+[.!?]')
