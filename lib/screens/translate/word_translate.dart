@@ -533,14 +533,26 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
       if (result != null && result.english.isNotEmpty) {
         // NEW: word-by-word Awing translation, deterministic. Words not
         // in the dictionary render as "—". No hallucination possible.
+        //
+        // Stopwords ("of", "or", "the", "a", "and", ...) and proper
+        // nouns get isStopword=true in WordGloss and their .translation
+        // is set to the English source (to "preserve sentence
+        // structure"). That's fine for Cloud AI (returns Awing-heavy
+        // responses) but leaks English into the Awing line for Offline
+        // AI (pure-English generator). Em-dash stopwords instead so the
+        // Awing line is either real Awing or "—".
         final gloss = WordGloss.instance.glossEnglish(result.english);
         final awingLine = gloss.tokens.map((t) {
-          if (t.translation != null && t.translation!.isNotEmpty) {
-            return t.translation!;
-          }
-          // Skip pure punctuation tokens.
+          // Punctuation preserved as-is.
           if (RegExp(r'^[\p{P}]+\$', unicode: true).hasMatch(t.source)) {
             return t.source;
+          }
+          // Stopwords (kept-as-is in gloss) become em-dashes in output.
+          if (t.isStopword == true) {
+            return '—';
+          }
+          if (t.translation != null && t.translation!.isNotEmpty) {
+            return t.translation!;
           }
           return '—';
         }).join(' ');
