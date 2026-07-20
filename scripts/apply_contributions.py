@@ -568,6 +568,15 @@ _audio_contributors_collected = set()
 # screen credit list. Add entries here as needed.
 _AUDIO_CONTRIBUTOR_ALIASES = {
     'bb': 'Berlin Sama',
+    # Session 63 — resolve every variant of Dr. Richard's profileName
+    # (his app auth might surface any of these depending on how his
+    # Google profile is set) to the polished display name.
+    'richard': 'Dr. Richard Alombah',
+    'richard alombah': 'Dr. Richard Alombah',
+    'dr richard': 'Dr. Richard Alombah',
+    'dr. richard': 'Dr. Richard Alombah',
+    'fozo': 'Dr. Richard Alombah',
+    'frichardfozo': 'Dr. Richard Alombah',
 }
 
 # Profile names to NEVER credit (core voices already hard-coded, fake

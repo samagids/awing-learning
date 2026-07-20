@@ -32,6 +32,7 @@ const List<String> _coreContributors = [
 const List<String> approvedContributors = [
   'Apongnde Emmanuel',
   'Berlin Sama',
+  'Dr. Richard Alombah',
 ];
 
 /// Full ordered list rendered on the About screen. Core voices first,
