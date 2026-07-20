@@ -79,6 +79,33 @@ service cloud.firestore {
       allow read: if isDeveloper();
     }
 
+    // Session 63 — Study Sets (Phase 2).
+    //
+    // Study sets are teacher-owned curated wordlists that can be shared
+    // with a roster of student Google accounts. The owner (teacher)
+    // has full read/write. Students on the sharedWithEmails roster get
+    // read access so they can browse the set. Nobody else can access.
+    //
+    // Schema:
+    //   teacherEmail:     string, the owner's Google email (immutable)
+    //   sharedWithEmails: [string], student Google emails on the roster
+    //   name, description, wordKeys, customWords, recordings, ...
+    match /study_sets/{setId} {
+      // Emails compared case-insensitively — client stores lowercased
+      // teacherEmail + roster, but Google's auth token.email preserves
+      // the user's original case. Lowercase both sides of every
+      // comparison here so a student signed in as "Kid@Gmail.com" still
+      // matches a roster entry stored as "kid@gmail.com".
+      allow read: if request.auth != null
+                  && (resource.data.teacherEmail.lower() == request.auth.token.email.lower()
+                      || request.auth.token.email.lower() in resource.data.sharedWithEmails
+                      || isDeveloper());
+      allow create: if request.auth != null
+                    && request.resource.data.teacherEmail.lower() == request.auth.token.email.lower();
+      allow update, delete: if request.auth != null
+                            && resource.data.teacherEmail.lower() == request.auth.token.email.lower();
+    }
+
     // Session 61 — G6 security hardening.
     //
     // Audit log: append-only record of every developer bulk-read of user

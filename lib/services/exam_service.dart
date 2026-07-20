@@ -25,6 +25,13 @@ class ExamQuestion {
   /// so the lookup degrades gracefully (fallback icon).
   final String? imageEnglish;
 
+  /// Session 63 Phase 4 — when a question was generated from a Study
+  /// Set, this points at the teacher's cloud recording (Google Drive
+  /// download URL). Student's "Hear it" plays this URL instead of
+  /// falling through to the built-in TTS. Null for questions from
+  /// non-StudySet sources — those keep using PronunciationService.
+  final String? audioUrl;
+
   const ExamQuestion({
     required this.id,
     required this.questionText,
@@ -34,6 +41,7 @@ class ExamQuestion {
     this.audioClipKey,
     this.imageKey,
     this.imageEnglish,
+    this.audioUrl,
   });
 
   Map<String, dynamic> toJson() => {
@@ -45,6 +53,7 @@ class ExamQuestion {
         'audioClipKey': audioClipKey,
         'imageKey': imageKey,
         'imageEnglish': imageEnglish,
+        'audioUrl': audioUrl,
       };
 
   factory ExamQuestion.fromJson(Map<String, dynamic> json) => ExamQuestion(
@@ -56,6 +65,7 @@ class ExamQuestion {
         audioClipKey: json['audioClipKey'],
         imageKey: json['imageKey'],
         imageEnglish: json['imageEnglish'],
+        audioUrl: json['audioUrl'],
       );
 }
 

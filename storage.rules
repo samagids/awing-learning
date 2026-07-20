@@ -1,0 +1,15 @@
+// DEPRECATED — Session 63 Phase 3 originally planned to use Firebase
+// Storage for teacher recordings, but Firebase Storage requires the
+// Blaze paid plan (Oct 2024 change). We instead reused the existing
+// Apps Script + Google Drive pipeline (same one that hosts community
+// pronunciation contributions).
+//
+// See:
+//   • lib/services/study_set_audio_service.dart — client-side upload
+//   • scripts/contributions_webapp.gs — study_set_upload_audio action
+//   • scripts/clasp_contributions/Code.js — mirrored copy that clasp
+//     actually deploys
+//
+// This file is kept only so historical references in git log resolve.
+// Do NOT paste it into Firebase Console — Storage isn't enabled and
+// doesn't need to be.

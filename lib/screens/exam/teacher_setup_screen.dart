@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/exam_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/services/study_set_service.dart';
+import 'package:awing_ai_learning/models/study_set.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/data/awing_alphabet.dart';
 import 'package:awing_ai_learning/data/awing_tones.dart';
@@ -27,6 +29,11 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
   // Vocabulary categories the teacher wants to draw from. Empty set
   // means "all categories".
   final Set<String> _selectedCategories = {};
+  // Phase 4 — when _selectedSource == 'study_set', this points at the
+  // teacher's chosen Study Set. Question pool is drawn from that set's
+  // wordKeys + customWords; audioUrl on each generated ExamQuestion
+  // comes from set.recordings so students hear the teacher's voice.
+  String? _selectedStudySetId;
   // True once we've handed the ExamService off to the monitor screen.
   // After hand-off, the monitor screen owns its lifecycle — we must NOT
   // close it here on dispose, or the room would shut down (and the PIN
@@ -40,6 +47,20 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
     // Initialize with all available types for beginner
     _selectedQuestionTypes = _getAvailableQuestionTypesForSource(
         'beginner', 'vocabulary');
+    // Phase 4 — preload Study Sets + subscribe to Firestore streams
+    // so the study-set picker shows the teacher's current sets.
+    _initStudySets();
+  }
+
+  Future<void> _initStudySets() async {
+    await StudySetService.instance.load();
+    if (!mounted) return;
+    final auth = context.read<AuthService>();
+    final email = auth.currentEmail ?? '';
+    if (email.isNotEmpty) {
+      await StudySetService.instance.attachToAccount(email);
+    }
+    if (mounted) setState(() {}); // rebuild picker
   }
 
   @override
@@ -77,6 +98,17 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
       case 'phrases':
         out.addAll(['translate_to_english', 'translate_to_awing']);
         break;
+      case 'study_set':
+        // Same as vocabulary — Study Set words are just a filtered
+        // slice of allVocabulary + custom teacher-added words.
+        out.addAll([
+          'translate_to_english',
+          'translate_to_awing',
+          'category_match',
+        ]);
+        if (level != 'beginner') out.add('identify_tone');
+        if (level == 'expert') out.add('spelling');
+        break;
       case 'all':
         out.addAll([
           'translate_to_english',
@@ -104,10 +136,156 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
         return 'Tones';
       case 'phrases':
         return 'Phrases';
+      case 'study_set':
+        return 'Study Set';
       case 'all':
         return 'Mixed (all)';
     }
     return source;
+  }
+
+  /// Study Sets the teacher owns AND that are fully covered by audio
+  /// (either their own uploads or native recordings). Only these are
+  /// eligible as an exam source because we don't want a question
+  /// firing with no audio at all.
+  List<StudySet> _availableStudySets() {
+    final svc = StudySetService.instance;
+    final ready = svc.ownSets
+        .where((s) => s.wordCount > 0 && svc.effectivelyFullyRecorded(s))
+        .toList();
+    // Also allow "not-fully-recorded" sets as a warning-only option so
+    // teachers can preview an exam without blocking. The picker shows a
+    // subtle warning icon in that case.
+    final notReady = svc.ownSets
+        .where((s) => s.wordCount > 0 && !svc.effectivelyFullyRecorded(s))
+        .toList();
+    return [...ready, ...notReady];
+  }
+
+  StudySet? get _selectedStudySet {
+    final id = _selectedStudySetId;
+    if (id == null) return null;
+    for (final s in StudySetService.instance.ownSets) {
+      if (s.id == id) return s;
+    }
+    return null;
+  }
+
+  /// Study Set picker widget shown under the source chip row when the
+  /// teacher selects the Study Set source.
+  Widget _buildStudySetPicker(BuildContext context) {
+    return AnimatedBuilder(
+      animation: StudySetService.instance,
+      builder: (context, _) {
+        final sets = _availableStudySets();
+        if (sets.isEmpty) {
+          return Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.orange.shade50,
+              border: Border.all(color: Colors.orange.shade200),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.info_outline, color: Colors.orange.shade700),
+                const SizedBox(width: 8),
+                const Expanded(
+                  child: Text(
+                    'You have no Study Sets yet. Go to Exam Mode → '
+                    'Teacher → Study Sets to create one, then come back '
+                    'and pick it here.',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        final svc = StudySetService.instance;
+        // Coerce selected id back to null if it points at a set that
+        // vanished (e.g. deleted).
+        if (_selectedStudySetId != null &&
+            !sets.any((s) => s.id == _selectedStudySetId)) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              setState(() => _selectedStudySetId = null);
+            }
+          });
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DropdownButtonFormField<String>(
+              value: _selectedStudySetId,
+              decoration: const InputDecoration(
+                labelText: 'Which Study Set?',
+                border: OutlineInputBorder(),
+                isDense: true,
+              ),
+              hint: const Text('Choose a set'),
+              items: [
+                for (final s in sets)
+                  DropdownMenuItem(
+                    value: s.id,
+                    child: Row(
+                      children: [
+                        Icon(
+                          svc.effectivelyFullyRecorded(s)
+                              ? Icons.check_circle
+                              : Icons.warning_amber_rounded,
+                          size: 16,
+                          color: svc.effectivelyFullyRecorded(s)
+                              ? Colors.green.shade600
+                              : Colors.orange.shade700,
+                        ),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            '${s.name}  •  ${s.wordCount} words',
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+              onChanged: (v) {
+                setState(() => _selectedStudySetId = v);
+              },
+            ),
+            if (_selectedStudySet != null &&
+                !svc.effectivelyFullyRecorded(_selectedStudySet!)) ...[
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade50,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.warning_amber_rounded,
+                        size: 16, color: Colors.orange.shade700),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        '${svc.effectiveMissingCount(_selectedStudySet!)} '
+                        'word(s) still need audio. Questions for those '
+                        'words will fall back to the built-in voice.',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.orange.shade900),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ],
+        );
+      },
+    );
   }
 
   /// All vocabulary categories present in the data, sorted by label.
@@ -123,7 +301,36 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
 
   /// Filter the vocabulary list by the teacher's category selection.
   /// Empty selection = all categories.
+  ///
+  /// Phase 4: when source is 'study_set', return the picked set's
+  /// dictionary + custom words instead of the full vocabulary. Custom
+  /// words are converted to AwingWord shape on the fly so all
+  /// downstream generators work unchanged.
   List<AwingWord> _filteredVocabulary() {
+    if (_selectedSource == 'study_set') {
+      final set = _selectedStudySet;
+      if (set == null) return const [];
+      final out = <AwingWord>[];
+      // Dictionary entries — look them up in allVocabulary by Awing key.
+      for (final key in set.wordKeys) {
+        for (final w in allVocabulary) {
+          if (w.awing == key) {
+            out.add(w);
+            break;
+          }
+        }
+      }
+      // Custom teacher-added words — synthesise an AwingWord.
+      for (final cw in set.customWords) {
+        out.add(AwingWord(
+          awing: cw.awing,
+          english: cw.english,
+          category: cw.category,
+          difficulty: cw.difficulty,
+        ));
+      }
+      return out;
+    }
     if (_selectedCategories.isEmpty) return allVocabulary;
     return allVocabulary
         .where((w) => _selectedCategories.contains(w.category))
@@ -623,8 +830,37 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
       return;
     }
 
+    // Phase 4 — when the source is a Study Set, attach the teacher's
+    // cloud-recording URL for this word so StudentExamScreen plays the
+    // teacher's own voice instead of the built-in TTS.
+    question = _withStudySetAudio(question);
+
     _examService.addQuestion(question);
     setState(() => _error = null);
+  }
+
+  /// If source is 'study_set' AND we have a recording for the target
+  /// word, return a copy of the question with audioUrl set. Otherwise
+  /// returns the question unchanged.
+  ExamQuestion _withStudySetAudio(ExamQuestion q) {
+    if (_selectedSource != 'study_set') return q;
+    final set = _selectedStudySet;
+    if (set == null) return q;
+    final target = q.imageKey ?? '';
+    if (target.isEmpty) return q;
+    final url = set.recordings[target];
+    if (url == null || url.isEmpty) return q;
+    return ExamQuestion(
+      id: q.id,
+      questionText: q.questionText,
+      type: q.type,
+      choices: q.choices,
+      correctIndex: q.correctIndex,
+      audioClipKey: q.audioClipKey,
+      imageKey: q.imageKey,
+      imageEnglish: q.imageEnglish,
+      audioUrl: url,
+    );
   }
 
   /// Add a custom question via dialog.
@@ -894,6 +1130,7 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
                           'alphabet',
                           'tones',
                           'phrases',
+                          'study_set',
                           'all',
                         ])
                           ChoiceChip(
@@ -909,11 +1146,20 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
                                 if (src != 'vocabulary' && src != 'all') {
                                   _selectedCategories.clear();
                                 }
+                                if (src != 'study_set') {
+                                  _selectedStudySetId = null;
+                                }
                               });
                             },
                           ),
                       ],
                     ),
+                    // Phase 4 — Study Set picker, shown only when
+                    // source == 'study_set'.
+                    if (_selectedSource == 'study_set') ...[
+                      const SizedBox(height: 12),
+                      _buildStudySetPicker(context),
+                    ],
                   ],
                 ),
               ),

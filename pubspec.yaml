@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.19.3+107
+version: 1.20.0+115
 environment:
   sdk: ">=3.4.0 <4.0.0"
 
@@ -46,6 +46,14 @@ dependencies:
   firebase_core: ^3.8.1
   firebase_auth: ^5.3.4
   cloud_firestore: ^5.6.0
+  # NOTE: Study Set teacher audio uploads (Phase 3) reuse the existing
+  # Apps Script + Google Drive pipeline via ContributionService's
+  # webhook — same base64-POST + Drive-download-URL pattern that
+  # community pronunciation contributions have used since Session 61b.
+  # No Firebase Storage / Blaze plan needed. See
+  # lib/services/study_set_audio_service.dart and the
+  # study_set_upload_audio / study_set_delete_audio /
+  # study_set_delete_set_audio actions in scripts/contributions_webapp.gs.
   # Session 61 — V3+G10 security hardening.
   # Firebase App Check + Play Integrity API. The app proves to Firebase's
   # backend that requests come from an unmodified, Play-Store-installed copy

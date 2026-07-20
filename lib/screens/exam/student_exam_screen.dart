@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
+import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
 import 'package:awing_ai_learning/services/exam_service.dart';
 
@@ -14,16 +16,42 @@ class StudentExamScreen extends StatefulWidget {
 }
 
 class _StudentExamScreenState extends State<StudentExamScreen> {
+  final AudioPlayer _urlPlayer = AudioPlayer();
+  final PronunciationService _pronunciation = PronunciationService();
+
   @override
   void initState() {
     super.initState();
     widget.examService.addListener(_onUpdate);
+    _pronunciation.init();
   }
 
   @override
   void dispose() {
     widget.examService.removeListener(_onUpdate);
+    _urlPlayer.dispose();
     super.dispose();
+  }
+
+  /// Play the audio for a question. Session 63 Phase 4: if the
+  /// question carries an audioUrl (was sourced from a Study Set),
+  /// stream the teacher's cloud recording. Otherwise fall through to
+  /// the built-in PronunciationService, which itself layers
+  /// native-shipped audio → Edge TTS.
+  Future<void> _playQuestionAudio(ExamQuestion q) async {
+    final url = q.audioUrl;
+    final target = q.imageKey ?? '';
+    if (url != null && url.isNotEmpty) {
+      try {
+        await _urlPlayer.play(UrlSource(url));
+        return;
+      } catch (_) {
+        // Fall through to TTS if the URL playback failed.
+      }
+    }
+    if (target.isNotEmpty) {
+      await _pronunciation.speakAwing(target);
+    }
   }
 
   void _onUpdate() {
@@ -229,6 +257,24 @@ class _StudentExamScreenState extends State<StudentExamScreen> {
                               ),
                             );
                           },
+                        ),
+                        // Hear-it button. When the question was sourced from
+                        // a Study Set with a teacher recording (audioUrl
+                        // present), the label calls that out so students
+                        // know they're hearing their teacher's voice.
+                        const SizedBox(height: 8),
+                        OutlinedButton.icon(
+                          onPressed: () => _playQuestionAudio(question),
+                          icon: Icon(
+                            (question.audioUrl ?? '').isNotEmpty
+                                ? Icons.record_voice_over
+                                : Icons.volume_up,
+                          ),
+                          label: Text(
+                            (question.audioUrl ?? '').isNotEmpty
+                                ? "Hear your teacher"
+                                : 'Hear it',
+                          ),
                         ),
                       ],
                     ],

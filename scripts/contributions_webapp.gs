@@ -139,6 +139,10 @@ function doPost(e) {
       return jsonResponse({ status: 'error', message: 'unauthorized' });
     }
 
+    // Session 63 Phase 3 — Study Set audio uploads. These use Google
+    // idToken auth against payload.teacherEmail (not developer-only).
+    // Handled inside each action function; validated before touching
+    // Drive.
     switch (action) {
       case 'submit':
         return handleSubmission(payload);
@@ -154,6 +158,12 @@ function doPost(e) {
         return handleVersionCheck(payload);
       case 'fetch_audio':
         return handleFetchAudio(payload);
+      case 'study_set_upload_audio':
+        return handleStudySetUploadAudio(payload);
+      case 'study_set_delete_audio':
+        return handleStudySetDeleteAudio(payload);
+      case 'study_set_delete_set_audio':
+        return handleStudySetDeleteSetAudio(payload);
       default:
         return jsonResponse({ status: 'error', message: 'Unknown action' });
     }
@@ -836,6 +846,179 @@ function getAudioFolder() {
     return folders.next();
   }
   return DriveApp.createFolder(AUDIO_FOLDER_NAME);
+}
+
+// ==================== Session 63 Phase 3 — Study Set audio ====================
+
+var STUDY_SETS_ROOT = 'StudySets';
+
+/**
+ * Find or create the root StudySets folder in Drive. Nested folders
+ * per set are created on-demand by getStudySetFolder.
+ */
+function getStudySetRootFolder() {
+  var folders = DriveApp.getFoldersByName(STUDY_SETS_ROOT);
+  if (folders.hasNext()) return folders.next();
+  return DriveApp.createFolder(STUDY_SETS_ROOT);
+}
+
+/**
+ * Find or create the folder for a specific set.
+ * Layout: StudySets/{setId}/
+ * We namespace by setId (not teacherEmail) because setId is a UUID
+ * that's already unique across teachers, and it keeps the browsing
+ * UX in Drive Console simpler.
+ */
+function getStudySetFolder(setId) {
+  var root = getStudySetRootFolder();
+  var subs = root.getFoldersByName(setId);
+  if (subs.hasNext()) return subs.next();
+  return root.createFolder(setId);
+}
+
+/**
+ * Verify the caller's Google idToken and confirm the email in the
+ * token matches payload.teacherEmail. This is the "only the set owner
+ * can upload for their set" check — no cross-Firestore reads needed
+ * because setId + teacherEmail travel together on every request.
+ * Returns true iff auth passed and emails match (case-insensitive).
+ */
+function requireStudySetAuth(payload) {
+  if (!payload || !payload.idToken || !payload.teacherEmail) return false;
+  try {
+    var url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' +
+              encodeURIComponent(payload.idToken);
+    var resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    if (resp.getResponseCode() !== 200) return false;
+    var info = JSON.parse(resp.getContentText());
+    if (!info || !info.email || info.email_verified !== 'true') return false;
+    var callerEmail = String(info.email).trim().toLowerCase();
+    var claimed = String(payload.teacherEmail).trim().toLowerCase();
+    return callerEmail === claimed;
+  } catch (e) {
+    Logger.log('requireStudySetAuth error: ' + e.toString());
+    return false;
+  }
+}
+
+/**
+ * Sanitize an id / key for use as a filename fragment. Strips path
+ * separators, control chars, and anything that could escape the
+ * intended Drive folder. Keeps alphanumeric + a couple of safe punct.
+ */
+function safeFileFragment(s) {
+  if (!s) return '';
+  return String(s).replace(/[^A-Za-z0-9_\-.]/g, '_').substring(0, 128);
+}
+
+/**
+ * Upload a teacher recording for a Study Set word. Writes to
+ * StudySets/{setId}/{audioKey}.m4a and returns the Drive download URL.
+ * Same content-cap as regular contributions (2 MB post-decode).
+ */
+function handleStudySetUploadAudio(payload) {
+  if (!requireStudySetAuth(payload)) {
+    return jsonResponse({ status: 'error', message: 'unauthorized' });
+  }
+  var setId = safeFileFragment(payload.setId);
+  var audioKey = safeFileFragment(payload.audioKey);
+  if (!setId || !audioKey) {
+    return jsonResponse({ status: 'error', message: 'missing setId or audioKey' });
+  }
+  if (!payload.audioBase64 || typeof payload.audioBase64 !== 'string') {
+    return jsonResponse({ status: 'error', message: 'missing audioBase64' });
+  }
+  var maxBase64 = Math.ceil(MAX_AUDIO_BYTES * 4 / 3) + 100;
+  if (payload.audioBase64.length > maxBase64) {
+    return jsonResponse({ status: 'error', message: 'audio too large' });
+  }
+  try {
+    var decoded = Utilities.base64Decode(payload.audioBase64);
+    if (decoded.length > MAX_AUDIO_BYTES) {
+      return jsonResponse({ status: 'error', message: 'audio too large' });
+    }
+    var folder = getStudySetFolder(setId);
+    // If a file with the same name already exists (re-record path),
+    // delete the old one first so we don't accumulate stale files
+    // and so the returned URL always points at the latest recording.
+    var fileName = audioKey + '.m4a';
+    var existing = folder.getFilesByName(fileName);
+    while (existing.hasNext()) {
+      try {
+        existing.next().setTrashed(true);
+      } catch (delErr) {
+        Logger.log('handleStudySetUploadAudio delete-old failed: ' + delErr);
+      }
+    }
+    var blob = Utilities.newBlob(decoded, 'audio/m4a', fileName);
+    var file = folder.createFile(blob);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    return jsonResponse({
+      status: 'ok',
+      audioUrl: file.getDownloadUrl(),
+      fileId: file.getId()
+    });
+  } catch (err) {
+    Logger.log('handleStudySetUploadAudio error: ' + err.toString());
+    return jsonResponse({ status: 'error', message: 'upload failed' });
+  }
+}
+
+/**
+ * Delete a single recording (re-record cleanup, or word-removed).
+ */
+function handleStudySetDeleteAudio(payload) {
+  if (!requireStudySetAuth(payload)) {
+    return jsonResponse({ status: 'error', message: 'unauthorized' });
+  }
+  var setId = safeFileFragment(payload.setId);
+  var audioKey = safeFileFragment(payload.audioKey);
+  if (!setId || !audioKey) {
+    return jsonResponse({ status: 'error', message: 'missing setId or audioKey' });
+  }
+  try {
+    var folder = getStudySetFolder(setId);
+    var files = folder.getFilesByName(audioKey + '.m4a');
+    var deleted = 0;
+    while (files.hasNext()) {
+      try {
+        files.next().setTrashed(true);
+        deleted++;
+      } catch (_) {}
+    }
+    return jsonResponse({ status: 'ok', deleted: deleted });
+  } catch (err) {
+    Logger.log('handleStudySetDeleteAudio error: ' + err.toString());
+    return jsonResponse({ status: 'error', message: 'delete failed' });
+  }
+}
+
+/**
+ * Wipe the whole folder for a set (set-delete flow).
+ */
+function handleStudySetDeleteSetAudio(payload) {
+  if (!requireStudySetAuth(payload)) {
+    return jsonResponse({ status: 'error', message: 'unauthorized' });
+  }
+  var setId = safeFileFragment(payload.setId);
+  if (!setId) {
+    return jsonResponse({ status: 'error', message: 'missing setId' });
+  }
+  try {
+    var root = getStudySetRootFolder();
+    var subs = root.getFoldersByName(setId);
+    var deleted = 0;
+    while (subs.hasNext()) {
+      try {
+        subs.next().setTrashed(true);
+        deleted++;
+      } catch (_) {}
+    }
+    return jsonResponse({ status: 'ok', deletedFolders: deleted });
+  } catch (err) {
+    Logger.log('handleStudySetDeleteSetAudio error: ' + err.toString());
+    return jsonResponse({ status: 'error', message: 'delete failed' });
+  }
 }
 
 function jsonResponse(data) {

@@ -5,6 +5,7 @@ import 'package:awing_ai_learning/screens/medium/medium_home.dart';
 import 'package:awing_ai_learning/screens/expert/expert_home.dart';
 import 'package:awing_ai_learning/screens/profile_screen.dart';
 import 'package:awing_ai_learning/screens/exam/teacher_setup_screen.dart';
+import 'package:awing_ai_learning/screens/study_sets/study_set_list_screen.dart';
 import 'package:awing_ai_learning/screens/exam/student_join_screen.dart';
 import 'package:awing_ai_learning/screens/admin/developer_screen.dart';
 import 'package:awing_ai_learning/screens/settings/feedback_screen.dart';
@@ -367,8 +368,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 12),
                       // Exam Mode
                       _ModeCard(
-                        title: 'Exam',
-                        subtitle: 'Take or create an exam',
+                        title: 'Exam & Study Sets',
+                        subtitle: 'Take or create exams, study wordlists',
                         icon: Icons.quiz,
                         color: Colors.indigo,
                         locked: false,
@@ -456,37 +457,41 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  /// Exam mode entry — two-step flow.
+  ///
+  /// Step 1: role picker (Student / Teacher). Students continue without
+  /// any gate — they can Join an exam or browse Study Sets shared with
+  /// them. Teachers pass through a parental gate first (creating an
+  /// exam and editing wordlists are adult-only actions), then get a
+  /// sub-menu to pick Study Sets vs Exam setup.
   void _showExamRoleDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Exam Mode'),
-        content: const Text('Are you a teacher creating an exam, or a student joining one?'),
+        content: const Text(
+          'Are you a teacher creating an exam or study set, or '
+          'a student joining or studying?',
+        ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const StudentJoinScreen()),
-              );
+              _showStudentSubMenu(context);
             },
             child: const Text('Student'),
           ),
           ElevatedButton(
             onPressed: () async {
               Navigator.pop(ctx);
-              // Only parents/teachers should set up exams
               final ok = await ParentalGate.verify(
                 context,
                 title: 'Teacher Mode',
-                message: 'Only a parent or teacher should set up exams.',
+                message: 'Only a parent or teacher should set up exams '
+                    'and study sets.',
               );
               if (ok && context.mounted) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const TeacherSetupScreen()),
-                );
+                _showTeacherSubMenu(context);
               }
             },
             style: ElevatedButton.styleFrom(
@@ -496,6 +501,182 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const Text('Teacher'),
           ),
         ],
+      ),
+    );
+  }
+
+  /// Student sub-menu — Join Exam or browse Study Sets shared with them.
+  /// No gate; kids can freely study or join a live exam.
+  void _showStudentSubMenu(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('What would you like to do?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _SubMenuChoice(
+              icon: Icons.login,
+              color: Colors.indigo,
+              title: 'Join an Exam',
+              subtitle: 'Your teacher will share a PIN',
+              onTap: () {
+                Navigator.pop(ctx);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const StudentJoinScreen(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 8),
+            _SubMenuChoice(
+              icon: Icons.library_books,
+              color: Colors.teal,
+              title: 'My Study Sets',
+              subtitle: 'Sets shared with you',
+              onTap: () {
+                Navigator.pop(ctx);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const StudySetListScreen(
+                      role: StudySetRole.student,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Teacher sub-menu — after passing the parental gate, teachers pick
+  /// between running an exam and managing study sets.
+  void _showTeacherSubMenu(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Teacher Mode'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _SubMenuChoice(
+              icon: Icons.library_books,
+              color: Colors.teal,
+              title: 'Study Sets',
+              subtitle: 'Curate wordlists to share with students',
+              onTap: () {
+                Navigator.pop(ctx);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const StudySetListScreen(
+                      role: StudySetRole.teacher,
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 8),
+            _SubMenuChoice(
+              icon: Icons.quiz,
+              color: Colors.indigo,
+              title: 'Create / Run an Exam',
+              subtitle: 'Live exam over WiFi or hotspot',
+              onTap: () {
+                Navigator.pop(ctx);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const TeacherSetupScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Reusable card-style choice tile used inside the exam sub-menus.
+class _SubMenuChoice extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  const _SubMenuChoice({
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          border: Border.all(color: color.withOpacity(0.35), width: 1.5),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: color.withOpacity(0.15),
+              child: Icon(icon, color: color),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right, color: Colors.grey.shade400),
+          ],
+        ),
       ),
     );
   }

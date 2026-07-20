@@ -198,10 +198,15 @@ bundletool.jar
 awing_dictionary_by_page.csv
 awing_dictionary_extracted.csv
 
-# Training corpus + models — too large to version, regenerable from scripts
-corpus/
-training_data/
-models/
+# Training corpus + models — too large to version, regenerable from scripts.
+# NOTE: leading slash is REQUIRED to anchor these to the repo root.
+# Without it, e.g. `models/` would ALSO match `lib/models/` (Session 63
+# incident: v1.20.0+115 CI failed with "Error when reading
+# 'lib/models/study_set.dart': No such file" because the unanchored
+# `models/` was excluding the whole StudySet model directory).
+/corpus/
+/training_data/
+/models/
 
 # Backup files left over from in-place edits
 *.bak_session*

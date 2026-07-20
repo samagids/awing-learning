@@ -1,23 +1,30 @@
-What's new in 1.19.3:
+What's new in 1.20.0:
 
-• New Awing keyboard: when you type in a text field that needs Awing
-  (Contribute, Translate, Report a wrong translation), the app now
-  shows an in-app keyboard with all the Awing letters (ɛ ɔ ə ɨ ŋ),
-  the curly glottal stop, and tone marks (á à â ǎ). No more fighting
-  with the phone's default keyboard.
+Big update this release — three major additions and a lot of polish.
 
-• On-device AI: when you turn off Cloud AI in settings, example
-  sentences are now generated locally by a small language model on
-  your device. Correct label and colour show which AI is being used.
-  No internet needed once the model is downloaded.
+STUDY SETS (new)
+Teachers can now build curated wordlists for their classes. Search
+the dictionary or add words that aren't in the app yet. Add notes,
+reorder, edit anytime. Recording, sharing with students, and
+class-only exams are all coming in the next updates.
 
-• Fresh-download reliability: deleting the offline AI model in
-  Settings now actually removes the file from disk. The re-download
-  after that fetches a clean copy instead of trusting the previous
-  cache.
+OFFLINE AI (new)
+Turn off Cloud AI and example sentences now generate on your
+device — no internet needed once the model is downloaded on
+Wi-Fi (~500 MB, one-time). Diagnostic messages tell you exactly
+what happens if something goes wrong. Full sentence extraction so
+you always get a clean sentence, never raw AI chain-of-thought.
 
-• Full-screen support for newer Android versions (edge-to-edge).
+AWING KEYBOARD (new)
+Every text field that accepts Awing (Contribute, Translate, Report
+wrong translation) now shows an in-app keyboard with all the special
+letters (ɛ ɔ ə ɨ ŋ), the glottal stop, and tone marks (á à â ǎ).
+No more fighting with your phone's English keyboard.
 
+POLISH
+• Fresh-download reliability for the offline AI model.
+• Better error messages across the board.
+• Full-screen support for newer Android versions.
 • Assorted bug fixes and voice tuning.
 
 Built with love for the Awing community.
