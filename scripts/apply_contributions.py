@@ -577,6 +577,16 @@ _AUDIO_CONTRIBUTOR_ALIASES = {
     'dr. richard': 'Dr. Richard Alombah',
     'fozo': 'Dr. Richard Alombah',
     'frichardfozo': 'Dr. Richard Alombah',
+    # Session 63 — Juliette Mandah (profileName resolved to "Nyla" from
+    # her device's local profile; her Google account's real name is
+    # Juliette Mandah). Session 63 Part B (googleDisplayName in payload)
+    # makes this unnecessary for FUTURE contributors, but future
+    # contributions from Juliette's device still land under the profile
+    # name so keep the alias too.
+    'nyla': 'Juliette Mandah',
+    'juliette': 'Juliette Mandah',
+    'juliette mandah': 'Juliette Mandah',
+    'mandah': 'Juliette Mandah',
 }
 
 # Profile names to NEVER credit (core voices already hard-coded, fake
@@ -615,14 +625,32 @@ def _canonicalize_contributor_name(profile):
     return name
 
 
-def _collect_audio_contributor(profile, ctype, has_audio):
+def _collect_audio_contributor(profile, ctype, has_audio,
+                                google_display_name=None):
     """Add a contributor to the pending list if their submission was
     audio-bearing. Called from the apply loop after a successful
-    print of the contribution header."""
+    print of the contribution header.
+
+    Session 63 Part B — when the contribution carries a
+    google_display_name (full name from the contributor's Google Sign-In
+    account), that's PREFERRED over the local profileName. Google
+    display names are already polished (real names, correct case), so
+    we skip the alias/canonicalize logic entirely for them and just
+    dedup against the skiplist. Falls back to profileName + full
+    canonicalize logic when google_display_name is empty/missing
+    (older clients that predate this field).
+    """
     if ctype not in ('pronunciationFix', 'newWord'):
         return
     if not has_audio:
         return
+    # Prefer Google display name if present.
+    if google_display_name:
+        gname = str(google_display_name).strip()
+        if gname and gname.lower() not in _AUDIO_CONTRIBUTOR_SKIPLIST:
+            _audio_contributors_collected.add(gname)
+            return
+    # Fallback: canonicalize the local profileName.
     canon = _canonicalize_contributor_name(profile)
     if canon:
         _audio_contributors_collected.add(canon)
@@ -1187,6 +1215,11 @@ def apply_contributions(contributions, dry_run=False):
         category = c.get('category', 'other')
         pronunciation = c.get('pronunciationGuide', '')
         profile = c.get('profileName', 'Unknown')
+        # Session 63 Part B — full name from contributor's Google account,
+        # if the app version sending the submission was new enough to
+        # include it. Preferred by _collect_audio_contributor over the
+        # local profileName when present.
+        google_display_name = c.get('googleDisplayName') or ''
         audio_url = c.get('audioUrl') or ''
 
         # SECURITY: validate audio_url BEFORE we ever fetch it. SSRF
@@ -1200,7 +1233,9 @@ def apply_contributions(contributions, dry_run=False):
                 audio_url = ''  # don't fetch, but allow non-audio fields to proceed
 
         print(f"\nApplying: [{ctype}] '{target}' → '{correction}' (from {profile})")
-        _collect_audio_contributor(profile, ctype, bool(audio_url))
+        _collect_audio_contributor(
+            profile, ctype, bool(audio_url),
+            google_display_name=google_display_name)
 
         # SECURITY: every branch below that mutates a Dart file delegates
         # input validation to its helper (apply_*). If a helper raises

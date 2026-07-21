@@ -270,6 +270,11 @@ function handleSubmission(payload) {
     safeId = Utilities.getUuid();
   }
   var safeProfile = sheetSafe(safeStr(payload.profileName, MAX_PROFILE_LEN) || 'Anonymous');
+  // Session 63 Part B — capture the contributor's Google account
+  // display name (their full name). Stored in column 13 of Submissions.
+  // Preferred by apply_contributions.py for the About screen credit
+  // list; falls back to profileName if empty (older clients).
+  var safeGoogleName = sheetSafe(safeStr(payload.googleDisplayName, MAX_PROFILE_LEN));
   var safeType = safeStr(payload.type, 32);
   var safeTarget = sheetSafe(safeStr(payload.targetWord, MAX_FIELD_LEN));
   var safeCorrection = sheetSafe(safeStr(payload.correction, MAX_FIELD_LEN));
@@ -365,6 +370,8 @@ function handleSubmission(payload) {
   }
 
   // Append row to Submissions sheet
+  // NOTE: column 13 (safeGoogleName) added in Session 63 Part B. Older
+  // rows have no column 13 — readers must treat undefined as empty.
   submissions.appendRow([
     safeId,
     new Date().toISOString(),
@@ -378,7 +385,8 @@ function handleSubmission(payload) {
     audioFileUrl,
     'pending',
     '',
-    ''
+    '',
+    safeGoogleName
   ]);
 
   // v1.13.3: Silence per-submit emails for the developer's own Record-tab
@@ -521,7 +529,8 @@ function handleFetchAll() {
       audioUrl: row[9],
       status: row[10] || 'pending',
       reviewNotes: row[11],
-      reviewedAt: row[12] ? new Date(row[12]).toISOString() : null
+      reviewedAt: row[12] ? new Date(row[12]).toISOString() : null,
+      googleDisplayName: row[13] || null  // Session 63 Part B
     });
   }
 
@@ -672,13 +681,16 @@ function handleVersionCheck(payload) {
   var subData = submissions.getDataRange().getValues();
   var audioById = {};
   var profileById = {};
+  var googleNameById = {};  // Session 63 Part B — full name from Google Sign-In
   for (var k = 1; k < subData.length; k++) {
     var sid = subData[k][0];
     var profile = subData[k][2];
     var url = subData[k][9];
+    var gname = subData[k][13];  // column 13 added Session 63 Part B
     if (sid) {
       if (url) audioById[sid] = url;
       if (profile) profileById[sid] = profile;
+      if (gname) googleNameById[sid] = gname;
     }
   }
 
@@ -700,7 +712,8 @@ function handleVersionCheck(payload) {
         approvedAt: data[i][6],
         version: data[i][7],
         audioUrl: audioById[data[i][0]] || null,
-        profileName: profileById[data[i][0]] || null
+        profileName: profileById[data[i][0]] || null,
+        googleDisplayName: googleNameById[data[i][0]] || null  // Session 63 Part B
       });
     }
   }

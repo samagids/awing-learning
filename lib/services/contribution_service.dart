@@ -56,7 +56,11 @@ class FetchAllResult {
 class Contribution {
   final String id;
   final String deviceId;        // Anonymous device ID
-  final String profileName;     // Display name (not email)
+  final String profileName;     // Local profile display name (may be short/nickname)
+  final String? googleDisplayName; // Full name from Google Sign-In (Session 63 Part B).
+                                   // Preferred by apply_contributions.py for the About
+                                   // screen credit list; falls back to profileName if
+                                   // absent (older client submissions).
   final ContributionType type;
   final String targetWord;      // The word/sentence being corrected or added
   final String correction;      // The suggested correction text
@@ -74,6 +78,7 @@ class Contribution {
     required this.id,
     required this.deviceId,
     required this.profileName,
+    this.googleDisplayName,
     required this.type,
     required this.targetWord,
     required this.correction,
@@ -92,6 +97,7 @@ class Contribution {
     'id': id,
     'deviceId': deviceId,
     'profileName': profileName,
+    'googleDisplayName': googleDisplayName,
     'type': type.name,
     'targetWord': targetWord,
     'correction': correction,
@@ -110,6 +116,7 @@ class Contribution {
     id: json['id'] ?? '',
     deviceId: json['deviceId'] ?? '',
     profileName: json['profileName'] ?? 'Anonymous',
+    googleDisplayName: json['googleDisplayName'],
     type: ContributionType.values.firstWhere(
       (t) => t.name == json['type'],
       orElse: () => ContributionType.generalFeedback,
@@ -427,10 +434,31 @@ class ContributionService extends ChangeNotifier {
   }) async {
     final id = '${DateTime.now().millisecondsSinceEpoch}_${deviceId.substring(0, 6)}';
 
+    // Session 63 Part B — capture the contributor's Google account
+    // display name at submit time so apply_contributions.py can credit
+    // them by their full name instead of the short local profile name.
+    // Silent-signed-in account is preferred (no user friction); we fall
+    // back to `null` if not signed in, and apply_contributions.py then
+    // uses the alias/skiplist logic against profileName as before.
+    String? googleDisplayName;
+    try {
+      final acc = CloudBackupService.loginGoogleSignIn.currentUser
+          ?? await CloudBackupService.loginGoogleSignIn.signInSilently();
+      final n = acc?.displayName?.trim();
+      if (n != null && n.isNotEmpty) {
+        googleDisplayName = n;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('ContributionService.submit: googleDisplayName fetch failed: $e');
+      }
+    }
+
     final contribution = Contribution(
       id: id,
       deviceId: deviceId,
       profileName: profileName,
+      googleDisplayName: googleDisplayName,
       type: type,
       targetWord: targetWord,
       correction: correction,
@@ -477,6 +505,7 @@ class ContributionService extends ChangeNotifier {
       'action': 'submit',
       'id': id,
       'profileName': profileName,
+      if (googleDisplayName != null) 'googleDisplayName': googleDisplayName,
       'type': type.name,
       'targetWord': targetWord,
       'correction': correction,
