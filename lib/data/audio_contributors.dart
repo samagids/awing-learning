@@ -33,6 +33,7 @@ const List<String> approvedContributors = [
   'Apongnde Emmanuel',
   'Berlin Sama',
   'Dr. Richard Alombah',
+  'Nyla',  // auto-added by apply_contributions.py
 ];
 
 /// Full ordered list rendered on the About screen. Core voices first,
