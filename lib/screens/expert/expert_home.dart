@@ -4,6 +4,7 @@ import 'package:awing_ai_learning/screens/translate/grade_attempt.dart';
 import 'package:awing_ai_learning/screens/expert/allophones_screen.dart';
 import 'package:awing_ai_learning/screens/expert/elision_screen.dart';
 import 'package:awing_ai_learning/screens/expert/conversation_screen.dart';
+import 'package:awing_ai_learning/screens/expert/expert_proverbs_screen.dart';
 import 'package:awing_ai_learning/screens/expert/expert_quiz_screen.dart';
 import 'package:awing_ai_learning/screens/expert/numbers_expert_screen.dart';
 import 'package:awing_ai_learning/screens/games/expert_tone_hunt.dart';
@@ -175,6 +176,18 @@ class _ExpertHomeState extends State<ExpertHome> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const ConversationScreen()),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Awing Proverbs',
+              subtitle: '44 long-form proverbs from the dictionary 📜',
+              icon: Icons.format_quote,
+              color: Colors.deepOrange.shade400,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const ExpertProverbsScreen()),
               ),
             ),
             const SizedBox(height: 12),

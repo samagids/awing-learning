@@ -11,8 +11,8 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
-  static const String appVersion = '1.20.3';
-  static const String buildNumber = '119';
+  static const String appVersion = '1.21.0';
+  static const String buildNumber = '120';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
   static const String appDescription =

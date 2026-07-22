@@ -256,37 +256,63 @@ class OnDeviceModelService extends ChangeNotifier {
     final ok = await _ensureLmLoaded();
     if (!ok) return null;
 
-    try {
-      // Prompt is calibrated for Qwen3 and similar small chat models.
-      // Word passed is the ENGLISH gloss - the model has no knowledge of
-      // Awing so we ask it to write in its native language and let the
-      // dictionary layer above translate token-by-token.
-      // "/no_think" is Qwen3's official switch to skip chain-of-thought
-      // output - without it the model emits <think>...</think> blocks
-      // full of reasoning that we'd have to filter.
-      final prompt = '/no_think Write ONE short English sentence '
-          '(5 to 8 words, simple grammar suitable for a $level learner) '
-          'that naturally uses the word "$word". '
-          'Category: $category. '
-          'Reply with ONLY the sentence itself. '
-          'No quotes, no explanation, no thinking, no <think> tags.';
+    // Try up to 3 attempts — small models often drop the target word.
+    // The extractor now REQUIRES the word to appear in the output
+    // (mustContainWord=true), so retries let us get a valid sentence.
+    for (int attempt = 0; attempt < 3; attempt++) {
+      try {
+        // Prompt calibrated for small chat models. Wrap word in ALL CAPS
+        // literal to make the model treat it as a token to include verbatim.
+        // "/no_think" is Qwen3's chain-of-thought disable switch.
+        //
+        // Each attempt uses a slightly different prompt/temperature so we
+        // don't just re-generate the exact same output.
+        final String prompt;
+        if (attempt == 0) {
+          prompt = '/no_think Write ONE short English sentence '
+              '(5 to 8 words, simple grammar for a $level learner) '
+              'that includes the word "$word" verbatim. '
+              'The sentence MUST contain the exact word "$word". '
+              'Category: $category. '
+              'Reply with ONLY the sentence itself. '
+              'No quotes, no explanation, no thinking.';
+        } else if (attempt == 1) {
+          // Second attempt: give an example to steer the model
+          prompt = '/no_think Complete the pattern. '
+              'Word: "hand". Sentence: I wash my hand every morning. '
+              'Word: "book". Sentence: She reads a book at night. '
+              'Word: "$word". Sentence:';
+        } else {
+          // Third attempt: extremely explicit
+          prompt = 'Fill in the blank so the sentence uses "$word" naturally. '
+              'The word "$word" must appear in your answer. '
+              'Write only the completed sentence, nothing else.';
+        }
 
-      final result = await _lm.generateCompletion(
-        messages: [ChatMessage(content: prompt, role: 'user')],
-        params: CactusCompletionParams(
-          maxTokens: 96,
-          temperature: 0.7,
-        ),
-      );
+        final result = await _lm.generateCompletion(
+          messages: [ChatMessage(content: prompt, role: 'user')],
+          params: CactusCompletionParams(
+            maxTokens: 96,
+            // Slightly bump temperature each retry to escape same-answer loop.
+            temperature: 0.5 + (attempt * 0.15),
+          ),
+        );
 
-      if (!result.success) return null;
-      final extracted = _extractSentence(result.response, word);
-      if (extracted == null || extracted.trim().isEmpty) return null;
-      return extracted;
-    } catch (e) {
-      debugPrint('OnDeviceModelService generation failed: $e');
-      return null;
+        if (!result.success) continue;
+        final extracted = _extractSentence(
+          result.response,
+          word,
+          mustContainWord: true,
+        );
+        if (extracted != null && extracted.trim().isNotEmpty) {
+          return extracted;
+        }
+      } catch (e) {
+        debugPrint('OnDeviceModelService attempt $attempt failed: $e');
+      }
     }
+    // All attempts failed to produce a sentence containing the target word
+    return null;
   }
 
   /// Salvage a usable example sentence from qwen3-0.6's rambling output.
@@ -304,11 +330,17 @@ class OnDeviceModelService extends ChangeNotifier {
   ///   2. Reject anything containing meta-reasoning tokens
   ///      ("user", "the word", "let's", "reasoning", "sentence", etc.)
   ///   3. Reject anything shorter than 3 or longer than 15 words
-  ///   4. Prefer sentences that mention the target [word] naturally
-  ///   5. Fall back to any valid-looking sentence
+  ///   4. If mustContainWord=true (default in v1.21+), REQUIRE the target
+  ///      word to appear; return null if no candidate contains it.
+  ///   5. Otherwise fall back to any valid-looking sentence.
   ///
-  /// Returns null if nothing salvageable.
-  String? _extractSentence(String raw, String targetWord) {
+  /// Returns null if nothing salvageable (or nothing matching the word
+  /// when mustContainWord=true).
+  String? _extractSentence(
+    String raw,
+    String targetWord, {
+    bool mustContainWord = true,
+  }) {
     var text = raw.trim();
 
     // Strip any <think>...</think> blocks first (belt + suspenders,
@@ -319,9 +351,13 @@ class OnDeviceModelService extends ChangeNotifier {
     );
     text = text.replaceAll(RegExp(r'</?think>'), ' ');
 
+    // Strip "Sentence:" / "Answer:" prefixes some models emit.
+    text = text.replaceAll(
+      RegExp(r'^\s*(?:sentence|answer|output)\s*:\s*', caseSensitive: false),
+      '',
+    );
+
     // Strip surrounding markdown quote markers.
-    // Use double-quoted non-raw string so the apostrophe is safe;
-    // \" escapes the double-quote delimiter, \$ escapes Dart interpolation.
     text = text.replaceAll(RegExp("^[\"'`]+"), '');
     text = text.replaceAll(RegExp("[\"'`]+\$"), '');
 
@@ -338,7 +374,16 @@ class OnDeviceModelService extends ChangeNotifier {
       r'i need to|i should|i can|i will|as requested|as asked)\b',
       caseSensitive: false,
     );
+
+    // Match target word as a whole word (word boundaries) — case-insensitive.
+    // This prevents "cat" matching inside "cathedral" while still tolerating
+    // trivial suffix inflections ("book" → "books").
     final targetLc = targetWord.toLowerCase();
+    final wordPattern = RegExp(
+      r'\b' + RegExp.escape(targetLc) + r'(s|es|ed|ing)?\b',
+      caseSensitive: false,
+    );
+
     String? fallback;
 
     for (final chunk in chunks) {
@@ -351,14 +396,15 @@ class OnDeviceModelService extends ChangeNotifier {
       // Length window.
       final words = s.split(RegExp(r'\s+')).length;
       if (words < 3 || words > 18) continue;
-      // Reject if it's basically a list of em-dashes and single letters.
+      // Reject em-dash lists.
       final dashCount = RegExp(r'—|--').allMatches(s).length;
       if (dashCount > 1) continue;
-      // Prefer sentences containing the target word.
-      if (s.toLowerCase().contains(targetLc)) return s;
+      // Word-inclusion check.
+      if (wordPattern.hasMatch(s)) return s;
       fallback ??= s;
     }
-    return fallback;
+    // Only accept a word-less fallback when caller explicitly opts in.
+    return mustContainWord ? null : fallback;
   }
 
   Future<bool> _ensureLmLoaded() async {

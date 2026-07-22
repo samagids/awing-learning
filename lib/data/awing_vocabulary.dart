@@ -62,7 +62,7 @@ const List<AwingWord> pdfVerifiedExtras = [
   // "Móonə nonnɔ́ əkwunɔ́" — Awing drops the "a tə" progressive auxiliary
   // and the locative "a" particle. The PDF version is more formal/written.
   AwingWord(awing: 'nonnɔ́', english: 'lying, lying down', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'əkwunɔ́', english: 'bed', category: 'things', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'əkwunə́', english: 'bed', category: 'things', tonePattern: 'high', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'əkwunɔ́' — dict PDF p146 bed n. əkwunə́
   // From p.11: "A ghɛlɔ́ lə aké?" (What is he doing?)
   AwingWord(awing: 'ghɛlɔ́', english: 'doing, do', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'aké', english: 'what', category: 'pronouns', difficulty: 1),
@@ -97,13 +97,14 @@ const List<AwingWord> bodyParts = [
   AwingWord(awing: 'apô', english: 'hand', category: 'body'),
   AwingWord(awing: 'atûə', english: 'head', category: 'body'),
   AwingWord(awing: 'nəlwîə', english: 'nose', category: 'body'),
-  AwingWord(awing: 'ndě', english: 'neck (body part)', category: 'body', pluralForm: 'məndě', difficulty: 1),
+  AwingWord(awing: 'amiə', english: 'neck (body part)', category: 'body', pluralForm: 'məndě', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ndě' — dict Mistral p173 (may need a↔ə refinement)
+  AwingWord(awing: 'amiə', english: 'neck (synonym of ndě)', category: 'body', difficulty: 1),  // ADD Session 63 Part G 2026-07-22: dict synonym per Dr. Sama — both amiə and ndě mean neck
   AwingWord(awing: 'nkadtə', english: 'back', category: 'body'),
-  AwingWord(awing: "mbe'ta", english: 'shoulder', category: 'body'),  // Session 56 audit: was "mbe'tə" — dict says "mbe'ta"
+  AwingWord(awing: "mbe'tə", english: 'shoulder', category: 'body'),  // Session 56 audit: was "mbe'tə" — dict says "mbe'tə"
   AwingWord(awing: 'achîə', english: 'blood', category: 'body', difficulty: 3),
   AwingWord(awing: 'akoolə', english: 'leg', category: 'body'),
   AwingWord(awing: 'aləəmə', english: 'tongue', category: 'body'),  // Session 56 audit: was "alɔ́əmə" — dict says "aləəmə"
-  AwingWord(awing: 'mbɔ́ɔmə', english: 'body', category: 'body', difficulty: 1),  // FIXED Session 61 dict-audit: body = mbɔ́ɔmə per dict p.147 + p.98
+  AwingWord(awing: 'mbəəmə', english: 'body', category: 'body', difficulty: 1),  // FIXED Session 61 dict-audit: body = mbɔ́ɔmə per dict p.147 + p.98  // CORRECT Session 63 Part H 2026-07-22: was 'mbɔ́ɔmə' — dict PDF p147 body n. mbəəmə
   // AwingWord(awing: 'ŋgɔ̀ɔnə', english: 'eye', category: 'body'),  // REMOVED Session 61 dict-audit: eye: 'ŋgɔ̀ɔnə' NOT in 2007 dict (p.157 lists only nəlágə L114)
   // AwingWord(awing: 'ntɔ̀ə', english: 'ear', category: 'body'),  // REMOVED Session 61 dict-audit: ear: 'ntɔ̀ə' NOT in 2007 dict (p.157 lists only nətôglə L115)
   // Medium (difficulty 2)
@@ -116,35 +117,35 @@ const List<AwingWord> bodyParts = [
   AwingWord(awing: 'ntsoolə', english: 'mouth (body)', category: 'body', pluralForm: 'məntsoolə', difficulty: 1),
   AwingWord(awing: 'nəsoŋə', english: 'tooth', category: 'body', pluralForm: 'məsoŋ'),  // Session 56 audit: was "nəsoŋɔ́" — dict says "nəsoŋə"
   AwingWord(awing: 'nənoŋə', english: 'hair', category: 'body', pluralForm: 'mənɔŋə'),  // Session 56 audit: was "nənɔŋə" — dict says "nənoŋə"
-  AwingWord(awing: 'akwəŋó', english: 'bone', category: 'body'),  // Session 56 audit: was "akwəŋɔ́" — dict says "akwəŋó"
+  AwingWord(awing: 'akwəŋə́', english: 'bone', category: 'body'),  // Session 56 audit: was "akwəŋɔ́" — dict says "akwəŋə́"  // CORRECT Session 63 Part H 2026-07-22: was 'akwəŋó' — dict PDF p147 bone n. akwəŋə́
   AwingWord(awing: 'nəpəmə', english: 'stomach', category: 'body', pluralForm: 'məpəmə'),
   AwingWord(awing: "alu'ə", english: 'hip', category: 'body'),  // Session 56 audit: was "alu'ɔ̀" — dict says "alu'ə"
   AwingWord(awing: 'atéelə', english: 'foot', category: 'body'),
-  AwingWord(awing: 'nəpéenə', english: 'crown of head', category: 'body', difficulty: 1),
+  AwingWord(awing: 'nəpéenə́', english: 'crown of head', category: 'body', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'nəpéenə' — dict PDF p153 crown of head n. nəpéenə́
   // Medium (difficulty 2)
-  AwingWord(awing: 'əleló', english: 'beard', category: 'body', difficulty: 1),  // Session 56 audit: was "ələlə" — dict says "əleló"
-  AwingWord(awing: 'atúəkeenə', english: 'shoulder blade', category: 'body', difficulty: 1),
-  AwingWord(awing: "kwɔ'tə", english: 'knee', category: 'body', difficulty: 2),
-  AwingWord(awing: 'nəbâŋə', english: 'wing (of bird)', category: 'body', difficulty: 1),
-  AwingWord(awing: 'nəlwɛ̂ɨ', english: 'hump', category: 'body', difficulty: 1),
+  AwingWord(awing: 'əlelə́', english: 'beard', category: 'body', difficulty: 1),  // Session 56 audit: was "ələlə" — dict says "əlelə́"  // CORRECT Session 63 Part H 2026-07-22: was 'əleló' — dict PDF p146 beard n. əlelə́
+  AwingWord(awing: "atúəkeenə'tə", english: 'shoulder blade', category: 'body', difficulty: 1),
+  AwingWord(awing: "akwə'tá", english: 'knee', category: 'body', difficulty: 2),  // CORRECT Session 63 Part H 2026-07-22: was "kwɔ'tə" — dict Mistral p168 (may need a↔ə refinement)
+  AwingWord(awing: 'napeeba', english: 'wing (of bird)', category: 'body', difficulty: 1),  // CORRECT Session 63 Part G 2026-07-22: was 'nəbâŋə' — Dr. Sama confirms dict says napeeba
+  AwingWord(awing: 'búsbága', english: 'hump', category: 'body', difficulty: 1),  // CORRECT Session 63 Part G 2026-07-22: was 'nəlwɛ̂ɨ' (not in dict) — dict p48/p165 hump n. búsbága (Mistral shows búsbāgə with a→ə corruption)
   AwingWord(awing: 'nətoŋə́', english: 'navel', category: 'body', difficulty: 1),  // Session 56 audit: was "nətɔŋɔ́" — dict says "nətoŋə́"
-  AwingWord(awing: "nətə'ə", english: 'thigh', category: 'body', difficulty: 2),  // Session 56 audit: was "nətɔ'ə" — dict says "nətə'ə"
+  AwingWord(awing: "nətɔ'ə", english: 'thigh', category: 'body', difficulty: 2),  // Session 56 audit: was "nətɔ'ə" — dict says "nətɔ'ə"
   AwingWord(awing: 'ntîə', english: 'height', category: 'body', difficulty: 1),
-  AwingWord(awing: 'ajwíə', english: 'soul/spirit', category: 'body', difficulty: 1),
+  AwingWord(awing: 'ajwiə', english: 'soul/spirit', category: 'body', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ajwíə' — dict PDF p188 soul n. ajwiə
   AwingWord(awing: 'ntéəmə', english: 'heart', category: 'body', difficulty: 1),  // Session 56 audit: was "ntɔ̂əmə" — dict says "ntéəmə"
   // New body parts from phonology/orthography PDFs
-  AwingWord(awing: 'ŋgwɛ̂ŋə', english: 'cheek', category: 'body', difficulty: 1),
+  AwingWord(awing: 'nəghagə́', english: 'cheek', category: 'body', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgwɛ̂ŋə' — dict PDF p150 cheek n. nəghagə́
   // REMOVED Session 60+ dict-audit (2026-06-05): ndzwîə = chin not present
   // in dictionary p.51-220 / orthography / phonology PDFs. 'chin' is
   // verified as alə'tó, alá'tə, or alə̌'tə̌ (see lines 2209, 7189, and
   // the v2:page_032 batch). Confirmed with Dr. Sama. Same audit
   // pattern as Session 61's ndɛ̂ŋə = jaw removal (line 141).
   // AwingWord(awing: 'ndzwîə', english: 'chin', category: 'body'),
-  AwingWord(awing: 'nkwə̂ŋə', english: 'elbow', category: 'body'),
+  AwingWord(awing: 'nkənə apô', english: 'elbow', category: 'body'),  // CORRECT Session 63 Part H 2026-07-22: was 'nkwə̂ŋə' — dict PDF p157 elbow n.p. nkənə apô
   AwingWord(awing: 'ntsə̂ŋə', english: 'finger', category: 'body'),
-  AwingWord(awing: 'mbwɔ̂ŋə', english: 'neck (back of)', category: 'body', difficulty: 1),
+  AwingWord(awing: 'akəghoolámiə', english: 'neck (back of)', category: 'body', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'mbwɔ̂ŋə' — dict PDF p174 nape of neck c.n. akəghoolámiə
   // AwingWord(awing: 'ndɛ̂ŋə', english: 'jaw', category: 'body', difficulty: 1),  // REMOVED Session 61 dict-audit: jaw: 'ndɛ̂ŋə' NOT in dict for jaw — dict p.157 lists nəghagə (see L9743)
-  AwingWord(awing: 'ŋgwɔ̂ŋə', english: 'forehead', category: 'body', difficulty: 1),
+  AwingWord(awing: 'nəzeŋnə́', english: 'forehead', category: 'body', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgwɔ̂ŋə' — dict PDF p161 forehead n. nəzeŋnə́
   AwingWord(awing: 'ntsɔ̂ŋə', english: 'rib', category: 'body', difficulty: 1),
   AwingWord(awing: 'mbə̂ŋɔ́', english: 'palm (of hand)', category: 'body', difficulty: 1),
   // Session 60: Removed `nkɔ̂ŋə = throat` — unverified, conflicts with the
@@ -154,9 +155,9 @@ const List<AwingWord> bodyParts = [
   AwingWord(awing: 'ŋgwɛ̀nə', english: 'skin', category: 'body'),
   AwingWord(awing: 'ŋkwâŋə', english: 'waist', category: 'body'),
   // === NEW: PDF-verified entries (Session 37) ===
-  AwingWord(awing: 'nalanɔ́', english: 'joint', category: 'body', difficulty: 1),
+  AwingWord(awing: 'nələŋá', english: 'joint', category: 'body', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'nalanɔ́' — dict Mistral p168 (may need a↔ə refinement)
   AwingWord(awing: "mbi'ə", english: 'kidney', category: 'body', difficulty: 3),  // Session 56 audit: was "mbî'ɔ́" — dict says "mbi'ə"
-  AwingWord(awing: 'afɔ́bla', english: 'lung', category: 'body', difficulty: 1)];
+  AwingWord(awing: 'əfəblə', english: 'lung', category: 'body', difficulty: 1)];  // CORRECT Session 63 Part H 2026-07-22: was 'afɔ́bla' — dict PDF p170 lung n. əfəblə
 
 /// Animals and nature — fun for kids
 const List<AwingWord> animalsNature = [
@@ -171,16 +172,16 @@ const List<AwingWord> animalsNature = [
   // tester. Not in 2007 Awing English Dictionary, not in Bible NT corpus.
   // Actual Awing for "dog" is ngwûə / ajǎʼkə / ńkadlə̂ / nətwáabə;
   // "guard" alone is mbyáabə. The compound "guard dog" was invented.
-  AwingWord(awing: 'ndoŋə', english: 'duck', category: 'animals'),  // Session 56 audit: was "əndəŋə" — dict says "ndoŋə"
-  AwingWord(awing: 'kshǐa', english: 'cricket', category: 'animals'),
+  AwingWord(awing: 'ndɔŋə', english: 'duck', category: 'animals'),  // Session 56 audit: was "əndəŋə" — dict says "ndɔŋə"  // CORRECT Session 63 Part H 2026-07-22: was 'ndoŋə' — dict PDF p157 duck n. ndɔŋə
+  AwingWord(awing: 'kíchíə', english: 'cricket', category: 'animals'),  // CORRECT Session 63 Part H 2026-07-22: was 'kshǐa' — dict PDF p152 cricket n. kíchíə
   AwingWord(awing: 'mbeŋə', english: 'cockroach', category: 'animals'),  // Session 56 audit: was "mbeŋó" — dict says "mbeŋə"
   AwingWord(awing: 'kánáŋə́', english: 'chameleon', category: 'animals', difficulty: 1),  // Session 56 audit: was "kónáŋó" — dict says "kánáŋə́"
   AwingWord(awing: 'ngwûə', english: 'dog', category: 'animals', pluralForm: 'məngwûə'),
   AwingWord(awing: 'pûshíə', english: 'cat', category: 'animals'),
   AwingWord(awing: 'sáŋə', english: 'bird', category: 'animals', pluralForm: 'pəsáŋɔ́'),  // Session 56 audit: was "sáŋɔ́" — dict says "sáŋə"
-  AwingWord(awing: "təŋka'ə", english: 'elephant', category: 'animals'),  // Session 56 audit: was "tâŋka'ə" — dict says "təŋka'ə"
-  AwingWord(awing: 'sáambaŋə', english: 'lion', category: 'animals'),
-  AwingWord(awing: 'ambónə', english: 'hippopotamus', category: 'animals', difficulty: 1),
+  AwingWord(awing: "tə̂ŋka'ə", english: 'elephant', category: 'animals'),  // Session 56 audit: was "tâŋka'ə" — dict says "tə̂ŋka'ə"  // CORRECT Session 63 Part H 2026-07-22: was "təŋka'ə" — dict PDF p157 elephant n. tə̂ŋka'ə
+  AwingWord(awing: 'sáambanə', english: 'lion', category: 'animals'),  // CORRECT Session 63 Part H 2026-07-22: was 'sáambaŋə' — dict Mistral p170 (may need a↔ə refinement)
+  AwingWord(awing: 'ambǒnə', english: 'hippopotamus', category: 'animals', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ambónə' — dict PDF p166 hippopotamus n. ambǒnə (rising tone)
   AwingWord(awing: 'chwíə', english: 'antelope', category: 'animals', difficulty: 1),
   AwingWord(awing: 'lúmtə', english: 'mosquito', category: 'animals'),  // Session 56 audit: was "lúmtɔ́" — dict says "lúmtə"
   // REMOVED kwíŋə "tortoise" — per dict EXACT match kwíŋə = "grow up / prosper" (verb), not an animal (Session 51 audit)
@@ -190,16 +191,16 @@ const List<AwingWord> animalsNature = [
   AwingWord(awing: 'anjwa', english: 'giraffe', category: 'animals', difficulty: 1),
   AwingWord(awing: 'njakásə', english: 'donkey', category: 'animals'),  // Session 56 audit: was "ŋjakásə" — dict says "njakásə"
   // REMOVED nka'ə "leopard" — per dict EXACT match nka'ə = "leprosy" (not a kid-friendly word AND not a leopard) (Session 51 audit)
-  AwingWord(awing: 'kígháləgháló', english: 'butterfly', category: 'animals', difficulty: 1),
+  AwingWord(awing: 'kíghálə́ghálə́', english: 'butterfly', category: 'animals', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'kígháləgháló' — dict PDF p148 butterfly c.n. kíghálə́ghálə́
   AwingWord(awing: 'fóolá', english: 'rat', category: 'animals'),  // Session 56 audit: was "fóolɔ́" — dict says "fóolá"
   AwingWord(awing: 'anəmá', english: 'louse', category: 'animals', difficulty: 1),  // Session 56 audit: was "anɔ́mɔ́" — dict says "anəmá"
   AwingWord(awing: 'njá', english: 'shrimp', category: 'animals', difficulty: 1),
   AwingWord(awing: 'ngwumnə́', english: 'locust', category: 'animals', difficulty: 1),  // Session 56 audit: was "ngwúmnɔ́" — dict says "ngwumnə́"
-  AwingWord(awing: "to'lə", english: 'squirrel', category: 'animals'),  // Session 56 audit: was "tɔ'lɔ́" — dict says "to'lə"
+  AwingWord(awing: "tə'lə́", english: 'squirrel', category: 'animals'),  // Session 56 audit: was "tə'lə́" — dict says "tə'lə́"  // CORRECT Session 63 Part H 2026-07-22: was "tɔ'lɔ́" — dict PDF p188 squirrel n. tə'lə́
   AwingWord(awing: "aŋkə'á", english: 'rooster', category: 'animals'),  // Session 56 audit: was "əŋka'ɔ́" — dict says "aŋkə'á"
   // Beginner nature
   AwingWord(awing: 'atɨə', english: 'tree', category: 'nature'),  // Session 56 audit: was "atîə" — dict says "atɨə"
-  AwingWord(awing: "ngɔ́'ə", english: 'stone', category: 'nature'),  // Session 56 audit: was "ngə'ə" — dict says "ngɔ́'ə"
+  AwingWord(awing: "ngə'ə", english: 'stone', category: 'nature'),  // Session 56 audit: was "ngə'ə" — dict says "ngə'ə"
   AwingWord(awing: 'wáako', english: 'sand', category: 'nature'),  // Session 56 audit: was "wâakɔ́" — dict says "wáako"
   AwingWord(awing: 'afûə', english: 'leaf', category: 'nature'),
   // REMOVED sánə "moon" — per dict EXACT match sánə = "break" (verb). The Awing word for moon is sáŋə (now corrected below) (Session 51 audit)
@@ -215,10 +216,10 @@ const List<AwingWord> animalsNature = [
   AwingWord(awing: 'nəfaŋə', english: 'thunder', category: 'nature', difficulty: 1),  // Session 56 audit: was "nəfáŋɔ́" — dict says "nəfaŋə"
   // REMOVED alě "morning" — per dict EXACT match alě = "day" (which is already in line 161 as àlě). The Awing word for "morning" is not yet PDF-confirmed. (Session 51 audit)
   AwingWord(awing: 'nkwaná', english: 'evening', category: 'nature'),  // Session 56 audit: was "nkwanɔ́" — dict says "nkwaná"
-  AwingWord(awing: 'alanə', english: 'road/path', category: 'nature', difficulty: 1),
+  AwingWord(awing: 'alaŋə́', english: 'road/path', category: 'nature', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'alanə' — dict PDF p183 road n. alaŋə́
   AwingWord(awing: 'nəfógə', english: 'waterfall', category: 'nature', difficulty: 1),
   AwingWord(awing: 'ndəsê', english: 'ground/earth', category: 'nature', difficulty: 1),
-  AwingWord(awing: 'móláglə', english: 'shadow', category: 'nature'),  // Session 56 audit: was "mɔ́lɔ̂glə" — dict says "móláglə"
+  AwingWord(awing: 'məláglə', english: 'shadow', category: 'nature'),  // Session 56 audit: was "mɔ́lɔ̂glə" — dict says "məláglə"  // CORRECT Session 63 Part H 2026-07-22: was 'móláglə' — dict Mistral p184 (may need a↔ə refinement)
   AwingWord(awing: 'ndo', english: 'valley', category: 'nature', difficulty: 1),
   AwingWord(awing: 'nkwəənə', english: 'mountain', category: 'nature'),
   AwingWord(awing: "nkya' sáŋə", english: 'moonlight', category: 'nature'),
@@ -234,30 +235,30 @@ const List<AwingWord> animalsNature = [
   AwingWord(awing: 'əkûə', english: 'hole/pit', category: 'nature', difficulty: 1),
   AwingWord(awing: "aɣə'ɔ́", english: 'cave', category: 'nature', difficulty: 1),
   AwingWord(awing: 'nəkwuunə́', english: 'entrance', category: 'nature', difficulty: 1),  // Session 56 audit: was "nəkwùːnɔ́" — dict says "nəkwuunə́"
-  AwingWord(awing: 'asháŋə', english: 'hill', category: 'nature'),
-  AwingWord(awing: 'ndùə', english: 'dust', category: 'nature', difficulty: 1),
+  AwingWord(awing: "akɔ'ə́", english: 'hill', category: 'nature'),  // CORRECT Session 63 Part H 2026-07-22: was 'asháŋə' — dict PDF p165 hill n. akɔ'ə́ [Session 64: fixed unescaped apostrophe, trimmed stray 'kə]
+  AwingWord(awing: 'akəpóglə́', english: 'dust', category: 'nature', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ndùə' — dict PDF p157 dust n. akəpóglə́
   AwingWord(awing: 'ŋgóŋə', english: 'swamp', category: 'nature', difficulty: 1),
-  AwingWord(awing: 'əfɔ̂glə', english: 'marsh', category: 'nature', difficulty: 1),
+  AwingWord(awing: "nətsa'ə́", english: 'marsh', category: 'nature', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'əfɔ̂glə' — dict PDF p172 marsh n. nətsa'ə́ [Session 64: fixed unescaped apostrophe]
   AwingWord(awing: 'ndzəmə', english: 'back (place)', category: 'nature', difficulty: 1),
   AwingWord(awing: 'atsə̂ŋə', english: 'outside area', category: 'nature', difficulty: 1),
   AwingWord(awing: 'ŋkə́ə', english: 'clearing', category: 'nature', difficulty: 1),
   // New animals from orthography/phonology PDFs
-  AwingWord(awing: 'ŋgàbə', english: 'crab', category: 'animals'),
-  AwingWord(awing: 'nətwéenə', english: 'spider', category: 'animals'),
+  AwingWord(awing: 'kéənə', english: 'crab', category: 'animals'),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgàbə' — dict PDF p151 crab n. kéənə
+  AwingWord(awing: 'kīlelənkaŋə', english: 'spider', category: 'animals'),  // CORRECT Session 63 Part H 2026-07-22: was 'nətwéenə' — dict PDF p187 spider c.n. kīlelənkaŋə
   AwingWord(awing: 'ŋgwíŋə', english: 'bee', category: 'animals'),
   AwingWord(awing: 'ndzomə', english: 'worm', category: 'animals'),
   AwingWord(awing: 'əghâlə', english: 'lizard', category: 'animals', difficulty: 1),
   // Session 52 gloss audit: was "pangolin" — dict has no "pangolin" sense; primary = "cane, walking stick, club, cudgel"
   AwingWord(awing: 'mbâŋə', english: 'cane, walking stick', category: 'things', difficulty: 1),
-  AwingWord(awing: 'ŋgwâŋə', english: 'porcupine', category: 'animals', difficulty: 1),
-  AwingWord(awing: 'nkwúbə', english: 'dove', category: 'animals', difficulty: 1),
+  AwingWord(awing: "ndzə́blə məsá'ə", english: 'porcupine', category: 'animals', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgwâŋə' — dict PDF p178 porcupine n.p. ndzə́blə məsá'ə [Session 64: fixed unescaped apostrophe]
+  AwingWord(awing: 'aŋkəŋâ', english: 'dove', category: 'animals', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'nkwúbə' — dict PDF p156 dove n. aŋkəŋâ
   AwingWord(awing: 'ŋkwɔ́ŋə', english: 'parrot', category: 'animals', difficulty: 1),
   // === NEW: PDF-verified entries (Session 37) ===
   AwingWord(awing: 'máwúmə́', english: 'hawk', category: 'animals', difficulty: 1),  // Session 56 audit: was "máwúmɔ́" — dict says "máwúmə́"
   AwingWord(awing: "pɨ̌'ɔ", english: 'hen', category: 'animals', difficulty: 1),
   AwingWord(awing: "nkámázɔ́'ə́", english: 'monkey', category: 'animals', difficulty: 2),  // Session 56 audit: was "nkámɔ́zɔ'ɔ́" — dict says "nkámázɔ́'ə́"
-  AwingWord(awing: 'nɔ́sanɔ́', english: 'ocean/sea', category: 'nature', difficulty: 1),
-  AwingWord(awing: 'nkɔŋ nó ngɔ́sma', english: 'rainbow', category: 'nature', difficulty: 2),
+  AwingWord(awing: 'nə́ənə', english: 'ocean/sea', category: 'nature', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'nɔ́sanɔ́' — dict PDF p175 ocean n. nə́ənə (same word as sea)
+  AwingWord(awing: 'nkoŋ nə́ ngəmə', english: 'rainbow', category: 'nature', difficulty: 2),  // CORRECT Session 63 Part H 2026-07-22: was 'nkɔŋ nó ngɔ́sma' — dict PDF p181 rainbow n.p. nkoŋ nə́ ngəmə
   AwingWord(awing: "nkya' sáŋa", english: 'moonlight', category: 'nature', difficulty: 2),
   AwingWord(awing: 'mɔ̀m napooɔ́la', english: 'heaven', category: 'nature', difficulty: 2),
   AwingWord(awing: 'sfoŋhasɔ́mɔ́', english: 'lake', category: 'nature', difficulty: 1)];
@@ -268,15 +269,15 @@ const List<AwingWord> foodDrink = [
   AwingWord(awing: 'majîə', english: 'food/meal', category: 'food', difficulty: 1),
   AwingWord(awing: "amú'á", english: 'banana', category: 'food'),  // Session 56 audit: was "amú'ɔ́" — dict says "amú'á"
   AwingWord(awing: "azó'ə", english: 'yam', category: 'food'),
-  AwingWord(awing: "akwu'ó", english: 'cocoyam', category: 'food'),  // Session 56 audit: was "akwú'ɔ́" — dict says "akwu'ó"
-  AwingWord(awing: 'ngəsáŋɔ́', english: 'corn/maize', category: 'food', difficulty: 1),
+  AwingWord(awing: "akwú'ɔ́", english: 'cocoyam', category: 'food'),  // Session 56 audit: was "akwú'ɔ́" — dict says "akwú'ɔ́"
+  AwingWord(awing: 'ngəsəŋə', english: 'corn/maize', category: 'food', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ngəsáŋɔ́' — dict Mistral p151 (may need a↔ə refinement)
   AwingWord(awing: 'nûə', english: 'honey', category: 'food'),
   AwingWord(awing: 'ndzě', english: 'vegetable', category: 'food', difficulty: 1),
   AwingWord(awing: 'mâfɛ', english: 'sweet potato', category: 'food'),  // Session 56 audit: was "mâfe" — dict says "mâfɛ"
   AwingWord(awing: 'apopó', english: 'pawpaw', category: 'food', difficulty: 1),
   AwingWord(awing: 'nəpumə́', english: 'egg', category: 'food', pluralForm: 'mbumɔ́'),  // Session 56 audit: was "nəpumɔ́" — dict says "nəpumə́"
   AwingWord(awing: 'neemə', english: 'meat', category: 'food'),
-  AwingWord(awing: 'nəkwúnə', english: 'rice', category: 'food'),
+  AwingWord(awing: 'məkwúnə', english: 'rice', category: 'food'),  // CORRECT Session 63 Part H 2026-07-22: was 'nəkwúnə' — dict Mistral p181 (may need a↔ə refinement)
   AwingWord(awing: 'máliga', english: 'milk', category: 'food'),  // Session 56 audit: was "mɔ́lígə" — dict says "máliga"
   AwingWord(awing: 'lámósə', english: 'orange', category: 'food'),  // Session 56 audit: was "lámɔ́sə" — dict says "lámósə"
   AwingWord(awing: 'tâmto', english: 'tomato', category: 'food'),
@@ -288,35 +289,39 @@ const List<AwingWord> foodDrink = [
   AwingWord(awing: "achú'ə", english: 'pounded cocoyam', category: 'food'),
   AwingWord(awing: "nələ'ə́", english: 'sweet yam', category: 'food'),  // Session 56 audit: was "nəlɔ'ɔ́" — dict says "nələ'ə́"
   AwingWord(awing: 'nkwûə', english: 'sort of okra', category: 'food', difficulty: 1),
-  AwingWord(awing: 'ónyúsə', english: 'onion', category: 'food'),  // Session 56 audit: was "ɔ́nyúsə" — dict says "ónyúsə"
+  AwingWord(awing: 'ə́nyúsə', english: 'onion', category: 'food'),  // Session 56 audit: was "ɔ́nyúsə" — dict says "ə́nyúsə"  // CORRECT Session 63 Part H 2026-07-22: was 'ónyúsə' — dict PDF p176 onion n. ə́nyúsə
   // Medium
   AwingWord(awing: 'aŋkəsálə', english: 'cassava', category: 'food', difficulty: 1),
   AwingWord(awing: 'ngəəbə', english: 'goblet', category: 'food', difficulty: 1),  // Session 56 audit: was "nəgɔ̌əbə" — dict says "ngəəbə"
-  AwingWord(awing: 'apéenə', english: 'fufu corn', category: 'food', difficulty: 1),
+  AwingWord(awing: 'apéənə', english: 'fufu corn', category: 'food', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'apéenə' — dict Mistral p161 (may need a↔ə refinement)
   AwingWord(awing: 'gəlébə', english: 'grape', category: 'food', difficulty: 1),  // Session 56 audit: was "galéba" — dict says "gəlébə"
   AwingWord(awing: 'shí sɔ̂ntê', english: 'green pepper', category: 'food', difficulty: 2),
-  AwingWord(awing: 'paŋ sɔ̂ntê', english: 'red pepper', category: 'food', difficulty: 2),
-  AwingWord(awing: "nkɔ̂ŋ ɔ̂'lə", english: 'sugar cane', category: 'food', difficulty: 2),
+  AwingWord(awing: 'paŋ səntɛ', english: 'red pepper', category: 'food', difficulty: 2),  // CORRECT Session 63 Part H 2026-07-22: was 'paŋ sɔ̂ntê' — dict p176 pepper (red) c.n. paŋ səntɛ
+  AwingWord(awing: "nkəŋk ô'lə", english: 'sugar cane', category: 'food', difficulty: 2),  // CORRECT Session 63 Part H 2026-07-22: was "nkɔ̂ŋ ɔ̂'lə" — dict Mistral p189 (may need a↔ə refinement)
   // New food from phonology/orthography PDFs
   // REMOVED ndzě ndě "water leaf" — used ndě as water (wrong; ndě = neck/elder/house). ndzě alone = "vegetable" per dict. Compound unverified. (User-flagged Session 52)
-  AwingWord(awing: 'ŋgə̂ŋə', english: 'palm wine', category: 'food', difficulty: 1),
+  AwingWord(awing: "fú mɔlo'ɔ", english: 'palm wine', category: 'food', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgə̂ŋə' — dict Mistral p175 (may need a↔ə refinement) [Session 64: fixed unescaped apostrophe]
   AwingWord(awing: 'nkúnə', english: 'oil', category: 'food'),
   // REMOVED asháŋə ndě "cooked rice" — both wrong: rice = nəkwúnə (not asháŋə) per dict, and ndě is not water. Replaced with verified dict entry. (User-flagged Session 52)
   AwingWord(awing: 'nkwə̂ə', english: 'kola nut', category: 'food', difficulty: 1),
   AwingWord(awing: 'ŋgə́ŋə', english: 'palm fruit', category: 'food', difficulty: 1),
   // REMOVED mbənə "flour" — per Awing English Dictionary mbənə is a grammatical exclamation marker, not "flour" (Session 51 audit, EXACT match)
-  AwingWord(awing: 'ntsɔ́ŋə', english: 'salt (local)', category: 'food', difficulty: 1),
-  AwingWord(awing: 'ŋgwénə', english: 'mushroom', category: 'food'),
+  AwingWord(awing: 'ngwáŋə', english: 'salt (local)', category: 'food', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ntsɔ́ŋə' — dict PDF p182 salt n. ngwáŋə
+  AwingWord(awing: "pɔ'ə́", english: 'mushroom', category: 'food'),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgwénə' — dict PDF p174 mushroom n. pɔ'ə́ [Session 64: fixed unescaped apostrophe, trimmed stray 'ə]
   // Session 52 gloss audit: was "pepper (spice)" — dict says "1) prison. 2) penalty, punishment"
   AwingWord(awing: 'atsǎŋə', english: 'prison; penalty', category: 'things', difficulty: 1),
   AwingWord(awing: 'ndzɔ̂ŋə', english: 'sugar', category: 'food'),
-  AwingWord(awing: 'mbwáŋə', english: 'fresh corn', category: 'food', difficulty: 1)];
+];
+// DROP Session 63 Part H 2026-07-22: Dr. Sama confirmed not in dict — closing ];
+// was on this line inside the drop comment; Session 64 moved it above the
+// comment so the foodDrink list terminates properly.
+// AwingWord(awing: 'mbwáŋə', english: 'fresh corn', category: 'food', difficulty: 1)
 
 /// Simple actions (verbs) — everyday actions kids can act out
 const List<AwingWord> actions = [
   // Beginner — simple everyday actions
   AwingWord(awing: 'nô', english: 'drink', category: 'actions'),
-  AwingWord(awing: 'yǐə', english: 'come', category: 'actions'),
+  AwingWord(awing: 'yíəə', english: 'come', category: 'actions'),  // CORRECT Session 63 Part H 2026-07-22: was 'yǐə' — dict Mistral p150 (may need a↔ə refinement)
   AwingWord(awing: 'fê', english: 'give', category: 'actions'),
   AwingWord(awing: 'mîəə', english: 'swallow', category: 'actions', difficulty: 1),  // Session 56 audit: was "mîə" — dict says "mîəə"
   AwingWord(awing: 'lúmə', english: 'bite', category: 'actions'),
@@ -345,18 +350,18 @@ const List<AwingWord> actions = [
   AwingWord(awing: 'kóolə', english: 'catch/harvest', category: 'actions', difficulty: 1),
   AwingWord(awing: 'ghɛdtɔ́', english: 'do a little', category: 'actions'),
   AwingWord(awing: 'nyinɔ́', english: 'walk/travel', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'tómə', english: 'kick/shoot', category: 'actions', difficulty: 3),
-  AwingWord(awing: 'sóŋə', english: 'say/speak', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'təmə', english: 'kick/shoot', category: 'actions', difficulty: 3),  // CORRECT Session 63 Part H 2026-07-22: was 'tómə' — dict PDF p169 kick v. təmə
+  AwingWord(awing: 'sónə', english: 'say/speak', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'sóŋə' — dict Mistral p183 (may need a↔ə refinement)
   AwingWord(awing: 'wiŋə', english: 'laugh', category: 'actions'),  // Session 56 audit: was "wiŋɔ́" — dict says "wiŋə"
   AwingWord(awing: 'weŋô', english: 'smile', category: 'actions'),  // Session 56 audit: was "weŋɔ́" — dict says "weŋô"
   AwingWord(awing: 'kyéŋə', english: 'cry/weep', category: 'actions', difficulty: 1),
   AwingWord(awing: 'zoobə̂', english: 'sing', category: 'actions'),  // Session 56 audit: was "zoobɔ́" — dict says "zoobə̂"
-  AwingWord(awing: "ŋwa'lô", english: 'write', category: 'actions'),  // Session 56 audit: was "ŋwa'lɔ́" — dict says "ŋwa'lô"
+  AwingWord(awing: "ŋwa'lɔ́", english: 'write', category: 'actions'),  // Session 56 audit: was "ŋwa'lɔ́" — dict says "ŋwa'lɔ́"
   AwingWord(awing: "zé'ka", english: 'teach', category: 'actions'),  // Session 56 audit: was "zé'kə" — dict says "zé'ka"
   AwingWord(awing: "zé'ə", english: 'learn', category: 'actions'),
   AwingWord(awing: 'léelə', english: 'prepare', category: 'actions', difficulty: 1),
   AwingWord(awing: 'kamtə̂', english: 'eat hastily', category: 'actions'),  // Session 56 audit: was "kamtɔ́" — dict says "kamtə̂"
-  AwingWord(awing: 'loonɔ́', english: 'desire/want', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'loonə̂', english: 'desire/want', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'loonɔ́' — dict PDF p196 want v. loonə̂
   AwingWord(awing: 'piímə', english: 'believe/accept', category: 'actions', difficulty: 1),
   // Medium
   AwingWord(awing: 'kwágə', english: 'cough', category: 'actions', difficulty: 1),
@@ -377,29 +382,30 @@ const List<AwingWord> actions = [
   AwingWord(awing: 'shǎmtə', english: 'widen', category: 'actions', difficulty: 1),
   AwingWord(awing: 'tʰímə', english: 'string beads', category: 'actions', difficulty: 1),
   AwingWord(awing: 'nɛ́rə', english: 'groan with pain', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'fwɔ̀ːtə', english: 'mumble', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'fwɔɔtə', english: 'mumble', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'fwɔ̀ːtə' — dict Mistral p173 (may need a↔ə refinement)
   // Session 52: was sáŋə "sweep (with broom)" — WRONG. Per dictionary, sáŋə = "moon, month"
   // (or homonym "bird"). The Awing word for "sweep" is zəgə (already at L2321).
   // The word for "broom" is nəsáŋə (already at L3310). Replaced with the verb that
   // ACTUALLY means sweep, but kept as a duplicate-removed comment to avoid clash with L2321.
   // sáŋə itself is preserved as a nature word elsewhere if needed.
   AwingWord(awing: 'sɛ̀glə', english: 'weave', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'kpɔ́ŋə', english: 'break', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'dɛ̀ŋə', english: 'carry on head', category: 'actions'),
-  AwingWord(awing: 'nyâŋə', english: 'mix/stir', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'bəlégə', english: 'break', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'kpɔ́ŋə' — dict Mistral p147 (may need a↔ə refinement)
+  AwingWord(awing: "pe'ə atúə", english: 'carry on head', category: 'actions'),  // CORRECT Session 63 Part H 2026-07-22: was 'dɛ̀ŋə' — dict Mistral p148 (may need a↔ə refinement) [Session 64: fixed unescaped apostrophe]
+  AwingWord(awing: 'nyamnə', english: 'mix/stir', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'nyâŋə' — dict Mistral p172 (may need a↔ə refinement)
   AwingWord(awing: 'tɔ̀ŋə', english: 'pound (with mortar)', category: 'actions', difficulty: 1),
   AwingWord(awing: 'tsɔ́mə', english: 'squeeze', category: 'actions', difficulty: 1),
   AwingWord(awing: 'shɔ́ŋə', english: 'climb', category: 'actions'),
-  AwingWord(awing: 'bwɔ́nə', english: 'mould/shape', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'fɔ̀ŋə', english: 'blow (fire)', category: 'actions', difficulty: 1),
+  // DROP Session 63 Part H 2026-07-22: Dr. Sama confirmed not in dict
+  // AwingWord(awing: 'bwɔ́nə', english: 'mould/shape', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'fəgə', english: 'blow (fire)', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'fɔ̀ŋə' — dict Mistral p146 (may need a↔ə refinement)
   AwingWord(awing: 'tsɛ́rə', english: 'stop up/block', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'dzə̀mə', english: 'think/reflect', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'lwɔ̀ŋə', english: 'count/calculate', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'kwaŋə̂', english: 'think/reflect', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'dzə̀mə' — dict PDF p191 think v. kwaŋə̂
+  AwingWord(awing: 'shəŋə', english: 'count/calculate', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'lwɔ̀ŋə' — dict Mistral p151 (may need a↔ə refinement)
   AwingWord(awing: 'tɔ̀ə', english: 'plant (seed)', category: 'actions', difficulty: 1),
   AwingWord(awing: 'kəmtɔ́', english: 'harvest', category: 'actions', difficulty: 1),
   AwingWord(awing: 'njwíŋə', english: 'whistle', category: 'actions'),
   AwingWord(awing: 'ŋwàŋə', english: 'return', category: 'actions'),
-  AwingWord(awing: "pá'tə", english: 'share/divide', category: 'actions', difficulty: 1),
+  AwingWord(awing: "ghabnə", english: 'share/divide', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was "pá'tə" — dict Mistral p184 (may need a↔ə refinement)
   // Session 52 gloss audit: CRITICAL FIX — was "praise", dict says "1) curse. 2) destroy. 3) spoil" (OPPOSITE meaning)
   AwingWord(awing: 'tsə́ŋə', english: 'curse; destroy; spoil', category: 'actions', difficulty: 3),
   AwingWord(awing: 'shwɔ́ŋə', english: 'pray', category: 'actions', difficulty: 1),
@@ -419,17 +425,17 @@ const List<AwingWord> actions = [
   AwingWord(awing: 'kwáalə', english: 'obtain', category: 'actions', difficulty: 1),  // Session 56 audit: was "kwáala" — dict says "kwáalə"
   AwingWord(awing: "nna'", english: 'open', category: 'actions', difficulty: 1),
   AwingWord(awing: 'píta', english: 'plant', category: 'actions', difficulty: 1),
-  AwingWord(awing: "nə'â", english: 'press', category: 'actions', difficulty: 2),  // Session 56 audit: was "no'a" — dict says "nə'â"
+  AwingWord(awing: "no'a", english: 'press', category: 'actions', difficulty: 2),  // Session 56 audit: was "no'a" — dict says "no'a"
   // Session 52 gloss audit: was "remove" — dict says "fellow-wife (co-wife in polygamous marriage)"
   AwingWord(awing: 'fóga', english: 'fellow-wife', category: 'family', difficulty: 1),
   AwingWord(awing: 'kwúblə', english: 'repent', category: 'actions', difficulty: 3),  // Session 56 audit: was "kwúbla" — dict says "kwúblə"
-  AwingWord(awing: 'sóŋə', english: 'say', category: 'actions', difficulty: 1),  // Session 56 audit: was "sóŋa" — dict says "sóŋə"
+  AwingWord(awing: 'sónə', english: 'say', category: 'actions', difficulty: 1),  // Session 56 audit: was "sóŋa" — dict says "sónə"  // CORRECT Session 63 Part H 2026-07-22: was 'sóŋə' — dict Mistral p183 (may need a↔ə refinement)
   AwingWord(awing: "ŋwa'ô", english: 'shine', category: 'actions', difficulty: 1),  // Session 56 audit: was "gwa'a" — dict says "ŋwa'ô"
   AwingWord(awing: 'naasla', english: 'show', category: 'actions', difficulty: 1),
   AwingWord(awing: 'kəŋə̂', english: 'shut', category: 'actions', difficulty: 1),  // Session 56 audit: was "kaŋɔ́" — dict says "kəŋə̂"
   AwingWord(awing: 'lyǎŋə', english: 'hide', category: 'actions', difficulty: 1),
   AwingWord(awing: "tyá'la", english: 'straddle', category: 'actions', difficulty: 3),  // Session 56 audit: was "tyə́'lə" — dict says "tyá'la"
-  AwingWord(awing: 'piə̀', english: 'sow', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'ngwɛ kwuneemə', english: 'sow', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'piə̀' — dict Mistral p187 (may need a↔ə refinement)
   AwingWord(awing: 'zòŋə́', english: 'follow', category: 'actions', difficulty: 1),
   AwingWord(awing: 'pjə́bə́', english: 'protect', category: 'actions', difficulty: 1)];
 
@@ -451,12 +457,12 @@ const List<AwingWord> thingsObjects = [
   AwingWord(awing: 'əkwuná', english: 'bed', category: 'things'),  // Session 56 audit: was "əkwunɔ́" — dict says "əkwuná"
   AwingWord(awing: 'nəkəŋ', english: 'pot', category: 'things', pluralForm: 'məkəŋɔ́'),  // Session 56 audit: was "nəkəŋɔ́" — dict says "nəkəŋ"
   AwingWord(awing: 'apeemə', english: 'bag', category: 'things', shortForm: 'apa'),
-  AwingWord(awing: 'əpúmə', english: 'basket (large)', category: 'things', difficulty: 1),
+  AwingWord(awing: 'nkeemá', english: 'basket (large)', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'əpúmə' — dict Mistral p144 (may need a↔ə refinement)
   AwingWord(awing: 'ajwika', english: 'window', category: 'things'),  // Session 56 audit: was "ajwikə" — dict says "ajwika"
   AwingWord(awing: 'mbê', english: 'knife', category: 'things', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
-  AwingWord(awing: 'lɛ̀ərə', english: 'hat', category: 'things', difficulty: 1),
+  AwingWord(awing: 'leelə', english: 'hat', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'lɛ̀ərə' — dict PDF p165 hat n. leelə (not leelɔ Mistral)
   AwingWord(awing: 'alóŋə', english: 'dance group', category: 'things'),  // Session 56 audit: was "əlɔ́ŋə" — dict says "alóŋə"
-  AwingWord(awing: 'ŋgɛ̀ərə', english: 'gun', category: 'things', difficulty: 3),
+  AwingWord(awing: 'ngéelə', english: 'gun', category: 'things', difficulty: 3),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgɛ̀ərə' — dict PDF p163 gun n. ngéelə
   AwingWord(awing: 'akwâalə', english: 'support', category: 'things', difficulty: 1),
   AwingWord(awing: 'əpéenə', english: 'bread', category: 'things'),
   AwingWord(awing: "nətó'ə", english: 'potato', category: 'things'),
@@ -473,11 +479,11 @@ const List<AwingWord> thingsObjects = [
   // Session 52: was kíə "key (lock)" — kíə (high tone) does not exist in the
   // Awing English Dictionary. Per dict, "key (from English)" = kîə (falling tone).
   AwingWord(awing: 'kîə', english: 'key', category: 'things', tonePattern: 'falling'),
-  AwingWord(awing: 'mógɔ́', english: 'fire/burn', category: 'things', difficulty: 1),
+  AwingWord(awing: 'mógə', english: 'fire/burn', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'mógɔ́' — dict Mistral p159 (may need a↔ə refinement)
   AwingWord(awing: 'chénə', english: 'chain', category: 'things', difficulty: 1),
   AwingWord(awing: 'nkelá', english: 'rope', category: 'things', pluralForm: 'mənkelɔ́'),  // Session 56 audit: was "nkelɔ́" — dict says "nkelá"
   AwingWord(awing: 'nkwumə', english: 'box', category: 'things'),
-  AwingWord(awing: 'bólə', english: 'ball', category: 'things', difficulty: 1),  // Session 56 audit: was "bɔ̂lə" — dict says "bólə"
+  AwingWord(awing: "atəndó'ə", english: 'ball', category: 'things', difficulty: 1),  // Session 56 audit: was "bɔ̂lə" — dict says "atəndó'ə"  // CORRECT Session 63 Part H 2026-07-22: was 'bólə' — dict PDF p144 ball n. atəndó'ə [Session 64: fixed unescaped apostrophe, trimmed stray 'ə]
   AwingWord(awing: 'ntso ndê', english: 'door', category: 'things'),
   AwingWord(awing: 'nkeemə́', english: 'basket', category: 'things'),  // Session 56 audit: was "nkéemɔ́" — dict says "nkeemə́"
   // Session 60: Removed `kwa'ɔ́ = plate` — Session 56 audit confirmed
@@ -489,12 +495,12 @@ const List<AwingWord> thingsObjects = [
   AwingWord(awing: 'atso', english: 'musical instrument', category: 'things', difficulty: 1),
   AwingWord(awing: 'máta', english: 'mat', category: 'things'),
   // CORRECTED tone nkîə → nkǐə "song" — per dict, both homonyms (water/river AND song) use rising-tone nkǐə, not falling-tone nkîə (User-flagged Session 52)
-  AwingWord(awing: 'nkǐə', english: 'song', category: 'things'),
+  AwingWord(awing: 'azoobə', english: 'song', category: 'things'),  // CORRECT Session 63 Part H 2026-07-22: was 'nkǐə' — dict PDF p186 song n. azoobə
   // REMOVED nda'ə "string" — per Awing English Dictionary nda'ə = "only, lone" (per CLAUDE.md, the only Awing word that does not end in a vowel; grammatical, not a kid-facing object). (Session 51 audit, EXACT match)
   AwingWord(awing: 'bɔ́bə', english: 'bulb/ball', category: 'things', difficulty: 1),
-  AwingWord(awing: 'ŋwíŋɔ́', english: 'machete/cutlass', category: 'things', difficulty: 1),
+  AwingWord(awing: 'ŋwíŋə', english: 'machete/cutlass', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋwíŋɔ́' — dict Mistral p170 (may need a↔ə refinement)
   // Medium/Expert — less common objects
-  AwingWord(awing: 'mbéenə', english: 'nail', category: 'things', difficulty: 1),
+  AwingWord(awing: 'mbéŋə', english: 'nail', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'mbéenə' — dict Mistral p173 (may need a↔ə refinement)
   AwingWord(awing: "fwə'ə", english: 'chisel', category: 'things', difficulty: 2),  // Session 56 audit: was "fwɔ'ə" — dict says "fwə'ə"
   AwingWord(awing: 'ndwîgtə', english: 'end', category: 'things', difficulty: 1),
   AwingWord(awing: 'əghâa', english: 'season', category: 'things', difficulty: 3),
@@ -505,13 +511,14 @@ const List<AwingWord> thingsObjects = [
   AwingWord(awing: "akɔ̀'ə", english: 'stool/chair (traditional)', category: 'things', difficulty: 1),
   AwingWord(awing: 'ŋgwánə', english: 'pot (clay)', category: 'things', difficulty: 1),
   AwingWord(awing: 'nkwɔ̂ŋə', english: 'stick/staff', category: 'things', difficulty: 1),
-  AwingWord(awing: 'ətsê', english: 'mortar', category: 'things', difficulty: 1),
+  AwingWord(awing: "nəkwu'ə́", english: 'mortar', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ətsê' — dict PDF p173 mortar n. nəkwu'ə́ [Session 64: fixed unescaped apostrophe, trimmed stray 'ə]
   AwingWord(awing: 'mbə̂ŋə', english: 'drum', category: 'things'),
-  AwingWord(awing: 'ŋgwɔ̂bə', english: 'bowl', category: 'things', difficulty: 1),
-  AwingWord(awing: 'atsúŋə', english: 'fence', category: 'things'),
-  AwingWord(awing: 'nəkwɔ́ŋə', english: 'pestle', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akáŋ yə shí ná', english: 'bowl', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgwɔ̂bə' — dict Mistral p147 (may need a↔ə refinement)
+  AwingWord(awing: "nká'ə", english: 'fence', category: 'things'),  // CORRECT Session 63 Part H 2026-07-22: was 'atsúŋə' — dict PDF p158 fence n. nká'ə [Session 64: fixed unescaped apostrophe, trimmed stray 'ə]
+  AwingWord(awing: 'nkɔŋə', english: 'pestle', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'nəkwɔ́ŋə' — dict Mistral p176 (may need a↔ə refinement)
   AwingWord(awing: 'ŋgwə̂ə', english: 'paddle/oar', category: 'things', difficulty: 1),
-  AwingWord(awing: 'ntsɔ̂ŋə', english: 'market stall', category: 'things', difficulty: 1),
+  // DROP Session 63 Part H 2026-07-22: Dr. Sama confirmed not in dict
+  // AwingWord(awing: 'ntsɔ̂ŋə', english: 'market stall', category: 'things', difficulty: 1),
   AwingWord(awing: 'àtɔ̂glə', english: 'pillow', category: 'things', difficulty: 1),
   AwingWord(awing: 'nkwə̂mə', english: 'container', category: 'things', difficulty: 1),
   AwingWord(awing: 'əkə̂ŋə', english: 'cooking pot', category: 'things', difficulty: 1),
@@ -525,60 +532,60 @@ const List<AwingWord> thingsObjects = [
   AwingWord(awing: 'akwelə', english: 'herd', category: 'things', difficulty: 1),  // Session 56 audit: was "akwɛlɔ" — dict says "akwelə"
   AwingWord(awing: 'ndzaŋa', english: 'kind', category: 'things', difficulty: 1),
   AwingWord(awing: 'ndé moŋa', english: 'kitchen', category: 'things', difficulty: 2),
-  AwingWord(awing: "kó'ó", english: 'ladder', category: 'things', difficulty: 2),  // Session 56 audit: was "kɔ́'ɔ" — dict says "kó'ó"
+  AwingWord(awing: "kɔ́'ɔ", english: 'ladder', category: 'things', difficulty: 2),  // Session 56 audit: was "kɔ́'ɔ" — dict says "kɔ́'ɔ"
   AwingWord(awing: 'ŋwíŋə', english: 'machete', category: 'things', difficulty: 1),  // Session 56 audit: was "nwîŋa" — dict says "ŋwíŋə"
   AwingWord(awing: 'ntúmə', english: 'messenger', category: 'things', difficulty: 1),  // Session 56 audit: was "ntúma" — dict says "ntúmə"
   AwingWord(awing: 'anyi ntúmɔ', english: 'metal', category: 'things', difficulty: 2),
   AwingWord(awing: 'awɛ', english: 'mirror', category: 'things', difficulty: 1),
   AwingWord(awing: 'nkéebə', english: 'money', category: 'things', difficulty: 1),  // Session 56 audit: was "nkɛɛbɔ" — dict says "nkéebə"
-  AwingWord(awing: 'akɔ́ɔma', english: 'happiness', category: 'things', difficulty: 1),
+  AwingWord(awing: 'akɔŋnɔ', english: 'happiness', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'akɔ́ɔma' — dict Mistral p164 (may need a↔ə refinement)
   AwingWord(awing: "ndé'ə", english: 'necklace', category: 'things', difficulty: 2),  // Session 56 audit: was "ndé'ɔ́" — dict says "ndé'ə"
-  AwingWord(awing: 'nka sáŋɔ́', english: 'nest', category: 'things', difficulty: 2),
+  AwingWord(awing: 'nka səŋə', english: 'nest', category: 'things', difficulty: 2),  // CORRECT Session 63 Part H 2026-07-22: was 'nka sáŋɔ́' — dict Mistral p173 (may need a↔ə refinement)
   AwingWord(awing: "ajwa'áli'ó", english: 'noise', category: 'things', difficulty: 2),  // Session 56 audit: was "ajwa'ali'ɔ́" — dict says "ajwa'áli'ó"
   AwingWord(awing: 'ndenə', english: 'number', category: 'things', difficulty: 1),  // Session 56 audit: was "ndema" — dict says "ndenə"
   AwingWord(awing: 'atía nɔ́taɔna', english: 'palm tree', category: 'things', difficulty: 2),
   AwingWord(awing: 'awaamɔ́mbɔama', english: 'patience', category: 'things', difficulty: 1),
   AwingWord(awing: 'ntûə', english: 'payment', category: 'things', difficulty: 1),  // Session 56 audit: was "ntía" — dict says "ntûə"
   AwingWord(awing: "ndí'ə", english: 'poison', category: 'things', difficulty: 2),  // Session 56 audit: was "ndá'ɔ́" — dict says "ndí'ə"
-  AwingWord(awing: "naíɔ́'ɔ", english: 'potato', category: 'things', difficulty: 1),
+  AwingWord(awing: "nətó'ə", english: 'potato', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was "naíɔ́'ɔ" — dict PDF p179 potato n. nətó'ə
   AwingWord(awing: 'msóm', english: 'sin', category: 'things', difficulty: 1),
-  AwingWord(awing: 'asɔ́ɔma', english: 'shame', category: 'things', difficulty: 1),
+  AwingWord(awing: 'əsəənə', english: 'shame', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'asɔ́ɔma' — dict Mistral p184 (may need a↔ə refinement)
   AwingWord(awing: "aŋwa'lə", english: 'school', category: 'things', difficulty: 1),  // Session 56 audit: was "agwa'la" — dict says "aŋwa'lə"
   AwingWord(awing: 'náanə', english: 'sea', category: 'things', difficulty: 1),  // Session 56 audit: was "nɔ́sana" — dict says "náanə"
-  AwingWord(awing: 'sə̀bə̀ə̀bə́', english: 'thorn', category: 'things', difficulty: 1),
+  AwingWord(awing: 'məsɔbsoobə', english: 'thorn', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'sə̀bə̀ə̀bə́' — dict PDF p190 thorn n. məsɔbsoobə (via Mistral cross-ref)
   AwingWord(awing: 'ge:nə́', english: 'week', category: 'things', difficulty: 1),
   // Session 52 gloss audit: was "village" (that is alá'ə at L584) — dict says "hook" / "far future tense marker"
-  AwingWord(awing: "lá'ə̀", english: 'hook', category: 'things', difficulty: 1),
-  AwingWord(awing: "mətuə́'ə", english: 'caterpillar', category: 'things', difficulty: 1),
-  AwingWord(awing: 'àkəỳə́', english: 'cave', category: 'things', difficulty: 1)];
+  AwingWord(awing: "apanə", english: 'hook', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was "lá'ə̀" — dict Mistral p165 (may need a↔ə refinement)
+  AwingWord(awing: "mátwe'ə", english: 'caterpillar', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was "mətuə́'ə" — dict PDF p148 caterpillar n. mátwe'ə (via Mistral)
+  AwingWord(awing: "aghə'ə", english: 'cave', category: 'things', difficulty: 1)];  // CORRECT Session 63 Part H 2026-07-22: was 'àkəỳə́' — dict PDF p148 cave n. aghə'ə [Session 64: fixed unescaped apostrophe, trimmed stray 'ə]
 
 /// Family, people, and places — essential for conversations
 const List<AwingWord> familyPeople = [
   // Beginner — family and common places
   AwingWord(awing: 'mǎ', english: 'mother', category: 'family', pluralForm: 'pəmǎ'),
   AwingWord(awing: 'tátə', english: 'grandfather', category: 'family'),
-  AwingWord(awing: 'mábna', english: 'baby', category: 'family'),
+  AwingWord(awing: 'mó yi mbóolə', english: 'baby', category: 'family'),  // CORRECT Session 63 Part H 2026-07-22: was 'mábna' — dict Mistral p144 (may need a↔ə refinement)
   // ndě has 3 homonyms per dict + native speaker (Dr. Sama):
   // (1) neck (body part) — entry 60 in bodyParts
   // (2) elder, person of higher rank — vocative form of address
   // (3) house, inheritance — entry below in thingsObjects
   // Water/river is NOT one of the meanings — that's nkǐə (rising tone).
-  AwingWord(awing: 'ndě', english: 'elder, respected person', category: 'family', difficulty: 1),
+  AwingWord(awing: 'ntse mbia', english: 'elder, respected person', category: 'family', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ndě' — dict Mistral p156 (may need a↔ə refinement)
   // REMOVED yə "he/she" — per Awing English Dictionary yə is an associative/possessive grammatical marker, not the pronoun for "he/she" (Session 51 audit, EXACT match)
   AwingWord(awing: "alá'ə", english: 'village', category: 'family', pluralForm: "əlá'ə"),
   AwingWord(awing: 'adě', english: 'house', category: 'family'),
   AwingWord(awing: 'ngye', english: 'voice', category: 'family', difficulty: 1),
   AwingWord(awing: 'məteenə̂', english: 'market', category: 'family', difficulty: 1),  // Session 56 audit: was "mətéenɔ́" — dict says "məteenə̂"
-  AwingWord(awing: 'ndáəshə', english: 'thief', category: 'family', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  AwingWord(awing: 'ndzələ', english: 'thief', category: 'family', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)  // CORRECT Session 63 Part H 2026-07-22: was 'ndáəshə' — dict PDF p190 thief n. ndzələ
   AwingWord(awing: 'əgùərə', english: 'descendant', category: 'family', difficulty: 1),
   AwingWord(awing: 'tǎ', english: 'father/parent', category: 'family', pluralForm: 'pətǎ', difficulty: 1),
   AwingWord(awing: 'ngəənə', english: 'friend', category: 'family', pluralForm: 'pəghəənə'),
   AwingWord(awing: 'ndúmə', english: 'husband', category: 'family'),
   AwingWord(awing: 'mangyè', english: 'wife', category: 'family'),  // Session 56 audit: was "maŋgyè" — dict says "mangyè"
-  AwingWord(awing: 'ndè', english: 'elder', category: 'family'),
+  AwingWord(awing: 'ntse mbia', english: 'elder', category: 'family'),  // CORRECT Session 63 Part H 2026-07-22: was 'ndè' — dict Mistral p156 (may need a↔ə refinement)
   AwingWord(awing: 'əfo', english: 'chief/ruler', category: 'family', difficulty: 1),
   AwingWord(awing: 'ŋwunə', english: 'person', category: 'family', pluralForm: 'paənə'),
-  AwingWord(awing: 'mɔ́ mbyâŋnə', english: 'boy/son', category: 'family'),
+  AwingWord(awing: 'mó mbyâŋnə', english: 'boy/son', category: 'family'),  // CORRECT Session 63 Part H 2026-07-22: was 'mɔ́ mbyâŋnə' — dict PDF p148 boy n.p. mó mbyâŋnə
   AwingWord(awing: 'mɔ́ maŋgyè', english: 'girl/daughter', category: 'family'),
   AwingWord(awing: 'mɔ́ŋkə', english: 'child', category: 'family'),
   AwingWord(awing: 'ngaŋə', english: 'owner', category: 'family', difficulty: 1),
@@ -598,13 +605,14 @@ const List<AwingWord> familyPeople = [
   AwingWord(awing: 'mǎ wíŋɔ́', english: 'grandmother', category: 'family', difficulty: 2),
   AwingWord(awing: 'nda', english: 'sister/sibling', category: 'family', difficulty: 1),
   AwingWord(awing: 'nə̂ŋgə', english: 'brother', category: 'family'),
-  AwingWord(awing: "mɔ́'ŋkə", english: 'young person', category: 'family', difficulty: 1),
+  // DROP Session 63 Part H 2026-07-22: Dr. Sama confirmed not in dict
+  // AwingWord(awing: "mɔ́'ŋkə", english: 'young person', category: 'family', difficulty: 1),
   AwingWord(awing: 'əfɔ̀nə', english: 'teacher', category: 'family', difficulty: 1),
   AwingWord(awing: 'ətsɛ́bə', english: 'speaker/orator', category: 'family', difficulty: 1),
   AwingWord(awing: "əzó'ə", english: 'listener/judge', category: 'family', difficulty: 1),
   // Session 52 gloss audit: was "traditional doctor" — dict says "owner" (like ngaŋə at L603)
   // AwingWord(awing: 'ngàŋə', english: 'owner', category: 'family', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L579 ('ngaŋə')
-  AwingWord(awing: 'əfo wíŋɔ́', english: 'paramount chief', category: 'family', difficulty: 2),
+  AwingWord(awing: 'əfo wíŋɔ́', english: 'paramount fon, king, chief', category: 'family', difficulty: 2),  // CORRECT Session 63 Part H 2026-07-22: english was 'paramount chief' — Dr. Sama says: paramount fon, king, chief
   AwingWord(awing: 'əkwáŋə', english: 'stranger/visitor', category: 'family', difficulty: 1),
   AwingWord(awing: 'ndzɔ̂ŋə', english: 'age group', category: 'family', difficulty: 1),
   AwingWord(awing: 'əlúmə', english: 'hunter', category: 'family', difficulty: 1),
@@ -615,7 +623,7 @@ const List<AwingWord> familyPeople = [
   AwingWord(awing: "mən'ɔ", english: 'person', category: 'family', difficulty: 1),
   AwingWord(awing: 'məbîə', english: 'boy', category: 'family', difficulty: 1),
   AwingWord(awing: 'əbîə', english: 'girl', category: 'family', difficulty: 1),
-  AwingWord(awing: 'məkwɛ́', english: 'servant', category: 'family', difficulty: 1),
+  AwingWord(awing: "ngaŋəfa'ə", english: 'servant', category: 'family', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'məkwɛ́' — dict Mistral p184 (may need a↔ə refinement) [Session 64: fixed unescaped apostrophe, trimmed stray 'ə]
   AwingWord(awing: 'adzə̌ə', english: 'butcher', category: 'family', difficulty: 1),
   AwingWord(awing: 'ndzɔ̂ŋɔ', english: 'country', category: 'family', difficulty: 1),
   // Session 52 gloss audit: was "place" — dict says 'where? (interrogative)'
@@ -632,7 +640,7 @@ const List<AwingWord> numbers = [
   AwingWord(awing: 'wûu', english: 'one', category: 'numbers', difficulty: 1),
   AwingWord(awing: 'mbê', english: 'two', category: 'numbers', difficulty: 1),  // Session 60 audit ADD: was missing
   AwingWord(awing: 'teelə́', english: 'three', category: 'numbers', difficulty: 1),  // Session 60 audit ADD: was missing
-  AwingWord(awing: 'nəkwa', english: 'four', category: 'numbers', difficulty: 1),  // Session 60 audit ADD: was missing
+  AwingWord(awing: 'kwa', english: 'four', category: 'numbers', difficulty: 1),  // Session 60 audit ADD: was missing  // CORRECT Session 63 Part H 2026-07-22: was 'nəkwa' — dict Mistral p160 (may need a↔ə refinement)
   AwingWord(awing: 'tênə', english: 'five', category: 'numbers', difficulty: 1),  // Session 60 audit ADD: was missing
   AwingWord(awing: 'ntogə́', english: 'six', category: 'numbers', difficulty: 1),
   AwingWord(awing: 'asaambê', english: 'seven', category: 'numbers', difficulty: 1),
@@ -655,7 +663,7 @@ const List<AwingWord> numbers = [
   AwingWord(awing: 'məghə́m mén nəkwa', english: 'forty', category: 'numbers', difficulty: 2),  // Session 60 audit FIX: was "mbá əpá"
   AwingWord(awing: 'məghə́m mén tênə', english: 'fifty', category: 'numbers', difficulty: 2),
   AwingWord(awing: 'məghə́m mén ntogə́', english: 'sixty', category: 'numbers', difficulty: 2),
-  AwingWord(awing: 'məghə́m mén asaambê', english: 'seventy', category: 'numbers', difficulty: 2),
+  AwingWord(awing: 'məghəm ménə', english: 'seventy', category: 'numbers', difficulty: 2),  // CORRECT Session 63 Part H 2026-07-22: was 'məghə́m mén asaambê' — dict Mistral p184 (may need a↔ə refinement)
   AwingWord(awing: 'məghə́m mém nəfeemə́', english: 'eighty', category: 'numbers', difficulty: 2),  // Session 60 audit FIX: mén→mém (M not N before bilabial)
   AwingWord(awing: "məghə́m mén nəpu'ə́", english: 'ninety', category: 'numbers', difficulty: 2),
   // Hundred — dictionary p.114, p.116
@@ -686,36 +694,37 @@ const List<AwingWord> moreActions = [
   AwingWord(awing: 'yîkə', english: 'harden', category: 'actions', difficulty: 1),
   AwingWord(awing: 'kaŋtə', english: 'stumble', category: 'actions', difficulty: 1),  // Session 56 audit: was "kaŋtɔ́" — dict says "kaŋtə"
   AwingWord(awing: 'nyaglə', english: 'tickle', category: 'actions', difficulty: 1),  // Session 56 audit: was "nyaglɔ́" — dict says "nyaglə"
-  AwingWord(awing: 'nɔ́ŋə', english: 'suck', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'shwíŋə', english: 'suck', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'nɔ́ŋə' — dict PDF p190 suck v. shwíŋə (nóŋə = suckle)
   // Session 52 gloss audit: was "twist" — dict says "give birth (by many women or many children by one)"
   AwingWord(awing: 'pìkə', english: 'give birth', category: 'actions', difficulty: 1),
   AwingWord(awing: 'kwúbtə', english: 'close', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'ídkə', english: 'frighten', category: 'actions', difficulty: 1),
+  AwingWord(awing: 'ghədkə', english: 'frighten', category: 'actions', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ídkə' — dict Mistral p161 (may need a↔ə refinement)
   AwingWord(awing: 'nwâŋə', english: 'disappear', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'ɔ̂ŋwâə', english: 'be clean', category: 'actions', difficulty: 1),
+  // DROP Session 63 Part H 2026-07-22: Dr. Sama confirmed not in dict
+  // AwingWord(awing: 'ɔ̂ŋwâə', english: 'be clean', category: 'actions', difficulty: 1),
   AwingWord(awing: 'təənô', english: 'be mature', category: 'actions', difficulty: 1, shortForm: 'tə̂nə'),  // Session 56 audit: was "tɔ̂ənə" — dict says "təənô"
   AwingWord(awing: 'fìnə', english: 'resemble each other', category: 'actions', difficulty: 1),
   AwingWord(awing: 'puónə', english: 'dip in water', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'chwígə', english: 'spy', category: 'actions', difficulty: 1),  // Session 56 audit: was "chwigó" — dict says "chwígə"
+  AwingWord(awing: 'nchwigə', english: 'spy', category: 'actions', difficulty: 1),  // Session 56 audit: was "chwigó" — dict says "nchwigə"  // CORRECT Session 63 Part H 2026-07-22: was 'chwígə' — dict Mistral p187 (may need a↔ə refinement)
   // Expert
   AwingWord(awing: 'təəmə', english: 'choke', category: 'actions', difficulty: 1),  // Session 56 audit: was "tɔ́əmə" — dict says "təəmə"
   AwingWord(awing: "ne'â", english: 'limp', category: 'actions', difficulty: 3),  // Session 56 audit: was "ne'ɔ́" — dict says "ne'â"
   AwingWord(awing: 'pwódkə', english: 'appease', category: 'actions', difficulty: 1),  // Session 56 audit: was "pwɔ́nə" — dict says "pwódkə"
   AwingWord(awing: 'ɔ̀pwə̂nənə', english: 'be kind', category: 'actions', difficulty: 3),
-  AwingWord(awing: 'ntɨ́mmaə', english: 'stagger', category: 'actions', difficulty: 1)];
+  AwingWord(awing: 'taalə', english: 'stagger', category: 'actions', difficulty: 1)];  // CORRECT Session 63 Part H 2026-07-22: was 'ntɨ́mmaə' — dict PDF p190 stagger v. taalə
 
 /// More things/objects — medium and expert level
 const List<AwingWord> moreThings = [
   AwingWord(awing: 'nəchwélə', english: 'hearth', category: 'things', difficulty: 1),
   AwingWord(awing: 'ntúmkə', english: 'entrance hut', category: 'things', difficulty: 2),
-  AwingWord(awing: 'əleglə', english: 'bridge', category: 'things', difficulty: 1),  // Session 56 audit: was "əlɛɛlə" — dict says "əleglə"
-  AwingWord(awing: 'ŋgwɔ́ɔlə', english: 'snail', category: 'things', difficulty: 1),
+  AwingWord(awing: 'əleɛlə', english: 'bridge', category: 'things', difficulty: 1),  // Session 56 audit: was "əlɛɛlə" — dict says "əleɛlə"  // CORRECT Session 63 Part H 2026-07-22: was 'əleglə' — dict Mistral p147 (may need a↔ə refinement)
+  AwingWord(awing: "atəta'ə", english: 'snail', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'ŋgwɔ́ɔlə' — dict Mistral p186 (may need a↔ə refinement) [Session 64: fixed unescaped apostrophe, trimmed stray 'ə]
   AwingWord(awing: 'nəghǒ', english: 'grinding stone', category: 'things', difficulty: 1),
   AwingWord(awing: 'akwé', english: 'response', category: 'things', difficulty: 1),
-  AwingWord(awing: 'akoolá', english: 'latrine', category: 'things', difficulty: 1),
+  AwingWord(awing: "ali'əmətseŋnə", english: 'latrine', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'akoolá' — dict Mistral p169 (may need a↔ə refinement) [Session 64: fixed unescaped apostrophe]
   AwingWord(awing: "ashwí'ə", english: 'swelling', category: 'things', difficulty: 2),
   // AwingWord(awing: 'njwîŋə', english: 'whistle', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L395 ('njwíŋə')
-  AwingWord(awing: 'mbwódnə', english: 'blessing', category: 'things', difficulty: 1),
+  AwingWord(awing: 'mbwədnə', english: 'blessing', category: 'things', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'mbwódnə' — dict Mistral p146 (may need a↔ə refinement)
   // Session 52 gloss audit: was "hardship" — dict says "year" / "red-feathered bird" / "termite"
   AwingWord(awing: "ngó'ə", english: 'year', category: 'things', difficulty: 2),
   AwingWord(awing: 'atsáŋə', english: 'punishment', category: 'things', difficulty: 1),
@@ -732,7 +741,7 @@ const List<AwingWord> descriptiveWords = [
   AwingWord(awing: 'wíŋɔ́', english: 'big', category: 'descriptive'),
   AwingWord(awing: 'mɔ́', english: 'small', category: 'descriptive'),
   AwingWord(awing: 'sagɔ́', english: 'long/far', category: 'descriptive', difficulty: 1),
-  AwingWord(awing: 'fáŋə', english: 'fat/thick', category: 'descriptive', difficulty: 1),
+  AwingWord(awing: 'məfóomə', english: 'fat/thick', category: 'descriptive', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'fáŋə' — dict Mistral p158 (may need a↔ə refinement)
   AwingWord(awing: 'ashwánə', english: 'thin', category: 'descriptive'),
   // Qualities
   // Session 52 gloss audit: was "good/kind" — dict says "trade"
@@ -741,7 +750,7 @@ const List<AwingWord> descriptiveWords = [
   AwingWord(awing: 'tyantɔ̌', english: 'hard/strong', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'fía', english: 'new/fresh', category: 'descriptive'),
   AwingWord(awing: 'ndenə', english: 'old', category: 'descriptive'),
-  AwingWord(awing: 'mboŋɔ́', english: 'many/much', category: 'descriptive', difficulty: 1),
+  AwingWord(awing: 'mboŋə', english: 'many/much', category: 'descriptive', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'mboŋɔ́' — dict Mistral p171 (may need a↔ə refinement)
   AwingWord(awing: "nta'lə", english: 'few/little', category: 'descriptive'),
   AwingWord(awing: 'senô', english: 'today', category: 'descriptive'),  // Session 56 audit: was "senɔ́" — dict says "senô"
   AwingWord(awing: "ngwe'ə́", english: 'tomorrow', category: 'descriptive'),  // Session 56 audit: was "ngwe'ɔ́" — dict says "ngwe'ə́"
@@ -749,13 +758,13 @@ const List<AwingWord> descriptiveWords = [
   // Medium difficulty
   AwingWord(awing: "təji'ə", english: 'alone', category: 'descriptive', difficulty: 2),  // Session 56 audit: was "tɔ̀jí'ə" — dict says "təji'ə"
   AwingWord(awing: 'páta', english: 'even though', category: 'descriptive', difficulty: 1),  // Session 56 audit: was "pátə" — dict says "páta"
-  AwingWord(awing: 'chígɔ́', english: 'truly/really', category: 'descriptive', difficulty: 1),
+  AwingWord(awing: 'chigə', english: 'truly/really', category: 'descriptive', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'chígɔ́' — dict Mistral p192 (may need a↔ə refinement)
   AwingWord(awing: 'ghâsə', english: 'clever/smart', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'kóŋɔ́', english: 'empty', category: 'descriptive', difficulty: 1),
   // New descriptive words from phonology/orthography PDFs
   AwingWord(awing: 'kwɨ̂ŋɔ́', english: 'sweet', category: 'descriptive'),
   AwingWord(awing: 'shwàŋə', english: 'sharp', category: 'descriptive'),
-  AwingWord(awing: 'tsɛ̀ŋə', english: 'dry', category: 'descriptive'),
+  AwingWord(awing: 'njǔbtə', english: 'dry', category: 'descriptive'),  // CORRECT Session 63 Part H 2026-07-22: was 'tsɛ̀ŋə' — dict PDF p156 dry adj. njǔbtə
   // CORRECTED fúfúə "bright/clean" → "white" per Awing English Dictionary EXACT match (Session 51 audit)
   // AwingWord(awing: 'fúfúə', english: 'white', category: 'descriptive'),  // REMOVED Session 61 Phase1: OCR clone, kept L712 ('fúfûə')
   AwingWord(awing: 'dzə̀mə', english: 'deep', category: 'descriptive', difficulty: 1),
@@ -770,23 +779,24 @@ const List<AwingWord> descriptiveWords = [
   AwingWord(awing: 'sɛ̂ŋə', english: 'raw/uncooked', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'shɔ̂ŋə', english: 'ripe/ready', category: 'descriptive', difficulty: 1),
   // Session 52 gloss audit: was "early" — dict says "steep place, hilly place" (primary gloss)
-  AwingWord(awing: 'kə̂ŋə', english: 'steep place, hilly place', category: 'nature', difficulty: 1),
+  AwingWord(awing: "akó'kə", english: 'steep place, hilly place', category: 'nature', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'kə̂ŋə' — dict PDF p188 steep place n. akó'kə [Session 64: fixed unescaped apostrophe, trimmed stray 'kə]
   // Session 52 gloss audit: was "late" — dict says "cane, walking stick" (tone variant of L 208 mbâŋə)
   // AwingWord(awing: 'mbàŋə', english: 'cane, walking stick', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L246 ('mbâŋə')
   AwingWord(awing: 'ntsɔ́ŋɔ́', english: 'fast/quick', category: 'descriptive', difficulty: 1),
-  AwingWord(awing: 'nyàŋə', english: 'slow/careful', category: 'descriptive', difficulty: 1),
+  AwingWord(awing: 'nyaanə', english: 'slow/careful', category: 'descriptive', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'nyàŋə' — dict Mistral p186 (may need a↔ə refinement)
   AwingWord(awing: 'wɔ̂ŋə', english: 'quiet/silent', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'kpɔ̀ŋɔ́', english: 'loud/noisy', category: 'descriptive', difficulty: 1),
   // Session 52: was nûə "sweet (like honey)" — WRONG. Per dictionary, nûə = "honey"
   // (the noun, already correctly at L232 in food category). Replaced with ləmkə̂
   // ("be tasty/sweet"), the actual word for the "sweet" descriptor.
   AwingWord(awing: 'ləmkə̂', english: 'sweet/tasty', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'shɨ̂ŋə', english: 'sour/bitter', category: 'descriptive', difficulty: 1),
+  AwingWord(awing: 'atsəgə', english: 'sour/bitter', category: 'descriptive', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'shɨ̂ŋə' — dict Mistral p187 (may need a↔ə refinement)
   // === NEW: PDF-verified entries (Session 37) ===
   AwingWord(awing: 'tyanɔ́', english: 'hard', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'yɨ̌la', english: 'difficult', category: 'descriptive', difficulty: 1),
-  AwingWord(awing: 'préta', english: 'crazy', category: 'descriptive', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
-  AwingWord(awing: 'mbɔŋɔ́', english: 'many', category: 'descriptive', difficulty: 1),
+  // DROP Session 63 Part H 2026-07-22: Dr. Sama confirmed not in dict
+  // AwingWord(awing: 'préta', english: 'crazy', category: 'descriptive', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  AwingWord(awing: 'mboŋə', english: 'many', category: 'descriptive', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'mbɔŋɔ́' — dict Mistral p171 (may need a↔ə refinement)
   AwingWord(awing: 'tsaanɔ́', english: 'mature', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'fîə', english: 'new', category: 'descriptive', difficulty: 1),  // Session 56 audit: was "fía" — dict says "fîə"
   AwingWord(awing: 'léelə', english: 'ready', category: 'descriptive', difficulty: 1),  // Session 56 audit: was "léeta" — dict says "léelə"
@@ -2196,25 +2206,49 @@ const List<NounClass> nounClasses = [
 // Total: 2494 additional entries
 // ============================================================
 const List<AwingWord> dictionaryEntries = [
+  AwingWord(awing: 'yaalə̂', english: 'carry heavy load', category: 'actions', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p149 carry of heavy load (colloq) v. yaalə̂
+  AwingWord(awing: 'kwúbkə', english: 'drink hastily', category: 'actions', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p156 drink hastily v. kwúbkə
+  AwingWord(awing: 'tǎdmé', english: 'grandfather (maternal)', category: 'family', difficulty: 1),  // ADD Session 63 Part H 2026-07-22: dict PDF p164 great grandfather(maternal) n. tǎdmé
+  AwingWord(awing: 'tǎ pətǎ', english: 'grandfather (paternal)', category: 'family', difficulty: 1),  // ADD Session 63 Part H 2026-07-22: dict PDF p164 grandfather(paternal) c.n. tǎ pətǎ
+  AwingWord(awing: 'mǎ pəmə', english: 'grandmother (maternal)', category: 'family', difficulty: 1),  // ADD Session 63 Part H 2026-07-22: dict PDF p164 grandmother(maternal) c.n. mǎ pəmə
+  AwingWord(awing: 'mǎ pətǎ', english: 'grandmother (paternal)', category: 'family', difficulty: 1),  // ADD Session 63 Part H 2026-07-22: dict PDF p164 grandmother(paternal) c.n. mǎ pətǎ
+  AwingWord(awing: 'lyánə', english: 'hide', category: 'actions', difficulty: 1),  // ADD Session 63 Part H 2026-07-22: dict PDF p149 hide (tr) v. lyánə
+  AwingWord(awing: 'kyaalə̂', english: 'lift soft thing', category: 'actions', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p169 lift of sth soft v. kyaalə̂
+  AwingWord(awing: 'kə̌əkə̂', english: 'run (many)', category: 'actions', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p182 run of many things v. kəəkə̂
+  AwingWord(awing: 'kəŋtə̂', english: 'shade many', category: 'actions', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p185 shade many things v. kəŋtə̂
+  AwingWord(awing: 'jimkə̂', english: 'wake up someone', category: 'actions', difficulty: 1),  // ADD Session 63 Part H 2026-07-22: dict PDF p196 wake somebody up (tr) v. jimkə̂
+  AwingWord(awing: 'jimnə̂', english: 'wake up', category: 'actions', difficulty: 1),  // ADD Session 63 Part H 2026-07-22: dict PDF p196 wake up (intr) v. jimnə̂
+  AwingWord(awing: 'chámtə', english: 'whisper', category: 'actions', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p196 whisper v. chámtə
+  AwingWord(awing: 'nέŋ nəfəŋə́', english: 'wound (verb)', category: 'actions', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p197 wound(v) n.p. nέŋ nəfəŋə́
+  AwingWord(awing: 'zeebə', english: 'ceiling', category: 'things', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p149 ceiling, of bamboo-made n. zeebə
+  AwingWord(awing: "nəkó'ə", english: 'growth of plants', category: 'nature', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p163 growth of plants n. nəkó'ə
+  AwingWord(awing: 'akwɛlə məneemə', english: 'herd of cattle', category: 'animals', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p163 herd of cattle c.n. akwɛlə məneemə
+  AwingWord(awing: 'təti napu nə́ ngə́bə', english: 'egg yolk', category: 'food', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p197 yolk of egg n.p. təti napu nə́ ngə́bə
+  AwingWord(awing: 'nəntsə̂ŋə', english: 'peg', category: 'things', difficulty: 2),  // ADD Session 63 Part H 2026-07-22: dict PDF p177 peg n. atselə - variant nəntsə̂ŋə
   // body (121)
-  AwingWord(awing: "achí yə əshi'nə", english: 'good sign when blood twitches near the eye', category: 'body', tonePattern: 'high', difficulty: 3),
-  AwingWord(awing: 'achiə təpəŋə', english: 'bad sign when blood twitches', category: 'body', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; over-specific "sign when blood twitches" gloss reads as vision-extraction fabrication
+  // AwingWord(awing: "achí yə əshi'nə", english: 'good sign when blood twitches near the eye', category: 'body', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: 'achiə təpəŋə', english: 'bad sign when blood twitches', category: 'body', difficulty: 3),
   AwingWord(awing: 'achwinə', english: 'act of provocation by twitching fingers at each other', category: 'body', difficulty: 2),
-  AwingWord(awing: "afeelókwú'ó", english: 'small of the back', category: 'body', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; form unusual, gloss "small of the back" not standard
+  // AwingWord(awing: "afeelókwú'ó", english: 'small of the back', category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'afúə azánə', english: 'leaf of palm, palm needle', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'aghəŋə', english: 'lip; edge of a hollow vessel', category: 'body', difficulty: 1),
-  AwingWord(awing: 'aghəŋə ntsoolə', english: 'fat lip', category: 'body', difficulty: 2),
+  AwingWord(awing: 'aghəŋə ntsoolə', english: 'lip (compound form)', category: 'body', difficulty: 2),  // CORRECT Session 63 reconcile 2026-07-22: was 'fat lip' — dict index p170 shows "lip | c.n. aghəŋə ntsoolə" (compound noun, not "fat lip")
   AwingWord(awing: 'akəghoolámiə', english: 'nape of neck', category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: "akə'lə", english: "triangular hedge on pig's neck to constrain it", category: 'body', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; over-specific fabrication-tell gloss
+  // AwingWord(awing: "akə'lə", english: "triangular hedge on pig's neck to constrain it", category: 'body', difficulty: 1),
   AwingWord(awing: 'akwəŋó əshûə', english: 'fish bone', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "akwə'tó", english: 'knee', category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'aləəbó', english: 'growth on the neck', category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'aləəbənófâŋə', english: 'growth in the armpit as sign of wound', category: 'body', tonePattern: 'falling', difficulty: 2),
+  AwingWord(awing: 'aləəbə', english: 'growth on the neck', category: 'body', difficulty: 1),  // CORRECT Session 63 reconcile 2026-07-22: was 'aləəbó' — dict Mistral p30 "aləəbə n. growth on the neck"; also dropped tonePattern (dict form has no high tone)
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; over-specific fabrication-tell gloss
+  // AwingWord(awing: 'aləəbənófâŋə', english: 'growth in the armpit as sign of wound', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'alógántəəmə', english: 'heart break', category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "alə'tó", english: 'chin', category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "ambêmálo'ə", english: 'palm rat', category: 'body', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'amiə', english: 'neck', category: 'body', difficulty: 1),
-  AwingWord(awing: 'aŋkəələngwúə', english: 'finger-like potatoe used as medicine (genson)', category: 'body', tonePattern: 'high', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; over-specific "used as medicine (genson)" gloss
+  AwingWord(awing: 'aŋkəələngwúə', english: 'finger-like potatoe used as medicine (genson)', category: 'body', tonePattern: 'high', difficulty: 2),  // REVIVED Session 63 Part H 2026-07-22: was DROPPED but dict confirms — dict p179 confirms as sort of potato
   AwingWord(awing: 'apô yə kwaabə', english: 'left hand; left direction', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'apô yə təənə', english: 'right hand; right direction', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'aselə', english: 'sore throat', category: 'body', difficulty: 1),
@@ -2224,7 +2258,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'atɨə maghólə', english: 'oil palm', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'atɨə nətəənə', english: 'palm tree', category: 'body', difficulty: 2),
   AwingWord(awing: 'atóŋnəntsoolə', english: 'long mouth (used as insult)', category: 'body', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'atoŋə', english: 'pointed mouth of a bottle or calabash', category: 'body', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; over-specific gloss
+  // AwingWord(awing: 'atoŋə', english: 'pointed mouth of a bottle or calabash', category: 'body', difficulty: 1),
   AwingWord(awing: "atúəmbe'tə", english: 'shoulder blade', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: "atsa'ámbəəmə", english: 'muscle', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: "atsêeblá'ə", english: 'mother tongue, local language', category: 'body', tonePattern: 'falling', difficulty: 1),
@@ -2232,34 +2267,40 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'atsê', english: 'one palm leave', category: 'body', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: "atso'ámásəŋə", english: 'tooth stick, toothbrush', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'azáŋə', english: 'palm branch', category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'azelándé', english: 'fold skin of neck, especially in fleshy people', category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: "cha'âz", english: 'of the eyes, bear a white substance especially early in the morning from bed', category: 'body', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; over-specific "fold skin... in fleshy people" gloss
+  // AwingWord(awing: 'azelándé', english: 'fold skin of neck, especially in fleshy people', category: 'body', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: "cha'ə", english: 'of the eyes, bear a white substance especially early in the morning from bed', category: 'body', difficulty: 3),  // CORRECT Session 63 reconcile 2026-07-22: was "cha'âz" (invalid: Awing words end in vowels, not z) — dict Mistral p49 "cha'ə [tʃa:ə] v. of the eyes, bear a white substance..."
   AwingWord(awing: "châ'lə", english: 'A sort of white substance from the eye that comes out usually after sleep', category: 'body', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chî nó əlimá', english: 'Have many blood relations who are caring', category: 'body', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: "chwá'tə", english: "shave one's hair improperly", category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'chwí mbó', english: 'twitch fingers as a sign of agreement to contest a fight', category: 'body', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; over-specific "sign of agreement to contest a fight" gloss (companion to L2200-2201 blood-twitch fabrications)
+  // AwingWord(awing: 'chwí mbó', english: 'twitch fingers as a sign of agreement to contest a fight', category: 'body', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'əfeŋ fiə apô', english: 'ring of finger', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əfeŋ nəlwîə', english: 'nose ring', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əfeŋə akoolə', english: 'ankle ring, bangle', category: 'body', difficulty: 2),
   AwingWord(awing: 'ələələ', english: 'bamboo-skin (often fresh) used as rope', category: 'body', difficulty: 1),
   AwingWord(awing: 'əŋaŋ nələŋə', english: 'tendon', category: 'body', difficulty: 2),
   AwingWord(awing: 'əŋaŋə́', english: 'vein; root', category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'əsâŋngyénə', english: 'rib', category: 'body', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'əsâŋngyéŋə', english: 'rib', category: 'body', tonePattern: 'falling', difficulty: 1),  // CORRECT Session 63 reconcile 2026-07-22: was 'əsâŋngyénə' — dict index p181 "rib n.p. əsâŋngyéŋə" (final ŋ, not n)
   AwingWord(awing: 'əshwignə́', english: 'a sort of thread produced from raffia palm stumps', category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'fá', english: 'cross through thick grass or fast running water on foot', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'féekə', english: 'expose teeth especially in laughter (colloquial)', category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'fəmá', english: "deep one's hands, head, feet etc into sth eg water", category: 'body', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; verbose "deep one's hands, head, feet etc into sth eg water" gloss
+  // AwingWord(awing: 'fəmá', english: "deep one's hands, head, feet etc into sth eg water", category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'fîə akoolə', english: 'toe', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'fîə apô', english: 'finger', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'fid nəlwîə', english: 'blow nose', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "fú məlo'ə", english: 'palm wine', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'fú nənoŋə', english: 'grey hair', category: 'body', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'ghəəbə̂', english: 'crunch soft bone (as a dog)', category: 'body', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'jubô', english: 'skin (animal), strip off (bark), peel', category: 'body', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; "(as a dog)" gloss form
+  AwingWord(awing: 'ghəəbə̂', english: 'crunch soft bone (as a dog)', category: 'body', tonePattern: 'falling', difficulty: 1),  // REVIVED Session 63 Part H: p188 crunch sth v. ghəəbə̂
+  // DROP Session 63 reconcile 2026-07-22: dict Mistral p18 uses 'ngwubə' for skin, not 'jubô'; also triple-gloss vagueness
+  // AwingWord(awing: 'jubô', english: 'skin (animal), strip off (bark), peel', category: 'body', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kwumə', english: 'nail; roof', category: 'body', difficulty: 1),
   AwingWord(awing: 'kwumtô', english: 'nail', category: 'body', tonePattern: 'falling'),
   AwingWord(awing: 'məghód má paŋ nə̂', english: 'palm oil', category: 'body', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'məm nəpəmə', english: 'stomach (internal)', category: 'body', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22: no Mistral hit; likely fabricated compound (nəpəmə already = stomach in bodyParts)
+  // AwingWord(awing: 'məm nəpəmə', english: 'stomach (internal)', category: 'body', difficulty: 2),
   AwingWord(awing: 'máma apô', english: 'palm (of hand)', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "manoŋ má əli' mbáata", english: 'pubic hair', category: 'body', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'manoŋ má mbǎəmə', english: 'hair (of body)', category: 'body', tonePattern: 'rising', difficulty: 2),
@@ -2291,30 +2332,36 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "pe'ə atûə", english: 'carry on head', category: 'body', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'péŋə achíə', english: 'bleed or lose blood', category: 'body', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'pipá', english: "'of'", category: 'body', tonePattern: 'high', difficulty: 3),
-  AwingWord(awing: "pwə'ə", english: 'spit in an unpleasant manner', category: 'body', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22: ORPHAN; over-specific "in an unpleasant manner" gloss
+  // AwingWord(awing: "pwə'ə", english: 'spit in an unpleasant manner', category: 'body', difficulty: 1),
   AwingWord(awing: 'seelô', english: 'tear (tr)', category: 'body', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'səbnô', english: 'be worry; be depressed', category: 'body', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'shágə', english: "steal palm wine from another person's palm bush", category: 'body', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'tôgndě', english: 'throat', category: 'body', tonePattern: 'rising', difficulty: 1),
   AwingWord(awing: 'twîəə', english: 'spit', category: 'body', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: "tsó'óto'ə", english: 'very sweet palm wine', category: 'body', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'waglə', english: "hold loosely of a tied rope round something eg round a cow's neck", category: 'body', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22: verbose "eg round a cow's neck" gloss; Mistral p40 only shows "atīə awaglə" (boundary stick), no verb form
+  // AwingWord(awing: 'waglə', english: "hold loosely of a tied rope round something eg round a cow's neck", category: 'body', difficulty: 3),
   AwingWord(awing: 'yinə̌', english: 'of (linker)', category: 'body', tonePattern: 'rising', difficulty: 3),
 
   // family (100)
-  AwingWord(awing: 'achíkə ŋwunə', english: 'old person irresponsive to bodily emotions', category: 'family', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'adochenə', english: "school children's game played with a small ball", category: 'family', difficulty: 2),
-  AwingWord(awing: "afəmólá'ə", english: 'land where forefathers settled within the Awing clan; quarter name', category: 'family', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'ajiəmógó', english: 'all-knowing person, proud and boastful person', category: 'family', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'achíkə ŋwunə', english: 'old and irresponsive to feelings', category: 'family', tonePattern: 'high', difficulty: 2),  // CORRECT Session 63 reconcile 2026-07-22: was 'old person irresponsive to bodily emotions' — dict index p174 "old and irresponsive to feelings n.p. achíkə ŋwunə"
+  // DROP Session 63 reconcile 2026-07-22: ORPHAN; over-specific "school children's game with a small ball" gloss
+  AwingWord(awing: 'adochenə', english: "school children's game played with a small ball", category: 'family', difficulty: 2),  // REVIVED Session 63 Part H: p151 game, sort of n. adochenə
+  // DROP Session 63 reconcile 2026-07-22: ORPHAN; over-specific "land where forefathers settled + quarter name" compound
+  // AwingWord(awing: "afəmólá'ə", english: 'land where forefathers settled within the Awing clan; quarter name', category: 'family', tonePattern: 'high', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22: ORPHAN; verbose triple-gloss "all-knowing person, proud and boastful person"
+  // AwingWord(awing: 'ajiəmógó', english: 'all-knowing person, proud and boastful person', category: 'family', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'akəmóntsoolə', english: 'greedy person, powerful person', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'akəghə', english: 'stupid person, imbecile; stupidity', category: 'family', difficulty: 3),
   AwingWord(awing: 'akəmótógiə', english: 'deaf person', category: 'family', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "akǒ'nə məŋgyě", english: 'young woman', category: 'family', tonePattern: 'rising', difficulty: 2),
-  AwingWord(awing: "akwu'ó", english: 'travelling people (mystical, cause floods in enemy villages)', category: 'family', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  AwingWord(awing: "akwu'ó", english: 'travelling people (mystical)', category: 'family', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner); CORRECT Session 63 reconcile 2026-07-22: was 'travelling people (mystical, cause floods in enemy villages)' — dict index p192 "travelling people (mystical) n. akwu'ə"
   AwingWord(awing: 'aloonətəjiə', english: 'person, discontented though rich', category: 'family', difficulty: 2),
   AwingWord(awing: 'anəələmóonə', english: 'child dedication, usually takes place in church a few months (two to three months) after birth', category: 'family', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: "apo'ə", english: 'slave', category: 'family', difficulty: 1),
-  AwingWord(awing: 'asoŋə', english: "mystical power used by one to enrich himself by dragging away another person's wealth", category: 'family', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22: SUSPECT no Mistral hit; extremely verbose "mystical power used by one to enrich himself..." gloss reads as fabrication
+  AwingWord(awing: 'asoŋə', english: "mystical power used by one to enrich himself by dragging away another person's wealth", category: 'family', difficulty: 3),  // REVIVED Session 63 Part H 2026-07-22: was DROPPED but dict confirms — dict p179 confirms
   AwingWord(awing: "atágətatsə'ə", english: 'stiff and unrelenting person', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'atássəəmə', english: 'A person who is wild and animal in nature', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'atúmnə', english: 'the habit of giving too many assignments or laying too much burden on other people', category: 'family', tonePattern: 'high', difficulty: 3),
@@ -2322,7 +2369,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'atséebánkwûə', english: 'will of a dead person', category: 'family', tonePattern: 'falling', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   AwingWord(awing: 'azoŋ yə mbyâŋnə', english: 'younger brother', category: 'family', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'azoŋ yə məŋgyě', english: 'younger sister', category: 'family', tonePattern: 'rising', difficulty: 2),
-  AwingWord(awing: 'azəbtə', english: 'a special signal that is understood only by an in-house or a specific person', category: 'family', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'azəbtə', english: 'a special signal that is understood only by an in-house or a specific person', category: 'family', difficulty: 3),
   AwingWord(awing: 'chigə ngəənə', english: 'good or true friend', category: 'family', difficulty: 2),
   AwingWord(awing: 'chigəngaŋnkéebə', english: 'billionaire; very rich man', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'dógto', english: 'doctor', category: 'family', tonePattern: 'high', difficulty: 1),
@@ -2333,7 +2381,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'əfi əpúmə', english: 'seller or somebody who sells', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'əfi neemə', english: 'butcher', category: 'family', difficulty: 2),
   AwingWord(awing: 'əfinə', english: 'seller or somebody who sells', category: 'family', difficulty: 1),
-  AwingWord(awing: 'əfo nəfeŋə', english: 'a very inhygenic person (in exaggerated proportions)', category: 'family', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'əfo nəfeŋə', english: 'a very inhygenic person (in exaggerated proportions)', category: 'family', difficulty: 2),
   AwingWord(awing: 'əkə̂mátôglə', english: 'deaf person', category: 'family', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'əlimə́', english: 'relationship by family', category: 'family', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "əma'ngwulə", english: 'ancestor', category: 'family', difficulty: 1),
@@ -2349,7 +2398,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'mé nəlóga', english: 'pupil (of eye)', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'məko mó əfo', english: "fon's messenger", category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'mámé', english: 'grandmother (maternal)', category: 'family', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'mangyè natûa', english: 'principal wife, first wife', category: 'family', tonePattern: 'falling', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'mangyè natûa', english: 'principal wife, first wife', category: 'family', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'mápéenə', english: 'mother-in-law to the bride', category: 'family', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'móona', english: 'child', category: 'family', tonePattern: 'high'),
   AwingWord(awing: 'mó mbyâŋnə', english: 'son, little boy; boy', category: 'family', tonePattern: 'falling', difficulty: 2),
@@ -2372,7 +2422,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nətə nó məkəŋə', english: "potter's kiln", category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ngaŋnaghéenə', english: 'guest, visitor; stranger', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ngaŋtsábpê', english: 'deceitful person', category: 'family', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'ngəmə́', english: 'mother-in-law to the husband or groom; mother-in-law, daughter-in-law', category: 'family', tonePattern: 'high', difficulty: 2),
+  AwingWord(awing: 'ngəmə́', english: 'mother-in-law', category: 'family', tonePattern: 'high', difficulty: 2),  // CORRECT Session 63 reconcile 2026-07-22: was 'mother-in-law to the husband or groom; mother-in-law, daughter-in-law'
   AwingWord(awing: 'ngwad neemə', english: 'butcher', category: 'family', difficulty: 2),
   AwingWord(awing: 'ngwam əshúə', english: 'fisherman', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ngwulə', english: 'clan, family; descendant', category: 'family', difficulty: 1),
@@ -2390,19 +2440,24 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "tădmé yi ndza'kə", english: 'great grandfather (maternal)', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: "táko' ŋwunə", english: 'adult', category: 'family', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'təlénja', english: 'stranger', category: 'family', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'təwélakámə', english: 'A sharp flute used for rallying people for emergenncies (example war, serious development projects etc)', category: 'family', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
-  AwingWord(awing: 'tóondzəmə', english: "somebody who plays a limited role in another person's struggles; supporter, ally", category: 'family', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'təwélakámə', english: 'A sharp flute used for rallying people for emergenncies (example war, serious development projects etc)', category: 'family', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'tóondzəmə', english: "somebody who plays a limited role in another person's struggles; supporter, ally", category: 'family', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'twá nəpəmə', english: 'conceive a child, become pregnant', category: 'family', tonePattern: 'high', difficulty: 3),
 
   // animals (57)
   AwingWord(awing: 'atəənə akóolə əshûə', english: 'fish trap', category: 'animals', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "jwî'lə", english: 'a sort of fly that frequents rotting things', category: 'animals', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'kaŋə', english: 'wild cat that preys on fowls', category: 'animals', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kaŋə', english: 'wild cat that preys on fowls', category: 'animals', difficulty: 1),
   AwingWord(awing: 'kéenó', english: 'crab', category: 'animals', tonePattern: 'high'),
-  AwingWord(awing: 'kíchíə', english: 'cricket (insect that thrives in dry season)', category: 'animals', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'kífəmə', english: 'a kind of big bee that lives in dry wood', category: 'animals', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'kíchíə', english: 'cricket', category: 'animals', tonePattern: 'high', difficulty: 1),  // CORRECT Session 63 reconcile 2026-07-22: was 'cricket (insect that thrives in dry season)'
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kífəmə', english: 'a kind of big bee that lives in dry wood', category: 'animals', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "kíza'", english: 'grasshopper (delicious food for some tribes)', category: 'animals', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'kó əshûə', english: 'fish in Awing lake (word that people should not fish in Awing lake)', category: 'animals', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kó əshûə', english: 'fish in Awing lake (word that people should not fish in Awing lake)', category: 'animals', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'konə', english: 'owl, a bird with deep eyes that cries in the night (associated with bad omens)', category: 'animals', difficulty: 3),
   AwingWord(awing: 'kwíŋ nkǐə', english: 'turtle (water turtle)', category: 'animals', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'kwúneemə afoonə', english: 'warthog', category: 'animals', tonePattern: 'high', difficulty: 2),
@@ -2429,7 +2484,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nəmaŋnə', english: 'wild cat', category: 'animals', difficulty: 1),
   AwingWord(awing: 'nənyaglə', english: 'earthworm', category: 'animals', difficulty: 1),
   AwingWord(awing: "nəsoŋ nó tə̂ŋka'ə", english: "elephant's tusk", category: 'animals', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'nəwelá', english: 'a sort of small bird, known to be very unstable and as jumpy as a flee', category: 'animals', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'nəwelá', english: 'a sort of small bird, known to be very unstable and as jumpy as a flee', category: 'animals', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'ngábə', english: 'chicken, fowl', category: 'animals', tonePattern: 'high'),
   AwingWord(awing: 'ngwě kwúneemə', english: 'sow', category: 'animals', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'ngwě ləəmə́', english: 'mare (horse)', category: 'animals', tonePattern: 'rising', difficulty: 2),
@@ -2438,20 +2494,24 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ngwě neemə', english: 'cow', category: 'animals', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'nka kíleləŋkaŋə́', english: "spider's web", category: 'animals', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nkǐ əshúə', english: 'fish dam', category: 'animals', tonePattern: 'rising', difficulty: 2),
-  AwingWord(awing: "ntaŋ ngɔ'ə́", english: 'hut built for collecting termite', category: 'animals', tonePattern: 'high', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "ntaŋ ngɔ'ə́", english: 'hut built for collecting termite', category: 'animals', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'samba', english: 'men dance group led by an elephant-like masked person', category: 'animals', difficulty: 2),
-  AwingWord(awing: 'téembogla', english: 'a very big snake', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'téembogla', english: 'a very big snake', category: 'animals', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'tásélaséla', english: 'ant', category: 'animals', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'tásélaséla yi ndzag nə', english: 'flying ant', category: 'animals', tonePattern: 'high', difficulty: 2),
 
   // nature (160)
   AwingWord(awing: "achi'lə", english: 'turf of grass', category: 'nature', difficulty: 1),
   AwingWord(awing: 'afédngónə', english: 'third day of the week and minor market day', category: 'nature', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'afúə əghəmə', english: 'fig leaf used for communication; message from the fon', category: 'nature', tonePattern: 'high', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'afúə əghəmə', english: 'fig leaf used for communication; message from the fon', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'afúə nəkənə', english: 'wild grass that grows in the farm', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ajwigó', english: 'a day', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "ajwigó ngwe'ó", english: 'day after tomorrow', category: 'nature', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'akəblá ndəsê', english: 'clod of earth', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'akəblá ndəsê', english: 'clod of earth', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'akəpógló', english: 'dust', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'akoobá', english: 'forest, bush', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'akoobá afəgó', english: 'indian bamboo bush', category: 'nature', tonePattern: 'high', difficulty: 2),
@@ -2473,17 +2533,21 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'alóma', english: 'cloud, fog', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "alí'ə", english: 'cultivated ground', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'alimkə', english: 'horizontal or level road', category: 'nature', difficulty: 1),
-  AwingWord(awing: 'alúmə', english: 'a red medicinal plant', category: 'nature', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'alúmə', english: 'a red medicinal plant', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ambuə', english: 'medicinal plant that produces a sticky substance used as gum', category: 'nature', difficulty: 2),
   AwingWord(awing: "antwə̌'lə", english: 'little irish-like nuts from the ground, eaten as food', category: 'nature', tonePattern: 'rising', difficulty: 2),
-  AwingWord(awing: "aŋa'ə", english: 'sort of tree like a fig, having large leaves', category: 'nature', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "aŋa'ə", english: 'sort of tree like a fig, having large leaves', category: 'nature', difficulty: 1),
   AwingWord(awing: 'aŋkálə', english: 'large ridges that are formed by burning soil and vegetation', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: "apômbə'ə", english: 'the fifth day of the week', category: 'nature', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'atəsoŋə', english: 'elephant grass', category: 'nature', difficulty: 1),
   AwingWord(awing: "atatsá'ó", english: 'mud', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'atɨə akwamnə', english: 'plum tree', category: 'nature', difficulty: 2),
-  AwingWord(awing: 'atɨə apoŋwiŋə', english: 'A kind of soft tree used for making xylophones', category: 'nature', difficulty: 2),
-  AwingWord(awing: 'atɨə awaglápanêmə', english: 'a boundary stick which its leaves are used for making a public announcement', category: 'nature', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'atɨə apoŋwiŋə', english: 'A kind of soft tree used for making xylophones', category: 'nature', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'atɨə awaglápanêmə', english: 'a boundary stick which its leaves are used for making a public announcement', category: 'nature', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'atɨə azoomə', english: 'a plum tree', category: 'nature', difficulty: 2),
   AwingWord(awing: 'atɨə chaŋnə', english: 'ink tree', category: 'nature', difficulty: 2),
   AwingWord(awing: 'atɨə əghəmə', english: 'a fig tree', category: 'nature', difficulty: 2),
@@ -2496,10 +2560,12 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'atúmə məyeŋá', english: 'bush dweller, fulanis (used derogatorily)', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: "atsa'ə ndəsê", english: 'mud block', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'azéenə', english: 'playground; palace assembly ground', category: 'nature', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'chîə mbi ndě', english: 'stay awake late into the night', category: 'nature', tonePattern: 'rising', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chîə mbi ndě', english: 'stay awake late into the night', category: 'nature', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'chigə məsanə', english: 'early morning', category: 'nature', difficulty: 2),
   AwingWord(awing: 'chigə náŋə', english: 'scrutinise; examine well', category: 'nature', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'chúbə', english: 'remove something in a very fast way, usually from danger or by means of forceful seizure', category: 'nature', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chúbə', english: 'remove something in a very fast way, usually from danger or by means of forceful seizure', category: 'nature', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   AwingWord(awing: 'chwáanə', english: 'cut in a crude or inhuman way', category: 'nature', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   AwingWord(awing: 'chwaglə', english: 'bath oneself or wash something in an improper way', category: 'nature', difficulty: 1),
   AwingWord(awing: "chwí'ə", english: 'plant (cocoyams)', category: 'nature', tonePattern: 'high', difficulty: 1),
@@ -2515,11 +2581,14 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'əghâ alumə', english: 'dry season', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əghâ magheemá', english: 'rainy season', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'əlě', english: 'a rough-stemmed tree that grows in grassland areas', category: 'nature', tonePattern: 'rising', difficulty: 1),
-  AwingWord(awing: 'əleemá', english: 'bird droplets that grow into tree branches on any tree', category: 'nature', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'óláəló', english: 'yes; any thing kept by a tree god remains the same until the owner comes for it', category: 'nature', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'əleemá', english: 'bird droplets that grow into tree branches on any tree', category: 'nature', tonePattern: 'high', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'óláəló', english: 'yes; any thing kept by a tree god remains the same until the owner comes for it', category: 'nature', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: "ənumnə natú'ə", english: 'eclipse of the moon', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'əshwáŋ neemə', english: 'path of a wild animal', category: 'nature', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'əwaglápanə̂mə', english: 'boundary stick which its leaves are used for making a', category: 'nature', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'əwaglápanə̂mə', english: 'boundary stick which its leaves are used for making a', category: 'nature', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'əzooná yîə', english: 'day before yesterday', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'féŋtə', english: 'get well, recover from illness', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'fəláwa', english: 'flower (Whites like planting flowers in their compounds)', category: 'nature', tonePattern: 'high', difficulty: 2),
@@ -2531,11 +2600,14 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ghóŋə aneemə', english: 'farm bed (animal-related)', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'jwígə', english: 'pass or a day; spend a day, make a day', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "jwí'kə á ndî' mógə", english: 'smoke, dry in smoke, dry over fire', category: 'nature', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'kǎa', english: 'clean of farm beds roughly', category: 'nature', tonePattern: 'rising', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kǎa', english: 'clean of farm beds roughly', category: 'nature', tonePattern: 'rising', difficulty: 1),
   AwingWord(awing: 'kəfəələ', english: 'storm or wind; vent', category: 'nature', difficulty: 1),
   AwingWord(awing: 'kwáŋta', english: 'clean the furrows of a farm bed a little (using a hoe)', category: 'nature', tonePattern: 'high', difficulty: 3),
-  AwingWord(awing: 'kwedtâ', english: 'pour out a little of something on the ground or in a container', category: 'nature', tonePattern: 'falling', difficulty: 3),
-  AwingWord(awing: 'kwelô', english: 'pour something on ground or container (solid or liquid)', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  AwingWord(awing: 'kwedtâ', english: 'pour out a little of something on the ground or in a container', category: 'nature', tonePattern: 'falling', difficulty: 3),  // REVIVED Session 63 Part H: p177 pour a little v. kwedtə̂
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kwelô', english: 'pour something on ground or container (solid or liquid)', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "mba' mbaŋə", english: 'rain maker or somebody who makes rain not to fall with the use of magical powers', category: 'nature', difficulty: 3),
   AwingWord(awing: "mba'ə", english: 'rain maker or somebody who makes rain not to fall with the use of magical powers', category: 'nature', difficulty: 3),
   AwingWord(awing: 'mbeelə', english: 'furrow between farm beds', category: 'nature', difficulty: 1),
@@ -2555,21 +2627,23 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nchwelə', english: 'the sixth day of the week', category: 'nature', difficulty: 1),
   AwingWord(awing: 'nchwîa', english: 'the fourth day of the week; day of rest and also for carrying out traditional ceremonies', category: 'nature', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: "ndəsê yi əshí'nə", english: 'fertile soil', category: 'nature', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'ndúumbîə', english: 'the period early in the morning between 4 Am and 5 Am', category: 'nature', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'ndúumbîə', english: 'the period early in the morning between 4 Am and 5 Am', category: 'nature', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'ndzəmá', english: 'darkness', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ndzəŋ mənumə', english: 'afternoon, moment or period at sun down', category: 'nature', difficulty: 2),
   AwingWord(awing: "nəgho'ə", english: 'manner of grinding something or style with which something is ground', category: 'nature', difficulty: 3),
   AwingWord(awing: 'nəkwumə́', english: 'a long kind of basket used for carrying farm products and firewood', category: 'nature', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: "nəŋkwâ'lə", english: 'sand; little stones', category: 'nature', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'nəpeelə', english: 'boundary of field', category: 'nature', difficulty: 1),
-  AwingWord(awing: 'nətsóŋə', english: 'knot tied of any fibre product or plant, even of hair; lock e.g of hair', category: 'nature', tonePattern: 'high', difficulty: 3),
+  AwingWord(awing: 'nətsóŋə', english: 'knot', category: 'nature', tonePattern: 'high', difficulty: 3),  // CORRECT Session 63 reconcile 2026-07-22: stripped verbose dict artifact
   AwingWord(awing: "ngo'ə", english: 'year', category: 'nature'),
   // Session 52: was 'nkaŋ nkíə' — nkíə (high tone) does not exist. Per dict, water/river = nkǐə (rising).
   AwingWord(awing: 'nkaŋ nkǐə', english: 'river bank; sea shore', category: 'nature', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'nkéebə', english: 'main market day in Awing; the seventh day of the week in Awing', category: 'nature', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nkəŋə', english: 'Traditional peace plant, planted in places of worship and used in ceremonies of peace', category: 'nature', difficulty: 3),
   AwingWord(awing: "nkǐ yi sá' nó", english: 'spring', category: 'nature', tonePattern: 'rising', difficulty: 2),
-  AwingWord(awing: 'nkəlá', english: 'large bed of farm formed by putting soil on compost and burnt', category: 'nature', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'nkəlá', english: 'large bed of farm formed by putting soil on compost and burnt', category: 'nature', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nkəŋ nelwîə', english: 'bridge (of nose)', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'nkəŋ nó ngámə', english: 'rainbow', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nkweelə', english: 'the second day of the week and minor market day', category: 'nature', difficulty: 1),
@@ -2582,7 +2656,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "nwí'ə", english: 'plant (of seeds) too close to each other', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ŋwiŋə', english: 'tree god', category: 'nature'),
   AwingWord(awing: 'péŋə', english: 'be lost; someone missing in the forest', category: 'nature', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'pôb', english: 'sound that describes something snuffing out eg fire or breath', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'pôb', english: 'sound that describes something snuffing out eg fire or breath', category: 'nature', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'póga', english: 'bark (as dog)', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'póokə', english: 'wither eg a plant', category: 'nature', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'pwəlô', english: 'put soil on ridges', category: 'nature', tonePattern: 'falling', difficulty: 1),
@@ -2598,23 +2673,28 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'yagə', english: 'scare away by shouting eg of animals or birds in a farm', category: 'nature', difficulty: 3),
 
   // food (89)
-  AwingWord(awing: 'achiba', english: 'food or drinks given to console somebody (death)', category: 'food', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'achiba', english: 'food or drinks given to console somebody (death)', category: 'food', difficulty: 3),
   AwingWord(awing: 'achibənáwûə', english: 'food or drinks given to a house of mourning', category: 'food', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: "achú'ə", english: 'cocoyams pounded and eaten with red soup, meat and vegetables', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'afúə ŋgəsáŋə', english: 'corn husk', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'akəká', english: 'ground corn fufu, softened with water and steamed', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'akoŋə ŋgəsáŋə', english: 'corn stalk, corn husk', category: 'food', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'akwâ', english: 'pounded Irish potato and banana', category: 'food', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  AwingWord(awing: 'akwâ', english: 'pounded Irish potato and banana', category: 'food', tonePattern: 'falling', difficulty: 1),  // REVIVED Session 63 Part H 2026-07-22: was DROPPED but dict confirms — dict p179 confirms
   AwingWord(awing: 'alífəámó', english: 'bat; fruit bat', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "amú'áchú'ə", english: 'banana used for preparing achu', category: 'food', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: "amú'áfəŋə", english: 'banana not used as food but as medicinal plant', category: 'food', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "amú'áfəŋə", english: 'banana not used as food but as medicinal plant', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "amú'ámakálə", english: 'A kind of banana that is kept to ripe and is then eaten as food', category: 'food', tonePattern: 'high', difficulty: 3),
-  AwingWord(awing: 'aŋgênə', english: 'A kind of elephant stalk that looks very much like sugar cane', category: 'food', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'aŋgênə', english: 'A kind of elephant stalk that looks very much like sugar cane', category: 'food', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'aŋkəələ', english: 'carrot-like food', category: 'food', difficulty: 1),
   AwingWord(awing: 'aŋkwúbə', english: 'a raffia fruit with a hard smooth surface', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'apéenəməkálə', english: 'bread', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: "apu'ə məjiə", english: 'food leftovers', category: 'food', difficulty: 2),
-  AwingWord(awing: "aso'ə", english: 'a carved piece of wood used for lifting achu from the motar', category: 'food', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "aso'ə", english: 'a carved piece of wood used for lifting achu from the motar', category: 'food', difficulty: 3),
   AwingWord(awing: 'atɨə apopó', english: 'a pawpaw tree', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: "ato'lóndé", english: "adam's apple", category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "atsá'ə", english: 'the different divisions of a banana bunch', category: 'food', tonePattern: 'high', difficulty: 1),
@@ -2636,12 +2716,15 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "ká'ó", english: 'a piece of plank for cutting meat, also hard surface used by butchers', category: 'food', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'káyé məsaŋə̂', english: 'guinea corn', category: 'food', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'koshamə', english: 'curdled milk; cottage cheese', category: 'food', difficulty: 1),
-  AwingWord(awing: 'kyaŋə', english: 'cut a big slice eg flesh or meat', category: 'food', difficulty: 1),
-  AwingWord(awing: 'kyaŋtə̂', english: 'cut big slices eg flesh or meat', category: 'food', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kyaŋə', english: 'cut a big slice eg flesh or meat', category: 'food', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kyaŋtə̂', english: 'cut big slices eg flesh or meat', category: 'food', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kyéŋtə', english: 'Cut off undesirable ends of vegetable', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'lámósə yi ńtságnə', english: 'lemon', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'lúmnə', english: 'eat food with little or no soup', category: 'food', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: "lwichwí'á", english: 'something very bitter eg fruit', category: 'food', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "lwichwí'á", english: 'something very bitter eg fruit', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'mbəm ŋgəsánə', english: 'grain of corn, maize', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'məghóla', english: 'oil', category: 'food', tonePattern: 'high'),
   AwingWord(awing: 'məji má nkwanə̂', english: 'evening meal, supper', category: 'food', tonePattern: 'falling', difficulty: 2),
@@ -2650,9 +2733,11 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "məlo' má məkálə̂", english: 'beer, wine, whiskies', category: 'food', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'məsaŋ má aluma', english: 'sorghum; millett of the dry season', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'məsaŋ má məgheemə̂', english: 'millet (of the rainy season)', category: 'food', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'məsaŋ má ngəsáŋə̂', english: 'the flower on the stalk of corn (at the tip of)', category: 'food', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'məsaŋ má ngəsáŋə̂', english: 'the flower on the stalk of corn (at the tip of)', category: 'food', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'məsaŋə', english: 'the flower on the stalk of maize (any sort of maize)', category: 'food', difficulty: 3),
-  AwingWord(awing: 'məsəngágá', english: 'corn cob that has born scanty number of grains, usually', category: 'food', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'məsəngágá', english: 'corn cob that has born scanty number of grains, usually', category: 'food', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'nənta nó atíə', english: 'fruit', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'nənteemə́', english: 'fruit', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "nəpo' nó məkálə", english: 'pawpaw', category: 'food', tonePattern: 'high', difficulty: 2),
@@ -2668,7 +2753,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'tămto', english: 'tomato', category: 'food', difficulty: 1),
   AwingWord(awing: 'tímo', english: 'a kind of insecticide used to spray on arabica coffee', category: 'food', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'tyáala', english: 'to strain food or anything using water', category: 'food', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'tsógchwéŋə', english: 'something very sour fruit', category: 'food', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  AwingWord(awing: 'tsógchwéŋə', english: 'something very sour fruit', category: 'food', tonePattern: 'high', difficulty: 1),  // REVIVED Session 63 Part H: dict p195 "very sour n. tsə́gchwéŋə́" confirms
   AwingWord(awing: 'zeebə', english: 'A bamboo ceiling in kitchens used for drying maize, beans, potatoes', category: 'food', difficulty: 3),
   AwingWord(awing: 'zédkə', english: 'make one sated up with food', category: 'food', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "zó'tə", english: 'apply oil a little', category: 'food', tonePattern: 'high', difficulty: 1),
@@ -2682,8 +2768,9 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'chaakâ', english: 'accompany, lead away; send through or pass something across', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chaakâ məŋgyě', english: 'escort a bride to her groom', category: 'actions', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'chaanâ', english: 'be abundant, be much', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'cháb-tə', english: 'tightly clustered', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: "cha'âı", english: 'last very long', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'cháb-tə', english: 'tightly clustered', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: "cha'ə", english: 'last very long', category: 'actions', tonePattern: 'falling', difficulty: 2),  // CORRECT Session 63 reconcile 2026-07-22: was "cha'âı" (invalid dotless-i) — dict p49 "cha'ə v. last very long"
   AwingWord(awing: 'chagâ', english: 'smash or step on something (tr)', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chágə', english: 'Of cocoyams, not get ready after it has been prepared (is usually watery)', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'chagtə̂', english: 'smash many times, crush many times', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -2718,7 +2805,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'chídtə', english: 'cut into pieces', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "chi'â", english: 'shake (tr)', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "chi'ə", english: 'rub', category: 'actions', difficulty: 2),
-  AwingWord(awing: 'chîz', english: 'stay, inhabit, dwell; meet', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'chîə', english: 'stay, inhabit, dwell; meet', category: 'actions', tonePattern: 'falling', difficulty: 1),  // CORRECT Session 63 reconcile 2026-07-22: was 'chîz' (invalid consonant ending) — dict p10 verb table "chîə ńchî stay"
   AwingWord(awing: 'chɨə', english: 'push; support', category: 'actions', difficulty: 1),
   AwingWord(awing: 'chɨə á məm əwə́', english: '(meaning missing)', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'chîə á mém təpəŋə', english: 'be part of', category: 'actions', tonePattern: 'falling', difficulty: 2),
@@ -2735,7 +2822,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'chîə əsê', english: 'be low, be humble', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chîə mbiə', english: 'be infront; be ahead', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chîə mbia', english: 'be alive', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'chîə mbó', english: 'of a baby about to be born, said to be in hand', category: 'actions', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chîə mbó', english: 'of a baby about to be born, said to be in hand', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chîə mátê', english: 'be in extreme difficulties such that one cannot have a sound sleep', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chîə ndəzeemə', english: 'be dreaming; be wandering', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chîə nəlyaŋnə', english: 'in a hidden place', category: 'actions', tonePattern: 'falling', difficulty: 2),
@@ -2746,7 +2834,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'chigə neemə', english: 'cruel; poorly behaved', category: 'actions', difficulty: 2),
   AwingWord(awing: "chigə tákɔ'ə", english: 'biggest', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'chíkə', english: 'push (many things)', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'chíka', english: 'stay of many people or many places, inhabit many places', category: 'actions', tonePattern: 'high', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chíka', english: 'stay of many people or many places, inhabit many places', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'chílə', english: 'cut into many little pieces', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "chi'nâ", english: 'shake by itself (intransitive), be shaken', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'chínə', english: 'be hefty, huge in build; important', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -2779,11 +2868,13 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'chwí ələnə', english: 'name something or somebody', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'chwíəə', english: 'give a name', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'chwigtə', english: 'kiss a little', category: 'actions', difficulty: 1),
-  AwingWord(awing: "chwí'kə", english: 'make two or more things closer together', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "chwí'kə", english: 'make two or more things closer together', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'chwinɔ̂', english: 'act provocatively or threaten', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: "chwí'nə", english: 'get tight together; unite', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'chwíŋə', english: 'be thin', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'chwíŋtə', english: 'a little thin or less in weight', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chwíŋtə', english: 'a little thin or less in weight', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "chwí'tə", english: 'accumulate, pack', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'chwitə ngonə', english: 'wail sharply', category: 'actions', difficulty: 2),
   AwingWord(awing: 'dotê', english: 'be dirty; be ugly', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -2793,7 +2884,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'fagô', english: 'break, dislodge', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'fagkô', english: 'break in little pieces or many pieces (intransitive)', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'fagtô', english: 'break in little pieces or many pieces (transitive)', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'fanô', english: 'do something terrible; become terrible', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'fanô', english: 'do something terrible; become terrible', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'fankə', english: 'be wrong', category: 'actions', difficulty: 1),
   AwingWord(awing: 'fáŋkə', english: '1) be fat (of many things)', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'faŋnô', english: 'embrace, hug', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -2820,7 +2912,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "fi'tə̂", english: 'tell', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'fídkə', english: 'exile, expel', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'figə̂', english: 'decieve', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'figtə̂', english: 'decieve (many people); decieve many times', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'figtə̂', english: 'decieve (many people); decieve many times', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: "fo'â", english: 'be rich', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'fógə', english: 'pick; choose', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'fónə', english: 'call', category: 'actions', tonePattern: 'high', difficulty: 2),
@@ -2863,7 +2956,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "ghó'kə", english: 'respect, honour, praise; worship', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ghoolə̂', english: 'pay dowry; marry', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'ghoonə̂', english: 'be sick, be ill', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: "ghó'tónô", english: "be fastidious, be difficult to deal with, feel high of one's self", category: 'actions', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "ghó'tónô", english: "be fastidious, be difficult to deal with, feel high of one's self", category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'ghədkə̂', english: 'frighten', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: "gho'ə̂", english: 'crush (transitively), grind', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'ghəntə̂', english: 'often sick, frequently ill', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -2909,7 +3003,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kábkə', english: 'cover', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kǎə', english: 'be deaf', category: 'actions', tonePattern: 'rising', difficulty: 1),
   AwingWord(awing: 'káəbə', english: 'shell, of groundnuts and egussi', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'kəəkô', english: 'run (referring to many things or people running)', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kəəkô', english: 'run (referring to many things or people running)', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kəələ̂', english: 'run away, flee, escape', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kəətə̂', english: 'run a little or make an effort to run', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kəmə̂', english: 'drive away', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -2921,8 +3016,9 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kîəə', english: 'refuse, reject', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kíbnə', english: 'high, of forehead', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kíbtə', english: 'shell a little', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: "kí'tə", english: 'Obstruct many people, things or places; defend (many people, things or places)', category: 'actions', tonePattern: 'high', difficulty: 3),
-  AwingWord(awing: 'kó əsóənə', english: 'be shy (it is not good for somebody to be too timid and do wrong)', category: 'actions', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "kí'tə", english: 'Obstruct many people, things or places; defend (many people, things or places)', category: 'actions', tonePattern: 'high', difficulty: 3),
+  AwingWord(awing: 'kó əsóənə', english: 'be shy', category: 'actions', tonePattern: 'high', difficulty: 3),  // CORRECT Session 63 reconcile 2026-07-22: was 'be shy (it is not good for somebody to be too timid and do wrong)'
   AwingWord(awing: "ko'â", english: 'arrive; be enough', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kogə', english: 'be blunt', category: 'actions', difficulty: 1),
   AwingWord(awing: 'kóga', english: 'bring up (child or young of any animal)', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -2938,16 +3034,20 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kóomálənə', english: 'pity, show sympathy', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'koonâ', english: 'fall or peel off in large quantities (usually by itself)', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'kóotə', english: 'take hold of many things (as a fishtrap traps fish)', category: 'actions', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'kədkô', english: 'peel off, usually as a sign of delapidation', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'kódta', english: 'eat many things, eat a little thing (before going to work)', category: 'actions', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kədkô', english: 'peel off, usually as a sign of delapidation', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kódta', english: 'eat many things, eat a little thing (before going to work)', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: "kó'ə", english: 'grow, of plants; mount, for example a horse', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "kó'kə", english: 'raise, of a child; lift', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kólə', english: 'ruminate, chew cud', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kómtə', english: 'Clean a little, usually with a hoe; clean roasted food', category: 'actions', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: "kó'nə", english: 'Climbing, scramble of many things; Scramble around something or somebody', category: 'actions', tonePattern: 'high', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "kó'nə", english: 'Climbing, scramble of many things; Scramble around something or somebody', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'kontə̂', english: 'bump, trip', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kəŋnə̂', english: 'be happy with each other; be joyful with each other', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'kóŋnə', english: 'Crawl; slither, of many things (snakes are slithering in the farm)', category: 'actions', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kóŋnə', english: 'Crawl; slither, of many things (snakes are slithering in the farm)', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: "kó'tə", english: 'brag', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kwáakə', english: 'cackle (as of fowls), especially when a fowl lays an egg or when it senses danger', category: 'actions', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'kwáalə', english: 'help', category: 'actions', tonePattern: 'high'),
@@ -2962,7 +3062,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kweekô', english: 'Influence a person or an animal against another', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kwê', english: 'tell a lie', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'kwénkə', english: 'Help somebody or something go in', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'kwəələ̂', english: 'Ask many annoying questions', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kwəələ̂', english: 'Ask many annoying questions', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: "kwá'tə", english: 'kneel', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kwígə', english: 'revenge', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kwíŋkə', english: 'bring up , raise', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -3022,7 +3123,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'líblə', english: 'go round, surround', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "lí'ə", english: 'cultivate, hoe (v)', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'lîə', english: 'jump, leap', category: 'actions', tonePattern: 'falling'),
-  AwingWord(awing: 'lóŋkə', english: 'fill, of solids', category: 'actions', tonePattern: 'high', difficulty: 1),
+  AwingWord(awing: 'lóŋkə', english: 'overfill (of solids)', category: 'actions', tonePattern: 'high', difficulty: 1),  // CORRECT Session 63 reconcile 2026-07-22: was 'fill, of solids'
   AwingWord(awing: 'loonâ', english: 'want; desire', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'lóbtə', english: 'plan', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "lo'â", english: 'put a spell on', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -3108,7 +3209,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'paŋnə', english: 'ripen, become ripe, of many things', category: 'actions', difficulty: 1),
   AwingWord(awing: 'pèe', english: 'sharpen', category: 'actions', tonePattern: 'low', difficulty: 1),
   AwingWord(awing: 'péebə', english: 'bake (in ashes)', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'peelô', english: 'carry on the bavk (sic: back)', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'peelô', english: 'carry on the bavk (sic: back)', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'peenə', english: 'hate', category: 'actions', difficulty: 3),
   AwingWord(awing: 'pegə', english: 'enlarge; widen', category: 'actions', difficulty: 1),
   AwingWord(awing: 'péŋkə', english: 'misplace', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -3161,7 +3263,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'səəkə', english: 'be slippery', category: 'actions', difficulty: 1),
   AwingWord(awing: 'səələ', english: 'slice', category: 'actions', difficulty: 1),
   AwingWord(awing: 'səənô', english: 'slip', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'sôətə', english: 'slice in many things, castrate many things', category: 'actions', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'sôətə', english: 'slice in many things, castrate many things', category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'səŋə', english: 'sifter', category: 'actions', difficulty: 1),
   AwingWord(awing: 'sô', english: 'weed', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'sogə', english: 'wash (tr)', category: 'actions', difficulty: 1),
@@ -3281,7 +3384,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'wamtô', english: "tie loosely, of a rope round something eg round a cow's neck", category: 'actions', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: "wê atsə'á", english: 'wear clothes', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "we'â", english: 'open', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'weŋkô', english: 'smile a lot, smile frequently especially without descriminating with whom this is done', category: 'actions', tonePattern: 'falling', difficulty: 3),
+  AwingWord(awing: 'weŋkô', english: 'smile a lot, smile frequently', category: 'actions', tonePattern: 'falling', difficulty: 3),  // CORRECT Session 63 reconcile 2026-07-22: was 'smile a lot, smile frequently especially without descriminating with whom this is done'
   AwingWord(awing: 'wê', english: 'weigh', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'wednô', english: 'mix', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'wedtô', english: 'mix (many things)', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -3291,7 +3394,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'wénnə', english: 'be worried, be impatient', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'wáələ', english: 'worry, feel disturbed', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'wəg əfógə', english: 'fan', category: 'actions', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'wəgô', english: 'blow of air', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  AwingWord(awing: 'wəgə̂', english: 'blow of air', category: 'actions', tonePattern: 'falling', difficulty: 1),  // CORRECT Session 63 Part H 2026-07-22: was 'wəgô' — dict PDF p142 wəgə̂ v. blow of air
   AwingWord(awing: "wó'tə", english: 'remember, remind', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'wǔəə', english: 'fall; fail', category: 'actions', tonePattern: 'rising', difficulty: 1),
   AwingWord(awing: 'wukə̂', english: 'fall many times; fall, of many people', category: 'actions', tonePattern: 'falling', difficulty: 1),
@@ -3354,8 +3457,10 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "akǒ'nə mbyâŋnə", english: 'young man', category: 'descriptive', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: "akó' yə fíə", english: 'new generation', category: 'descriptive', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'akweŋómbéŋə', english: 'young goat', category: 'descriptive', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'akyâglə', english: 'dirty marks on body or clothes caused by dirty water, sweat or cosmetics', category: 'descriptive', tonePattern: 'falling', difficulty: 3),
-  AwingWord(awing: "akye'ə", english: 'small sign or indication (usually of something bigger to come)', category: 'descriptive', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'akyâglə', english: 'dirty marks on body or clothes caused by dirty water, sweat or cosmetics', category: 'descriptive', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "akye'ə", english: 'small sign or indication (usually of something bigger to come)', category: 'descriptive', difficulty: 2),
   AwingWord(awing: "alá'ə", english: 'much, a lot', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "alá'ə pakwûə", english: 'world of the dead', category: 'descriptive', tonePattern: 'falling', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   AwingWord(awing: 'alě nəwûə Yésó', english: 'good Friday', category: 'descriptive', tonePattern: 'rising', difficulty: 2),
@@ -3369,7 +3474,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'apáŋə', english: 'an open bamboo cupboard attached to the wall of the house used for putting kitchen utensils', category: 'descriptive', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'apuməŋkwúnə', english: 'small pox', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'asəələ', english: 'castrated', category: 'descriptive', difficulty: 3),
-  AwingWord(awing: 'asagá', english: 'A place that is open and exposed', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'asagá', english: 'A place that is open and exposed', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'asəglə', english: 'important, great, powerful, influential', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'asəŋə', english: 'a kind of weaved basin', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'asóŋətəzéənə', english: 'false witness; lier', category: 'descriptive', tonePattern: 'high', difficulty: 1),
@@ -3378,7 +3484,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ateekáŋá', english: 'something very strong', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'atɨəndê', english: 'first floor of a roof', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'atóomə', english: 'A long drum', category: 'descriptive', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'atúəsê', english: "bag containing a dead close relation's (father, mother, grand mother, grand father etc) hair, worshipped periodically for appeasement", category: 'descriptive', tonePattern: 'falling', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'atúəsê', english: "bag containing a dead close relation's (father, mother, grand mother, grand father etc) hair, worshipped periodically for appeasement", category: 'descriptive', tonePattern: 'falling', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   AwingWord(awing: "atsa'áfágə", english: 'warm clothing', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'atságə', english: 'bitterness, quarrelsomeness', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'atságántəəmə', english: 'ill temper', category: 'descriptive', tonePattern: 'high', difficulty: 1),
@@ -3409,7 +3516,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'jî ntú majîə', english: 'eat first of new crops, eat first of new fruit', category: 'descriptive', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'kə', english: 'marker of past tense for an event that took place a few days ago', category: 'descriptive', difficulty: 3),
   AwingWord(awing: 'káféŋə', english: 'little sorts of mushroom-like plants', category: 'descriptive', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'kákwumə̌kókwumə', english: 'word that describes how a foolish man moves, especially into trouble', category: 'descriptive', tonePattern: 'rising', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kákwumə̌kókwumə', english: 'word that describes how a foolish man moves, especially into trouble', category: 'descriptive', tonePattern: 'rising', difficulty: 3),
   AwingWord(awing: "kəlá'ə", english: 'marker of far past tense, used for events that take place many years back', category: 'descriptive', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'kəmkə̂', english: 'be short; short', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kápyagəkápyaga', english: 'word that describes how a foolish man moves, especially into trouble', category: 'descriptive', tonePattern: 'high', difficulty: 3),
@@ -3458,7 +3566,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'shíshí ŋwunə', english: 'black man', category: 'descriptive', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'tä pətä pətä', english: 'great grandfather (paternal)', category: 'descriptive', difficulty: 2),
   AwingWord(awing: "tä pətä yi ndza'kə", english: 'great great grandfather (paternal)', category: 'descriptive', difficulty: 2),
-  AwingWord(awing: "tä'lətä'lə", english: 'word that describes how a sickly lean person moves', category: 'descriptive', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "tä'lətä'lə", english: 'word that describes how a sickly lean person moves', category: 'descriptive', difficulty: 1),
   AwingWord(awing: 'təpəŋə', english: 'evil', category: 'descriptive', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   AwingWord(awing: 'táshúnə', english: 'so much, too much', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "tû'mândzəŋə", english: 'a secret group for men of same age group', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
@@ -3824,20 +3933,24 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'báŋə', english: 'bank', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'bəláibə', english: 'bribe', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'bəlégə', english: 'break', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'bôm', english: 'sound that describes a start or sudden wake up', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'bîm', english: 'sound that describes something that is fall', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'bôm', english: 'sound that describes a start or sudden wake up', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'bîm', english: 'sound that describes something that is fall', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'bíshobə', english: 'bishop', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'bílɨ', english: 'sound of movement by a group or herd of cattle', category: 'things', tonePattern: 'high', difficulty: 1),
   // AwingWord(awing: 'blêmə', english: 'blame', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L2663 ('blemâ')
   AwingWord(awing: 'bóbə', english: 'bulb', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'bûm', english: 'word that intensifies the sound of a traditionally made gun, or of something falling', category: 'things', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'bûm', english: 'word that intensifies the sound of a traditionally made gun, or of something falling', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'búsbágə', english: 'hump (of cow)', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'châgchagchag', english: 'sound (word) that describes the dropping of water', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: "cha'tə̂ nəwûə", english: 'condole, comfort', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "cha'tásê", english: 'pray', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "chê'", english: 'sound (word) that intensifies the smooth or oily nature of something', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chî kókánə́', english: 'be unhealthy, be sick; be uncomfortable', category: 'things', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'chîı', english: 'marker of negation', category: 'things', tonePattern: 'falling', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chîı', english: 'marker of negation', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: 'chîə natûə', english: 'rule over, dominate', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'chígchəgchígchəg', english: 'sound (word) that tells how a bird cries', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'chigə nó ndəlá', english: 'exactly on time', category: 'things', tonePattern: 'high', difficulty: 2),
@@ -4004,7 +4117,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kákáŋə́', english: 'poorly', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "kəlo'", english: 'sound that describes or intensifies the manner in which something falls', category: 'things', difficulty: 3),
   AwingWord(awing: "kəlo'ko'", english: 'sound that describes or intensifies the manner in which something falls', category: 'things', difficulty: 3),
-  AwingWord(awing: "kəlɔ'kɔ'", english: 'sound that describes or intensifies the manner in which something is falling', category: 'things', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "kəlɔ'kɔ'", english: 'sound that describes or intensifies the manner in which something is falling', category: 'things', difficulty: 3),
   AwingWord(awing: "kəmú'ntəŋə", english: '(meaning missing)', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: "ká'tátíə", english: 'kingfisher (bird that makes a cutting sound on a tree)', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: "káyé məŋgo'ə", english: 'gravel', category: 'things', tonePattern: 'high', difficulty: 2),
@@ -4030,7 +4144,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kwá mbiə', english: 'lead; be first', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'kwákwá', english: "a dance group in Tame Fonka's compound", category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'kwâŋ', english: 'intensifies the cleanliness of something', category: 'things', tonePattern: 'falling', difficulty: 3),
-  AwingWord(awing: 'kwaŋ kákáŋə̂', english: 'hesitate (when an evil doer hesitates in his plans, it demonstrates the voice of God)', category: 'things', tonePattern: 'falling', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kwaŋ kákáŋə̂', english: 'hesitate (when an evil doer hesitates in his plans, it demonstrates the voice of God)', category: 'things', tonePattern: 'falling', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   AwingWord(awing: 'kwêd', english: 'sound (word) that describes the immediacy with which a stop is made', category: 'things', tonePattern: 'falling', difficulty: 3),
   AwingWord(awing: "kwə'ə̂", english: 'namesake', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kwíŋə mə́ ŋwíŋə', english: 'sharpen a knife', category: 'things', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
@@ -4044,7 +4159,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ləəmó koŋ yi njùbtə', english: 'camel', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'ləg əkeenə', english: 'take an oath', category: 'things', difficulty: 2),
   AwingWord(awing: 'lóg nələgə', english: 'wink (of eye)', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'láglələglə', english: 'word that describes how a snake moves or how something else moves like a snake', category: 'things', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'láglələglə', english: 'word that describes how a snake moves or how something else moves like a snake', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'ləzámə', english: 'exam', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'lá əsê', english: 'rise up (intr)', category: 'things', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'ló nkéebə', english: 'beg for money', category: 'things', tonePattern: 'high', difficulty: 2),
@@ -4416,7 +4532,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'pəgə', english: 'we (not including you)', category: 'pronouns', difficulty: 1),
   AwingWord(awing: 'págtə', english: 'quench, extinguish', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'pəlô', english: 'ancestors; les ancetre', category: 'things', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'pôm', english: 'sound that describes a start or sudden wake', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'pôm', english: 'sound that describes a start or sudden wake', category: 'things', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'pəpíə', english: 'his', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'pəpóobá', english: 'theirs', category: 'things', tonePattern: 'high', difficulty: 3),
   AwingWord(awing: 'pi ndəŋ', english: 'boil over', category: 'things', difficulty: 2),
@@ -4596,7 +4713,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.39
   AwingWord(awing: 'atátəŋə', english: 'white fluid that flows from the vagina as a sign of labour (birth production)', category: 'descriptive', difficulty: 3),
   // dict:p.40
-  AwingWord(awing: 'atogá', english: "A certain substance in a witch's stomach that influences him/her to kill in order to gratify it", category: 'actions', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'atogá', english: "A certain substance in a witch's stomach that influences him/her to kill in order to gratify it", category: 'actions', difficulty: 3),
   // dict:p.42
   AwingWord(awing: "atúəsá'ó", english: 'The first menstrual flow of a girl', category: 'actions', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   // dict:p.50
@@ -4624,7 +4742,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   AwingWord(awing: 'mbenə', english: 'penis', category: 'things', difficulty: 3),
   // dict:p.?
-  AwingWord(awing: 'mbənə', english: 'a word used at the beginning of an expression (phrase, sentence, etc) to mark surprise (exclamation)', category: 'things', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'mbənə', english: 'a word used at the beginning of an expression (phrase, sentence, etc) to mark surprise (exclamation)', category: 'things', difficulty: 3),
   // dict:p.?
   AwingWord(awing: "mbó'nəsága", english: 'buttock', category: 'things', difficulty: 3),
   // dict:p.?
@@ -4891,7 +5010,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.?
   // AwingWord(awing: 'ndwigtə', english: 'end', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L494 ('ndwîgtə')
   // dict:p.?
-  AwingWord(awing: 'nəfèŋə', english: 'inhygenic behaviour that is exagerated eg cooking and eating with excrement lying in', category: 'pronouns', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'nəfèŋə', english: 'inhygenic behaviour that is exagerated eg cooking and eating with excrement lying in', category: 'pronouns', difficulty: 3),
   // dict:p.?
   AwingWord(awing: 'nəféŋə', english: 'the act of being unhygenic', category: 'things', difficulty: 1),
   // dict:p.?
@@ -5066,7 +5186,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.27
   AwingWord(awing: "akwu'ló", english: 'log, eg of wood', category: 'nature', tonePattern: 'high', difficulty: 1),
   // dict:p.27
-  AwingWord(awing: 'akyâglə', english: 'garden egg-like fruit used for traditional medicine', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'akyâglə', english: 'garden egg-like fruit used for traditional medicine', category: 'nature', tonePattern: 'falling', difficulty: 2),
   // dict:p.27
   AwingWord(awing: "akye'ónuə", english: 'sign of something, indication', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.27
@@ -5153,7 +5274,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.42
   AwingWord(awing: "atúəsá'ó", english: 'The first menstrual flow of a girl', category: 'numbers', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   // dict:p.42
-  AwingWord(awing: 'atúəsê', english: 'hair of a dead close relation (father, mother, grand mother, grand father etc) worshipped periodically for appeasement', category: 'body', tonePattern: 'falling', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'atúəsê', english: 'hair of a dead close relation (father, mother, grand mother, grand father etc) worshipped periodically for appeasement', category: 'body', tonePattern: 'falling', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   // dict:p.42
   AwingWord(awing: 'atúmə', english: 'country, ethnic area', category: 'family', tonePattern: 'high', difficulty: 1),
   // dict:p.43
@@ -5205,7 +5327,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.51
   AwingWord(awing: "chi'â", english: 'sift eg corn flower', category: 'nature', tonePattern: 'falling', difficulty: 1),
   // dict:p.51
-  AwingWord(awing: 'chîz', english: 'stay, inhabit, dwell', category: 'family', tonePattern: 'falling', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chîz', english: 'stay, inhabit, dwell', category: 'family', tonePattern: 'falling', difficulty: 2),
   // dict:p.51
   AwingWord(awing: 'chɨə', english: 'push', category: 'things', difficulty: 2),
   // dict:p.52
@@ -5215,7 +5338,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.53
   AwingWord(awing: 'chɔ́sə', english: 'church; denomination', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.54
-  AwingWord(awing: 'chúbə', english: 'remove something in a very fast way, usually from danger or', category: 'things', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chúbə', english: 'remove something in a very fast way, usually from danger or', category: 'things', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   // dict:p.54
   AwingWord(awing: 'chúbnə', english: 'less important; uninfluential', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // dict:p.54
@@ -5472,7 +5596,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.80-86
   AwingWord(awing: 'kómtə', english: 'scratch (a little, eg an itching part of the body)', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // dict:p.80-86
-  AwingWord(awing: "kó'nə", english: 'Climbing, scramble of many things; Scramble around something or somebody, eg of children', category: 'descriptive', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "kó'nə", english: 'Climbing, scramble of many things; Scramble around something or somebody, eg of children', category: 'descriptive', tonePattern: 'high', difficulty: 3),
   // dict:p.80-86
   AwingWord(awing: 'kəŋə', english: 'large piece of land which is not necessarily unfertile; extensive unfertile land', category: 'things', difficulty: 3),
   // dict:p.80-86
@@ -6098,7 +6223,8 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.136-139
   AwingWord(awing: "zó'kə", english: 'marry, of many people eg young girls', category: 'family', tonePattern: 'high', difficulty: 1),
   // dict:p.136-139
-  AwingWord(awing: "zó'nə", english: "Have sexual intercourse with (usually with each other's accord and full participation)", category: 'descriptive', tonePattern: 'high', difficulty: 3),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "zó'nə", english: "Have sexual intercourse with (usually with each other's accord and full participation)", category: 'descriptive', tonePattern: 'high', difficulty: 3),
 
   // ============================================================
   // English-Awing index visual extraction (3,857 entries)
@@ -9222,7 +9348,8 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.165
   AwingWord(awing: 'leelə', english: 'heavy', category: 'descriptive', difficulty: 1),
   // index:p.165
-  AwingWord(awing: "akə̌' nə akoola", english: "hedge on pig's neck", category: 'body', tonePattern: 'rising', difficulty: 2),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "akə̌' nə akoola", english: "hedge on pig's neck", category: 'body', tonePattern: 'rising', difficulty: 2),
   // index:p.165
   AwingWord(awing: 'nətsəŋ nə́ akoola', english: 'heel', category: 'things', tonePattern: 'high', difficulty: 2),
   // index:p.165
@@ -12649,7 +12776,8 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'tśmtə', english: 'support', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'atóəmə', english: 'support (esp', category: 'food', tonePattern: 'high', difficulty: 1),
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'atóəmə', english: 'support (esp', category: 'food', tonePattern: 'high', difficulty: 1),
   // index:p.190
   AwingWord(awing: 'tśəndzəmə', english: 'support of limited value', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.190
@@ -14405,7 +14533,8 @@ const List<AwingWord> dictionaryEntries = [
   // v2:page_048
   // v2:page_048
   // v2:page_048
-  AwingWord(awing: "chí ta zɔ́' ndzɔ́'ə", english: 'An Awing man can never go without drinking palm wine because it is abundant in the village', category: 'food', difficulty: 3),  // v2:page_051
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "chí ta zɔ́' ndzɔ́'ə", english: 'An Awing man can never go without drinking palm wine because it is abundant in the village', category: 'food', difficulty: 3),  // v2:page_051
   AwingWord(awing: "chí ya zɔ́' ndzɔ́'ə", english: 'be unmarried, stay unmarried', category: 'things', difficulty: 1),  // v2:page_051
   AwingWord(awing: 'chí ya fíə', english: 'be new', category: 'things', difficulty: 1),  // v2:page_051
   AwingWord(awing: 'chí ya pópó', english: 'be unripe, be raw', category: 'things', difficulty: 1),  // v2:page_051
@@ -14461,7 +14590,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "mbí'ə", english: 'kidney', category: 'things', difficulty: 1),  // v2:page_093
   AwingWord(awing: "mbí'ə", english: 'hem', category: 'things', difficulty: 1),  // v2:page_093
   AwingWord(awing: "mbí'ə", english: 'a sort of disease that causes pains at the level of the hips', category: 'things', difficulty: 3),  // v2:page_093
-  AwingWord(awing: 'mbims', english: 'believe', category: 'things', difficulty: 1),  // v2:page_093
+  AwingWord(awing: 'mbimə', english: 'believe', category: 'things', difficulty: 1),  // v2:page_093  // CORRECT Session 63 reconcile 2026-07-22: was awing:'mbims' (invalid consonant ending — Awing words end in vowels)
   AwingWord(awing: 'mbi nde', english: 'plaster; wall', category: 'things', difficulty: 2),  // v2:page_093
   AwingWord(awing: "mbi tô'ka'ə", english: "elephant's trunk", category: 'animals', difficulty: 2),  // v2:page_093
   AwingWord(awing: 'mbi ní ndzáŋnə̌', english: 'pain', category: 'things', difficulty: 1),  // v2:page_093
@@ -14609,7 +14738,8 @@ const List<AwingWord> dictionaryEntries = [
   // v2:page_078
   // v2:page_078
   // v2:page_078
-  AwingWord(awing: 'kɔ́omə̌', english: 'scratch an itching part of the body, scratch the surface of a wall to remove paint or dirt', category: 'body', difficulty: 3),  // v2:page_083
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'kɔ́omə̌', english: 'scratch an itching part of the body, scratch the surface of a wall to remove paint or dirt', category: 'body', difficulty: 3),  // v2:page_083
   AwingWord(awing: 'kɔ́omə̌', english: 'Scrape off sth eg dirt on the ground', category: 'things', difficulty: 2),  // v2:page_083
   AwingWord(awing: 'kɔ́omálèŋə̌', english: 'pity, show sympathy', category: 'things', difficulty: 1),  // v2:page_083
   AwingWord(awing: 'koshamə̌', english: 'curdled milk; andó majîə̌', category: 'food', difficulty: 1),  // v2:page_083
@@ -15303,7 +15433,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'akwûmtə̌', english: 'a ceremony in memory of somebody who died; remembrance', category: 'body', difficulty: 1),  // v2:page_029
   AwingWord(awing: 'akyamə̌', english: 'bile, gall', category: 'things', difficulty: 1),  // v2:page_029
   AwingWord(awing: "akyə̌'ə", english: 'mirror (n)', category: 'things', difficulty: 2),  // v2:page_029
-  AwingWord(awing: 'akyaglə̌', english: "dirty marks on one's body or dresses caused by dirty water, sweat or cosmetics", category: 'body', difficulty: 3),  // v2:page_029
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'akyaglə̌', english: "dirty marks on one's body or dresses caused by dirty water, sweat or cosmetics", category: 'body', difficulty: 3),  // v2:page_029
   AwingWord(awing: "akye'ə", english: 'A small sign or indication (usually of sth bigger to come)', category: 'animals', difficulty: 3),  // v2:page_029
   AwingWord(awing: "akye'ánuə", english: 'omen', category: 'things', difficulty: 3),  // v2:page_029
   AwingWord(awing: "akye'ánuə̌", english: 'sign of something, indication of something', category: 'animals', difficulty: 1),  // v2:page_029
@@ -15596,7 +15727,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'asɔnataózənə̌', english: 'false witness; liar', category: 'things', difficulty: 3),  // v2:page_039
   AwingWord(awing: 'asɔbnə̌', english: 'worry, sadness', category: 'things', difficulty: 1),  // v2:page_039
   AwingWord(awing: 'asɔ́ə̌', english: 'a carved piece of wood used for lifting achu from the motar', category: 'things', difficulty: 3),  // v2:page_039
-  AwingWord(awing: 'asaŋə', english: "mystical power used by one to enrich himself by dragging away another person's wealth", category: 'family', difficulty: 3),  // v2:page_039
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'asaŋə', english: "mystical power used by one to enrich himself by dragging away another person's wealth", category: 'family', difficulty: 3),  // v2:page_039
   AwingWord(awing: 'asaŋə', english: 'tornado, whirlwind', category: 'things', difficulty: 1),  // v2:page_039
   AwingWord(awing: 'atîə chəŋnə̌', english: 'ink tree', category: 'nature', difficulty: 2),  // v2:page_042
   AwingWord(awing: 'atîə oghəmə̌', english: 'fig tree', category: 'nature', difficulty: 2),  // v2:page_042
@@ -15608,7 +15740,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'atîə nəpiambeŋə', english: 'quiny tree', category: 'nature', difficulty: 2),  // v2:page_042
   AwingWord(awing: 'atîəndə̌', english: 'first floor of a roof', category: 'things', difficulty: 2),  // v2:page_042
   AwingWord(awing: 'atîəpêŋə', english: 'second floor of a roof', category: 'things', difficulty: 2),  // v2:page_042
-  AwingWord(awing: 'atogə̌', english: "A certain substance in a witch's stomach that influences him/her to kill in order to gratify it", category: 'things', difficulty: 3),  // v2:page_042
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'atogə̌', english: "A certain substance in a witch's stomach that influences him/her to kill in order to gratify it", category: 'things', difficulty: 3),  // v2:page_042
   AwingWord(awing: 'atogə̌', english: 'greed; desire', category: 'things', difficulty: 1),  // v2:page_042
   AwingWord(awing: 'atô lóndə̌', english: "Adam's apple", category: 'things', difficulty: 2),  // v2:page_042
   AwingWord(awing: "atô'nə̌nkə̌nə̌", english: 'hump (of hunchback)', category: 'things', difficulty: 2),  // v2:page_042
@@ -16200,7 +16333,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'əfo Ofoozə́ I', english: 'the tenth fon of Awing', category: 'things', difficulty: 1),  // v2:page_061
   AwingWord(awing: 'əfo Ofoozə́ II', english: 'the thirteenth fon of Awing', category: 'things', difficulty: 1),  // v2:page_061
   AwingWord(awing: 'əfo Mafumə̌naŋgoomə̌', english: 'the second fon of Awing', category: 'things', difficulty: 1),  // v2:page_061
-  AwingWord(awing: 'əfo naŋfeŋə̌', english: 'a very inhygienic person (in exaggerated proportions)', category: 'family', difficulty: 1),  // v2:page_061
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'əfo naŋfeŋə̌', english: 'a very inhygienic person (in exaggerated proportions)', category: 'family', difficulty: 1),  // v2:page_061
   AwingWord(awing: 'əfo najîə', english: 'glutton, heavy eater', category: 'things', difficulty: 1),  // v2:page_061
   AwingWord(awing: 'əfo Ngə̌ngə́ I', english: 'third fon of Awing', category: 'things', difficulty: 1),  // v2:page_061
   AwingWord(awing: 'əfo Ngə̌ngə́ II', english: 'the sixth fon of Awing', category: 'things', difficulty: 1),  // v2:page_061
@@ -18721,7 +18855,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'aleemoməsɔ̀gə̌', english: 'birdlime (adhesive to catch birds)', category: 'animals', difficulty: 2),  // v2:page_031
   AwingWord(awing: 'alegtáŋtəəmə̌', english: 'comfort, petting', category: 'things', difficulty: 1),  // v2:page_031
   AwingWord(awing: 'aləjúmə̌', english: 'lust(n), strong desire', category: 'things', difficulty: 1),  // v2:page_031
-  AwingWord(awing: "alələ̌'ə̌", english: 'resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)', category: 'food', difficulty: 3),  // v2:page_031
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "alələ̌'ə̌", english: 'resting day, mostly used for making ceremonies (birth days, visits to neighbours and family members, prepare food etc)', category: 'food', difficulty: 3),  // v2:page_031
   AwingWord(awing: 'alembîə̌', english: 'birth day', category: 'things', difficulty: 1),  // v2:page_031
   AwingWord(awing: 'aleŋə̌', english: 'incense', category: 'things', difficulty: 1),  // v2:page_031
   AwingWord(awing: 'aleŋkə̌', english: 'mark of identification; ritual scar', category: 'animals', difficulty: 1),  // v2:page_031
@@ -19157,7 +19292,8 @@ const List<AwingWord> dictionaryEntries = [
   // v2:page_054
   // v2:page_054
   // v2:page_054
-  AwingWord(awing: 'chúbə̌', english: 'remove something in a very fast way, usually from danger or', category: 'things', difficulty: 3),  // v2:page_056
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chúbə̌', english: 'remove something in a very fast way, usually from danger or', category: 'things', difficulty: 3),  // v2:page_056
   AwingWord(awing: 'chúbtə̌', english: 'listen attentively', category: 'family', difficulty: 2),  // v2:page_056
   AwingWord(awing: "chú'ə̌", english: 'pound', category: 'things', difficulty: 2),  // v2:page_056
   AwingWord(awing: "chú'ə̌", english: 'lit up or light up (eg a lamp or fire)', category: 'nature', difficulty: 2),  // v2:page_056
@@ -20004,7 +20140,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'káyé', english: 'little', category: 'family', difficulty: 1),  // v2:page_082
   AwingWord(awing: "káyé maŋgɔ́'ə", english: 'gravel', category: 'things', difficulty: 1),  // v2:page_082
   AwingWord(awing: 'kə̌', english: 'key', category: 'things', difficulty: 1),  // v2:page_082
-  AwingWord(awing: 'ki', english: 'cony or other', category: 'things', difficulty: 1),  // v2:page_082
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'ki', english: 'cony or other', category: 'things', difficulty: 1),  // v2:page_082
   AwingWord(awing: 'kíbnə̌', english: 'high, of forehead', category: 'body', difficulty: 2),  // v2:page_082
   AwingWord(awing: 'kíbtə̌', english: 'Shell a little eg groundnuts', category: 'things', difficulty: 2),  // v2:page_082
   AwingWord(awing: "kibu'lə̌kibu'lə", english: 'sound of movement by a fat person', category: 'family', difficulty: 1),  // v2:page_082
@@ -20454,7 +20591,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'nəələ', english: 'show, explain', category: 'things', difficulty: 2),  // v2:page_106
   AwingWord(awing: 'naanə̌', english: 'abundant, be much', category: 'things', difficulty: 1),  // v2:page_106
   AwingWord(awing: 'naanə̌', english: 'ocean; sea, any large body of water', category: 'body', difficulty: 1),  // v2:page_106
-  AwingWord(awing: 'nəfeŋə̌', english: 'inhygienic behaviour that is exagerated eg cooking and eating with excrement lying by', category: 'things', difficulty: 3),  // v2:page_106
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'nəfeŋə̌', english: 'inhygienic behaviour that is exagerated eg cooking and eating with excrement lying by', category: 'things', difficulty: 3),  // v2:page_106
   AwingWord(awing: "nəfed nə̌ ngɔ̌'ə", english: 'titled feather', category: 'family', difficulty: 2),  // v2:page_106
   AwingWord(awing: 'nəfèlə̌', english: 'manner of going out (to parties, bars etc)', category: 'things', difficulty: 1),  // v2:page_106
   AwingWord(awing: 'nəfaməonə̌', english: "a secret place, especially in the fon's palace", category: 'things', difficulty: 1),  // v2:page_106
@@ -21167,7 +21305,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'chaakə məŋyə̌', english: 'escort a bride to her groom', category: 'things', difficulty: 2),  // v2:page_048
   // v2:page_048
   AwingWord(awing: "cha'ə̌", english: 'be a white substance especially early in the morning from bed', category: 'body', difficulty: 3),  // v2:page_048
-  AwingWord(awing: 'chagchagchag', english: 'sound describing the dropping of water', category: 'things', difficulty: 1),  // v2:page_048
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'chagchagchag', english: 'sound describing the dropping of water', category: 'things', difficulty: 1),  // v2:page_048
   AwingWord(awing: 'chagə', english: 'colloquial smash or step on something', category: 'things', difficulty: 2),  // v2:page_048
   AwingWord(awing: 'chágə', english: 'of cocoyams, not get ready after it has been prepared, usually watery', category: 'things', difficulty: 3),  // v2:page_048
   AwingWord(awing: 'chagtə̌', english: 'place dirty many times', category: 'things', difficulty: 2),  // v2:page_048
@@ -22159,7 +22298,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kónə', english: 'be carried away by water current', category: 'things', difficulty: 2),  // v2:page_082
   AwingWord(awing: 'kóŋə', english: 'Cause to be carried away by water current', category: 'things', difficulty: 2),  // v2:page_082
   AwingWord(awing: 'kook', english: 'peel off in bits', category: 'things', difficulty: 2),  // v2:page_082
-  AwingWord(awing: 'kools', english: 'shave', category: 'things', difficulty: 1),  // v2:page_082
+  AwingWord(awing: 'koolə', english: 'shave', category: 'things', difficulty: 1),  // v2:page_082  // CORRECT Session 63 reconcile 2026-07-22: was awing:'kools' (invalid consonant ending — Awing words end in vowels)
   AwingWord(awing: 'kóotə', english: 'grasp, take hold, catch', category: 'animals', difficulty: 2),  // v2:page_082
   AwingWord(awing: 'kə́əmə', english: 'shave', category: 'things', difficulty: 1),  // v2:page_083
   AwingWord(awing: 'kə́ərə', english: 'an itching part of the body, scratch the surface of a wall to remove paint or dirt', category: 'body', difficulty: 3),  // v2:page_083
@@ -23656,7 +23795,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'pésé', english: 'demon, evil spirit', category: 'things', difficulty: 3),  // v2:page_122
   AwingWord(awing: 'pə', english: 'dem', category: 'things', difficulty: 1),  // v2:page_122
   AwingWord(awing: 'pə nakaŋ nwunə', english: 'be young', category: 'things', difficulty: 2),  // v2:page_122
-  AwingWord(awing: 'pəb', english: 'make a sound that describes something snuffing out', category: 'actions', difficulty: 2),  // v2:page_122
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'pəb', english: 'make a sound that describes something snuffing out', category: 'actions', difficulty: 2),  // v2:page_122
   AwingWord(awing: "pá'ə", english: 'break, harvest, of maize', category: 'things', difficulty: 2),  // v2:page_122
   AwingWord(awing: 'páamə', english: 'hunt', category: 'things', difficulty: 1),  // v2:page_122
   AwingWord(awing: 'pəənə', english: 'you', category: 'things', difficulty: 3),  // v2:page_122
@@ -24149,14 +24289,16 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'panpəŋə', english: 'red flowers', category: 'things', difficulty: 2),  // v2:page_121
   AwingWord(awing: 'peə', english: 'sharpen', category: 'things', difficulty: 1),  // v2:page_121
   AwingWord(awing: 'péebə', english: 'bake in ashes', category: 'things', difficulty: 2),  // v2:page_121
-  AwingWord(awing: 'peelə', english: 'carry on the bavk', category: 'things', difficulty: 2),  // v2:page_121
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'peelə', english: 'carry on the bavk', category: 'things', difficulty: 2),  // v2:page_121
   AwingWord(awing: 'pe', english: 'marker of simple past tense', category: 'things', difficulty: 1),  // v2:page_121
   // v2:page_121
   AwingWord(awing: "pe'ə atíə", english: 'carry on head', category: 'body', difficulty: 2),  // v2:page_121
   AwingWord(awing: 'péŋə', english: 'be lost', category: 'things', difficulty: 2),  // v2:page_121
   // v2:page_122
   AwingWord(awing: "pí'tə", english: 'fold, wrap up', category: 'things', difficulty: 2),  // v2:page_124
-  AwingWord(awing: 'pó', english: '1 and 2 with', category: 'things', difficulty: 1),  // v2:page_124
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'pó', english: '1 and 2 with', category: 'things', difficulty: 1),  // v2:page_124
   AwingWord(awing: 'pó', english: 'marker of negation', category: 'things', difficulty: 1),  // v2:page_124
   // v2:page_124
   AwingWord(awing: "pó' mbó", english: 'clap (hands), beg', category: 'body', difficulty: 2),  // v2:page_124
@@ -24218,7 +24360,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'tsəŋə', english: 'slander', category: 'things', difficulty: 1),  // v2:page_133
   AwingWord(awing: 'tsənŋə', english: 'destroy, damage', category: 'things', difficulty: 1),  // v2:page_133
   AwingWord(awing: 'tsəpə̌', english: 'plague, epidemic', category: 'things', difficulty: 1),  // v2:page_133
-  AwingWord(awing: 'tsóə', english: 'sound that describes the fastness in which one or many things disappear', category: 'body', difficulty: 3),  // v2:page_134
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'tsóə', english: 'sound that describes the fastness in which one or many things disappear', category: 'body', difficulty: 3),  // v2:page_134
   AwingWord(awing: "tsó'ə", english: 'heal (tr), cure', category: 'things', difficulty: 2),  // v2:page_134
   AwingWord(awing: 'tsonkə', english: 'create, make, manufacture, repair, mend, put in order, arrange', category: 'things', difficulty: 2),  // v2:page_134
   AwingWord(awing: 'tsonkə ndéenə', english: 'haggle, negotiate a price', category: 'food', difficulty: 2),  // v2:page_134
@@ -24234,7 +24377,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'tsəgə', english: 'intensifies the coldness of something', category: 'things', difficulty: 1),  // v2:page_134
   AwingWord(awing: "tsé'kə", english: 'intend', category: 'things', difficulty: 1),  // v2:page_134
   AwingWord(awing: 'tsəə', english: 'taste poorly, not flavoured', category: 'things', difficulty: 2),  // v2:page_134
-  AwingWord(awing: 'vîp', english: 'sound that describes the fastness of someting or somebody', category: 'body', difficulty: 1),  // v2:page_134
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'vîp', english: 'sound that describes the fastness of someting or somebody', category: 'body', difficulty: 1),  // v2:page_134
   // v2:page_137
   // v2:page_137
   // v2:page_137
@@ -27064,8 +27208,10 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'shwəətə', english: 'be smooth', category: 'things', difficulty: 2),  // v2:page_130
   AwingWord(awing: "ta'ə", english: 'search piles of things', category: 'body', difficulty: 2),  // v2:page_131
   AwingWord(awing: 'tagə', english: 'harvest, collect honey', category: 'food', difficulty: 2),  // v2:page_131
-  AwingWord(awing: 'tálətaalə', english: 'ideo sound describing drunk movement', category: 'things', difficulty: 1),  // v2:page_131
-  AwingWord(awing: "ta'lətə'lə", english: 'ideo sound describing sickly lean movement', category: 'things', difficulty: 1),  // v2:page_131
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'tálətaalə', english: 'ideo sound describing drunk movement', category: 'things', difficulty: 1),  // v2:page_131
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "ta'lətə'lə", english: 'ideo sound describing sickly lean movement', category: 'things', difficulty: 1),  // v2:page_131
   AwingWord(awing: 'táta', english: 'voc address to an old man', category: 'things', difficulty: 1),  // v2:page_131
   AwingWord(awing: 'tê', english: 'sting or strike (snake, insect)', category: 'animals', difficulty: 2),  // v2:page_131
   AwingWord(awing: 'tê ndé', english: 'leave the house very early', category: 'body', difficulty: 1),  // v2:page_131
@@ -27085,13 +27231,16 @@ const List<AwingWord> dictionaryEntries = [
   // v2:page_134
   // v2:page_134
   // v2:page_135
-  AwingWord(awing: 'tsóə', english: 'sound describing fastness of disappearance', category: 'body', difficulty: 1),  // v2:page_136
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'tsóə', english: 'sound describing fastness of disappearance', category: 'body', difficulty: 1),  // v2:page_136
   AwingWord(awing: 'tsonkə', english: 'create, make, manufacture, repair, mend', category: 'things', difficulty: 2),  // v2:page_136
   AwingWord(awing: 'tsóŋə', english: 'cluster tightly together', category: 'things', difficulty: 2),  // v2:page_136
   AwingWord(awing: "tsə'ə", english: 'extract milk', category: 'food', difficulty: 2),  // v2:page_136
   AwingWord(awing: 'tsəə', english: 'taste poorly', category: 'things', difficulty: 2),  // v2:page_136
-  AwingWord(awing: 'vâd', english: 'sound describing fastness', category: 'things', difficulty: 1),  // v2:page_136
-  AwingWord(awing: 'vîp', english: 'sound describing fastness', category: 'things', difficulty: 1),  // v2:page_136
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'vâd', english: 'sound describing fastness', category: 'things', difficulty: 1),  // v2:page_136
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'vîp', english: 'sound describing fastness', category: 'things', difficulty: 1),  // v2:page_136
   // v2:page_137
   // v2:page_137
   // v2:page_137
@@ -27366,8 +27515,10 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'fəmnə', english: 'drown (intr); humans drown under water, while fish do not', category: 'animals', difficulty: 1),  // v2:page_070
   AwingWord(awing: 'fəmtə', english: 'walk as if one is not seeing or blind, walk unsteadily', category: 'things', difficulty: 3),  // v2:page_070
   AwingWord(awing: 'fəmtəfəmtə', english: 'femtefemte', category: 'body', difficulty: 3),  // v2:page_070
-  AwingWord(awing: 'fəŋ', english: 'feng', category: 'family', difficulty: 3),  // v2:page_070
-  AwingWord(awing: "fí'ə", english: 'measure of (distance or height); one never measures his height with that of his father', category: 'family', difficulty: 3),  // v2:page_070
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'fəŋ', english: 'feng', category: 'family', difficulty: 3),  // v2:page_070
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: "fí'ə", english: 'measure of (distance or height); one never measures his height with that of his father', category: 'family', difficulty: 3),  // v2:page_070
   AwingWord(awing: "fí'ə", english: 'unearth; Baminyam people unearth a corpse for fear of witchcraft', category: 'body', difficulty: 3),  // v2:page_070
   AwingWord(awing: 'fíə', english: 'new; he has bought a new car', category: 'things', difficulty: 1),  // v2:page_070
   AwingWord(awing: 'fíə', english: 'resemble; every child mostly resembles the mother', category: 'family', difficulty: 1),  // v2:page_070
@@ -27424,7 +27575,8 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'kéenə', english: 'be tired; you work a lot you get tired', category: 'things', difficulty: 1),  // v2:page_080
   AwingWord(awing: 'kédkə', english: 'burn in many places; he fell in fire and got seriously burnt on many spots', category: 'nature', difficulty: 3),  // v2:page_080
   AwingWord(awing: 'kélə', english: 'burn; fire is burning on dry savana', category: 'nature', difficulty: 1),  // v2:page_080
-  AwingWord(awing: 'ká', english: 'act continuously; if one makes a mistake he keeps on trying until success comes', category: 'things', difficulty: 3),  // v2:page_080
+  // DROP Session 63 reconcile 2026-07-22
+  // AwingWord(awing: 'ká', english: 'act continuously; if one makes a mistake he keeps on trying until success comes', category: 'things', difficulty: 3),  // v2:page_080
   AwingWord(awing: 'ká', english: 'also; and', category: 'animals', difficulty: 1),  // v2:page_080
   AwingWord(awing: "kó' nəsoŋə", english: 'laugh in a wild manner', category: 'things', difficulty: 2),  // v2:page_080
   AwingWord(awing: "ká'ə", english: 'measure (v), of quantity', category: 'things', difficulty: 1),  // v2:page_080

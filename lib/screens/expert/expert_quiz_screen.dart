@@ -61,9 +61,14 @@ class _ExpertQuizScreenState extends State<ExpertQuizScreen> {
   }
 
   List<Map<String, dynamic>> _generateVocabularyQuestions(int count) {
-    final vocab = List.from(allVocabulary)..shuffle(_random);
+    // Expert mode: prefer difficulty=3 words; fall back to diff>=2 if pool too small
+    var expertPool = allVocabulary.where((w) => w.difficulty == 3).toList();
+    if (expertPool.length < 20) {
+      expertPool = allVocabulary.where((w) => w.difficulty >= 2).toList();
+    }
+    final vocab = List.from(expertPool)..shuffle(_random);
     return vocab.take(count).map((word) {
-      final wrongAnswers = allVocabulary
+      final wrongAnswers = expertPool
           .where((w) => w.english != word.english)
           .toList()
         ..shuffle(_random);
@@ -110,15 +115,20 @@ class _ExpertQuizScreenState extends State<ExpertQuizScreen> {
   }
 
   List<Map<String, dynamic>> _generateSpellingQuestions(int count) {
+    // Expert mode: prefer difficulty=3, fall back to >=2 if too few.
+    var expertPool = allVocabulary.where((w) => w.difficulty == 3).toList();
+    if (expertPool.length < 20) {
+      expertPool = allVocabulary.where((w) => w.difficulty >= 2).toList();
+    }
     // Only pick words that contain special Awing characters (ɔ, ə, ɛ, ɨ)
     // so the wrong answers are actually different from the correct one
-    final specialCharWords = allVocabulary.where((w) =>
+    final specialCharWords = expertPool.where((w) =>
         w.awing.contains('ɔ') || w.awing.contains('ə') ||
         w.awing.contains('ɛ') || w.awing.contains('ɨ')).toList();
     specialCharWords.shuffle(_random);
 
     // Fallback: if not enough special-char words, use all vocabulary
-    final source = specialCharWords.length >= count ? specialCharWords : (List.from(allVocabulary)..shuffle(_random));
+    final source = specialCharWords.length >= count ? specialCharWords : (List.from(expertPool)..shuffle(_random));
 
     return source.take(count).map((word) {
       final wrongSet = <String>{};
@@ -130,7 +140,7 @@ class _ExpertQuizScreenState extends State<ExpertQuizScreen> {
 
       // If still not enough wrong answers, pick other words from same category
       if (wrongSet.length < 3) {
-        final otherWords = allVocabulary
+        final otherWords = expertPool
             .where((w) => w.english != word.english)
             .toList()..shuffle(_random);
         for (final other in otherWords) {

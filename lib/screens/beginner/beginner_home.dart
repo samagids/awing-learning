@@ -7,6 +7,7 @@ import 'package:awing_ai_learning/screens/beginner/quiz_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/tone_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/pronunciation_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/phrases_screen.dart';
+import 'package:awing_ai_learning/screens/beginner/beginner_sentences_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/numbers_screen.dart';
 import 'package:awing_ai_learning/screens/beginner/vocabulary_review_screen.dart';
 import 'package:awing_ai_learning/screens/games/beginner_picture_match.dart';
@@ -260,6 +261,18 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const PhrasesScreen()),
+              ),
+            ),
+            const SizedBox(height: 12),
+            _LessonTile(
+              title: 'Short Sentences',
+              subtitle: '132 easy 2–5 word Awing sentences 📖',
+              icon: Icons.short_text,
+              color: Colors.lightGreen.shade600,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const BeginnerSentencesScreen()),
               ),
             ),
             const SizedBox(height: 12),
