@@ -57,13 +57,49 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
     setState(() => _set = s);
   }
 
+  String _levelLabelForBar(String level) {
+    switch (level.toLowerCase()) {
+      case 'medium':
+        return 'Medium';
+      case 'expert':
+        return 'Expert';
+      default:
+        return 'Beginner';
+    }
+  }
+
+  /// Max difficulty allowed for this set's level.
+  /// beginner → 1, medium → 2, expert → 3.
+  int _maxDifficultyForLevel(String level) {
+    switch (level.toLowerCase()) {
+      case 'medium':
+        return 2;
+      case 'expert':
+        return 3;
+      default:
+        return 1;
+    }
+  }
+
+  /// Vocabulary pool filtered to the set's chosen level. Session 63
+  /// Part C — beginner sets only see difficulty-1 words, medium adds
+  /// difficulty-2, expert unlocks everything. Words with no difficulty
+  /// field default to 1 (beginner).
+  List<AwingWord> _vocabularyForCurrentLevel() {
+    final level = _set?.level ?? 'beginner';
+    final maxDiff = _maxDifficultyForLevel(level);
+    return allVocabulary
+        .where((w) => (w.difficulty) <= maxDiff)
+        .toList();
+  }
+
   void _runSearch(String query) {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) {
       setState(() => _searchResults = null);
       return;
     }
-    final all = allVocabulary;
+    final all = _vocabularyForCurrentLevel();
     // Two passes: exact + prefix on Awing OR English, then substring.
     // Cap at 20 to keep the list scrollable.
     final matches = <AwingWord>[];
@@ -126,7 +162,7 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
           children: [
             Text(set.name, style: const TextStyle(fontSize: 18)),
             Text(
-              '${set.wordCount} word${set.wordCount == 1 ? '' : 's'}',
+              '${_levelLabelForBar(set.level)} • ${set.wordCount} word${set.wordCount == 1 ? '' : 's'}',
               style: TextStyle(
                 fontSize: 12,
                 color: theme.appBarTheme.foregroundColor
@@ -277,12 +313,31 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
   Widget _buildSearchResults(BuildContext context) {
     final results = _searchResults!;
     if (results.isEmpty) {
+      final level = _set?.level ?? 'beginner';
+      final levelHint = level == 'beginner'
+          ? 'Search only shows Beginner words. Harder words are hidden until you create a Medium or Expert set.'
+          : (level == 'medium'
+              ? 'Search shows Beginner + Medium words only. Harder words are in Expert sets.'
+              : 'Search shows all words.');
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Text(
-          'No match. Tap "+ Add new word" to add it as a custom word.',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodySmall,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Column(
+          children: [
+            Text(
+              'No match. Tap "+ Add new word" to add it as a custom word.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              levelHint,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontSize: 11,
+                    color: Colors.grey.shade600,
+                  ),
+            ),
+          ],
         ),
       );
     }

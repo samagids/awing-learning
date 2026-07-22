@@ -452,6 +452,12 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
                 children: [
                   _chip(
                     context,
+                    icon: _levelIcon(set.level),
+                    label: _levelLabel(set.level),
+                    color: _levelColor(set.level),
+                  ),
+                  _chip(
+                    context,
                     icon: Icons.text_snippet_outlined,
                     label: '$wordCount word${wordCount == 1 ? '' : 's'}',
                   ),
@@ -485,6 +491,40 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
         ),
       ),
     );
+  }
+
+  /// Human label for a stored level value.
+  String _levelLabel(String level) {
+    switch (level.toLowerCase()) {
+      case 'medium':
+        return 'Medium';
+      case 'expert':
+        return 'Expert';
+      default:
+        return 'Beginner';
+    }
+  }
+
+  IconData _levelIcon(String level) {
+    switch (level.toLowerCase()) {
+      case 'medium':
+        return Icons.speed;
+      case 'expert':
+        return Icons.workspace_premium;
+      default:
+        return Icons.spa;
+    }
+  }
+
+  Color _levelColor(String level) {
+    switch (level.toLowerCase()) {
+      case 'medium':
+        return Colors.orange.shade700;
+      case 'expert':
+        return Colors.red.shade700;
+      default:
+        return Colors.green.shade700;
+    }
   }
 
   Widget _chip(
@@ -530,48 +570,103 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
     }
 
     if (!context.mounted) return;
+    // Session 63 Part C — level picker. Locked levels are dimmed and
+    // show a lock icon (kids/teachers can't create a set for a level
+    // they haven't unlocked). Developer bypasses the lock.
+    String selectedLevel = 'beginner';
     final result = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('New Study Set'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nameController,
-              autofocus: true,
-              decoration: const InputDecoration(
-                labelText: 'Set name',
-                hintText: 'e.g. Grade 3 Unit 2',
-                border: OutlineInputBorder(),
-              ),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setStateDialog) => AlertDialog(
+          title: const Text('New Study Set'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  controller: nameController,
+                  autofocus: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Set name',
+                    hintText: 'e.g. Grade 3 Unit 2',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: descController,
+                  minLines: 1,
+                  maxLines: 2,
+                  decoration: const InputDecoration(
+                    labelText: 'Notes (optional)',
+                    hintText: 'What this set is for, focus…',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Difficulty level',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Words the teacher can add come from this mode. '
+                  'Locked levels are unavailable until you unlock them.',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    for (final lvl in const ['beginner', 'medium', 'expert'])
+                      Expanded(
+                        child: _levelChip(
+                          context,
+                          level: lvl,
+                          selected: selectedLevel == lvl,
+                          unlocked: auth.isLevelUnlocked(lvl),
+                          onTap: () {
+                            if (!auth.isLevelUnlocked(lvl)) {
+                              ScaffoldMessenger.of(ctx).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    '${_levelLabel(lvl)} is locked. '
+                                    'Complete the previous level to unlock it.',
+                                  ),
+                                  duration: const Duration(seconds: 2),
+                                ),
+                              );
+                              return;
+                            }
+                            setStateDialog(() => selectedLevel = lvl);
+                          },
+                        ),
+                      ),
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: descController,
-              minLines: 1,
-              maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: 'Notes (optional)',
-                hintText: 'What this set is for, level, focus…',
-                border: OutlineInputBorder(),
-              ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (nameController.text.trim().isEmpty) return;
+                Navigator.pop(ctx, true);
+              },
+              child: const Text('Create'),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (nameController.text.trim().isEmpty) return;
-              Navigator.pop(ctx, true);
-            },
-            child: const Text('Create'),
-          ),
-        ],
       ),
     );
 
@@ -581,9 +676,81 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
       teacherName: teacherName,
       name: nameController.text,
       description: descController.text,
+      level: selectedLevel,
     );
     if (!mounted) return;
     _openEditor(context, set);
+  }
+
+  /// One of the three level-picker tiles used by the create dialog.
+  /// Renders in three states: selected (colored fill), unlocked
+  /// (outlined + clickable), or locked (dimmed + lock icon + disabled
+  /// click behaviour that shows a snackbar).
+  Widget _levelChip(
+    BuildContext context, {
+    required String level,
+    required bool selected,
+    required bool unlocked,
+    required VoidCallback onTap,
+  }) {
+    final color = _levelColor(level);
+    final icon = _levelIcon(level);
+    final label = _levelLabel(level);
+    Widget content = Container(
+      margin: const EdgeInsets.symmetric(horizontal: 3),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
+      decoration: BoxDecoration(
+        color: selected ? color.withOpacity(0.15) : Colors.transparent,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: selected ? color : color.withOpacity(0.35),
+          width: selected ? 2 : 1,
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: color, size: 20),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              color: color,
+            ),
+          ),
+        ],
+      ),
+    );
+    if (!unlocked) {
+      // Dim + overlay a lock badge. Wrap in Stack to place the lock at
+      // the top-right corner.
+      content = Stack(
+        alignment: Alignment.topRight,
+        children: [
+          Opacity(opacity: 0.4, child: content),
+          Positioned(
+            top: 2,
+            right: 6,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                shape: BoxShape.circle,
+              ),
+              padding: const EdgeInsets.all(2),
+              child: Icon(Icons.lock,
+                  size: 12, color: Colors.grey.shade700),
+            ),
+          ),
+        ],
+      );
+    }
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(10),
+      child: content,
+    );
   }
 
   void _openEditor(BuildContext context, StudySet set) {

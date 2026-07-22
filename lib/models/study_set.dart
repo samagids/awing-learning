@@ -28,6 +28,13 @@ class StudySet {
   /// Optional description — teacher notes about focus, level, etc.
   String description;
 
+  /// Difficulty level this set targets: 'beginner', 'medium', or 'expert'.
+  /// Session 63 Part C — determines which vocabulary the teacher sees
+  /// in the editor's search (beginner=diff 1, medium=diff ≤ 2,
+  /// expert=diff ≤ 3), and locks the choice behind the level-unlock
+  /// check when creating a new set.
+  String level;
+
   /// Awing keys (audio_key format) of words drawn from the existing
   /// app dictionary. Order preserved.
   List<String> wordKeys;
@@ -62,6 +69,7 @@ class StudySet {
     required this.teacherName,
     required this.name,
     this.description = '',
+    this.level = 'beginner',
     List<String>? wordKeys,
     List<StudySetCustomWord>? customWords,
     List<String>? sharedWithEmails,
@@ -110,6 +118,7 @@ class StudySet {
         'teacherName': teacherName,
         'name': name,
         'description': description,
+        'level': level,
         'wordKeys': wordKeys,
         'customWords': customWords.map((w) => w.toJson()).toList(),
         'sharedWithEmails': sharedWithEmails,
@@ -125,6 +134,7 @@ class StudySet {
         teacherName: j['teacherName'] as String? ?? '',
         name: j['name'] as String? ?? '',
         description: j['description'] as String? ?? '',
+        level: (j['level'] as String?) ?? 'beginner',
         wordKeys: (j['wordKeys'] as List?)?.cast<String>() ?? [],
         customWords: ((j['customWords'] as List?) ?? [])
             .map((w) => StudySetCustomWord.fromJson(

@@ -96,6 +96,7 @@ class StudySetService extends ChangeNotifier {
     required String teacherName,
     required String name,
     String description = '',
+    String level = 'beginner',
   }) async {
     await load();
     final id = _generateId();
@@ -107,6 +108,7 @@ class StudySetService extends ChangeNotifier {
       teacherName: teacherName,
       name: name.trim(),
       description: description.trim(),
+      level: level,
     );
     _sets.add(set);
     await _persist();
