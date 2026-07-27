@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/screens/medium/sentences_screen.dart'
     show AwingSentence, expertSentences;
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
@@ -16,6 +15,11 @@ class ExpertProverbsScreen extends StatefulWidget {
 
 class _ExpertProverbsScreenState extends State<ExpertProverbsScreen> {
   int _index = 0;
+  // PronunciationService is a plain singleton in this codebase (not Provided
+  // via Provider.of). Session 64 fix: instantiate directly to match the
+  // expert_home.dart pattern. Provider.of was throwing
+  // ProviderNotFoundException at build time → grey screen with no AppBar.
+  final PronunciationService _pronunciation = PronunciationService();
 
   void _next() {
     setState(() {
@@ -48,7 +52,6 @@ class _ExpertProverbsScreenState extends State<ExpertProverbsScreen> {
     }
 
     final AwingSentence s = expertSentences[_index];
-    final pron = Provider.of<PronunciationService>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -100,7 +103,8 @@ class _ExpertProverbsScreenState extends State<ExpertProverbsScreen> {
                               ),
                               const SizedBox(height: 12),
                               ElevatedButton.icon(
-                                onPressed: () => pron.speakAwing(s.awing),
+                                onPressed: () =>
+                                    _pronunciation.speakAwing(s.awing),
                                 icon: const Icon(Icons.volume_up),
                                 label: const Text('Hear it'),
                                 style: ElevatedButton.styleFrom(
