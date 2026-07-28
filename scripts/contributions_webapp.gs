@@ -281,6 +281,11 @@ function handleSubmission(payload) {
   var safeEnglish = sheetSafe(safeStr(payload.englishMeaning, MAX_FIELD_LEN));
   var safeCategory = sheetSafe(safeStr(payload.category, 64));
   var safeNotes = sheetSafe(safeStr(payload.notes, MAX_NOTES_LEN));
+  // Session 64 — app version (e.g. "1.21.1+121"). Lets Dr. Sama triage
+  // whether a report came from the latest build. sheetSafe() protects
+  // against future clients that might send unusual chars; the standard
+  // shape is digits/dots/plus.
+  var safeAppVersion = sheetSafe(safeStr(payload.appVersion, 32));
 
   // Save audio file to Drive if included.
   var audioFileUrl = '';
@@ -372,6 +377,8 @@ function handleSubmission(payload) {
   // Append row to Submissions sheet
   // NOTE: column 13 (safeGoogleName) added in Session 63 Part B. Older
   // rows have no column 13 — readers must treat undefined as empty.
+  // NOTE: column 14 (safeAppVersion) added in Session 64. Older rows
+  // have no column 14 — readers must treat undefined as empty.
   submissions.appendRow([
     safeId,
     new Date().toISOString(),
@@ -386,7 +393,8 @@ function handleSubmission(payload) {
     'pending',
     '',
     '',
-    safeGoogleName
+    safeGoogleName,
+    safeAppVersion
   ]);
 
   // v1.13.3: Silence per-submit emails for the developer's own Record-tab
@@ -420,6 +428,7 @@ function handleSubmission(payload) {
       var body = 'A user submitted a contribution:\n\n' +
         'Type: ' + typeLabel + '\n' +
         'From: ' + safeProfile + '\n' +
+        'App version: ' + (safeAppVersion || '(unknown, pre-1.21.2)') + '\n' +
         'Word: ' + safeTarget + '\n' +
         'Correction: ' + (safeCorrection || '(none)') + '\n' +
         'English: ' + (safeEnglish || '(none)') + '\n' +

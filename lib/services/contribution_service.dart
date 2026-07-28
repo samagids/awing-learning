@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'cloud_backup_service.dart';
+import '../screens/about_screen.dart' show AboutScreen;
 
 /// Type of contribution a user can submit.
 enum ContributionType {
@@ -500,7 +501,13 @@ class ContributionService extends ChangeNotifier {
       }
     }
 
-    // Also push to webhook (non-blocking, best-effort)
+    // Also push to webhook (non-blocking, best-effort).
+    // Session 64: include the app's version string so the notification
+    // email + Submissions sheet show which build the reporter is on.
+    // Lets Dr. Sama triage whether a report is still valid or whether
+    // the user needs to update first.
+    final appVersion =
+        '${AboutScreen.appVersion}+${AboutScreen.buildNumber}';
     _postToWebhook({
       'action': 'submit',
       'id': id,
@@ -513,6 +520,7 @@ class ContributionService extends ChangeNotifier {
       'category': category ?? '',
       'pronunciationGuide': pronunciationGuide ?? '',
       'notes': notes ?? '',
+      'appVersion': appVersion,
       if (audioBase64 != null) 'audioBase64': audioBase64,
     });
 
