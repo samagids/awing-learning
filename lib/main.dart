@@ -385,24 +385,35 @@ class AwingApp extends StatelessWidget {
             // so it can float above any screen. Only appears when an
             // AwingTextField gains focus (see AwingKeyboardController).
             builder: (context, child) {
-              return Stack(
-                children: [
-                  child ?? const SizedBox.shrink(),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: AnimatedBuilder(
-                      animation: AwingKeyboardController.instance,
-                      builder: (context, _) {
-                        if (!AwingKeyboardController.instance.isVisible) {
-                          return const SizedBox.shrink();
-                        }
-                        return const AwingKeyboard();
-                      },
+              // Session 64: wrap the whole app in a SelectionArea so
+              // every Text widget becomes tap-and-hold selectable. Users
+              // asked for this so they can copy Awing words out of
+              // vocabulary, alphabet, stories, sentences, etc. into
+              // WhatsApp / notes / a browser search. SelectionArea only
+              // acts on text; taps and long-press gesture recognizers
+              // registered by underlying widgets still win (quiz answers,
+              // "Hear it" buttons, etc.), so no interference with
+              // existing gameplay.
+              return SelectionArea(
+                child: Stack(
+                  children: [
+                    child ?? const SizedBox.shrink(),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: AnimatedBuilder(
+                        animation: AwingKeyboardController.instance,
+                        builder: (context, _) {
+                          if (!AwingKeyboardController.instance.isVisible) {
+                            return const SizedBox.shrink();
+                          }
+                          return const AwingKeyboard();
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             },
           );

@@ -5,6 +5,7 @@ import 'package:awing_ai_learning/services/study_set_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
 import 'package:awing_ai_learning/components/awing_text_field.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
+import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/screens/study_sets/study_set_record_screen.dart';
 
 /// Add / remove / reorder words in a Study Set. Session 63 Phase 1.
@@ -33,6 +34,13 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
   final _searchController = TextEditingController();
   List<AwingWord>? _searchResults;
   StudySet? _set;
+  // Session 64: allow teachers to preview each word from the tile.
+  // PronunciationService is a plain singleton (matches beginner_home,
+  // expert_home, etc.). It routes to the native recording first (via
+  // its priority-0 native tier), then Edge TTS character voices, then
+  // flutter_tts fallback — so tapping the play icon does the right
+  // thing regardless of whether the word has a native recording.
+  final PronunciationService _pronunciation = PronunciationService();
 
   @override
   void initState() {
@@ -509,6 +517,20 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // Session 64: preview the current pronunciation. Falls through
+        // PronunciationService's priority chain (native recording →
+        // level-appropriate Edge TTS voice → flutter_tts fallback), so
+        // this is what students will actually hear.
+        IconButton(
+          tooltip: hasNative
+              ? 'Hear native recording'
+              : (hasTeacherRec
+                  ? 'Hear your recording'
+                  : 'Hear TTS pronunciation'),
+          icon: Icon(Icons.volume_up, color: Colors.blueGrey.shade700),
+          onPressed: () => _pronunciation.speakAwing(awing),
+          visualDensity: VisualDensity.compact,
+        ),
         IconButton(
           tooltip: tooltip,
           icon: Icon(icon, color: iconColor),
