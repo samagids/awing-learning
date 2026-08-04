@@ -300,6 +300,7 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
               suffixIcon: _searchController.text.isEmpty
                   ? null
                   : IconButton(
+                    tooltip: 'Clear',
                       icon: const Icon(Icons.clear),
                       onPressed: () {
                         _searchController.clear();
@@ -391,6 +392,7 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
                       color: Colors.green);
                 }
                 return IconButton(
+                  tooltip: 'Add',
                   icon: const Icon(Icons.add_circle_outline),
                   onPressed: () async {
                     await StudySetService.instance.addDictionaryWord(
@@ -543,6 +545,7 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
           visualDensity: VisualDensity.compact,
         ),
         IconButton(
+          tooltip: 'Close',
           icon: const Icon(Icons.close, size: 20),
           onPressed: onRemove,
           visualDensity: VisualDensity.compact,

@@ -262,12 +262,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 24,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : Image.network(
-                            'https://developers.google.com/identity/images/g-logo.png',
-                            height: 24,
-                            width: 24,
-                            errorBuilder: (_, __, ___) =>
-                                const Icon(Icons.account_circle, size: 24),
+                        // Session 64 (H5): was Image.network to
+                        // developers.google.com/identity/images/g-logo.png.
+                        // That hit the network on EVERY app launch, costing
+                        // metered data for Cameroonian users and left the
+                        // login screen half-broken on flaky first-launches.
+                        // Now uses an offline-safe Material icon. If we
+                        // ever need brand-perfect Google G branding, drop
+                        // assets/images/google_g.png in and switch to
+                        // Image.asset.
+                        : const Icon(
+                            Icons.account_circle,
+                            size: 24,
+                            color: Color(0xFF4285F4), // Google brand blue
                           ),
                     label: Text(
                       _isLoading ? 'Signing in...' : 'Sign in with Google',

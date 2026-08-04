@@ -139,6 +139,10 @@ class _StudentJoinScreenState extends State<StudentJoinScreen> {
               ),
             const SizedBox(height: 16),
             if (_error != null) ...[
+              // Session 64 (L6): was showing raw exception text — scary
+              // for kids on flaky data. Now shows a friendly lead + the
+              // raw detail collapsed under a Tooltip so devs/parents
+              // can still long-press to see what actually failed.
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -146,12 +150,35 @@ class _StudentJoinScreenState extends State<StudentJoinScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(Icons.error_outline, color: Colors.red),
                     const SizedBox(width: 8),
                     Expanded(
-                      child: Text(_error!,
-                          style: TextStyle(color: Colors.red.shade700)),
+                      child: Tooltip(
+                        message: _error!,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Could not join the exam.',
+                              style: TextStyle(
+                                color: Colors.red.shade700,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              'Check the 6-digit PIN and make sure you '
+                              'are on the same WiFi as your teacher.',
+                              style: TextStyle(
+                                color: Colors.red.shade700,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

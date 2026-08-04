@@ -710,7 +710,8 @@ class _StoryQuizScreenState extends State<StoryQuizScreen> {
         appBar: AppBar(
           title: const Text('Quiz Complete!'),
           backgroundColor: Colors.teal,
-          automaticallyImplyLeading: false,
+          // Session 64 C3 fix: was automaticallyImplyLeading:false — kids
+          // who tapped the wrong story got trapped. Now back arrow works.
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -770,11 +771,36 @@ class _StoryQuizScreenState extends State<StoryQuizScreen> {
     final question = widget.story.questions[_currentQuestion];
     final isCorrect = _selectedAnswer == question.correctAnswer;
 
-    return Scaffold(
+    // Session 64 C3 fix: was automaticallyImplyLeading:false with no
+    // other exit — kids got trapped. Now WillPopScope intercepts back
+    // with a confirmation matching the exam flow's leave-safely pattern.
+    return WillPopScope(
+      onWillPop: () async {
+        final shouldLeave = await showDialog<bool>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Leave quiz?'),
+            content: const Text(
+              'Your quiz progress will not be saved.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: const Text('Keep going'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: const Text('Leave'),
+              ),
+            ],
+          ),
+        );
+        return shouldLeave ?? false;
+      },
+      child: Scaffold(
       appBar: AppBar(
         title: const Text('Story Quiz'),
         backgroundColor: Colors.teal,
-        automaticallyImplyLeading: false,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -821,16 +847,22 @@ class _StoryQuizScreenState extends State<StoryQuizScreen> {
                     child: ElevatedButton(
                       onPressed: _answered ? null : () => _selectAnswer(option),
                       style: ElevatedButton.styleFrom(
+                        // Session 64 (L7): was grey.shade300 background
+                        // + black54 text — muddy at low brightness. Now
+                        // unpicked-after-answer stays on a white surface
+                        // with a soft border, so the correct/wrong ones
+                        // stand out as chromatic accents and unpicked
+                        // stays readable.
                         backgroundColor: _answered
                             ? showCorrect
                                 ? Colors.green
                                 : showIncorrect
                                     ? Colors.red
-                                    : Colors.grey.shade300
+                                    : Colors.grey.shade50
                             : Colors.white,
                         foregroundColor: Colors.teal,
-                        disabledBackgroundColor: Colors.grey.shade300,
-                        disabledForegroundColor: Colors.black54,
+                        disabledBackgroundColor: Colors.grey.shade50,
+                        disabledForegroundColor: Colors.grey.shade700,
                         side: BorderSide(
                           color: isSelected ? Colors.teal : Colors.grey.shade300,
                           width: isSelected ? 2 : 1,
@@ -902,6 +934,7 @@ class _StoryQuizScreenState extends State<StoryQuizScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }
@@ -964,6 +997,7 @@ class StoryVocabularyView extends StatelessWidget {
                   ),
                 ),
                 IconButton(
+                  tooltip: 'Hear it',
                   onPressed: () {
                     PronunciationService().speakAwing(entry.key);
                   },

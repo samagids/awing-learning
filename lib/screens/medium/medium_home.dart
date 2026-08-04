@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awing_ai_learning/screens/medium/clusters_screen.dart';
 import 'package:awing_ai_learning/screens/translate/sentence_translate.dart';
 import 'package:awing_ai_learning/screens/medium/vowels_screen.dart';
@@ -12,6 +13,7 @@ import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
 import 'package:awing_ai_learning/screens/daily_words_screen.dart';
 import 'package:awing_ai_learning/screens/stories_screen.dart';
+import 'package:awing_ai_learning/components/mode_home_widgets.dart';
 
 class MediumHome extends StatefulWidget {
   const MediumHome({Key? key}) : super(key: key);
@@ -23,18 +25,82 @@ class MediumHome extends StatefulWidget {
 class _MediumHomeState extends State<MediumHome> {
   final PronunciationService _pronunciation = PronunciationService();
   bool _isFemaleVoice = false;
+  // Session 64 (H3+M9): kid-voice override matching Beginner. Now with
+  // SharedPreferences persistence so the pick survives app restart.
+  String? _kidOverride;
+
+  static const _kPrefsGender = 'medium_voice_is_female';
+  static const _kPrefsKidMan = 'medium_voice_kid_man';
+  static const _kPrefsKidWoman = 'medium_voice_kid_woman';
 
   @override
   void initState() {
     super.initState();
     _pronunciation.setVoiceForLevel('medium', alternate: _isFemaleVoice);
+    _loadPersistedVoice();
+  }
+
+  Future<void> _loadPersistedVoice() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final female = prefs.getBool(_kPrefsGender) ?? false;
+      final key = female ? _kPrefsKidWoman : _kPrefsKidMan;
+      final kid = prefs.getString(key);
+      if (!mounted) return;
+      setState(() {
+        _isFemaleVoice = female;
+        _kidOverride = kid;
+      });
+      _pronunciation.setVoiceForLevel('medium', alternate: female);
+      _pronunciation.setKidOverride(kid);
+    } catch (_) {/* fall back to defaults */}
+  }
+
+  Future<void> _persistGender(bool female) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_kPrefsGender, female);
+    } catch (_) {}
+  }
+
+  Future<void> _persistKid(String? slug, bool female) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = female ? _kPrefsKidWoman : _kPrefsKidMan;
+      if (slug == null) {
+        await prefs.remove(key);
+      } else {
+        await prefs.setString(key, slug);
+      }
+    } catch (_) {}
   }
 
   void _toggleVoice(bool female) {
     setState(() {
       _isFemaleVoice = female;
+      _kidOverride = null;
     });
     _pronunciation.setVoiceForLevel('medium', alternate: female);
+    _pronunciation.setKidOverride(null);
+    _persistGender(female);
+    _restoreKidForGender(female);
+  }
+
+  Future<void> _restoreKidForGender(bool female) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = female ? _kPrefsKidWoman : _kPrefsKidMan;
+      final saved = prefs.getString(key);
+      if (saved == null || !mounted) return;
+      setState(() => _kidOverride = saved);
+      _pronunciation.setKidOverride(saved);
+    } catch (_) {}
+  }
+
+  void _pickKid(String? slug) {
+    setState(() => _kidOverride = slug);
+    _pronunciation.setKidOverride(slug);
+    _persistKid(slug, _isFemaleVoice);
   }
 
   @override
@@ -56,6 +122,7 @@ class _MediumHomeState extends State<MediumHome> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                // Session 64 (M8): overflow protection for narrow phones.
                 child: Row(
                   children: [
                     const Icon(Icons.record_voice_over, color: Colors.orange),
@@ -64,33 +131,51 @@ class _MediumHomeState extends State<MediumHome> {
                       'Voice:',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
-                    const Spacer(),
-                    _VoiceOption(
-                      label: 'Young Man',
-                      icon: Icons.face,
-                      selected: !_isFemaleVoice,
-                      color: Colors.orange,
-                      onTap: () => _toggleVoice(false),
-                    ),
-                    const SizedBox(width: 8),
-                    _VoiceOption(
-                      label: 'Young Woman',
-                      icon: Icons.face_3,
-                      selected: _isFemaleVoice,
-                      color: Colors.orange,
-                      onTap: () => _toggleVoice(true),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Wrap(
+                        alignment: WrapAlignment.end,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 8,
+                        runSpacing: 6,
+                        children: [
+                          VoiceOption(
+                            label: 'Young Man',
+                            icon: Icons.face,
+                            selected: !_isFemaleVoice,
+                            color: Colors.orange,
+                            onTap: () => _toggleVoice(false),
+                          ),
+                          VoiceOption(
+                            label: 'Young Woman',
+                            icon: Icons.face_3,
+                            selected: _isFemaleVoice,
+                            color: Colors.orange,
+                            onTap: () => _toggleVoice(true),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
+            ),
+            const SizedBox(height: 8),
+            // Session 64 (H3): kid-voice picker now on Medium too.
+            KidVoicePicker(
+              isFemaleVoice: _isFemaleVoice,
+              activeKid: _kidOverride,
+              onChanged: _pickKid,
+              accentColor: Colors.orange.shade400,
             ),
             const SizedBox(height: 16),
             const Text(
               'Choose a lesson:',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
-            _LessonTile(
+            // Session 64 (H1): section headers reduce cognitive load.
+            const SectionHeader('Daily'),
+            LessonTile(
               title: "Today's Sentences",
               subtitle: '10 new everyday sentences picked for you 🧠',
               icon: Icons.wb_sunny,
@@ -106,7 +191,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Translate Sentences',
               subtitle: 'Type a sentence, get word-by-word Awing',
               icon: Icons.translate,
@@ -118,7 +203,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Stories',
               subtitle: 'Read & listen to medium-level Awing stories',
               icon: Icons.auto_stories,
@@ -133,8 +218,8 @@ class _MediumHomeState extends State<MediumHome> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
-            _LessonTile(
+            const SectionHeader('Learn'),
+            LessonTile(
               title: 'Short Sentences',
               subtitle: 'Learn everyday Awing sentences',
               icon: Icons.short_text,
@@ -145,7 +230,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Consonant Clusters',
               subtitle: 'Prenasalized, palatalized & labialized sounds',
               icon: Icons.record_voice_over,
@@ -156,7 +241,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Vowels & Syllables',
               subtitle: '9 vowels, long vowels & syllable types',
               icon: Icons.circle_outlined,
@@ -167,7 +252,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Noun Classes',
               subtitle: 'Singular & plural patterns',
               icon: Icons.category,
@@ -178,7 +263,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Sentence Building',
               subtitle: 'Build your own Awing sentences',
               icon: Icons.chat_bubble_outline,
@@ -189,7 +274,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Difficult Words',
               subtitle: 'Learn more challenging vocabulary',
               icon: Icons.menu_book,
@@ -210,7 +295,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Numbers 11-100',
               subtitle: 'Teens, tens & big numbers',
               icon: Icons.pin,
@@ -220,8 +305,8 @@ class _MediumHomeState extends State<MediumHome> {
                 MaterialPageRoute(builder: (_) => const NumbersMediumScreen()),
               ),
             ),
-            const SizedBox(height: 12),
-            _LessonTile(
+            const SectionHeader('Test & Play'),
+            LessonTile(
               title: 'Writing Quiz',
               subtitle: 'Fill in the blank sentences',
               icon: Icons.edit_note,
@@ -232,7 +317,7 @@ class _MediumHomeState extends State<MediumHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Games',
               subtitle: 'Sentence Build - arrange words in order',
               icon: Icons.extension,
@@ -249,88 +334,3 @@ class _MediumHomeState extends State<MediumHome> {
   }
 }
 
-class _VoiceOption extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final bool selected;
-  final Color color;
-  final VoidCallback onTap;
-
-  const _VoiceOption({
-    required this.label,
-    required this.icon,
-    required this.selected,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-        decoration: BoxDecoration(
-          color: selected ? color : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: selected ? color : Colors.grey.shade400,
-            width: 2,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 20, color: selected ? Colors.white : Colors.grey.shade600),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: selected ? Colors.white : Colors.grey.shade600,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _LessonTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  const _LessonTile({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        leading: CircleAvatar(
-          backgroundColor: color,
-          radius: 28,
-          child: Icon(icon, color: Colors.white, size: 28),
-        ),
-        title: Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
-      ),
-    );
-  }
-}

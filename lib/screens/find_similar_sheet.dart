@@ -170,6 +170,7 @@ class _FindSimilarSheetState extends State<_FindSimilarSheet> {
                     ),
                   ),
                   IconButton(
+                    tooltip: 'Close',
                     icon: const Icon(Icons.close),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
@@ -291,6 +292,7 @@ class _FindSimilarSheetState extends State<_FindSimilarSheet> {
                     ),
                   ),
                   IconButton(
+                    tooltip: 'Hear it',
                     icon: Icon(Icons.volume_up,
                         color: Colors.deepPurple.shade400),
                     onPressed: () => _pronunciation.speakAwing(aw),

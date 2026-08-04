@@ -15,6 +15,7 @@ import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
 import 'package:awing_ai_learning/screens/daily_words_screen.dart';
 import 'package:awing_ai_learning/screens/stories_screen.dart';
+import 'package:awing_ai_learning/components/mode_home_widgets.dart';
 
 class BeginnerHome extends StatefulWidget {
   const BeginnerHome({Key? key}) : super(key: key);
@@ -135,6 +136,10 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                // Session 64 (M8): row was Icon + Text + Spacer + 2 chips.
+                // On narrow phones the chips overflowed. Now the chips
+                // sit inside a Wrap that flows to a second row on tiny
+                // screens instead of clipping.
                 child: Row(
                   children: [
                     const Icon(Icons.record_voice_over, color: Colors.green),
@@ -143,21 +148,30 @@ class _BeginnerHomeState extends State<BeginnerHome> {
                       'Voice:',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
-                    const Spacer(),
-                    _VoiceOption(
-                      label: 'Boy',
-                      icon: Icons.face,
-                      selected: !_isFemaleVoice,
-                      color: Colors.green,
-                      onTap: () => _toggleVoice(false),
-                    ),
-                    const SizedBox(width: 8),
-                    _VoiceOption(
-                      label: 'Girl',
-                      icon: Icons.face_3,
-                      selected: _isFemaleVoice,
-                      color: Colors.green,
-                      onTap: () => _toggleVoice(true),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Wrap(
+                        alignment: WrapAlignment.end,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 8,
+                        runSpacing: 6,
+                        children: [
+                          VoiceOption(
+                            label: 'Boy',
+                            icon: Icons.face,
+                            selected: !_isFemaleVoice,
+                            color: Colors.green,
+                            onTap: () => _toggleVoice(false),
+                          ),
+                          VoiceOption(
+                            label: 'Girl',
+                            icon: Icons.face_3,
+                            selected: _isFemaleVoice,
+                            color: Colors.green,
+                            onTap: () => _toggleVoice(true),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -168,18 +182,21 @@ class _BeginnerHomeState extends State<BeginnerHome> {
             // default. When a kid is picked, words THEY recorded play
             // in their voice; words they didn't record still play in
             // "My voice" silently.
-            _KidVoicePicker(
+            KidVoicePicker(
               isFemaleVoice: _isFemaleVoice,
               activeKid: _kidOverride,
               onChanged: _pickKid,
+              accentColor: Colors.green.shade400,
             ),
             const SizedBox(height: 16),
             const Text(
               'Choose a lesson:',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
-            _LessonTile(
+            // Session 64 (H1): section headers reduce cognitive load
+            // vs. a flat 13-tile scroll.
+            const SectionHeader('Daily'),
+            LessonTile(
               title: "Today's Words",
               subtitle: '10 new words picked for you every day 🧠',
               icon: Icons.wb_sunny,
@@ -195,7 +212,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Translate Words',
               subtitle: 'English ↔ Awing word lookup with pronunciation',
               icon: Icons.translate,
@@ -206,7 +223,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Stories',
               subtitle: 'Read & listen to simple Awing stories',
               icon: Icons.auto_stories,
@@ -221,8 +238,8 @@ class _BeginnerHomeState extends State<BeginnerHome> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
-            _LessonTile(
+            const SectionHeader('Learn'),
+            LessonTile(
               title: 'Alphabet',
               subtitle: 'Learn the 22 consonants and 9 vowels',
               icon: Icons.abc,
@@ -233,7 +250,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Words',
               subtitle: 'Learn common Awing words',
               icon: Icons.menu_book,
@@ -253,7 +270,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Phrases & Greetings',
               subtitle: 'Say hello, ask questions & more',
               icon: Icons.chat,
@@ -264,7 +281,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Short Sentences',
               subtitle: '132 easy 2–5 word Awing sentences 📖',
               icon: Icons.short_text,
@@ -276,7 +293,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Tones',
               subtitle: 'Hear how tone changes meaning',
               icon: Icons.music_note,
@@ -287,7 +304,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Numbers',
               subtitle: 'Learn to count 1-10 in Awing',
               icon: Icons.looks_one,
@@ -297,8 +314,8 @@ class _BeginnerHomeState extends State<BeginnerHome> {
                 MaterialPageRoute(builder: (_) => const NumbersScreen()),
               ),
             ),
-            const SizedBox(height: 12),
-            _LessonTile(
+            const SectionHeader('Practice'),
+            LessonTile(
               title: 'Pronunciation',
               subtitle: 'Practice speaking Awing words',
               icon: Icons.mic,
@@ -308,8 +325,8 @@ class _BeginnerHomeState extends State<BeginnerHome> {
                 MaterialPageRoute(builder: (_) => const PronunciationScreen()),
               ),
             ),
-            const SizedBox(height: 12),
-            _LessonTile(
+            const SectionHeader('Test & Play'),
+            LessonTile(
               title: 'Quiz',
               subtitle: 'Test what you have learned!',
               icon: Icons.quiz,
@@ -320,7 +337,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Review',
               subtitle: 'Practice words you are still learning',
               icon: Icons.replay,
@@ -331,7 +348,7 @@ class _BeginnerHomeState extends State<BeginnerHome> {
               ),
             ),
             const SizedBox(height: 12),
-            _LessonTile(
+            LessonTile(
               title: 'Games',
               subtitle: 'Picture Match - drag words to pictures',
               icon: Icons.extension,
@@ -348,206 +365,3 @@ class _BeginnerHomeState extends State<BeginnerHome> {
   }
 }
 
-class _VoiceOption extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final bool selected;
-  final Color color;
-  final VoidCallback onTap;
-
-  const _VoiceOption({
-    required this.label,
-    required this.icon,
-    required this.selected,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-        decoration: BoxDecoration(
-          color: selected ? color : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: selected ? color : Colors.grey.shade400,
-            width: 2,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 20, color: selected ? Colors.white : Colors.grey.shade600),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: selected ? Colors.white : Colors.grey.shade600,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _LessonTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  const _LessonTile({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        leading: CircleAvatar(
-          backgroundColor: color,
-          radius: 28,
-          child: Icon(icon, color: Colors.white, size: 28),
-        ),
-        title: Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
-      ),
-    );
-  }
-}
-
-/// Sub-picker for "Whose voice should we use?". Sits directly below
-/// the Boy/Girl card on the Beginner home screen.
-///
-/// When Boy is selected (isFemaleVoice=false): My voice / Joel / Janelle.
-/// When Girl is selected (isFemaleVoice=true):  My voice / Joyce / Jadyne.
-///
-/// "My voice" is null override — plays Dr. Sama's recording where
-/// available, or the Edge TTS character voice otherwise. Picking a
-/// specific kid plays THEIR recording when present, silently falling
-/// back to "My voice" for words they haven't recorded yet.
-class _KidVoicePicker extends StatelessWidget {
-  final bool isFemaleVoice;
-  final String? activeKid;
-  final ValueChanged<String?> onChanged;
-
-  const _KidVoicePicker({
-    required this.isFemaleVoice,
-    required this.activeKid,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final character = isFemaleVoice ? 'girl' : 'boy';
-    final kids =
-        PronunciationService.kidVoicesByCharacter[character] ?? const [];
-
-    return Card(
-      color: Colors.green.shade50,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Row(
-          children: [
-            const Icon(Icons.person_pin_circle_outlined,
-                color: Colors.green),
-            const SizedBox(width: 12),
-            const Text(
-              'Whose voice?',
-              style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-            const Spacer(),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                reverse: true, // keep the "My voice" chip visible
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    _KidChip(
-                      label: 'My voice',
-                      selected: activeKid == null,
-                      onTap: () => onChanged(null),
-                    ),
-                    for (final kid in kids) ...[
-                      const SizedBox(width: 6),
-                      _KidChip(
-                        label:
-                            PronunciationService.kidDisplayNames[kid] ??
-                                kid,
-                        selected: activeKid == kid,
-                        onTap: () => onChanged(kid),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _KidChip extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _KidChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding:
-            const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: selected ? Colors.green : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: selected ? Colors.green : Colors.grey.shade400,
-            width: 1.6,
-          ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: selected ? Colors.white : Colors.grey.shade700,
-          ),
-        ),
-      ),
-    );
-  }
-}

@@ -86,7 +86,7 @@ class _BeginnerSentencesScreenState extends State<BeginnerSentencesScreen> {
                             children: [
                               const Text('Awing',
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.green)),
                               const SizedBox(height: 8),
@@ -123,7 +123,7 @@ class _BeginnerSentencesScreenState extends State<BeginnerSentencesScreen> {
                             children: [
                               const Text('English',
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.blueGrey)),
                               const SizedBox(height: 8),

@@ -44,6 +44,10 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
   String _category = 'body';
   bool _submitted = false;
+  // Session 64 (M12): flipped to true once NativeAudioInventory.load
+  // completes. `_alreadyRecorded` returns false until then, so we use
+  // this to disable the record UI meanwhile (see _startRecording).
+  bool _nativeInventoryLoaded = false;
   /// Set to true once a submission has been posted to the webhook.
   /// Drives the "Sent to Developer" success message. No longer means
   /// "email app opened" -- the webhook sends the email server-side now.
@@ -77,8 +81,12 @@ class _ContributeScreenState extends State<ContributeScreen> {
       _category = widget.prefillCategory!;
     }
     // v1.17.4+ — Session 60+ block-duplicate-recordings rule.
+    // Session 64 (M12): track the load state so we can disable the record
+    // button until the inventory is available. Without this a fast-typing
+    // user could tap Record before the async load returns and slip past
+    // the `_alreadyRecorded` guard.
     NativeAudioInventory.instance.load().then((_) {
-      if (mounted) setState(() {});
+      if (mounted) setState(() => _nativeInventoryLoaded = true);
     });
     // Rebuild whenever the word changes so the "already recorded"
     // warning + record-button disable react live.
@@ -112,6 +120,22 @@ class _ContributeScreenState extends State<ContributeScreen> {
   // ==================== Audio Recording ====================
 
   Future<void> _startRecording() async {
+    // Session 64 (M12): defensive check — if the native inventory hasn't
+    // loaded yet, block the record entirely rather than let a fast user
+    // slip past `_alreadyRecorded` while it still reads as `false`.
+    if (!_nativeInventoryLoaded) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Still checking the native recordings list. Please wait a '
+              'second and try again.',
+            ),
+          ),
+        );
+      }
+      return;
+    }
     if (_alreadyRecorded) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -172,6 +196,32 @@ class _ContributeScreenState extends State<ContributeScreen> {
   }
 
   Future<void> _deleteRecording() async {
+    // Session 64 (M7): confirmation before wiping the recording. The
+    // delete icon sits right next to the play icon in a compact row —
+    // easy to fat-finger for kids. Confirming prevents accidental
+    // loss of a good recording.
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Delete recording?'),
+        content: const Text(
+          'Are you sure you want to delete your recording? '
+          'You will need to record again.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Keep'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+    if (confirm != true) return;
     setState(() {
       _hasRecording = false;
       _recordingPath = null;
@@ -911,12 +961,14 @@ class _ContributeScreenState extends State<ContributeScreen> {
               if (_hasRecording) ...[
                 const SizedBox(width: 16),
                 IconButton(
+                  tooltip: 'Play',
                   onPressed: _playRecording,
                   icon: const Icon(Icons.play_circle_fill),
                   iconSize: 48,
                   color: const Color(0xFF006432),
                 ),
                 IconButton(
+                  tooltip: 'Delete',
                   onPressed: _deleteRecording,
                   icon: const Icon(Icons.delete),
                   iconSize: 32,

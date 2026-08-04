@@ -205,7 +205,7 @@ class _QuizCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     const Text(
                       '20 questions',
-                      style: TextStyle(fontSize: 12, color: Colors.white70),
+                      style: TextStyle(fontSize: 14, color: Colors.white70),
                     ),
                     if (bestScore > 0) ...[
                       const SizedBox(height: 6),
@@ -223,7 +223,7 @@ class _QuizCard extends StatelessWidget {
                         child: Text(
                           'Best: $bestScore%',
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: passed
                                 ? Colors.green.shade800
@@ -461,6 +461,7 @@ class _QuizPlayState extends State<_QuizPlay> {
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         leading: IconButton(
+          tooltip: 'Back',
           icon: const Icon(Icons.arrow_back),
           onPressed: widget.onBack,
         ),

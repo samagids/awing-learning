@@ -91,7 +91,7 @@ class _PhrasesScreenState extends State<PhrasesScreen> {
                     Expanded(
                       child: Text(
                         'Tap a phrase to hear it spoken. Practice saying each phrase out loud!',
-                        style: TextStyle(fontSize: 13, height: 1.4),
+                        style: TextStyle(fontSize: 14, height: 1.4),
                       ),
                     ),
                   ],
@@ -245,7 +245,7 @@ class _PhraseCardState extends State<_PhraseCard> {
                   child: Text(
                     phrase.context!,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       color: Colors.grey.shade500,
                       fontStyle: FontStyle.italic,
                     ),
@@ -258,7 +258,7 @@ class _PhraseCardState extends State<_PhraseCard> {
                   padding: const EdgeInsets.only(left: 68, top: 8),
                   child: Text(
                     'Tap to see translation',
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade400),
+                    style: TextStyle(fontSize: 14, color: Colors.grey.shade400),
                   ),
                 ),
                 secondChild: Padding(

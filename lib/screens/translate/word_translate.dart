@@ -109,6 +109,7 @@ class _WordTranslateScreenState extends State<WordTranslateScreen> {
                           suffixIcon: _controller.text.isEmpty
                               ? null
                               : IconButton(
+                                tooltip: 'Clear',
                                   icon: const Icon(Icons.clear),
                                   onPressed: () {
                                     setState(() {
@@ -134,6 +135,7 @@ class _WordTranslateScreenState extends State<WordTranslateScreen> {
                           suffixIcon: _controller.text.isEmpty
                               ? null
                               : IconButton(
+                                tooltip: 'Clear',
                                   icon: const Icon(Icons.clear),
                                   onPressed: () {
                                     setState(() {
@@ -230,7 +232,7 @@ class _WordTranslateScreenState extends State<WordTranslateScreen> {
               Text(
                 'Tip: don\'t worry about tone marks — the app finds words with or without them.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
               ),
             ],
           ),
@@ -256,7 +258,7 @@ class _WordTranslateScreenState extends State<WordTranslateScreen> {
               Text(
                 'Try checking spelling, or search for a shorter part of the word.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 13),
+                style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
               ),
             ],
           ),
@@ -370,7 +372,7 @@ class _ResultCard extends StatelessWidget {
                   Text(
                     'Example${examples.length > 1 ? "s" : ""}:',
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey.shade700,
                     ),
@@ -446,7 +448,7 @@ class _ExampleTile extends StatelessWidget {
                 Text(
                   example.english,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 14,
                     color: Colors.grey.shade700,
                     fontStyle: FontStyle.italic,
                   ),
@@ -544,7 +546,12 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
         final gloss = WordGloss.instance.glossEnglish(result.english);
         final awingLine = gloss.tokens.map((t) {
           // Punctuation preserved as-is.
-          if (RegExp(r'^[\p{P}]+\$', unicode: true).hasMatch(t.source)) {
+          // Session 64 C2 fix: raw string \$ used to mean "match literal $",
+          // so this regex never matched actual punctuation — the whole
+          // "preserve punctuation" branch was dead code and punctuation
+          // fell through to em-dash replacement. Now correctly matches
+          // any Unicode punctuation-only token.
+          if (RegExp(r'^[\p{P}]+$', unicode: true).hasMatch(t.source)) {
             return t.source;
           }
           // Stopwords (kept-as-is in gloss) become em-dashes in output.
@@ -585,7 +592,9 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
       if (!mounted) return;
       setState(() {
         _loading = false;
-        _error = 'Cloud AI call failed: \$e';
+        // Session 64 C1 fix: was '\$e' (literal string) — users saw
+        // "Cloud AI call failed: $e" with no diagnostic. Now interpolates.
+        _error = 'Cloud AI call failed: $e';
       });
     }
   }
@@ -630,7 +639,7 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
                           ? 'Example (Offline AI):'
                           : 'Example (Cloud AI):',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: isOffline
                             ? Colors.green.shade900
@@ -650,7 +659,7 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
             Text(
               _example!.english,
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 14,
                 color: Colors.grey.shade700,
                 fontStyle: FontStyle.italic,
               ),
@@ -719,7 +728,7 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
                 'Turn on Cloud AI (top-right) or download Offline AI to '
                 'generate example sentences.',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   fontStyle: FontStyle.italic,
                   color: Colors.grey.shade700,
                 ),

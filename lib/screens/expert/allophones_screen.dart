@@ -246,6 +246,7 @@ class _AllophonesScreenState extends State<AllophonesScreen> {
                     ),
                   ),
                   IconButton(
+                    tooltip: 'Hear it',
                     icon: const Icon(Icons.volume_up, color: Colors.red),
                     onPressed: () => _pronunciation.speakAwing(ex['word']!),
                   ),

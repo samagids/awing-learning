@@ -327,7 +327,7 @@ class _MinimalPairCard extends StatelessWidget {
           child: Text(
             tone,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: FontWeight.w600,
               color: const Color(0xFF006432),
             ),

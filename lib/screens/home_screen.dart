@@ -15,6 +15,7 @@ import 'package:awing_ai_learning/screens/contribute/contribute_screen.dart';
 import 'package:awing_ai_learning/components/parental_gate.dart';
 import 'package:awing_ai_learning/screens/about_screen.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
+import 'package:awing_ai_learning/theme/app_colors.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
@@ -203,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'Beginner',
                         subtitle: 'Alphabet, basic words & tones',
                         icon: Icons.child_care,
-                        color: Colors.green,
+                        color: AppColors.beginner, // Session 64 (C4)
                         locked: false,
                         onTap: () {
                           context.read<ProgressService>().markDifficultyLevelTried('Beginner');
@@ -224,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'Medium',
                         subtitle: 'Grammar, sentences & clusters',
                         icon: Icons.school,
-                        color: Colors.orange,
+                        color: AppColors.medium, // Session 64 (C4)
                         locked: !auth.isLevelUnlocked('medium'),
                         progressWidget: (!auth.isLevelUnlocked('medium') && profile != null)
                             ? _UnlockProgress(
@@ -270,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'Expert',
                         subtitle: 'Tone mastery, elision & conversations',
                         icon: Icons.emoji_events,
-                        color: Colors.red,
+                        color: AppColors.expert, // Session 64 (C4)
                         locked: !auth.isLevelUnlocked('expert'),
                         progressWidget: (!auth.isLevelUnlocked('expert') && auth.isLevelUnlocked('medium') && profile != null)
                             ? _UnlockProgress(

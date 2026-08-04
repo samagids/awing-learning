@@ -193,7 +193,7 @@ class _LetterCardState extends State<_LetterCard> {
                         'Example:',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 13,
+                          fontSize: 14,
                           color: Colors.grey,
                         ),
                       ),

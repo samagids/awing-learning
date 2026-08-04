@@ -132,12 +132,28 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
   /// in the student's empty state (full form) and above their list
   /// when they have sets (compact form). Helps debug why a share
   /// isn't showing up — is the email wrong? Firestore denied? etc.
+  /// Session 64 (M11): redact an email address to "first-char + …@domain"
+  /// so a passing kid can't read another user's full address off the
+  /// diagnostic pill. Returns "(not signed in)" and "(none)" cases
+  /// unchanged. Full email is still visible when the diagnostic card
+  /// is opened via the info button (behind a tap, not surface-visible).
+  String _redactEmail(String? raw) {
+    if (raw == null || raw.isEmpty) return '(not signed in)';
+    if (raw.startsWith('(')) return raw; // already a placeholder
+    final at = raw.indexOf('@');
+    if (at <= 1) return raw; // nothing to redact
+    return '${raw[0]}…${raw.substring(at)}';
+  }
+
   Widget _syncDiagnostic(BuildContext context, {required bool compact}) {
     final theme = Theme.of(context);
     final service = StudySetService.instance;
     final auth = context.read<AuthService>();
-    final signedInEmail = auth.currentEmail ?? '(not signed in)';
-    final attachedEmail = service.attachedEmail ?? '(none)';
+    final rawEmail = auth.currentEmail ?? '(not signed in)';
+    final signedInEmail = compact ? _redactEmail(rawEmail) : rawEmail;
+    final rawAttached = service.attachedEmail ?? '(none)';
+    final attachedEmail =
+        compact ? _redactEmail(rawAttached) : rawAttached;
     final err = service.lastSharedError;
     final lastEvent = service.lastSharedEvent;
     final eventCount = service.sharedEventCount;
@@ -210,7 +226,7 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
             if (err != null) ...[
               const SizedBox(height: 6),
               Text('Error: $err',
-                  style: TextStyle(color: Colors.red.shade700, fontSize: 12)),
+                  style: TextStyle(color: Colors.red.shade700, fontSize: 14)),
             ],
             const SizedBox(height: 12),
             Row(
@@ -253,13 +269,13 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
             width: 140,
             child: Text(
               label,
-              style: const TextStyle(fontSize: 12, color: Colors.black54),
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
           ),
           Expanded(
             child: Text(
               value,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -381,7 +397,7 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
       child: Text(
         label.toUpperCase(),
         style: TextStyle(
-          fontSize: 12,
+          fontSize: 14,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.6,
           color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -428,6 +444,7 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
                   // "dismiss" action on shared cards.
                   if (isOwn)
                     IconButton(
+                      tooltip: 'More options',
                       icon: const Icon(Icons.more_vert),
                       onPressed: () => _setActionSheet(context, set),
                       visualDensity: VisualDensity.compact,
@@ -546,7 +563,7 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
         children: [
           Icon(icon, size: 14, color: c),
           const SizedBox(width: 4),
-          Text(label, style: TextStyle(fontSize: 12, color: c)),
+          Text(label, style: TextStyle(fontSize: 14, color: c)),
         ],
       ),
     );
@@ -608,7 +625,7 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
                 const Text(
                   'Difficulty level',
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -617,7 +634,7 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
                   'Words the teacher can add come from this mode. '
                   'Locked levels are unavailable until you unlock them.',
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     color: Colors.grey.shade600,
                   ),
                 ),
@@ -715,7 +732,7 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
           Text(
             label,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
               color: color,
             ),

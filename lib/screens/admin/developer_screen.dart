@@ -1317,6 +1317,7 @@ class _RecordTabState extends State<_RecordTab> {
           suffixIcon: _searchController.text.isEmpty
               ? null
               : IconButton(
+                tooltip: 'Clear',
                   icon: const Icon(Icons.clear, size: 18),
                   onPressed: () => _searchController.clear(),
                 ),
@@ -1637,6 +1638,7 @@ class _RecordTabState extends State<_RecordTab> {
                           : Colors.white54)),
               const SizedBox(width: 6),
               IconButton(
+                tooltip: 'Close',
                 icon: const Icon(Icons.close,
                     color: Colors.white54),
                 onPressed: _cancelRecording,

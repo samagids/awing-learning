@@ -428,7 +428,7 @@ function handleSubmission(payload) {
       var body = 'A user submitted a contribution:\n\n' +
         'Type: ' + typeLabel + '\n' +
         'From: ' + safeProfile + '\n' +
-        'App version: ' + (safeAppVersion || '(unknown, pre-1.21.2)') + '\n' +
+        'App version: ' + (safeAppVersion || '(unknown, pre-1.21.2)') + '\n' + // pre-1.21.2 = before this field was added
         'Word: ' + safeTarget + '\n' +
         'Correction: ' + (safeCorrection || '(none)') + '\n' +
         'English: ' + (safeEnglish || '(none)') + '\n' +

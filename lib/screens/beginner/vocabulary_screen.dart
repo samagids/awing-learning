@@ -145,7 +145,43 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           // Flashcard
           Expanded(
             child: words.isEmpty
-                ? const Center(child: Text('No words in this category'))
+                // Session 64 (M4): friendlier empty state matching the
+                // word_translate.dart pattern — icon + explanation + hint
+                // so kids landing on an empty category know to switch.
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.category_outlined,
+                            size: 64,
+                            color: Colors.grey.shade400,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No words in this category yet',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Try a different category from the chips above ⬆',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 : GestureDetector(
                     onTap: () => setState(() => _showEnglish = !_showEnglish),
                     onHorizontalDragEnd: (details) {

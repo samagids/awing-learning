@@ -388,7 +388,7 @@ class _PronunciationScreenState extends State<PronunciationScreen>
                 child: Text(
                   'No reference recording for this word yet. Listen and '
                   'compare by ear, or tap Next word.',
-                  style: TextStyle(fontSize: 13, height: 1.4),
+                  style: TextStyle(fontSize: 14, height: 1.4),
                 ),
               ),
             ],
@@ -415,7 +415,7 @@ class _PronunciationScreenState extends State<PronunciationScreen>
                 child: Text(
                   'Couldn\'t grade this attempt. Tap Try again.',
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 14,
                     height: 1.4,
                     color: Colors.red.shade900,
                   ),
@@ -496,7 +496,7 @@ class _PronunciationScreenState extends State<PronunciationScreen>
               Text(
                 paceHint,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   color: Colors.grey.shade700,
                   fontStyle: FontStyle.italic,
                 ),
@@ -725,7 +725,7 @@ class _PronunciationScreenState extends State<PronunciationScreen>
                       Text(
                         'Listen to both — your stars below show how close they sound.',
                         style: TextStyle(
-                            fontSize: 12, color: Colors.blue.shade900),
+                            fontSize: 14, color: Colors.blue.shade900),
                         textAlign: TextAlign.center,
                       ),
                     ],

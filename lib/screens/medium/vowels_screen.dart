@@ -198,6 +198,7 @@ class _VowelsScreenState extends State<VowelsScreen> {
         title: Text(v.description, style: const TextStyle(fontSize: 14)),
         subtitle: Text('${v.exampleWord} = ${v.exampleEnglish}', style: const TextStyle(fontSize: 13)),
         trailing: IconButton(
+          tooltip: 'Hear it',
           icon: const Icon(Icons.volume_up, color: Colors.orange),
           onPressed: () => _pronunciation.speakAwing(v.exampleWord),
         ),
@@ -255,6 +256,7 @@ class _VowelsScreenState extends State<VowelsScreen> {
                         ),
                       ),
                       IconButton(
+                        tooltip: 'Hear it',
                         icon: const Icon(Icons.volume_up, color: Colors.orange),
                         onPressed: () => _pronunciation.speakAwing(lv['word']!),
                       ),
@@ -361,6 +363,7 @@ class _VowelsScreenState extends State<VowelsScreen> {
                         ),
                       ),
                       IconButton(
+                        tooltip: 'Hear it',
                         icon: const Icon(Icons.volume_up, color: Colors.orange),
                         onPressed: () => _pronunciation.speakAwing(st.example),
                       ),
@@ -400,6 +403,7 @@ class _VowelsScreenState extends State<VowelsScreen> {
               title: Text(vs.meaning, style: const TextStyle(fontSize: 14)),
               subtitle: Text('${vs.example} = ${vs.exampleEnglish}', style: const TextStyle(fontSize: 13)),
               trailing: IconButton(
+                tooltip: 'Hear it',
                 icon: const Icon(Icons.volume_up, color: Colors.orange),
                 onPressed: () => _pronunciation.speakAwing(vs.example),
               ),

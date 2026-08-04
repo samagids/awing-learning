@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:awing_ai_learning/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
@@ -86,7 +87,7 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Vocabulary Review'),
-          backgroundColor: Colors.green,
+          backgroundColor: AppColors.beginner, // Session 64 (M5)
         ),
         body: Center(
           child: Column(
@@ -119,7 +120,7 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
               ElevatedButton(
                 onPressed: _resetSession,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: AppColors.beginner, // Session 64 (M5)
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                 ),
                 child: const Text(
@@ -141,7 +142,7 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Review Complete'),
-          backgroundColor: Colors.green,
+          backgroundColor: AppColors.beginner, // Session 64 (M5)
         ),
         body: Center(
           child: Padding(
@@ -234,7 +235,7 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
                 ElevatedButton(
                   onPressed: _resetSession,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: AppColors.beginner, // Session 64 (M5)
                     padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                   ),
                   child: const Text(
@@ -277,12 +278,11 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
                         color: Colors.green,
                       ),
                     ),
+                    // Session 64 (L2): Leitner "Box 1..5" internals
+                    // are meaningless to kids. Show stars instead.
                     Text(
-                      'Box ${currentWord.box + 1}',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                      ),
+                      '⭐' * (currentWord.box + 1),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ],
                 ),
@@ -391,7 +391,7 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
                                   icon: const Icon(Icons.volume_up),
                                   label: const Text('Hear it'),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green,
+                                    backgroundColor: AppColors.beginner, // Session 64 (M5)
                                     foregroundColor: Colors.white,
                                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                   ),
@@ -421,7 +421,7 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
                             ElevatedButton(
                               onPressed: _revealAnswer,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                                backgroundColor: AppColors.beginner, // Session 64 (M5)
                                 foregroundColor: Colors.white,
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
@@ -469,7 +469,7 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
                                   icon: const Icon(Icons.check_circle),
                                   label: const Text('I knew it!'),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green,
+                                    backgroundColor: AppColors.beginner, // Session 64 (M5)
                                     foregroundColor: Colors.white,
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 24,

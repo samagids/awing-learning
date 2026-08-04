@@ -1409,6 +1409,7 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
                             ),
                           ),
                           trailing: IconButton(
+                            tooltip: 'Delete',
                             icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               _examService.removeQuestion(i);

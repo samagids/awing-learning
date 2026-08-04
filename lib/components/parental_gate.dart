@@ -11,19 +11,46 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 ///
 /// Use [ParentalGate.verify] to show the gate and get a bool result.
 class ParentalGate {
+  /// Session 64 (H14): 5-minute cache. Without this, home_screen.dart's
+  /// contribute/teacher/developer flows re-prompted on every tap and
+  /// parents got annoyed enough to give kids the math answer. With this,
+  /// one successful unlock keeps the session flowing for 5 minutes then
+  /// re-locks. Static so it survives across widget rebuilds inside a
+  /// single app session; NOT persisted to disk — restarting the app or
+  /// backgrounding for >5 minutes forces a fresh unlock.
+  static DateTime? _lastVerifiedAt;
+  static const Duration _cacheTtl = Duration(minutes: 5);
+
+  static bool get _cacheStillValid {
+    final at = _lastVerifiedAt;
+    if (at == null) return false;
+    return DateTime.now().difference(at) < _cacheTtl;
+  }
+
+  /// Called by the auth service on sign-out and profile switch so the
+  /// cache doesn't survive a change of hands.
+  static void invalidateCache() {
+    _lastVerifiedAt = null;
+  }
+
   /// Show a parental gate dialog. Returns true if the parent/adult passes.
   static Future<bool> verify(
     BuildContext context, {
     String title = 'Parent Verification',
     String message = 'This action requires a parent or guardian.',
   }) async {
-    final auth = context.read<AuthService>();
+    // Session 64 (H14): 5-minute cache. Skip the dialog entirely if the
+    // parent recently unlocked.
+    if (_cacheStillValid) return true;
 
-    if (auth.hasAccountPin) {
-      return await _showPinGate(context, auth, title: title, message: message);
-    } else {
-      return await _showMathGate(context, title: title, message: message);
+    final auth = context.read<AuthService>();
+    final ok = auth.hasAccountPin
+        ? await _showPinGate(context, auth, title: title, message: message)
+        : await _showMathGate(context, title: title, message: message);
+    if (ok) {
+      _lastVerifiedAt = DateTime.now();
     }
+    return ok;
   }
 
   /// PIN-based gate — asks for the account PIN (at least 6 digits).
@@ -93,17 +120,20 @@ class ParentalGate {
     return result ?? false;
   }
 
-  /// Math-based gate — asks a simple arithmetic question that young kids
-  /// typically can't solve but adults can (e.g. "What is 7 + 5?").
+  /// Math-based gate — asks an arithmetic question that young kids
+  /// typically can't solve but adults can.
+  /// Session 64 (H14): bumped from single-digit addition (8-26 range,
+  /// most 8-year-olds solve this) to 2-digit × 1-digit multiplication.
+  /// A typical 8-year-old cannot do this quickly; a parent can.
   static Future<bool> _showMathGate(
     BuildContext context, {
     required String title,
     required String message,
   }) async {
     final random = Random();
-    final a = random.nextInt(10) + 5; // 5-14
-    final b = random.nextInt(10) + 3; // 3-12
-    final answer = a + b;
+    final a = random.nextInt(20) + 11; // 11-30
+    final b = random.nextInt(8) + 2;   // 2-9
+    final answer = a * b;
     final controller = TextEditingController();
 
     bool? result = await showDialog<bool>(
@@ -128,7 +158,7 @@ class ParentalGate {
             ),
             const SizedBox(height: 12),
             Text(
-              'What is $a + $b?',
+              'What is $a × $b?',
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

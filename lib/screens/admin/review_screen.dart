@@ -850,6 +850,7 @@ class _ContributionCard extends StatelessWidget {
                     const SizedBox(width: 8),
                     const Expanded(child: Text('Audio recording attached')),
                     IconButton(
+                      tooltip: 'Play',
                       icon: const Icon(Icons.play_circle_fill,
                           color: Colors.blue, size: 32),
                       onPressed: () async {
