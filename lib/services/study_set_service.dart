@@ -34,6 +34,21 @@ class StudySetService extends ChangeNotifier {
 
   StreamSubscription<List<StudySet>>? _sharedSub;
   StreamSubscription<List<StudySet>>? _ownSub;
+  /// v1.21.4 (Session 65): partnered-sets stream — sets where the
+  /// current email appears in partnerEmails (co-owner).
+  StreamSubscription<List<StudySet>>? _partnerSub;
+  int _partnerEventCount = 0;
+  DateTime? _lastPartnerEvent;
+  String? _lastPartnerError;
+  int get partnerEventCount => _partnerEventCount;
+  DateTime? get lastPartnerEvent => _lastPartnerEvent;
+  String? get lastPartnerError => _lastPartnerError;
+
+  /// v1.21.4 (Session 65 self-audit fix): IDs currently emitted by the
+  /// partnered-sets Firestore stream. Used to prune _sets when a set
+  /// STOPS being emitted (creator removed us as partner). Without this,
+  /// removed partners saw the set stuck in "My sets" until app restart.
+  final Set<String> _partnerSetIds = {};
 
   // ---- Sync diagnostics (surfaced in list screen when empty) ----
   String? _attachedEmail;
@@ -190,6 +205,58 @@ class StudySetService extends ChangeNotifier {
         notifyListeners();
       },
     );
+    // v1.21.4 (Session 65): also watch sets where this user is a
+    // partner (co-owner). They merge into the same _sets list so
+    // partners see them under "My sets" — the UI distinguishes
+    // owned-vs-partnered via set.isCreator() / set.isPartner().
+    //
+    // Session 65 self-audit fix: this stream must also PRUNE. When a
+    // creator removes us as partner, this stream stops emitting the
+    // set. Without a diff-and-remove pass, the local cache keeps the
+    // stale set forever ("still in My sets after being kicked").
+    _partnerSub = StudySetFirestoreService.instance
+        .watchPartneredSets(normalized)
+        .listen(
+      (sets) {
+        _partnerEventCount++;
+        _lastPartnerEvent = DateTime.now();
+        final incomingIds = sets.map((s) => s.id).toSet();
+
+        // Merge / update the sets that ARE in the incoming list.
+        for (final cloudSet in sets) {
+          final idx = _sets.indexWhere((s) => s.id == cloudSet.id);
+          if (idx >= 0) {
+            cloudSet.locallyDismissed = _sets[idx].locallyDismissed;
+            _sets[idx] = cloudSet;
+          } else {
+            _sets.add(cloudSet);
+          }
+        }
+
+        // Prune: any set we previously saw via THIS stream but is no
+        // longer emitted has been un-partnered. Remove it, but only
+        // if we're not ALSO the creator (which would keep it via the
+        // own stream). Owned sets are ignored — they belong to the
+        // own stream's lifecycle.
+        final myEmail = _attachedEmail;
+        final removedIds = _partnerSetIds.difference(incomingIds);
+        if (removedIds.isNotEmpty && myEmail != null) {
+          _sets.removeWhere((s) =>
+              removedIds.contains(s.id) && !s.isCreator(myEmail));
+        }
+        _partnerSetIds
+          ..clear()
+          ..addAll(incomingIds);
+
+        _persist();
+        notifyListeners();
+      },
+      onError: (e) {
+        _lastPartnerError = e.toString();
+        debugPrint('StudySetService partner stream error: $e');
+        notifyListeners();
+      },
+    );
     notifyListeners();
   }
 
@@ -222,10 +289,16 @@ class StudySetService extends ChangeNotifier {
   Future<void> detachAccount() async {
     await _sharedSub?.cancel();
     await _ownSub?.cancel();
+    await _partnerSub?.cancel();
     _sharedSub = null;
     _ownSub = null;
+    _partnerSub = null;
     _attachedEmail = null;
     _sharedWithMe.clear();
+    // v1.21.4 (Session 65 self-audit): flush the diff-tracking set so a
+    // fresh sign-in starts clean and doesn't accidentally treat the
+    // previous user's partnered sets as "already known".
+    _partnerSetIds.clear();
     notifyListeners();
   }
 
@@ -462,6 +535,64 @@ class StudySetService extends ChangeNotifier {
     set.updatedAt = DateTime.now().millisecondsSinceEpoch;
     await _persist();
     unawaited(_syncOne(set));
+    notifyListeners();
+  }
+
+  // ─── v1.21.4 partners (Session 65) ───────────────────────────
+
+  /// Add a co-owner teacher to the set. Caller is expected to enforce
+  /// that the current user is the creator (see StudySet.canManagePartners).
+  /// Refuses to add the creator to their own partner list (redundant),
+  /// or a student who's already on the roster (partners should be
+  /// promoted or moved manually, not double-listed).
+  Future<void> addPartner(String setId, String email) async {
+    final e = email.trim().toLowerCase();
+    if (e.isEmpty || !_looksLikeEmail(e)) return;
+    final set = await byId(setId);
+    if (set == null) return;
+    if (set.teacherEmail.trim().toLowerCase() == e) return; // creator
+    if (set.partnerEmails.contains(e)) return; // dedup
+    // If a partner is also on the student roster, silently promote them
+    // by removing from students (avoids sync conflicts on Firestore).
+    set.sharedWithEmails.remove(e);
+    set.partnerEmails.add(e);
+    set.updatedAt = DateTime.now().millisecondsSinceEpoch;
+    await _persist();
+    unawaited(_syncOne(set));
+    notifyListeners();
+  }
+
+  /// Remove a partner teacher (creator-only per canManagePartners).
+  Future<void> removePartner(String setId, String email) async {
+    final set = await byId(setId);
+    if (set == null) return;
+    set.partnerEmails.remove(email.trim().toLowerCase());
+    set.updatedAt = DateTime.now().millisecondsSinceEpoch;
+    await _persist();
+    unawaited(_syncOne(set));
+    notifyListeners();
+  }
+
+  /// A partner voluntarily leaves a set. Symmetric to removePartner but
+  /// self-service — no creator permission needed. After leaving, the
+  /// set disappears from the partner's "My sets" list.
+  Future<void> leavePartneredSet(String setId, String currentEmail) async {
+    final set = await byId(setId);
+    if (set == null) return;
+    final e = currentEmail.trim().toLowerCase();
+    if (!set.partnerEmails.map((p) => p.trim().toLowerCase()).contains(e)) {
+      return; // Not a partner — nothing to do.
+    }
+    set.partnerEmails.removeWhere(
+      (p) => p.trim().toLowerCase() == e,
+    );
+    set.updatedAt = DateTime.now().millisecondsSinceEpoch;
+    // Sync THEN drop from local list. If the sync fails, the next
+    // Firestore snapshot for our email will still include the set
+    // (we're still in partnerEmails on the server) — no orphaned state.
+    await _syncOne(set);
+    _sets.removeWhere((s) => s.id == setId);
+    await _persist();
     notifyListeners();
   }
 

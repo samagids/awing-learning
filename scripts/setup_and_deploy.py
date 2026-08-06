@@ -157,12 +157,29 @@ def verify_contributions_webhook(url):
              it and confirming the response is now status=ok.
     """
     def _post(payload):
+        """POST to the webhook with retry — Apps Script edge instances go
+        cold quickly after a fresh deploy and can take >20s to warm on
+        the next request. Was 1x 20s; now 3x 45s with exponential backoff
+        so a transient cold-start doesn't kill the whole build."""
         data = json.dumps(payload).encode('utf-8')
-        req = Request(url, data=data, headers={
-            'Content-Type': 'application/json; charset=utf-8',
-        })
-        with urlopen(req, timeout=20) as r:
-            return json.loads(r.read().decode('utf-8', errors='replace'))
+        import time as _time
+        last_err = None
+        for attempt in range(3):
+            try:
+                req = Request(url, data=data, headers={
+                    'Content-Type': 'application/json; charset=utf-8',
+                })
+                with urlopen(req, timeout=45) as r:
+                    return json.loads(
+                        r.read().decode('utf-8', errors='replace'))
+            except Exception as e:
+                last_err = e
+                if attempt < 2:
+                    wait = 3 * (attempt + 1)
+                    print(f"    [retry] {type(e).__name__}: {e} — "
+                          f"waiting {wait}s and retrying ({attempt + 2}/3)")
+                    _time.sleep(wait)
+        raise last_err
 
     try:
         # Step 1 — open endpoint, confirms webhook is live.

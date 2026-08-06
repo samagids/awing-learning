@@ -50,6 +50,13 @@ class StudySet {
   /// Populated in Phase 2.
   List<String> sharedWithEmails;
 
+  /// v1.21.4 (Session 65) — teacher partners: co-owner emails that get
+  /// FULL edit access (add words, record, remove words, add students,
+  /// reorder). Only the creator (teacherEmail) can add/remove partners
+  /// and delete the whole set. Partners see the set in their own "My
+  /// Sets" list with a "shared with you" badge.
+  List<String> partnerEmails;
+
   /// Map from Awing key → downloaded audio URL. Populated in Phase 3.
   /// Empty until teacher records + uploads. Used by student browse
   /// view AND by set-share-gate ("all words must have audio").
@@ -73,6 +80,7 @@ class StudySet {
     List<String>? wordKeys,
     List<StudySetCustomWord>? customWords,
     List<String>? sharedWithEmails,
+    List<String>? partnerEmails,
     Map<String, String>? recordings,
     int? createdAt,
     int? updatedAt,
@@ -80,9 +88,35 @@ class StudySet {
   })  : wordKeys = wordKeys ?? [],
         customWords = customWords ?? [],
         sharedWithEmails = sharedWithEmails ?? [],
+        partnerEmails = partnerEmails ?? [],
         recordings = recordings ?? {},
         createdAt = createdAt ?? DateTime.now().millisecondsSinceEpoch,
         updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch;
+
+  // ─── v1.21.4 partner role checks (Session 65) ───
+
+  /// True if this email is the set's creator (has full control including
+  /// delete + add/remove partners).
+  bool isCreator(String? email) {
+    if (email == null || email.isEmpty) return false;
+    return email.trim().toLowerCase() == teacherEmail.trim().toLowerCase();
+  }
+
+  /// True if this email is a partner teacher (can edit but not delete
+  /// the set or manage other partners).
+  bool isPartner(String? email) {
+    if (email == null || email.isEmpty) return false;
+    final e = email.trim().toLowerCase();
+    return partnerEmails.any((p) => p.trim().toLowerCase() == e);
+  }
+
+  /// True if this email can add words / record / edit meta / reorder
+  /// (creator OR partner).
+  bool canEdit(String? email) => isCreator(email) || isPartner(email);
+
+  /// True if this email can delete the set or manage partners
+  /// (creator only).
+  bool canManagePartners(String? email) => isCreator(email);
 
   /// Total words in set (dictionary + custom).
   int get wordCount => wordKeys.length + customWords.length;
@@ -122,6 +156,7 @@ class StudySet {
         'wordKeys': wordKeys,
         'customWords': customWords.map((w) => w.toJson()).toList(),
         'sharedWithEmails': sharedWithEmails,
+        'partnerEmails': partnerEmails,
         'recordings': recordings,
         'createdAt': createdAt,
         'updatedAt': updatedAt,
@@ -143,6 +178,10 @@ class StudySet {
             .toList(),
         sharedWithEmails:
             (j['sharedWithEmails'] as List?)?.cast<String>() ?? [],
+        // v1.21.4 (Session 65): partnerEmails may be missing on older
+        // documents — treat undefined as empty.
+        partnerEmails:
+            (j['partnerEmails'] as List?)?.cast<String>() ?? [],
         recordings:
             ((j['recordings'] as Map?) ?? const {}).cast<String, String>(),
         createdAt: j['createdAt'] as int?,

@@ -5,6 +5,7 @@ import 'package:awing_ai_learning/services/study_set_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/screens/study_sets/study_set_editor_screen.dart';
 import 'package:awing_ai_learning/screens/study_sets/study_set_roster_screen.dart';
+import 'package:awing_ai_learning/screens/study_sets/study_set_partners_screen.dart';
 import 'package:awing_ai_learning/screens/study_sets/study_set_browse_screen.dart';
 
 /// Study Sets list screen. Session 63 Phase 2.
@@ -782,6 +783,13 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
     ));
   }
 
+  /// v1.21.4 (Session 65) — open the teacher-partner management screen.
+  void _openPartners(BuildContext context, StudySet set) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => StudySetPartnersScreen(setId: set.id),
+    ));
+  }
+
   void _openBrowse(BuildContext context, StudySet set) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => StudySetBrowseScreen(setId: set.id),
@@ -823,6 +831,13 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
   }
 
   Future<void> _setActionSheet(BuildContext context, StudySet set) async {
+    // v1.21.4 (Session 65) — role determines which tiles show. Creator
+    // sees "Manage teacher partners"; any partner sees "Leave this set"
+    // instead of the roster/rename controls.
+    final auth = context.read<AuthService>();
+    final currentEmail = auth.currentEmail;
+    final isCreator = set.isCreator(currentEmail);
+    final isPartner = set.isPartner(currentEmail);
     showModalBottomSheet(
       context: context,
       builder: (ctx) => SafeArea(
@@ -840,6 +855,33 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
               onTap: () {
                 Navigator.pop(ctx);
                 _openRoster(context, set);
+              },
+            ),
+            // v1.21.4 (Session 65) — partner management. Creators can
+            // add + remove partners; partners get the same tile but the
+            // subtitle explains they can only see + leave.
+            ListTile(
+              leading: Icon(
+                isCreator ? Icons.groups_2_outlined : Icons.groups_outlined,
+                color: isPartner && !isCreator
+                    ? Colors.teal.shade600
+                    : null,
+              ),
+              title: Text(isCreator
+                  ? 'Manage teacher partners'
+                  : isPartner
+                      ? 'Teacher partners (view or leave)'
+                      : 'Teacher partners'),
+              subtitle: Text(
+                set.partnerEmails.isEmpty
+                    ? (isCreator
+                        ? 'Add a fellow teacher as co-owner'
+                        : 'No partners yet')
+                    : '${set.partnerEmails.length} partner(s)',
+              ),
+              onTap: () {
+                Navigator.pop(ctx);
+                _openPartners(context, set);
               },
             ),
             ListTile(

@@ -128,4 +128,39 @@ class StudySetFirestoreService {
       return Stream.value(<StudySet>[]);
     }
   }
+
+  /// v1.21.4 (Session 65): sets where this email is a partner teacher
+  /// (co-owner). Mirrors watchOwnSets structure so the service can
+  /// merge both into a single "my sets" list.
+  Stream<List<StudySet>> watchPartneredSets(String partnerEmail) {
+    final email = partnerEmail.trim().toLowerCase();
+    try {
+      return _coll
+          .where('partnerEmails', arrayContains: email)
+          .snapshots()
+          .map((snap) => snap.docs
+              .map((d) => StudySet.fromJson(d.data()))
+              .toList());
+    } catch (e) {
+      debugPrint('StudySetFirestoreService watchPartneredSets failed: $e');
+      return Stream.value(<StudySet>[]);
+    }
+  }
+
+  /// One-shot load of partnered sets (Session 65) — used for the
+  /// "Retry from cloud" affordance in the list screen.
+  Future<List<StudySet>> loadPartneredSets(String partnerEmail) async {
+    final email = partnerEmail.trim().toLowerCase();
+    try {
+      final snap = await _coll
+          .where('partnerEmails', arrayContains: email)
+          .get();
+      return snap.docs
+          .map((d) => StudySet.fromJson(d.data()))
+          .toList();
+    } catch (e) {
+      debugPrint('StudySetFirestoreService loadPartneredSets failed: $e');
+      return [];
+    }
+  }
 }

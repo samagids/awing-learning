@@ -90,6 +90,16 @@ service cloud.firestore {
     //   teacherEmail:     string, the owner's Google email (immutable)
     //   sharedWithEmails: [string], student Google emails on the roster
     //   name, description, wordKeys, customWords, recordings, ...
+    // v1.21.4 (Session 65) — partnerEmails added:
+    //   partnerEmails: [string], teacher co-owner Google emails
+    // Partners get full read+write (same as creator) EXCEPT:
+    //   - Only the creator can delete the set
+    //   - Only the creator can add/remove other partners
+    // These extra restrictions are enforced by the client (see
+    // StudySet.canManagePartners / delete flow in the list screen).
+    // Firestore rules only guard READ/WRITE at the doc level; the
+    // finer-grained "partner can't manage other partners" is enforced
+    // via the update rule's data-diff check below.
     match /study_sets/{setId} {
       // Emails compared case-insensitively — client stores lowercased
       // teacherEmail + roster, but Google's auth token.email preserves
@@ -99,11 +109,48 @@ service cloud.firestore {
       allow read: if request.auth != null
                   && (resource.data.teacherEmail.lower() == request.auth.token.email.lower()
                       || request.auth.token.email.lower() in resource.data.sharedWithEmails
+                      || request.auth.token.email.lower() in resource.data.partnerEmails
                       || isDeveloper());
       allow create: if request.auth != null
                     && request.resource.data.teacherEmail.lower() == request.auth.token.email.lower();
-      allow update, delete: if request.auth != null
-                            && resource.data.teacherEmail.lower() == request.auth.token.email.lower();
+      // Update: creator OR partner (with restrictions).
+      //
+      // Creator: full update access, may change any field.
+      //
+      // Partner: may edit words, recordings, description, roster, etc.
+      // Must NOT change teacherEmail (creator is immutable).
+      // Must NOT add other partners or remove someone else — the ONLY
+      // permitted partnerEmails delta is "unchanged" or "remove self"
+      // (self-service leave via StudySetService.leavePartneredSet).
+      //
+      // The size + hasAll check below encodes:
+      //   • new partnerEmails is a subset of old (no additions), AND
+      //   • exactly one item was removed, AND
+      //   • that item is the caller (self is not in new list)
+      // Any other delta (removing someone else) fails the rule.
+      allow update: if request.auth != null
+                    && (
+                      // Creator: unrestricted update.
+                      resource.data.teacherEmail.lower() == request.auth.token.email.lower()
+                      // Partner: restricted update.
+                      || (
+                        request.auth.token.email.lower() in resource.data.partnerEmails
+                        && request.resource.data.teacherEmail == resource.data.teacherEmail
+                        && (
+                          // Partnering unchanged (editing words etc.)
+                          request.resource.data.partnerEmails == resource.data.partnerEmails
+                          // Or partner is leaving (removing self only).
+                          || (
+                            resource.data.partnerEmails.hasAll(request.resource.data.partnerEmails)
+                            && !(request.auth.token.email.lower() in request.resource.data.partnerEmails)
+                            && resource.data.partnerEmails.size() - request.resource.data.partnerEmails.size() == 1
+                          )
+                        )
+                      )
+                    );
+      // Only the creator can delete.
+      allow delete: if request.auth != null
+                    && resource.data.teacherEmail.lower() == request.auth.token.email.lower();
     }
 
     // Session 61 — G6 security hardening.
