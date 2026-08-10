@@ -22,6 +22,10 @@
 
 var SHEET_NAME = 'Awing Contributions';
 var AUDIO_FOLDER_NAME = 'Awing Audio Recordings';
+// v1.22.0 (Session 66) — parallel Drive folder for image contributions.
+// Kept separate from audio so a Drive listing is readable and quota
+// tracking per media type is straightforward.
+var IMAGE_FOLDER_NAME = 'Awing Vocabulary Images';
 var DEVELOPER_EMAIL = 'samagids@gmail.com';
 
 // =========================================================================
@@ -36,6 +40,11 @@ var MAX_PROFILE_LEN = 60;       // profile name (privacy: don't store more)
 var MAX_AUDIO_BYTES = 2 * 1024 * 1024;  // 2 MB raw — well above any legit
                                         // pronunciation recording (a 10 sec
                                         // m4a is ~120 KB).
+// v1.22.0 (Session 66) — image contributions. Client compresses to
+// 1024×1024 JPEG q80 at pick time, so a normal photo lands around
+// 50–300 KB. 2 MB gives comfortable headroom for large captures
+// before compression completes.
+var MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 // Headers in setFontWeight rely on email subject not containing CR/LF.
 // MailApp also gets confused by control characters in subjects.
 //
@@ -164,6 +173,10 @@ function doPost(e) {
         return handleStudySetDeleteAudio(payload);
       case 'study_set_delete_set_audio':
         return handleStudySetDeleteSetAudio(payload);
+      case 'study_set_upload_image':
+        return handleStudySetUploadImage(payload);
+      case 'study_set_delete_image':
+        return handleStudySetDeleteImage(payload);
       default:
         return jsonResponse({ status: 'error', message: 'Unknown action' });
     }
@@ -329,6 +342,37 @@ function handleSubmission(payload) {
     }
   }
 
+  // v1.22.0 (Session 66) — image contribution. Symmetric to the audio
+  // block above but writes to the IMAGE_FOLDER_NAME Drive folder and
+  // uses .jpg for the filename (image_picker's default output).
+  var imageFileUrl = '';
+  if (payload.imageBase64 && typeof payload.imageBase64 === 'string') {
+    var maxImageBase64 = Math.ceil(MAX_IMAGE_BYTES * 4 / 3) + 100;
+    if (payload.imageBase64.length > maxImageBase64) {
+      Logger.log('Rejecting oversized image: ' +
+                 payload.imageBase64.length + ' chars');
+    } else {
+      try {
+        var imgFolder = getImageFolder();
+        var imgDecoded = Utilities.base64Decode(payload.imageBase64);
+        if (imgDecoded.length > MAX_IMAGE_BYTES) {
+          Logger.log('Rejecting oversized image: ' +
+                     imgDecoded.length + ' bytes');
+        } else {
+          var imgBlob = Utilities.newBlob(
+              imgDecoded, 'image/jpeg', safeId + '.jpg');
+          var imgFile = imgFolder.createFile(imgBlob);
+          imgFile.setSharing(
+              DriveApp.Access.ANYONE_WITH_LINK,
+              DriveApp.Permission.VIEW);
+          imageFileUrl = imgFile.getDownloadUrl();
+        }
+      } catch (imgErr) {
+        Logger.log('Image upload error: ' + imgErr.toString());
+      }
+    }
+  }
+
   // v1.13.4 — REPLACE prior submissions for the same (audio_key,
   // recorder_slug) pair before appending. Re-recordings (e.g. when
   // a user re-records a word they already have) should always WIN,
@@ -394,7 +438,8 @@ function handleSubmission(payload) {
     '',
     '',
     safeGoogleName,
-    safeAppVersion
+    safeAppVersion,
+    imageFileUrl
   ]);
 
   // v1.13.3: Silence per-submit emails for the developer's own Record-tab
@@ -438,6 +483,10 @@ function handleSubmission(payload) {
       if (audioFileUrl) {
         body += '\nAudio recording: ' + audioFileUrl + '\n';
       }
+      // v1.22.0 (Session 66) — surface attached vocab image if present.
+      if (imageFileUrl) {
+        body += 'Photo: ' + imageFileUrl + '\n';
+      }
 
       body += '\nOpen the Awing app > Developer Mode > Review to approve or reject.\n';
       body += '\nSheet: ' + ss.getUrl();
@@ -453,7 +502,8 @@ function handleSubmission(payload) {
   return jsonResponse({
     status: 'ok',
     id: safeId,
-    audioUrl: audioFileUrl || null
+    audioUrl: audioFileUrl || null,
+    imageUrl: imageFileUrl || null
   });
 }
 
@@ -870,6 +920,17 @@ function getAudioFolder() {
   return DriveApp.createFolder(AUDIO_FOLDER_NAME);
 }
 
+// v1.22.0 (Session 66) — image folder helper. Symmetric to
+// getAudioFolder — parallel Drive folder keeps images and audio
+// filterable / countable separately.
+function getImageFolder() {
+  var folders = DriveApp.getFoldersByName(IMAGE_FOLDER_NAME);
+  if (folders.hasNext()) {
+    return folders.next();
+  }
+  return DriveApp.createFolder(IMAGE_FOLDER_NAME);
+}
+
 // ==================== Session 63 Phase 3 — Study Set audio ====================
 
 var STUDY_SETS_ROOT = 'StudySets';
@@ -1039,6 +1100,97 @@ function handleStudySetDeleteSetAudio(payload) {
     return jsonResponse({ status: 'ok', deletedFolders: deleted });
   } catch (err) {
     Logger.log('handleStudySetDeleteSetAudio error: ' + err.toString());
+    return jsonResponse({ status: 'error', message: 'delete failed' });
+  }
+}
+
+// ────────────────────────────────────────────────────────────────
+// v1.22.0 (Session 66) — Study Set pictures. Parallel to audio.
+// Uses the per-set Drive folder (same one that holds the m4a files)
+// so the picture lives alongside the audio and gets deleted with the
+// set if the teacher removes it.
+// ────────────────────────────────────────────────────────────────
+
+function handleStudySetUploadImage(payload) {
+  if (!requireStudySetAuth(payload)) {
+    return jsonResponse({ status: 'error', message: 'unauthorized' });
+  }
+  var setId = safeFileFragment(payload.setId);
+  var imageKey = safeFileFragment(payload.imageKey);
+  if (!setId || !imageKey) {
+    return jsonResponse({ status: 'error', message: 'missing setId or imageKey' });
+  }
+  if (!payload.imageBase64 || typeof payload.imageBase64 !== 'string') {
+    return jsonResponse({ status: 'error', message: 'missing imageBase64' });
+  }
+  var ext = (payload.imageExt === 'png') ? 'png' : 'jpg';
+  var mime = (ext === 'png') ? 'image/png' : 'image/jpeg';
+  var maxBase64 = Math.ceil(MAX_IMAGE_BYTES * 4 / 3) + 100;
+  if (payload.imageBase64.length > maxBase64) {
+    return jsonResponse({ status: 'error', message: 'image too large' });
+  }
+  try {
+    var decoded = Utilities.base64Decode(payload.imageBase64);
+    if (decoded.length > MAX_IMAGE_BYTES) {
+      return jsonResponse({ status: 'error', message: 'image too large' });
+    }
+    var folder = getStudySetFolder(setId);
+    // Overwrite existing picture with same key so re-upload path
+    // returns a URL pointing at the newest picture.
+    var fileName = imageKey + '.' + ext;
+    var existing = folder.getFilesByName(fileName);
+    while (existing.hasNext()) {
+      try {
+        existing.next().setTrashed(true);
+      } catch (delErr) {
+        Logger.log('handleStudySetUploadImage delete-old failed: ' + delErr);
+      }
+    }
+    // Also trash any stale copy with the OTHER extension.
+    var otherExt = (ext === 'png') ? 'jpg' : 'png';
+    var stale = folder.getFilesByName(imageKey + '.' + otherExt);
+    while (stale.hasNext()) {
+      try { stale.next().setTrashed(true); } catch (_) {}
+    }
+    var blob = Utilities.newBlob(decoded, mime, fileName);
+    var file = folder.createFile(blob);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    return jsonResponse({
+      status: 'ok',
+      imageUrl: file.getDownloadUrl(),
+      fileId: file.getId()
+    });
+  } catch (err) {
+    Logger.log('handleStudySetUploadImage error: ' + err.toString());
+    return jsonResponse({ status: 'error', message: 'upload failed' });
+  }
+}
+
+function handleStudySetDeleteImage(payload) {
+  if (!requireStudySetAuth(payload)) {
+    return jsonResponse({ status: 'error', message: 'unauthorized' });
+  }
+  var setId = safeFileFragment(payload.setId);
+  var imageKey = safeFileFragment(payload.imageKey);
+  if (!setId || !imageKey) {
+    return jsonResponse({ status: 'error', message: 'missing setId or imageKey' });
+  }
+  try {
+    var folder = getStudySetFolder(setId);
+    var deleted = 0;
+    var exts = ['jpg', 'png'];
+    for (var i = 0; i < exts.length; i++) {
+      var files = folder.getFilesByName(imageKey + '.' + exts[i]);
+      while (files.hasNext()) {
+        try {
+          files.next().setTrashed(true);
+          deleted++;
+        } catch (_) {}
+      }
+    }
+    return jsonResponse({ status: 'ok', deleted: deleted });
+  } catch (err) {
+    Logger.log('handleStudySetDeleteImage error: ' + err.toString());
     return jsonResponse({ status: 'error', message: 'delete failed' });
   }
 }

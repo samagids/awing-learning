@@ -186,6 +186,82 @@ class StudySetAudioService {
     return result['audioUrl'] as String?;
   }
 
+  // ────────────────────────────────────────────────────────────────
+  // v1.22.0 (Session 66) — Study Set pictures. Parallel to audio.
+  // Reuses the same Apps Script webhook + Google Drive folder pattern.
+  // ────────────────────────────────────────────────────────────────
+
+  /// Cap for image uploads: 2 MB before base64 encoding.
+  /// image_picker in ImageAttachmentPicker already compresses to
+  /// 1024x1024 @ quality 80, which lands well under this.
+  static const int _maxImageBytesPreEncode = 2 * 1024 * 1024;
+
+  /// Upload a picture via Apps Script → Google Drive.
+  /// Returns the Drive download URL, or null on failure.
+  Future<String?> uploadImage({
+    required String teacherEmail,
+    required String setId,
+    required String awing,
+    required String localPath,
+  }) async {
+    final file = File(localPath);
+    if (!await file.exists()) {
+      debugPrint('StudySetAudioService uploadImage: file not found '
+          '$localPath');
+      return null;
+    }
+    final bytes = await file.readAsBytes();
+    if (bytes.length > _maxImageBytesPreEncode) {
+      debugPrint('StudySetAudioService uploadImage: file too large '
+          '(${bytes.length} bytes, cap $_maxImageBytesPreEncode)');
+      return null;
+    }
+    final idToken = await _idToken();
+    if (idToken == null) {
+      debugPrint('StudySetAudioService uploadImage: no idToken '
+          '— caller must be signed in with Google');
+      return null;
+    }
+    // Guess the extension from the path — image_picker gives us .jpg
+    // or .png depending on source.
+    final ext = localPath.toLowerCase().endsWith('.png') ? 'png' : 'jpg';
+    final result = await _post({
+      'action': 'study_set_upload_image',
+      'setId': setId,
+      'teacherEmail': teacherEmail.trim().toLowerCase(),
+      'awing': awing,
+      'imageKey': audioKey(awing),
+      'imageExt': ext,
+      'imageBase64': base64Encode(bytes),
+      'idToken': idToken,
+    });
+    if (result == null) return null;
+    if (result['status'] != 'ok') {
+      debugPrint('StudySetAudioService uploadImage error: '
+          '${result['message']}');
+      return null;
+    }
+    return result['imageUrl'] as String?;
+  }
+
+  /// Best-effort delete of a single cloud image via webhook.
+  Future<void> deleteImage({
+    required String teacherEmail,
+    required String setId,
+    required String awing,
+  }) async {
+    final idToken = await _idToken();
+    if (idToken == null) return;
+    await _post({
+      'action': 'study_set_delete_image',
+      'setId': setId,
+      'teacherEmail': teacherEmail.trim().toLowerCase(),
+      'awing': awing,
+      'imageKey': audioKey(awing),
+      'idToken': idToken,
+    });
+  }
+
   /// Best-effort delete of a single cloud recording via webhook. If it
   /// fails we still zero out the client-side recordings map — a stale
   /// Drive file is harmless (no client references it).

@@ -378,6 +378,43 @@ class StudySetService extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ────────────────────────────────────────────────────────────────
+  // v1.22.0 (Session 66) — Study Set pictures. Parallel to recordings.
+  // ────────────────────────────────────────────────────────────────
+
+  /// Record that a word in the set now has an uploaded picture URL.
+  /// Called after StudySetAudioService.uploadImage completes with a
+  /// non-null URL. Firestore sync propagates to students within a
+  /// couple of seconds.
+  Future<void> setImage(String setId, String awing, String url) async {
+    final set = await byId(setId);
+    if (set == null) return;
+    set.images[awing] = url;
+    set.updatedAt = DateTime.now().millisecondsSinceEpoch;
+    await _persist();
+    unawaited(_syncOne(set));
+    notifyListeners();
+  }
+
+  /// Remove a word's picture (used when replacing or when the word is
+  /// removed from the set). Best-effort Drive cleanup.
+  Future<void> clearImage(String setId, String awing) async {
+    final set = await byId(setId);
+    if (set == null) return;
+    set.images.remove(awing);
+    set.updatedAt = DateTime.now().millisecondsSinceEpoch;
+    await _persist();
+    unawaited(_syncOne(set));
+    if (set.teacherEmail.isNotEmpty) {
+      unawaited(StudySetAudioService.instance.deleteImage(
+        teacherEmail: set.teacherEmail,
+        setId: setId,
+        awing: awing,
+      ));
+    }
+    notifyListeners();
+  }
+
   /// Remove a word's recording (used when the teacher re-records to
   /// clear the old URL before uploading, or when a word is removed
   /// from the set).

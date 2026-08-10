@@ -117,24 +117,39 @@ class StudySetBrowseScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final hasAudio =
         (set.recordings[item.awing] ?? '').isNotEmpty;
+    // v1.22.0 (Session 66): if teacher uploaded a real picture for
+    // this word, use it in preference to the SDXL illustration.
+    final customImageUrl = set.images[item.awing];
+    final hasCustomImage =
+        customImageUrl != null && customImageUrl.isNotEmpty;
     return ListTile(
       leading: SizedBox(
         width: 44,
         height: 44,
-        child: item.isCustom
-            ? Container(
-                color: Colors.orange.shade100,
-                child: Icon(
-                  Icons.new_releases_outlined,
-                  color: Colors.orange.shade700,
+        child: hasCustomImage
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Image.network(
+                  customImageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) =>
+                      const Icon(Icons.image_not_supported_outlined),
                 ),
               )
-            : PackImage(
-                awingWord: item.awing,
-                english: item.english,
-                errorWidget:
-                    const Icon(Icons.image_not_supported_outlined),
-              ),
+            : item.isCustom
+                ? Container(
+                    color: Colors.orange.shade100,
+                    child: Icon(
+                      Icons.new_releases_outlined,
+                      color: Colors.orange.shade700,
+                    ),
+                  )
+                : PackImage(
+                    awingWord: item.awing,
+                    english: item.english,
+                    errorWidget:
+                        const Icon(Icons.image_not_supported_outlined),
+                  ),
       ),
       title: Text(
         item.awing,

@@ -62,6 +62,13 @@ class StudySet {
   /// view AND by set-share-gate ("all words must have audio").
   Map<String, String> recordings;
 
+  /// v1.22.0 (Session 66) — Map from Awing key → uploaded picture URL.
+  /// Parallel to `recordings`. Populated when the teacher taps the
+  /// picture icon on a row and uploads a photo. Used by the student
+  /// browse view: if `images[awing]` is set, it overrides the bundled
+  /// SDXL illustration for that word. Empty by default.
+  Map<String, String> images;
+
   /// Timestamps (ms since epoch, UTC).
   final int createdAt;
   int updatedAt;
@@ -82,6 +89,7 @@ class StudySet {
     List<String>? sharedWithEmails,
     List<String>? partnerEmails,
     Map<String, String>? recordings,
+    Map<String, String>? images,
     int? createdAt,
     int? updatedAt,
     this.locallyDismissed = false,
@@ -90,6 +98,7 @@ class StudySet {
         sharedWithEmails = sharedWithEmails ?? [],
         partnerEmails = partnerEmails ?? [],
         recordings = recordings ?? {},
+        images = images ?? {},
         createdAt = createdAt ?? DateTime.now().millisecondsSinceEpoch,
         updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch;
 
@@ -158,6 +167,7 @@ class StudySet {
         'sharedWithEmails': sharedWithEmails,
         'partnerEmails': partnerEmails,
         'recordings': recordings,
+        'images': images,
         'createdAt': createdAt,
         'updatedAt': updatedAt,
         'locallyDismissed': locallyDismissed,
@@ -184,6 +194,10 @@ class StudySet {
             (j['partnerEmails'] as List?)?.cast<String>() ?? [],
         recordings:
             ((j['recordings'] as Map?) ?? const {}).cast<String, String>(),
+        // v1.22.0 (Session 66): images field may be missing on older
+        // documents — treat undefined as empty.
+        images:
+            ((j['images'] as Map?) ?? const {}).cast<String, String>(),
         createdAt: j['createdAt'] as int?,
         updatedAt: j['updatedAt'] as int?,
         locallyDismissed: j['locallyDismissed'] as bool? ?? false,

@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/models/study_set.dart';
 import 'package:awing_ai_learning/services/study_set_service.dart';
+import 'package:awing_ai_learning/services/study_set_audio_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
 import 'package:awing_ai_learning/components/awing_text_field.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/screens/study_sets/study_set_record_screen.dart';
+import 'package:awing_ai_learning/components/image_attachment_picker.dart';
+import 'package:awing_ai_learning/services/contribution_service.dart';
+import 'package:awing_ai_learning/services/analytics_service.dart';
+import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 /// Add / remove / reorder words in a Study Set. Session 63 Phase 1.
 ///
@@ -544,6 +550,14 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
           ),
           visualDensity: VisualDensity.compact,
         ),
+        // v1.22.0 (Session 66) — picture icon. Three states:
+        //   • ATTACHED (green filled): teacher uploaded a picture.
+        //     Tap re-uploads.
+        //   • MISSING (orange outlined): needs a picture. Tap opens
+        //     picker.
+        // Dictionary words already have SDXL illustrations bundled,
+        // but the teacher can override with a real photo if they want.
+        _buildPictureAction(set: set, awing: awing),
         IconButton(
           tooltip: 'Close',
           icon: const Icon(Icons.close, size: 20),
@@ -552,6 +566,155 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
         ),
       ],
     );
+  }
+
+  /// v1.22.0 (Session 66) — inline picture upload icon for a study
+  /// set row. Uses the same visual grammar as the mic (filled green
+  /// when attached, outlined orange when missing).
+  Widget _buildPictureAction({
+    required StudySet set,
+    required String awing,
+  }) {
+    final hasImage = (set.images[awing] ?? '').isNotEmpty;
+    return IconButton(
+      tooltip: hasImage ? 'Replace picture' : 'Add picture',
+      icon: Icon(
+        hasImage ? Icons.image : Icons.add_photo_alternate_outlined,
+        color:
+            hasImage ? Colors.green.shade700 : Colors.orange.shade700,
+      ),
+      onPressed: () => _openPictureDialog(set: set, awing: awing),
+      visualDensity: VisualDensity.compact,
+    );
+  }
+
+  Future<void> _openPictureDialog({
+    required StudySet set,
+    required String awing,
+  }) async {
+    String? localPath;
+    bool uploading = false;
+    final picked = await showDialog<String?>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogCtx) => StatefulBuilder(
+        builder: (ctx, setStateDialog) => AlertDialog(
+          title: Text('Picture for "$awing"'),
+          content: SizedBox(
+            width: 340,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Tap Take photo or Choose photo, then Save to '
+                    'upload. Your students will see it as the picture '
+                    'for this word in the study set.',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  const SizedBox(height: 12),
+                  ImageAttachmentPicker(
+                    imagePath: localPath,
+                    onChanged: (p) => setStateDialog(() => localPath = p),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: uploading
+                  ? null
+                  : () => Navigator.pop(dialogCtx, null),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton.icon(
+              onPressed: (localPath == null || uploading)
+                  ? null
+                  : () async {
+                      setStateDialog(() => uploading = true);
+                      Navigator.pop(dialogCtx, localPath);
+                    },
+              icon: uploading
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.cloud_upload_outlined),
+              label: Text(uploading ? 'Uploading…' : 'Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (picked == null || !mounted) return;
+
+    // Upload → save URL → also submit as contribution for dev review.
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Uploading picture…'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+    final url = await StudySetAudioService.instance.uploadImage(
+      teacherEmail: set.teacherEmail,
+      setId: widget.setId,
+      awing: awing,
+      localPath: picked,
+    );
+    if (!mounted) return;
+    if (url == null || url.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Upload failed. Check your connection.'),
+        ),
+      );
+      return;
+    }
+    await StudySetService.instance.setImage(widget.setId, awing, url);
+
+    // Also submit as a contribution so the dev can approve + bundle
+    // this into the next app build's global vocabulary image assets.
+    // Best-effort — the set itself already has the picture.
+    try {
+      final entry = _findByKey(awing);
+      final english = entry?.english ??
+          set.customWords
+              .firstWhere((w) => w.awing == awing,
+                  orElse: () => const StudySetCustomWord(
+                      awing: '', english: ''))
+              .english;
+      final category = entry?.category ??
+          set.customWords
+              .firstWhere((w) => w.awing == awing,
+                  orElse: () => const StudySetCustomWord(
+                      awing: '', english: ''))
+              .category;
+      final auth = context.read<AuthService>();
+      await context.read<ContributionService>().submit(
+            deviceId: 'study_set_teacher',
+            profileName: auth.currentProfile?.displayName ?? 'Teacher',
+            type: ContributionType.newWord,
+            targetWord: awing,
+            correction: '',
+            englishMeaning: english,
+            category: category,
+            imagePath: picked,
+            notes:
+                'Picture attached from Study Set editor "${set.name}"',
+          );
+    } catch (_) {/* non-fatal */}
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Picture saved for "$awing" ✓'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+    setState(() {});
   }
 
   Widget _buildDictWordTile(
@@ -629,6 +792,10 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
     final englishCtrl = TextEditingController();
     String category = 'other';
     int difficulty = 1;
+    // v1.22.0 (Session 66): optional photo attached to the new custom
+    // word. Ships alongside the newWord contribution so Dr. Sama can
+    // review both the word text and the photo of what it refers to.
+    String? imagePath;
 
     final categories = <String>[
       'body', 'animals', 'nature', 'food', 'family', 'actions',
@@ -692,6 +859,17 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
                   ],
                 ),
                 const SizedBox(height: 12),
+                // v1.22.0 (Session 66): optional photo of the new word.
+                // Ships with the newWord contribution submission so
+                // Dr. Sama sees the picture in Developer Mode > Review.
+                ImageAttachmentPicker(
+                  imagePath: imagePath,
+                  onChanged: (p) => setStateDialog(() => imagePath = p),
+                  label: 'Add a photo (optional)',
+                  hint: 'A picture of what this word means helps confirm '
+                      'the meaning and can become the vocab card image.',
+                ),
+                const SizedBox(height: 12),
                 const Text(
                   'This word will be added to your set now, and will '
                   'also be submitted for developer approval so it can '
@@ -730,11 +908,42 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
       difficulty: difficulty,
     );
     await StudySetService.instance.addCustomWord(widget.setId, word);
-    // TODO(Phase 1b): submit this word via ContributionService as a
-    // newWord contribution so it enters the developer review queue.
-    // Deferred to keep Phase 1 focused on the set-editing UX; wire in
-    // when we ship Phase 2 (which also touches contributions for
-    // teacher recordings).
+    // v1.22.0 (Session 66): resolved the Phase 1b TODO. Every custom
+    // word added via this dialog now ALSO submits a newWord
+    // contribution to the review pipeline so:
+    //   1. The optional attached photo can be uploaded to Drive.
+    //   2. Dr. Sama can approve the word into the app-wide
+    //      dictionary in a future release (not just this teacher's
+    //      set).
+    //   3. If the word is fabricated/misspelled, review catches it
+    //      before it spreads.
+    // The `contribute` call is best-effort — if the network is
+    // unavailable, the queue-and-retry mechanism in
+    // ContributionService handles delivery when connectivity
+    // returns.
+    try {
+      final auth = context.read<AuthService>();
+      final deviceId = AnalyticsService.instance.isOptedOut
+          ? 'anonymous'
+          : 'study_set_teacher';
+      await context.read<ContributionService>().submit(
+            deviceId: deviceId,
+            profileName: auth.currentProfile?.displayName ?? 'Teacher',
+            type: ContributionType.newWord,
+            targetWord: word.awing,
+            correction: '',
+            englishMeaning: word.english,
+            category: word.category,
+            imagePath: imagePath,
+            notes: 'From Study Set editor "Add new word" — '
+                'difficulty=${word.difficulty}',
+          );
+    } catch (e) {
+      // Non-fatal — the word IS in the teacher's set; the
+      // dictionary submission is a bonus. If it fails, the queue
+      // will retry when the network is back.
+      debugPrint('Custom-word contribution submit failed: $e');
+    }
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
