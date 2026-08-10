@@ -5,6 +5,7 @@ import 'package:awing_ai_learning/components/awing_text_field.dart';
 import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
+import 'package:awing_ai_learning/components/image_attachment_picker.dart';
 
 /// Compact flag-icon button. Tap → dialog for reporting a wrong
 /// translation with optional correction + word-by-word breakdown.
@@ -96,6 +97,8 @@ class _ReportDialogState extends State<_ReportDialog> {
   final _notesController = TextEditingController();
   bool _submitting = false;
   String? _error;
+  /// v1.22.0 (Session 66): optional photo attached to this correction.
+  String? _imagePath;
 
   @override
   void dispose() {
@@ -142,6 +145,7 @@ class _ReportDialogState extends State<_ReportDialog> {
         targetWord: widget.wrongAwing,
         correction: correction,
         englishMeaning: widget.english,
+        imagePath: _imagePath,
         notes: jsonEncode(structuredNotes),
       );
       if (!mounted) return;
@@ -262,6 +266,17 @@ class _ReportDialogState extends State<_ReportDialog> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
+            ),
+            const SizedBox(height: 12),
+            // v1.22.0 (Session 66) — optional photo attached to the
+            // translation correction. Useful when the wrong translation
+            // shows a real-world thing the user can photograph
+            // (e.g. "this fruit is called X in my village").
+            ImageAttachmentPicker(
+              imagePath: _imagePath,
+              onChanged: (p) => setState(() => _imagePath = p),
+              label: 'Add a photo (optional)',
+              hint: 'A picture of the thing helps us confirm the meaning.',
             ),
             if (_error != null) ...[
               const SizedBox(height: 8),

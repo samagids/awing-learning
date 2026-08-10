@@ -77,17 +77,25 @@
 	     though the app never requests background location. Both keys required. -->
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Awing AI Learning does not track your location. This permission is required only because a third-party library bundled with the app references the Always location API on iOS. The app never requests background location access.</string>
-	<!-- Photo library + camera purpose strings — required by Apple even though
-	     the app does not directly use these APIs. file_picker / share_plus /
-	     image_picker pull in iOS frameworks that reference PhotoKit; Apple's
-	     static analyzer (rejection 90683) flags any binary that references the
-	     PhotoKit symbols regardless of whether the user-facing flow uses them. -->
+	<!-- Photo library + camera purpose strings.
+	     v1.22.0 (Session 66) — the Contribute flow now uses image_picker to
+	     attach optional photos to word corrections, pronunciation
+	     recordings, translation corrections, and Study Set word entries.
+	     Strings updated from the earlier "does not use" placeholders
+	     (Session 57b) to accurately describe the new user-facing use.
+	     Apple's App Review reads these strings verbatim at the runtime
+	     permission prompt; shipping stale "does not use" language while
+	     actually invoking the APIs risks ITMS-90683 or App Review
+	     rejection.
+	     NSPhotoLibraryAddUsageDescription stays a placeholder because the
+	     app still doesn't SAVE anything back to the library — it only
+	     READS via NSPhotoLibraryUsageDescription. -->
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Awing AI Learning does not use your photo library. This permission is required only because a third-party library bundled with the app references the Photos framework.</string>
+	<string>Awing AI Learning uses your photo library so you can attach a picture of a word to your correction, new-word suggestion, or pronunciation recording. Pictures help the teacher confirm the meaning.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Awing AI Learning does not save anything to your photo library. This permission is required only because a third-party library bundled with the app references the Photos framework.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Awing AI Learning does not use your camera. This permission is required only because a third-party library bundled with the app references the Camera framework.</string>
+	<string>Awing AI Learning uses your camera so you can take a photo to attach to a word correction, new-word suggestion, or pronunciation recording. Pictures help the teacher confirm the meaning.</string>
 	<!-- Bonjour service types we register/browse via mDNS. The single service
 	     here is the Kahoot-style exam discovery service used by exam_service.dart.
 	     iOS 14+ requires every Bonjour service type to be declared here or

@@ -15,7 +15,9 @@ import 'package:awing_ai_learning/screens/contribute/contribute_screen.dart';
 import 'package:awing_ai_learning/components/parental_gate.dart';
 import 'package:awing_ai_learning/screens/about_screen.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
+import 'package:awing_ai_learning/services/notification_service.dart';
 import 'package:awing_ai_learning/theme/app_colors.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
@@ -27,7 +29,68 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    // v1.22.0 (Session 66): register for lifecycle so we can check the
+    // notification pending-action flag on every resume. The flag is
+    // set by NotificationService._onTap when the user taps the weekly
+    // share reminder while the app is backgrounded.
+    WidgetsBinding.instance.addObserver(this);
+    // Also check on first mount — covers the cold-start case where the
+    // user tapped the notification and it launched the app fresh.
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _checkPendingNotificationAction(),
+    );
+    // Session 66 self-heal: re-run the scheduler on every HomeScreen
+    // mount too. main.dart already calls it at cold start; this is
+    // extra insurance for OEMs that wipe schedules mid-session.
+    NotificationService.instance
+        .scheduleAllReminders()
+        .catchError((_) {/* non-fatal */});
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _checkPendingNotificationAction();
+      // Reschedule again on resume — cheap and idempotent, and it
+      // catches the "OEM killed the alarm while backgrounded" case.
+      NotificationService.instance
+          .scheduleAllReminders()
+          .catchError((_) {/* non-fatal */});
+    }
+  }
+
+  /// v1.22.0 (Session 66): consume the pending-action flag left by a
+  /// notification tap. Currently only 'share_app' is defined — routes
+  /// to the platform share sheet with the Play Store URL.
+  Future<void> _checkPendingNotificationAction() async {
+    final action = await NotificationService.instance.consumePendingAction();
+    if (action != 'share_app' || !mounted) return;
+    await _shareApp();
+  }
+
+  Future<void> _shareApp() async {
+    const shareText =
+        'I use Awing AI Learning to help my kids learn Awing. '
+        'It has games, quizzes, stories and even a teacher exam mode. '
+        '📱 Android: https://play.google.com/store/apps/details?id=com.awing.learning\n'
+        '🍎 iPhone: https://apps.apple.com/app/id6764426877';
+    try {
+      await Share.share(shareText, subject: 'Awing AI Learning');
+      AnalyticsService.instance.logActivity(event: 'share_app_from_reminder');
+    } catch (_) {/* user cancelled or platform unavailable */}
+  }
+
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthService>();

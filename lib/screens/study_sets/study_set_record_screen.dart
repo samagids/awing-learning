@@ -34,6 +34,7 @@ import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/study_set_audio_service.dart';
 import 'package:awing_ai_learning/services/study_set_service.dart';
+import 'package:awing_ai_learning/components/image_attachment_picker.dart';
 
 class StudySetRecordScreen extends StatefulWidget {
   final String setId;
@@ -64,6 +65,11 @@ class _StudySetRecordScreenState extends State<StudySetRecordScreen> {
   final PronunciationService _pronunciation = PronunciationService();
 
   String? _localPath;
+  /// v1.22.0 (Session 66): optional photo attached to this recording's
+  /// contribution submission. When set, the ContributionService.submit
+  /// call at _saveAndUpload passes this to the webhook for storage in
+  /// the vocabulary image folder.
+  String? _imagePath;
   bool _isRecording = false;
   bool _hasRecording = false;
   int _seconds = 0;
@@ -271,6 +277,7 @@ class _StudySetRecordScreenState extends State<StudySetRecordScreen> {
         englishMeaning: widget.english,
         category: widget.category ?? '',
         audioPath: _localPath,
+        imagePath: _imagePath,
         notes: 'From Study Set "${set.name}" (id: ${set.id})',
       );
 
@@ -428,6 +435,16 @@ class _StudySetRecordScreenState extends State<StudySetRecordScreen> {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 12),
+                // v1.22.0 (Session 66) — optional photo alongside the
+                // recording. Attached image ships with the same
+                // contribution submission that carries the audio.
+                ImageAttachmentPicker(
+                  imagePath: _imagePath,
+                  onChanged: (p) => setState(() => _imagePath = p),
+                  label: 'Add a photo (optional)',
+                  hint: 'A picture of this word will help kids remember it.',
                 ),
                 const SizedBox(height: 12),
                 SizedBox(

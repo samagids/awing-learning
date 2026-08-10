@@ -101,6 +101,19 @@ class DailySuggestionService {
   static const _kEnabled = 'daily_notification_enabled';
   static const _kHour = 'daily_notification_hour';
   static const _kMinute = 'daily_notification_minute';
+  // v1.22.0 (Session 66) — engagement reminders.
+  static const _kEveningEnabled = 'evening_notification_enabled';
+  static const _kEveningHour = 'evening_notification_hour';
+  static const _kEveningMinute = 'evening_notification_minute';
+  static const _kWeeklyShareEnabled = 'weekly_share_enabled';
+  static const _kWeeklyShareWeekday = 'weekly_share_weekday';
+  static const _kWeeklyShareHour = 'weekly_share_hour';
+  static const _kWeeklyShareMinute = 'weekly_share_minute';
+  // Sentinel key that tells us whether the "on by default" flip has
+  // already run for this install. Without it, users who explicitly
+  // OPTED OUT before v1.22.0 would get flipped back on by the new
+  // default = true logic. See isEnabled() for the migration guard.
+  static const _kEnabledDefaultsApplied = 'reminders_defaults_v122_applied';
 
   /// Default profile id used when caller does not pass one (e.g. the
   /// notification scheduler runs outside any profile context). Keeps the
@@ -599,9 +612,38 @@ class DailySuggestionService {
   }
 
   /// Settings: notification enabled?
+  ///
+  /// v1.22.0 (Session 66): default flipped from `false` → `true` for
+  /// new installs so users get engagement reminders out of the box
+  /// (the audit found users were "not getting notifications" mostly
+  /// because they never toggled the setting on). Migration is
+  /// guarded by `_kEnabledDefaultsApplied` so pre-1.22 installs that
+  /// explicitly opted out don't get their choice overridden.
   static Future<bool> isEnabled() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_kEnabled) ?? false;
+    await _applyRemindersDefaultsOnce(prefs);
+    return prefs.getBool(_kEnabled) ?? true;
+  }
+
+  /// Idempotent one-time migration: sets the three reminder-enabled
+  /// keys to `true` ONLY if they've never been touched, guarded by a
+  /// sentinel so users who explicitly opted out on an older build
+  /// keep their opt-out choice.
+  static Future<void> _applyRemindersDefaultsOnce(
+      SharedPreferences prefs) async {
+    if (prefs.getBool(_kEnabledDefaultsApplied) == true) return;
+    // Only initialize keys that have NEVER been set. If a user
+    // previously toggled a value (even to false), preserve it.
+    if (!prefs.containsKey(_kEnabled)) {
+      await prefs.setBool(_kEnabled, true);
+    }
+    if (!prefs.containsKey(_kEveningEnabled)) {
+      await prefs.setBool(_kEveningEnabled, true);
+    }
+    if (!prefs.containsKey(_kWeeklyShareEnabled)) {
+      await prefs.setBool(_kWeeklyShareEnabled, true);
+    }
+    await prefs.setBool(_kEnabledDefaultsApplied, true);
   }
 
   static Future<void> setEnabled(bool v) async {
@@ -623,6 +665,79 @@ class DailySuggestionService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_kHour, hour);
     await prefs.setInt(_kMinute, minute);
+  }
+
+  // ─── v1.22.0 (Session 66) engagement reminders ───
+
+  /// Default evening WOD reminder time (7:00 PM local).
+  static const int defaultEveningHour = 19;
+  static const int defaultEveningMinute = 0;
+
+  /// Default weekly-share reminder (Saturday 10 AM local).
+  /// DateTime.weekday: Mon=1..Sun=7.
+  static const int defaultWeeklyShareWeekday = 6; // Saturday
+  static const int defaultWeeklyShareHour = 10;
+  static const int defaultWeeklyShareMinute = 0;
+
+  static Future<bool> eveningEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    await _applyRemindersDefaultsOnce(prefs);
+    return prefs.getBool(_kEveningEnabled) ?? true;
+  }
+
+  static Future<void> setEveningEnabled(bool v) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_kEveningEnabled, v);
+  }
+
+  static Future<int> eveningHour() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_kEveningHour) ?? defaultEveningHour;
+  }
+
+  static Future<int> eveningMinute() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_kEveningMinute) ?? defaultEveningMinute;
+  }
+
+  static Future<void> setEveningTime(int hour, int minute) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_kEveningHour, hour);
+    await prefs.setInt(_kEveningMinute, minute);
+  }
+
+  static Future<bool> weeklyShareEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    await _applyRemindersDefaultsOnce(prefs);
+    return prefs.getBool(_kWeeklyShareEnabled) ?? true;
+  }
+
+  static Future<void> setWeeklyShareEnabled(bool v) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_kWeeklyShareEnabled, v);
+  }
+
+  static Future<int> weeklyShareWeekday() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_kWeeklyShareWeekday) ?? defaultWeeklyShareWeekday;
+  }
+
+  static Future<int> weeklyShareHour() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_kWeeklyShareHour) ?? defaultWeeklyShareHour;
+  }
+
+  static Future<int> weeklyShareMinute() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_kWeeklyShareMinute) ?? defaultWeeklyShareMinute;
+  }
+
+  static Future<void> setWeeklyShareTime(
+      int weekday, int hour, int minute) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_kWeeklyShareWeekday, weekday);
+    await prefs.setInt(_kWeeklyShareHour, hour);
+    await prefs.setInt(_kWeeklyShareMinute, minute);
   }
 
   // === Helpers ===

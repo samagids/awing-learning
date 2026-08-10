@@ -11,6 +11,7 @@ import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/screens/contribute/record_picker_screen.dart';
 import 'package:awing_ai_learning/components/awing_text_field.dart';
+import 'package:awing_ai_learning/components/image_attachment_picker.dart';
 
 /// User-facing screen for submitting contributions.
 ///
@@ -65,6 +66,13 @@ class _ContributeScreenState extends State<ContributeScreen> {
   String? _recordingPath;
   Duration _recordingDuration = Duration.zero;
   Timer? _recordingTimer;
+
+  /// v1.22.0 (Session 66): optional photo attached to the contribution.
+  /// Users tap the ImageAttachmentPicker to pick from camera or gallery;
+  /// image_picker compresses at pick time to 1024x1024 JPEG q80. Path
+  /// is passed to ContributionService.submit which base64-encodes and
+  /// inlines it in the webhook payload.
+  String? _imagePath;
 
   static const _categories = [
     'body', 'animals', 'nature', 'actions', 'things', 'family', 'numbers',
@@ -329,6 +337,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
           ? _pronunciationController.text.trim()
           : null,
       audioPath: _hasRecording ? _recordingPath : null,
+      imagePath: _imagePath,
       notes: _notesController.text.trim().isNotEmpty
           ? _notesController.text.trim()
           : null,
@@ -506,6 +515,10 @@ class _ContributeScreenState extends State<ContributeScreen> {
                       _hasRecording = false;
                       _recordingPath = null;
                       _recordingDuration = Duration.zero;
+                      // v1.22.0 (Session 66): also reset the attached photo
+                      // so "Submit Another" doesn't accidentally re-send
+                      // last submission's image with the new form data.
+                      _imagePath = null;
                     });
                   },
                   child: const Text('Submit Another'),
@@ -695,6 +708,19 @@ class _ContributeScreenState extends State<ContributeScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
+          ),
+          const SizedBox(height: 12),
+
+          // v1.22.0 (Session 66) — optional photo attached to any
+          // contribution type. Especially useful for new-word or
+          // spelling contributions where a photo of the real thing
+          // (a cane, a market fruit) is worth 1000 English glosses.
+          ImageAttachmentPicker(
+            imagePath: _imagePath,
+            onChanged: (path) => setState(() => _imagePath = path),
+            label: 'Add a photo (optional)',
+            hint: 'Show us what the word means — e.g. a picture of the '
+                'object, action, or scene. Great for kids learning.',
           ),
           const SizedBox(height: 24),
 

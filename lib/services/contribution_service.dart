@@ -69,6 +69,12 @@ class Contribution {
   final String? category;       // vocabulary category
   final String? pronunciationGuide; // How to pronounce it (phonetic spelling)
   final String? audioPath;      // Local path to recorded audio
+  final String? imagePath;      // v1.22.0 (Session 66): local path to a
+                                // photo attached to this contribution
+                                // (camera or gallery pick). Compressed
+                                // on the client to 1024x1024 JPEG q80
+                                // and inlined into the webhook payload
+                                // as imageBase64 alongside audioBase64.
   final String? notes;          // User's explanation
   final DateTime submittedAt;
   ContributionStatus status;
@@ -87,6 +93,7 @@ class Contribution {
     this.category,
     this.pronunciationGuide,
     this.audioPath,
+    this.imagePath,
     this.notes,
     DateTime? submittedAt,
     this.status = ContributionStatus.pending,
@@ -106,6 +113,7 @@ class Contribution {
     'category': category,
     'pronunciationGuide': pronunciationGuide,
     'audioPath': audioPath,
+    'imagePath': imagePath,
     'notes': notes,
     'submittedAt': submittedAt.toIso8601String(),
     'status': status.name,
@@ -128,6 +136,7 @@ class Contribution {
     category: json['category'],
     pronunciationGuide: json['pronunciationGuide'],
     audioPath: json['audioPath'],
+    imagePath: json['imagePath'],
     notes: json['notes'],
     submittedAt: json['submittedAt'] != null
         ? DateTime.parse(json['submittedAt'])
@@ -431,6 +440,7 @@ class ContributionService extends ChangeNotifier {
     String? category,
     String? pronunciationGuide,
     String? audioPath,
+    String? imagePath,
     String? notes,
   }) async {
     final id = '${DateTime.now().millisecondsSinceEpoch}_${deviceId.substring(0, 6)}';
@@ -467,6 +477,7 @@ class ContributionService extends ChangeNotifier {
       category: category,
       pronunciationGuide: pronunciationGuide,
       audioPath: audioPath,
+      imagePath: imagePath,
       notes: notes,
     );
 
@@ -501,6 +512,30 @@ class ContributionService extends ChangeNotifier {
       }
     }
 
+    // v1.22.0 (Session 66) — image upload. The client-side compression
+    // happens at the picker layer (image_picker's maxWidth + imageQuality
+    // params), so by the time we get here the file is already down to a
+    // ~50-300 KB JPEG. Same 1.5 MB pre-encode cap for safety though.
+    String? imageBase64;
+    if (imagePath != null) {
+      try {
+        final file = File(imagePath);
+        if (await file.exists()) {
+          final bytes = await file.readAsBytes();
+          if (bytes.length < 1500 * 1024) {
+            imageBase64 = base64Encode(bytes);
+          } else if (kDebugMode) {
+            print('ContributionService.submit: image too large to inline '
+                '(${bytes.length} bytes), skipping upload');
+          }
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('ContributionService.submit: image read failed: $e');
+        }
+      }
+    }
+
     // Also push to webhook (non-blocking, best-effort).
     // Session 64: include the app's version string so the notification
     // email + Submissions sheet show which build the reporter is on.
@@ -522,6 +557,7 @@ class ContributionService extends ChangeNotifier {
       'notes': notes ?? '',
       'appVersion': appVersion,
       if (audioBase64 != null) 'audioBase64': audioBase64,
+      if (imageBase64 != null) 'imageBase64': imageBase64,
     });
 
     return id;

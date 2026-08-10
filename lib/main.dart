@@ -166,22 +166,26 @@ void main() async {
       const Duration(seconds: 3),
       onTimeout: () => debugPrint('NotificationService init timed out'),
     );
-    // v1.18.3 fix: re-schedule the daily notification on every cold start
-    // if the user has enabled it. Older builds used inexactAllowWhileIdle
-    // which Doze drops; the new schedule below uses exactAllowWhileIdle,
-    // fixing the "kids don't get reminders" report on Samsung S24 Ultra.
-    // Some OEMs also wipe scheduled alarms on app updates or reboots
-    // despite RECEIVE_BOOT_COMPLETED; this self-heals on next open.
-    // Cheap (~10 ms) and idempotent: scheduleDaily cancels first.
+    // v1.22.0 (Session 66): auto-request notification permission at cold
+    // start. Android 13+ and iOS require this; older Android grants
+    // implicitly. Silent no-op if already granted. Without this, the
+    // isEnabled=true default flip in DailySuggestionService is
+    // effectively silent because the OS-level permission is still
+    // missing on first launch.
     try {
-      if (await DailySuggestionService.isEnabled()) {
-        final h = await DailySuggestionService.notificationHour();
-        final m = await DailySuggestionService.notificationMinute();
-        await NotificationService.instance.scheduleDaily(hour: h, minute: m);
-        debugPrint('Daily notification re-scheduled at $h:$m');
-      }
+      await NotificationService.instance.requestPermission();
     } catch (e) {
-      debugPrint('Daily notification re-schedule failed (non-fatal): $e');
+      debugPrint('Notification permission request failed (non-fatal): $e');
+    }
+    // v1.22.0 (Session 66): use the new scheduleAllReminders orchestrator
+    // that handles morning WOD + evening WOD + weekly share. Idempotent
+    // and cheap (~10 ms). Runs on every cold start to self-heal against
+    // OEMs that wipe scheduled alarms on reboot or update.
+    try {
+      await NotificationService.instance.scheduleAllReminders();
+      debugPrint('All reminders (re-)scheduled');
+    } catch (e) {
+      debugPrint('Reminder scheduling failed (non-fatal): $e');
     }
   } catch (e) {
     debugPrint('NotificationService init failed: $e');

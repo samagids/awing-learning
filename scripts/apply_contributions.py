@@ -79,6 +79,15 @@ REGENERATE_FILE = os.path.join(CONTRIBUTIONS_DIR, 'regenerate_words.json')
 # are always what the learner hears.
 VOICE_REFERENCES_DIR = os.path.join(CONTRIBUTIONS_DIR, 'voice_references')
 
+# v1.22.0 (Session 66): user-contributed vocabulary images land in the
+# PAD (Play Asset Delivery) images folder alongside the SDXL-generated
+# images. Filename matches the audio_key so PackImage / word cards find
+# it via the same key derivation as the app uses. Contributed images
+# override AI-generated ones (they're written last).
+VOCAB_IMAGES_DIR = os.path.join(
+    PROJECT_DIR, 'android', 'install_time_assets', 'src', 'main', 'assets',
+    'images', 'vocabulary')
+
 
 # ============================================================
 # SECURITY: input sanitization
@@ -237,6 +246,28 @@ def _validate_audio_url(url):
     if host not in allowed_hosts and not any(host.endswith('.' + h) for h in allowed_hosts):
         raise ContributionRejected(
             f'audioUrl: host {host!r} not in allowlist {allowed_hosts}'
+        )
+    return url
+
+
+def _validate_image_url(url):
+    """v1.22.0 (Session 66): mirror of _validate_audio_url for image
+    contributions. Same allowlist — the webhook stores images in the
+    same Drive account audio lives in, so the trust boundary is
+    identical."""
+    if not isinstance(url, str) or not url.startswith(('https://')):
+        raise ContributionRejected('imageUrl: must be https://')
+    allowed_hosts = (
+        'drive.google.com',
+        'docs.google.com',
+        'script.google.com',
+        'script.googleusercontent.com',
+    )
+    after_scheme = url[len('https://'):]
+    host = after_scheme.split('/', 1)[0].split('?', 1)[0].lower()
+    if host not in allowed_hosts and not any(host.endswith('.' + h) for h in allowed_hosts):
+        raise ContributionRejected(
+            f'imageUrl: host {host!r} not in allowlist {allowed_hosts}'
         )
     return url
 
@@ -482,6 +513,45 @@ def _archive_voice_reference(audio_url, awing_word, dry_run=False):
     size_kb = os.path.getsize(dest_path) / 1024.0
     print(f"  ✓ Archived reference: voice_references/{key}.m4a ({size_kb:.1f} KB)")
     return True, key, dest_path
+
+
+def _install_vocabulary_image(image_url, awing_word, profile, dry_run=False):
+    """v1.22.0 (Session 66): download a user-contributed photo and install
+    it as the vocabulary card image for `awing_word`, overriding any
+    SDXL-generated placeholder at the same key.
+
+    Destination: android/install_time_assets/src/main/assets/images/
+                 vocabulary/{audio_key(awing_word)}.png
+
+    Even though the client uploads JPEG (image_picker default), we save
+    with a .png extension because that's what generate_images.py + the
+    Flutter PackImage widget both expect. Drive serves whatever bytes
+    the client uploaded — the app treats them as opaque image content,
+    so the extension mismatch is safe (Android's ImageDecoder sniffs
+    the header, not the filename).
+    """
+    key = _audio_key(awing_word)
+    if not key:
+        print(f"  ✗ Could not derive image key from '{awing_word}'")
+        return False
+
+    dest_path = os.path.join(VOCAB_IMAGES_DIR, f'{key}.png')
+
+    if dry_run:
+        print(f"  [DRY RUN] Would download {image_url}")
+        print(f"  [DRY RUN] Would install to images/vocabulary/{key}.png "
+              f"(from {profile})")
+        return True
+
+    os.makedirs(VOCAB_IMAGES_DIR, exist_ok=True)
+    print(f"  → Downloading vocabulary image from Drive...")
+    if not _download_drive_file(image_url, dest_path):
+        return False
+
+    size_kb = os.path.getsize(dest_path) / 1024.0
+    print(f"  ✓ Installed image: images/vocabulary/{key}.png "
+          f"({size_kb:.1f} KB, from {profile})")
+    return True
 
 
 # Module-level flag so we only print the "Whisper missing" banner once
@@ -1232,10 +1302,33 @@ def apply_contributions(contributions, dry_run=False):
                 print(f"\n  ⚠ Rejecting audio for [{ctype}] '{target}': {e}")
                 audio_url = ''  # don't fetch, but allow non-audio fields to proceed
 
+        # v1.22.0 (Session 66): image contributions. Same SSRF allowlist
+        # as audio. Approved images override the SDXL-generated vocab
+        # image at android/install_time_assets/.../vocabulary/{key}.png.
+        image_url = c.get('imageUrl') or ''
+        if image_url:
+            try:
+                image_url = _validate_image_url(image_url)
+            except ContributionRejected as e:
+                print(f"\n  ⚠ Rejecting image for [{ctype}] '{target}': {e}")
+                image_url = ''
+
         print(f"\nApplying: [{ctype}] '{target}' → '{correction}' (from {profile})")
         _collect_audio_contributor(
             profile, ctype, bool(audio_url),
             google_display_name=google_display_name)
+
+        # v1.22.0 (Session 66): fetch + install any attached image
+        # BEFORE the type-specific branches below run. The image is
+        # orthogonal to the correction type — spelling corrections, new
+        # words, translation corrections, and pronunciation fixes can
+        # all carry an image.
+        if image_url and target:
+            try:
+                _install_vocabulary_image(image_url, target, profile,
+                                          dry_run=dry_run)
+            except Exception as e:
+                print(f"  ⚠ Image install failed for '{target}': {e}")
 
         # SECURITY: every branch below that mutates a Dart file delegates
         # input validation to its helper (apply_*). If a helper raises

@@ -27,6 +27,7 @@ import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/local_pending_service.dart';
+import 'package:awing_ai_learning/components/image_attachment_picker.dart';
 
 class RecordAudioScreen extends StatefulWidget {
   /// v1.18.0+ — When set, the screen opens already-locked on this word
@@ -48,6 +49,9 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
 
   AwingWord? _selected;
   String? _recordingPath;
+  /// v1.22.0 (Session 66): optional photo attached to this pronunciation
+  /// contribution. Ships with the audio in the same webhook submit call.
+  String? _imagePath;
   bool _isRecording = false;
   bool _hasRecording = false;
   int _seconds = 0;
@@ -211,6 +215,7 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
       englishMeaning: _selected!.english,
       category: _selected!.category,
       audioPath: _recordingPath,
+      imagePath: _imagePath,
     );
 
     bool emailSuccess = false;
@@ -306,6 +311,21 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
               _buildAlreadyRecordedBanner(),
             if (_selected != null && !_alreadyRecorded)
               _buildRecordControls(),
+            // v1.22.0 (Session 66) — optional photo alongside the
+            // recording. Visible whenever a word is selected + not
+            // already natively recorded; independent of whether the
+            // user has captured the audio yet, so they can attach
+            // the photo before or after recording.
+            if (_selected != null && !_alreadyRecorded && !_submitted) ...[
+              const SizedBox(height: 16),
+              ImageAttachmentPicker(
+                imagePath: _imagePath,
+                onChanged: (p) => setState(() => _imagePath = p),
+                label: 'Add a photo (optional)',
+                hint: 'Show us what "${_selected!.awing}" looks like — '
+                    'e.g. a picture of the object or scene.',
+              ),
+            ],
             const SizedBox(height: 24),
             if (_selected != null &&
                 !_alreadyRecorded &&
