@@ -345,7 +345,11 @@ jobs:
         with:
           name: awing-ios-signed
           path: build/ios/ipa/*.ipa
-          retention-days: 90
+          # Session 66: was 90 days — bloated storage until GitHub free
+          # quota (500 MB) filled and killed the tag build with 1h30m
+          # of retry timeouts. IPA already goes to TestFlight in the
+          # same job; 3 days is plenty for occasional manual download.
+          retention-days: 3
           if-no-files-found: ignore
 
       # Cactus 1.3.0 packaging bug: cactus_util.xcframework ships with an

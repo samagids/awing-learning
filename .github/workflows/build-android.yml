@@ -163,7 +163,10 @@ jobs:
         with:
           name: awing-android-apk
           path: build/app/outputs/flutter-apk/awing-1.2.0.apk
-          retention-days: 30
+          # Session 66: was 30 days — dropped to 3 to keep GitHub free
+          # storage tier (500 MB) from filling. APK goes to Play alpha
+          # in the same job; 3 days covers any manual download need.
+          retention-days: 3
 
       # Reset Gradle daemon between main-build APK and tag-build AAB.
       # On TAG pushes (when the APK build above was skipped) this is a
@@ -193,7 +196,10 @@ jobs:
         with:
           name: awing-android-aab
           path: build/app/outputs/bundle/release/app-release.aab
-          retention-days: 90
+          # Session 66: was 90 days — dropped to 3 to keep GitHub free
+          # storage tier (500 MB) from filling. AAB goes to Play alpha
+          # in the same job; 3 days covers any manual download need.
+          retention-days: 3
           if-no-files-found: ignore
 
       # === AUTO-UPLOAD TO GOOGLE PLAY CLOSED TESTING - ALPHA ===
