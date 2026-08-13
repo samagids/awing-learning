@@ -619,11 +619,14 @@ class DailySuggestionService {
   /// because they never toggled the setting on). Migration is
   /// guarded by `_kEnabledDefaultsApplied` so pre-1.22 installs that
   /// explicitly opted out don't get their choice overridden.
-  static Future<bool> isEnabled() async {
-    final prefs = await SharedPreferences.getInstance();
-    await _applyRemindersDefaultsOnce(prefs);
-    return prefs.getBool(_kEnabled) ?? true;
-  }
+  /// v1.22.1 (Session 67): notifications are ENFORCED. Always returns
+  /// true regardless of stored pref. Setter is a no-op. UI must not
+  /// expose an enable/disable toggle. The only way to silence Awing
+  /// notifications is at the OS Settings level (per-app notification
+  /// permission), which we can't override — but by removing the
+  /// in-app toggle we stop users from accidentally opting themselves
+  /// out and then complaining "notifications don't work."
+  static Future<bool> isEnabled() async => true;
 
   /// Idempotent one-time migration: sets the three reminder-enabled
   /// keys to `true` ONLY if they've never been touched, guarded by a
@@ -646,10 +649,9 @@ class DailySuggestionService {
     await prefs.setBool(_kEnabledDefaultsApplied, true);
   }
 
-  static Future<void> setEnabled(bool v) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_kEnabled, v);
-  }
+  /// v1.22.1 (Session 67): no-op. Notifications are enforced — see
+  /// isEnabled(). Signature kept so old callers compile.
+  static Future<void> setEnabled(bool v) async {/* enforced */}
 
   static Future<int> notificationHour() async {
     final prefs = await SharedPreferences.getInstance();
@@ -679,16 +681,9 @@ class DailySuggestionService {
   static const int defaultWeeklyShareHour = 10;
   static const int defaultWeeklyShareMinute = 0;
 
-  static Future<bool> eveningEnabled() async {
-    final prefs = await SharedPreferences.getInstance();
-    await _applyRemindersDefaultsOnce(prefs);
-    return prefs.getBool(_kEveningEnabled) ?? true;
-  }
-
-  static Future<void> setEveningEnabled(bool v) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_kEveningEnabled, v);
-  }
+  // v1.22.1 (Session 67): enforced — see isEnabled().
+  static Future<bool> eveningEnabled() async => true;
+  static Future<void> setEveningEnabled(bool v) async {/* enforced */}
 
   static Future<int> eveningHour() async {
     final prefs = await SharedPreferences.getInstance();
@@ -706,16 +701,9 @@ class DailySuggestionService {
     await prefs.setInt(_kEveningMinute, minute);
   }
 
-  static Future<bool> weeklyShareEnabled() async {
-    final prefs = await SharedPreferences.getInstance();
-    await _applyRemindersDefaultsOnce(prefs);
-    return prefs.getBool(_kWeeklyShareEnabled) ?? true;
-  }
-
-  static Future<void> setWeeklyShareEnabled(bool v) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_kWeeklyShareEnabled, v);
-  }
+  // v1.22.1 (Session 67): enforced — see isEnabled().
+  static Future<bool> weeklyShareEnabled() async => true;
+  static Future<void> setWeeklyShareEnabled(bool v) async {/* enforced */}
 
   static Future<int> weeklyShareWeekday() async {
     final prefs = await SharedPreferences.getInstance();

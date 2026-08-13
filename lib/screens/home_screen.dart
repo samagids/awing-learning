@@ -18,6 +18,7 @@ import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/notification_service.dart';
 import 'package:awing_ai_learning/theme/app_colors.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
@@ -41,9 +42,17 @@ class _HomeScreenState extends State<HomeScreen>
     WidgetsBinding.instance.addObserver(this);
     // Also check on first mount — covers the cold-start case where the
     // user tapped the notification and it launched the app fresh.
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _checkPendingNotificationAction(),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkPendingNotificationAction();
+      // v1.22.1 (Session 67): first-run notification rationale. Show
+      // a friendly Awing-flavored dialog ONCE before the OS permission
+      // prompt fires so users understand why we want to send them
+      // reminders. Deferred to post-frame so main.dart's ThemeProvider
+      // + AuthGate have already resolved and the home screen has
+      // painted at least once — the OS dialog then feels contextual,
+      // not surprise-mugged.
+      _maybeShowNotificationRationale();
+    });
     // Session 66 self-heal: re-run the scheduler on every HomeScreen
     // mount too. main.dart already calls it at cold start; this is
     // extra insurance for OEMs that wipe schedules mid-session.
@@ -68,6 +77,71 @@ class _HomeScreenState extends State<HomeScreen>
           .scheduleAllReminders()
           .catchError((_) {/* non-fatal */});
     }
+  }
+
+  /// v1.22.1 (Session 67): one-time in-app rationale shown before we
+  /// invoke the OS notification permission prompt. If we've already
+  /// shown it (regardless of whether the user granted or denied),
+  /// this returns immediately — never ask twice.
+  ///
+  /// The pref key is versioned so we could re-prompt in a future
+  /// release with different copy if acceptance is low, without
+  /// re-nagging existing users right now.
+  static const String _kRationaleShownKey =
+      'notification_rationale_shown_v1_22_1';
+
+  Future<void> _maybeShowNotificationRationale() async {
+    if (!mounted) return;
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool(_kRationaleShownKey) == true) {
+      // Already shown. If the OS permission is granted, we're done.
+      // If it was denied, that's the user's OS-level choice and we
+      // respect it — no in-app nag.
+      return;
+    }
+    // Mark shown BEFORE the async dialog so a double-mount can't
+    // fire the dialog twice.
+    await prefs.setBool(_kRationaleShownKey, true);
+    if (!mounted) return;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        icon: const Icon(Icons.notifications_active,
+            color: Colors.green, size: 40),
+        title: const Text('Daily Awing reminders'),
+        content: const Text(
+          'Awing AI Learning sends you a few short reminders each week '
+          'so your kids keep practicing:\n\n'
+          '  🌅 A morning "word of the day"\n'
+          '  🌇 A gentle evening nudge\n'
+          '  📣 One Saturday reminder to share Awing with a friend\n\n'
+          'These reminders are always on inside the app. On the next '
+          'screen, please allow notifications so Awing can reach you.',
+          style: TextStyle(fontSize: 14),
+        ),
+        actions: [
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () => Navigator.of(ctx).pop(),
+            icon: const Icon(Icons.check),
+            label: const Text('Got it — enable notifications'),
+          ),
+        ],
+      ),
+    );
+
+    // Now trigger the OS-level prompt. If the user denies here they
+    // can still re-enable manually in Settings; we don't nag.
+    if (!mounted) return;
+    await NotificationService.instance.requestPermission();
+    // Re-schedule now that permission (may) have been granted.
+    if (!mounted) return;
+    await NotificationService.instance.scheduleAllReminders();
   }
 
   /// v1.22.0 (Session 66): consume the pending-action flag left by a

@@ -166,17 +166,16 @@ void main() async {
       const Duration(seconds: 3),
       onTimeout: () => debugPrint('NotificationService init timed out'),
     );
-    // v1.22.0 (Session 66): auto-request notification permission at cold
-    // start. Android 13+ and iOS require this; older Android grants
-    // implicitly. Silent no-op if already granted. Without this, the
-    // isEnabled=true default flip in DailySuggestionService is
-    // effectively silent because the OS-level permission is still
-    // missing on first launch.
-    try {
-      await NotificationService.instance.requestPermission();
-    } catch (e) {
-      debugPrint('Notification permission request failed (non-fatal): $e');
-    }
+    // v1.22.1 (Session 67): notification permission is NO LONGER
+    // requested at cold-start splash. That popped a surprise OS
+    // dialog on first launch with no context, which many users
+    // reflexively denied. HomeScreen now shows a friendly Awing-
+    // flavored rationale dialog first, then calls requestPermission
+    // after they tap "Got it — enable notifications". If the user
+    // already granted permission on a previous launch, this whole
+    // codepath is a no-op — the scheduler below still schedules
+    // reminders, they just fire silently to a permission-denied OS
+    // until the user re-enables in Settings.
     // v1.22.0 (Session 66): use the new scheduleAllReminders orchestrator
     // that handles morning WOD + evening WOD + weekly share. Idempotent
     // and cheap (~10 ms). Runs on every cold start to self-heal against
