@@ -13,22 +13,27 @@
     <!-- ===== v1.15.0+ Daily-word local notifications ===== -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <!-- v1.18.3 daily reminder fix: explicitly REMOVE the exact-alarm
-         permissions that flutter_local_notifications 17.x declares in its
-         own AndroidManifest. Without this, Gradle's manifest merger adds
-         them back into the final AAB, and Play rejects upload demanding a
-         "Sensitive permissions declaration" form that is NOT surfaced via
-         the CI upload path (only appears in active manual edits — chicken
-         and egg with the API-only flow). Confirmed: dropped from our
-         manifest alone is NOT enough; need tools:node="remove" to win the
-         merger. Daily notifications fall back to inexactAllowWhileIdle
-         in notification_service.dart — drifts up to 30-60 min under Doze
-         on aggressive-battery OEMs but SURVIVES reboots thanks to the
-         BOOT_COMPLETED receiver below (which is the dominant bug fix). -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
-                     tools:node="remove" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"
-                     tools:node="remove" />
+    <!-- v1.22.2 (Session 67): REVERSED the Session 43 tools:node="remove"
+         strip. Inexact alarms were dropped for 12+ hours on Samsung
+         S24 Ultra under Doze + aggressive OEM battery optimization —
+         exactly the user-facing bug we were trying to prevent by
+         stripping the perms (to dodge Play's declaration form).
+         Restoring exact-alarm perms: Play now requires the
+         "Sensitive permissions declaration" form on upload, which
+         qualifies as "critical user-facing alarm/reminder/
+         notification apps" per Google's policy for language-
+         learning reminders. Notification service now uses
+         exactAllowWhileIdle successfully instead of falling through
+         to inexactAllowWhileIdle. -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- v1.22.2 (Session 67): request battery-optimization bypass so
+         Doze doesn't defer or drop scheduled alarms on aggressive
+         OEMs (Samsung, Xiaomi, Oppo, Huawei). We request this at
+         first-run via permission_handler → the OS shows a system
+         dialog asking the user to whitelist Awing. Without this,
+         even exact alarms can be delayed under Doze. -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <application
         android:label="Awing"
         android:name="${applicationName}"

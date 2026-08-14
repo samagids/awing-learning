@@ -470,8 +470,16 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
     );
   }
 
+  /// v1.22.2 (Session 67): the entire reminder settings block was
+  /// removed at Dr. Sama's request. Notifications are ENFORCED — no
+  /// enable/disable toggles, no in-app time pickers. The only user
+  /// action on this screen now is "Reset word history."
+  ///
+  /// Times are fixed at defaults (see DailySuggestionService constants):
+  ///   Morning WOD ...... 8:00 AM local (defaultHour/Minute)
+  ///   Evening WOD ...... 7:00 PM local (defaultEveningHour/Minute)
+  ///   Weekly share ..... Saturday 10:00 AM local
   Widget _settingsCard() {
-    final time = TimeOfDay(hour: _hour, minute: _minute);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
@@ -479,98 +487,9 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Reminder settings',
+            const Text('Word history',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            // v1.22.1 (Session 67) — notifications are enforced. No
-            // in-app toggle. Only time-of-day is user-configurable.
-            // To silence Awing entirely, users must revoke permission
-            // in the OS Settings.
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.blue.shade200),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.notifications_active,
-                      color: Colors.blue.shade700, size: 22),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'Awing reminders are always on so your kids '
-                      'keep learning. You can change WHEN they arrive '
-                      'below.',
-                      style: TextStyle(
-                          fontSize: 13, color: Colors.blue.shade900),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // Morning WOD time picker.
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.wb_sunny_outlined),
-              title: const Text('Morning reminder'),
-              subtitle: Text('3 words each day at ${time.format(context)}'),
-              trailing: TextButton(
-                onPressed: _pickTime,
-                child: const Text('Change'),
-              ),
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.notifications_active),
-              title: const Text('Send preview now'),
-              subtitle: const Text('See what the notification looks like'),
-              onTap: _previewNow,
-            ),
-            const Divider(height: 24),
-            // Evening WOD time picker.
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.wb_twilight),
-              title: const Text('Evening reminder'),
-              subtitle: Text(
-                  'Second reminder at '
-                  '${TimeOfDay(hour: _eveningHour, minute: _eveningMinute).format(context)}'),
-              trailing: TextButton(
-                onPressed: _pickEveningTime,
-                child: const Text('Change'),
-              ),
-            ),
-            const Divider(height: 24),
-            // Weekly share time picker.
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.calendar_today),
-              title: const Text('Weekly share day'),
-              subtitle: Text(
-                  'Reminder to share Awing on '
-                  '${_weekdayName(_weeklyShareWeekday)}'),
-              trailing: TextButton(
-                onPressed: _pickWeeklyShareDay,
-                child: const Text('Change'),
-              ),
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.access_time),
-              title: const Text('Weekly share time'),
-              subtitle: Text(TimeOfDay(
-                      hour: _weeklyShareHour, minute: _weeklyShareMinute)
-                  .format(context)),
-              trailing: TextButton(
-                onPressed: _pickWeeklyShareTime,
-                child: const Text('Change'),
-              ),
-            ),
-            const Divider(height: 24),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.refresh),

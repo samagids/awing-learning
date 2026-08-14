@@ -19,6 +19,7 @@ import 'package:awing_ai_learning/services/notification_service.dart';
 import 'package:awing_ai_learning/theme/app_colors.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
@@ -32,6 +33,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with WidgetsBindingObserver {
+  /// v1.22.2 (Session 67): true when we've detected that the OS-level
+  /// notification permission is CURRENTLY denied. Drives the amber
+  /// nag banner at the top of Home. Refreshed on every mount and
+  /// every resume (so if the user opens Settings, toggles it on, and
+  /// switches back, the nag disappears immediately).
+  bool _notificationsDenied = false;
+
   @override
   void initState() {
     super.initState();
@@ -52,6 +60,10 @@ class _HomeScreenState extends State<HomeScreen>
       // painted at least once — the OS dialog then feels contextual,
       // not surprise-mugged.
       _maybeShowNotificationRationale();
+      // v1.22.2 (Session 67): also refresh the "notifications denied"
+      // nag state on mount so the amber banner shows immediately for
+      // users who denied the OS prompt on a previous launch.
+      _refreshNotificationPermissionStatus();
     });
     // Session 66 self-heal: re-run the scheduler on every HomeScreen
     // mount too. main.dart already calls it at cold start; this is
@@ -76,7 +88,24 @@ class _HomeScreenState extends State<HomeScreen>
       NotificationService.instance
           .scheduleAllReminders()
           .catchError((_) {/* non-fatal */});
+      // v1.22.2 (Session 67): re-check the notification permission
+      // status on every resume so the nag banner appears/disappears
+      // if the user just visited Settings.
+      _refreshNotificationPermissionStatus();
     }
+  }
+
+  /// v1.22.2 (Session 67): query the OS to see whether Awing is
+  /// currently allowed to post notifications. Sets `_notificationsDenied`
+  /// which drives the amber nag banner.
+  Future<void> _refreshNotificationPermissionStatus() async {
+    try {
+      final status = await Permission.notification.status;
+      final denied = status.isDenied || status.isPermanentlyDenied;
+      if (mounted && denied != _notificationsDenied) {
+        setState(() => _notificationsDenied = denied);
+      }
+    } catch (_) {/* platform not supported — treat as granted */}
   }
 
   /// v1.22.1 (Session 67): one-time in-app rationale shown before we
@@ -136,12 +165,92 @@ class _HomeScreenState extends State<HomeScreen>
     );
 
     // Now trigger the OS-level prompt. If the user denies here they
-    // can still re-enable manually in Settings; we don't nag.
+    // can still re-enable via the persistent amber nag banner that
+    // appears at the top of Home whenever notifications are off.
     if (!mounted) return;
     await NotificationService.instance.requestPermission();
-    // Re-schedule now that permission (may) have been granted.
+
+    // v1.22.2 (Session 67): after notification permission (whether
+    // granted or denied), request battery-optimization bypass on
+    // Android. Doze mode / aggressive OEM battery managers (Samsung,
+    // Xiaomi, Oppo) will DROP scheduled alarms overnight if we're
+    // optimized. The OS system dialog gives the user a one-tap way
+    // to whitelist Awing so exact alarms fire on time.
+    try {
+      final battStatus =
+          await Permission.ignoreBatteryOptimizations.status;
+      if (battStatus.isDenied || battStatus.isRestricted) {
+        await Permission.ignoreBatteryOptimizations.request();
+      }
+    } catch (_) {/* iOS / desktop — no-op */}
+
+    // Re-schedule now that permissions (may) have been granted.
     if (!mounted) return;
     await NotificationService.instance.scheduleAllReminders();
+    // Refresh nag state.
+    await _refreshNotificationPermissionStatus();
+  }
+
+  /// v1.22.2 (Session 67): open the OS Settings screen for Awing so
+  /// the user can flip Notifications back on. Called from the amber
+  /// nag banner. `openAppSettings()` comes from permission_handler.
+  Future<void> _openAwingSettings() async {
+    try {
+      await openAppSettings();
+    } catch (_) {/* platform not supported */}
+  }
+
+  /// v1.22.2 (Session 67): amber banner that shows at the top of
+  /// Home while notification permission is denied at the OS level.
+  /// Prompts the user to flip it back on so daily reminders work.
+  Widget _buildNotificationDeniedBanner() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.amber.shade50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.amber.shade400, width: 1.5),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.notifications_off,
+              color: Colors.amber.shade800, size: 28),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Notifications are off',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber.shade900,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'Your kids will miss their daily Awing reminders. '
+                  'Tap to turn them back on.',
+                  style: TextStyle(
+                      fontSize: 12, color: Colors.amber.shade900),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          TextButton(
+            onPressed: _openAwingSettings,
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.amber.shade700,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Fix'),
+          ),
+        ],
+      ),
+    );
   }
 
   /// v1.22.0 (Session 66): consume the pending-action flag left by a
@@ -178,6 +287,13 @@ class _HomeScreenState extends State<HomeScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
             const SizedBox(height: 16),
+            // v1.22.2 (Session 67): persistent amber nag banner when
+            // OS notification permission is currently denied. Tapping
+            // opens Awing's app settings screen so the user can flip
+            // it back on. Disappears immediately on resume once they
+            // toggle it (see didChangeAppLifecycleState → refresh).
+            if (_notificationsDenied)
+              _buildNotificationDeniedBanner(),
             // Title row with icon buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
