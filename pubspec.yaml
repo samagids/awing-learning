@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.22.2+127
+version: 1.22.3+128
 environment:
   sdk: ">=3.4.0 <4.0.0"
 
@@ -70,6 +70,16 @@ dependencies:
   # Requires manual Play Console + Firebase Console setup (see CLAUDE.md
   # Session 61 deployment checklist).
   firebase_app_check: ^0.3.1+7
+  # v1.22.3 (Session 68) — Firebase Cloud Messaging.
+  # Replaces local AlarmManager reminders (unreliable on Samsung/Xiaomi
+  # OEMs — Session 67 postmortem: 3 days silence on S24 Ultra with
+  # exact alarms + battery-opt bypass). FCM push is delivered by Google
+  # Play Services (always-running system component), bypasses Doze,
+  # bypasses App Standby, bypasses battery optimization — same
+  # architecture WhatsApp uses. Server side: Apps Script cron (see
+  # scripts/fcm_daily_push.gs) hits Firebase FCM v1 HTTP API at 8 AM
+  # + 7 PM WAT twice daily.
+  firebase_messaging: ^15.1.5
   nsd: ^5.0.1
   network_info_plus: ^6.1.1
   # Phase C — On-device LLM via cactus (llama.cpp wrapper, iOS 12+ compatible).

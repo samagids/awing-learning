@@ -20,6 +20,7 @@ import 'package:awing_ai_learning/services/recordings_service.dart';
 import 'package:awing_ai_learning/services/image_service.dart';
 import 'package:awing_ai_learning/services/native_audio_inventory.dart';
 import 'package:awing_ai_learning/services/notification_service.dart';
+import 'package:awing_ai_learning/services/fcm_service.dart';
 import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
 import 'package:awing_ai_learning/services/vocab_embeddings.dart';
 import 'package:awing_ai_learning/services/ai_toggle_service.dart';
@@ -166,28 +167,34 @@ void main() async {
       const Duration(seconds: 3),
       onTimeout: () => debugPrint('NotificationService init timed out'),
     );
-    // v1.22.1 (Session 67): notification permission is NO LONGER
-    // requested at cold-start splash. That popped a surprise OS
-    // dialog on first launch with no context, which many users
-    // reflexively denied. HomeScreen now shows a friendly Awing-
-    // flavored rationale dialog first, then calls requestPermission
-    // after they tap "Got it — enable notifications". If the user
-    // already granted permission on a previous launch, this whole
-    // codepath is a no-op — the scheduler below still schedules
-    // reminders, they just fire silently to a permission-denied OS
-    // until the user re-enables in Settings.
-    // v1.22.0 (Session 66): use the new scheduleAllReminders orchestrator
-    // that handles morning WOD + evening WOD + weekly share. Idempotent
-    // and cheap (~10 ms). Runs on every cold start to self-heal against
-    // OEMs that wipe scheduled alarms on reboot or update.
-    try {
-      await NotificationService.instance.scheduleAllReminders();
-      debugPrint('All reminders (re-)scheduled');
-    } catch (e) {
-      debugPrint('Reminder scheduling failed (non-fatal): $e');
-    }
+    // v1.22.3 (Session 68): AlarmManager scheduling is GONE. Local
+    // scheduled alarms drop silently on Samsung/Xiaomi/Oppo/Huawei
+    // (Session 67 postmortem: 3-day silence on S24 Ultra even with
+    // exact alarms + battery-opt bypass + rationale dialog).
+    // Daily reminders are now Firebase Cloud Messaging PUSH — sent
+    // server-side by scripts/fcm_daily_push.gs at 08:00 and 19:00
+    // WAT, delivered to devices via Google Play Services (bypasses
+    // Doze / App Standby / battery optimization — same architecture
+    // WhatsApp uses). NotificationService.initialize() is retained
+    // so the "Send preview now" button on Daily Words still works
+    // (immediate notifications via flutter_local_notifications are
+    // reliable — only scheduled ones are the problem).
   } catch (e) {
     debugPrint('NotificationService init failed: $e');
+  }
+
+  // v1.22.3 (Session 68): initialize FCM. Requests POST_NOTIFICATIONS
+  // permission (Android 13+) / iOS alert permission, fetches the
+  // device FCM token, saves it to Firestore users/{email}/data/settings
+  // so the daily-push Apps Script cron can reach this device.
+  // Idempotent and cheap (~200 ms first launch, ~20 ms after).
+  try {
+    await FcmService.instance.initialize().timeout(
+      const Duration(seconds: 5),
+      onTimeout: () => debugPrint('FcmService init timed out'),
+    );
+  } catch (e) {
+    debugPrint('FcmService init failed: $e');
   }
 
   // v1.16.0 — Background load of the precomputed vocab embeddings.

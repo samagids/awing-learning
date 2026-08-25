@@ -13,27 +13,20 @@
     <!-- ===== v1.15.0+ Daily-word local notifications ===== -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <!-- v1.22.2 (Session 67): REVERSED the Session 43 tools:node="remove"
-         strip. Inexact alarms were dropped for 12+ hours on Samsung
-         S24 Ultra under Doze + aggressive OEM battery optimization —
-         exactly the user-facing bug we were trying to prevent by
-         stripping the perms (to dodge Play's declaration form).
-         Restoring exact-alarm perms: Play now requires the
-         "Sensitive permissions declaration" form on upload, which
-         qualifies as "critical user-facing alarm/reminder/
-         notification apps" per Google's policy for language-
-         learning reminders. Notification service now uses
-         exactAllowWhileIdle successfully instead of falling through
-         to inexactAllowWhileIdle. -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
-    <!-- v1.22.2 (Session 67): request battery-optimization bypass so
-         Doze doesn't defer or drop scheduled alarms on aggressive
-         OEMs (Samsung, Xiaomi, Oppo, Huawei). We request this at
-         first-run via permission_handler → the OS shows a system
-         dialog asking the user to whitelist Awing. Without this,
-         even exact alarms can be delayed under Doze. -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- v1.22.3 (Session 68): EVERYTHING alarm-related is gone. FCM
+         push (via firebase_messaging + Google Play Services) delivers
+         daily reminders now — bypasses Doze, App Standby, and battery
+         optimization without needing ANY of the special permissions.
+         Explicitly strip the exact-alarm perms that
+         flutter_local_notifications 17.x declares in its own manifest
+         so the merged AAB doesn't accidentally reintroduce them and
+         re-trigger Play's Sensitive Permissions Declaration form.
+         The only notification perm we need is POST_NOTIFICATIONS
+         (above), which FCM requests via its normal permission flow. -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
+                     tools:node="remove" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"
+                     tools:node="remove" />
     <application
         android:label="Awing"
         android:name="${applicationName}"
