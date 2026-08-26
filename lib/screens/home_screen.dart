@@ -14,6 +14,7 @@ import 'package:awing_ai_learning/screens/settings/backup_screen.dart';
 import 'package:awing_ai_learning/screens/contribute/contribute_screen.dart';
 import 'package:awing_ai_learning/components/parental_gate.dart';
 import 'package:awing_ai_learning/screens/about_screen.dart';
+import 'package:awing_ai_learning/screens/daily_words_screen.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/notification_service.dart';
 import 'package:awing_ai_learning/theme/app_colors.dart';
@@ -73,12 +74,29 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   /// v1.22.0 (Session 66): consume the pending-action flag left by a
-  /// notification tap. Currently only 'share_app' is defined — routes
-  /// to the platform share sheet with the Play Store URL.
+  /// notification tap.
+  ///
+  /// v1.22.6 (Session 68b): added 'open_daily_words' — routes to
+  /// DailyWordsScreen for taps on the twice-daily FCM push (payloads
+  /// 'daily_words' and 'daily_words_evening'). Landing the user on
+  /// today's picks was the whole point of the notification — the
+  /// previous release delivered the push but the tap fell through to
+  /// the home screen because no branch matched.
   Future<void> _checkPendingNotificationAction() async {
     final action = await NotificationService.instance.consumePendingAction();
-    if (action != 'share_app' || !mounted) return;
-    await _shareApp();
+    if (!mounted || action == null) return;
+    if (action == 'share_app') {
+      await _shareApp();
+    } else if (action == 'open_daily_words') {
+      AnalyticsService.instance.logActivity(
+        event: 'open_daily_words_from_reminder',
+      );
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => const DailyWordsScreen(),
+        ),
+      );
+    }
   }
 
   Future<void> _shareApp() async {

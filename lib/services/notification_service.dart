@@ -134,14 +134,32 @@ class NotificationService {
   /// Static tap handler so it can be passed as a callback pointer
   /// without depending on the singleton instance. Runs on the app's
   /// main isolate after the OS wakes it — safe to touch SharedPreferences.
+  ///
+  /// v1.22.6 (Session 68b): route the two daily-words FCM payloads
+  /// (`daily_words` = morning, `daily_words_evening` = evening) to
+  /// the "open_daily_words" pending action. HomeScreen picks it up
+  /// on the next foreground and pushes DailyWordsScreen so the user
+  /// lands on today's picks.
   static Future<void> _onTap(NotificationResponse resp) async {
     final payload = resp.payload ?? '';
+    // v1.22.6 (Session 68b): EVERY tap must lead the user into a
+    // meaningful screen inside the app. Known payloads route to their
+    // specific destination; anything else falls through to
+    // 'open_daily_words' as a safe default so the user never taps a
+    // notification and ends up looking at nothing.
+    String action;
     if (payload == 'weekly_share') {
-      try {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString(pendingActionKey, 'share_app');
-      } catch (_) {/* best-effort; home screen falls back if unset */}
+      action = 'share_app';
+    } else if (payload == 'daily_words' ||
+        payload == 'daily_words_evening') {
+      action = 'open_daily_words';
+    } else {
+      action = 'open_daily_words';
     }
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(pendingActionKey, action);
+    } catch (_) {/* best-effort; home screen falls back if unset */}
   }
 
   /// Consume-once accessor for the pending-action flag. home_screen

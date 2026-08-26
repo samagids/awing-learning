@@ -38,6 +38,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'notification_service.dart';
+
 class FcmService {
   FcmService._();
   static final FcmService instance = FcmService._();
@@ -96,6 +98,26 @@ class FcmService {
       // the push (logcat: "Unable to log event: analytics library is
       // missing"), but nothing appeared in the tray because we did
       // nothing here beyond debugPrint.
+      // v1.22.6 (Session 68b): tap-routing for BACKGROUND / KILLED-app
+      // notifications. When the FCM push is delivered while the app is
+      // not in-memory, the OS shows the notification via Google Play
+      // Services (not via our onMessage handler above). Tapping it:
+      //   - onMessageOpenedApp fires if the app was backgrounded when
+      //     the tap happened
+      //   - getInitialMessage returns the message if the app was
+      //     killed AND the notification tap is what launched it
+      // Both need to translate `data.payload` into the same pending-
+      // action string that NotificationService._onTap sets for
+      // foreground taps, so HomeScreen's existing
+      // _checkPendingNotificationAction handler routes them all the
+      // same way.
+      FirebaseMessaging.onMessageOpenedApp.listen(_handleTap);
+      // Cold-start: run after first frame so SharedPreferences is
+      // definitely up and HomeScreen is mounted to pick up the pref.
+      FirebaseMessaging.instance.getInitialMessage().then((msg) {
+        if (msg != null) _handleTap(msg);
+      });
+
       FirebaseMessaging.onMessage.listen((msg) {
         try {
           final notif = msg.notification;
@@ -139,6 +161,41 @@ class FcmService {
   /// Public accessor for the current token — useful for diagnostics
   /// in Developer Mode.
   String? get currentToken => _currentToken;
+
+  /// v1.22.6 (Session 68b): translate an FCM tap (background or cold-
+  /// start) into the same SharedPreferences pending-action flag that
+  /// NotificationService._onTap writes for foreground taps of local
+  /// notifications. HomeScreen._checkPendingNotificationAction reads
+  /// this pref on initState + resume and routes:
+  ///   'open_daily_words' → Navigator.push(DailyWordsScreen)
+  ///   'share_app'        → Share.share(app link)
+  ///
+  /// The server-side cron (`scripts/fcm_daily_push.gs`) sends payload
+  /// values 'daily_words' | 'daily_words_evening' | 'weekly_share'.
+  Future<void> _handleTap(RemoteMessage msg) async {
+    try {
+      final payload = msg.data['payload'] as String? ?? '';
+      // v1.22.6 (Session 68b): EVERY tap lands the user somewhere
+      // useful. Known payloads → specific destination; unknown /
+      // missing → default to 'open_daily_words'.
+      String action;
+      if (payload == 'weekly_share') {
+        action = 'share_app';
+      } else if (payload == 'daily_words' ||
+          payload == 'daily_words_evening') {
+        action = 'open_daily_words';
+      } else {
+        action = 'open_daily_words';
+      }
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(
+        NotificationService.pendingActionKey,
+        action,
+      );
+    } catch (e) {
+      debugPrint('FcmService _handleTap failed: $e');
+    }
+  }
 
   /// Save the FCM token to Firestore under the current user's settings
   /// document, but only if it differs from the last-saved token (avoids
