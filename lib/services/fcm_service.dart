@@ -152,10 +152,11 @@ class FcmService {
   }
 
   /// Read the currently signed-in user's email from SharedPreferences.
-  /// AuthService writes 'current_user_email' whenever a user signs in.
+  /// AuthService (lib/services/auth_service.dart) writes it under
+  /// `auth_current_email` — this key MUST match AuthService._keyCurrentEmail
+  /// or the token save silently no-ops.
   String? _currentUserEmail(SharedPreferences prefs) {
-    return prefs.getString('current_user_email') ??
-        prefs.getString('auth_email');
+    return prefs.getString('auth_current_email');
   }
 
   /// Sanitize an email for use as a Firestore doc id. MUST mirror the
