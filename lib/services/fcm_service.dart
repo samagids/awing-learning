@@ -35,6 +35,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FcmService {
@@ -83,15 +84,51 @@ class FcmService {
         _saveTokenIfChanged(newToken);
       });
 
-      // Foreground handler: if the app is open when a push arrives,
-      // FCM by default suppresses the visual notification. On Android
-      // 13+ we already have a notification channel set up (via
-      // NotificationService) so we could re-show — but for our use
-      // case (twice-daily WOD nudges), a silent skip when the user
-      // is already IN the app is actually the right behavior.
+      // v1.22.5 (Session 68): when FCM delivers to the app process
+      // (foreground OR recently-backgrounded warm cache), the system
+      // does NOT auto-show a notification — it defers to us to
+      // display it via `flutter_local_notifications`. Without this
+      // handler, users on the emulator (and often on real devices
+      // that keep Awing in-memory for a while after use) get zero
+      // notification even though FCM successfully delivered.
+      //
+      // Session 68 emulator test confirmed: FirebaseMessaging received
+      // the push (logcat: "Unable to log event: analytics library is
+      // missing"), but nothing appeared in the tray because we did
+      // nothing here beyond debugPrint.
       FirebaseMessaging.onMessage.listen((msg) {
-        if (kDebugMode) {
-          debugPrint('FCM foreground message: ${msg.notification?.title}');
+        try {
+          final notif = msg.notification;
+          if (notif == null) return; // silent data-only message
+          final localPlugin = FlutterLocalNotificationsPlugin();
+          // Route to the awing_daily_words channel — the same channel
+          // the server-side FCM payload references. Channel is
+          // guaranteed to exist because NotificationService.initialize
+          // creates it proactively at app startup.
+          localPlugin.show(
+            msg.hashCode,
+            notif.title,
+            notif.body,
+            const NotificationDetails(
+              android: AndroidNotificationDetails(
+                'awing_daily_words',
+                'Daily Awing Words',
+                channelDescription:
+                    'Three new Awing words every morning',
+                importance: Importance.high,
+                priority: Priority.high,
+                icon: '@mipmap/ic_launcher',
+              ),
+              iOS: DarwinNotificationDetails(
+                presentAlert: true,
+                presentBadge: true,
+                presentSound: true,
+              ),
+            ),
+            payload: msg.data['payload'] as String? ?? 'fcm',
+          );
+        } catch (e) {
+          debugPrint('FcmService onMessage show failed: $e');
         }
       });
     } catch (e) {

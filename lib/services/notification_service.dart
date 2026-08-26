@@ -89,6 +89,41 @@ class NotificationService {
       // up on next foreground → auto-opens the share sheet.
       onDidReceiveNotificationResponse: _onTap,
     );
+
+    // v1.22.5 (Session 68): PROACTIVELY create both notification
+    // channels on Android. Before this fix, flutter_local_notifications
+    // only created channels lazily the first time a notification was
+    // SHOWN. But v1.22.3 removed all local AlarmManager scheduling in
+    // favor of FCM push — so the channel never got created and every
+    // incoming FCM push referencing `awing_daily_words` was silently
+    // dropped by the Samsung/Android OS ("channel unknown, drop
+    // notification"). Explicit creation via createNotificationChannel
+    // fixes this on both Android 8+ (channel-required) and older.
+    try {
+      final android = _plugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+      if (android != null) {
+        await android.createNotificationChannel(
+          const AndroidNotificationChannel(
+            _channelId,
+            _channelName,
+            description: _channelDescription,
+            importance: Importance.high,
+          ),
+        );
+        await android.createNotificationChannel(
+          const AndroidNotificationChannel(
+            _shareChannelId,
+            _shareChannelName,
+            description: _shareChannelDescription,
+            importance: Importance.defaultImportance,
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('createNotificationChannel failed (non-fatal): $e');
+    }
+
     _initialized = true;
   }
 
