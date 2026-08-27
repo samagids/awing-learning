@@ -131,6 +131,19 @@ class NotificationService {
   /// (currently: 'share_app' when the weekly reminder is tapped).
   static const String pendingActionKey = 'pending_notification_action';
 
+  /// v1.22.6 (Session 68b) — bump this whenever a notification tap
+  /// writes a new pending action. HomeScreen listens and re-checks
+  /// the pref on any bump.
+  ///
+  /// WHY: `_checkPendingNotificationAction` was only called on
+  /// initState + didChangeAppLifecycleState.resumed. Both are one-
+  /// shot on cold-start / background→foreground. If the user was
+  /// already in the app when the FCM push arrived (foreground), OR
+  /// tapped a locally-shown notification without ever backgrounding
+  /// the app, NO lifecycle event fired → the pref sat unread → the
+  /// tap appeared to do nothing. This notifier closes that gap.
+  static final ValueNotifier<int> tapCounter = ValueNotifier<int>(0);
+
   /// Static tap handler so it can be passed as a callback pointer
   /// without depending on the singleton instance. Runs on the app's
   /// main isolate after the OS wakes it — safe to touch SharedPreferences.
@@ -159,6 +172,8 @@ class NotificationService {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(pendingActionKey, action);
+      // Wake HomeScreen so foreground taps route immediately.
+      tapCounter.value++;
     } catch (_) {/* best-effort; home screen falls back if unset */}
   }
 

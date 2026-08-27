@@ -192,6 +192,11 @@ class FcmService {
         NotificationService.pendingActionKey,
         action,
       );
+      // Wake HomeScreen so background / cold-start taps route
+      // immediately, without waiting for a lifecycle event that may
+      // never come (foreground taps in particular don't fire
+      // didChangeAppLifecycleState.resumed).
+      NotificationService.tapCounter.value++;
     } catch (e) {
       debugPrint('FcmService _handleTap failed: $e');
     }

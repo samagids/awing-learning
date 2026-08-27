@@ -58,12 +58,22 @@ class _HomeScreenState extends State<HomeScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkPendingNotificationAction();
     });
+    // v1.22.6 (Session 68b): listen for foreground-tap wakes. Without
+    // this, tapping a notification while the app is already visible
+    // set the pending-action pref but nothing re-checked it because
+    // no app-lifecycle change fired.
+    NotificationService.tapCounter.addListener(_onTapCounterChanged);
   }
 
   @override
   void dispose() {
+    NotificationService.tapCounter.removeListener(_onTapCounterChanged);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void _onTapCounterChanged() {
+    _checkPendingNotificationAction();
   }
 
   @override
