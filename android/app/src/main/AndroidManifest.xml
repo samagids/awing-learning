@@ -57,6 +57,23 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!--
+              v1.22.8 (Session 68b) — FCM `click_action` handler.
+              scripts/fcm_daily_push.gs sends
+              android.notification.click_action = 'FLUTTER_NOTIFICATION_CLICK'
+              on every push. Without this intent-filter matching that action,
+              Android fires the intent, finds no activity to handle it, and
+              the notification tap silently no-ops — the notification just
+              disappears from the shade without opening the app.
+              Adding the DEFAULT category is required for implicit intents
+              (which is what FCM fires on tap).
+              This is the exact filter shape documented in the
+              firebase_messaging README under "Handle interaction".
+            -->
+            <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
