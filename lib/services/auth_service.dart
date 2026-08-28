@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
+import 'package:awing_ai_learning/services/fcm_service.dart';
 
 /// Authentication and user management service.
 ///
@@ -164,6 +165,13 @@ class AuthService extends ChangeNotifier {
     final account = _accounts[e]!;
     _currentAccount = account;
     _prefs.setString(_keyCurrentEmail, e);
+
+    // v1.22.8 (Session 68b): sign-in just wrote auth_current_email.
+    // FcmService.initialize() ran on cold-start BEFORE we had an
+    // email, so it deferred the token save. Trigger re-register now
+    // so this device shows up in the Apps Script cron's collection-
+    // group query — fire-and-forget, no need to block sign-in on it.
+    FcmService.instance.forceReRegister();
 
     if (account.profiles.length == 1) {
       selectProfile(account.profiles.first.id);
