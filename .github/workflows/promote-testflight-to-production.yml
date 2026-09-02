@@ -3,9 +3,9 @@ name: Promote TestFlight → App Store Production
 # ============================================================================
 # Time-delayed auto-release of soaked TestFlight builds to the App Store.
 #
-# The iOS twin of promote-alpha-to-production.yml. Runs daily at 09:30 UTC,
-# 30 min after the Android promoter so both platforms land on the same date
-# for any given tag (7-day default soak on both sides).
+# The iOS twin of promote-alpha-to-production.yml. Runs twice a week
+# (Mon+Thu 09:30 UTC), 30 min after the Android promoter so both platforms
+# land on the same date for any given tag (7-day default soak on both sides).
 #
 # Session 61 said "intentionally no cron auto-releaser for iOS because
 # Apple's review timing is unpredictable and mixing that with a rigid soak
@@ -42,9 +42,11 @@ name: Promote TestFlight → App Store Production
 
 on:
   schedule:
-    # Daily at 09:30 UTC — 30 min after the Android promoter's 09:00 UTC.
-    # Ensures both platforms move on the same date for a given tag.
-    - cron: '30 9 * * *'
+    # Twice a week: Monday + Thursday 09:30 UTC -- 30 min after the Android
+    # promoter's 09:00 UTC on the same days. Ensures both platforms move on
+    # the same date for a given tag. Reduced from daily on 2026-09-02 --
+    # 7-day soak means daily firing was redundant.
+    - cron: '30 9 * * 1,4'
 
   workflow_dispatch:
     inputs:

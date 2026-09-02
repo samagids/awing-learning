@@ -3,7 +3,7 @@ name: Promote Alpha → Production
 # ============================================================================
 # Time-delayed auto-promote of soaked closed-testing releases to production.
 #
-# Daily cron at 09:00 UTC walks the v*+N git tags, finds ones older than
+# Twice-weekly cron (Mon+Thu 09:00 UTC) walks the v*+N git tags, finds ones older than
 # ALPHA_SOAK_DAYS (default 7), and promotes their corresponding alpha-track
 # release to production at PROMOTE_ROLLOUT (default 20%) staged rollout.
 #
@@ -34,10 +34,11 @@ name: Promote Alpha → Production
 
 on:
   schedule:
-    # Daily at 09:00 UTC (10:00 BST / 04:00 EST / 02:00 PST). Cron picks
-    # up any soaked tag once per day. Adjust if you want morning-of-day-
-    # in-your-timezone behavior.
-    - cron: '0 9 * * *'
+    # Twice a week: Monday + Thursday 09:00 UTC (10:00 BST / 04:00 EST /
+    # 02:00 PST). Cron picks up any soaked tag on those days. Reduced from
+    # daily on 2026-09-02 -- Play + TestFlight promoters don't need to fire
+    # every day since the soak threshold is 7 days.
+    - cron: '0 9 * * 1,4'
 
   workflow_dispatch:
     inputs:
