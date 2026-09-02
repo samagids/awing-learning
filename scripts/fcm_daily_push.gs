@@ -378,7 +378,7 @@ function getOrCreateLogSheet() {
 
 function testSendToOneEmail() {
   // Edit this to your own email address, then Run.
-  var testEmail = 'samagidshop@gmail.com';
+  var testEmail = 'samagids@gmail.com';
   var docId = testEmail.toLowerCase().replace(/\./g, '_dot_');
   var accessToken = getOAuthAccessToken();
   var projectId = getFcmProjectId();
@@ -403,4 +403,244 @@ function testSendToOneEmail() {
   var result = sendOneFcm(accessToken, projectId, token,
       'Awing test push', 'If you see this, FCM works!', 'test');
   Logger.log('Result: ' + JSON.stringify(result));
+}
+
+// ==================== Email outreach (v1.22.9+, Session 68c) ====================
+//
+// Two ways to reach every user by email — separate from the FCM push
+// channel because email is a better fit for longer-form content
+// (feature tours, re-engagement asks, honest-review requests) and
+// works even for testers who haven't yet updated to the FCM-capable
+// build.
+//
+// Uses MailApp.sendEmail() — quota 100/day for personal Google
+// accounts, plenty for a ~30-tester audience. Emails come "from"
+// the Apps Script owner (samagids@gmail.com).
+//
+// One-time OAuth: the first time you Run either function, Apps
+// Script will prompt to authorize the send_mail scope. Click Allow.
+
+/**
+ * Enumerate every user email currently in Firestore. Uses the same
+ * collectionGroup pattern as fetchAllFcmTokens but with no field
+ * filter — we just extract unique parent emails from every
+ * data/{doc} path (accounts, settings, progress, etc.).
+ *
+ * Returns an array of plain email strings, e.g. ['user@gmail.com', ...].
+ */
+function fetchAllUserEmails() {
+  var accessToken = getOAuthAccessToken();
+  var projectId = getFcmProjectId();
+  var url = 'https://firestore.googleapis.com/v1/projects/' + projectId +
+      '/databases/(default)/documents:runQuery';
+  var body = {
+    structuredQuery: {
+      from: [{ collectionId: 'data', allDescendants: true }],
+      // Only need the doc name (path) — skip returning all fields.
+      select: { fields: [{ fieldPath: '__name__' }] },
+    },
+  };
+  var response = UrlFetchApp.fetch(url, {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { Authorization: 'Bearer ' + accessToken },
+    payload: JSON.stringify(body),
+    muteHttpExceptions: true,
+  });
+  if (response.getResponseCode() !== 200) {
+    Logger.log('fetchAllUserEmails failed: ' + response.getContentText());
+    return [];
+  }
+  var rows = JSON.parse(response.getContentText());
+  var seen = {};
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    if (!row.document) continue;
+    // Path: projects/X/databases/(default)/documents/users/{email_dot_gmail_dot_com}/data/{doc}
+    var match = row.document.name.match(/\/users\/([^\/]+)\/data\//);
+    if (!match) continue;
+    // Desanitize doc id back to email address: _dot_ -> .
+    var email = match[1].replace(/_dot_/g, '.');
+    if (email.indexOf('@') > 0) seen[email] = true;
+  }
+  var emails = [];
+  for (var e in seen) emails.push(e);
+  emails.sort();
+  return emails;
+}
+
+/**
+ * One-off manual reminder — run from the Apps Script editor whenever
+ * engagement dips. Emails every user in the database asking them to
+ * open the app.
+ */
+function sendReminderEmailToAll() {
+  var emails = fetchAllUserEmails();
+  Logger.log('sendReminderEmailToAll: ' + emails.length + ' users found');
+  var subject = 'Awing AI Learning — update, open, and share when you can';
+  var body =
+    'Hi friend,\n\n' +
+    'Thank you for being part of the Awing AI Learning journey.\n\n' +
+    'FIRST — please update the app. Open the Play Store or App Store, ' +
+    'search for "Awing AI Learning" and tap Update. New updates include ' +
+    'a daily Word of the Day notification, better pronunciations, and ' +
+    'other improvements.\n\n' +
+    'THEN — take a few minutes this week to open the app and try any ' +
+    'lesson (Alphabet, Words, Tones, Numbers, or the Quiz). Real usage ' +
+    'helps us prove to Google and Apple that the app is worth keeping ' +
+    'in their stores.\n\n' +
+    'PLEASE SHARE — if you enjoy the app, forward this link to a ' +
+    'friend, a teacher, or anyone who wants their children to learn ' +
+    'Awing. Every new person brings us closer to a full public launch:\n' +
+    '  Android: https://play.google.com/store/apps/details?id=com.awing.learning\n' +
+    '  iPhone: https://apps.apple.com/app/id6764426877\n\n' +
+    'And an honest review on the store helps other families discover ' +
+    'the app.\n\n' +
+    'Thank you!\n' +
+    'Dr. Guidion Sama';
+  var sent = 0, failed = 0;
+  for (var i = 0; i < emails.length; i++) {
+    try {
+      MailApp.sendEmail(emails[i], subject, body);
+      sent++;
+      Utilities.sleep(200); // ~5/sec, well under MailApp's 100/day quota
+    } catch (err) {
+      Logger.log('Email to ' + emails[i] + ' failed: ' + err);
+      failed++;
+    }
+  }
+  Logger.log('sendReminderEmailToAll done — sent=' + sent + ' failed=' + failed);
+}
+
+/**
+ * Weekly feature tour — set as a time-based trigger so testers get a
+ * different one-paragraph tip every week. Rotates through FEATURES
+ * in order, remembering position across runs via ScriptProperties.
+ *
+ * Setup: Triggers → Add Trigger → runWeeklyFeatureTour →
+ *        Time-driven → Week timer → e.g. Wednesday 09:00-10:00 UTC
+ *        (10:00-11:00 WAT — mid-morning, not competing with the
+ *        Saturday share reminder).
+ *
+ * To add a new feature, append to the FEATURES array below and
+ * re-paste this file into the Apps Script editor. The rotation
+ * picks up the new entry automatically on its natural turn.
+ */
+function runWeeklyFeatureTour() {
+  // Each week asks a curiosity-driven question that pulls the user
+  // into the app to search for the answer themselves. We never state
+  // the Awing word in the email — per the Session 30 rule the app
+  // is the only place authorized to display Awing. The whole point
+  // is to make them OPEN THE APP to find it.
+  //
+  // Approach: rotate through ~256 curated English words × 10 subject
+  // templates. That's 2560+ unique subject+body combos — enough
+  // for over a decade of weekly rotation before the same pair repeats.
+  //
+  // To add more topics: append to WORDS below. All entries must be
+  // English words that exist as glosses in lib/data/awing_vocabulary
+  // so testers who search actually find an answer in the app. To add
+  // more phrasings: append to TEMPLATES.
+  var WORDS = [
+    'ear', 'eye', 'hip', 'jaw', 'leg', 'lip', 'rib', 'toe', 'back', 'body',
+    'bone', 'chin', 'face', 'foot', 'hair', 'hand', 'head', 'knee', 'lung',
+    'nail', 'neck', 'nose', 'skin', 'tear', 'beard', 'cheek', 'chest',
+    'elbow', 'heart', 'joint', 'boy', 'baby', 'clan', 'farm', 'girl',
+    'town', 'twin', 'wife', 'chief', 'child', 'elder', 'guest', 'house',
+    'niece', 'tribe', 'twins', 'church', 'doctor', 'father', 'friend',
+    'hunter', 'market', 'mother', 'nephew', 'ant', 'bat', 'bee', 'cat',
+    'dog', 'fly', 'hen', 'owl', 'pig', 'ram', 'rat', 'bird', 'claw',
+    'cock', 'crab', 'dove', 'duck', 'fish', 'frog', 'goat', 'hawk', 'lion',
+    'toad', 'worm', 'eagle', 'horse', 'louse', 'mouse', 'snail', 'snake',
+    'animal', 'baboon', 'donkey', 'insect', 'jackal', 'lizard', 'egg',
+    'oil', 'yam', 'corn', 'food', 'meat', 'milk', 'rice', 'salt', 'soup',
+    'beans', 'fruit', 'grape', 'guava', 'honey', 'maize', 'onion', 'sauce',
+    'sugar', 'banana', 'coffee', 'orange', 'pawpaw', 'potato', 'tomato',
+    'avocado', 'cassava', 'cocoyam', 'kola nut', 'mushroom', 'plantain',
+    'day', 'dew', 'fog', 'mud', 'sea', 'sky', 'sun', 'bush', 'cave',
+    'dawn', 'dust', 'fire', 'hill', 'lake', 'leaf', 'moon', 'path', 'rain',
+    'road', 'rock', 'root', 'sand', 'seed', 'tree', 'wind', 'year',
+    'cloud', 'field', 'flame', 'grass', 'light', 'marsh', 'ask', 'dig',
+    'dip', 'eat', 'mix', 'run', 'say', 'try', 'bend', 'bite', 'blow',
+    'boil', 'burn', 'call', 'chew', 'comb', 'come', 'drip', 'fade', 'give',
+    'have', 'help', 'hide', 'hook', 'kiss', 'lend', 'lick', 'lift', 'melt',
+    'obey', 'open', 'plan', 'push', 'read', 'all', 'big', 'dry', 'far',
+    'fat', 'few', 'hot', 'new', 'old', 'red', 'wet', 'bony', 'cold',
+    'deep', 'down', 'full', 'good', 'hard', 'kind', 'last', 'late', 'long',
+    'many', 'much', 'nice', 'real', 'one', 'six', 'ten', 'two', 'five',
+    'four', 'nine', 'eight', 'seven', 'three', 'second'
+  ];
+  var TEMPLATES = [
+    {
+      subject: 'Do you know the Awing word for "{w}"?',
+      body: 'Open Awing AI Learning today and find it in:\n  • Beginner → Words (search "{w}")\n  • Explore → Translate\n\nTap the speaker to hear how it sounds, then teach it to your children today.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: 'Can you pronounce "{w}" in Awing?',
+      body: 'Open Awing AI Learning → Beginner → Words. Search for "{w}", tap the speaker to hear the correct pronunciation, then say it out loud with your family this week.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: 'What is the Awing word for "{w}"?',
+      body: 'Every language has its own word for this. Open Awing AI Learning → Beginner → Words, or try Translate under Explore. Search for "{w}" and hear the real Awing sound.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: 'This week: how do you say "{w}" in Awing?',
+      body: 'A small language challenge for the week.\n\nOpen Awing AI Learning → Beginner → Words. Search for "{w}", then use it with your children at least once each day this week.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: 'Awing challenge: teach your children "{w}" this week',
+      body: 'Kids learn best when they hear a word every day.\n\nOpen Awing AI Learning → Beginner → Words. Search for "{w}", tap the speaker, and use it around the house until they remember it.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: 'Do you remember the Awing word for "{w}"?',
+      body: 'Refresh a word you might already know.\n\nOpen Awing AI Learning → Beginner → Words. Search for "{w}" and hear it again. The more we practice, the better we remember.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: '"{w}" in Awing — do you know it?',
+      body: 'A small language quiz for you.\n\nOpen Awing AI Learning → Beginner → Words, or Explore → Translate. Look up "{w}" and hear the Awing pronunciation.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: 'Can you name "{w}" in Awing?',
+      body: 'Naming things in our language keeps it alive.\n\nOpen Awing AI Learning → Beginner → Words. Search for "{w}", tap the speaker, and use it with your family today.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: 'Test yourself: "{w}" in Awing?',
+      body: 'A quick self-test to keep your Awing sharp.\n\nOpen Awing AI Learning → Beginner → Words. Search for "{w}". Hear it, say it out loud, then teach it to a family member this week.\n\nThank you!\nDr. Sama'
+    },
+    {
+      subject: 'Awing word of the week: {w}',
+      body: 'This week\'s word to focus on: "{w}".\n\nOpen Awing AI Learning → Beginner → Words. Search for it, hear the pronunciation, and use it every day for the next seven days.\n\nThank you!\nDr. Sama'
+    },
+  ];
+  var props = PropertiesService.getScriptProperties();
+  var lastIdx = parseInt(props.getProperty('LAST_FEATURE_IDX') || '-1', 10);
+  var idx = (lastIdx + 1) % WORDS.length;
+  var word = WORDS[idx];
+  // Cycle template variety across weeks — template 0 pairs with word 0,
+  // template 1 with word 1, etc. After one WORDS cycle the templates
+  // shift so the same word gets a fresh phrasing next go-round.
+  var templateIdx = idx % TEMPLATES.length;
+  var t = TEMPLATES[templateIdx];
+  var re = /\{w\}/g;
+  var feature = {
+    subject: t.subject.replace(re, word),
+    body: t.body.replace(re, word),
+  };
+  var emails = fetchAllUserEmails();
+  Logger.log('runWeeklyFeatureTour: word=' + word + ' template=' + templateIdx +
+      ' (idx ' + idx + ' of ' + WORDS.length + '), ' + emails.length + ' users');
+  var sent = 0, failed = 0;
+  for (var i = 0; i < emails.length; i++) {
+    try {
+      MailApp.sendEmail(emails[i], feature.subject, feature.body);
+      sent++;
+      Utilities.sleep(200);
+    } catch (err) {
+      Logger.log('Email to ' + emails[i] + ' failed: ' + err);
+      failed++;
+    }
+  }
+  props.setProperty('LAST_FEATURE_IDX', String(idx));
+  Logger.log('runWeeklyFeatureTour done — idx=' + idx +
+      ' word=' + word + ' sent=' + sent + ' failed=' + failed);
 }
