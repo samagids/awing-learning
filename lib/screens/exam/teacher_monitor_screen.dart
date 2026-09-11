@@ -644,7 +644,7 @@ class _ParticipantCard extends StatelessWidget {
         final picked = participant.answers[q.id];
         final answered = picked != null;
         final isCorrect = answered && picked == q.correctIndex;
-        final pickedText = answered && picked! >= 0 && picked < q.choices.length
+        final pickedText = answered && picked >= 0 && picked < q.choices.length
             ? q.choices[picked]
             : '—';
         final correctText = q.correctIndex >= 0 &&

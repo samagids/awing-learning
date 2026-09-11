@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 /// A single user profile within an email account.
 /// One email can have multiple profiles (e.g. siblings sharing a tablet).

@@ -481,7 +481,6 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
     }
 
     final sentence = widget.story.sentences[_currentSentenceIndex];
-    final progress = (_currentSentenceIndex + 1) / widget.story.sentences.length;
 
     return Scaffold(
       appBar: AppBar(

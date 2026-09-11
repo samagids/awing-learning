@@ -224,7 +224,12 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
       emailSuccess = await contribService.emailContribution(
         c,
         senderName: auth.currentProfile?.displayName ?? "Anonymous",
-        senderEmail: auth.currentEmail ?? "no-reply@awing-app.local",
+        // currentEmail returns '' (never null) when signed out, so the
+        // old `?? "no-reply@..."` fallback never fired and we posted an
+        // empty sender. Session 63: check isNotEmpty instead.
+        senderEmail: auth.currentEmail.isNotEmpty
+            ? auth.currentEmail
+            : "no-reply@awing-app.local",
       );
     }
 

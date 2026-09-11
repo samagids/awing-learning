@@ -310,7 +310,7 @@ REM transcode the whole PAD audio tree to OPUS @ 32k mono voip before
 REM the AAB is built. OPUS files are ~50%% smaller; pronunciation_service
 REM .dart loads .opus directly. Skipping already-converted files keeps
 REM this fast (~3s on a warm pack, ~90s on a cold pack with 18k MP3s).
-echo [4b/7] Compressing audio (MP3 -> OPUS)...
+echo [4b/7] Compressing audio ^(MP3 -^> OPUS^)...
 python scripts\cleanup_assets.py --tier 2
 if !ERRORLEVEL! neq 0 (
     echo        WARNING: audio compression had errors. Continuing with mixed pack.

@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.23.0+136
+version: 1.23.2+138
 environment:
   sdk: ">=3.4.0 <4.0.0"
 
@@ -47,9 +47,17 @@ dependencies:
   # the Google flow. ^6.1.0 supports Flutter 3.22+.
   sign_in_with_apple: ^6.1.4
   http: ^1.2.2
-  firebase_core: ^3.8.1
-  firebase_auth: ^5.3.4
-  cloud_firestore: ^5.6.0
+  # Session 63 — bumped major versions to drop transitive
+  # `com.google.android.gms:play-services-safetynet:18.0.0` (deprecated
+  # per Play Console recommendation on production release 136 (1.23.0)).
+  # Firebase Android BOM 34.x+ (bundled with firebase_core 4.x) removed
+  # SafetyNet Attestation in favor of Play Integrity API.
+  # BREAKING CHANGE RISK: firebase_auth 5→6 may adjust some API surface.
+  # Test Google Sign-In on real Android device before shipping — Session 61
+  # documented ApiException-38003 fragility around auth changes.
+  firebase_core: ^4.0.0
+  firebase_auth: ^6.0.0
+  cloud_firestore: ^6.0.0
   # NOTE: Study Set teacher audio uploads (Phase 3) reuse the existing
   # Apps Script + Google Drive pipeline via ContributionService's
   # webhook — same base64-POST + Drive-download-URL pattern that
@@ -69,7 +77,8 @@ dependencies:
   #          to submit malformed contributions or scrape user data.
   # Requires manual Play Console + Firebase Console setup (see CLAUDE.md
   # Session 61 deployment checklist).
-  firebase_app_check: ^0.3.1+7
+  # Session 63 — bumped 0.3.x → 0.4.x for SafetyNet drop (see firebase_core note).
+  firebase_app_check: ^0.4.0
   # v1.22.3 (Session 68) — Firebase Cloud Messaging.
   # Replaces local AlarmManager reminders (unreliable on Samsung/Xiaomi
   # OEMs — Session 67 postmortem: 3 days silence on S24 Ultra with
@@ -79,7 +88,8 @@ dependencies:
   # architecture WhatsApp uses. Server side: Apps Script cron (see
   # scripts/fcm_daily_push.gs) hits Firebase FCM v1 HTTP API at 8 AM
   # + 7 PM WAT twice daily.
-  firebase_messaging: ^15.1.5
+  # Session 63 — bumped 15.x → 16.x to align with firebase_core 4.x BOM.
+  firebase_messaging: ^16.0.0
   nsd: ^5.0.1
   network_info_plus: ^6.1.1
   # Phase C — On-device LLM via cactus (llama.cpp wrapper, iOS 12+ compatible).

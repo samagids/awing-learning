@@ -16,6 +16,22 @@
 # to deobfuscate Play Console crash reports.
 # =============================================================================
 
+# ---------- Optimization pass: OFF -------------------------------------------
+# Session 63. AGP 9 forces the "proguard-android-optimize.txt" base file, so
+# the -dontoptimize that used to come free with "proguard-android.txt" now has
+# to be declared here. Net effect is identical to every release through
+# v1.23.0+136.
+#
+# Why optimization stays off: R8's optimization pass inlines methods that
+# Flutter plugins reach via reflection (Firebase, Google Sign-In,
+# tflite_flutter), producing release-only runtime failures that debug builds
+# never reproduce. Minification (name obfuscation) IS still active via
+# isMinifyEnabled = true — only the optimization tier is disabled.
+#
+# To revisit: remove this line, then smoke-test Google Sign-In + Firestore
+# sync + TFLite inference on a real device before tagging.
+-dontoptimize
+
 # ---------- Flutter embedding (do not strip) ---------------------------------
 # Flutter reaches into io.flutter.* from Dart via the JNI; obfuscating these
 # breaks the platform channel layer.

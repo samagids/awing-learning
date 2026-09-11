@@ -52,7 +52,6 @@ class _ContributeScreenState extends State<ContributeScreen> {
   /// Set to true once a submission has been posted to the webhook.
   /// Drives the "Sent to Developer" success message. No longer means
   /// "email app opened" -- the webhook sends the email server-side now.
-  bool _emailSent = false;
 
   /// The type of the most recent submission — used by the thank-you
   /// screen to copy back the right reset state.
@@ -264,7 +263,6 @@ class _ContributeScreenState extends State<ContributeScreen> {
 
   // ==================== Submit ====================
 
-  Contribution? _lastSubmitted;
 
   Future<void> _submit(ContributionType type) async {
     if (_wordController.text.trim().isEmpty) {
@@ -322,7 +320,7 @@ class _ContributeScreenState extends State<ContributeScreen> {
     final contribService = context.read<ContributionService>();
     final analytics = AnalyticsService.instance;
 
-    final id = await contribService.submit(
+    await contribService.submit(
       deviceId: analytics.isOptedOut ? 'anonymous' : 'contributor',
       profileName: _firstNameForSubmission(
           auth.currentProfile?.displayName),
@@ -343,11 +341,6 @@ class _ContributeScreenState extends State<ContributeScreen> {
           : null,
     );
 
-    if (id != null) {
-      _lastSubmitted = contribService.contributions
-          .firstWhere((c) => c.id == id);
-    }
-
     analytics.logFeedback(
       type: 'contribution_${type.name}',
       message: '${_wordController.text} → ${_correctionController.text}',
@@ -364,8 +357,6 @@ class _ContributeScreenState extends State<ContributeScreen> {
     setState(() {
       _submitted = true;
       _submittedType = type;
-      _emailSent = true; // success badge always shows; kept the field
-                         // to avoid widening the diff into the build()
     });
   }
 
@@ -505,8 +496,6 @@ class _ContributeScreenState extends State<ContributeScreen> {
                   onPressed: () {
                     setState(() {
                       _submitted = false;
-                      _emailSent = false;
-                      _lastSubmitted = null;
                       _wordController.clear();
                       _correctionController.clear();
                       _englishController.clear();

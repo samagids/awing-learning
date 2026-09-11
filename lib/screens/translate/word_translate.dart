@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/ai_toggle_service.dart';
 import 'package:awing_ai_learning/services/cloud_ai_service.dart';
 import 'package:awing_ai_learning/services/on_device_model_service.dart';
-import 'package:awing_ai_learning/services/retrieval_service.dart';
 import 'package:awing_ai_learning/components/awing_text_field.dart';
 import 'package:awing_ai_learning/services/word_gloss.dart';
 import 'package:awing_ai_learning/widgets/wrong_translation_reporter.dart';
@@ -499,25 +498,29 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
   bool _loading = false;
   CloudExampleSentence? _example;
   String? _error;
-  List<String> _hallucinated = const [];
 
   Future<void> _generate() async {
     if (_loading) return;
     setState(() {
       _loading = true;
       _error = null;
-      _hallucinated = const [];
     });
     try {
-      // Retrieval now lives inside the CloudFlare Worker. We still
-      // build a client-side vocabulary set for the hallucination guard
-      // — it costs nothing (local map lookups) and lets us flag any
-      // Awing word in the response that isn't in our dictionary.
-      final bundle = RetrievalService.instance.buildForWord(
-        targetAwing: widget.awing,
-        targetEnglish: widget.english,
-        targetCategory: widget.category,
-      );
+      // Retrieval now lives inside the CloudFlare Worker.
+      //
+      // NO-HALLUCINATED-AWING INVARIANT (Session 63):
+      // The model is never trusted to produce Awing. It returns English;
+      // the Awing line below is assembled token-by-token from dictionary
+      // lookups via WordGloss, with "—" for anything absent. So every
+      // Awing character that reaches a child is real, by construction.
+      //
+      // RetrievalService.findHallucinatedWords() still exists but is
+      // deliberately NOT called: it would validate a string we built
+      // ourselves out of dictionary entries, so it can only ever return
+      // an empty list. It predates this design, when the model was asked
+      // for Awing directly. Do not "restore" it — if the architecture
+      // ever goes back to model-authored Awing, that is when it matters.
+      //
       // preferOffline picks the on-device model when the Cloud toggle is
       // OFF and the model is downloaded + inference is wired up. If it
       // isn't, generateExample returns null and we fall through to the
@@ -531,7 +534,15 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
         preferOffline: !toggle.cloudEnabled,
       );
       if (!mounted) return;
-      CloudExampleSentence? finalResult = result;
+      // Enforcement of the invariant above. Today every parse branch
+      // that fills `awing` also requires a non-empty `english`, so the
+      // gloss always runs and always overwrites it — but that is an
+      // emergent property of two conditions in two files lining up, not
+      // something the type system protects. Start from null so a future
+      // edit to CloudAIService.tryParse can never leak model-authored
+      // Awing onto the screen; worst case the user sees the "no usable
+      // example" message, which is the correct failure for this app.
+      CloudExampleSentence? finalResult;
       if (result != null && result.english.isNotEmpty) {
         // NEW: word-by-word Awing translation, deterministic. Words not
         // in the dictionary render as "—". No hallucination possible.
@@ -568,13 +579,9 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
           english: result.english,
         );
       }
-      // Hallucination guard is no longer needed — we build Awing from
-      // dictionary lookups so every displayed word is real. Keep an
-      // empty list so the warning strip never fires.
       setState(() {
         _loading = false;
         _example = finalResult;
-        _hallucinated = const [];
         if (finalResult == null) {
           // Route the message to reality: if the user chose Offline
           // (Cloud toggle OFF), tell them exactly WHY offline didn't
@@ -664,36 +671,6 @@ class _CloudExampleSectionState extends State<_CloudExampleSection> {
                 fontStyle: FontStyle.italic,
               ),
             ),
-            if (_hallucinated.isNotEmpty) ...[
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.orange.shade50,
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: Colors.orange.shade300),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(Icons.warning_amber,
-                        size: 14, color: Colors.orange.shade700),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        'AI may have invented: ${_hallucinated.take(4).join(", ")}',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.orange.shade900,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
           ],
         ),
       );

@@ -2,8 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
-import 'package:awing_ai_learning/data/awing_tones.dart';
-import 'package:awing_ai_learning/data/awing_alphabet.dart';
 import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';

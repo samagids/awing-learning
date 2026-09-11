@@ -14,13 +14,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Badge? _selectedBadge;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ProgressService>(
       builder: (context, progressService, _) {
-        final unlockedBadges = progressService.getUnlockedBadges();
         final allBadges = progressService.getAllBadges();
         final wordsToReview = progressService.getWordsToReview();
 
@@ -234,9 +232,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   /// Build stats row with Words Learned, Quizzes Taken, Lessons Done
   Widget _buildStatsRow(ProgressService progressService) {
-    final wordsLearned = progressService.getCompletedLessons().length > 0
-        ? 'Multiple'
-        : '0'; // Simplified - you might track this differently
     final quizzesTaken = progressService.getAllQuizScores().length;
     final lessonsDone = progressService.getCompletedLessons().length;
 
@@ -434,9 +429,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildBadgeWidget(Badge badge) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _selectedBadge = badge;
-        });
         _showBadgeDialog(badge);
       },
       child: Container(

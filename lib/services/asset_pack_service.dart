@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
 /// Service for accessing assets from the Play Asset Delivery install-time pack.

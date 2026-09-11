@@ -29,10 +29,6 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
     defaultConfig {
         applicationId = "com.awing.learning"
         minSdk = 26
@@ -69,10 +65,13 @@ android {
             // "com.awing.learning/asset_pack" or the dev-mode 2FA path)
             // requires deobfuscation rather than `apktool + strings`.
             //
-            // We use `proguard-android.txt` (not -optimize.txt) because the
-            // optimization pass occasionally inlines methods that Flutter
-            // plugins reach via reflection (Firebase, Google Sign-In,
-            // tflite_flutter).
+            // Session 63: AGP 9 forced the base file to
+            // `proguard-android-optimize.txt`; the optimization pass itself
+            // is still disabled via `-dontoptimize` in proguard-rules.pro,
+            // because it occasionally inlines methods that Flutter plugins
+            // reach via reflection (Firebase, Google Sign-In, tflite_flutter).
+            // Do not "fix" this back to proguard-android.txt — AGP 9 rejects
+            // that file outright.
             //
             // Resource shrinking is intentionally DISABLED. The Google
             // Services Gradle plugin (`com.google.gms.google-services`)
@@ -97,13 +96,29 @@ android {
             // Sign-In. The minor APK-size win is not worth the risk.
             isMinifyEnabled = true
             isShrinkResources = false
+            // Session 63 — AGP 9 removed support for "proguard-android.txt"
+            // because it bakes in -dontoptimize. We keep the SAME effective
+            // behavior by using the -optimize base and re-adding -dontoptimize
+            // in proguard-rules.pro (the two default files are otherwise
+            // identical). This is a no-op vs. what shipped in v1.23.0+136 —
+            // the Session 61 reasoning against R8's optimization pass
+            // (inlining methods that Firebase / Google Sign-In /
+            // tflite_flutter reach by reflection) is unchanged.
             proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
+                getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
 
+}
+
+// Session 63 — AGP 9 removed the `android { kotlinOptions { } }` block.
+// The KGP-native equivalent is this top-level `kotlin { compilerOptions }`.
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
 }
 
 flutter {

@@ -24,7 +24,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:awing_ai_learning/services/asset_pack_service.dart';
 import 'package:awing_ai_learning/services/model_service.dart';
@@ -83,7 +82,6 @@ class VocabEmbeddings {
       offset += 4;
       final keyBytes = bytes.sublist(offset, offset + keyLen);
       offset += keyLen;
-      final key = String.fromCharCodes(keyBytes); // UTF-8 = bytes for ASCII; for non-ASCII we need utf8 decode
       // The vocab has Awing chars (ɛ, ɔ, ə, ɨ, ŋ + tone diacritics)
       // which are multi-byte UTF-8. Decode properly.
       final keyDecoded = _utf8Decode(keyBytes);

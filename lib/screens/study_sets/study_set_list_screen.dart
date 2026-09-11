@@ -150,7 +150,11 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
     final theme = Theme.of(context);
     final service = StudySetService.instance;
     final auth = context.read<AuthService>();
-    final rawEmail = auth.currentEmail ?? '(not signed in)';
+    // currentEmail returns '' (never null) when signed out, so the old
+    // `?? '(not signed in)'` fallback never fired. Session 63: isNotEmpty.
+    final rawEmail = auth.currentEmail.isNotEmpty
+        ? auth.currentEmail
+        : '(not signed in)';
     final signedInEmail = compact ? _redactEmail(rawEmail) : rawEmail;
     final rawAttached = service.attachedEmail ?? '(none)';
     final attachedEmail =
@@ -575,7 +579,7 @@ class _StudySetListScreenState extends State<StudySetListScreen> {
     final descController = TextEditingController();
     final auth = context.read<AuthService>();
 
-    final teacherEmail = auth.currentEmail ?? '';
+    final teacherEmail = auth.currentEmail;
     final teacherName = auth.currentProfile?.displayName ?? 'Teacher';
 
     if (teacherEmail.isEmpty) {

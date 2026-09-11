@@ -12,7 +12,7 @@ const Duration _autoSyncDebounce = Duration(minutes: 2);
 /// Keep in sync with AboutScreen.appVersion and AboutScreen.buildNumber.
 /// Stamped on every Firestore doc so Developer Mode can see which client
 /// last wrote a given user's data.
-const String _kAppVersion = '1.23.0+136';
+const String _kAppVersion = '1.23.2+138';
 
 /// Cloud backup service using Firebase Firestore.
 ///
@@ -258,7 +258,7 @@ class CloudBackupService extends ChangeNotifier {
       // Count profiles for the parent user document
       int pCount = 0;
       if (accountsData is Map) {
-        for (final v in (accountsData as Map).values) {
+        for (final v in (accountsData).values) {
           if (v is Map && v['profiles'] is List) {
             pCount += (v['profiles'] as List).length;
           }

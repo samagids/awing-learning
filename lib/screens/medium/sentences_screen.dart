@@ -482,7 +482,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p16 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Pá chú\'ə achú\' ló əlè ɛtsəmə alá\' Mbɨwɨŋə.",
+    awing: "Pá chú'ə achú' ló əlè ɛtsəmə alá' Mbɨwɨŋə.",
     english: 'Achu is prepared daily in Awing.',
     difficulty: 2,
     words: [
@@ -499,7 +499,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p16 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Pí pá kwéŋə ló pá\' achwí\'nə á chí ná á təti pó.",
+    awing: "Pí pá kwéŋə ló pá' achwí'nə á chí ná á təti pó.",
     english: 'People prosper when there is unity amongst them.',
     difficulty: 3,
     words: [
@@ -518,7 +518,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p16 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Á pɔŋə mə fa\' nə afa\'ə ɔsè.",
+    awing: "Á pɔŋə mə fa' nə afa'ə ɔsè.",
     english: 'It pays to work for God.',
     difficulty: 2,
     words: [
@@ -534,7 +534,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p16 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Lá tɔ\'ə nda\' ɔsè mbɔ\'ə a fógə afankónuə á məm mbɨə.",
+    awing: "Lá tɔ'ə nda' ɔsè mbɔ'ə a fógə afankónuə á məm mbɨə.",
     english: 'Only God alone can rid the world of errors.',
     difficulty: 3,
     words: [
@@ -553,7 +553,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p16 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Afeelákwú\'ə neemə á ləmkə.",
+    awing: "Afeelákwú'ə neemə á ləmkə.",
     english: 'The small of back of a cow is very tasty.',
     difficulty: 1,
     words: [
@@ -579,7 +579,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p17 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Pá zó\'ə məngyè lá pó ndú əyí əfɛlə afoonə ndzɔ\'ə.",
+    awing: "Pá zó'ə məngyè lá pó ndú əyí əfɛlə afoonə ndzɔ'ə.",
     english: 'When a man gets a new bride, both of them go through the shaving ceremony.',
     difficulty: 2,
     words: [
@@ -599,7 +599,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p19 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Ndɔŋ mó nkə a laŋə aŋwa\'lə lá tso\'ə aghabnə.",
+    awing: "Ndɔŋ mó nkə a laŋə aŋwa'lə lá tso'ə aghabnə.",
     english: 'A lazy child succeeds only averagely in school.',
     difficulty: 2,
     words: [
@@ -617,7 +617,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p19 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Máchisə mée lá pá mya\'ə aghaglə.",
+    awing: "Máchisə mée lá pá mya'ə aghaglə.",
     english: 'When match gets finished the empty box is thrown away.',
     difficulty: 2,
     words: [
@@ -632,7 +632,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p19 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Mbɔ\' ŋwunə ghenə asəg ntso a kə aghaglətúə ŋwu pón pó.",
+    awing: "Mbɔ' ŋwunə ghenə asəg ntso a kə aghaglətúə ŋwu pón pó.",
     english: 'One can never lack a human skull on a battle field.',
     difficulty: 3,
     words: [
@@ -685,7 +685,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p23 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Nchindê ntsəmə alá\' Mbíiwíŋ á túgə akeelə kwúneemə.",
+    awing: "Nchindê ntsəmə alá' Mbíiwíŋ á túgə akeelə kwúneemə.",
     english: 'Every compound in Awing has a pig sty.',
     difficulty: 2,
     words: [
@@ -717,7 +717,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p23 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Ná\'ə akəghan ə pəŋ nə ngaalə.",
+    awing: "Ná'ə akəghan ə pəŋ nə ngaalə.",
     english: 'Okro soup is good for garri.',
     difficulty: 2,
     words: [
@@ -748,7 +748,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p24 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Mbɨwɨŋ zá mbá\' əkəká\' ló aghá akyé akəfɛ.",
+    awing: "Mbɨwɨŋ zá mbá' əkəká' ló aghá akyé akəfɛ.",
     english: 'Awing people usually weave baskets during the coffee harvesting period.',
     difficulty: 2,
     words: [
@@ -781,7 +781,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p24 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Á aghá apɨəpú ŋwu ntsəmə a néŋə akə\'lɔ á ndɛ kwúna əyɨə.",
+    awing: "Á aghá apɨəpú ŋwu ntsəmə a néŋə akə'lɔ á ndɛ kwúna əyɨə.",
     english: 'During the planting season every body puts a hedge round his pig\'s neck.',
     difficulty: 3,
     words: [
@@ -800,7 +800,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p24 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Mbɔ\' tɔ tɔŋə anu o peg fɛ akəmə atsáb ntɛ.",
+    awing: "Mbɔ' tɔ tɔŋə anu o peg fɛ akəmə atsáb ntɛ.",
     english: 'If you want to say anything, first give an introduction.',
     difficulty: 2,
     words: [
@@ -837,7 +837,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p24 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Akəmátɔgɨə ló ŋwu pá\' a kɛ nɛ ɨlɨ\' tɔ ndzó\'ə pɔ.",
+    awing: "Akəmátɔgɨə ló ŋwu pá' a kɛ nɛ ɨlɨ' tɔ ndzó'ə pɔ.",
     english: 'A deaf is a person who does not hear.',
     difficulty: 3,
     words: [
@@ -873,7 +873,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p26 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "A fɛ ɔkwa\'lɔ pɛn pɛ nɔ maŋɔ.",
+    awing: "A fɛ ɔkwa'lɔ pɛn pɛ nɔ maŋɔ.",
     english: 'He gave me two questions.',
     difficulty: 2,
     words: [
@@ -889,7 +889,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p26 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Akwa\'lɔ sɔtɔnɔ ɔ nɔ tɔshɔnɔ.",
+    awing: "Akwa'lɔ sɔtɔnɔ ɔ nɔ tɔshɔnɔ.",
     english: 'Satan\'s temptation is so much.',
     difficulty: 1,
     words: [
@@ -919,7 +919,7 @@ const List<AwingSentence> awingSentences = [
 
   // DICT p33 — added Session 63 Part H 2026-07-22
   AwingSentence(
-    awing: "Ali\'átsəmə á ndu mbi ló ali\' mbɔ\' ŋwunə kwéŋ ówá.",
+    awing: "Ali'átsəmə á ndu mbi ló ali' mbɔ' ŋwunə kwéŋ ówá.",
     english: 'One can prosper anywhere in the world.',
     difficulty: 2,
     words: [

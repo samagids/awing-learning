@@ -7,7 +7,6 @@ import 'package:awing_ai_learning/services/study_set_service.dart';
 import 'package:awing_ai_learning/models/study_set.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/data/awing_alphabet.dart';
-import 'package:awing_ai_learning/data/awing_tones.dart';
 import 'package:awing_ai_learning/screens/exam/teacher_monitor_screen.dart';
 
 class TeacherSetupScreen extends StatefulWidget {
@@ -56,7 +55,7 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
     await StudySetService.instance.load();
     if (!mounted) return;
     final auth = context.read<AuthService>();
-    final email = auth.currentEmail ?? '';
+    final email = auth.currentEmail;
     if (email.isNotEmpty) {
       await StudySetService.instance.attachToAccount(email);
     }
@@ -378,31 +377,6 @@ class _TeacherSetupScreenState extends State<TeacherSetupScreen> {
     return out;
   }
 
-  /// Get prompt text for a question type
-  String _getPromptForType(String type) {
-    switch (type) {
-      case 'translate_to_english':
-        return 'What does this mean in English?';
-      case 'translate_to_awing':
-        return 'How do you say this in Awing?';
-      case 'category_match':
-        return 'Which word belongs to this category?';
-      case 'identify_tone':
-        return 'What tone does this word have?';
-      case 'spelling':
-        return 'Which is the correct Awing spelling?';
-      case 'letter_to_sound':
-        return 'What sound does this letter make?';
-      case 'sound_to_letter':
-        return 'Which letter makes this sound?';
-      case 'letter_example':
-        return 'Which Awing word starts with this letter?';
-      case 'tone_minimal_pair':
-        return 'What is the meaning of this word?';
-      default:
-        return 'Answer this question';
-    }
-  }
 
   /// Auto-generate a question of a specific type, honoring the teacher's
   /// source + category selection.

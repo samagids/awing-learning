@@ -43,10 +43,8 @@ class _GraderSmokeTestScreenState extends State<GraderSmokeTestScreen> {
   // Typical resolved value:
   //   /storage/emulated/0/Android/data/com.awing.learning/files/awing_grader/apo.wav
   String? _referencePath;
-  String? _referenceDir;
 
   final AudioRecorder _recorder = AudioRecorder();
-  String? _liveRecordingPath;
 
   String _status = 'Resolving reference path ...';
   bool _busy = false;
@@ -70,7 +68,6 @@ class _GraderSmokeTestScreenState extends State<GraderSmokeTestScreen> {
         await Directory(dir).create(recursive: true);
       } catch (_) {}
       setState(() {
-        _referenceDir = dir;
         _referencePath = '$dir/apo.wav';
         _status = 'Idle. Sideload the reference WAV, then tap "Sanity test".';
       });
@@ -159,7 +156,6 @@ class _GraderSmokeTestScreenState extends State<GraderSmokeTestScreen> {
       );
       setState(() {
         _isRecording = true;
-        _liveRecordingPath = path;
         _liveResult = null;
         _status = '🎤 Recording... Speak the same word as the reference, '
             'then tap "Stop & grade".';

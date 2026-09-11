@@ -172,17 +172,6 @@ class _ToneMasteryScreenState extends State<ToneMasteryScreen> {
     );
   }
 
-  void _restart() {
-    setState(() {
-      _generateExercises();
-      _currentExerciseIndex = 0;
-      _exerciseScore = 0;
-      _exerciseAnswered = 0;
-      _selectedTone = null;
-      _answered = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

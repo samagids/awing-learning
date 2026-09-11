@@ -14,14 +14,12 @@ class ElisionScreen extends StatefulWidget {
 class _ElisionScreenState extends State<ElisionScreen> {
   final PronunciationService _pronunciation = PronunciationService();
   int _currentRuleIndex = 0;
-  List<String> _answers = [];
   bool _showAnswer = false;
 
   @override
   void initState() {
     super.initState();
     _pronunciation.init();
-    _answers = List.filled(_elisionRules.length, '');
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('expert_elision');
     });

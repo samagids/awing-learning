@@ -34,6 +34,7 @@ const List<String> approvedContributors = [
   'Berlin Sama',
   'Dr. Richard Alombah',
   'Juliette Mandah',
+  'Sama Guidion',  // auto-added by apply_contributions.py
 ];
 
 /// Full ordered list rendered on the About screen. Core voices first,

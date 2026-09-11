@@ -2,14 +2,20 @@
 // ---------------------------------------------------------------
 // v1.15.0 — UI for the daily-word feature.
 // Shows today's 3 suggested words with images + audio.
-// Settings card: enable/disable notification + time picker +
-// "show preview now" button + "reset seen words" button.
+// Settings card: "reset seen words" only.
+//
+// Session 63: the reminder controls that used to live here (daily
+// on/off, time pickers, evening + weekly-share reminders) were
+// removed as dead code. They stopped being reachable in v1.22.1,
+// when DailySuggestionService made notifications enforced
+// (isEnabled() always true, setEnabled() a no-op), and v1.22.3
+// dropped local AlarmManager scheduling for FCM push. Recover from
+// git history if in-app reminder settings ever come back.
 // ---------------------------------------------------------------
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
-import 'package:awing_ai_learning/services/notification_service.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
@@ -31,18 +37,6 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
   List<DailyWord> _picks = [];
   int _learnedCount = 0;
   bool _loading = true;
-  bool _notificationEnabled = false;
-  int _hour = DailySuggestionService.defaultHour;
-  int _minute = DailySuggestionService.defaultMinute;
-  // v1.22.0 (Session 66): second daily WOD reminder + weekly share
-  // reminder — the engagement pair Dr. Sama asked for.
-  bool _eveningEnabled = false;
-  int _eveningHour = DailySuggestionService.defaultEveningHour;
-  int _eveningMinute = DailySuggestionService.defaultEveningMinute;
-  bool _weeklyShareEnabled = false;
-  int _weeklyShareWeekday = DailySuggestionService.defaultWeeklyShareWeekday;
-  int _weeklyShareHour = DailySuggestionService.defaultWeeklyShareHour;
-  int _weeklyShareMinute = DailySuggestionService.defaultWeeklyShareMinute;
   final PronunciationService _pronunciation = PronunciationService();
 
   @override
@@ -89,30 +83,10 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
       profileId: profileId,
       contentType: widget.contentType,
     );
-    final enabled = await DailySuggestionService.isEnabled();
-    final h = await DailySuggestionService.notificationHour();
-    final m = await DailySuggestionService.notificationMinute();
-    final eveOn = await DailySuggestionService.eveningEnabled();
-    final eveH = await DailySuggestionService.eveningHour();
-    final eveM = await DailySuggestionService.eveningMinute();
-    final wsOn = await DailySuggestionService.weeklyShareEnabled();
-    final wsWd = await DailySuggestionService.weeklyShareWeekday();
-    final wsH = await DailySuggestionService.weeklyShareHour();
-    final wsM = await DailySuggestionService.weeklyShareMinute();
     if (!mounted) return;
     setState(() {
       _picks = picks;
       _learnedCount = learnedCount;
-      _notificationEnabled = enabled;
-      _hour = h;
-      _minute = m;
-      _eveningEnabled = eveOn;
-      _eveningHour = eveH;
-      _eveningMinute = eveM;
-      _weeklyShareEnabled = wsOn;
-      _weeklyShareWeekday = wsWd;
-      _weeklyShareHour = wsH;
-      _weeklyShareMinute = wsM;
       _loading = false;
     });
   }
@@ -144,152 +118,6 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
     }
   }
 
-  Future<void> _toggleEnabled(bool v) async {
-    if (v) {
-      final granted = await NotificationService.instance.requestPermission();
-      if (!granted) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-                'Notification permission denied. Allow notifications in your phone Settings to use this feature.'),
-            duration: Duration(seconds: 4),
-          ),
-        );
-        return;
-      }
-      await DailySuggestionService.setEnabled(true);
-      await NotificationService.instance
-          .scheduleDaily(hour: _hour, minute: _minute);
-    } else {
-      await DailySuggestionService.setEnabled(false);
-      await NotificationService.instance.cancelDaily();
-    }
-    if (!mounted) return;
-    setState(() => _notificationEnabled = v);
-  }
-
-  Future<void> _pickTime() async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay(hour: _hour, minute: _minute),
-      helpText: 'When should we send today\'s words?',
-    );
-    if (picked == null) return;
-    await DailySuggestionService.setNotificationTime(
-        picked.hour, picked.minute);
-    if (_notificationEnabled) {
-      await NotificationService.instance
-          .scheduleDaily(hour: picked.hour, minute: picked.minute);
-    }
-    if (!mounted) return;
-    setState(() {
-      _hour = picked.hour;
-      _minute = picked.minute;
-    });
-  }
-
-  // ------------------------------------------------------------
-  // v1.22.0 (Session 66) — evening WOD + weekly share reminder
-  // ------------------------------------------------------------
-  Future<void> _toggleEvening(bool v) async {
-    if (v) {
-      final granted = await NotificationService.instance.requestPermission();
-      if (!granted) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Notification permission denied.'),
-              duration: Duration(seconds: 4)),
-        );
-        return;
-      }
-    }
-    await DailySuggestionService.setEveningEnabled(v);
-    await NotificationService.instance.scheduleAllReminders();
-    if (!mounted) return;
-    setState(() => _eveningEnabled = v);
-  }
-
-  Future<void> _pickEveningTime() async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay(hour: _eveningHour, minute: _eveningMinute),
-      helpText: 'Evening reminder time',
-    );
-    if (picked == null) return;
-    await DailySuggestionService.setEveningTime(picked.hour, picked.minute);
-    await NotificationService.instance.scheduleAllReminders();
-    if (!mounted) return;
-    setState(() {
-      _eveningHour = picked.hour;
-      _eveningMinute = picked.minute;
-    });
-  }
-
-  Future<void> _toggleWeeklyShare(bool v) async {
-    if (v) {
-      final granted = await NotificationService.instance.requestPermission();
-      if (!granted) return;
-    }
-    await DailySuggestionService.setWeeklyShareEnabled(v);
-    await NotificationService.instance.scheduleAllReminders();
-    if (!mounted) return;
-    setState(() => _weeklyShareEnabled = v);
-  }
-
-  Future<void> _pickWeeklyShareTime() async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime:
-          TimeOfDay(hour: _weeklyShareHour, minute: _weeklyShareMinute),
-      helpText: 'Weekly share reminder time',
-    );
-    if (picked == null) return;
-    await DailySuggestionService.setWeeklyShareTime(
-        _weeklyShareWeekday, picked.hour, picked.minute);
-    await NotificationService.instance.scheduleAllReminders();
-    if (!mounted) return;
-    setState(() {
-      _weeklyShareHour = picked.hour;
-      _weeklyShareMinute = picked.minute;
-    });
-  }
-
-  Future<void> _pickWeeklyShareDay() async {
-    const dayNames = [
-      'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-      'Friday', 'Saturday', 'Sunday',
-    ];
-    final picked = await showDialog<int>(
-      context: context,
-      builder: (ctx) => SimpleDialog(
-        title: const Text('Weekly reminder day'),
-        children: [
-          for (int i = 1; i <= 7; i++)
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(ctx, i),
-              child: Text(dayNames[i - 1]),
-            ),
-        ],
-      ),
-    );
-    if (picked == null) return;
-    await DailySuggestionService.setWeeklyShareTime(
-        picked, _weeklyShareHour, _weeklyShareMinute);
-    await NotificationService.instance.scheduleAllReminders();
-    if (!mounted) return;
-    setState(() => _weeklyShareWeekday = picked);
-  }
-
-  String _weekdayName(int weekday) {
-    const names = [
-      '', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
-    ];
-    if (weekday < 1 || weekday > 7) return 'Sat';
-    return names[weekday];
-  }
-
   Future<void> _resetSeen() async {
     final ok = await showDialog<bool>(
       context: context,
@@ -313,15 +141,6 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
       contentType: widget.contentType,
     );
     await _load();
-  }
-
-  Future<void> _previewNow() async {
-    if (_picks.isEmpty) return;
-    await NotificationService.instance.showPreview(_picks);
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Notification sent — check your tray!')),
-    );
   }
 
   @override

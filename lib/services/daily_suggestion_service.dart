@@ -40,7 +40,6 @@
 // ---------------------------------------------------------------
 
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/services/image_service.dart';
@@ -98,22 +97,14 @@ class DailySuggestionService {
       'daily_last_suggestion_conversations';
 
   // ===== Device-global keys (one notification setting per device).
-  static const _kEnabled = 'daily_notification_enabled';
   static const _kHour = 'daily_notification_hour';
   static const _kMinute = 'daily_notification_minute';
   // v1.22.0 (Session 66) — engagement reminders.
-  static const _kEveningEnabled = 'evening_notification_enabled';
   static const _kEveningHour = 'evening_notification_hour';
   static const _kEveningMinute = 'evening_notification_minute';
-  static const _kWeeklyShareEnabled = 'weekly_share_enabled';
   static const _kWeeklyShareWeekday = 'weekly_share_weekday';
   static const _kWeeklyShareHour = 'weekly_share_hour';
   static const _kWeeklyShareMinute = 'weekly_share_minute';
-  // Sentinel key that tells us whether the "on by default" flip has
-  // already run for this install. Without it, users who explicitly
-  // OPTED OUT before v1.22.0 would get flipped back on by the new
-  // default = true logic. See isEnabled() for the migration guard.
-  static const _kEnabledDefaultsApplied = 'reminders_defaults_v122_applied';
 
   /// Default profile id used when caller does not pass one (e.g. the
   /// notification scheduler runs outside any profile context). Keeps the
@@ -616,9 +607,10 @@ class DailySuggestionService {
   /// v1.22.0 (Session 66): default flipped from `false` → `true` for
   /// new installs so users get engagement reminders out of the box
   /// (the audit found users were "not getting notifications" mostly
-  /// because they never toggled the setting on). Migration is
-  /// guarded by `_kEnabledDefaultsApplied` so pre-1.22 installs that
-  /// explicitly opted out don't get their choice overridden.
+  /// because they never toggled the setting on).
+  /// Session 63: the one-time defaults migration and its stored keys
+  /// were removed — they became unreachable once v1.22.1 made this
+  /// getter return true unconditionally.
   /// v1.22.1 (Session 67): notifications are ENFORCED. Always returns
   /// true regardless of stored pref. Setter is a no-op. UI must not
   /// expose an enable/disable toggle. The only way to silence Awing
@@ -628,26 +620,6 @@ class DailySuggestionService {
   /// out and then complaining "notifications don't work."
   static Future<bool> isEnabled() async => true;
 
-  /// Idempotent one-time migration: sets the three reminder-enabled
-  /// keys to `true` ONLY if they've never been touched, guarded by a
-  /// sentinel so users who explicitly opted out on an older build
-  /// keep their opt-out choice.
-  static Future<void> _applyRemindersDefaultsOnce(
-      SharedPreferences prefs) async {
-    if (prefs.getBool(_kEnabledDefaultsApplied) == true) return;
-    // Only initialize keys that have NEVER been set. If a user
-    // previously toggled a value (even to false), preserve it.
-    if (!prefs.containsKey(_kEnabled)) {
-      await prefs.setBool(_kEnabled, true);
-    }
-    if (!prefs.containsKey(_kEveningEnabled)) {
-      await prefs.setBool(_kEveningEnabled, true);
-    }
-    if (!prefs.containsKey(_kWeeklyShareEnabled)) {
-      await prefs.setBool(_kWeeklyShareEnabled, true);
-    }
-    await prefs.setBool(_kEnabledDefaultsApplied, true);
-  }
 
   /// v1.22.1 (Session 67): no-op. Notifications are enforced — see
   /// isEnabled(). Signature kept so old callers compile.

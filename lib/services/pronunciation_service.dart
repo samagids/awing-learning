@@ -29,7 +29,6 @@ class PronunciationService {
   /// has installed. Drives the choice between awingToSpeakable() (Swahili
   /// path -- matches the build-time Edge TTS pipeline) and the older
   /// awingToPhonetic() English-approximation path.
-  String _ttsLocale = 'en-US';
 
   /// True when flutter_tts is currently configured to speak Swahili.
   /// Most Awing words contain ɛ/ɔ/ə/ɨ/ŋ/ɣ and prenasalized clusters that
@@ -126,16 +125,14 @@ class PronunciationService {
 
     // Prefer Swahili (matches build-time Edge TTS sw-KE / sw-TZ neural
     // voices). Fall back to English if no Swahili voice is installed on
-    // the device. The selected locale drives awingToSpeakable vs
-    // awingToPhonetic in speakAwing() and speakSentence().
+    // the device. _swahiliAvailable is what drives awingToSpeakable
+    // vs awingToPhonetic in speakAwing() and speakSentence().
     _swahiliAvailable = false;
-    _ttsLocale = 'en-US';
     for (final locale in const ['sw-KE', 'sw-TZ', 'sw']) {
       try {
         final ok = await _tts.isLanguageAvailable(locale);
         if (ok == true) {
           await _tts.setLanguage(locale);
-          _ttsLocale = locale;
           _swahiliAvailable = true;
           break;
         }

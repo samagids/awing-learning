@@ -128,11 +128,37 @@ class _PackImageState extends State<PackImage> {
           );
     }
 
+    // Session 63 — Play Console bitmap-downsampling fix.
+    // Vocabulary PNGs are 256x256 on disk. Without cacheWidth/cacheHeight,
+    // Flutter decodes at full source resolution regardless of display size,
+    // burning ~262 KB of RAM per image even when shown at 70-90px thumbnails.
+    // Capping at physical-pixel display size (or 256, whichever is smaller)
+    // is Google's recommended remediation for the "u1.e.b: missing
+    // BitmapFactory.Options" recommendation flagged on production release
+    // 136 (1.23.0).
+    final dpr = MediaQuery.of(context).devicePixelRatio;
+    int? cacheW;
+    int? cacheH;
+    if (widget.width != null && widget.width!.isFinite) {
+      cacheW = (widget.width! * dpr).ceil().clamp(1, 256);
+    }
+    if (widget.height != null && widget.height!.isFinite) {
+      cacheH = (widget.height! * dpr).ceil().clamp(1, 256);
+    }
+    // If neither dimension is specified (Expanded/fill), cap both at 256
+    // (the source PNG size) so we still avoid the full-frame decode.
+    if (cacheW == null && cacheH == null) {
+      cacheW = 256;
+      cacheH = 256;
+    }
+
     return Image.memory(
       _bytes!,
       fit: widget.fit,
       width: widget.width,
       height: widget.height,
+      cacheWidth: cacheW,
+      cacheHeight: cacheH,
       errorBuilder: (_, __, ___) =>
           widget.errorWidget ??
           Container(
