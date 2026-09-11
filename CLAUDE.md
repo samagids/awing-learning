@@ -8311,3 +8311,191 @@ Dart-only edits that cannot affect Gradle, R8, or Firebase native init,
 so the sign-in result still stands — but the tagged build must be a
 fresh one, and `flutter analyze` must be clean first, since the sweep
 was verified by grep rather than by a compiler.
+
+---
+
+### Session 63 (continued 5, 2026-09-11) — v1.23.2+138 SHIPPED. Three CI incidents worth never repeating.
+
+**Final state: GREEN.** Build Android #297 + Build iOS #297 on tag
+`v1.23.2+138` at commit `e15c064` both succeeded. AAB uploaded to Play
+alpha, IPA to TestFlight. 7-day auto-promote soak starts now.
+
+It took THREE tag-build attempts. Each failure had a different cause,
+and none of them was the code.
+
+#### INCIDENT 1 — GitHub cancelled both jobs: $0 Actions budget
+
+Symptom: Android and iOS tag builds both died at **18m33s / 18m21s** —
+two different OSes, two runners, 12 seconds apart. Log showed:
+
+```
+Running Gradle task 'bundleRelease'... 911.7s
+Gradle task bundleRelease failed with exit code 143
+Error: The operation was canceled.
+```
+
+**Exit 143 = SIGTERM.** The process was KILLED, not failed. Job timeout
+is 30 min and the job ran 18m29s, so no timeout fired. No `concurrency:`
+block, so not self-cancellation. `main` builds on the SAME commit passed.
+
+Root cause: **Settings → Billing → Budgets** had
+`Product: Actions / Stop usage: Yes / $0 budget`. When the included
+allowance ran out mid-run, GitHub killed every in-flight Actions job.
+
+**Diagnostic rule:** two jobs on DIFFERENT runner OSes dying within
+seconds of each other is never a build problem. Check billing/budgets
+first. Exit 143 + "operation was canceled" + no timeout = external kill.
+
+Workaround used: made the repo **public** (public repos get unlimited
+free Actions minutes), ran the builds, then back to private. This is a
+workaround, NOT a fix — the next tag push hits the same wall.
+
+Durable options: (a) raise the Actions budget above $0 (needs a payment
+method — the whole month was only $7.87 gross), or (b) restrict
+`build-ios.yml` to tags only. Every push currently builds iOS TWICE
+(main + tag) and macOS bills at 10x, so the duplicate main-branch iOS
+run is where essentially all the spend goes. Option (b) is free and
+roughly halves it. NOT YET DONE.
+
+#### INCIDENT 2 — THE EMPTY COMMIT (the expensive one)
+
+Symptom: after fixing billing, the tag build got all the way to the Play
+upload and was rejected with:
+
+```
+Error: Version code 136 has already been used.
+```
+
+**136 is v1.23.0+136 — the PREVIOUS release.** We were shipping 138.
+
+Root cause: the release commit `239cb13` contained ONE file:
+
+```
+$ git show --stat 239cb13
+239cb13 v1.23.2+138 - AGP 9 + Gradle 9.1.0 migration, ...
+ OPUS) | 1 -
+ 1 file changed, 1 deletion(-)
+```
+
+The multi-line PowerShell `git add ...` block with backtick
+continuations silently did not run; only the `git rm --cached "OPUS)"`
+on the following line did. The commit carried the right MESSAGE and
+none of the work. `pubspec.yaml` at that commit was still `1.23.0+136`
+(inherited from `c9e5862`), so CI faithfully built versionCode 136 and
+Play correctly rejected it.
+
+**A commit message is not evidence that a commit contains anything.**
+
+MANDATORY pre-tag verification, every release:
+
+```powershell
+git show HEAD --stat | Select-String "pubspec.yaml"    # must appear
+git show HEAD:pubspec.yaml | Select-String "^version:" # must be the NEW version
+```
+
+Only tag after `git show HEAD:pubspec.yaml` prints the version you
+intend to ship. This check takes two seconds and would have prevented
+this entire incident plus the burned-code incidents of Sessions 58/60.
+
+**Also: avoid backtick line-continuations for long `git add` lists in
+PowerShell.** Use several short `git add` commands on separate lines.
+That is what finally worked:
+
+```powershell
+git add pubspec.yaml pubspec.lock CLAUDE.md scripts/build_and_run.bat
+git add android/settings.gradle.kts android/build.gradle.kts android/gradle.properties
+git add android/app/build.gradle.kts android/app/proguard-rules.pro
+git add android/gradle/wrapper/gradle-wrapper.properties
+git add lib/
+```
+
+Result: `e15c064`, 37 files changed, +380/-436. THAT is the release.
+
+Silver lining: because the rejected upload carried 136, version code
+**138 was never burned** and was reused successfully.
+
+#### INCIDENT 3 — Session 61's CI hardening was never actually committed
+
+CLAUDE.md (Session 61 continued) describes adding `continue-on-error:
+true` + `id: play_upload` to the Play/TestFlight upload steps so a
+duplicate-version-code rejection goes YELLOW instead of RED. **That
+change does not exist in the repo.** The live step is still:
+
+```yaml
+- name: Upload to Play Closed Testing
+  if: startsWith(github.ref, 'refs/tags/v')
+  uses: r0adkll/upload-google-play@v1.1.3
+```
+
+That push plan was written but never executed. This is why Incident 2
+turned the whole job red and discarded the (valid) 957 MB AAB artifact
+instead of preserving it for manual upload.
+
+**Lesson: CLAUDE.md records INTENT as well as fact. If a past session
+documents a change, verify it is actually on disk before relying on
+it.** Same class of error as Incident 2 — documentation drifting from
+reality. STILL NOT DONE; worth a small standalone commit.
+
+#### Repo visibility / PII exposure
+
+The repo was briefly made PUBLIC to get free Actions minutes.
+Audit performed at that moment:
+
+- **Clean:** full-history search for `*.jks`, `*.keystore`,
+  `android/key.properties`, `config/play-service-account.json`,
+  `config/asc-credentials.json`, `*.p8` returned EMPTY. No credential
+  was ever committed. The release keystore and its passwords are safe.
+- **Exposed and since redacted (commit `fe96f50`):** Dr. Sama's home
+  address appeared TWICE in CLAUDE.md (Session 63's Play Console
+  verification notes), plus four tester handles. Removed from HEAD.
+  **Still present in git history** — accepted risk given the short
+  public window; a `git filter-repo` rewrite was considered and
+  declined.
+- **Now public knowledge regardless:** the CloudFlare Worker URL
+  (`lib/services/cloud_ai_service.dart`) and the webhook URLs in
+  `config/webhooks.json`. The Worker has no rate limit — anyone can
+  call it and spend the AI budget. The contributions webhook's
+  `submit` / `check_version` actions are unauthenticated BY DESIGN
+  (Session 58), so they are spammable; privileged actions remain
+  auth-gated. **Worth adding a Worker-side rate limit.** NOT DONE.
+
+**RULE FOR FUTURE SESSIONS: never write a home address, tester handle,
+or personal email into CLAUDE.md.** This file is a release artifact
+that has now been public once and may be again.
+
+#### Version code ledger — UPDATE
+
+| +138 | `v1.23.2+138` | pushed | 2026-09-11 | Commit `e15c064`. AGP 9.0 + Gradle 9.1.0 migration (6 sequential gates), bitmap downsampling in PackImage, Firebase 4.x/6.x majors (drops SafetyNet transitively), analyzer 76 to 0 incl. 2 real `currentEmail` bugs, AI no-hallucinated-Awing invariant made explicit, `build_and_run.bat` stray-`OPUS)`-file fix. Built-in Kotlin attempt 2 reverted (blocked by 16 pub-cache plugins applying KGP). **Android**: Build #297 Play alpha OK. **iOS**: Build #297 TestFlight OK. Three tag attempts — see Incidents 1-3 above. Version 137 was built locally but never uploaded (NOT burned); 136 was re-attempted by the empty commit and rejected as already-used. |
+
+**Next safe build code: +139.**
+
+#### Verified on-device before shipping
+
+Google Sign-In completes cleanly on emulator — clears BOTH the Firebase
+4.x/6.x majors AND AGP 9's stricter `strictFullModeForKeepRules` R8
+behavior in a single check. Remaining risk for the soak window is
+release-only reflection failures in code paths the emulator did not
+exercise: watch tester reports for `ClassNotFoundException` /
+`NoSuchMethodError` / `NoClassDefFoundError`.
+
+Rollback if that appears: revert the 5 Firebase pins + AGP to 8.11.1
+(keep Gradle 9.1.0, it is harmless), bump to +139.
+
+#### Environment note (2026-09-11)
+
+Mid-session, the Cowork device shell lost its mount of the Awing folder:
+`sandbox-helper: no Plan9 drive shares mounted`. A Windows update
+released 2026-09-08 prevents the agent workspace from reaching local
+files. Claude Code itself is unaffected. Workaround used: write content
+in the container and commit it across with the file tools.
+
+#### Open follow-ups, in priority order
+
+1. Restrict `build-ios.yml` to tags only — halves Actions spend, free.
+2. Add `continue-on-error` to both upload steps (Incident 3).
+3. Rate-limit the CloudFlare Worker (now-public URL).
+4. `node_modules/` into `.gitignore` — `cf-worker/node_modules` is
+   tracked and churns on every diff.
+5. Exclude `build/` from OneDrive sync — it held a file lock that broke
+   one build this session, and is the likely root of the truncation /
+   read-after-write races in Sessions 49c, 56, 60, 61.
