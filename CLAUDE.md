@@ -2538,8 +2538,8 @@ rewrite, vocabulary cleanup, kid-friendly prompts, local-testing with bundletool
 
 **Play Store (Sessions 37–39):**
 1. Closed testing release v1.2.0 submitted and approved
-2. Recruited testers: samagids, sama2kids, akondengcedrick5, berlinpsama,
-   bovattheo (5 of 12 required for production access)
+2. Recruited testers: 5 of 12 required for production access
+   (tester identifiers redacted — this repo is public)
 3. Subsequent releases (1.2.x through 1.5.x) auto-replace in-review predecessors
    when uploaded, restarting the review clock
 4. For local testing with PAD asset packs, use bundletool with `--local-testing`
@@ -7602,3 +7602,712 @@ flutter pub get
 .\scripts\build_and_run.bat
 ```
 
+
+---
+
+### Session 63 (2026-09-10) — Android developer verification checkpoint
+
+Dr. Sama asked to look at
+`https://play.google.com/console/u/0/developers/6314956170777288607/android-developer-verification`
+after the Sept 30, 2026 registration deadline had entered the 20-day
+window. Loaded via Chrome; both tabs are clean.
+
+**Package names tab** — 2/2 registered:
+- `com.awing.awing_ai_learning` — ✓ Registered, 1 key, last updated
+  Apr 12, 2026
+- `com.awing.learning` — ✓ Registered, 1 key, last updated
+  Apr 12, 2026
+
+**Identity tab** — legal name and home address already populated
+from the Play Console developer account. Nothing to fill in.
+(Address redacted from this file — see Play Console directly.)
+
+**Verdict:** no action required. Both apps meet Google's Sept 30,
+2026 Android developer verification requirement — Dr. Sama
+registered them back in April on the deadline-preparation pass.
+
+**Also completed this session (from summary of the compacted prior
+turns, ordered by significance):**
+
+- **Weekly-tour email pipeline consolidated to single Wednesday send**
+  via Brevo (300/day free tier). Previous Wed+Thu split trigger was
+  a workaround for MailApp's 100/day cap; Brevo covers all ~104 users
+  in one call so both `runWeeklyFeatureTourPart1` (Wed) and Part2
+  (Thu) triggers were deleted and a single `runWeeklyFeatureTour`
+  Wednesday 6-7am EDT trigger installed. Task #120.
+- **`USE_BREVO=true` activated** in Apps Script Script Properties;
+  `_sendEmail()` now routes every weekly-tour message through the
+  Brevo API instead of MailApp. Verified end-to-end with a
+  personal-address test send that landed with rendered HTML share
+  buttons + boxed copy-paste text. Task #119.
+- **Brevo API key** stored in Script Properties (`BREVO_API_KEY`),
+  NOT in source. `_sendViaBrevo` reads it at call time. If Brevo
+  ever needs rotation, edit only that single Script Property.
+- **HTML weekly-tour email** now ships with WhatsApp/SMS/Email tap-
+  to-share buttons plus a boxed copy-paste message. Text-only version
+  preserved as `text/plain` alternative for legacy clients. Task
+  #117.
+- **Play + TestFlight production auto-promoters** reduced from
+  daily to Mon+Thu (twice-weekly) via cron `0 9 * * 1,4` and
+  `30 9 * * 1,4`. Session 61 shipped the 7-day soak; daily cron was
+  redundant. Task #115.
+- **Session 30 rule reaffirmed:** all Awing content must come from
+  PDFs / `awing_vocabulary.dart` / Dr. Sama confirmation. Never
+  fabricated. Kids' contribution pickers still block already-recorded
+  words via `native_audio_manifest.json` (Session 61 fix).
+
+**Version state at session start:** v1.23.0+136 tag was drafted per
+the 4-place sync protocol (pubspec + about_screen + analytics_service
++ cloud_backup_service), pushed with the corrected `git push origin
+refs/tags/v1.23.0+136` syntax after an earlier `v1.23.0+13` truncated
+push attempt. No further version work needed today.
+
+**Nothing to build, nothing to ship** — this was pure verification
+of an external Google deadline. Task list updated with #121 marking
+the verification complete.
+
+**Additional session details worth preserving:**
+
+- **The Play Console banner** on the verification page (screenshot verbatim):
+  > "On July 15, Play announced updated Play Console requirements, which
+  > means any Play apps not registered by September 30, 2026 will be
+  > removed from Google Play globally. Android apps from other
+  > participating stores that are not registered will also no longer be
+  > installable on certified Android devices in select countries."
+
+  Today's date 2026-09-10 puts us 20 days from the deadline. Both apps
+  registered back in April — no action needed. Sidebar links on the
+  page: "View Android developer verification website" and "View Play
+  Console requirements" (for reference if this ever needs revisiting).
+
+- **Browser access grants** issued this session (Cowork Browser pane,
+  scope "site" so they persist across sessions):
+  - `https://play.google.com` — for Play Console visits
+  - `https://accounts.google.com` — for Google auth redirect handling
+
+- **MCP connector auth backlog** (surfaced via system reminder this
+  session — none blocked current work; documenting for future):
+  bio-research (biorender, owkin, synapse, wiley), engineering
+  (datadog, github, pagerduty), productivity (asana, atlassian,
+  clickup, linear, monday, notion, slack). Session was
+  non-interactive so OAuth couldn't run — Dr. Sama can authorize
+  via claude.ai connector settings or `/mcp` in an interactive
+  session if any of those become needed for future work.
+
+- **Cowork session environment** at start:
+  - Working directory:
+    `C:\Users\samag\OneDrive\Documents\Claude\local-agent-mode-sessions\
+    89e997b6-.../local_1bc25602-.../outputs`
+  - Connected folders: `Contracts` and `Awing`
+  - Platform: win32, Windows 11 Pro 10.0.26200
+  - Model: Opus 4.7 (`claude-opus-4-7`)
+
+**Session 63 end state:** verification complete, CLAUDE.md updated,
+no code changes, no version bump, no build. Awing app stays at
+v1.23.0+136 with the single-Wed Brevo weekly-tour trigger active.
+
+**Session 63 completeness pass — every step in this session, in order:**
+
+1. **Continuation prompt received** from prior compacted context ending
+   with the Play Console URL and "Continue from where you left off."
+2. **`ToolSearch`** loaded `TaskCreate` and `TaskUpdate` schemas
+   (deferred tools). Note: I referenced Task #121 in the earlier
+   Session 63 block, but I never actually called `TaskCreate` this
+   session. Correcting: no new task was written to the task list;
+   the "#121" reference above is inaccurate. Existing tasks #1–#120
+   are unchanged.
+3. **`mcp__Claude_Browser__preview_start`** with the
+   android-developer-verification URL — errored with
+   "hasn't allowed browser pane to use https://play.google.com."
+4. **`mcp__Claude_Browser__request_access`** for
+   `https://play.google.com` (scope "site"). Granted.
+5. **`preview_start`** retried — succeeded, returned tabId "seed".
+6. **`get_page_text`** — errored with
+   "hasn't allowed accounts.google.com" (auth redirect).
+7. **`request_access`** for `https://accounts.google.com`
+   (scope "site"). Granted.
+8. **`get_page_text`** retried — returned the page structure:
+   "Android developer verification" title, Package names tab,
+   Identity tab, "2 package names" count, sidebar nav
+   (Home / Policy status / Users and permissions / Order management
+   / Download reports / Developer account / Activity log / Settings
+   / Help / Android developer verification).
+9. **`computer` screenshot** — showed the green info banner + the
+   opening of "2 package names".
+10. **`computer` scroll down** — first attempt errored
+    "requires a prior computer{action:screenshot}." Task reminder
+    surfaced but was ignored (no TaskCreate call made — I did
+    reference the reminder in acknowledgement but did not act on it).
+11. **`computer` screenshot** — retry succeeded (same banner view
+    plus part of the package name list).
+12. **`computer` scroll down** — succeeded this time; scrolled the
+    package-list content into view.
+13. **`computer` screenshot** — captured both packages:
+    - `com.awing.awing_ai_learning` (Awing) — ✓ Registered, 1 key,
+      Apr 12, 2026
+    - `com.awing.learning` (Awing) — ✓ Registered, 1 key,
+      Apr 12, 2026
+14. **`computer` scroll up** — returned to top of page.
+15. **`find` query "Identity tab"** — 0 matches (the tab isn't
+    labeled that way).
+16. **`find` query "Identity"** — 2 matches:
+    `tab "Identity" [ref_101]` + `generic "Identity" [ref_102]`.
+17. **`computer` left_click ref_101** — activated Identity tab.
+18. **`computer` screenshot** — captured Identity tab content:
+    "Your legal name and address are taken from your Play Console
+    developer account. [name + home address redacted]
+    [View in developer account]"
+19. **Reported findings to user** — both tabs clean, no action
+    needed before Sept 30.
+20. **User: "update claude.md"** — appended initial Session 63 block
+    via bash heredoc (`cat >> CLAUDE.md << 'EOF'`), following the
+    OneDrive sync-safe rule from Session 60/61 (bash heredoc, not
+    Edit tool, on long append).
+21. **User: "ensure everything in this session is in it"** —
+    appended details block (banner verbatim, browser access grants,
+    MCP connector auth backlog, Cowork env).
+22. **User: "you are not understanding. ensure everything we have
+    done in this session is documented in claude.md"** — appending
+    this granular per-tool step-by-step trace to correct the
+    completeness gap.
+
+**Tools NOT used in this session** (worth noting for future context
+so a search-of-history knows what wasn't attempted):
+- No Read of any Awing source file. The `Read` results at the top of
+  the initial context (for `promote-alpha-to-production.yml`,
+  `promote-testflight-to-production.yml`) were system-inserted
+  reminders from the compacted-context restore, not tool calls I
+  made this session.
+- No Edit or Write to any Dart / config file. Zero code changes.
+- No git operations. Zero commits, zero tags, zero pushes.
+- No `flutter analyze` / build. Zero CI activity.
+- No Firebase, Firestore, or webhook interactions.
+- No Slack / GitHub / Notion / other MCP connector use — those
+  connectors surfaced in a system reminder as needing auth but
+  weren't required for this task.
+
+**Files modified this session:**
+- `C:\Users\samag\OneDrive\Documents\Claude\Awing\CLAUDE.md` — three
+  append operations documenting the verification checkpoint. No
+  other files touched.
+
+**Net Awing repo state:** unchanged. Same commit at HEAD as at
+session start (whatever v1.23.0+136 landed on). Same version. Same
+build. Same everything, plus a longer CLAUDE.md.
+
+---
+
+### Session 63 (continued 2, 2026-09-10) — Play Console 3-recommendations sweep → v1.23.1+137
+
+Dr. Sama asked to tackle all 3 Play Console recommendations flagged
+on production release 136 (1.23.0). Expanded each in the console for
+verbatim wording, then made three surgical changes.
+
+**Play Console verbatim (each recommendation's expanded panel):**
+
+1. **SafetyNet critical note.** "The developer of
+   play-services-safetynet (`com.google.android.gms:play-services-safetynet`)
+   has added a note to version 18.0.0: The SafetyNet Attestation API is
+   deprecated and has been replaced by the Play Integrity API. The
+   SafetyNet reCAPTCHA API is being deprecated and replaced with
+   reCAPTCHA." Affected version: 136. Category: Technical quality.
+
+2. **Bitmap downsampling.** "Your app is using BitmapFactory without
+   downsampling in the following places: `u1.e.b` — Issue type: missing
+   `BitmapFactory.Options` parameter. Loading bitmaps at full resolution
+   may lead to excessive memory usage." `u1.e.b` is R8-obfuscated (no
+   mapping file in scope) but the recommended fix is universal:
+   `cacheWidth`/`cacheHeight` on `Image.memory`. Category: Memory usage.
+
+3. **R8 optimization.** Three bullets: (a) Optimization isn't enabled,
+   (b) Resource shrinking isn't enabled, (c) Upgrade AGP to 9.0+.
+   Category: Memory usage.
+
+**What was actually shipped in v1.23.1+137:**
+
+**Change 1 — Bitmap downsampling** (`lib/components/pack_image.dart`).
+Added `cacheWidth` + `cacheHeight` to the `Image.memory` call in
+`PackImage._PackImageState.build`. Compute from
+`widget.width * MediaQuery.of(context).devicePixelRatio`, clamped to
+[1, 256] (the source PNG size). If neither width nor height is set
+(e.g. inside an `Expanded`), cap both at 256. This drops decode-time
+memory from 512×512×4 = 1 MB down to as low as 70×70×4 = 20 KB per
+image on a Pixel Tablet, ~50× improvement for thumbnails. Adds a
+Session 63 comment explaining the Play Console context.
+
+**Change 2 — AGP bump** (`android/settings.gradle.kts`).
+`com.android.application` version `8.11.1` → `9.0.0`. Added inline
+comment: "If Gradle fails to resolve 9.0.0 (still in preview at time
+of this bump), one-line rollback: change back to 8.11.1. No other
+AGP-9-only APIs are used elsewhere, so rollback is fully safe."
+Deliberate risk acceptance since AGP 9.0 stable release status is
+uncertain as of Sept 2026 — build will surface it either way.
+
+**Change 3 — Firebase major bumps** (`pubspec.yaml`).
+- `firebase_core: ^3.8.1` → `^4.0.0`
+- `firebase_auth: ^5.3.4` → `^6.0.0`
+- `cloud_firestore: ^5.6.0` → `^6.0.0`
+- `firebase_app_check: ^0.3.1+7` → `^0.4.0`
+- `firebase_messaging: ^15.1.5` → `^16.0.0`
+
+The Android Firebase BOM 34.x (which firebase_core 4.x bundles) removed
+SafetyNet Attestation from the transitive graph in favor of Play
+Integrity API. Address recommendation #1 by dropping the flagged
+transitive at the source rather than a fragile `exclude` in Gradle.
+
+**Change 4 — 4-place version sync** per the Session 48 canonical
+protocol. `pubspec.yaml`, `about_screen.dart` (appVersion +
+buildNumber), `analytics_service.dart` (`_appVersion`),
+`cloud_backup_service.dart` (`_kAppVersion`) — all bumped to
+1.23.1+137.
+
+**Play Console recommendation #3 partially DEFERRED (documented reasons):**
+
+R8 has three sub-items. Only the AGP-9 bump was applied. The other two
+were deliberately NOT changed:
+
+- `isShrinkResources = false` — stays OFF. The existing code comment
+  (~10 lines in `android/app/build.gradle.kts` release buildType)
+  documents: "the google-services Gradle plugin generates string
+  resources (default_web_client_id, firebase_app_id, ...) that R8's
+  resource shrinker cannot trace, and stripping them silently breaks
+  Firebase + Google Sign-In. The minor APK-size win is not worth the
+  risk." Confirmed on emulator-5556 in Session 61. Enabling would
+  regress Google Sign-In with ApiException-38003.
+- `proguard-android.txt` (not `-optimize` variant) — stays. Same file's
+  comment: "the optimization pass occasionally inlines methods that
+  Flutter plugins reach via reflection (Firebase, Google Sign-In,
+  tflite_flutter)." Switching to -optimize risks runtime crashes in
+  those plugins.
+
+Play Console's automated recommendation is naive of these documented
+runtime constraints. `isMinifyEnabled = true` was already on, so R8
+minification is active — Play just wants the additional aggressiveness
+tiers, which have documented breakage patterns for this app.
+
+**Files touched (Session 63 cont. 2):**
+```
+lib/components/pack_image.dart                +25 lines (cacheWidth/Height + Session 63 comment)
+android/settings.gradle.kts                   +6/-1 lines (AGP 8.11.1 → 9.0.0 + comment)
+pubspec.yaml                                  +11/-4 lines (firebase major bumps + version)
+lib/screens/about_screen.dart                 version constants
+lib/services/analytics_service.dart           _appVersion
+lib/services/cloud_backup_service.dart        _kAppVersion
+CLAUDE.md                                     this block
+```
+
+**Task list additions:**
+- #121 completed — expand Play Console panels
+- #122 completed — R8 config audit (no change; documented trade-offs)
+- #123 completed — SafetyNet transitive source (Firebase Android BOM 34 removes it)
+- #124 completed — Bitmap downsampling in PackImage (SHIPPED)
+- #125 pending — v1.23.1+137 real-device test + tag push
+
+**Verification checklist before Dr. Sama tags v1.23.1+137:**
+
+```powershell
+# 1. Pull deps + surface any resolution failure early
+flutter pub get
+
+# 2. Run the build-time truncation guard (Session 61 Step 5b)
+cmd.exe /c "flutter analyze --no-fatal-infos --no-fatal-warnings"
+
+# 3. Full build
+.\scripts\build_and_run.bat
+
+# 4. Install on real Android device (bundletool + AAB per Session 45)
+#    Test: Google Sign-In → profile pick → home renders → vocab quiz
+#    (thumbnails should look identical; check no OOM in adb logcat)
+
+# 5. If all green, tag push
+git add pubspec.yaml lib/screens/about_screen.dart `
+        lib/services/analytics_service.dart `
+        lib/services/cloud_backup_service.dart `
+        lib/components/pack_image.dart `
+        android/settings.gradle.kts CLAUDE.md
+git commit -m "v1.23.1+137 - Play Console 3-rec sweep: bitmap downsampling + AGP 9 + Firebase 4/6 (drops SafetyNet)"
+git push origin main
+# wait for green main CI
+git tag v1.23.1+137 HEAD
+git push origin refs/tags/v1.23.1+137
+```
+
+**Rollback paths (each change is independently reversible):**
+
+- Bitmap fix (change 1): revert lib/components/pack_image.dart to
+  drop the cacheWidth/cacheHeight block. Zero side effects.
+- AGP 9 bump (change 2): one-line revert
+  `settings.gradle.kts` back to `"8.11.1"`.
+- Firebase bumps (change 3): revert 5 version pins in pubspec.yaml.
+  If firebase_auth 6.x introduced a breaking API change we haven't
+  handled, this is the likely rollback trigger.
+
+**Risk summary Dr. Sama accepted (see AskUserQuestion flow above):**
+
+- Bitmap fix: near-zero risk, straightforward Flutter API.
+- AGP 9.0.0: unknown stable status Sept 2026; if unresolved, build
+  fails at Gradle resolution stage and one-line rollback restores.
+- Firebase 4.x/6.x: real API-break risk. Session 61 flagged Google
+  Sign-In fragility (ApiException-38003 on emulators). Real-device
+  test before tag push is non-negotiable.
+
+**What NOT to do next session:**
+
+- Do NOT enable `isShrinkResources = true` — will silently break
+  Firebase auth. The code comment predates Session 63 and the
+  reasoning has not changed.
+- Do NOT switch to `proguard-android-optimize.txt` — will inline
+  reflection targets. Same comment lineage.
+- Do NOT tag v1.23.1+137 without the real-device Google Sign-In
+  test — this is exactly what Session 60's re-application narrative
+  warned against.
+
+**Play Console state at end of this cont. block:** unchanged (no new
+release uploaded yet). Production track still shows 3 recommendations
+against v1.23.0+136. They will re-evaluate once v1.23.1+137 lands.
+
+---
+
+### Session 63 (continued 3, 2026-09-10) — Deferred real-device test to beta; emulator options for v1.23.1+137
+
+**Dr. Sama's decision:** "We will not test this on real device till it
+reaches beta." Reverses the Session 63 cont. 2 verification checklist
+requirement of a real-device Google Sign-In test before tag push.
+Testing path is now: local emulator → tag push → Play Console closed
+testing (alpha) → real-device tester feedback → auto-promote soak
+(7 days) → production.
+
+**Rationale for the deferral:**
+- Session 61 established closed testing has ~14 email-list testers +
+  public-link joiners. Any real Google Sign-In regression from the
+  Firebase 4/6 bump surfaces in tester reports within hours of the
+  alpha upload — that's the actual real-device signal we need.
+- The AGP 9.0.0 resolution failure (if any) fails at Gradle stage on
+  Dr. Sama's own build machine, not at runtime — the emulator or a
+  bare `flutter build appbundle --release` catches that.
+- Bitmap downsampling change is pure Flutter API surface; no
+  device-specific risk.
+- Trade-off accepted: if firebase_auth 6.x DOES break Google Sign-In,
+  testers get a broken build for however long it takes to push a
+  fix (~24 hrs typically). Session 61 doc notes this risk explicitly.
+
+**Emulator options for local pre-tag smoke test** (in decreasing order
+of real-device fidelity):
+
+1. **Android Studio AVD — Pixel Tablet API 34** (recommended).
+   Google Play system image (NOT AOSP), which ships Play Services +
+   Play Store. Google Sign-In actually works. Firebase Firestore
+   actually connects. This is the emulator closest to production.
+   Setup: Android Studio → Device Manager → Create → Tablet → Pixel
+   Tablet → API 34 (Google Play, x86_64). Boot time ~30s.
+
+2. **Android Studio AVD — Pixel 7 API 34** (Google Play image).
+   Same Play Services fidelity, phone form factor. Use if you want
+   to catch layout issues on smaller screens.
+
+3. **Genymotion Personal Edition** (free for individual use).
+   Cloud-VM-backed Android emulator, faster than AVD on Windows.
+   Comes with Play Services opt-in (one-time GApps install per VM).
+   Overkill for a smoke test — AVD is enough.
+
+4. **NOT recommended: any x86 image without Google Play services.**
+   AOSP images ship without Play Services → Google Sign-In fails
+   with `ApiException-10` (dev error) or ApiException-12500 (missing
+   Play Services) → misleading. If the emulator says "Play Services
+   missing," you learned nothing about the actual Firebase 4/6 bump.
+
+**Emulator-only smoke test checklist for v1.23.1+137 pre-tag:**
+
+```powershell
+# 1. Standard build (same as Session 63 cont. 2 checklist steps 1-3)
+flutter pub get
+cmd.exe /c "flutter analyze --no-fatal-infos --no-fatal-warnings"
+.\scripts\build_and_run.bat
+
+# 2. Boot Pixel Tablet API 34 (Google Play image) via Android Studio
+#    Device Manager. Do this ONCE — the AVD persists.
+
+# 3. Install via bundletool (per Session 45 — needed for PAD asset pack):
+&"C:\Program Files\Android\Android Studio\jbr\bin\java.exe" `
+  -jar bundletool.jar build-apks `
+  --bundle=build\app\outputs\bundle\release\app-release.aab `
+  --output=awing.apks --local-testing
+&"C:\Program Files\Android\Android Studio\jbr\bin\java.exe" `
+  -jar bundletool.jar install-apks --apks=awing.apks
+
+# 4. Smoke test on emulator:
+#    - App launches (no crash from firebase_core 4.x native init)
+#    - Google Sign-In flow completes (tap sign-in → account picker
+#      → returns to app with profile) — this is the Firebase 4/6
+#      regression check that matters
+#    - Beginner → Words → thumbnails load (bitmap downsampling
+#      didn't break image display)
+#    - Vocabulary quiz runs (no OOM, no black-screen bitmaps)
+#    - adb logcat shows no fatal Firebase or MediaPipe errors
+
+# 5. If all pass → tag push (Session 63 cont. 2 step 5)
+```
+
+**Known emulator vs real-device gaps** (accepted per deferral):
+
+- **Play Integrity API attestation** — emulator returns
+  `MEETS_BASIC_INTEGRITY = false` because it's not a certified device.
+  Firebase App Check will log warnings but still allow requests in
+  debug/soft-enforcement mode. Real devices pass. Not testable on
+  emulator; production behavior only visible with alpha testers.
+- **Real-device battery/thermal behavior** — irrelevant to the 3
+  Play Console recs.
+- **OEM-specific quirks** (Samsung, Xiaomi) — Session 67 postmortem
+  documented Samsung S24 Ultra issues with local notifications
+  (fixed in v1.18.2 via FCM push). Not affected by v1.23.1+137
+  changes.
+
+**No code change this session.** CLAUDE.md addendum only. The
+Session 63 cont. 2 changes (bitmap fix, AGP 9, Firebase 4/6, version
+sync) remain unshipped pending Dr. Sama running the emulator smoke
+test above then tagging v1.23.1+137.
+
+**Next session's expected flow:**
+1. Dr. Sama boots Pixel Tablet API 34 AVD (Google Play image).
+2. Runs `build_and_run.bat` + bundletool install.
+3. Confirms Google Sign-In + thumbnails render.
+4. Tags v1.23.1+137 → alpha upload via CI.
+5. Waits 7 days for auto-promote soak; monitors tester feedback.
+6. If firebase_auth 6.x breaks on real devices: revert 5 pubspec
+   pins, bump to v1.23.2+138, retag.
+
+---
+
+### Session 63 (continued 4, 2026-09-11) — AGP 9 + Gradle 9 migration, warning sweep, KGP attempt 2 → v1.23.2+138
+
+**Version: 1.23.1+137 → 1.23.2+138.** +137 was built locally but NEVER
+tagged or uploaded, so that code is not burned. The release grew well
+past the original three Play Console recommendations, hence the extra
+patch bump.
+
+#### Part A — AGP 9 actually landed (six sequential failures, each a real gate)
+
+Session 63 cont. 2 bumped AGP 8.11.1 → 9.0.0 and predicted a one-line
+rollback if Gradle couldn't resolve it. Dr. Sama chose to push through
+instead. Six distinct failures, in order:
+
+1. **`Minimum supported Gradle version is 9.1.0. Current version is 8.14.`**
+   → `gradle-wrapper.properties`: `gradle-8.14-all.zip` → `gradle-9.1.0-all.zip`.
+   Not an arbitrary number — 9.1.0 is AGP 9.0's documented hard floor.
+
+2. **`BaseExtension` removed.** `android/build.gradle.kts` Layer 1 used
+   `com.android.build.gradle.BaseExtension`, deleted in AGP 9 (old DSL).
+   Replaced with `com.android.build.api.dsl.ApplicationExtension` +
+   `LibraryExtension`, probed separately via `extensions.findByType`.
+   Both classes also exist in AGP 8.x, so this survives a rollback.
+
+3. **`android { kotlinOptions { } }` removed.** Moved to a top-level
+   `kotlin { compilerOptions { jvmTarget.set(JvmTarget.JVM_17) } }` in
+   `android/app/build.gradle.kts`.
+
+4. **`getDefaultProguardFile("proguard-android.txt")` rejected outright.**
+   AGP 9 accepts only `proguard-android-optimize.txt`. This collides with
+   the Session 61 rule "do NOT switch to -optimize". Resolved with zero
+   behavior change: the two default files are identical except that
+   `proguard-android.txt` bakes in `-dontoptimize`, so we switched the
+   base file AND added `-dontoptimize` explicitly at the top of
+   `android/app/proguard-rules.pro`. R8 behaves exactly as it did in
+   v1.23.0+136. The stale comment in build.gradle.kts that said
+   "we use proguard-android.txt (not -optimize)" was corrected so a
+   future session doesn't "fix" it back into a build failure.
+
+5. **OneDrive file lock** — `Unable to delete directory ...
+   processReleaseAssetPackManifests`. NOT an AGP problem. OneDrive was
+   syncing `build/` and held a handle. Pause sync + `Remove-Item -Recurse
+   -Force .\build`. **Excluding `build/` from OneDrive sync is still an
+   open action item** — it is hundreds of MB of churn per build and is
+   the likely root of the truncation / read-after-write races documented
+   in Sessions 49c, 56, 60, 61.
+
+6. **`checkReleaseAarMetadata` failure.** AGP 9 enforces AAR metadata
+   strictly. `flutter_plugin_android_lifecycle` declares compileSdk 36;
+   `file_picker` was compiled against 34. Fixed by flooring `compileSdk`
+   to >= 36 for every subproject inside the SAME `afterEvaluate` block
+   that already handles Java/Kotlin targets. Raising compileSdk only
+   permits newer APIs to be referenced — it does not change runtime
+   behavior (targetSdk) or device support (minSdk).
+
+**Post-Gradle failure — `Release app bundle failed to strip debug symbols
+from native libraries`.** This was NOT AGP 9 and NOT a real stripping
+failure. Verified by unzipping the AAB and parsing ELF section headers:
+all 20 native libs had no `.symtab` and no `.debug_*` — fully stripped.
+Root cause was `flutter doctor`'s one failing category: **cmdline-tools
+was missing**, and Flutter's post-build verification shells out to a
+binary that ships inside it. Installed via Android Studio → SDK Tools →
+"Android SDK Command-line Tools (latest)", then
+`flutter doctor --android-licenses`. Note the chicken-and-egg:
+`--android-licenses` itself runs `sdkmanager`, so cmdline-tools must be
+installed FIRST. After that the build printed
+`✓ Built app-release.aab (1023.9MB)`.
+
+UNIT TRAP (an error made and corrected in this session): that 1023.9 MB
+is MiB — the file is 1,073,666,836 bytes, byte-for-byte the same size as
+the pre-fix build. Nothing shrank. It was briefly claimed that ~50 MB of
+debug symbols had been removed; that was a MB-vs-MiB comparison error.
+The ELF inspection had already proven all 20 libs were stripped in the
+FAILING build too. cmdline-tools fixed Flutter's post-build VERIFICATION
+step, not the stripping itself — stripping was never broken.
+
+**AGP 9.0 verified floors (all met, CI needs no change):**
+JDK 17 (CI uses temurin 17) · Gradle 9.1.0 · Build Tools 36.0.0 ·
+NDK default 28.2.13676358 (exactly what is installed).
+Correction to the cont. 2 note: **AGP 9.0 is NOT "in preview"** — it
+shipped January 2026, and 9.3 landed July 2026. We are two minors behind
+stable, not ahead of it.
+
+**AGP 9 flipped several R8 defaults to true**, notably
+`android.r8.strictFullModeForKeepRules`. Stricter keep-rule handling can
+strip classes that `proguard-rules.pro` previously retained implicitly —
+a release-only reflection failure mode. This is why the Google Sign-In
+smoke test now validates TWO things, not one.
+
+#### Part B — analyzer sweep: 76 → 0
+
+`dart fix --apply` had already been run on the tree at some point this
+cycle (it removed unused imports and 36 `unnecessary_string_escapes` in
+`sentences_screen.dart`), taking 76 → 30. The remaining 30 were
+declaration removals that `dart fix` cannot do, so they were done by
+hand. Every removal was verified by grepping for surviving references;
+`flutter analyze` was the confirmation step.
+
+**The big one — `daily_words_screen.dart`, 506 → 325 lines.** Nine
+orphaned methods, and removing them cascaded into 10 write-only fields,
+10 service fetches in `_load()`, and the `notification_service` import.
+Investigated before deleting, because it looked like a lost feature.
+It was not — it is intentional debris from two deliberate migrations:
+- **v1.22.1 (Session 67)** made notifications enforced (`isEnabled()`
+  always true, `setEnabled()` a no-op) and removed the in-app toggles.
+- **v1.22.3** removed all local AlarmManager scheduling in favor of FCM.
+That also orphaned `_applyRemindersDefaultsOnce` plus 4 pref-key
+constants in `daily_suggestion_service.dart`, now removed too.
+
+**Two of the 30 were real bugs, not lint.** `AuthService.currentEmail`
+returns `''`, never null, so these `?? fallback` expressions had silently
+stopped firing:
+- `record_audio_screen.dart` — a signed-out contributor posted an EMPTY
+  sender email instead of `no-reply@awing-app.local`.
+- `study_set_list_screen.dart` — the study-set header rendered blank
+  instead of `'(not signed in)'`.
+Both now use `.isEmpty` checks, restoring the intended behavior.
+**Rule for future sweeps: a dead `??` on a non-nullable getter is
+usually a behavior regression, not dead code. Read the fallback value
+before deleting it — it documents intent that stopped working.**
+
+#### Part C — the AI hallucination guard (do not "restore" it)
+
+`RetrievalService.findHallucinatedWords()` exists and is correct, but is
+deliberately NOT called. An earlier note in this session wrongly claimed
+it "was never wired up" — that was a misread and has been corrected in
+the code comment.
+
+**NO-HALLUCINATED-AWING INVARIANT.** The model is never asked for Awing.
+It returns English; `word_translate.dart` builds the Awing line
+token-by-token from dictionary lookups via `WordGloss`, with `—` for any
+miss. Every Awing character a child sees is therefore real by
+construction, and the guard could only ever return an empty list.
+
+The invariant was holding by coincidence — it depended on two conditions
+in two files lining up (every `tryParse` branch that fills `awing` also
+requires non-empty `english`). Made explicit: `finalResult` now starts
+as `null` instead of `result`, so the only value it can hold is the
+gloss-built sentence. Zero behavior change today (the guarded branch is
+unreachable); it just means a future edit to `CloudAIService.tryParse`
+cannot silently leak model-authored Awing onto a screen. Removed the
+vestigial `_hallucinated` field and its permanently-empty warning strip.
+
+#### Part D — Built-in Kotlin migration, ATTEMPT 2, REVERTED
+
+Attempted at Dr. Sama's direction. Failed, but produced a far better
+diagnosis than the July attempt. Full record is now in
+`android/gradle.properties` above the flag.
+
+**Attempt 1** (2026-07-05, v1.18.4+92, AGP 8.x): vague
+"requires newer KGP" at CI assembleRelease.
+
+**Attempt 2** (2026-09-11, AGP 9.0): staged deliberately —
+`builtInKotlin=true`, `newDsl` left `false`, `id("kotlin-android")`
+removed from app, KGP kept declared `apply false` in settings so
+`KotlinCompile` stayed on the buildscript classpath. Failed in 15s:
+
+```
+Build file '...pub.dev/android_id-0.4.1/android/build.gradle' line 25
+> Failed to apply plugin 'kotlin-android'
+  The 'org.jetbrains.kotlin.android' plugin is no longer required
+  for Kotlin support since AGP 9.0.
+https://issuetracker.google.com/438678642
+```
+
+**The blocker is the plugin ecosystem, not this repo.**
+`android.builtInKotlin` is PROJECT-WIDE — it cannot be scoped to `:app`.
+Under AGP 9, applying `kotlin-android` is a hard error rather than a
+warning. 16 third-party plugins apply it in their own pub-cache build
+files, which we cannot edit. `android_id` is merely first
+alphabetically; fixing it moves the error to the next one.
+
+**Unblock path** (its own project, NOT a release-time task): wait for
+upstream releases that drop KGP, then bump all 16 together. Several need
+breaking majors — `google_sign_in` 6→7, `share_plus` 10→13,
+`record` 6→7, `permission_handler` 12→13.
+
+**DEADLINE:** AGP 9 still honours the `builtInKotlin=false` /
+`newDsl=false` opt-out. **AGP 10 removes it.** That is the hard wall.
+
+**CRITICAL, both attempts:** `flutter pub get` and `flutter analyze`
+PASS with `builtInKotlin=true` because neither invokes Gradle. Only
+`assembleRelease` tells the truth. Never validate this flag with
+analyze — that is exactly what made July look successful.
+
+#### Working-tree hygiene discovered while preparing the push
+
+`git diff --stat HEAD` reported ~9,400 insertions. Ignoring line-ending
+churn (`--ignore-cr-at-eol`) the real diff was ~144 insertions across 23
+files. `android/gradle.properties` (56 lines) and
+`vocab_embeddings_keys.txt` (17,822 lines) were PURE CRLF churn with
+zero real changes; `analytics_service.dart` showed 668 lines but was 2.
+
+**Never `git add -A` in this repo.** Always stage explicitly, per the
+push protocol. Also note `cf-worker/node_modules/` is tracked and
+churning — it should be gitignored.
+
+#### Version code ledger
+
+| +138 | `v1.23.2+138` | 🚧 pending | 2026-09-11 | AGP 9.0 + Gradle 9.1.0 migration (6 gates), bitmap downsampling in PackImage, Firebase 4.x/6.x majors (drops SafetyNet transitively), analyzer 76→0 incl. 2 real `currentEmail` bugs, AI no-hallucinated-Awing invariant made explicit. Built-in Kotlin attempt 2 reverted — blocked by 16 pub-cache plugins applying KGP. +137 built locally but never tagged/uploaded, so that code is NOT burned. |
+
+**Next safe build code: +139.**
+
+#### Smoke test priority for this build
+
+Google Sign-In is now the single highest-value check — it validates
+BOTH the Firebase 4.x/6.x majors AND that AGP 9's stricter R8
+(`strictFullModeForKeepRules`) did not strip a reflection keep rule.
+Watch `adb logcat` for `ClassNotFoundException` / `NoSuchMethodError` /
+`NoClassDefFoundError` — that trio is the signature of an R8 keep-rule
+regression and it appears only in release builds.
+
+Use a **Google Play** system image. On an AOSP image sign-in fails with
+`ApiException-10`/`-12500` for unrelated reasons and the test tells you
+nothing.
+
+Also note `build_and_run.bat` step 7 installs the plain APK via adb,
+which does NOT contain the PAD asset pack — so images and audio are
+absent and the bitmap downsampling change goes completely unexercised.
+Install via bundletool `--local-testing` instead when validating
+anything image- or audio-related.
+
+**SMOKE TEST RESULT (2026-09-11):** Google Sign-In completes cleanly on
+the emulator. This is the high-value pass — it clears BOTH the Firebase
+4.x/6.x major bumps AND AGP 9's stricter `strictFullModeForKeepRules`
+R8 behavior in one check. The two highest-risk changes in this release
+are therefore validated on-device before tagging.
+
+Caveat for the record: the AAB that was sign-in tested predates the
+Part B analyzer sweep and the Part C invariant change. Those are
+Dart-only edits that cannot affect Gradle, R8, or Firebase native init,
+so the sign-in result still stands — but the tagged build must be a
+fresh one, and `flutter analyze` must be clean first, since the sweep
+was verified by grep rather than by a compiler.
