@@ -12,11 +12,12 @@ const Duration _autoSyncDebounce = Duration(minutes: 2);
 /// Keep in sync with AboutScreen.appVersion and AboutScreen.buildNumber.
 /// Stamped on every Firestore doc so Developer Mode can see which client
 /// last wrote a given user's data.
-const String _kAppVersion = '1.23.2+138';
+const String _kAppVersion = '1.23.3+139';
 
 /// Cloud backup service using Firebase Firestore.
 ///
-/// Data is stored per Google account email in Firestore:
+/// Data is stored per signed-in account email (Google OR Apple) in
+/// Firestore:
 ///   users/{email}/data/accounts   — user accounts with profiles
 ///   users/{email}/data/progress   — learning progress, XP, badges, streaks
 ///   users/{email}/data/settings   — app settings (theme, analytics opt-out)
@@ -64,9 +65,141 @@ class CloudBackupService extends ChangeNotifier {
     return 'users/$sanitized';
   }
 
-  Future<void> initialize() async {
+  // ==================== Auth provider awareness (v1.23.3) ====================
+  //
+  // Session 64 fix. The app offers BOTH Google Sign-In and Sign in with
+  // Apple (the latter is mandatory under App Store Review Guideline 4.8
+  // once a third-party provider is offered). Every path in this file
+  // predated Apple and treated `loginGoogleSignIn` as the only source of
+  // truth for "is someone signed in, and who?".
+  //
+  // Consequence, shipped and unnoticed: an Apple user got a perfectly
+  // valid Firebase Auth session from login_screen.dart, but this service
+  // never set `_isSignedIn` or `_connectedEmail`, so backupAll(),
+  // restoreAll(), getBackupInfo() and onDataChanged() all early-returned.
+  // Worse, initialize() actively signed the Apple session OUT on every
+  // cold start because Google silent sign-in returned null. Net result:
+  // zero Apple accounts have ever written a document to Firestore, and
+  // FCM token registration / recordings / study sets all failed for them
+  // from the second launch onward.
+
+  /// Auth provider ids linked to the live Firebase session
+  /// (e.g. 'google.com', 'apple.com'). Empty when signed out.
+  static Set<String> firebaseProviders() {
+    final u = FirebaseAuth.instance.currentUser;
+    if (u == null) return const <String>{};
+    return u.providerData.map((p) => p.providerId).toSet();
+  }
+
+  /// True when the live Firebase session came from Sign in with Apple.
+  static bool get isAppleSession =>
+      firebaseProviders().contains('apple.com');
+
+  /// Normalise an email the same way [_userDocPath] and firestore.rules
+  /// `emailKey()` do, so the client and the rules can never disagree.
+  static String? _normalizeEmail(String? raw) {
+    final e = raw?.trim().toLowerCase();
+    return (e == null || e.isEmpty) ? null : e;
+  }
+
+  /// Adopt a Firebase Auth session this service did not create itself.
+  ///
+  /// The Apple flow in login_screen.dart performs its own
+  /// `signInWithCredential` and then hands off to AuthService, so nothing
+  /// here ever learned about it. Call this immediately after that
+  /// exchange to make the user visible to every sync path below.
+  Future<void> adoptFirebaseSession({String? email}) async {
+    await initialize();
+    final user = FirebaseAuth.instance.currentUser;
+    // Prefer the FIREBASE email over any caller-supplied one: it is the
+    // exact value firestore.rules evaluates as `request.auth.token.email`.
+    // The Apple flow can fall back to `appleCredential.email`, which may
+    // differ from what Firebase minted into the token (Hide My Email
+    // resolves to an @privaterelay.appleid.com forwarder). Writing the
+    // doc under a different key than the rules check = permission denied.
+    final resolved = _normalizeEmail(user?.email) ?? _normalizeEmail(email);
+    if (user == null || resolved == null) {
+      debugPrint('adoptFirebaseSession: no Firebase user/email to adopt');
+      return;
+    }
+    _isSignedIn = true;
+    _connectedEmail = resolved;
+    _autoSync = true;
+    // `_prefs` is `late` and only assigned by a SUCCESSFUL _doInitialize.
+    // If initialize() failed we still want the in-memory session so this
+    // run can sync; we just skip persisting the flag rather than throwing
+    // a LateInitializationError into the sign-in flow.
+    if (_initialized) {
+      _prefs.setBool(_keyAutoSync, true);
+    }
+    _syncError = null;
+    debugPrint('Auth: adopted ${firebaseProviders().join(",")} '
+        'session for $resolved');
+    notifyListeners();
+  }
+
+  /// Watches Firebase Auth so our cached session state can never outlive
+  /// the real session.
+  ///
+  /// v1.23.3 (Session 64). AuthService.logout() and this class's own
+  /// signOut() both drop the Firebase session, but only the latter
+  /// cleared `_isSignedIn` / `_connectedEmail`. That left a window where
+  /// a logged-out user's now-empty local data could be auto-synced
+  /// straight over the PREVIOUS account's cloud document. Reacting to
+  /// the auth stream fixes it for every sign-out path, present and
+  /// future, regardless of provider.
+  StreamSubscription<User?>? _authSub;
+
+  @override
+  void dispose() {
+    _authSub?.cancel();
+    super.dispose();
+  }
+
+  /// Guards against concurrent initialize() calls. Without this, a caller
+  /// that awaits initialize() while it is already in flight would return
+  /// before `_prefs` was assigned and then throw on first use.
+  Future<void>? _initFuture;
+
+  Future<void> initialize() {
+    final existing = _initFuture;
+    if (existing != null) return existing;
+    // v1.23.3 (Session 64), hardened after review: memoise so concurrent
+    // callers share ONE run, but DROP the memo if that run fails.
+    //
+    // `_initFuture ??= _doInitialize()` alone would cache a REJECTED
+    // future forever: SharedPreferences.getInstance() sits outside
+    // _doInitialize's try/catch, so one transient failure would make
+    // every later initialize() re-throw for the life of the process.
+    // adoptFirebaseSession() awaits this, so BOTH sign-in paths would
+    // break permanently. Clearing the memo restores the pre-memo
+    // behaviour of retrying on the next call.
+    final started = _doInitialize().catchError((Object e) {
+      _initFuture = null;
+      debugPrint('CloudBackupService.initialize failed ($e) — '
+          'will retry on next call.');
+    });
+    _initFuture = started;
+    return started;
+  }
+
+  Future<void> _doInitialize() async {
     if (_initialized) return;
     _prefs = await SharedPreferences.getInstance();
+
+    _authSub ??= FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user != null) return;
+      // Re-check synchronously. Guards against a transient null emitted
+      // while Firebase restores its persisted session on cold start —
+      // acting on that would wipe a session we had just adopted.
+      if (FirebaseAuth.instance.currentUser != null) return;
+      if (!_isSignedIn && _connectedEmail == null) return;
+      debugPrint('Auth: Firebase session ended — clearing cached '
+          'cloud session for $_connectedEmail');
+      _isSignedIn = false;
+      _connectedEmail = null;
+      notifyListeners();
+    });
     _autoSync = _prefs.getBool(_keyAutoSync) ?? true;
     _lastBackupTime = _prefs.getString(_keyLastBackup);
 
@@ -76,7 +209,7 @@ class CloudBackupService extends ChangeNotifier {
       final account = await loginGoogleSignIn.signInSilently();
       if (account != null) {
         _isSignedIn = true;
-        _connectedEmail = account.email;
+        _connectedEmail = _normalizeEmail(account.email);
         // Force-refresh Firebase Auth in case the persisted token is stale
         // (a v1.12.x → v1.13.x upgrade silently invalidates the refresh
         // token; without this check the user appears signed-in locally
@@ -84,15 +217,48 @@ class CloudBackupService extends ChangeNotifier {
         // and returns empty Cloud Users + Review tabs in Dev Mode).
         await _ensureFirebaseAuth(account);
       } else if (FirebaseAuth.instance.currentUser != null) {
-        // Google silent sign-in returned null, but Firebase Auth still
-        // has a session object. The Google credential is gone — Firebase
-        // Auth is now an orphan. Drop it so the auth gate routes to
-        // login screen on first frame and the user gets a clean re-auth.
-        debugPrint('Auth recovery: Google silent SI returned null but '
-            'Firebase Auth has currentUser — signing out to clear stale session.');
-        try {
-          await FirebaseAuth.instance.signOut();
-        } catch (_) {}
+        final user = FirebaseAuth.instance.currentUser!;
+        if (isAppleSession) {
+          // v1.23.3 (Session 64): a Sign in with Apple session is
+          // INVISIBLE to loginGoogleSignIn.signInSilently() — it returns
+          // null for a perfectly healthy Apple user. The orphan-recovery
+          // branch below was written for the v1.12.x -> v1.13.x Google
+          // refresh-token bug and predates Apple, so it could not tell
+          // the two apart and signed Apple users out on EVERY cold
+          // start. That single line is why no Apple account has ever
+          // appeared in Firestore.
+          //
+          // Validate the session for real (force an ID-token refresh),
+          // then adopt it instead of destroying it.
+          var valid = false;
+          try {
+            final token = await user.getIdToken(true);
+            valid = token != null && token.isNotEmpty;
+          } catch (e) {
+            debugPrint('Auth: Apple session token refresh failed ($e)');
+          }
+          final email = _normalizeEmail(user.email);
+          if (valid && email != null) {
+            _isSignedIn = true;
+            _connectedEmail = email;
+            debugPrint('Auth: adopted existing Apple session for $email');
+          } else {
+            debugPrint('Auth: Apple session is genuinely stale — clearing.');
+            try {
+              await FirebaseAuth.instance.signOut();
+            } catch (_) {}
+          }
+        } else {
+          // Google silent sign-in returned null, but Firebase Auth still
+          // has a session object. The Google credential is gone — Firebase
+          // Auth is now an orphan. Drop it so the auth gate routes to
+          // login screen on first frame and the user gets a clean re-auth.
+          debugPrint('Auth recovery: Google silent SI returned null but '
+              'Firebase Auth has currentUser — signing out to clear stale session.');
+          try {
+            await FirebaseAuth.instance.signOut();
+          } catch (_) {}
+        }
       }
     } catch (e) {
       debugPrint('Cloud backup silent sign-in check failed: $e');
@@ -173,7 +339,7 @@ class CloudBackupService extends ChangeNotifier {
 
       await _ensureFirebaseAuth(account);
       _isSignedIn = true;
-      _connectedEmail = account.email;
+      _connectedEmail = _normalizeEmail(account.email);
       _autoSync = true;
       _prefs.setBool(_keyAutoSync, true);
       _syncError = null;
@@ -440,17 +606,27 @@ class CloudBackupService extends ChangeNotifier {
     if (_isSyncing) return false;
     try {
       final account = await loginGoogleSignIn.signInSilently();
-      if (account == null) {
-        debugPrint('Auto-restore: not signed in');
-        return false;
+      if (account != null) {
+        _isSignedIn = true;
+        _connectedEmail = _normalizeEmail(account.email);
+        await _ensureFirebaseAuth(account);
+      } else {
+        // v1.23.3 (Session 64): Apple users are invisible to Google
+        // silent sign-in, so fall back to whatever Firebase already
+        // holds. Before this, tryAutoRestore() returned false for every
+        // Apple user, meaning they got no data back on a new device.
+        final user = FirebaseAuth.instance.currentUser;
+        final email = _normalizeEmail(user?.email);
+        if (user == null || email == null) {
+          debugPrint('Auto-restore: not signed in');
+          return false;
+        }
+        _isSignedIn = true;
+        _connectedEmail = email;
       }
 
-      _isSignedIn = true;
-      _connectedEmail = account.email;
-      await _ensureFirebaseAuth(account);
-
       debugPrint(
-        'Auto-restore: signed in as ${account.email}, checking Firestore...',
+        'Auto-restore: signed in as $_connectedEmail, checking Firestore...',
       );
       final result = await restoreAll();
 

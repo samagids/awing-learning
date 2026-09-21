@@ -7,6 +7,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'cloud_backup_service.dart';
 import '../screens/about_screen.dart' show AboutScreen;
 
@@ -263,27 +265,81 @@ class ContributionService extends ChangeNotifier {
   /// We never throw on token-fetch failure — a privileged call without
   /// a token will simply be rejected by the server, which is the
   /// correct outcome.
+  /// v1.23.3 (Session 64) — TWO changes, both learned from the Apple
+  /// cloud-backup bug fixed in the same release.
+  ///
+  /// 1. ATTACH A FIREBASE TOKEN TOO. This method only ever consulted
+  ///    `loginGoogleSignIn`. A developer signed in with Sign in with
+  ///    Apple has NO Google account, so `currentUser` is null,
+  ///    `signInSilently()` returns null, and the payload went out with
+  ///    no token at all — the server then correctly answered
+  ///    'unauthorized' and Developer Mode > Review simply never synced.
+  ///    Identical root cause to CloudBackupService being Google-only.
+  ///    The Firebase ID token is provider-agnostic, so we send both and
+  ///    let the server accept whichever it can verify.
+  ///
+  /// 2. FAIL LOUDLY. Every exit path here used to be silent (two bare
+  ///    `return`s, and a `print` gated behind kDebugMode that never runs
+  ///    in a release build). "Sync failed: unauthorized" gave no clue
+  ///    whether the cause was no account, a null token, or an
+  ///    exception. Session 49's rule — every silent failure is a bug —
+  ///    applies here as much as it did to the TTS pipeline. These use
+  ///    `debugPrint`, which DOES reach logcat in release builds.
   Future<void> _attachAuthIfPrivileged(Map<String, dynamic> payload) async {
     final action = payload['action']?.toString() ?? '';
     if (!_privilegedActions.contains(action)) return;
+
+    // ---- Google OAuth ID token (unchanged path, still preferred) ----
     try {
-      // Reach into the same Google sign-in instance the cloud backup
-      // service uses, so we don't trigger a second silent sign-in.
       final account = CloudBackupService.loginGoogleSignIn.currentUser
           ?? await CloudBackupService.loginGoogleSignIn.signInSilently();
-      if (account == null) return;
-      final googleAuth = await account.authentication;
-      final idToken = googleAuth.idToken;
-      if (idToken != null && idToken.isNotEmpty) {
-        payload['idToken'] = idToken;
+      if (account == null) {
+        debugPrint('ContributionService[$action]: no Google account '
+            '(signed in with Apple, or Google session expired) — '
+            'falling back to the Firebase ID token.');
+      } else {
+        final googleAuth = await account.authentication;
+        final idToken = googleAuth.idToken;
+        if (idToken != null && idToken.isNotEmpty) {
+          payload['idToken'] = idToken;
+        } else {
+          debugPrint('ContributionService[$action]: Google account '
+              '${account.email} returned a NULL idToken. This usually '
+              'means default_web_client_id is missing from the build '
+              '(google-services.json / R8 resource shrinking).');
+        }
       }
     } catch (e) {
-      // Token fetch can fail for many benign reasons (offline, network,
-      // user signed out mid-call). Don't blow up — server rejects
-      // privileged calls without a token, which is the safe default.
-      if (kDebugMode) {
-        print('ContributionService: googleAuth.idToken failed: $e');
+      debugPrint('ContributionService[$action]: googleAuth.idToken '
+          'threw: $e');
+    }
+
+    // ---- Firebase ID token (works for Google AND Apple) ----
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        debugPrint('ContributionService[$action]: no Firebase session '
+            'either — this call WILL be rejected as unauthorized.');
+      } else {
+        final fbToken = await user.getIdToken();
+        if (fbToken != null && fbToken.isNotEmpty) {
+          payload['firebaseIdToken'] = fbToken;
+        } else {
+          debugPrint('ContributionService[$action]: Firebase '
+              'getIdToken() returned null/empty for ${user.email}.');
+        }
       }
+    } catch (e) {
+      debugPrint('ContributionService[$action]: Firebase getIdToken '
+          'threw: $e');
+    }
+
+    if (!payload.containsKey('idToken') &&
+        !payload.containsKey('firebaseIdToken')) {
+      debugPrint('ContributionService[$action]: NO TOKEN ATTACHED — '
+          'the server will answer "unauthorized". Check which account '
+          'the app is signed in as; the webhook only accepts the '
+          'developer address.');
     }
   }
 
@@ -458,6 +514,17 @@ class ContributionService extends ChangeNotifier {
       final n = acc?.displayName?.trim();
       if (n != null && n.isNotEmpty) {
         googleDisplayName = n;
+      }
+      // v1.23.3 (Session 64): Apple contributors have no Google account,
+      // so the lookup above always returned null and they were credited
+      // by short local profile name instead of their real name. Fall
+      // back to the Firebase display name, which login_screen.dart now
+      // populates from the Apple credential on first sign-in.
+      if (googleDisplayName == null) {
+        final fb = FirebaseAuth.instance.currentUser?.displayName?.trim();
+        if (fb != null && fb.isNotEmpty) {
+          googleDisplayName = fb;
+        }
       }
     } catch (e) {
       if (kDebugMode) {

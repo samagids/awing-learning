@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.23.2+138
+version: 1.23.3+139
 environment:
   sdk: ">=3.4.0 <4.0.0"
 

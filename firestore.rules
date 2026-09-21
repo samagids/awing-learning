@@ -42,8 +42,15 @@ service cloud.firestore {
     // Compute the sanitized email key the client uses to derive a userId.
     // Matches cloud_backup_service.dart `_userDocPath()`:
     //   emailKey = email.toLowerCase().replaceAll('.', '_dot_')
+    // v1.23.3 (Session 64): explicitly guard a missing token.email.
+    // Sign in with Apple is now a supported provider, and an Apple token
+    // carries either the real address or an @privaterelay.appleid.com
+    // forwarder. Both are fine, but if email were ever absent the
+    // unguarded .lower() below raised an evaluation error rather than a
+    // clean deny. Returning a sentinel that can never match a real doc
+    // id keeps the failure mode boring and legible.
     function emailKey() {
-      return request.auth != null
+      return request.auth != null && request.auth.token.email != null
           ? request.auth.token.email.lower().replace('\\.', '_dot_')
           : '';
     }

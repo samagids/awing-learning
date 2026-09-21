@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
 import 'package:awing_ai_learning/services/fcm_service.dart';
 
@@ -413,6 +414,21 @@ class AuthService extends ChangeNotifier {
     // Sign out of Google so the login screen shows the account picker next time
     try {
       await CloudBackupService.loginGoogleSignIn.signOut();
+    } catch (_) {}
+    // v1.23.3 (Session 64): ALSO drop the Firebase Auth session.
+    //
+    // Before this, logout() cleared only the Google plugin's cache. For
+    // Google users the stale Firebase session happened to be swept up by
+    // CloudBackupService.initialize()'s orphan check on the next cold
+    // start, so the leak was invisible. For Apple users nothing cleared
+    // it at all.
+    //
+    // This line is REQUIRED by the initialize() fix in the same release:
+    // now that a healthy Apple session is ADOPTED rather than signed out,
+    // omitting this would leave a logged-out Apple user still
+    // authenticated to Firestore as themselves on the next launch.
+    try {
+      await FirebaseAuth.instance.signOut();
     } catch (_) {}
     notifyListeners();
   }

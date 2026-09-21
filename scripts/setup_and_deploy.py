@@ -29,6 +29,7 @@ import sys
 import webbrowser
 from pathlib import Path
 from datetime import datetime
+import urllib.request
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
@@ -129,6 +130,46 @@ def _existing_deployment_id(config_key):
     return m.group(1) if m else None
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Stops urllib turning an Apps Script POST into a GET. See the long
+    note in verify_contributions_webhook._post for why this matters."""
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def _post_follow(req, timeout=45, max_hops=5):
+    """POST, then follow Apps Script's 302 chain with GETs by hand.
+
+    Returns the final response body as bytes. Mirrors
+    ContributionService._postToWebhook in the Dart client, which does
+    exactly this and is the only client in the codebase that reads
+    doPost results correctly.
+    """
+    opener = urllib.request.build_opener(_NoRedirect)
+    try:
+        with opener.open(req, timeout=timeout) as r:
+            return r.read()
+    except HTTPError as e:
+        if e.code not in (301, 302, 303, 307, 308):
+            raise
+        location = e.headers.get('Location')
+        if not location:
+            raise
+        for _ in range(max_hops):
+            try:
+                with opener.open(
+                        Request(location), timeout=timeout) as r2:
+                    return r2.read()
+            except HTTPError as e2:
+                if e2.code not in (301, 302, 303, 307, 308):
+                    raise
+                nxt = e2.headers.get('Location')
+                if not nxt:
+                    raise
+                location = nxt
+        raise RuntimeError('too many redirects from Apps Script')
+
+
 def verify_contributions_webhook(url):
     """Confirm the deployed contributions webhook is the latest code.
 
@@ -169,9 +210,24 @@ def verify_contributions_webhook(url):
                 req = Request(url, data=data, headers={
                     'Content-Type': 'application/json; charset=utf-8',
                 })
-                with urlopen(req, timeout=45) as r:
-                    return json.loads(
-                        r.read().decode('utf-8', errors='replace'))
+                # v1.23.3 (Session 64) — CRITICAL: do NOT let urllib
+                # auto-follow the redirect.
+                #
+                # Apps Script answers every POST with a 302. urllib's
+                # default HTTPRedirectHandler converts POST -> GET when
+                # it follows, which lands on doGet() and returns the
+                # health payload {status:'ok', service:'Awing
+                # Contributions'} — no 'version', no 'message'. Step 1
+                # below then saw status ok but no version key and
+                # declared the deployment stale, failing the build on a
+                # deployment that was perfectly fine.
+                #
+                # Same trap bit the Dart client (Session 26) and
+                # PowerShell's Invoke-RestMethod (Session 64). The fix
+                # is always the same: POST without following, read the
+                # Location header, then GET that URL.
+                body = _post_follow(req)
+                return json.loads(body.decode('utf-8', errors='replace'))
             except Exception as e:
                 last_err = e
                 if attempt < 2:
@@ -184,6 +240,15 @@ def verify_contributions_webhook(url):
     try:
         # Step 1 — open endpoint, confirms webhook is live.
         cv = _post({"action": "check_version", "currentVersion": 999999})
+        if cv.get('status') == 'ok' and 'version' not in cv \
+                and cv.get('service'):
+            # doGet's health payload leaked through — we failed to read
+            # the doPost result rather than learning anything about the
+            # deployment. INCONCLUSIVE, not stale. Returning False here
+            # is what failed the build in Session 64.
+            print(f"    ? Could not read the doPost response (got "
+                  f"doGet's health payload instead).")
+            return None
         if cv.get('status') != 'ok' or 'version' not in cv:
             print(f"    Server said: {cv.get('status')} - "
                   f"{cv.get('message', '')}")
@@ -211,6 +276,10 @@ def verify_contributions_webhook(url):
             print(f"      The pushed Code.js predates Session 49's "
                   f"fetch_all handler.")
             return False
+        if fa.get('status') == 'ok' and fa.get('service'):
+            print(f"    ? Could not read the doPost response for "
+                  f"fetch_all (got doGet's health payload).")
+            return None
         print(f"    ✗ Unexpected fetch_all response: "
               f"{fa.get('status')} - {msg}")
         return False
@@ -457,14 +526,37 @@ def deploy_webhooks():
             import time
             print(f"  Verifying new deployment at {url} ...")
             verified = False
+            inconclusive = False
             for attempt, wait in enumerate([0, 5, 10, 15], start=1):
                 if wait:
                     print(f"  Not yet propagated — waiting {wait}s "
                           f"(attempt {attempt}/4)...")
                     time.sleep(wait)
-                if verify_contributions_webhook(url):
+                res = verify_contributions_webhook(url)
+                if res is True:
                     verified = True
                     break
+                if res is None:
+                    # Inconclusive (couldn't read the doPost result).
+                    # Retrying won't help — it's a client-side redirect
+                    # problem, not propagation.
+                    inconclusive = True
+                    break
+            if inconclusive:
+                # v1.23.3 (Session 64): a smoke test that cannot OBSERVE
+                # must not block a release. The deploy itself already
+                # succeeded (clasp reported the new version on the same
+                # deployment id). Warn loudly and keep the URL — the old
+                # behaviour fell through to `continue`, which DROPPED
+                # contributions_url from config/webhooks.json and would
+                # have shipped an app with no contributions webhook.
+                print(f"  WARNING: could not verify the deployment "
+                      f"(redirect could not be followed).")
+                print(f"           The deploy itself succeeded. Verify "
+                      f"by hand via the app's Developer Mode > Review "
+                      f"tab, which follows the redirect correctly.")
+                urls[f"{name}_url"] = url
+                continue
             if not verified:
                 print(f"  ERROR: New deployment at {url}")
                 print(f"         does not support fetch_all even after 30s of")

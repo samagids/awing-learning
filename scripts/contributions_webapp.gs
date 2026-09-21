@@ -60,6 +60,23 @@ var MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 //      DEVELOPER_EMAIL — used by the developer's own app. We verify via
 //      Google's tokeninfo endpoint (no JWT signing libraries needed).
 //
+// STUDY-SET ENDPOINTS (study_set_upload_audio, study_set_upload_image,
+// study_set_delete_audio, study_set_delete_image,
+// study_set_delete_set_audio) are NOT developer-only. They authenticate
+// the caller against payload.teacherEmail via requireStudySetAuth(),
+// which as of v1.23.3 (Session 64) accepts EITHER:
+//   a. payload.idToken         — Google OAuth token (unchanged), or
+//   b. payload.firebaseIdToken — Firebase token, any provider.
+// (b) exists because Sign in with Apple users have no Google account,
+// so every study-set upload silently failed for them. It needs the
+// FIREBASE_API_KEY script property (Firebase Console > Project settings
+// > Web API key). Without it, path (b) fails closed and logs why.
+//
+// requireDevAuth() ALSO accepts payload.firebaseIdToken as of v1.23.3,
+// for the same reason: the developer may be signed in with Apple on an
+// iOS device, in which case no Google token exists. The email must
+// still equal DEVELOPER_EMAIL, so the bar is unchanged.
+//
 // Open endpoints (no auth required):
 //   submit, check_version. submit is rate-limited by field caps + audio
 //   cap. check_version is read-only and only returns approved content
@@ -227,6 +244,37 @@ function requireDevAuth(payload) {
       }
     } catch (e) {
       Logger.log('Token verify failed: ' + e);
+    }
+  }
+
+  // v1.23.3 (Session 64) — Firebase ID token path. STRICTLY ADDITIVE:
+  // both blocks above are untouched, so the scriptSecret and Google
+  // paths behave exactly as before.
+  //
+  // Why this is needed: the in-app Developer Mode > Review tab attaches
+  // a token pulled from loginGoogleSignIn. A developer signed in with
+  // Sign in with Apple has no Google account at all, so NO token was
+  // attached and every privileged call came back 'unauthorized' with no
+  // indication why. Same root cause as the Apple cloud-backup bug fixed
+  // in this release: a second auth provider was added to the app and the
+  // code that gates on identity was never revisited.
+  //
+  // This grants NOTHING extra. verifyFirebaseIdToken_ already requires
+  // a federated (google.com / apple.com) provider, a non-disabled
+  // account, and a token minted by THIS Firebase project; on top of
+  // that we still require the address to be exactly DEVELOPER_EMAIL —
+  // the identical bar the Google path enforces.
+  if (payload.firebaseIdToken &&
+      typeof payload.firebaseIdToken === 'string' &&
+      payload.firebaseIdToken.length > 0 &&
+      payload.firebaseIdToken.length < 8192) {
+    var fbEmail = verifyFirebaseIdToken_(payload.firebaseIdToken);
+    if (fbEmail && fbEmail === String(DEVELOPER_EMAIL).trim().toLowerCase()) {
+      return true;
+    }
+    if (fbEmail) {
+      Logger.log('requireDevAuth: Firebase token is valid but belongs ' +
+                 'to ' + fbEmail + ', not the developer address.');
     }
   }
 
@@ -960,28 +1008,146 @@ function getStudySetFolder(setId) {
 }
 
 /**
- * Verify the caller's Google idToken and confirm the email in the
- * token matches payload.teacherEmail. This is the "only the set owner
- * can upload for their set" check — no cross-Firestore reads needed
- * because setId + teacherEmail travel together on every request.
- * Returns true iff auth passed and emails match (case-insensitive).
+ * Resolve a Google OAuth ID token to a verified lowercase email, or
+ * null. Extracted verbatim from the original requireStudySetAuth so the
+ * Google path's behaviour is bit-for-bit unchanged.
  */
-function requireStudySetAuth(payload) {
-  if (!payload || !payload.idToken || !payload.teacherEmail) return false;
+function verifyGoogleIdToken_(idToken) {
   try {
     var url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' +
-              encodeURIComponent(payload.idToken);
+              encodeURIComponent(idToken);
     var resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
-    if (resp.getResponseCode() !== 200) return false;
+    if (resp.getResponseCode() !== 200) return null;
     var info = JSON.parse(resp.getContentText());
-    if (!info || !info.email || info.email_verified !== 'true') return false;
-    var callerEmail = String(info.email).trim().toLowerCase();
-    var claimed = String(payload.teacherEmail).trim().toLowerCase();
-    return callerEmail === claimed;
+    if (!info || !info.email || info.email_verified !== 'true') return null;
+    return String(info.email).trim().toLowerCase();
   } catch (e) {
-    Logger.log('requireStudySetAuth error: ' + e.toString());
-    return false;
+    Logger.log('verifyGoogleIdToken_ error: ' + e.toString());
+    return null;
   }
+}
+
+/**
+ * Resolve a FIREBASE ID token to a verified lowercase email, or null.
+ *
+ * v1.23.3 (Session 64). Sign in with Apple has been a supported provider
+ * since the App Store Guideline 4.8 work, but every privileged webhook
+ * endpoint verified a GOOGLE OAuth token via oauth2.googleapis.com/
+ * tokeninfo. An Apple teacher has no Google account at all, so
+ * requireStudySetAuth() below returned false for them and EVERY
+ * study-set audio/image upload and delete silently failed — the
+ * recording saved locally and simply never reached Drive.
+ *
+ * Firebase ID tokens are provider-agnostic: Google, Apple, or anything
+ * added later all mint one. We verify via Identity Toolkit's
+ * accounts:lookup, which validates the token's signature and expiry AND
+ * binds it to the Firebase project identified by FIREBASE_API_KEY — a
+ * token minted by any other project is rejected with INVALID_ID_TOKEN.
+ *
+ * Security notes:
+ *  • The API key is a PUBLIC value (it ships inside the app). That is
+ *    fine: it identifies the project, it does not authorize anything.
+ *    An attacker holding it still has to actually authenticate against
+ *    our Firebase project, and then the email we return is THEIR email,
+ *    which requireStudySetAuth compares against payload.teacherEmail.
+ *    So the worst they can do is act as themselves.
+ *  • We require a FEDERATED provider (google.com / apple.com). Those are
+ *    the only two the app offers, and both verify the address at the
+ *    IdP. This is deliberately stricter than checking emailVerified: if
+ *    password auth is ever enabled on this project, those users do NOT
+ *    silently inherit study-set write access.
+ *  • Disabled accounts are rejected.
+ *  • Fails CLOSED (returns null) when FIREBASE_API_KEY is unset, and
+ *    logs why — so a missing property looks like a config error rather
+ *    than an auth bypass.
+ *
+ * FIREBASE_API_KEY: Firebase Console > Project settings > General >
+ * Web API key. Set it in Apps Script > Project Settings > Script
+ * Properties. No new OAuth scope is needed — script.external_request
+ * was already granted in Session 58 — so NO manual re-authorisation.
+ */
+function verifyFirebaseIdToken_(idToken) {
+  var apiKey = SCRIPT_PROPS.getProperty('FIREBASE_API_KEY');
+  if (!apiKey) {
+    Logger.log('verifyFirebaseIdToken_: FIREBASE_API_KEY script property ' +
+               'is not set — Apple-authenticated callers cannot be ' +
+               'verified. See CLAUDE.md Session 64.');
+    return null;
+  }
+  try {
+    var resp = UrlFetchApp.fetch(
+      'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=' +
+        encodeURIComponent(apiKey),
+      {
+        method: 'post',
+        contentType: 'application/json',
+        payload: JSON.stringify({ idToken: idToken }),
+        muteHttpExceptions: true
+      }
+    );
+    if (resp.getResponseCode() !== 200) {
+      Logger.log('verifyFirebaseIdToken_: lookup HTTP ' +
+                 resp.getResponseCode());
+      return null;
+    }
+    var data = JSON.parse(resp.getContentText());
+    if (!data || !data.users || !data.users.length) return null;
+    var u = data.users[0];
+    if (!u.email) return null;
+    if (u.disabled === true) return null;
+
+    var providers = [];
+    var infos = u.providerUserInfo || [];
+    for (var i = 0; i < infos.length; i++) {
+      if (infos[i] && infos[i].providerId) providers.push(infos[i].providerId);
+    }
+    var federated = providers.indexOf('google.com') !== -1 ||
+                    providers.indexOf('apple.com') !== -1;
+    if (!federated) {
+      Logger.log('verifyFirebaseIdToken_: rejecting non-federated ' +
+                 'account (providers: ' + providers.join(',') + ')');
+      return null;
+    }
+    return String(u.email).trim().toLowerCase();
+  } catch (e) {
+    Logger.log('verifyFirebaseIdToken_ error: ' + e.toString());
+    return null;
+  }
+}
+
+/**
+ * Verify the caller owns payload.teacherEmail. This is the "only the set
+ * owner can upload for their set" check — no cross-Firestore reads
+ * needed because setId + teacherEmail travel together on every request.
+ * Returns true iff auth passed and emails match (case-insensitive).
+ *
+ * v1.23.3 (Session 64): accepts EITHER token. The Google path is tried
+ * first and is unchanged, so Google teachers see identical behaviour;
+ * the Firebase path is purely additive and is what unblocks Apple.
+ * The client sends both fields whenever it has them.
+ */
+function requireStudySetAuth(payload) {
+  if (!payload || !payload.teacherEmail) return false;
+  var claimed = String(payload.teacherEmail).trim().toLowerCase();
+  if (!claimed) return false;
+
+  // Path 1 — Google OAuth ID token. Unchanged from the original.
+  if (payload.idToken && typeof payload.idToken === 'string' &&
+      payload.idToken.length > 0 && payload.idToken.length < 8192) {
+    if (verifyGoogleIdToken_(payload.idToken) === claimed) return true;
+  }
+
+  // Path 2 — Firebase ID token. Works for Google AND Apple.
+  if (payload.firebaseIdToken &&
+      typeof payload.firebaseIdToken === 'string' &&
+      payload.firebaseIdToken.length > 0 &&
+      payload.firebaseIdToken.length < 8192) {
+    if (verifyFirebaseIdToken_(payload.firebaseIdToken) === claimed) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**

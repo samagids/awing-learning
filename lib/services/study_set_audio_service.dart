@@ -24,6 +24,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
@@ -78,21 +79,43 @@ class StudySetAudioService {
     return _webhookUrl;
   }
 
-  /// Fetch the current Google OAuth idToken (NOT Firebase idToken) —
-  /// the Apps Script webhook validates this against Google's tokeninfo
-  /// endpoint. Matches the pattern in ContributionService for privileged
-  /// endpoints (see Session 58 notes in CLAUDE.md).
-  Future<String?> _idToken() async {
+  /// Auth fields to stamp on a privileged study-set write.
+  ///
+  /// v1.23.3 (Session 64). Previously this returned ONLY the Google OAuth
+  /// idToken, which the Apps Script webhook validates against Google's
+  /// `oauth2.googleapis.com/tokeninfo` endpoint. A teacher signed in with
+  /// Apple has no Google account at all, so the lookup returned null and
+  /// every study-set audio/image upload and delete bailed out silently —
+  /// the recording appeared to save locally and simply never reached the
+  /// cloud.
+  ///
+  /// We now send BOTH:
+  ///   • `idToken`         — Google OAuth token (unchanged, when present)
+  ///   • `firebaseIdToken` — Firebase ID token, valid for ANY provider
+  ///
+  /// The server ignores unknown fields, so shipping `firebaseIdToken`
+  /// ahead of the Apps Script change is a no-op for Google users and
+  /// costs nothing. Once the webhook learns to verify it via
+  /// `identitytoolkit.googleapis.com/v1/accounts:lookup`, Apple teachers
+  /// start working with NO further client release. See the
+  /// APPLE_AUTH_SERVER_TODO note in CLAUDE.md Session 64.
+  Future<Map<String, String>> _authFields() async {
+    final out = <String, String>{};
     try {
       final acc = _googleSignIn.currentUser ??
           await _googleSignIn.signInSilently();
-      if (acc == null) return null;
-      final auth = await acc.authentication;
-      return auth.idToken;
+      final t = (await acc?.authentication)?.idToken;
+      if (t != null && t.isNotEmpty) out['idToken'] = t;
     } catch (e) {
-      debugPrint('StudySetAudioService _idToken failed: $e');
-      return null;
+      debugPrint('StudySetAudioService google idToken failed: $e');
     }
+    try {
+      final t = await FirebaseAuth.instance.currentUser?.getIdToken();
+      if (t != null && t.isNotEmpty) out['firebaseIdToken'] = t;
+    } catch (e) {
+      debugPrint('StudySetAudioService firebase idToken failed: $e');
+    }
+    return out;
   }
 
   /// POST a payload to the Apps Script webhook and follow the
@@ -162,10 +185,10 @@ class StudySetAudioService {
           '(${bytes.length} bytes, cap ${_maxBytesPreEncode})');
       return null;
     }
-    final idToken = await _idToken();
-    if (idToken == null) {
-      debugPrint('StudySetAudioService uploadRecording: no idToken '
-          '— caller must be signed in with Google');
+    final authFields = await _authFields();
+    if (authFields.isEmpty) {
+      debugPrint('StudySetAudioService uploadRecording: no auth token — '
+          'caller must be signed in with Google or Apple');
       return null;
     }
     final result = await _post({
@@ -175,7 +198,7 @@ class StudySetAudioService {
       'awing': awing,
       'audioKey': audioKey(awing),
       'audioBase64': base64Encode(bytes),
-      'idToken': idToken,
+      ...authFields,
     });
     if (result == null) return null;
     if (result['status'] != 'ok') {
@@ -216,10 +239,10 @@ class StudySetAudioService {
           '(${bytes.length} bytes, cap $_maxImageBytesPreEncode)');
       return null;
     }
-    final idToken = await _idToken();
-    if (idToken == null) {
-      debugPrint('StudySetAudioService uploadImage: no idToken '
-          '— caller must be signed in with Google');
+    final authFields = await _authFields();
+    if (authFields.isEmpty) {
+      debugPrint('StudySetAudioService uploadImage: no auth token — '
+          'caller must be signed in with Google or Apple');
       return null;
     }
     // Guess the extension from the path — image_picker gives us .jpg
@@ -233,7 +256,7 @@ class StudySetAudioService {
       'imageKey': audioKey(awing),
       'imageExt': ext,
       'imageBase64': base64Encode(bytes),
-      'idToken': idToken,
+      ...authFields,
     });
     if (result == null) return null;
     if (result['status'] != 'ok') {
@@ -250,15 +273,15 @@ class StudySetAudioService {
     required String setId,
     required String awing,
   }) async {
-    final idToken = await _idToken();
-    if (idToken == null) return;
+    final authFields = await _authFields();
+    if (authFields.isEmpty) return;
     await _post({
       'action': 'study_set_delete_image',
       'setId': setId,
       'teacherEmail': teacherEmail.trim().toLowerCase(),
       'awing': awing,
       'imageKey': audioKey(awing),
-      'idToken': idToken,
+      ...authFields,
     });
   }
 
@@ -270,15 +293,15 @@ class StudySetAudioService {
     required String setId,
     required String awing,
   }) async {
-    final idToken = await _idToken();
-    if (idToken == null) return;
+    final authFields = await _authFields();
+    if (authFields.isEmpty) return;
     await _post({
       'action': 'study_set_delete_audio',
       'setId': setId,
       'teacherEmail': teacherEmail.trim().toLowerCase(),
       'awing': awing,
       'audioKey': audioKey(awing),
-      'idToken': idToken,
+      ...authFields,
     });
   }
 
@@ -288,13 +311,13 @@ class StudySetAudioService {
     required String teacherEmail,
     required String setId,
   }) async {
-    final idToken = await _idToken();
-    if (idToken == null) return;
+    final authFields = await _authFields();
+    if (authFields.isEmpty) return;
     await _post({
       'action': 'study_set_delete_set_audio',
       'setId': setId,
       'teacherEmail': teacherEmail.trim().toLowerCase(),
-      'idToken': idToken,
+      ...authFields,
     });
   }
 }

@@ -8499,3 +8499,441 @@ in the container and commit it across with the file tools.
 5. Exclude `build/` from OneDrive sync — it held a file lock that broke
    one build this session, and is the likely root of the truncation /
    read-after-write races in Sessions 49c, 56, 60, 61.
+
+---
+
+### Session 64 (2026-09-21) — v1.23.3+139: Apple Sign-In was invisible to the entire cloud layer
+
+**Reported by Dr. Sama:** "I do not see apple users in the firestore."
+
+Correct observation, and the answer is worse than a missing row: **no
+Apple-signed-in account has ever been able to write a single document to
+Firestore.** Not a data problem, not a rules problem — a whole provider
+that the cloud layer was never taught about.
+
+#### How this happened (the review failure, stated plainly)
+
+Sign in with Apple was added as a **login-screen** feature to satisfy App
+Store Review Guideline 4.8 (mandatory once Google Sign-In is offered).
+`login_screen.dart` does the exchange correctly — real
+`OAuthProvider('apple.com').credential(...)` →
+`FirebaseAuth.signInWithCredential(...)`. Nobody traced the call graph
+one level further.
+
+`CloudBackupService` was written when Google was the only provider and
+was never revisited. The check that would have caught this takes one
+second:
+
+```
+$ grep -ci apple lib/services/cloud_backup_service.dart
+0
+```
+
+**RULE ADDED: whenever a new auth provider, identity source, or account
+type is introduced, grep every service that gates on identity for the
+OLD provider's name and prove each hit is provider-agnostic.** The
+login screen is the shallowest possible place to stop looking.
+
+#### Root cause — three independent breaks in one file
+
+1. **`_connectedEmail` was never set for Apple users.** Assigned in only
+   three places (`cloud_backup_service.dart:79, 176, 449`), all from a
+   `GoogleSignInAccount`. Every write path guards on it:
+   `if (_isSyncing || _connectedEmail == null) return false;`
+   (lines 209, 329) and `if (_connectedEmail == null) return null;`
+   (426). `backupAll()` returned `false` on its first line, forever.
+
+2. **`_isSignedIn` never became true for Apple users**, so the debounced
+   auto-sync gate — `if (!_autoSync || !_isSignedIn || _isSyncing)
+   return;` — never let a single sync through either.
+
+3. **`initialize()` actively signed Apple users OUT of Firebase on every
+   cold start.** `loginGoogleSignIn.signInSilently()` returns null for a
+   perfectly healthy Apple user; the next branch saw
+   `FirebaseAuth.currentUser != null`, concluded "orphaned Google
+   session", and called `FirebaseAuth.signOut()`. That branch was
+   written for the v1.12.x → v1.13.x Google refresh-token bug and
+   predates Apple entirely.
+
+#### Why nobody noticed — perfect silent failure
+
+`_AuthGate` in `main.dart` gates on `auth.hasAccount`, which is **local**
+(SharedPreferences), not Firebase. So an Apple user is never bounced back
+to the login screen. They sign in, everything looks right, and the app
+quietly stops talking to the cloud from the second launch onward.
+
+#### Downstream damage from that single root cause
+
+| Subsystem | Provider-agnostic in itself? | Broken for Apple? | Why |
+|---|---|---|---|
+| Cloud backup / restore | no — Google-only | **yes, always** | `_connectedEmail` / `_isSignedIn` never set |
+| FCM token registration | **yes** (reads `auth_current_email` pref) | **yes, from 2nd launch** | Firestore write needs a live `request.auth`; session killed at startup |
+| `RecordingsService` | **yes** (`FirebaseAuth.currentUser?.email`) | **yes, from 2nd launch** | same |
+| `StudySetFirestoreService` | **yes** (email-based queries) | **yes, from 2nd launch** | same |
+| Study-set audio/image upload | no — own `GoogleSignIn` instance | **yes, always** | separate break, see below |
+| `firestore.rules` | **yes** — `emailKey()` from `request.auth.token.email` | no | rules were never the blocker |
+
+Apple users therefore also got **no push notifications** — the daily-word
+and weekly-tour crons read the FCM token from
+`users/{emailKey}/data/settings`, which Apple users could not write.
+
+#### Two further Google-only paths found in the sweep
+
+- **`StudySetAudioService`** constructs its **own** `GoogleSignIn`
+  instance and sends a Google OAuth `idToken` on every privileged
+  study-set write. The Apps Script webhook validates it against
+  `oauth2.googleapis.com/tokeninfo`. An Apple teacher has no Google
+  account, so `_idToken()` returned null and **all five** call sites
+  (`uploadRecording`, `uploadImage`, `deleteRecording`, `deleteImage`,
+  `deleteAllForSet`) bailed out — three of them completely silently. The
+  recording appeared to save locally and simply never reached the cloud.
+- **`ContributionService.submit()`** captured `googleDisplayName` for
+  contributor credit; Apple contributors always got `null` and were
+  credited by short local profile name instead of their real name.
+  (`_attachAuthIfPrivileged` is also Google-only, but privileged actions
+  are developer-only and the developer account is Google — acceptable,
+  left as-is, now documented.)
+
+#### A latent bug on the GOOGLE path, found during the same sweep
+
+`login_screen._signInWithGoogle()` never told `CloudBackupService` who
+had signed in either. `_connectedEmail` only got set as a **side effect**
+of `tryAutoRestore()`, which `AuthService._loginWithProvider()` calls
+*exclusively for brand-new accounts* (`if (!_accounts.containsKey(e))`).
+So a **returning Google user who signed out and back in** had a null
+`_connectedEmail` for the rest of that app run, and every `backupAll()`
+early-returned until the next cold start. Milder than the Apple case and
+self-healing, but the same root defect. Both providers now adopt
+explicitly.
+
+#### What v1.23.3+139 changes
+
+**`lib/services/cloud_backup_service.dart`**
+- `firebaseProviders()` / `isAppleSession` — read `currentUser.providerData`.
+- `adoptFirebaseSession({String? email})` — sets `_isSignedIn` +
+  `_connectedEmail` from a session this service did not create. **Prefers
+  `FirebaseAuth.currentUser.email` over any caller-supplied value**,
+  because that is the exact string `firestore.rules` evaluates as
+  `request.auth.token.email`. (The Apple flow can fall back to
+  `appleCredential.email`, which may differ from what Firebase minted
+  when Hide My Email is on — writing the doc under a different key than
+  the rules check is a guaranteed permission-denied.)
+- `initialize()` → `_initFuture ??= _doInitialize()`, so concurrent
+  callers can no longer return before `_prefs` is assigned.
+- `initialize()` now **adopts** a healthy Apple session (validated by a
+  forced `getIdToken(true)` refresh) instead of signing it out. Only a
+  genuinely orphaned **Google** session is cleared.
+- `tryAutoRestore()` falls back to the live Firebase session when Google
+  silent sign-in returns null, so Apple users get their data on a new device.
+- **`authStateChanges()` listener** clears `_isSignedIn` /
+  `_connectedEmail` whenever the Firebase session ends, from any code
+  path. It re-checks `currentUser` synchronously to ignore a transient
+  null during cold-start session restore.
+- All emails normalised (`trim().toLowerCase()`) to match `_userDocPath()`
+  and `emailKey()`.
+
+**`lib/services/auth_service.dart`**
+- `logout()` now also calls `FirebaseAuth.instance.signOut()`.
+  **This line is REQUIRED by the `initialize()` change above.** Previously
+  logout cleared only the Google plugin cache; for Google users the stale
+  Firebase session happened to be swept up by the orphan check on next
+  launch, so the leak was invisible. Now that a healthy Apple session is
+  *adopted* rather than killed, omitting this would leave a logged-out
+  Apple user still authenticated to Firestore as themselves.
+
+**`lib/screens/auth/login_screen.dart`**
+- Apple branch: `await cloud.adoptFirebaseSession(email: email)` **before**
+  `auth.loginWithApple(...)` (that call triggers `_tryCloudRestore()` for
+  new accounts, which needs `_connectedEmail` already populated).
+- Apple branch: persists the Apple `fullName` via
+  `firebaseUser.updateDisplayName(...)`. Apple returns it **only on the
+  very first sign-in ever**; we were dropping it, leaving
+  `FirebaseAuth.currentUser.displayName` permanently null for every Apple
+  account.
+- Google branch: same `adoptFirebaseSession` call, for the latent bug above.
+
+**`lib/services/study_set_audio_service.dart`**
+- `_idToken()` → `_authFields()`, returning **both** `idToken` (Google,
+  when available) and `firebaseIdToken` (Firebase, valid for any
+  provider). All five call sites updated; the two upload paths now log a
+  provider-neutral error instead of "must be signed in with Google".
+
+**`lib/services/contribution_service.dart`**
+- Contributor credit falls back to `FirebaseAuth.currentUser.displayName`
+  when there is no Google account.
+
+**`firestore.rules`**
+- `emailKey()` explicitly guards a missing `token.email` and returns `''`
+  (never a valid doc id) rather than raising an evaluation error.
+
+**Version** — 4-place sync per the Session 48 protocol: `pubspec.yaml`,
+`about_screen.dart` (appVersion + buildNumber), `analytics_service.dart`
+(`_appVersion`), `cloud_backup_service.dart` (`_kAppVersion`). Verified:
+zero remaining `1.23.2` strings in the tree.
+
+#### Server fix — Apple study-set uploads (SHIPPED in this session)
+
+`requireStudySetAuth()` in the contributions webhook verified a **Google**
+OAuth token via `oauth2.googleapis.com/tokeninfo`. An Apple teacher has
+no Google account, so it returned false and all five study-set endpoints
+refused — three of them with no error surfaced at all.
+
+**`scripts/contributions_webapp.gs` + `scripts/clasp_contributions/Code.js`**
+(mirrored byte-for-byte per the Session 49b rule — both 1343 lines,
+53,038 bytes, `diff -q` clean):
+
+- `verifyGoogleIdToken_(idToken)` — the original tokeninfo logic
+  extracted **verbatim**, so Google behaviour is bit-for-bit unchanged.
+- `verifyFirebaseIdToken_(idToken)` — NEW. Verifies via Identity
+  Toolkit `accounts:lookup`, which validates signature + expiry AND binds
+  the token to the project identified by `FIREBASE_API_KEY` (a token from
+  any other Firebase project returns `INVALID_ID_TOKEN`).
+- `requireStudySetAuth()` — tries Google first (unchanged), then Firebase.
+  Both paths must still match `payload.teacherEmail`.
+
+`requireDevAuth()` was deliberately **NOT** extended. Privileged actions
+are developer-only, the developer account is Google, and widening that
+gate buys nothing. Minimum blast radius.
+
+**Security properties, deliberate:**
+- The Firebase Web API key is a **public** value (it ships in the app).
+  That is fine — it identifies the project, it authorizes nothing. An
+  attacker holding it still has to authenticate against our Firebase
+  project, and the email returned is then *their* email, which is
+  compared to `teacherEmail`. Worst case: they act as themselves.
+- **Requires a federated provider** (`google.com` / `apple.com`), which
+  is stricter than checking `emailVerified`. Rationale: those are the
+  only two providers the app offers and both verify the address at the
+  IdP; and if password auth is ever enabled on this project, those users
+  do not silently inherit study-set write access.
+- Rejects `disabled` accounts.
+- **Fails closed** when `FIREBASE_API_KEY` is unset, and logs why, so a
+  missing property reads as a config error rather than an auth bypass.
+
+**`scripts/test_study_set_auth.js`** — NEW, and the more important half
+of this change. Apps Script cannot be unit-tested in place, so this
+extracts the three auth functions into a Node sandbox with stubbed
+`UrlFetchApp` / `Logger` / `SCRIPT_PROPS` and asserts a 24-case matrix.
+`node scripts/test_study_set_auth.js`, exit 0 = all pass. **Run it before
+every `clasp push`.**
+
+All 38 pass (24 study-set + 14 developer-auth). The two that matter most:
+- *"Google path works with NO api key set" → true.* Zero regression for
+  existing Google teachers even before the property is added.
+- *"NO FIREBASE_API_KEY → fail closed" → false.* Safe default.
+
+Plus 11 negative cases: wrong email, unverified email, tokeninfo 400,
+lookup 400, empty `users[]`, missing email, password-only account,
+disabled account, oversized token, missing/blank `teacherEmail`, null
+payload. And the both-tokens-present cases, including "Google bad →
+Firebase saves it".
+
+**ONE MANUAL STEP before this works for Apple teachers:**
+
+1. Firebase Console → Project settings → General → **Web API key** (copy).
+2. Apps Script editor → Project Settings → Script Properties → add
+   `FIREBASE_API_KEY` = that value.
+3. `cd scripts\clasp_contributions ; clasp push --force`, then
+   `clasp deploy --deploymentId <existing>` — **never a bare
+   `clasp deploy`** (Session 49c: it mints a NEW url and orphans every
+   installed app). `build_and_run.bat` Step 0 does this in place
+   automatically via `setup_and_deploy.py`.
+4. No new OAuth scope — `script.external_request` was granted in
+   Session 58 — so **no manual re-authorisation**.
+5. Verify with the Session 58 check: an unauthenticated `fetch_all` must
+   still answer `unauthorized`.
+
+Until step 2 is done, Google teachers are unaffected and Apple teachers
+keep failing exactly as before — no new failure mode is introduced.
+
+#### THIRD instance of the same bug — Developer Mode > Review sync
+
+Found mid-session when Review sync returned `unauthorized`. Same root
+cause as the two above, in the one function this session had explicitly
+decided NOT to touch.
+
+`ContributionService._attachAuthIfPrivileged()` consulted only
+`loginGoogleSignIn`. On a device signed in with Apple, `currentUser` is
+null and `signInSilently()` returns null, so it returned early having
+attached **no token at all** — and the server correctly answered
+`unauthorized`.
+
+The earlier note in this session read: *"requireDevAuth is deliberately
+NOT extended to Firebase tokens: privileged actions are developer-only,
+the developer account is Google, and widening that gate buys nothing."*
+**That reasoning was wrong** the moment Apple sign-in started working:
+the developer can be signed in with Apple on an iOS device. Recorded
+here because the mistake is instructive — "this provider doesn't apply
+to this code path" is exactly the assumption that caused the original
+bug.
+
+**Diagnostic history worth keeping** (three hypotheses killed in order):
+1. *Stale OAuth authorization from pushing `appsscript.json`* — killed
+   by running `safeStr` in the editor: it completed with NO consent
+   prompt, so authorization was intact.
+2. *R8 stripping under AGP 9's `strictFullModeForKeepRules`* — killed by
+   reading `proguard-rules.pro`: `-keep class com.google.android.gms.**
+   { *; }` is a blanket keep, plus `-dontoptimize`.
+3. *Caused by this session's `clasp push`* — killed by the execution
+   log: "15 executions over last 7 days", oldest 7:58 AM that morning.
+   **Zero executions in the preceding week** — Review sync had been
+   broken long before anything was pushed.
+
+**Fixes (both in v1.23.3+139):**
+
+*Client* — `_attachAuthIfPrivileged` now attaches BOTH `idToken`
+(Google, when present) and `firebaseIdToken` (any provider), and **fails
+loudly**. It previously had three silent exits: two bare `return`s and a
+`print` gated behind `kDebugMode`, which never runs in a release build —
+which is why "sync failed: unauthorized" carried no information. Now
+uses `debugPrint` (reaches logcat in release) and names the exact path:
+no Google account / null idToken / no Firebase session / no token
+attached at all.
+
+*Server* — `requireDevAuth()` accepts `payload.firebaseIdToken`,
+**strictly additively**: the `scriptSecret` and Google blocks are
+byte-identical to before. The new path reuses `verifyFirebaseIdToken_`
+(federated provider + not disabled + project-bound) and still requires
+the address to equal `DEVELOPER_EMAIL`. Same bar, new provider. It also
+logs when a valid token belongs to the wrong address, so a wrong-account
+sign-in now says so instead of failing mutely.
+
+*Tests* — `scripts/test_study_set_auth.js` grew from 24 to **38 cases**.
+The new `[dev]` suite exists specifically to prove the widening grants
+nothing extra: `google: NON-developer REJECTED`, `firebase:
+NON-developer REJECTED`, `password acct REJECTED`, `disabled acct
+REJECTED`, `no API key -> fail closed`.
+
+#### Verification traps found this session (BOTH cost real time)
+
+**1. PowerShell has the same POST->302->GET trap as Dart.** CLAUDE.md
+Session 58 prescribes an unauthenticated `fetch_all` as the post-deploy
+check but never warns how to issue it. Every naive form —
+`Invoke-RestMethod -Method Post`, and `Invoke-WebRequest
+-MaximumRedirection 0` on PS 5.1 — returns
+`{"status":"ok","service":"Awing Contributions",...}`. **That is
+`doGet`'s health payload, not a `doPost` result.** It looks like a pass
+and proves nothing. Confirmed against the execution log, which showed
+doPost/doGet alternating pairs. Same root cause as the Dart bug in
+Session 26. PS 5.1 also prompts "Script Execution Risk" without
+`-UseBasicParsing`. **The reliable check is the app itself** (Developer
+Mode > Review), or `apply_contributions.py`, both of which follow the
+redirect correctly.
+
+**2. `Logger.log` output is unreachable.** The script uses the *Default*
+GCP project, so "Cloud logs" and "Cloud errors" are greyed out in the
+Executions menu, and rows don't expand to show logs. Every `Logger.log`
+in the webhook — including `verifyFirebaseIdToken_`'s "FIREBASE_API_KEY
+not set" — is effectively write-only. To make these readable the script
+must be linked to a real GCP project. Until then, **client-side
+`debugPrint` is the only usable diagnostic channel**, which is why the
+client fix above matters as much as the auth fix.
+
+**3. `apply_contributions.py --list` does NOT touch the webhook.** It
+only checks for a local file. `--download` (default) hits `check_version`,
+which is an OPEN endpoint. Only `--refetch-audio` exercises a privileged
+endpoint, and it needs `SCRIPT_SECRET` from an env var,
+`config/webhooks.json`'s `script_secret` key, or `~/.awing_script_secret`.
+
+#### Apps Script conventions worth remembering
+
+- **Trailing-underscore functions are private.** `verifyGoogleIdToken_`
+  and `verifyFirebaseIdToken_` do NOT appear in the editor's "Select
+  function to run" dropdown. Their absence is correct, not evidence of a
+  failed push.
+- **`clasp deploy` without `--deploymentId` mints a NEW url** and
+  orphans every installed app (Session 49c). Always deploy in place.
+- **Running any function in the editor re-triggers OAuth consent** if
+  authorization has lapsed — which doubles as the cheapest test of
+  whether it has. `safeStr` is the safe choice: pure string function, no
+  side effects. Never run `setupContributions` casually; it creates
+  Sheets and Drive folders.
+
+#### Data reality for existing Apple users
+
+Their local progress has never been backed up. The first successful sync
+after +139 writes it up correctly. But any Apple user who has **already
+reinstalled** since signing in has lost that data permanently — no fix
+recovers it, because it was never anywhere but on the device.
+
+#### Testing — what actually has to be exercised
+
+Emulator alone is NOT sufficient this time. Sign in with Apple does not
+work on an Android emulator at all, and the `sign_in_with_apple` package
+falls back to a web flow off-device (`_showAppleSignIn` gates on
+platform). **This needs a real iOS device or the iOS Simulator with a
+signed-in Apple ID.**
+
+1. iOS: Sign in with Apple → confirm a `users/{emailKey}/data/*` document
+   appears in the Firebase console. **This is the whole point of the release.**
+2. iOS: force-quit, relaunch → confirm the session is ADOPTED
+   (`adb`/Xcode log: `Auth: adopted existing Apple session for ...`) and
+   NOT signed out. Complete a lesson, confirm a second write lands.
+3. iOS: sign out → confirm `FirebaseAuth.currentUser == null`, and that
+   no further writes reach the previous account's document.
+4. Android + Google: full regression. Sign out, sign back in with the
+   **same existing account**, complete a lesson, confirm a write lands
+   *without* a restart (this is the latent Google bug being fixed).
+5. Android + Google: cold start with a valid session → confirm the
+   orphan-recovery branch still behaves exactly as before.
+6. Publish `firestore.rules` (Firebase Console → Firestore → Rules) and
+   re-run the Rules Playground checks from Session 58: own-data ALLOWED,
+   cross-user DENIED, developer-cross-user ALLOWED.
+7. `node scripts/test_study_set_auth.js` → must print `38 passed, 0 failed`.
+8. Set `FIREBASE_API_KEY`, redeploy the webhook, then on iOS: create a
+   study set → record a word → confirm the audio appears in the Drive
+   study-set folder. Repeat on an Android/Google account to prove the
+   Google path did not regress.
+
+#### Version code ledger
+
+| +139 | `v1.23.3+139` | pending | 2026-09-21 | **Apple Sign-In cloud fix (client + server).** `CloudBackupService` was 100% Google-only, so no Apple account had ever written to Firestore; `initialize()` was signing healthy Apple sessions out on every cold start. Adds `adoptFirebaseSession()` + provider detection + `authStateChanges()` listener; `AuthService.logout()` now drops the Firebase session (required by the above); both login branches adopt explicitly (fixes a latent Google bug for returning users); Apple `fullName` persisted to the Firebase profile; `StudySetAudioService` sends dual tokens; contributor credit falls back to Firebase displayName; `firestore.rules` guards a null `token.email`. **Server**: `requireStudySetAuth()` now accepts a Firebase ID token (`verifyFirebaseIdToken_` via Identity Toolkit `accounts:lookup`) alongside the unchanged Google path, unblocking Apple teachers' study-set uploads; covered by the new 24-case `scripts/test_study_set_auth.js`. Needs the `FIREBASE_API_KEY` script property set once. |
+
+**Next safe build code: +140.**
+
+#### Pre-tag checklist (Incident-2 guard from Session 63 — do not skip)
+
+```powershell
+node scripts\test_study_set_auth.js        # must print 38 passed, 0 failed
+flutter pub get
+cmd.exe /c "flutter analyze --no-fatal-infos --no-fatal-warnings"   # must be clean
+.\scripts\build_and_run.bat
+
+git add pubspec.yaml firestore.rules CLAUDE.md
+git add scripts/contributions_webapp.gs scripts/clasp_contributions/Code.js
+git add scripts/test_study_set_auth.js
+git add lib/services/cloud_backup_service.dart lib/services/auth_service.dart
+git add lib/services/contribution_service.dart lib/services/study_set_audio_service.dart
+git add lib/services/analytics_service.dart
+git add lib/screens/auth/login_screen.dart lib/screens/about_screen.dart
+git commit -m "v1.23.3+139 - Apple Sign-In cloud fix: adopt non-Google Firebase sessions"
+
+# MANDATORY — Session 63 Incident 2. A commit message is not evidence
+# that a commit contains anything.
+git show HEAD --stat | Select-String "pubspec.yaml"      # must appear
+git show HEAD:pubspec.yaml | Select-String "^version:"   # must read 1.23.3+139
+
+git push origin main
+# wait for GREEN main CI, then:
+git tag v1.23.3+139 HEAD
+git push origin refs/tags/v1.23.3+139
+```
+
+Note the Session 63 billing wall: the repo is private again and the
+Actions budget is still `$0` with "Stop usage" on, so a tag push may be
+cancelled mid-run (exit 143). Open follow-up #1 (restrict
+`build-ios.yml` to tags only) is now worth doing *before* this tag.
+
+#### Follow-ups — updated priority
+
+1. DONE 2026-09-21: `FIREBASE_API_KEY` script property set; webhook
+   deployed in place at Version 181 (same deployment id, no orphan).
+2. Restrict `build-ios.yml` to tags only — halves Actions spend, free,
+   and de-risks this tag push.
+3. Add `continue-on-error` + `id` to both upload steps (Session 63
+   Incident 3 — documented in Session 61 but never actually committed).
+4. Rate-limit the CloudFlare Worker (URL is public).
+5. `node_modules/` into `.gitignore`.
+6. Exclude `build/` from OneDrive sync.
+7. Built-in Kotlin migration — blocked on 16 upstream plugins; hard wall
+   is AGP 10 removing the opt-out.

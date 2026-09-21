@@ -87,13 +87,45 @@ class _LoginScreenState extends State<LoginScreen> {
       final auth = context.read<AuthService>();
       final cloud = context.read<CloudBackupService>();
 
+      // v1.23.3 (Session 64): persist the Apple display name onto the
+      // Firebase user. Apple returns fullName ONLY on the very first
+      // sign-in, and until now we dropped it on the floor — leaving
+      // FirebaseAuth.currentUser.displayName permanently null for every
+      // Apple account, which broke contributor crediting downstream.
+      final existingFbName = firebaseUser?.displayName?.trim() ?? '';
+      if (displayName.isNotEmpty && existingFbName.isEmpty) {
+        try {
+          await firebaseUser?.updateDisplayName(displayName);
+        } catch (e) {
+          debugPrint('Apple: updateDisplayName failed: $e');
+        }
+      }
+
+      // v1.23.3 (Session 64): THE fix for "no Apple users in Firestore".
+      // CloudBackupService only ever learned about a user through
+      // loginGoogleSignIn, which can never see an Apple session. Hand it
+      // the session we just created so _isSignedIn / _connectedEmail get
+      // set and every sync path stops silently no-op'ing.
+      //
+      // Must run BEFORE loginWithApple(), because that call triggers
+      // _tryCloudRestore() for brand-new accounts and the restore needs
+      // _connectedEmail already populated.
+      await cloud.adoptFirebaseSession(email: email);
+
+      // NOTE: deliberately NO `if (!mounted) return;` here. Returning
+      // between adopting the session and creating the local account
+      // would leave the user authenticated with Apple but with no
+      // AuthService account — they'd be bounced straight back to this
+      // screen with no way to tell why. `auth` and `cloud` are already
+      // captured, so neither call needs a live BuildContext; only the
+      // setState below does, and it is guarded.
       final error = auth.loginWithApple(
         email,
         displayName: displayName.isEmpty ? null : displayName,
         cloudBackup: cloud,
       );
 
-      if (error != null) {
+      if (error != null && mounted) {
         setState(() {
           _error = error;
           _isLoading = false;
@@ -158,6 +190,20 @@ class _LoginScreenState extends State<LoginScreen> {
       final auth = context.read<AuthService>();
       final cloud = context.read<CloudBackupService>();
 
+      // v1.23.3 (Session 64): the Google path had the same latent defect
+      // as Apple, just better hidden. Nothing here ever told
+      // CloudBackupService who had signed in — `_connectedEmail` only
+      // got set as a SIDE EFFECT of tryAutoRestore(), which
+      // AuthService._loginWithProvider() calls exclusively for
+      // brand-new accounts. A returning user who signed out and back in
+      // therefore had a null `_connectedEmail` for the rest of that app
+      // run, so every backupAll() early-returned until the next cold
+      // start. Adopt explicitly on both providers so the state is the
+      // same however you signed in.
+      await cloud.adoptFirebaseSession(email: account.email);
+
+      // See the note on the Apple path: no early-return here, or we can
+      // authenticate the user and then never create their account.
       final error = auth.loginWithGoogle(
         account.email,
         displayName: account.displayName,
@@ -165,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
         cloudBackup: cloud,
       );
 
-      if (error != null) {
+      if (error != null && mounted) {
         setState(() {
           _error = error;
           _isLoading = false;
