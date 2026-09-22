@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.23.3+139
+version: 1.23.4+140
 environment:
   sdk: ">=3.4.0 <4.0.0"
 
@@ -26,6 +26,11 @@ dependencies:
   file_picker: ^8.1.6
   record: ^6.1.1
   url_launcher: ^6.3.1
+  # Session 64b - Play's native in-app update flow (Android only).
+  # iOS has no equivalent API, so AppUpdateService falls back to a
+  # plain store link there, and on any Android build not installed
+  # from Play (sideload / bundletool --local-testing / emulator).
+  in_app_update: ^4.2.3
   # v1.22.0 (Session 66) — image contributions. image_picker gives us
   # camera + gallery pickers on Android + iOS. Compression happens via
   # the existing `image` package (already used by SDXL asset pipeline).

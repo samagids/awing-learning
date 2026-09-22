@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/models/study_set.dart';
 import 'package:awing_ai_learning/services/study_set_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/widgets/email_known_icon.dart';
 
 /// v1.21.4 (Session 65) — manage the co-owner teacher list on a Study
 /// Set. Parallel to `StudySetRosterScreen` (students) but partners can
@@ -214,7 +215,16 @@ class _StudySetPartnersScreenState extends State<StudySetPartnersScreen> {
           backgroundColor: Colors.teal,
           child: Icon(Icons.person, color: Colors.white),
         ),
-        title: Text(partnerEmail),
+        title: Row(
+          children: [
+            Expanded(child: Text(partnerEmail)),
+            // Session 64c - see EmailKnownIcon. Amber here usually means a
+            // mistyped address, which on a partner is worth catching: an
+            // unmatched partner email silently grants nobody access.
+            const SizedBox(width: 8),
+            EmailKnownIcon(email: partnerEmail),
+          ],
+        ),
         subtitle: Text(
           'Partner teacher',
           style: TextStyle(color: Colors.teal.shade700, fontSize: 12),

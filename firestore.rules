@@ -86,6 +86,56 @@ service cloud.firestore {
       allow read: if isDeveloper();
     }
 
+    // Session 64c — registry of addresses that have signed in.
+    //
+    // Powers the green/amber badge when a teacher types a student's email
+    // onto a study-set roster, so typos are caught instead of producing an
+    // entry that silently matches nobody.
+    //
+    // Each document id is the sanitized email key and the body holds ONLY
+    // a lastSeen timestamp. No names, no progress, nothing personal beyond
+    // the address already encoded in the id.
+    //
+    // Why this exists instead of reading /users: the rules above
+    // deliberately stop one user reading another's document. Relaxing THAT
+    // to answer 'does this address exist' would expose every child's
+    // progress. This collection exposes the single bit actually needed.
+    //
+    //   get   — any signed-in user: confirm an address you ALREADY know.
+    //   list  — developer only: the collection must not be harvestable, or
+    //           it becomes a directory of every user's email.
+    //   write — your own key only (plus the developer, who seeds entries
+    //           for existing users via Developer Mode > Sync registry).
+    //
+    // Accepted disclosure: a signed-in user can confirm an address they
+    // already have. They cannot enumerate or discover addresses. Delete
+    // this block to switch the feature off — every lookup then fails and
+    // the badge degrades to a neutral grey icon.
+    match /registry/{emailKeyDoc} {
+      allow get: if request.auth != null;
+      allow list: if isDeveloper();
+      allow write: if request.auth != null
+                   && (emailKeyDoc == emailKey() || isDeveloper());
+    }
+
+    // Session 64b — app version gate (config/app_version).
+    //
+    // Holds latestBuild / minSupportedBuild / message / store URLs, read
+    // by AppUpdateService on launch to decide whether to nudge or block.
+    //
+    // READ IS PUBLIC AND UNAUTHENTICATED, deliberately: the gate has to
+    // work for a user who is on a retired build and cannot get as far as
+    // signing in. The document contains only version numbers, a message
+    // and two public store URLs — nothing private.
+    //
+    // WRITE IS DEVELOPER-ONLY. This is the important half: whoever can
+    // write here can lock every user out of the app by raising
+    // minSupportedBuild. Never widen this.
+    match /config/{configDoc} {
+      allow read: if true;
+      allow write: if isDeveloper();
+    }
+
     // Session 63 — Study Sets (Phase 2).
     //
     // Study sets are teacher-owned curated wordlists that can be shared

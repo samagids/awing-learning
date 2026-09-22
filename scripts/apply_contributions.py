@@ -873,10 +873,36 @@ def get_last_version():
 
 
 def save_last_version(version):
-    """Save the last content version we applied."""
+    """Save the last content version we applied. MONOTONIC.
+
+    v1.23.4 (Session 64c) — this used to write whatever it was handed.
+    One caller passed `result.get('version', 0)` from a response parsed
+    off a bare urlopen; when Apps Script's 302 decayed that POST into a
+    GET on doGet(), the health payload has no 'version', so it wrote
+    **0** and rewound the counter to the beginning of time. The next run
+    then re-downloaded all 404 approved contributions and re-applied
+    them — re-fetching voice references from Drive, re-running Whisper
+    and re-queueing regeneration across all 6 character voices, for work
+    that was already done.
+
+    A counter that only ever moves forward cannot cause that, whatever
+    a caller hands it. Going backwards is now an explicit operation:
+    `--reset-version`, which deletes the file outright.
+    """
     ensure_directories()
+    try:
+        new = int(version)
+    except (TypeError, ValueError):
+        print(f"  Refusing to write non-numeric version {version!r} "
+              f"(keeping {get_last_version()}).")
+        return
+    current = get_last_version()
+    if new < current:
+        print(f"  Refusing to rewind version {current} -> {new}. "
+              f"Use --reset-version if that is really what you want.")
+        return
     with open(VERSION_FILE, 'w') as f:
-        f.write(str(version))
+        f.write(str(new))
 
 
 def download_approved():
@@ -900,6 +926,24 @@ def download_approved():
         'currentVersion': current_version,
     }).encode('utf-8')
 
+    # v1.23.4 (Session 64c): this used a bare urllib.request.urlopen,
+    # which auto-follows Apps Script's 302 and converts POST -> GET,
+    # landing on doGet() and returning its health payload. That payload
+    # has status == 'ok' and no 'updates', so the old code read it as
+    # "no new contributions" AND then called save_last_version(0),
+    # silently rewinding the local version counter. Reuse the one helper
+    # in this repo that POSTs without following and then GETs the
+    # Location target.
+    try:
+        from setup_and_deploy import _post_follow as _pf
+    except Exception as _imp_err:
+        # Falling back to a bare urlopen would silently reintroduce the
+        # 302 trap this whole function exists to avoid. Say so.
+        print(f"  WARNING: could not import _post_follow ({_imp_err}); "
+              f"falling back to a redirect-following POST, which may "
+              f"misread the response.")
+        _pf = None
+
     try:
         req = urllib.request.Request(
             webhook_url,
@@ -907,18 +951,34 @@ def download_approved():
             headers={'Content-Type': 'application/json'},
             method='POST',
         )
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            result = json.loads(resp.read().decode('utf-8'))
+        if _pf is not None:
+            result = json.loads(_pf(req, timeout=30).decode('utf-8'))
+        else:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                result = json.loads(resp.read().decode('utf-8'))
     except urllib.error.URLError as e:
-        print(f"  Warning: Could not reach webhook: {e}")
-        return 0
+        print(f"  UNREACHABLE: could not reach webhook: {e}")
+        return None
     except Exception as e:
-        print(f"  Warning: Download failed: {e}")
-        return 0
+        print(f"  UNREACHABLE: download failed: {e}")
+        return None
+
+    # doGet's health payload leaked through: status ok, a 'service' key,
+    # and no 'version'. We learned NOTHING about pending contributions.
+    if result.get('status') == 'ok' and result.get('service') \
+            and 'version' not in result:
+        print("  UNREACHABLE: got doGet's health payload instead of the "
+              "doPost result.")
+        return None
 
     if result.get('status') != 'ok':
-        print(f"  Warning: Webhook error: {result.get('message', 'unknown')}")
-        return 0
+        print(f"  UNREACHABLE: webhook error: "
+              f"{result.get('message', 'unknown')}")
+        return None
+
+    if 'version' not in result:
+        print("  UNREACHABLE: response has no 'version' field.")
+        return None
 
     server_version = result.get('version', 0)
     updates = result.get('updates', [])
@@ -1185,11 +1245,65 @@ def apply_new_sentence(tones_content, awing_text, english_text):
     return tones_content, True
 
 
-def apply_contributions(contributions, dry_run=False):
+def load_applied_ids():
+    """Every contribution id we have already applied, from the archives
+    in contributions/applied/.
+
+    v1.23.4 (Session 64c) — this ledger was written after every run and
+    never once read back. The ONLY thing standing between us and
+    re-applying the entire history was last_version.txt: a single
+    integer, written by a caller that defaulted to 0, inside a
+    swallow-everything try/except labelled "Non-critical". When that
+    integer got clobbered, 404 contributions were re-applied -- each one
+    re-downloading a voice reference from Drive, re-running Whisper and
+    re-queueing regeneration across 6 character voices.
+
+    An id that has been applied stays applied. A re-approval of the same
+    contribution carries the SAME id with a higher version (see the
+    Session 48 note on handleApproval idempotency), so matching on id is
+    exactly the duplicate case we want to drop. A genuinely new
+    correction to the same word gets a new id and still comes through.
+    """
+    seen = set()
+    if not os.path.isdir(APPLIED_DIR):
+        return seen
+    for fname in sorted(os.listdir(APPLIED_DIR)):
+        if not fname.endswith('.json'):
+            continue
+        try:
+            with open(os.path.join(APPLIED_DIR, fname), 'r',
+                      encoding='utf-8') as f:
+                rows = json.load(f)
+        except Exception:
+            continue          # a corrupt archive must not block a build
+        if isinstance(rows, dict):
+            rows = [rows]
+        for r in rows:
+            if isinstance(r, dict) and r.get('id'):
+                seen.add(r['id'])
+    return seen
+
+
+def apply_contributions(contributions, dry_run=False, skip_applied=True):
     """Apply all contributions to the Dart data files."""
     if not contributions:
         print("No contributions to apply.")
         return 0
+
+    if skip_applied:
+        already = load_applied_ids()
+        if already:
+            before = len(contributions)
+            contributions = [c for c in contributions
+                             if c.get('id') not in already]
+            dropped = before - len(contributions)
+            if dropped:
+                print(f"  Skipping {dropped} contribution(s) already "
+                      f"applied in an earlier run "
+                      f"({len(contributions)} remain).")
+        if not contributions:
+            print("  Nothing new to apply.")
+            return 0
 
     # Two-stage dedup:
     #   1. By id — collapses server-side duplicates where `handleApproval`
@@ -1825,12 +1939,26 @@ def refetch_audio():
             headers={'Content-Type': 'application/json; charset=utf-8'},
             method='POST',
         )
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            result = json.loads(resp.read().decode('utf-8'))
+        # v1.23.4 (Session 64c): was a bare urlopen. On the 302 leak
+        # doGet's health payload arrives, whose status IS 'ok', so the
+        # check below passed, `audio` came back empty, and the user was
+        # told "the deployed version doesn't implement fetch_audio yet,
+        # or none of these have a recording" -- blaming the deployment
+        # or the data for a request that never reached doPost.
+        from setup_and_deploy import _post_follow as _pf
+        result = json.loads(_pf(req, timeout=30).decode('utf-8'))
     except Exception as e:
         print(f"  ✗ Webhook call failed: {e}")
         print(f"     Make sure you've redeployed the webhook:")
         print(f"       cd scripts\\clasp_contributions && clasp push --force && clasp deploy")
+        return
+
+    if result.get('status') == 'ok' and result.get('service') \
+            and 'audio' not in result:
+        print(f"  ✗ Could not read the doPost response (got doGet's "
+              f"health payload). The request never reached fetch_audio,")
+        print(f"    so this says NOTHING about whether recordings exist.")
+        print(f"    Retry; if it persists the deployment may be warming up.")
         return
 
     if result.get('status') != 'ok':
@@ -1957,6 +2085,9 @@ def main():
     if '--download' in args:
         # Download only, don't apply
         count = download_approved()
+        if count is None:
+            print("\n  Could not check the webhook. Nothing downloaded.")
+            return 1
         if count > 0:
             print(f"\nDownloaded {count} new contributions.")
             print(f"Run without --download to apply them.")
@@ -1966,8 +2097,36 @@ def main():
 
     # Step 1: Try to download new approved contributions from the webhook (if configured)
     webhook_url = get_webhook_url()
+    if webhook_url and '--offline' in args:
+        # Explicit opt-out: the operator accepts that this build may not
+        # include contributions approved since the last successful check.
+        print()
+        print("  --offline: SKIPPING the approved-contributions check.")
+        print("  This build may be missing content approved since the")
+        print("  last successful sync. Do not ship it to the stores")
+        print("  without re-running online first.")
+        print()
+        webhook_url = None
     if webhook_url:
-        download_approved()
+        # v1.23.4 (Session 64c): the return value used to be discarded
+        # entirely, so a timeout and a genuine "nothing pending" were
+        # indistinguishable and the build carried on either way, ready
+        # to ship an APK missing approved content with one Warning line
+        # as the only trace.
+        if download_approved() is None:
+            print()
+            print("=" * 60)
+            print("  ERROR: could not check for approved contributions.")
+            print("=" * 60)
+            print("  The webhook did not return a readable answer, so we")
+            print("  do NOT know whether approved contributions are")
+            print("  pending. Building now could ship an APK missing")
+            print("  content Dr. Sama has already approved.")
+            print()
+            print("  Retry, or to build anyway (you accept that risk):")
+            print("     python scripts\\apply_contributions.py --offline")
+            print("=" * 60)
+            return 1
 
     # Step 2: Load and apply local contributions
     contributions = load_contributions()
@@ -1997,11 +2156,23 @@ def main():
                     headers={'Content-Type': 'application/json'},
                     method='POST',
                 )
-                with urllib.request.urlopen(req, timeout=15) as resp:
-                    result = json.loads(resp.read().decode('utf-8'))
-                    save_last_version(result.get('version', 0))
-            except Exception:
-                pass  # Non-critical
+                # v1.23.4 (Session 64c): was a bare urlopen, which let
+                # Apps Script's 302 turn this POST into a GET on
+                # doGet(). Its health payload carries no 'version', so
+                # the `, 0)` default fired and reset the counter.
+                from setup_and_deploy import _post_follow as _pf
+                result = json.loads(_pf(req, timeout=15).decode('utf-8'))
+                if 'version' in result:
+                    save_last_version(result['version'])
+                else:
+                    print("  Could not read the server version "
+                          "(keeping local version "
+                          f"{get_last_version()}).")
+            except Exception as _e:
+                # Still non-fatal, but no longer silent: losing this
+                # bookkeeping step is how contributions get re-applied.
+                print(f"  Could not refresh the server version ({_e}); "
+                      f"keeping local version {get_last_version()}.")
 
         print("\nNext steps:")
         print("  1. Audio will be regenerated by build_and_run.bat")
@@ -2010,4 +2181,8 @@ def main():
 
 
 if __name__ == '__main__':
-    _flush_and_exit(main())
+    # v1.23.4 (Session 64c): was `_flush_and_exit(main())` -- the return
+    # code was computed and then THROWN AWAY, so this script always
+    # exited 0. build_and_run.bat's "if !ERRORLEVEL! neq 0 -> abort"
+    # check on step [1/7] was dead code for its entire life.
+    sys.exit(_flush_and_exit(main()) or 0)

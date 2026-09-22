@@ -8887,7 +8887,7 @@ signed-in Apple ID.**
 
 #### Version code ledger
 
-| +139 | `v1.23.3+139` | pending | 2026-09-21 | **Apple Sign-In cloud fix (client + server).** `CloudBackupService` was 100% Google-only, so no Apple account had ever written to Firestore; `initialize()` was signing healthy Apple sessions out on every cold start. Adds `adoptFirebaseSession()` + provider detection + `authStateChanges()` listener; `AuthService.logout()` now drops the Firebase session (required by the above); both login branches adopt explicitly (fixes a latent Google bug for returning users); Apple `fullName` persisted to the Firebase profile; `StudySetAudioService` sends dual tokens; contributor credit falls back to Firebase displayName; `firestore.rules` guards a null `token.email`. **Server**: `requireStudySetAuth()` now accepts a Firebase ID token (`verifyFirebaseIdToken_` via Identity Toolkit `accounts:lookup`) alongside the unchanged Google path, unblocking Apple teachers' study-set uploads; covered by the new 24-case `scripts/test_study_set_auth.js`. Needs the `FIREBASE_API_KEY` script property set once. |
+| +139 | `v1.23.3+139` | pushed | 2026-09-21 | **Apple Sign-In cloud fix (client + server).** `CloudBackupService` was 100% Google-only, so no Apple account had ever written to Firestore; `initialize()` was signing healthy Apple sessions out on every cold start. Adds `adoptFirebaseSession()` + provider detection + `authStateChanges()` listener; `AuthService.logout()` now drops the Firebase session (required by the above); both login branches adopt explicitly (fixes a latent Google bug for returning users); Apple `fullName` persisted to the Firebase profile; `StudySetAudioService` sends dual tokens; contributor credit falls back to Firebase displayName; `firestore.rules` guards a null `token.email`. **Server**: `requireStudySetAuth()` now accepts a Firebase ID token (`verifyFirebaseIdToken_` via Identity Toolkit `accounts:lookup`) alongside the unchanged Google path, unblocking Apple teachers' study-set uploads; covered by the new 24-case `scripts/test_study_set_auth.js`. Needs the `FIREBASE_API_KEY` script property set once. **Android**: Build #300 (tag, commit afce276) AAB uploaded to Play alpha, 14m52s. **iOS**: Build #300 IPA uploaded to TestFlight, 37m44s. Main-branch verify #299 green on both first. Firestore rules published 2026-09-21 09:24 (emailKey null guard; live had drifted from the repo by two backticks in a comment on line 43, restored at the same time). Emulator-verified: Google sign-in, sign-out/sign-in without restart, cold start, Review sync. **NOT verified: Sign in with Apple itself** - impossible on an Android emulator; must be tested on real iOS during the 7-day soak, BEFORE auto-promotion carries it to production. |
 
 **Next safe build code: +140.**
 
@@ -8937,3 +8937,177 @@ cancelled mid-run (exit 143). Open follow-up #1 (restrict
 6. Exclude `build/` from OneDrive sync.
 7. Built-in Kotlin migration — blocked on 16 upstream plugins; hard wall
    is AGP 10 removing the opt-out.
+
+
+---
+
+## Session 64c - v1.23.4+140 (three features + a bug-class sweep)
+
+### Shipped in v1.23.4
+- Email-known indicator on study-set roster/partners: green = the address
+  is a known app user, amber = not seen yet, grey = could not check.
+  Amber NEVER blocks adding someone.
+- Developer Mode > Users: total count card + "Sync registry" backfill.
+- Email alert to the developer on first sign-in of a new account, with
+  server-side dedupe in Script Properties.
+- Update gate (`UpdateGate` wraps `_AuthGate` in main.dart, OUTSIDE auth
+  on purpose) reading `config/app_version`.
+
+### Console state (done by hand this session, do not redo)
+- `firestore.rules` published. Adds `match /config/{configDoc}`
+  (public read / dev write) and `match /registry/{emailKeyDoc}`
+  (get: any signed-in, list: dev, write: own key or dev).
+- `config/app_version` created: latestBuild 140 (int64),
+  minSupportedBuild 0 (int64), message, androidUrl, iosUrl.
+  minSupportedBuild MUST stay 0 unless deliberately locking users out,
+  and only ever raise it to a build at 100% on BOTH stores.
+
+### THE BUG CLASS OF THIS SESSION: unobservable read as negative
+Five separate instances, all found in one day, all the same shape - a
+check that could not OBSERVE reported a NEGATIVE result, and the caller
+believed it:
+
+1. `setup_and_deploy.py --verify` treated the tri-state `None`
+   (inconclusive) as falsy and aborted the build, while the deploy path
+   right above it handled `None` correctly. Same file, one function
+   apart. Killed a good build.
+2. The deploy loop broke out of its retry on `None`, on a comment that
+   said "retrying won't help". That stopped being true once transport
+   errors also mapped to `None`.
+3. `apply_contributions.py` DISCARDED `download_approved()`'s return
+   value entirely, so a webhook timeout and "nothing pending" printed
+   the identical line. A build could ship without approved content,
+   leaving one `Warning:` line as the only trace.
+4. `_flush_and_exit(main())` computed a return code and threw it away,
+   so the script always exited 0 and `build_and_run.bat`'s documented
+   "abort on failure" check for step [1/7] was DEAD CODE from birth.
+5. `_post_follow` gave up with a bare `RuntimeError`, which landed in
+   the generic handler and was reported as `False` = STALE. Introduced
+   while fixing #1-#4; caught by a test before it shipped.
+
+RULE: a probe has THREE outcomes - yes, no, and could-not-tell. Never
+let could-not-tell collapse into no. When adding one, grep for every
+caller and check each one distinguishes them.
+
+### `_post_follow` - the trap was one hop deeper than documented
+Apps Script parks a doPost result on a `script.googleusercontent.com`
+echo URL you fetch with GET. But while a deployment is warming up it
+instead 302s straight back to `/exec`, and GET on `/exec` runs doGet(),
+returning `{status:'ok', service:'...'}` - healthy-looking, and not an
+answer to the question asked.
+
+The helper written to stop POST->GET decay was doing POST->GET decay,
+one hop down. Now: echo host -> GET; bounce to `/exec` -> RE-POST
+(capped at 1, since current handlers are read-only but a future
+mutating action must not be replayed). Gives up with
+`AppsScriptNotReady`, which maps to inconclusive, never to stale.
+
+### Other fixes
+- `config/webhooks.json` is committed LF but was written in Windows
+  text mode, so every deploy flipped it to CRLF and turned a one-line
+  timestamp change into a whole-file diff. Now `newline='\n'`.
+- `apply_contributions.py` now ABORTS the build when the contributions
+  webhook is unreachable (operator's explicit choice). Escape hatch:
+  `python scripts/apply_contributions.py --offline`, which warns that
+  the APK may lack approved content and must not go to the stores.
+- New `scripts/probe_new_user.py` - checks the deployed `new_user`
+  handler without shell quoting or curl. Sends an empty email, so
+  nothing is mailed and the dedupe store is untouched.
+
+### Gotchas re-confirmed
+- `scripts/clasp_analytics/*` and `scripts/clasp_contributions/*` are
+  GITIGNORED (.gitignore:133-134). The tracked `.gs` files are the
+  source of truth; git will NEVER show you drift between a `.gs` and
+  its `Code.js`. Check the pair by hand before every push.
+- PowerShell mangles `-d "{\"a\":1}"`. Use a file or a Python script.
+- Still never `git add -A` here.
+
+### Open
+- Sign in with Apple has NEVER been tested on real iOS hardware.
+- Bump `config/app_version.latestBuild` past 140 only once the newer
+  build is at 100% on both stores.
+- Grep the rest of `scripts/` for instance #6 of the bug class above.
+
+### Session 64c (cont.) - instance #6 found, plus a twin cache bug
+
+**#6, found by the operator noticing a build re-applying old fixes.**
+`apply_contributions.py` ended every successful run with a "save the
+server version so we don't re-download these next time" block: a bare
+`urlopen` (the 302 trap), `result.get('version', 0)`, inside
+`except Exception: pass` labelled "Non-critical". The doGet health
+payload has no 'version', so the `, 0)` default fired and REWOUND
+last_version.txt to 0. Next build re-downloaded all 404 approved
+contributions and re-applied 391 already-applied ones: 374 Drive
+downloads, 374 Whisper runs, 2244 voice regenerations. The block whose
+only job was "don't re-download these" guaranteed re-downloading
+everything.
+
+Fixes: `save_last_version` is now MONOTONIC (refuses to go backwards;
+`--reset-version` is the explicit escape); that call site uses
+`_post_follow` and won't write a version it could not read; and
+`load_applied_ids()` finally READS contributions/applied/, which had
+been written after every run since April and never once read back. One
+integer was the only thing preventing re-application of the whole
+history.
+
+**Twin bug, same day, different cache.** `apply_recordings_as_audio.py`
+re-trimmed and re-encoded all 368 recordings on EVERY build. Its
+freshness check looked for `<key>.mp3`, but `cleanup_assets.py`
+transcodes to `.opus` and then DELETES the mp3 (`p.unlink()`). So
+`target_path.exists()` was False for every file forever: permanent
+cache miss. Measured before: "Written: 368  Skipped (cached): 0".
+After: "Written: 0  Skipped (cached): 368", and touching one source WAV
+correctly rebuilds exactly that one.
+
+`generate_audio_edge.py` HIT THIS EXACT BUG AND WAS FIXED IN v1.17.1 -
+its comment literally says "whose source MP3 was then deleted". The
+lesson was learned in one script and never carried to the sibling doing
+the same job.
+
+RULE: when a pipeline step deletes or renames an artifact, every other
+step that treats that artifact as a cache key is now broken. Grep for
+the old extension across ALL scripts, not just the one in front of you.
+
+RULE: `except Exception: pass` labelled "non-critical" is where this
+class of bug lives. If a step's failure can cause redundant or wrong
+work later, it is not non-critical - print it.
+
+Still open: a proper sweep of `scripts/` for further instances. Two of
+the seven found so far were caught by the operator noticing wasted work
+in a build log, not by code review.
+
+### Session 64c - the sweep (instances #7-#9)
+
+Grepped all of `scripts/` for the pattern. Cleared: `check_version_codes.py`
+and `promote_testflight_to_production.py` POST to googleapis / App Store
+Connect, not Apps Script, so the 302 trap does not apply there.
+
+**#7 `apply_contributions.py` `refetch_audio()`** - bare urlopen on the
+privileged `fetch_audio` endpoint. doGet's health payload has
+status == 'ok', so the error check passed, `audio` came back empty, and
+the user was told "the deployed version doesn't implement fetch_audio
+yet, or none of these submissions have a recording on file" - blaming
+the deployment or the DATA for a request that never reached doPost.
+Contributors' recordings silently not fetched, with a message pointing
+at a redeploy that would not have helped.
+
+**#8 `setup_and_deploy.py` `test_webhook()`** - bare urlopen, and it
+returns True for ANY JSON response ("At least it responded with JSON").
+doGet's payload passes. Left as-is: it is weak by design rather than
+wrong, and rewiring it means touching the auth flow. Do not treat a
+`test_webhook` pass as evidence of anything beyond reachability.
+
+**#9 `setup_and_deploy.py` `test_dev_email()`** - bare urlopen. Its
+`status == 'ok'` branch reported doGet's health payload as "send_mail
+scope is authorized": a FALSE PASS claiming the 2FA dev-email path was
+verified when the probe never reached doPost. Now rejects the health
+payload explicitly.
+
+Also hardened: `download_approved`'s `except: _pf = None` fallback was
+silent, which would have quietly reinstated the very trap that function
+exists to avoid. It prints a warning now.
+
+TALLY: nine instances of unobservable-read-as-negative (or as a false
+positive) in one codebase, in one day. THREE were found by the operator
+noticing wasted work in a build log; the rest by grep. Code review did
+not find them - reading build output did.

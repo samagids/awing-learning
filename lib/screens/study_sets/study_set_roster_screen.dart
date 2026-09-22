@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/models/study_set.dart';
 import 'package:awing_ai_learning/services/study_set_service.dart';
+import 'package:awing_ai_learning/widgets/email_known_icon.dart';
 
 /// Manage the roster of student Google emails on a Study Set.
 /// Session 63 Phase 2.
@@ -214,13 +215,23 @@ class _StudySetRosterScreenState extends State<StudySetRosterScreen> {
             ),
           ),
           title: Text(email),
-          trailing: IconButton(
-            icon: const Icon(Icons.close, size: 20),
-            tooltip: 'Remove',
-            onPressed: () async {
-              await StudySetService.instance
-                  .removeFromRoster(set.id, email);
-            },
+          // Session 64c: green = this address has signed in to Awing,
+          // amber = it has not (usually a typo, sometimes a student who
+          // just has not installed yet), grey = could not check. Purely
+          // informational - it never blocks adding or keeping an entry.
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              EmailKnownIcon(email: email),
+              IconButton(
+                icon: const Icon(Icons.close, size: 20),
+                tooltip: 'Remove',
+                onPressed: () async {
+                  await StudySetService.instance
+                      .removeFromRoster(set.id, email);
+                },
+              ),
+            ],
           ),
         );
       },

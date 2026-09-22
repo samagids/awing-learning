@@ -32,6 +32,7 @@ from datetime import datetime
 import urllib.request
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
+from urllib.parse import urljoin, urlparse
 
 # ==================== Paths ====================
 SCRIPT_DIR = Path(__file__).parent
@@ -137,37 +138,85 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def _post_follow(req, timeout=45, max_hops=5):
-    """POST, then follow Apps Script's 302 chain with GETs by hand.
+class AppsScriptNotReady(RuntimeError):
+    """Apps Script never handed back a readable doPost result.
+
+    Distinct from RuntimeError so callers can map it to INCONCLUSIVE.
+    A bare RuntimeError would fall into verify_contributions_webhook's
+    generic handler and be reported as `False` = STALE, which is the
+    same unobservable-read-as-negative mistake this whole session has
+    been unpicking.
+    """
+
+
+_REDIRECT_CODES = (301, 302, 303, 307, 308)
+
+
+def _post_follow(req, timeout=45, max_hops=5, trace=False):
+    """POST, then walk Apps Script's 302 chain by hand.
 
     Returns the final response body as bytes. Mirrors
-    ContributionService._postToWebhook in the Dart client, which does
-    exactly this and is the only client in the codebase that reads
-    doPost results correctly.
+    ContributionService._postToWebhook in the Dart client.
+
+    v1.23.4 (Session 64c) — the previous version followed EVERY hop with
+    a GET. That is right for the one hop that matters (Apps Script parks
+    the doPost result on a script.googleusercontent.com "echo" URL and
+    you fetch it with GET), but it is wrong when Apps Script instead
+    bounces you straight back to .../exec, which it does while a fresh
+    deployment is still warming up. GET on /exec runs doGet(), which
+    cheerfully returns {status:'ok', service:'...'} — a healthy-looking
+    payload that is not an answer to the question we asked. That is the
+    "got doGet's health payload" reading, and it is precisely the trap
+    this helper exists to avoid, reintroduced one hop further down.
+
+    So: hop to googleusercontent -> GET. Hop back to /exec -> re-POST.
+
+    Re-POST is capped at one attempt. doPost handlers here are
+    read-only (check_version, fetch_all) or self-rejecting
+    (new_user with an empty address), but a future mutating action must
+    not be replayed blindly, so the cap stays.
     """
     opener = urllib.request.build_opener(_NoRedirect)
-    try:
-        with opener.open(req, timeout=timeout) as r:
-            return r.read()
-    except HTTPError as e:
-        if e.code not in (301, 302, 303, 307, 308):
-            raise
-        location = e.headers.get('Location')
-        if not location:
-            raise
-        for _ in range(max_hops):
-            try:
-                with opener.open(
-                        Request(location), timeout=timeout) as r2:
-                    return r2.read()
-            except HTTPError as e2:
-                if e2.code not in (301, 302, 303, 307, 308):
-                    raise
-                nxt = e2.headers.get('Location')
-                if not nxt:
-                    raise
-                location = nxt
-        raise RuntimeError('too many redirects from Apps Script')
+    data = req.data
+    headers = dict(req.headers)
+    chain = []
+    reposts = 0
+    cur = req
+
+    for _ in range(max_hops + 1):
+        try:
+            with opener.open(cur, timeout=timeout) as r:
+                if trace and chain:
+                    print(f"      redirect chain: {' -> '.join(chain)}")
+                return r.read()
+        except HTTPError as e:
+            if e.code not in _REDIRECT_CODES:
+                raise
+            loc = e.headers.get('Location')
+            if not loc:
+                raise
+            loc = urljoin(cur.full_url, loc)
+            host = urlparse(loc).netloc
+            if 'googleusercontent.com' in host:
+                chain.append(f"{e.code}->echo")
+                cur = Request(loc)                      # GET the result
+            elif e.code == 303:
+                chain.append(f"303->{host}")
+                cur = Request(loc)                      # 303 mandates GET
+            elif reposts < 1:
+                # Bounced back to /exec: re-send the POST rather than
+                # letting it decay into a GET on doGet().
+                chain.append(f"{e.code}->exec(re-POST)")
+                reposts += 1
+                cur = Request(loc, data=data, headers=headers)
+            else:
+                if trace:
+                    print(f"      redirect chain: {' -> '.join(chain)}")
+                raise AppsScriptNotReady(
+                    'Apps Script kept redirecting back to /exec '
+                    '(deployment still warming up?)')
+
+    raise AppsScriptNotReady('too many redirects from Apps Script')
 
 
 def verify_contributions_webhook(url):
@@ -284,11 +333,25 @@ def verify_contributions_webhook(url):
               f"{fa.get('status')} - {msg}")
         return False
     except HTTPError as e:
+        # v1.23.4 (Session 64c): a transport-level HTTP failure says
+        # NOTHING about which code is deployed. 404/408/429/5xx right
+        # after a deploy are propagation lag (we hit 404 routinely on
+        # the first probe). Inconclusive, not stale.
+        if e.code in (404, 408, 429) or 500 <= e.code < 600:
+            print(f"    ? HTTP {e.code} during verify - treating as "
+                  f"not-yet-propagated, not stale.")
+            return None
         print(f"    HTTP error during verify: {e.code}")
         return False
     except URLError as e:
-        print(f"    Network error during verify: {e.reason}")
-        return False
+        # Could not reach the endpoint at all, so we learned nothing
+        # about the deployed code. Inconclusive.
+        print(f"    ? Network error during verify: {e.reason} - "
+              f"inconclusive.")
+        return None
+    except AppsScriptNotReady as e:
+        print(f"    ? {e} - inconclusive, not stale.")
+        return None
     except (json.JSONDecodeError, ValueError) as e:
         print(f"    Could not decode JSON response: {e}")
         return False
@@ -536,12 +599,17 @@ def deploy_webhooks():
                 if res is True:
                     verified = True
                     break
-                if res is None:
-                    # Inconclusive (couldn't read the doPost result).
-                    # Retrying won't help — it's a client-side redirect
-                    # problem, not propagation.
-                    inconclusive = True
-                    break
+                # v1.23.4 (Session 64c): None used to break out of the
+                # loop immediately, on the assumption that "inconclusive"
+                # could only mean the client-side redirect leak, which no
+                # amount of retrying fixes. That assumption stopped
+                # holding once transport failures (404/5xx right after a
+                # deploy = propagation lag) also map to None, and those
+                # DO clear on retry — we saw 404-then-success in a real
+                # run. So keep retrying on None and decide after the
+                # loop; a genuine redirect leak just returns None four
+                # times and costs ~30s before the same warning.
+            inconclusive = (res is None)
             if inconclusive:
                 # v1.23.3 (Session 64): a smoke test that cannot OBSERVE
                 # must not block a release. The deploy itself already
@@ -577,7 +645,12 @@ def deploy_webhooks():
         existing.update(urls)
         existing["deployed_at"] = datetime.now().isoformat(timespec='seconds')
 
-        with open(WEBHOOKS_FILE, 'w') as f:
+        # v1.23.4 (Session 64c): newline='\n' is NOT cosmetic. Python's
+        # text mode on Windows translates \n -> \r\n, so every deploy
+        # rewrote this LF-committed file as CRLF and turned a one-line
+        # timestamp change into a whole-file diff -- the same CRLF churn
+        # that makes `git add -A` unusable in this repo.
+        with open(WEBHOOKS_FILE, 'w', newline='\n') as f:
             json.dump(existing, f, indent=2)
 
         print(f"\n  Saved to {WEBHOOKS_FILE}")
@@ -631,10 +704,18 @@ def test_dev_email(analytics_url):
             "code": "000000",
             "email": "test@test.com",  # Will be rejected by email check — that's fine
         }).encode('utf-8')
-        req = Request(analytics_url, data=data, headers={'Content-Type': 'application/json'})
-        resp = urlopen(req, timeout=15)
-        body = resp.read().decode('utf-8')
-        result = json.loads(body)
+        req = Request(analytics_url, data=data,
+                      headers={'Content-Type': 'application/json'})
+        # v1.23.4 (Session 64c): was a bare urlopen. doGet's health
+        # payload is {status:'ok', service:...}, and the `status == 'ok'`
+        # branch below reported that as "send_mail scope is authorized" —
+        # a FALSE PASS on a probe that never reached doPost.
+        body = _post_follow(req, timeout=15)
+        result = json.loads(body.decode('utf-8'))
+        if result.get('status') == 'ok' and result.get('service'):
+            print("    ? Got doGet's health payload — the dev-email path "
+                  "was never actually exercised.")
+            return False
         # "Unauthorized email" means the function ran — send_mail scope is authorized
         if result.get('status') == 'error' and 'Unauthorized' in result.get('message', ''):
             return True
@@ -958,10 +1039,37 @@ def main():
             sys.exit(1)
         print(f"\n  Testing: {url}")
         print("  POST action=fetch_all ...")
-        if verify_contributions_webhook(url):
+        # v1.23.4 (Session 64c): this path is Step 0b of
+        # build_and_run.bat and it ABORTS THE BUILD on a falsy result.
+        # It previously called verify once and treated BOTH False
+        # (stale) and None (could not observe) as failure, so a build
+        # could be killed seconds after a successful deploy purely
+        # because the new deployment had not propagated yet. The deploy
+        # path already had the retry + tri-state logic; this one did
+        # not. Same rule as there: a smoke test that cannot OBSERVE
+        # must not block a release.
+        import time as _t
+        res = None
+        for attempt, wait in enumerate([0, 5, 10, 15], start=1):
+            if wait:
+                print(f"  Not yet propagated - waiting {wait}s "
+                      f"(attempt {attempt}/4)...")
+                _t.sleep(wait)
+            res = verify_contributions_webhook(url)
+            if res is True or res is False:
+                break
+        if res is True:
             print("\n  OK: Deployment supports fetch_all.")
             print("  If the app still shows a sync error, make sure the APK")
             print("  was rebuilt AFTER webhooks.json was updated.")
+            sys.exit(0)
+        elif res is None:
+            print("\n  WARNING: could not verify the deployment "
+                  "(no readable response).")
+            print("  This is NOT evidence of a stale deployment - the probe")
+            print("  never got a response it could read. Not failing the")
+            print("  build. Confirm by hand in Developer Mode > Review,")
+            print("  which follows the redirect correctly.")
             sys.exit(0)
         else:
             print("\n  FAIL: Deployed URL does not support fetch_all.")

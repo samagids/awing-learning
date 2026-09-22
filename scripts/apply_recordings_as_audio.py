@@ -428,9 +428,29 @@ def main() -> int:
         #   - The WAV side-car already exists AND is newer than the source WAV
         #     (added in pipeline v2 for the on-device grader)
         # If either output is missing or older than the source, we re-encode.
+        # v1.23.4 (Session 64c) -- THE reason this script re-trimmed and
+        # re-encoded all 368 recordings on EVERY build.
+        #
+        # cleanup_assets.py transcodes these MP3s to .opus and then
+        # DELETES the source .mp3 (its `p.unlink()` pass). This check
+        # only ever looked for the .mp3, so from the first cleanup run
+        # onward `target_path.exists()` was False for every file
+        # forever: cache miss, re-trim, re-encode, every single build.
+        # Measured before the fix: "Written: 368  Skipped (cached): 0".
+        #
+        # generate_audio_edge.py hit this and was taught about it in
+        # v1.17.1 -- its comment even says "whose source MP3 was then
+        # deleted". This script was never given the same lesson. Same
+        # pattern, same fix: accept whichever encoded artifact is
+        # actually on disk.
+        encoded_path = target_path
+        if not encoded_path.exists():
+            opus_alt = target_path.with_suffix(".opus")
+            if opus_alt.exists() and opus_alt.stat().st_size > 0:
+                encoded_path = opus_alt
         mp3_fresh = (
-            target_path.exists()
-            and target_path.stat().st_mtime >= wav_mtime
+            encoded_path.exists()
+            and encoded_path.stat().st_mtime >= wav_mtime
         )
         wav_fresh = (
             wav_companion.exists()

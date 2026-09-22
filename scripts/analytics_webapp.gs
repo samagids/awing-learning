@@ -73,6 +73,12 @@ function setupSheets() {
  * Handle POST requests from the app.
  * Each request contains a JSON body with { sheet, data } fields.
  */
+// Session 64c - single destination for operational alerts. Defined as a
+// constant because handleNewUser() mails it directly; the address in an
+// inbound payload is CONTENT only and must never become a recipient,
+// since this endpoint is unauthenticated (that would be an open relay).
+var DEVELOPER_EMAIL = 'samagids@gmail.com';
+
 function doPost(e) {
   try {
     var payload = JSON.parse(e.postData.contents);
@@ -80,6 +86,11 @@ function doPost(e) {
     // Handle developer 2FA verification code email
     if (payload.action === 'send_dev_code') {
       return handleSendDevCode(payload);
+    }
+
+    // Session 64c - a brand-new account signed in for the first time.
+    if (payload.action === 'new_user') {
+      return handleNewUser(payload);
     }
 
     var sheetName = payload.sheet || 'Activity';
@@ -167,6 +178,75 @@ function handleSendDevCode(payload) {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'error',
       message: 'Failed to send email: ' + err.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Session 64c - email the developer when a new account appears.
+ *
+ * Fired once per address by AuthService when it creates a local account
+ * for an email it has not seen. Deliberately deduplicated SERVER-side as
+ * well: the endpoint is unauthenticated (like the rest of this webhook's
+ * analytics intake), so a client bug, a reinstall, or someone poking the
+ * URL could otherwise spam the inbox. We keep a seen-list in Script
+ * Properties and mail at most once per address, ever.
+ *
+ * The alert always goes to DEVELOPER_EMAIL - the address in the payload is
+ * only ever used as CONTENT, never as a destination. That matters: this
+ * endpoint takes unauthenticated input, and echoing a caller-supplied
+ * address into sendEmail's recipient would turn it into an open relay.
+ */
+function handleNewUser(payload) {
+  var email = String(payload.email || '').trim().toLowerCase();
+  if (!email || email.length > 320 || email.indexOf('@') < 1) {
+    return ContentService.createTextOutput(JSON.stringify({
+      status: 'error', message: 'invalid email'
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  var props = PropertiesService.getScriptProperties();
+  var key = 'seen_user_' + email.replace(/[^a-z0-9]/g, '_').substring(0, 80);
+  if (props.getProperty(key)) {
+    // Already announced. Silent success so the client never retries.
+    return ContentService.createTextOutput(JSON.stringify({
+      status: 'ok', message: 'already announced'
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  try {
+    // Strip CR/LF from anything that reaches the subject line - MailApp
+    // mis-parses headers containing them.
+    function clean(v, max) {
+      return String(v || '').replace(/[\r\n]+/g, ' ').substring(0, max || 120);
+    }
+    var name = clean(payload.displayName, 80);
+    var how = clean(payload.authMethod, 20);
+    var ver = clean(payload.appVersion, 20);
+    var plat = clean(payload.platform, 20);
+
+    var subject = '[Awing] New user: ' + clean(email, 120);
+    var body =
+      'A new account just signed in to Awing AI Learning.\n\n' +
+      '  Email    : ' + email + '\n' +
+      '  Name     : ' + (name || '(not provided)') + '\n' +
+      '  Sign-in  : ' + (how || '(unknown)') + '\n' +
+      '  Platform : ' + (plat || '(unknown)') + '\n' +
+      '  App      : ' + (ver || '(unknown)') + '\n' +
+      '  Seen at  : ' + new Date().toISOString() + '\n\n' +
+      'You are receiving this because you are the developer of the app.\n' +
+      'See Developer Mode > Users for the full list.\n\n' +
+      '-- Awing AI Learning';
+
+    MailApp.sendEmail(DEVELOPER_EMAIL, subject, body);
+    props.setProperty(key, String(Date.now()));
+
+    return ContentService.createTextOutput(JSON.stringify({
+      status: 'ok', message: 'alert sent'
+    })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({
+      status: 'error', message: 'Failed to send: ' + err.toString()
     })).setMimeType(ContentService.MimeType.JSON);
   }
 }

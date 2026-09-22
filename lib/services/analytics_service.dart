@@ -18,7 +18,7 @@ class AnalyticsService {
 
   // Keep this in sync with AboutScreen.appVersion in lib/screens/about_screen.dart.
   // Cannot import AboutScreen here without circular deps, so it's a manual mirror.
-  static const String _appVersion = '1.23.3';
+  static const String _appVersion = '1.23.4';
   static const int _batchSize = 20;
   static const Duration _flushInterval = Duration(minutes: 5);
   static const String _keyDeviceId = 'analytics_device_id';
@@ -209,6 +209,64 @@ class AnalyticsService {
     // If webhook URL is configured, send events to Google Sheet
     if (_webhookUrl != null && _webhookUrl!.isNotEmpty) {
       await _sendToCloud();
+    }
+  }
+
+  /// Session 64c — tell the developer, by email, that a brand-new account
+  /// just appeared.
+  ///
+  /// Called exactly once per email, from AuthService when an account is
+  /// created for the first time on this device. Deliberately bypasses the
+  /// batched event queue: a signup is worth knowing about now, not at the
+  /// next 5-minute flush, and it must survive the user closing the app
+  /// straight after onboarding.
+  ///
+  /// Fire-and-forget. This is a notification, not a record — the sign-in
+  /// must never fail or stall because a webhook was unreachable.
+  ///
+  /// NOTE this ignores the analytics opt-out on purpose: it is an
+  /// operational alert to the app owner about their own service, not
+  /// behavioural analytics about the user. It sends only the address that
+  /// was used to sign in, which the developer can already see in the
+  /// Developer Mode > Users tab.
+  Future<void> notifyNewUser({
+    required String email,
+    String? displayName,
+    String? authMethod,
+  }) async {
+    if (_webhookUrl == null || _webhookUrl!.isEmpty) {
+      if (kDebugMode) print('Analytics: no webhook - new-user alert skipped');
+      return;
+    }
+    try {
+      final payload = jsonEncode({
+        'action': 'new_user',
+        'email': email,
+        'displayName': displayName ?? '',
+        'authMethod': authMethod ?? '',
+        'appVersion': _appVersion,
+        'platform': Platform.operatingSystem,
+        'timestamp': DateTime.now().toUtc().toIso8601String(),
+      });
+      final client = HttpClient();
+      client.connectionTimeout = const Duration(seconds: 15);
+      final req = await client.postUrl(Uri.parse(_webhookUrl!));
+      req.headers.set('Content-Type', 'application/json; charset=utf-8');
+      // Apps Script answers every POST with a 302 whose body is served by a
+      // follow-up GET. We do not need the body here, so we simply do not
+      // follow it - but we must NOT let the client auto-follow either, or
+      // it converts the POST to a GET and the payload is lost (Session 26
+      // in Dart, Session 64 again in PowerShell and Python).
+      req.followRedirects = false;
+      req.add(utf8.encode(payload));
+      final resp = await req.close();
+      await resp.drain<void>();
+      client.close();
+      if (kDebugMode) {
+        print('Analytics: new-user alert sent for $email (${resp.statusCode})');
+      }
+    } catch (e) {
+      if (kDebugMode) print('Analytics: new-user alert failed: $e');
     }
   }
 

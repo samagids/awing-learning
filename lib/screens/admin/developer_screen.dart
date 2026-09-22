@@ -28,6 +28,7 @@ import 'package:awing_ai_learning/screens/stories_screen.dart'
     show awingStories;
 import 'package:awing_ai_learning/components/parental_gate.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/services/user_registry_service.dart';
 import 'package:record/record.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -1805,6 +1806,7 @@ class _UsersTabState extends State<_UsersTab> {
   List<Map<String, dynamic>>? _cloudUsers;
   bool _loadingCloud = false;
   String? _cloudError;
+  bool _backfilling = false;
 
   @override
   void initState() {
@@ -1852,6 +1854,23 @@ class _UsersTabState extends State<_UsersTab> {
       // But we log loudly so dev notices regressions (e.g. rule changes).
       debugPrint('Audit log write failed: $e');
     }
+  }
+
+  /// Session 64c — seed `registry/` from the users we can already see.
+  ///
+  /// The registry powers the green/amber badge on study-set rosters, but it
+  /// only fills in as users sign in again. Until then a perfectly valid
+  /// address shows amber, which is misleading. The developer can read
+  /// /users, so seeding from it makes the badge truthful immediately.
+  Future<void> _backfillRegistry() async {
+    setState(() => _backfilling = true);
+    final n = await UserRegistryService.instance.backfillFromUsers();
+    if (!mounted) return;
+    setState(() => _backfilling = false);
+    final msg = n < 0
+        ? 'Registry backfill failed - see logs.'
+        : 'Registry backfill complete: $n entries.';
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   Future<void> _fetchCloudUsers() async {
@@ -2032,6 +2051,57 @@ class _UsersTabState extends State<_UsersTab> {
                   child: Text('Error: $_cloudError',
                       style: const TextStyle(
                           color: Colors.red, fontSize: 12)),
+                ),
+              ),
+
+            // Session 64c — headline count. Previously the only way to
+            // know how many users existed was to scroll and tally the
+            // cards by hand.
+            if (_cloudUsers != null)
+              Card(
+                color: Colors.indigo.shade50,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.groups, color: Colors.indigo, size: 32),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${_cloudUsers!.length}',
+                              style: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.indigo,
+                              ),
+                            ),
+                            Text(
+                              _cloudUsers!.length == 1
+                                  ? 'total user with cloud data'
+                                  : 'total users with cloud data',
+                              style: TextStyle(
+                                  fontSize: 12, color: Colors.grey.shade700),
+                            ),
+                          ],
+                        ),
+                      ),
+                      _backfilling
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child:
+                                  CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : TextButton.icon(
+                              onPressed: _backfillRegistry,
+                              icon: const Icon(Icons.sync, size: 18),
+                              label: const Text('Sync registry'),
+                            ),
+                    ],
+                  ),
                 ),
               ),
 

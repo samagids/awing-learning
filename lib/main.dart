@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:awing_ai_learning/modules/beginner/beginner_module.dart';
 import 'package:awing_ai_learning/screens/home_screen.dart';
+import 'package:awing_ai_learning/widgets/update_gate.dart';
 import 'package:awing_ai_learning/screens/auth/login_screen.dart';
 import 'package:awing_ai_learning/screens/auth/profile_select_screen.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
@@ -388,7 +389,12 @@ class AwingApp extends StatelessWidget {
             darkTheme: ThemeNotifier.darkTheme(),
             themeMode:
                 themeNotifier.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-            home: const _AuthGate(),
+            // Session 64b: UpdateGate sits OUTSIDE _AuthGate on purpose.
+            // A user on a retired build must see the update screen even if
+            // they cannot get past sign-in, so the gate must not depend on
+            // auth state. It fails open when offline, so it costs an
+            // offline child nothing.
+            home: const UpdateGate(child: _AuthGate()),
             // Awing on-screen keyboard overlay. Renders at the app root
             // so it can float above any screen. Only appears when an
             // AwingTextField gains focus (see AwingKeyboardController).

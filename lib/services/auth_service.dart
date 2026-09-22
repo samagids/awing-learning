@@ -7,6 +7,8 @@ import 'package:awing_ai_learning/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
 import 'package:awing_ai_learning/services/fcm_service.dart';
+import 'package:awing_ai_learning/services/analytics_service.dart';
+import 'package:awing_ai_learning/services/user_registry_service.dart';
 
 /// Authentication and user management service.
 ///
@@ -154,6 +156,16 @@ class AuthService extends ChangeNotifier {
       if (cloudBackup != null) {
         _tryCloudRestore(e, cloudBackup);
       }
+
+      // Session 64c: a brand-new account on this device. Email the
+      // developer so new installs are visible without polling Firestore.
+      // Guarded by `!_accounts.containsKey(e)` above, so it fires once per
+      // address. Fire-and-forget - never blocks sign-in.
+      unawaited(AnalyticsService.instance.notifyNewUser(
+        email: e,
+        displayName: displayName,
+        authMethod: authMethod,
+      ));
     } else if (displayName != null) {
       // Update display name if provided
       final account = _accounts[e]!;
@@ -162,6 +174,12 @@ class AuthService extends ChangeNotifier {
         _saveAccounts();
       }
     }
+
+    // Session 64c: record this address in the registry that powers the
+    // green/amber badge on study-set rosters. Runs on EVERY sign-in, not
+    // just the first, so pre-existing users backfill as they return.
+    // Fire-and-forget; a failure only means a roster shows grey.
+    unawaited(UserRegistryService.instance.registerSelf(e));
 
     final account = _accounts[e]!;
     _currentAccount = account;
