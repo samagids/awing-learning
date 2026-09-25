@@ -66,12 +66,18 @@ android {
             // requires deobfuscation rather than `apktool + strings`.
             //
             // Session 63: AGP 9 forced the base file to
-            // `proguard-android-optimize.txt`; the optimization pass itself
-            // is still disabled via `-dontoptimize` in proguard-rules.pro,
-            // because it occasionally inlines methods that Flutter plugins
-            // reach via reflection (Firebase, Google Sign-In, tflite_flutter).
-            // Do not "fix" this back to proguard-android.txt — AGP 9 rejects
-            // that file outright.
+            // `proguard-android-optimize.txt`. Do not "fix" this back to
+            // proguard-android.txt — AGP 9 rejects that file outright.
+            //
+            // v1.23.5 (Session 64d): the optimization pass is now ON.
+            // `-dontoptimize` was removed from proguard-rules.pro after
+            // Play Console flagged release 140 (1.23.4) with "DEX code
+            // optimization is below our threshold — Optimization (0%)",
+            // deadline Feb 2027. See the long note at the top of
+            // proguard-rules.pro for the reasoning, the safety net, and
+            // the real-device test matrix that MUST pass before tagging.
+            // If release-only breakage appears, restoring the single line
+            // `-dontoptimize` reverts this completely.
             //
             // Resource shrinking is intentionally DISABLED. The Google
             // Services Gradle plugin (`com.google.gms.google-services`)

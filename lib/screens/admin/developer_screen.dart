@@ -528,7 +528,10 @@ class _RecordTabState extends State<_RecordTab> {
 
   // Filters
   String _filterSource = 'All';
-  String _filterStatus = 'All';
+  // v1.23.5 (Session 64d): open on "To do", not "All". The tab exists to
+  // find what still needs recording; showing every already-covered word
+  // by default buried that. The All chip is one tap away.
+  String _filterStatus = 'NotRecorded';
   String _filterRecorder = 'Anyone';
   final _searchController = TextEditingController();
 
@@ -739,7 +742,19 @@ class _RecordTabState extends State<_RecordTab> {
       // Status
       switch (_filterStatus) {
         case 'NotRecorded':
+          // v1.23.5 (Session 64d): "To do" used to mean only "no doc in
+          // the Firestore `recordings` collection", so every word Dr.
+          // Sama or the kids had already recorded into the shipped audio
+          // pack still showed up as outstanding. Two independent sources
+          // say a word is covered and BOTH must be empty:
+          //   recs                     — contributions / in-app recordings
+          //   NativeAudioInventory     — canonical (Dr. Sama / Berlin) and
+          //                              per-kid clips already in the build
+          // hasAnyRecording() covers canonical OR any kid slug.
           if (recs.isNotEmpty) return false;
+          if (NativeAudioInventory.instance.hasAnyRecording(item.audioKey)) {
+            return false;
+          }
           break;
         case 'ByMe':
           if (!byMe) return false;

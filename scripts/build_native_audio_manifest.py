@@ -89,8 +89,53 @@ def _normalize_recorder(name):
     return _RECORDER_ALIASES.get(first)
 
 
+# v1.23.5 (Session 64d) — THE reason this manifest came out empty.
+#
+# These scans looked only for *.mp3. cleanup_assets.py transcodes every
+# clip to .opus and then DELETES the .mp3 (its `p.unlink()` pass), so
+# after the first cleanup there are ZERO .mp3 files on disk: 324
+# recordings, all .opus. The manifest therefore wrote `"categories": {}`
+# — 96 bytes — NativeAudioInventory loaded nothing, hasAnyRecording()
+# returned false for everything, and Dev Mode's Record tab listed every
+# already-recorded word as still "to do".
+#
+# Exactly the same mistake as apply_recordings_as_audio.py's freshness
+# check and generate_audio_edge.py before v1.17.1. Scan for whatever
+# encoded form is actually on disk, and dedupe by stem so a directory
+# holding both .mp3 and .opus counts the word once.
+AUDIO_EXTS = ("*.opus", "*.mp3", "*.m4a")
+
+# Only these subdirectories of audio/native/ hold NATIVE-SPEAKER
+# recordings. The others (man, woman, boy, girl, young_man,
+# young_woman, bible_trained) are synthesized CHARACTER VOICES.
+#
+# The old *.mp3-only scan excluded them for the wrong reason — the
+# character voices were already .opus, so they simply never matched.
+# Broadening the extensions to fix the empty-manifest bug would have
+# swept all 226 of them in and reported words with nothing but TTS
+# audio as "already recorded by a native speaker", hiding them from
+# the Dev Mode Record tab. The last manifest built while .mp3 files
+# still existed (2026-08-04) contains exactly alphabet + vocabulary,
+# which is the behaviour this allowlist preserves.
+#
+# The independent tell: apply_recordings_as_audio.py writes a .wav
+# side-car next to every real native clip (pipeline v2). The character
+# voice folders have opus files and zero .wav side-cars.
+NATIVE_CATEGORIES = {"alphabet", "vocabulary", "sentences", "stories"}
+
+
+def _keys_in(dir_path):
+    """Stems of every encoded clip in dir_path, any supported format."""
+    keys = set()
+    for pattern in AUDIO_EXTS:
+        for p in dir_path.glob(pattern):
+            keys.add(p.stem)
+    return keys
+
+
 def scan_canonical():
-    """Walk audio/native/<category>/*.mp3. Returns dict[category -> set[key]]."""
+    """Walk audio/native/<category>/ for encoded clips.
+    Returns dict[category -> set[key]]."""
     out = {}
     if not NATIVE_DIR.exists():
         return out
@@ -98,14 +143,16 @@ def scan_canonical():
         if not cat_dir.is_dir():
             continue
         category = cat_dir.name
-        keys = {p.stem for p in cat_dir.glob("*.mp3")}
+        if category not in NATIVE_CATEGORIES:
+            continue          # character voice, not a native recording
+        keys = _keys_in(cat_dir)
         if keys:
             out[category] = keys
     return out
 
 
 def scan_kids():
-    """Walk audio/native_kids/<slug>/<category>/*.mp3.
+    """Walk audio/native_kids/<slug>/<category>/ for encoded clips.
     Returns dict[category -> dict[key -> set[slug]]]."""
     out = {}  # category -> key -> set[slug]
     if not KIDS_DIR.exists():
@@ -118,8 +165,9 @@ def scan_kids():
             if not cat_dir.is_dir():
                 continue
             category = cat_dir.name
-            for mp3 in cat_dir.glob("*.mp3"):
-                key = mp3.stem
+            if category not in NATIVE_CATEGORIES:
+                continue
+            for key in _keys_in(cat_dir):
                 out.setdefault(category, {}).setdefault(key, set()).add(slug)
     return out
 

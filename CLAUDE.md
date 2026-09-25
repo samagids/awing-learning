@@ -9111,3 +9111,95 @@ TALLY: nine instances of unobservable-read-as-negative (or as a false
 positive) in one codebase, in one day. THREE were found by the operator
 noticing wasted work in a build log; the rest by grep. Code review did
 not find them - reading build output did.
+
+---
+
+## Session 64d - v1.23.5+141
+
+### Shipped
+- Dev Mode 2FA: `_sendDevVerificationEmail` is now `Future<bool?>`.
+- Native audio manifest repaired (was EMPTY - see below).
+- Dev Mode Record tab: "To do" is honest and is now the default filter.
+- R8 optimization pass ENABLED (`-dontoptimize` removed).
+- New `scripts/probe_dev_code.py`.
+
+### Instance #10 - "failed to send email" that had already sent
+Entering Dev Mode reported "The verification email could not be sent
+(offline or webhook down)". The Apps Script execution log showed 50/50
+doPost runs Completed and MailApp never threw - the codes were landing
+in the inbox the whole time.
+
+`about_screen.dart` never checked `getResponse.statusCode` before
+`jsonDecode`. Apps Script parks the doPost result on a
+googleusercontent "echo" URL that is NOT ready the instant the 302
+arrives, so the follow-up GET can 404; the HTML error page went into
+jsonDecode, threw, hit the catch-all, and returned `false`.
+
+Now tri-state: true = confirmed sent, false = known NOT sent, null =
+unknown (doPost ran, reply unreadable). Retries 404/408/429/5xx three
+times. A `postDelivered` flag means an exception AFTER the POST was
+answered returns null, never false. The dialog says "Check your email"
+on null instead of claiming failure.
+
+### Instance #11 - the native audio manifest was empty
+`assets/native_audio_manifest.json` was 96 bytes, `"categories": {}`.
+NativeAudioInventory loaded nothing, `hasAnyRecording()` returned false
+for every word, and Dev Mode listed all 250 already-recorded words as
+still "to do".
+
+`build_native_audio_manifest.py` scanned `*.mp3`. cleanup_assets.py
+transcodes to .opus and DELETES the mp3. Zero mp3 files remained.
+THIRD script with this bug (apply_recordings_as_audio.py, and
+generate_audio_edge.py back in v1.17.1). Now scans .opus/.mp3/.m4a.
+0 entries -> 250.
+
+NEAR MISS worth remembering: the first fix scanned all of `native/`
+and produced 476 entries. `native/` also holds `man`, `boy`, `girl` -
+SYNTHESIZED CHARACTER VOICES, not native recordings. The old mp3-only
+scan excluded them by accident, not design. Shipping that would have
+hidden 226 words that have NO native recording - the exact opposite of
+the request. Two independent tells caught it: the last manifest built
+while mp3s existed (2026-08-04) has only alphabet + vocabulary, and the
+character-voice folders have ZERO .wav side-cars (apply_recordings_as_
+audio writes one beside every real native clip). Now allowlisted via
+NATIVE_CATEGORIES.
+
+### R8 optimization is ON - how to revert
+Play flagged release 140: "DEX code optimization is below our threshold
+- Optimization (0%)", deadline Feb 2027. The old justification for
+`-dontoptimize` claimed R8 inlines methods Firebase / Google Sign-In /
+tflite reach by reflection - but all three already had blanket
+`-keep class ... { *; }` rules added in Session 61, AFTER that
+reasoning. A keep with `{ *; }` preserves every member, so R8 cannot
+inline away what reflection looks up. The guard did less than its
+comment claimed.
+
+Added an explicit safety net (native methods, enum values/valueOf,
+Parcelable CREATOR, Serializable) - the AGP default file covers most of
+it, but inheriting silently is an assumption and this repo keeps losing
+to those. NOTE: R8 IGNORES ProGuard's `-optimizations` directive, so
+there is no partial setting; keep rules are the only lever.
+
+Measured on the 1.23.5 release build: 552 inlined members, 15553 R8
+outline markers (both ZERO with -dontoptimize), 11331 classes mapped,
+MainActivity unobfuscated. Removals are dominated by desugaring
+artifacts (366) and R$ classes (224, compile-time constants - safe).
+The 70 stripped native methods are ObjectBox's, and ObjectBox is
+referenced in ZERO Dart files.
+
+TO REVERT: put the single line `-dontoptimize` back in
+proguard-rules.pro. That is the whole rollback. Feb 2027 is far away;
+a bad release is not worth it.
+
+NOT VERIFIED: the resulting optimization percentage (Play computes it
+after upload), and whether any usage.txt removal is NEW - the previous
+build's usage.txt was overwritten, so there is no baseline. Shrinking
+(not optimization) governs removals and shrinking was already on, so it
+is very likely unchanged - but that is inference, not measurement.
+
+### Testing gap at push time
+v1.23.5 was built and installed on emulator-5554 only. Note that
+proguard-rules.pro itself records that an emulator Google Sign-In
+ApiException-38003 was once an emulator OS-level account issue, NOT R8
+- so a sign-in failure on emulator is not proof of a regression.
+Apple sign-in cannot be tested on the Android emulator at all.

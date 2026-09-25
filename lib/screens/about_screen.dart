@@ -11,7 +11,7 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
-  static const String appVersion = '1.23.4';
+  static const String appVersion = '1.23.5';
   static const String buildNumber = '140';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
@@ -645,7 +645,25 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   /// Send a 6-digit verification code to the developer's Gmail via webhook.
-  Future<bool> _sendDevVerificationEmail(String code) async {
+  ///
+  /// Returns TRI-STATE, deliberately (v1.23.5, Session 64d):
+  ///   true  — the server confirmed `status: ok`. The mail was sent.
+  ///   false — we know it was NOT sent (no webhook URL, the POST itself
+  ///           never got through, or the server explicitly said not-ok).
+  ///   null  — UNKNOWN. doPost ran (we got its 302) but we could not read
+  ///           the reply. The mail has most likely gone out.
+  ///
+  /// Why: this used to return a plain bool, and every unreadable reply
+  /// became `false` -> "The verification email could not be sent
+  /// (offline or webhook down)". That message was simply untrue. Apps
+  /// Script answers the POST with a 302 to a googleusercontent "echo"
+  /// URL that is NOT ready the instant the redirect arrives, so the
+  /// follow-up GET can 404. The old code never checked the status code,
+  /// fed the 404 HTML page straight into jsonDecode, threw, and landed
+  /// in the catch-all. Verified against the Apps Script execution log:
+  /// 50/50 doPost runs Completed, MailApp never threw, and the codes
+  /// were arriving in the inbox the whole time the app claimed failure.
+  Future<bool?> _sendDevVerificationEmail(String code) async {
     final webhookUrl = await _getAnalyticsWebhookUrl();
     if (webhookUrl == null) return false;
 
@@ -654,6 +672,11 @@ class _AboutScreenState extends State<AboutScreen> {
       'code': code,
       'email': 'samagids@gmail.com',
     });
+
+    // Set once the POST has been answered. After that point doPost has
+    // RUN on the server, so a later read failure means "unknown", never
+    // "not sent".
+    var postDelivered = false;
 
     try {
       final client = HttpClient();
@@ -665,6 +688,7 @@ class _AboutScreenState extends State<AboutScreen> {
       postRequest.headers.contentType = ContentType.json;
       postRequest.write(payload);
       final postResponse = await postRequest.close();
+      postDelivered = true;
 
       debugPrint('Webhook POST: ${postResponse.statusCode}');
 
@@ -679,9 +703,14 @@ class _AboutScreenState extends State<AboutScreen> {
         }
         debugPrint('Webhook redirect to: ${location.substring(0, 80)}...');
 
-        // Follow redirect chain with GET
+        // Follow redirect chain with GET.
+        // The echo URL is often not ready the moment the 302 lands, so a
+        // 404 here is TRANSIENT — the same 404-then-success we see in
+        // scripts/setup_and_deploy.py's verifier. Retry before giving up,
+        // and never parse a non-200 body as JSON.
         var getUri = Uri.parse(location);
-        for (int i = 0; i < 5; i++) {
+        var transientTries = 0;
+        for (int i = 0; i < 8; i++) {
           final getRequest = await client.getUrl(getUri);
           getRequest.followRedirects = false;
           final getResponse = await getRequest.close();
@@ -694,27 +723,63 @@ class _AboutScreenState extends State<AboutScreen> {
             continue;
           }
 
+          final sc = getResponse.statusCode;
+          if (sc == 404 || sc == 408 || sc == 429 || (sc >= 500 && sc < 600)) {
+            await getResponse.drain<void>();
+            if (transientTries < 3) {
+              transientTries++;
+              debugPrint('Webhook echo not ready (HTTP $sc) — '
+                  'retry $transientTries/3');
+              await Future<void>.delayed(
+                  Duration(milliseconds: 700 * transientTries));
+              continue;
+            }
+            client.close();
+            debugPrint('Webhook: echo URL still HTTP $sc after retries — '
+                'result UNKNOWN (the mail was probably sent).');
+            return null;
+          }
+
           final body = await getResponse.transform(utf8.decoder).join();
           client.close();
-          debugPrint('Webhook response: ${getResponse.statusCode} $body');
-          final result = jsonDecode(body);
-          return result is Map && result['status'] == 'ok';
+          debugPrint('Webhook response: $sc $body');
+          if (sc != 200) return null;
+          try {
+            final result = jsonDecode(body);
+            if (result is Map && result['status'] == 'ok') return true;
+            // A readable, explicit non-ok IS a real failure.
+            debugPrint('Webhook said not-ok: $body');
+            return false;
+          } catch (_) {
+            // Unparseable body — we learned nothing.
+            return null;
+          }
         }
       } else {
         // No redirect — read directly
         final body = await postResponse.transform(utf8.decoder).join();
         client.close();
         debugPrint('Webhook response (no redirect): ${postResponse.statusCode} $body');
-        final result = jsonDecode(body);
-        return result is Map && result['status'] == 'ok';
+        if (postResponse.statusCode != 200) return null;
+        try {
+          final result = jsonDecode(body);
+          if (result is Map && result['status'] == 'ok') return true;
+          return false;
+        } catch (_) {
+          return null;
+        }
       }
 
       client.close();
-      debugPrint('Webhook error: could not get response after redirects');
-      return false;
+      debugPrint('Webhook: ran out of redirect hops — result UNKNOWN.');
+      return null;
     } catch (e) {
       debugPrint('Webhook error: $e');
-      return false;
+      // If the POST was already answered, doPost ran on the server and
+      // the mail may well have been sent — that is UNKNOWN, not failure.
+      // Only a failure BEFORE the POST was answered proves nothing was
+      // sent.
+      return postDelivered ? null : false;
     }
   }
 
@@ -858,31 +923,45 @@ class _AboutScreenState extends State<AboutScreen> {
     if (!mounted) return;
     Navigator.pop(context); // dismiss loading
 
-    // Webhook-failed fallback: show the code on-screen instead of via email.
+    // Webhook fallback: show the code on-screen as well as via email.
     // Security model is intact — caller already cleared the `awing2026`
     // access-code gate, is signed in as the developer email, and still has
     // to type the 6-digit code into the verification dialog. The webhook
     // email is a third factor that's helpful in production but blocks
     // local-only dev work when the network or webhook deployment is down.
-    if (!sent) {
+    //
+    // v1.23.5 (Session 64d): `sent` is now tri-state. `null` means we
+    // could not READ the webhook's reply — it does NOT mean the mail
+    // failed, and in practice it almost always went out. Saying "could
+    // not be sent" there was a lie that sent the developer chasing a
+    // webhook that was working perfectly.
+    if (sent != true) {
+      final unknown = sent == null;
       await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (ctx) => AlertDialog(
-          title: const Row(
+          title: Row(
             children: [
-              Icon(Icons.warning_amber, color: Colors.orange),
-              SizedBox(width: 8),
-              Text('Email unavailable'),
+              Icon(unknown ? Icons.info_outline : Icons.warning_amber,
+                  color: unknown ? Colors.blue : Colors.orange),
+              const SizedBox(width: 8),
+              Text(unknown ? 'Check your email' : 'Email unavailable'),
             ],
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'The verification email could not be sent (offline or '
-                'webhook down). Showing the code on-screen as a fallback:',
+              Text(
+                unknown
+                    ? 'The code was sent, but the app could not confirm it '
+                        '(the webhook reply was unreadable). Check your '
+                        'inbox — it is most likely there. The same code is '
+                        'shown below either way:'
+                    : 'The verification email could not be sent (offline or '
+                        'webhook down). Showing the code on-screen as a '
+                        'fallback:',
               ),
               const SizedBox(height: 16),
               Container(

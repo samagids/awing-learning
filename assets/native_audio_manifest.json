@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generated_at": "2026-08-04T18:55:21.916764+00:00",
+  "generated_at": "2026-09-25T16:51:16.237409+00:00",
   "categories": {
     "alphabet": {
       "a": {
@@ -11,6 +11,11 @@
       "chato": {
         "canonical": true,
         "kids": []
+      },
+      "eshue": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ghane": {
         "canonical": true,

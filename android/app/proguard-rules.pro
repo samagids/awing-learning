@@ -16,21 +16,73 @@
 # to deobfuscate Play Console crash reports.
 # =============================================================================
 
-# ---------- Optimization pass: OFF -------------------------------------------
-# Session 63. AGP 9 forces the "proguard-android-optimize.txt" base file, so
-# the -dontoptimize that used to come free with "proguard-android.txt" now has
-# to be declared here. Net effect is identical to every release through
-# v1.23.0+136.
+# ---------- Optimization pass: ON (v1.23.5, Session 64d) ---------------------
+# `-dontoptimize` was removed here. Play Console flagged release 140 (1.23.4):
 #
-# Why optimization stays off: R8's optimization pass inlines methods that
-# Flutter plugins reach via reflection (Firebase, Google Sign-In,
-# tflite_flutter), producing release-only runtime failures that debug builds
-# never reproduce. Minification (name obfuscation) IS still active via
-# isMinifyEnabled = true — only the optimization tier is disabled.
+#   "DEX code optimization is below our threshold — Optimization (0%).
+#    Percentages under 25% in any category may impact your visibility and
+#    publishing capabilities on Google Play."  Fix by Feb 2027.
 #
-# To revisit: remove this line, then smoke-test Google Sign-In + Firestore
-# sync + TFLite inference on a real device before tagging.
--dontoptimize
+# The old note said optimization had to stay off because R8 "inlines methods
+# that Flutter plugins reach via reflection (Firebase, Google Sign-In,
+# tflite_flutter)". That risk is real in general, but every one of those
+# three already has a blanket `-keep class ... { *; }` below (added in
+# Session 61, AFTER the reasoning that produced -dontoptimize). A `-keep`
+# with `{ *; }` preserves every member, so R8 cannot delete or inline away
+# the very methods reflection looks up. The guard was doing less work than
+# its comment claimed.
+#
+# NOTE: R8 ignores ProGuard's `-optimizations` directive, so there is no
+# way to enable optimization "partially". Keep rules are the only lever —
+# which is why the safety net below is explicit rather than inherited.
+#
+# THIS IS THE HIGHEST-RISK CHANGE IN 1.23.5. Optimization defects are
+# release-only; a debug build proves nothing. Before tagging, on a REAL
+# device running the release build:
+#   1. Google Sign-In (new account AND returning account)
+#   2. Sign in with Apple on real iOS hardware
+#   3. Firestore sync — make progress, confirm it lands in the cloud
+#   4. TFLite inference — the pronunciation scorer
+#   5. Dev Mode 2FA, exam mode (nsd/mDNS), audio record + playback
+# If any of those fail only in release, put `-dontoptimize` back and ship
+# without it; the Play deadline is Feb 2027, not this week.
+
+# ---------- Optimization safety net ------------------------------------------
+# These are the classic things that break the moment the optimization pass
+# turns on. The AGP default `proguard-android-optimize.txt` includes most of
+# them, but inheriting them silently is an assumption, and this codebase has
+# been bitten repeatedly by assumptions that were true until they weren't.
+# Declaring them here costs nothing and is idempotent with the default file.
+
+# JNI: a native method's name is resolved by the JVM at link time. If R8
+# renames or inlines it, the lookup fails with UnsatisfiedLinkError — and
+# TFLite, Firestore's native client and Flutter's engine are all JNI.
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# Enums: values() / valueOf() are called reflectively by serializers
+# (Firestore codecs, JSON) even when nothing in the source calls them.
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# Parcelable: the framework reads the CREATOR field by name via reflection.
+-keepclassmembers class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+# Serializable: the runtime reads these members reflectively during
+# (de)serialization.
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
 
 # ---------- Flutter embedding (do not strip) ---------------------------------
 # Flutter reaches into io.flutter.* from Dart via the JNI; obfuscating these
