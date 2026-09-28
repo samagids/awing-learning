@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
 import 'package:awing_ai_learning/components/parental_gate.dart';
+import 'package:awing_ai_learning/components/parent_contacts_editor.dart';
 
 class ProfileSelectScreen extends StatefulWidget {
   const ProfileSelectScreen({Key? key}) : super(key: key);
@@ -97,6 +98,13 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
                       );
                     } else {
                       Navigator.pop(ctx);
+                      // v1.23.6 — first profile only. This is the one moment
+                      // a parent is definitely the one holding the device, so
+                      // it is where contact details are asked for. Skippable,
+                      // and never shown twice (see the prefs flag inside).
+                      if (auth.profiles.length == 1) {
+                        maybeShowParentContactsSetup(context);
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

@@ -33,6 +33,56 @@ echo ============================================
 echo.
 
 REM ============================================================
+REM   Step 0a: keep build output OUT of OneDrive
+REM ============================================================
+REM The repo lives in OneDrive and stays there. OneDrive's Files
+REM On-Demand turns freshly written large files into cloud placeholders,
+REM and a placeholder is an NTFS reparse point, which Java refuses to
+REM snapshot. Observed 2026-09-28: bundleRelease SUCCEEDED, then
+REM assembleRelease died with
+REM     ':app:mergeReleaseNativeLibs' ... java.io.IOException:
+REM     Cannot snapshot ...\libcactus.so: not a regular file
+REM because OneDrive re-attributed the .so files the AAB step had just
+REM written (ctime was two minutes later than mtime).
+REM
+REM Only the build OUTPUT has to leave sync. ensure_local_build_dirs.ps1
+REM makes build\, .dart_tool\ and android\.gradle\ junctions to local
+REM disk (default C:\dev\awing-build, override with AWING_BUILD_ROOT).
+REM Idempotent: first run converts, later runs just verify.
+REM
+REM This runs BEFORE the fast-path jump on purpose — --fast still builds,
+REM so it still needs the redirect.
+REM
+REM android\.gradle is EXCLUDED. Junctioning it made Gradle fail at
+REM startup, every time, in 2 seconds:
+REM     Could not create service of type OutputFilesRepository ...
+REM     java.io.IOException: Cannot delete file:
+REM       ...\android\.gradle\buildOutputCleanup\buildOutputCleanup.lock
+REM Gradle rebuilds buildOutputCleanup on startup and could not delete its
+REM own lock file through the junction. Not worth chasing: only build\
+REM ever needed to leave OneDrive — that is where the 1 GB of native libs
+REM lives and where mergeReleaseNativeLibs died. android\.gradle is tens
+REM of MB, too small for OneDrive to bother dehydrating.
+echo [0a/7] Ensuring build output lives outside OneDrive...
+where powershell >nul 2>nul
+if !ERRORLEVEL! neq 0 (
+    echo        powershell not found - SKIPPING the OneDrive redirect.
+    echo        If the build dies in mergeReleaseNativeLibs with
+    echo        "not a regular file", this is why.
+) else (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ensure_local_build_dirs.ps1" -Exclude "android\.gradle"
+    if !ERRORLEVEL! neq 0 (
+        echo.
+        echo        ERROR: could not redirect the build directories.
+        echo        Stopping rather than building into a tree OneDrive
+        echo        will dehydrate mid-build. Fix the error above, or set
+        echo        AWING_BUILD_ROOT to a writable local path, then re-run.
+        exit /b 1
+    )
+)
+echo.
+
+REM ============================================================
 REM   FAST PATH — Skip content gen when only Dart code changed
 REM ============================================================
 REM If the user sets AWING_FAST=1 (env var) or passes --fast as arg 1,

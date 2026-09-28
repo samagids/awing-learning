@@ -180,6 +180,18 @@ function doPost(e) {
         return handleApproval(payload);
       case 'reject':
         return handleRejection(payload);
+      case 'pin_reset':
+        return handlePinReset(payload);
+      // v1.23.6 (Session 65a) — parent activity reports.
+      // Deliberately NOT in the `privileged` map: these are for ordinary
+      // signed-in parents, not the developer. Each one verifies a Firebase
+      // ID token itself and decides its own recipients.
+      case 'parent_report':
+        return handleParentReport(payload);
+      case 'parent_contact_verify':
+        return handleParentContactVerify(payload);
+      case 'parent_contact_status':
+        return handleParentContactStatus(payload);
       case 'check_version':
         return handleVersionCheck(payload);
       case 'fetch_audio':
@@ -1452,6 +1464,21 @@ function jsonResponse(data) {
 }
 
 function doGet(e) {
+  // v1.23.6 — the one-click confirmation link sent to a second parent.
+  // A GET is the only thing an email client will follow, so this lives here
+  // rather than in doPost. It carries a single-use UUID and nothing else:
+  // no account data is exposed, and a bad or spent token says so plainly
+  // instead of hinting at what a valid one looks like.
+  try {
+    if (e && e.parameter && e.parameter.action === 'confirm_parent') {
+      return _confirmParentContactPage(e.parameter.t, e.parameter.o);
+    }
+  } catch (err) {
+    Logger.log('doGet confirm_parent: ' + err);
+    return _htmlPage('Something went wrong',
+      'We could not confirm that address. Please try the link again.');
+  }
+
   return jsonResponse({
     status: 'ok',
     service: 'Awing Contributions',
@@ -1557,4 +1584,377 @@ function sendDailyContributionDigest() {
     // Do NOT advance the watermark - next run retries this window.
     Logger.log('Digest send failed, watermark held: ' + err);
   }
+}
+
+
+// ==================== PIN reset (v1.23.6, Session 64e) ==================
+// A forgotten parent PIN was an absolute lockout: the PIN gate protects
+// PIN Settings, changing the PIN needs the old PIN, and signing out
+// needs it too. Worse, accountPin round-trips through the cloud backup,
+// so reinstalling and restoring brings the PIN straight back.
+//
+// SECURITY — why this is not an open relay:
+// The caller does NOT choose the recipient. It sends a Firebase ID
+// token; verifyFirebaseIdToken_ exchanges it with Identity Toolkit and
+// returns the email that Google says owns it. We mail THAT address and
+// nothing else. An attacker can only ever cause mail to be sent to an
+// account they already control, which is not an attack.
+//
+// The 6-digit code is generated client-side and merely relayed, exactly
+// like send_dev_code. The security boundary is delivery to a verified
+// owner, not secrecy of the code in transit.
+
+var PIN_RESET_MAX_PER_HOUR = 5;
+
+function handlePinReset(payload) {
+  var idToken = payload.idToken || '';
+  if (!idToken) {
+    return jsonResponse({ status: 'error', message: 'missing idToken' });
+  }
+
+  var email = verifyFirebaseIdToken_(idToken);
+  if (!email) {
+    Logger.log('pin_reset: token verification failed');
+    return jsonResponse({ status: 'error', message: 'unauthorized' });
+  }
+
+  var code = String(payload.code || '').replace(/[^0-9]/g, '').substring(0, 8);
+  if (code.length < 4) {
+    return jsonResponse({ status: 'error', message: 'invalid code' });
+  }
+
+  // Per-address hourly rate limit, so a stolen-but-valid token cannot be
+  // used to mailbomb its own owner.
+  var props = PropertiesService.getScriptProperties();
+  var bucketKey = 'pinreset_' + email.replace(/[^a-z0-9]/g, '_').substring(0, 60);
+  var nowMs = Date.now();
+  var raw = props.getProperty(bucketKey);
+  var stamps = [];
+  if (raw) {
+    try { stamps = JSON.parse(raw) || []; } catch (_) { stamps = []; }
+  }
+  var fresh = [];
+  for (var i = 0; i < stamps.length; i++) {
+    if (nowMs - stamps[i] < 60 * 60 * 1000) fresh.push(stamps[i]);
+  }
+  if (fresh.length >= PIN_RESET_MAX_PER_HOUR) {
+    Logger.log('pin_reset: rate limited');
+    return jsonResponse({ status: 'error', message: 'too many requests' });
+  }
+
+  try {
+    var subject = '[Awing] Parent PIN reset code: ' + code;
+    var body =
+      'Someone asked to reset the parent PIN on your Awing AI Learning\n' +
+      'account.\n\n' +
+      '    ' + code + '\n\n' +
+      'Enter this code in the app to clear the PIN. It expires in 10\n' +
+      'minutes.\n\n' +
+      'If this was not you, you can ignore this email — the PIN has NOT\n' +
+      'been changed, and nobody can change it without this code.\n\n' +
+      '-- Awing AI Learning';
+
+    _sendEmail(email, subject, body);
+
+    fresh.push(nowMs);
+    props.setProperty(bucketKey, JSON.stringify(fresh));
+
+    return jsonResponse({ status: 'ok', message: 'reset code sent' });
+  } catch (err) {
+    return jsonResponse({
+      status: 'error',
+      message: 'Failed to send: ' + err.toString()
+    });
+  }
+}
+// ============ Parent activity reports (v1.23.6, Session 65a) ============
+//
+// WHY THIS IS SERVER-SIDE AT ALL
+// The app used to "send" these by opening a wa.me link on the child's
+// device. That needed WhatsApp installed there, needed a human to press
+// Send, and reported success when a browser merely opened WhatsApp's
+// download page. Families whose devices have no WhatsApp — the common case
+// for the kids' tablets — could never receive anything.
+//
+// WHY RECIPIENTS ARE NOT TAKEN AT FACE VALUE
+// Any parent with a working app login can call this. If it mailed whatever
+// address the payload named, it would be an open relay wearing the app's
+// name and burning the shared Brevo allowance. So:
+//   * the address behind the verified ID token is always allowed;
+//   * any OTHER address must first be confirmed by its own owner clicking
+//     a link mailed to it (handleParentContactVerify below);
+//   * everything else is silently dropped, not errored, so a stale contact
+//     on one device cannot block the report to the rest.
+//
+// WHY THE SUBJECT IS NOT CLIENT-SUPPLIED
+// The body is composed on the device (that is where the statistics live),
+// but the subject is chosen here from a fixed list. That keeps the app's
+// name off anything an attacker could word freely in an inbox preview.
+
+var PARENT_MAX_RECIPIENTS = 3;
+var PARENT_REPORT_MAX_PER_DAY = 6;
+var PARENT_VERIFY_MAX_PER_DAY = 5;
+var PARENT_BODY_MAX_CHARS = 6000;
+var PARENT_CONTACTS_PROP_PREFIX = 'pcontacts_';
+var PARENT_CONFIRM_TOKEN_TTL_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
+
+/// Stable, filesystem-safe key for an email address.
+function _parentOwnerKey(email) {
+  return String(email || '').toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 60);
+}
+
+/// Sliding-window rate limit. Returns true when the call may proceed AND
+/// records the attempt; false when the window is full.
+function _rateLimitOk_(bucketKey, maxCount, windowMs) {
+  var props = PropertiesService.getScriptProperties();
+  var nowMs = Date.now();
+  var stamps = [];
+  var raw = props.getProperty(bucketKey);
+  if (raw) {
+    try { stamps = JSON.parse(raw) || []; } catch (_) { stamps = []; }
+  }
+  var fresh = [];
+  for (var i = 0; i < stamps.length; i++) {
+    if (nowMs - stamps[i] < windowMs) fresh.push(stamps[i]);
+  }
+  if (fresh.length >= maxCount) return false;
+  fresh.push(nowMs);
+  props.setProperty(bucketKey, JSON.stringify(fresh));
+  return true;
+}
+
+/// Everything stored for one account: { pending: [...], confirmed: [...] }.
+function _loadParentContacts(ownerKey) {
+  var raw = PropertiesService.getScriptProperties()
+    .getProperty(PARENT_CONTACTS_PROP_PREFIX + ownerKey);
+  if (!raw) return { pending: [], confirmed: [] };
+  try {
+    var v = JSON.parse(raw) || {};
+    return {
+      pending: v.pending || [],
+      confirmed: v.confirmed || []
+    };
+  } catch (_) {
+    return { pending: [], confirmed: [] };
+  }
+}
+
+function _saveParentContacts(ownerKey, data) {
+  PropertiesService.getScriptProperties().setProperty(
+    PARENT_CONTACTS_PROP_PREFIX + ownerKey,
+    JSON.stringify({ pending: data.pending || [], confirmed: data.confirmed || [] })
+  );
+}
+
+function _normalizeParentEmail(raw) {
+  var v = String(raw || '').trim().toLowerCase();
+  if (!v || v.length > 254) return '';
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) return '';
+  return v;
+}
+
+function _htmlPage(title, message) {
+  var safeTitle = String(title).replace(/[<>&]/g, '');
+  var safeMessage = String(message).replace(/[<>&]/g, '');
+  return HtmlService.createHtmlOutput(
+    '<!doctype html><html><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<title>' + safeTitle + '</title></head>' +
+    '<body style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;' +
+    'max-width:34rem;margin:3rem auto;padding:0 1rem;line-height:1.55;color:#123">' +
+    '<h1 style="color:#006432;font-size:1.4rem">' + safeTitle + '</h1>' +
+    '<p>' + safeMessage + '</p>' +
+    '<p style="color:#667;font-size:.9rem">Awing AI Learning</p>' +
+    '</body></html>'
+  );
+}
+
+/// Land the one-click confirmation from a second parent's inbox.
+function _confirmParentContactPage(token, ownerKey) {
+  token = String(token || '').substring(0, 64);
+  ownerKey = String(ownerKey || '').replace(/[^a-z0-9_]/g, '').substring(0, 60);
+  if (!token || !ownerKey) {
+    return _htmlPage('Link not recognised',
+      'This confirmation link is incomplete. Please ask for a new one from the app.');
+  }
+
+  var data = _loadParentContacts(ownerKey);
+  var nowMs = Date.now();
+  var pending = data.pending || [];
+  var keep = [];
+  var matched = null;
+  for (var i = 0; i < pending.length; i++) {
+    var row = pending[i];
+    if (!row || !row.token) continue;
+    if (nowMs - (row.createdAt || 0) > PARENT_CONFIRM_TOKEN_TTL_MS) continue; // expired: drop
+    if (row.token === token) { matched = row; continue; } // single use: not kept
+    keep.push(row);
+  }
+
+  if (!matched) {
+    return _htmlPage('Link already used or expired',
+      'This confirmation link is no longer valid. Open the app and send a new one.');
+  }
+
+  var confirmed = data.confirmed || [];
+  if (confirmed.indexOf(matched.email) === -1) confirmed.push(matched.email);
+  _saveParentContacts(ownerKey, { pending: keep, confirmed: confirmed });
+
+  return _htmlPage('You are confirmed',
+    'You will now receive your child\'s Awing Learning activity reports. ' +
+    'To stop them, ask the parent who added you to remove your address in ' +
+    'the app under Parent Settings.');
+}
+
+/// POST { action:'parent_contact_verify', idToken, email }
+function handleParentContactVerify(payload) {
+  var email = verifyFirebaseIdToken_(payload.idToken || '');
+  if (!email) return jsonResponse({ status: 'error', message: 'unauthorized' });
+
+  var target = _normalizeParentEmail(payload.email);
+  if (!target) return jsonResponse({ status: 'error', message: 'invalid email' });
+
+  // The account's own address needs no confirmation — the ID token already
+  // proves ownership of it.
+  if (target === email) {
+    return jsonResponse({ status: 'success', confirmed: true, message: 'own address' });
+  }
+
+  var ownerKey = _parentOwnerKey(email);
+  var data = _loadParentContacts(ownerKey);
+  if ((data.confirmed || []).indexOf(target) !== -1) {
+    return jsonResponse({ status: 'success', confirmed: true, message: 'already confirmed' });
+  }
+  if ((data.confirmed || []).length + (data.pending || []).length >= PARENT_MAX_RECIPIENTS * 2) {
+    return jsonResponse({ status: 'error', message: 'too many contacts' });
+  }
+  if (!_rateLimitOk_('pverify_' + ownerKey, PARENT_VERIFY_MAX_PER_DAY, 24 * 60 * 60 * 1000)) {
+    return jsonResponse({ status: 'error', message: 'too many requests' });
+  }
+
+  var token = Utilities.getUuid();
+  var url = ScriptApp.getService().getUrl() +
+    '?action=confirm_parent&t=' + encodeURIComponent(token) +
+    '&o=' + encodeURIComponent(ownerKey);
+
+  try {
+    // The requesting address is named so the recipient can judge whether they
+    // expected this. It is the verified token address, never payload text.
+    var body =
+      'Hello,\n\n' +
+      email + ' would like to send you their child\'s learning activity\n' +
+      'reports from the Awing AI Learning app.\n\n' +
+      'If you are happy to receive them, open this link:\n\n' +
+      url + '\n\n' +
+      'If you were not expecting this, ignore this email. Nothing will be\n' +
+      'sent to you unless you open the link above.\n\n' +
+      '-- Awing AI Learning';
+    _sendEmail(target, 'Confirm Awing Learning activity reports', body);
+  } catch (err) {
+    return jsonResponse({ status: 'error', message: 'send failed: ' + err.toString() });
+  }
+
+  // Recorded only after the mail went out, so a failed send does not leave a
+  // token the recipient never received.
+  data.pending = (data.pending || []).concat([
+    { email: target, token: token, createdAt: Date.now() }
+  ]);
+  _saveParentContacts(ownerKey, data);
+
+  return jsonResponse({ status: 'success', confirmed: false, message: 'confirmation sent' });
+}
+
+/// POST { action:'parent_contact_status', idToken }
+function handleParentContactStatus(payload) {
+  var email = verifyFirebaseIdToken_(payload.idToken || '');
+  if (!email) return jsonResponse({ status: 'error', message: 'unauthorized' });
+
+  var data = _loadParentContacts(_parentOwnerKey(email));
+  var pendingEmails = [];
+  var nowMs = Date.now();
+  for (var i = 0; i < (data.pending || []).length; i++) {
+    var row = data.pending[i];
+    if (row && row.email && nowMs - (row.createdAt || 0) <= PARENT_CONFIRM_TOKEN_TTL_MS) {
+      pendingEmails.push(row.email);
+    }
+  }
+  return jsonResponse({
+    status: 'success',
+    account: email,
+    confirmed: data.confirmed || [],
+    pending: pendingEmails
+  });
+}
+
+/// POST { action:'parent_report', idToken, kind, body, recipients:[] }
+function handleParentReport(payload) {
+  var email = verifyFirebaseIdToken_(payload.idToken || '');
+  if (!email) return jsonResponse({ status: 'error', message: 'unauthorized' });
+
+  var kind = String(payload.kind || '').toLowerCase();
+  var subject;
+  if (kind === 'daily') subject = 'Awing Learning - daily activity report';
+  else if (kind === 'weekly') subject = 'Awing Learning - weekly activity report';
+  else if (kind === 'test') subject = 'Awing Learning - test report';
+  else return jsonResponse({ status: 'error', message: 'unknown report kind' });
+
+  var body = String(payload.body || '');
+  if (!body.trim()) return jsonResponse({ status: 'error', message: 'empty report' });
+  if (body.length > PARENT_BODY_MAX_CHARS) {
+    body = body.substring(0, PARENT_BODY_MAX_CHARS) + '\n\n[report truncated]';
+  }
+  // Plain text only. Nothing composed on a device becomes markup here.
+  body = body.replace(/[<>]/g, '');
+
+  var ownerKey = _parentOwnerKey(email);
+  var allowed = { };
+  allowed[email] = true;
+  var stored = _loadParentContacts(ownerKey);
+  for (var i = 0; i < (stored.confirmed || []).length; i++) {
+    allowed[stored.confirmed[i]] = true;
+  }
+
+  var asked = payload.recipients;
+  if (!asked || !asked.length) asked = [email];
+
+  var targets = [];
+  var dropped = 0;
+  for (var j = 0; j < asked.length && targets.length < PARENT_MAX_RECIPIENTS; j++) {
+    var t = _normalizeParentEmail(asked[j]);
+    if (!t) { dropped++; continue; }
+    if (!allowed[t]) { dropped++; continue; }   // not confirmed: silently skipped
+    if (targets.indexOf(t) !== -1) continue;
+    targets.push(t);
+  }
+
+  if (!targets.length) {
+    return jsonResponse({
+      status: 'error',
+      message: 'no confirmed recipients',
+      dropped: dropped
+    });
+  }
+
+  if (!_rateLimitOk_('preport_' + ownerKey, PARENT_REPORT_MAX_PER_DAY, 24 * 60 * 60 * 1000)) {
+    return jsonResponse({ status: 'error', message: 'too many requests' });
+  }
+
+  var sent = 0;
+  var lastErr = '';
+  for (var k = 0; k < targets.length; k++) {
+    try {
+      _sendEmail(targets[k], subject, body);
+      sent++;
+    } catch (err) {
+      lastErr = err.toString();
+      Logger.log('parent_report: send to recipient ' + k + ' failed: ' + lastErr);
+    }
+  }
+
+  // Partial success is still success for the caller's watermark: the report
+  // reached someone, and re-sending would double-mail the rest.
+  if (sent > 0) {
+    return jsonResponse({ status: 'success', sent: sent, dropped: dropped });
+  }
+  return jsonResponse({ status: 'error', message: 'send failed: ' + lastErr });
 }

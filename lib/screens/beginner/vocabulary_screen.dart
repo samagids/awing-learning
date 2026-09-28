@@ -5,6 +5,7 @@ import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/screens/find_similar_sheet.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/services/progress_service.dart';
 
 class VocabularyScreen extends StatefulWidget {
   /// If set, restrict the word pool to words at this exact difficulty.
@@ -183,7 +184,22 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                     ),
                   )
                 : GestureDetector(
-                    onTap: () => setState(() => _showEnglish = !_showEnglish),
+                    onTap: () {
+                      setState(() => _showEnglish = !_showEnglish);
+                      // v1.23.6 (Session 65c) — ProgressService.markWordViewed
+                      // had no caller anywhere, so `viewed_words` stayed empty
+                      // and the "Word Collector" (10 words) and "Vocabulary
+                      // Champion" (67 words) badges could never unlock.
+                      //
+                      // Counted on the flip to English rather than on mere
+                      // display: swiping past a card is not learning a word,
+                      // and the badges say "Learn". Idempotent per word.
+                      if (_showEnglish) {
+                        context
+                            .read<ProgressService>()
+                            .markWordViewed(words[_currentCard].awing);
+                      }
+                    },
                     onHorizontalDragEnd: (details) {
                       if (details.primaryVelocity != null) {
                         if (details.primaryVelocity! < 0) {

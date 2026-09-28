@@ -43,6 +43,19 @@ class AuthService extends ChangeNotifier {
   /// Used to refresh ProgressService from the restored SharedPreferences data.
   void Function()? onCloudRestoreComplete;
 
+  /// Fired the FIRST time a lesson is completed, with the child's display
+  /// name and the lesson id.
+  ///
+  /// v1.23.6 (Session 65c) — `ParentNotificationService.recordLessonCompleted`
+  /// existed but had no caller anywhere, so the weekly parent report's
+  /// "Lessons completed" line was structurally incapable of showing anything
+  /// but 0. This is the missing wire.
+  ///
+  /// Deliberately first-completion only: `completeLesson` is called every
+  /// time a lesson screen opens, so firing unconditionally would count a
+  /// child re-reading the alphabet as new progress.
+  void Function(String childName, String lessonId)? onLessonCompleted;
+
   // ==================== Getters ====================
 
   bool get isLoggedIn => _currentAccount != null && _currentProfile != null;
@@ -288,11 +301,15 @@ class AuthService extends ChangeNotifier {
   /// Mark a lesson as completed for the current profile.
   void completeLesson(String lessonId) {
     if (_currentProfile == null) return;
+    final alreadyCompleted = _currentProfile!.lessonsCompleted[lessonId] == true;
     _currentProfile!.lessonsCompleted[lessonId] = true;
     _checkLevelUnlocks();
     _saveAccounts();
     notifyListeners();
     onDataChanged?.call();
+    if (!alreadyCompleted) {
+      onLessonCompleted?.call(_currentProfile!.displayName, lessonId);
+    }
   }
 
   /// Save a quiz score for the current profile.
@@ -345,7 +362,7 @@ class AuthService extends ChangeNotifier {
   /// Set or update the account-level PIN (protects sign out, delete profile).
   void setAccountPin(String pin) {
     if (_currentAccount == null) return;
-    _currentAccount!.accountPin = pin.length >= 6 ? pin : null;
+    _currentAccount!.setAccountPin(pin);
     _saveAccounts();
     notifyListeners();
     onDataChanged?.call();
@@ -354,7 +371,7 @@ class AuthService extends ChangeNotifier {
   /// Remove the account-level PIN.
   void removeAccountPin() {
     if (_currentAccount == null) return;
-    _currentAccount!.accountPin = null;
+    _currentAccount!.setAccountPin(null);
     _saveAccounts();
     notifyListeners();
     onDataChanged?.call();
@@ -376,7 +393,7 @@ class AuthService extends ChangeNotifier {
       final profile = _currentAccount!.profiles.firstWhere(
         (p) => p.id == profileId,
       );
-      profile.pin = pin.length >= 6 ? pin : null;
+      profile.setPin(pin);
       _saveAccounts();
       notifyListeners();
       onDataChanged?.call();
@@ -390,7 +407,7 @@ class AuthService extends ChangeNotifier {
       final profile = _currentAccount!.profiles.firstWhere(
         (p) => p.id == profileId,
       );
-      profile.pin = null;
+      profile.setPin(null);
       _saveAccounts();
       notifyListeners();
       onDataChanged?.call();
@@ -491,11 +508,184 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Normalize a phone number — strip spaces and dashes, keep + prefix.
-  String? _normalizePhone(String? raw) {
-    if (raw == null || raw.trim().isEmpty) return null;
-    return raw.trim().replaceAll(RegExp(r'[\s\-\(\)]'), '');
+  // ==================== Parent Contacts (v1.23.6) ====================
+
+  /// Default country code used when a parent types a bare local number.
+  /// Cameroon. A number that already carries `+` or an international `00`
+  /// prefix is never touched.
+  static const String defaultCountryCode = '+237';
+
+  /// Read-only view of the account's parent/guardian contacts.
+  List<ParentContact> get parentContacts =>
+      List<ParentContact>.unmodifiable(_currentAccount?.parentContacts ?? const []);
+
+  /// Add a contact. Returns an error message, or null on success.
+  String? addParentContact({
+    required String label,
+    String? whatsappNumber,
+    String? email,
+  }) {
+    final account = _currentAccount;
+    if (account == null) return 'Not signed in';
+    if (account.parentContacts.length >= UserAccount.maxParentContacts) {
+      return 'You can add up to ${UserAccount.maxParentContacts} contacts';
+    }
+
+    final phone = normalizeParentPhone(whatsappNumber);
+    final mail = _normalizeEmail(email);
+    final err = _validateContact(phone, mail);
+    if (err != null) return err;
+
+    if (phone != null &&
+        account.parentContacts.any((c) => c.whatsappNumber == phone)) {
+      return 'That number is already on the list';
+    }
+    if (mail != null &&
+        account.parentContacts.any((c) => c.email == mail)) {
+      return 'That email is already on the list';
+    }
+
+    account.parentContacts.add(ParentContact(
+      label: label.trim().isEmpty ? 'Parent' : label.trim(),
+      whatsappNumber: phone,
+      email: mail,
+    ));
+    _saveAccounts();
+    notifyListeners();
+    return null;
   }
+
+  /// Edit an existing contact. Returns an error message, or null on success.
+  ///
+  /// Changing the email address clears [ParentContact.emailConfirmed] — a
+  /// confirmation belongs to one address, never to the row.
+  String? updateParentContact(
+    int index, {
+    String? label,
+    String? whatsappNumber,
+    String? email,
+  }) {
+    final account = _currentAccount;
+    if (account == null) return 'Not signed in';
+    if (index < 0 || index >= account.parentContacts.length) {
+      return 'Contact not found';
+    }
+
+    final phone = normalizeParentPhone(whatsappNumber);
+    final mail = _normalizeEmail(email);
+    final err = _validateContact(phone, mail);
+    if (err != null) return err;
+
+    for (var i = 0; i < account.parentContacts.length; i++) {
+      if (i == index) continue;
+      final other = account.parentContacts[i];
+      if (phone != null && other.whatsappNumber == phone) {
+        return 'That number is already on the list';
+      }
+      if (mail != null && other.email == mail) {
+        return 'That email is already on the list';
+      }
+    }
+
+    final c = account.parentContacts[index];
+    if (label != null && label.trim().isNotEmpty) c.label = label.trim();
+    c.whatsappNumber = phone;
+    if (c.email != mail) {
+      c.email = mail;
+      c.emailConfirmed = false;
+    }
+    _saveAccounts();
+    notifyListeners();
+    return null;
+  }
+
+  void removeParentContact(int index) {
+    final account = _currentAccount;
+    if (account == null) return;
+    if (index < 0 || index >= account.parentContacts.length) return;
+    account.parentContacts.removeAt(index);
+    _saveAccounts();
+    notifyListeners();
+  }
+
+  /// Mark an address as confirmed by the server. Matched on the address, not
+  /// on position, so a reordered or re-edited list cannot confirm the wrong row.
+  void markContactEmailConfirmed(String email, {bool confirmed = true}) {
+    final account = _currentAccount;
+    if (account == null) return;
+    final target = _normalizeEmail(email);
+    if (target == null) return;
+    var changed = false;
+    for (final c in account.parentContacts) {
+      if (c.email == target && c.emailConfirmed != confirmed) {
+        c.emailConfirmed = confirmed;
+        changed = true;
+      }
+    }
+    if (!changed) return;
+    _saveAccounts();
+    notifyListeners();
+  }
+
+  String? _validateContact(String? phone, String? mail) {
+    if (phone == null && mail == null) {
+      return 'Enter a WhatsApp number or an email address';
+    }
+    if (phone != null) {
+      final digits = phone.replaceAll(RegExp(r'[^\d]'), '');
+      if (!phone.startsWith('+')) {
+        return 'Include the country code, e.g. $defaultCountryCode 6 12 34 56 78';
+      }
+      if (digits.length < 8 || digits.length > 15) {
+        return 'That WhatsApp number does not look complete';
+      }
+    }
+    if (mail != null && !RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(mail)) {
+      return 'That email address does not look valid';
+    }
+    return null;
+  }
+
+  String? _normalizeEmail(String? raw) {
+    final v = raw?.trim().toLowerCase();
+    if (v == null || v.isEmpty) return null;
+    return v;
+  }
+
+  /// Normalize a phone number for WhatsApp.
+  ///
+  /// WhatsApp deep links and the Cloud API both require a full international
+  /// number. A bare local number silently fails at send time, so it is
+  /// upgraded here rather than left to fail later:
+  ///   `+237 6 12 34 56 78` -> `+237612345678`  (kept as typed)
+  ///   `00237612345678`     -> `+237612345678`  (international prefix)
+  ///   `612345678`          -> `+237612345678`  (assumed local)
+  ///   `0612345678`         -> `+237612345678`  (local trunk zero dropped)
+  /// Anything else is returned stripped but unchanged, and `_validateContact`
+  /// rejects it so the parent sees the problem at entry.
+  String? normalizeParentPhone(String? raw) {
+    if (raw == null) return null;
+    var v = raw.trim().replaceAll(RegExp(r'[\s\-\(\)\.]'), '');
+    if (v.isEmpty) return null;
+
+    if (v.startsWith('+')) {
+      final digits = v.substring(1).replaceAll(RegExp(r'[^\d]'), '');
+      return '+$digits';
+    }
+    v = v.replaceAll(RegExp(r'[^\d]'), '');
+    if (v.isEmpty) return null;
+
+    if (v.startsWith('00') && v.length > 4) return '+${v.substring(2)}';
+    // Local Cameroon formats: 9 digits, optionally with a trunk 0.
+    if (v.length == 9) return '$defaultCountryCode$v';
+    if (v.length == 10 && v.startsWith('0')) {
+      return '$defaultCountryCode${v.substring(1)}';
+    }
+    return v; // rejected by _validateContact
+  }
+
+  /// Legacy single-number normalizer, kept for [updateWhatsAppNumber].
+  String? _normalizePhone(String? raw) => normalizeParentPhone(raw);
 
   // ==================== Developer Mode (2FA) ====================
 
@@ -617,8 +807,69 @@ class AuthService extends ChangeNotifier {
       _accounts = decoded.map(
         (k, v) => MapEntry(k, UserAccount.fromJson(v)),
       );
+      _purgeLegacyPlaintextSecrets();
     } catch (e) {
       if (kDebugMode) print('Error loading accounts: $e');
+    }
+  }
+
+  /// Re-read accounts from storage after something else rewrote them.
+  ///
+  /// `CloudBackupService.restoreAll()` writes the `auth_accounts` key
+  /// directly, so without this the service keeps serving the pre-restore
+  /// objects until the next cold start. Two consequences, both fixed here:
+  /// the UI showed stale profiles after a manual restore, and — since
+  /// v1.23.6 — a restore that pulled down a PIN written as plain text by an
+  /// older device would have left it readable on disk until the next launch.
+  ///
+  /// `_currentAccount` and `_currentProfile` are re-pointed by identity
+  /// (email, profile id) rather than kept, because `_loadAccounts` builds
+  /// fresh objects and the old pointers would silently write to a map nobody
+  /// reads. Anything that no longer exists becomes null, which is the same
+  /// state a cold start would produce.
+  void reloadAccountsFromStorage() {
+    _loadAccounts();
+
+    final email = _prefs.getString(_keyCurrentEmail);
+    _currentAccount = email == null ? null : _accounts[email];
+
+    final profileId = _prefs.getString(_keyCurrentProfileId);
+    _currentProfile = null;
+    if (_currentAccount != null && profileId != null) {
+      for (final p in _currentAccount!.profiles) {
+        if (p.id == profileId) {
+          _currentProfile = p;
+          break;
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  /// Rewrite storage once if any PIN arrived as plain text.
+  ///
+  /// v1.23.6 (Session 65b). `UserAccount.fromJson` has already hashed the
+  /// value in memory; this is what removes the readable copy from disk, and
+  /// — because the same blob is what `CloudBackupService` uploads — from
+  /// `users/{emailKey}/data/accounts` on the next sync.
+  ///
+  /// Called from every path that replaces `_accounts`, including cloud
+  /// restore, because that is where plaintext written by an older device
+  /// comes back down.
+  void _purgeLegacyPlaintextSecrets() {
+    final affected =
+        _accounts.values.where((a) => a.migratedLegacySecret).toList();
+    if (affected.isEmpty) return;
+    for (final a in affected) {
+      a.migratedLegacySecret = false;
+      for (final p in a.profiles) {
+        p.migratedLegacySecret = false;
+      }
+    }
+    _saveAccounts();
+    if (kDebugMode) {
+      print('AuthService: hashed ${affected.length} legacy plaintext PIN '
+          'record(s) and removed the readable copy.');
     }
   }
 

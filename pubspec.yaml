@@ -6,7 +6,7 @@ description: A lightweight on-device AI application to teach the Awing language.
 
 publish_to: "none"
 
-version: 1.23.5+141
+version: 1.23.6+142
 environment:
   sdk: ">=3.4.0 <4.0.0"
 
@@ -26,6 +26,11 @@ dependencies:
   file_picker: ^8.1.6
   record: ^6.1.1
   url_launcher: ^6.3.1
+  # v1.23.6 (Session 65b) — PBKDF2-HMAC-SHA256 for parent/child PIN hashes.
+  # Already present transitively via firebase_*; declared directly because
+  # lib/models/secret_hash.dart imports it and `depend_on_referenced_packages`
+  # flags using a package you have not asked for.
+  crypto: ^3.0.7
   # Session 64b - Play's native in-app update flow (Android only).
   # iOS has no equivalent API, so AppUpdateService falls back to a
   # plain store link there, and on any Android build not installed

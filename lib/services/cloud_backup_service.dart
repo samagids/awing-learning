@@ -12,7 +12,7 @@ const Duration _autoSyncDebounce = Duration(minutes: 2);
 /// Keep in sync with AboutScreen.appVersion and AboutScreen.buildNumber.
 /// Stamped on every Firestore doc so Developer Mode can see which client
 /// last wrote a given user's data.
-const String _kAppVersion = '1.23.5+141';
+const String _kAppVersion = '1.23.6+142';
 
 /// Cloud backup service using Firebase Firestore.
 ///
@@ -29,6 +29,9 @@ const String _kAppVersion = '1.23.5+141';
 class CloudBackupService extends ChangeNotifier {
   static const String _keyAutoSync = 'cloud_auto_sync';
   static const String _keyLastBackup = 'cloud_last_backup';
+  /// v1.23.6 (Session 65b) — set once the legacy plaintext PIN fields have
+  /// been deleted from this account's cloud document.
+  static const String _keyLegacyPinPurged = 'cloud_legacy_pin_purged_v1';
 
   late SharedPreferences _prefs;
   bool _initialized = false;
@@ -473,6 +476,11 @@ class CloudBackupService extends ChangeNotifier {
 
       await batch.commit();
 
+      // The write above cannot remove what it does not mention, so the old
+      // readable PINs need deleting explicitly. Deliberately AFTER the
+      // commit: a failure here must not cost the user their backup.
+      await _purgeLegacyPlaintextFields(basePath, accountsData);
+
       _lastBackupTime = now;
       _prefs.setString(_keyLastBackup, now);
       _syncError = null;
@@ -487,6 +495,59 @@ class CloudBackupService extends ChangeNotifier {
       debugPrint('Cloud backup error: $e');
       debugPrint('Cloud backup stack: $stack');
       return false;
+    }
+  }
+
+  /// Delete the pre-1.23.6 plaintext PIN fields from the cloud document.
+  ///
+  /// v1.23.6 (Session 65b). The app stopped WRITING `accountPin` and
+  /// `passwordHash`, but every backup uses `SetOptions(merge: true)`, and
+  /// Firestore's merge deep-merges maps: a field the new write does not
+  /// mention is preserved, not removed. Without this, the readable PINs
+  /// already in `users/{emailKey}/data/accounts` would sit there forever
+  /// while the app quietly believed it had fixed the problem.
+  ///
+  /// Two details that dictate the shape of this:
+  ///
+  ///  * The keys inside `data` are email addresses, which contain dots, so a
+  ///    dotted string path would be parsed as several nested segments.
+  ///    [FieldPath] takes the segments literally and is the only safe form.
+  ///  * Child PINs live inside a `profiles` LIST. Firestore replaces arrays
+  ///    wholesale rather than merging them element by element, so those are
+  ///    already gone the first time a 1.23.6 client backs up. Only the two
+  ///    top-level string fields need deleting by hand.
+  ///
+  /// Runs once per device (guarded by [_keyLegacyPinPurged]) and is harmless
+  /// if it runs again: deleting an absent field is a no-op.
+  ///
+  /// NOTE: a device still on <= 1.23.5 will keep re-uploading its plaintext
+  /// PIN on every sync. Nothing here can prevent that; those families are
+  /// only fully clean once every one of their devices has updated.
+  Future<void> _purgeLegacyPlaintextFields(
+      String basePath, dynamic accountsData) async {
+    if (_prefs.getBool(_keyLegacyPinPurged) == true) return;
+    if (accountsData is! Map || accountsData.isEmpty) return;
+
+    final deletions = <Object, Object?>{};
+    for (final key in accountsData.keys) {
+      final accountKey = key.toString();
+      if (accountKey.isEmpty) continue;
+      deletions[FieldPath(['data', accountKey, 'accountPin'])] =
+          FieldValue.delete();
+      deletions[FieldPath(['data', accountKey, 'passwordHash'])] =
+          FieldValue.delete();
+    }
+    if (deletions.isEmpty) return;
+
+    try {
+      await _db.doc('$basePath/data/accounts').update(deletions);
+      await _prefs.setBool(_keyLegacyPinPurged, true);
+      debugPrint('Cloud backup: removed legacy plaintext PIN fields for '
+          '${accountsData.length} account(s).');
+    } catch (e) {
+      // Left unflagged on purpose so the next backup tries again. This is
+      // best-effort cleanup, never a reason to report the backup as failed.
+      debugPrint('Cloud backup: legacy PIN purge deferred ($e)');
     }
   }
 

@@ -118,5 +118,15 @@
             <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="https"/>
         </intent>
+        <!-- v1.23.6: the https probe above is answered by ANY browser, so it
+             can never tell us whether WhatsApp exists. These two entries let
+             canLaunchUrl('whatsapp://...') answer truthfully, which is what
+             the share button checks before claiming a message was sent. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="whatsapp"/>
+        </intent>
+        <package android:name="com.whatsapp"/>
+        <package android:name="com.whatsapp.w4b"/>
     </queries>
 </manifest>

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/services/contribution_service.dart';
 import 'package:awing_ai_learning/services/parent_notification_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
+import 'package:awing_ai_learning/models/user_model.dart';
+import 'package:awing_ai_learning/components/parent_contacts_editor.dart';
 import 'package:awing_ai_learning/screens/settings/backup_screen.dart';
 
 /// Settings screen for parents to manage WhatsApp notifications,
@@ -17,7 +20,6 @@ class ParentSettingsScreen extends StatefulWidget {
 
 class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
   late TextEditingController _nameController;
-  late TextEditingController _whatsappController;
   bool _hasChanges = false;
 
   @override
@@ -25,39 +27,19 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
     super.initState();
     final account = context.read<AuthService>().currentAccount;
     _nameController = TextEditingController(text: account?.parentName ?? '');
-    _whatsappController = TextEditingController(text: account?.whatsappNumber ?? '');
   }
 
   @override
   void dispose() {
     _nameController.dispose();
-    _whatsappController.dispose();
     super.dispose();
   }
 
   void _save() {
-    // Validate WhatsApp number if provided
-    final phone = _whatsappController.text.trim();
-    if (phone.isNotEmpty) {
-      // Strip spaces and dashes for validation
-      final cleaned = phone.replaceAll(RegExp(r'[\s\-\(\)]'), '');
-      // Must start with + and country code, then digits (7-15 digits total)
-      if (!RegExp(r'^\+\d{7,15}$').hasMatch(cleaned)) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Please enter a valid phone number with country code (e.g. +237 6XX XXX XXX)',
-            ),
-            backgroundColor: Colors.orange,
-          ),
-        );
-        return;
-      }
-    }
-
-    final auth = context.read<AuthService>();
-    auth.updateParentName(_nameController.text);
-    auth.updateWhatsAppNumber(phone);
+    // v1.23.6 — the WhatsApp number moved onto the contact rows, which
+    // validate themselves in AuthService. Only the parent's name is left
+    // here, so there is nothing to reject.
+    context.read<AuthService>().updateParentName(_nameController.text);
     setState(() => _hasChanges = false);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -65,6 +47,101 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
         backgroundColor: Colors.green,
       ),
     );
+  }
+
+  // ==================== Report actions (v1.23.6) ====================
+  //
+  // Every one of these renders THREE outcomes. The previous version had two,
+  // and treated "a browser opened WhatsApp's download page" as delivery.
+
+  void _reportOutcome(ReportResult result, String noun) {
+    if (!mounted) return;
+    late final String text;
+    late final Color colour;
+    switch (result) {
+      case ReportResult.sent:
+        text = 'The $noun was sent.';
+        colour = Colors.green;
+        break;
+      case ReportResult.notSent:
+        text = 'The $noun was not sent. Check that a contact has a '
+            'confirmed email address.';
+        colour = Colors.orange;
+        break;
+      case ReportResult.unknown:
+        // Not an error. Saying "failed" here invites a second send and a
+        // duplicate email.
+        text = 'We could not confirm whether the $noun went out. '
+            'Check the inbox before sending again.';
+        colour = Colors.blueGrey;
+        break;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text),
+        backgroundColor: colour,
+        duration: const Duration(seconds: 5),
+      ),
+    );
+    setState(() {});
+  }
+
+  Future<void> _sendTestReport() async {
+    final contrib = context.read<ContributionService>();
+    final auth = context.read<AuthService>();
+    final account = auth.currentAccount;
+    if (account == null) return;
+
+    final child = auth.currentProfile?.displayName ?? 'your child';
+    final reply = await contrib.sendParentReport(
+      kind: 'test',
+      subject: 'test',
+      body: 'This is a test report from Awing AI Learning.\n\n'
+          'If you can read this, activity reports for $child will reach '
+          'this address.\n\n-- Awing AI Learning',
+      recipients: account.deliverableContacts.map((c) => c.email!).toList(),
+    );
+    if (!mounted) return;
+    if (reply == null) {
+      _reportOutcome(ReportResult.unknown, 'test report');
+    } else if (reply['status'] == 'success') {
+      _reportOutcome(ReportResult.sent, 'test report');
+    } else {
+      _reportOutcome(ReportResult.notSent, 'test report');
+    }
+  }
+
+  Future<void> _sendWeeklyNow() async {
+    final notifier = context.read<ParentNotificationService>();
+    final result = await notifier.sendWeeklySummary();
+    _reportOutcome(result, 'weekly summary');
+  }
+
+  Future<void> _sendDailyNow() async {
+    final notifier = context.read<ParentNotificationService>();
+    final result = await notifier.sendDailyReport();
+    _reportOutcome(result, 'daily report');
+  }
+
+  Future<void> _shareViaWhatsApp(ParentContact contact) async {
+    final notifier = context.read<ParentNotificationService>();
+    final ok = await notifier.shareViaWhatsApp(
+      contact: contact,
+      message: notifier.composeShareableReport(),
+    );
+    if (!mounted) return;
+    if (!ok) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'WhatsApp is not installed on this device, so nothing was sent. '
+            'The emailed report still works.',
+          ),
+          backgroundColor: Colors.orange,
+          duration: Duration(seconds: 5),
+        ),
+      );
+    }
   }
 
   // ==================== Parent Controls ====================
@@ -474,37 +551,30 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                 _SectionCard(
                   title: 'Your Contact Info',
                   icon: Icons.person,
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: _nameController,
-                        textCapitalization: TextCapitalization.words,
-                        onChanged: (_) => setState(() => _hasChanges = true),
-                        decoration: InputDecoration(
-                          labelText: 'Parent Name',
-                          prefixIcon: const Icon(Icons.person_outlined),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
+                  child: TextField(
+                    controller: _nameController,
+                    textCapitalization: TextCapitalization.words,
+                    onChanged: (_) => setState(() => _hasChanges = true),
+                    decoration: InputDecoration(
+                      labelText: 'Parent Name',
+                      prefixIcon: const Icon(Icons.person_outlined),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        controller: _whatsappController,
-                        keyboardType: TextInputType.phone,
-                        onChanged: (_) => setState(() => _hasChanges = true),
-                        decoration: InputDecoration(
-                          labelText: 'WhatsApp Number',
-                          hintText: '+237 6XX XXX XXX',
-                          prefixIcon: const Icon(Icons.phone_outlined),
-                          helperText:
-                              'Include country code (e.g. +237 for Cameroon)',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                _SectionCard(
+                  title: 'Who gets the reports',
+                  icon: Icons.family_restroom,
+                  child: const ParentContactsEditor(
+                    introText:
+                        'Add up to 3 parents or guardians. Reports are emailed '
+                        'to them, so WhatsApp does not need to be installed on '
+                        'this device — and the same details can be used on '
+                        'every child\'s device.',
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -516,12 +586,16 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                   child: Column(
                     children: [
                       SwitchListTile(
-                        title: const Text('Quiz Notifications'),
+                        title: const Text('Daily quiz report'),
+                        // Deliberately "daily", not "after each quiz". One
+                        // email per quiz would exhaust the whole app's mail
+                        // allowance within a couple of dozen families.
                         subtitle: const Text(
-                          'Receive a WhatsApp message each time your child finishes a quiz',
+                          'One email a day listing the quizzes your child '
+                          'finished and their scores',
                         ),
                         value: account.sendQuizNotifications,
-                        onChanged: account.hasWhatsApp
+                        onChanged: account.canDeliverReports
                             ? (v) => auth.setQuizNotifications(v)
                             : null,
                         activeColor: const Color(0xFF006432),
@@ -531,16 +605,16 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                       SwitchListTile(
                         title: const Text('Weekly Summary'),
                         subtitle: const Text(
-                          'Get a weekly report of lessons, quizzes, and streaks',
+                          'A weekly report of lessons, quizzes, and streaks',
                         ),
                         value: account.sendWeeklySummary,
-                        onChanged: account.hasWhatsApp
+                        onChanged: account.canDeliverReports
                             ? (v) => auth.setWeeklySummary(v)
                             : null,
                         activeColor: const Color(0xFF006432),
                         contentPadding: EdgeInsets.zero,
                       ),
-                      if (!account.hasWhatsApp) ...[
+                      if (!account.canDeliverReports) ...[
                         const SizedBox(height: 8),
                         Container(
                           padding: const EdgeInsets.all(12),
@@ -556,7 +630,11 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
-                                  'Add your WhatsApp number above to enable notifications',
+                                  account.parentContacts.isEmpty
+                                      ? 'Add a parent or guardian above to '
+                                          'turn these on.'
+                                      : 'Reports start once a contact above '
+                                          'has a confirmed email address.',
                                   style: TextStyle(
                                     color: Colors.orange.shade700,
                                     fontSize: 13,
@@ -573,69 +651,33 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                 const SizedBox(height: 20),
 
                 // Actions
-                if (account.hasWhatsApp) ...[
+                if (account.canDeliverReports) ...[
                   _SectionCard(
                     title: 'Actions',
                     icon: Icons.send,
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Icon(Icons.send, color: Colors.green.shade700),
-                          title: const Text('Send Test Message'),
+                          leading:
+                              Icon(Icons.mark_email_read_outlined,
+                                  color: Colors.green.shade700),
+                          title: const Text('Send a test report'),
                           subtitle: const Text(
-                            'Send a test message to verify your WhatsApp number',
+                            'Emails a short test to every confirmed contact',
                           ),
                           contentPadding: EdgeInsets.zero,
-                          onTap: () async {
-                            final notifier =
-                                context.read<ParentNotificationService>();
-                            final childName =
-                                auth.currentProfile?.displayName ?? 'Test Child';
-                            final sent = await notifier.notifyQuizCompleted(
-                              childName: childName,
-                              quizName: 'Test Quiz',
-                              score: 85,
-                              totalQuestions: 20,
-                              correctAnswers: 17,
-                            );
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(sent
-                                      ? 'Opening WhatsApp...'
-                                      : 'Could not open WhatsApp. Message queued.'),
-                                  backgroundColor:
-                                      sent ? Colors.green : Colors.orange,
-                                ),
-                              );
-                            }
-                          },
+                          onTap: _sendTestReport,
                         ),
                         const Divider(),
                         ListTile(
-                          leading:
-                              Icon(Icons.summarize, color: Colors.blue.shade700),
-                          title: const Text('Send Weekly Summary Now'),
+                          leading: Icon(Icons.summarize,
+                              color: Colors.blue.shade700),
+                          title: const Text('Send weekly summary now'),
                           subtitle: const Text(
-                            'Send this week\'s activity report right now',
+                            "Send this week's activity report right away",
                           ),
                           contentPadding: EdgeInsets.zero,
-                          onTap: () async {
-                            final notifier =
-                                context.read<ParentNotificationService>();
-                            final sent = await notifier.sendWeeklySummary();
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(sent
-                                      ? 'Opening WhatsApp with weekly summary...'
-                                      : 'Could not send summary. Try again later.'),
-                                  backgroundColor:
-                                      sent ? Colors.green : Colors.orange,
-                                ),
-                              );
-                            }
-                          },
+                          onTap: _sendWeeklyNow,
                         ),
                       ],
                     ),
@@ -643,65 +685,106 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                   const SizedBox(height: 20),
                 ],
 
-                // Pending messages
+                // Unsent activity. This is no longer a WhatsApp outbox — it
+                // is simply the activity recorded since the last delivered
+                // daily report.
                 Builder(
                   builder: (context) {
                     final notifier = context.read<ParentNotificationService>();
-                    if (notifier.pendingMessageCount == 0) {
+                    if (notifier.pendingEventCount == 0) {
                       return const SizedBox.shrink();
                     }
-                    return _SectionCard(
-                      title: 'Pending Messages',
-                      icon: Icons.schedule_send,
-                      child: Column(
-                        children: [
-                          Text(
-                            '${notifier.pendingMessageCount} message(s) waiting to be sent.',
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _SectionCard(
+                          title: 'Not yet reported',
+                          icon: Icons.schedule_send,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Expanded(
-                                child: ElevatedButton.icon(
-                                  onPressed: () async {
-                                    final sent =
-                                        await notifier.flushPendingMessages();
-                                    if (mounted) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text('Sent $sent message(s)'),
-                                        ),
-                                      );
-                                      setState(() {});
-                                    }
-                                  },
-                                  icon: const Icon(Icons.send),
-                                  label: const Text('Send Now'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green,
-                                    foregroundColor: Colors.white,
-                                  ),
+                              Text(
+                                '${notifier.pendingEventCount} quiz result(s) '
+                                'recorded since the last report was delivered.',
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 14,
                                 ),
                               ),
-                              const SizedBox(width: 12),
-                              OutlinedButton(
-                                onPressed: () {
-                                  notifier.clearPendingMessages();
-                                  setState(() {});
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Queue cleared')),
-                                  );
-                                },
-                                child: const Text('Clear'),
+                              const SizedBox(height: 12),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton.icon(
+                                      onPressed: account.canDeliverReports
+                                          ? _sendDailyNow
+                                          : null,
+                                      icon: const Icon(Icons.send),
+                                      label: const Text('Send now'),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0xFF006432),
+                                        foregroundColor: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  OutlinedButton(
+                                    onPressed: () {
+                                      notifier.clearPendingMessages();
+                                      setState(() {});
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content: Text('Cleared')),
+                                      );
+                                    },
+                                    child: const Text('Clear'),
+                                  ),
+                                ],
                               ),
+                              if (account.parentContacts
+                                  .any((c) => c.hasPlausibleWhatsApp)) ...[
+                                const Divider(height: 28),
+                                Text(
+                                  'Share by WhatsApp instead',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey.shade800,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  'Opens WhatsApp on this device with the '
+                                  'report ready to send. Only available where '
+                                  'WhatsApp is installed.',
+                                  style: TextStyle(
+                                      fontSize: 12.5,
+                                      color: Colors.grey.shade600),
+                                ),
+                                const SizedBox(height: 10),
+                                for (final c in account.parentContacts)
+                                  if (c.hasPlausibleWhatsApp)
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: TextButton.icon(
+                                        onPressed: () => _shareViaWhatsApp(c),
+                                        icon: const Icon(Icons.share, size: 18),
+                                        label: Text(
+                                            '${c.label} — ${c.whatsappNumber}'),
+                                        style: TextButton.styleFrom(
+                                          foregroundColor:
+                                              const Color(0xFF006432),
+                                          padding: EdgeInsets.zero,
+                                        ),
+                                      ),
+                                    ),
+                              ],
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     );
                   },
                 ),

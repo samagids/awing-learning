@@ -3213,6 +3213,13 @@ class _SettingsTabState extends State<_SettingsTab> {
                           ? null
                           : () async {
                               await cloud.restoreAll();
+                              // See backup_screen: refresh AuthService so
+                              // restored data is live and any legacy
+                              // plaintext PIN is re-hashed immediately.
+                              if (context.mounted) {
+                                context.read<AuthService>()
+                                    .reloadAccountsFromStorage();
+                              }
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(

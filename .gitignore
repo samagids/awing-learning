@@ -61,11 +61,16 @@ config/*.p8
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
-.dart_tool/
+# v1.23.6 (Session 65c): no trailing slash. These are now NTFS junctions
+# (see scripts/ensure_local_build_dirs.ps1 - the build tree lives outside
+# OneDrive), and git reports a junction as a SYMLINK, not a directory. A
+# trailing-slash pattern matches directories only, so `.dart_tool/` stopped
+# matching and both paths reappeared as untracked.
+.dart_tool
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+/build
 /coverage/
 
 # Symbolication related

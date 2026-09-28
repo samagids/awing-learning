@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/services/contribution_service.dart';
 
 /// Parental gate that protects destructive actions from kids.
 ///
@@ -95,6 +96,18 @@ class ParentalGate {
           ],
         ),
         actions: [
+          // v1.23.6 (Session 64e): a forgotten PIN used to be an absolute
+          // lockout — the gate guards PIN Settings, changing the PIN needs
+          // the old PIN, and signing out needs it too. And because
+          // accountPin round-trips through the cloud backup, reinstalling
+          // restored the PIN along with everything else.
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(ctx, false);
+              await _showForgotPinFlow(context, auth);
+            },
+            child: const Text('Forgot PIN?'),
+          ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
             child: const Text('Cancel'),
@@ -207,6 +220,145 @@ class ParentalGate {
 
   /// Show a dialog to set or change the account PIN.
   /// If a PIN already exists, the user must enter the current PIN first.
+
+  /// Forgot-PIN recovery (v1.23.6, Session 64e).
+  ///
+  /// Emails a 6-digit code to the address Google/Apple says owns this
+  /// account, then clears the PIN when it is entered back. The app never
+  /// tells the server WHERE to send — it sends a Firebase ID token and
+  /// the server mails the verified owner, so this cannot be pointed at
+  /// anyone else's inbox.
+  static Future<void> _showForgotPinFlow(
+    BuildContext context,
+    AuthService auth,
+  ) async {
+    final code = (100000 + Random.secure().nextInt(900000)).toString();
+    final contrib = context.read<ContributionService>();
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const AlertDialog(
+        content: Row(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(width: 16),
+            Expanded(child: Text('Sending reset code…')),
+          ],
+        ),
+      ),
+    );
+
+    final reply = await contrib.requestPinReset(code);
+    if (!context.mounted) return;
+    Navigator.pop(context); // dismiss spinner
+
+    final status = reply == null ? null : reply['status'];
+    final msg = reply == null ? '' : (reply['message']?.toString() ?? '');
+
+    if (reply != null && msg == 'not-signed-in') {
+      await _info(context, 'Sign in first',
+          'To reset the PIN we need to confirm you own this account. '
+          'Sign in with Google or Apple, then try again.');
+      return;
+    }
+    if (reply != null && status == 'error' && msg == 'too many requests') {
+      await _info(context, 'Too many attempts',
+          'Several reset codes have already been sent in the last hour. '
+          'Please check your email, or wait and try again.');
+      return;
+    }
+    if (reply != null && status == 'error') {
+      await _info(context, 'Could not send',
+          'The reset code could not be sent ($msg). Please try again.');
+      return;
+    }
+    // reply == null means we could not READ the answer. The mail may well
+    // have gone out, so do NOT claim failure — offer the code entry.
+    if (reply == null) {
+      await _info(context, 'Check your email',
+          'We could not confirm the send, but the code was most likely '
+          'emailed to you. Check your inbox, then enter it on the next '
+          'screen.');
+    }
+
+    if (!context.mounted) return;
+    final entered = TextEditingController();
+    final ok = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Enter reset code'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'We emailed a 6-digit code to the address this account is '
+              'signed in with. Enter it to clear the parent PIN.',
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: entered,
+              keyboardType: TextInputType.number,
+              maxLength: 6,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 28, letterSpacing: 8),
+              decoration: const InputDecoration(border: OutlineInputBorder()),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (entered.text.trim() == code) {
+                Navigator.pop(ctx, true);
+              } else {
+                ScaffoldMessenger.of(ctx).showSnackBar(
+                  const SnackBar(
+                    content: Text('Incorrect code'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+            },
+            child: const Text('Clear PIN'),
+          ),
+        ],
+      ),
+    );
+    entered.dispose();
+
+    if (ok == true) {
+      auth.removeAccountPin();
+      invalidateCache();
+      if (!context.mounted) return;
+      await _info(context, 'PIN cleared',
+          'The parent PIN has been removed. You can set a new one from '
+          'the profile screen.');
+    }
+  }
+
+  static Future<void> _info(
+      BuildContext context, String title, String body) async {
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title),
+        content: Text(body),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   static Future<void> showSetPinDialog(BuildContext context) async {
     final auth = context.read<AuthService>();
 

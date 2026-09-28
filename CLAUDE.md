@@ -9281,3 +9281,477 @@ createDailyDigestTrigger() once.
   this thread is still locked out; PINs survive reinstall because
   accountPin round-trips through the cloud backup).
 - v1.23.5+141 tagged locally but the tag was never pushed.
+
+---
+
+## Session 65a - Parent reports: WhatsApp never worked (v1.23.6)
+
+### The question that started it
+"Can parents get quiz notifications without WhatsApp on the device, can
+one number be used on several devices, and can we take mother AND
+father?" Answer to all three, before this session: no.
+
+### What the feature actually was
+`ParentNotificationService._sendWhatsApp` built
+`https://wa.me/<n>?text=<msg>` and called `launchUrl`. Four defects:
+
+1. It required WhatsApp installed. Without it Android handed the https
+   link to a browser, which showed WhatsApp's download page.
+2. `launchUrl` returns TRUE when ANY handler takes the intent, so a
+   browser counted as delivery. `sendWeeklySummary` then stamped
+   `parent_last_weekly_sent` AND called `_clearWeeklyStats()`. The week's
+   data was destroyed and nothing was sent. The "queued messages"
+   fallback only ran when launching THREW, which essentially never
+   happens on a device with a browser.
+3. `notifyQuizCompleted` was wired into 6 quiz/game screens with
+   `sendQuizNotifications` defaulting to true, and
+   `sendWeeklySummaryIfDue()` ran at `main.dart` provider-build time. So
+   finishing a quiz, or cold-starting the app, threw the CHILD out into
+   WhatsApp, where a human then had to press Send.
+4. `String? whatsappNumber` - one number, no mother/father.
+
+Also: `main.dart` called `sendWeeklySummaryIfDue()` synchronously after
+`..initialize()`, i.e. before `late SharedPreferences _prefs` was
+assigned. Any account with a number set hit a LateInitializationError in
+an async gap. It only stayed invisible because the `hasWhatsApp` guard
+short-circuited first for everyone else.
+
+**This is the same bug class as Session 64e** (a check that could not
+observe reporting a definite answer), in its other direction: there,
+could-not-tell collapsed into NO; here it collapsed into YES, which is
+worse because it deleted data.
+
+### What it is now
+Delivery is server-side e-mail through the contributions web app's
+existing Brevo sender. Nothing is launched on a child's device.
+
+- `ParentContact {label, whatsappNumber, email, emailConfirmed}`, up to
+  `UserAccount.maxParentContacts` (3). `whatsappNumber` survives on
+  `UserAccount` as a getter/setter over `parentContacts[0]`, and
+  `toJson` still EMITS the legacy key - installs on <= 1.23.5 read the
+  same `users/{emailKey}/data/accounts` document and would otherwise
+  find their notification setup blanked.
+- `ReportResult {sent, notSent, unknown}`. Watermarks advance and stats
+  clear ONLY on `sent`. Worst case a parent gets a day twice; they never
+  lose it.
+- Reports are batched DAILY, not per quiz. Brevo's free tier is 300
+  e-mails/day for the whole app; one per quiz would exhaust it with a
+  couple of dozen families - exactly what took out the MailApp quota in
+  64e. The settings label says "Daily quiz report" on purpose.
+- WhatsApp survives only as a parent-initiated share from Parent
+  Settings, gated on `canLaunchUrl('whatsapp://...')`. The old https
+  probe could never answer this: any browser says yes. Needed
+  `<package android:name="com.whatsapp">` + the `whatsapp` scheme in
+  AndroidManifest queries, and `LSApplicationQueriesSchemes` on iOS.
+
+### Why recipients are not taken at face value
+`handleParentReport` is callable by any parent with a working app login.
+If it mailed whatever the payload named, it would be an open relay
+wearing the app's name and burning the shared Brevo allowance. So:
+
+- the address behind the verified ID token is always allowed;
+- any OTHER address must be confirmed by its own owner opening a
+  single-use link mailed to it (`handleParentContactVerify` ->
+  `doGet?action=confirm_parent`);
+- unconfirmed addresses are dropped silently, and if EVERY recipient is
+  dropped the call errors rather than quietly mailing the owner instead;
+- the subject is chosen server-side from `kind`, never from the payload,
+  so nothing an attacker words freely reaches an inbox preview under the
+  app's name.
+
+Confirmations live in Script Properties (`pcontacts_<ownerkey>`), not a
+sheet - the data is tiny and needs no schema.
+
+`scripts/test_parent_report.js` is a node harness that stubs the Apps
+Script globals and asserts all of the above (22 checks). Run:
+`node scripts/test_parent_report.js scripts/clasp_contributions/Code.js`
+
+### Security finding, NOT yet fixed
+`users/{emailKey}/data/accounts` syncs the whole `auth_accounts` blob,
+which contains `accountPin`, every child `pin`, and `passwordHash` in
+PLAINTEXT. Directly relevant to the forgot-PIN work in the same release.
+Hash before the next change to that document.
+
+### Gotchas
+- `flutter analyze` CANNOT be run from the device shell - Flutter is a
+  Windows install and the device shell is a Linux VM with only the
+  project folder mounted. Analysis has to be run by the user.
+- `device_bash` caps at ~120s regardless of the requested timeout, so
+  long builds must be backgrounded to a log file and polled.
+
+---
+
+## Session 65b - PINs are no longer plaintext (v1.23.6)
+
+Follow-on from the 65a finding. `users/{emailKey}/data/accounts` carried
+`accountPin`, every child `pin`, and `passwordHash` as readable strings.
+PINs get reused as phone-unlock codes, so this was the most sensitive
+thing the app held.
+
+### What is stored now
+`lib/models/secret_hash.dart` - PBKDF2-HMAC-SHA256, 16-byte random salt
+per secret, 12000 rounds, constant-time compare. The iteration count is
+stored WITH each hash, so it can be raised later and old hashes keep
+verifying (`SecretHash.needsRehash` flags the stale ones).
+
+`UserProfile.pin` -> `pinHash`, `UserAccount.accountPin` ->
+`accountPinHash`. `passwordHash` was deleted outright: nothing in the
+entire repo ever read or wrote it.
+
+### Be honest about what this buys
+A 6-digit PIN is a million guesses and has to verify synchronously on a
+cheap tablet, so NO client-side scheme makes it brute-force-proof. What
+changed is that a database dump, console screenshot or mis-scoped rule no
+longer hands anyone a working PIN, and the per-secret salt means a
+thousand-row dump costs a thousand separate searches. Do not describe
+this as "PINs are now secure".
+
+12000 rounds was chosen so `verifyAccountPin` stays synchronous - it is
+called inline from ~10 button handlers across 5 files, and making it
+async would have been a far larger, riskier diff than the threat
+justifies.
+
+### Migration - the part that could have locked families out
+`_LegacySecret.read()` runs inside `fromJson`, NOT as a one-shot startup
+pass. That is deliberate: every path into an account - local load, cloud
+restore, an older device's write coming back down - goes through
+`fromJson`, and a startup-only migration would have missed the restore
+path, which is exactly where plaintext arrives from.
+
+A usable hash always wins over a stale plaintext sitting beside it. A
+plaintext under 6 digits is discarded rather than hashed (hashing junk
+would leave a gate nothing can open). `migratedLegacySecret` then makes
+`AuthService._purgeLegacyPlaintextSecrets()` re-save once, which removes
+the readable copy from disk.
+
+`AuthService.reloadAccountsFromStorage()` is new and is now called after
+the two MANUAL restore paths (backup_screen, developer_screen). Those
+wrote `auth_accounts` straight under AuthService's feet, so the service
+kept serving pre-restore objects until the next cold start - a
+pre-existing staleness bug that also would have left restored plaintext
+on disk.
+
+### THE TRAP: merge does not delete
+`SetOptions(merge: true)` DEEP-merges maps. A field the new write does
+not mention is PRESERVED, not removed. So simply not writing `accountPin`
+any more would have left every existing plaintext PIN in Firestore
+forever while the app believed it was fixed.
+
+`CloudBackupService._purgeLegacyPlaintextFields()` deletes them
+explicitly, after the batch commits (a failure there must not cost the
+user their backup), guarded by `cloud_legacy_pin_purged_v1`.
+
+Two details that dictate its shape:
+- The keys inside `data` are EMAIL ADDRESSES, which contain dots. A
+  dotted string path would be parsed as nested segments, so `FieldPath`
+  is the only safe form.
+- Child PINs live inside a `profiles` LIST. Firestore replaces arrays
+  wholesale rather than merging element-wise, so those clear on the first
+  normal 1.23.6 backup. Only the two top-level strings need hand-deleting.
+
+Still true: a device on <= 1.23.5 keeps re-uploading its plaintext PIN on
+every sync. A family is only clean once ALL their devices have updated.
+
+### Compatibility note
+`toJson` no longer emits `accountPin` / `pin`. An older device reading the
+same synced doc therefore finds no PIN and opens its parental gate until
+it updates. That was accepted deliberately: emitting the plaintext "for
+compatibility" would have undone the entire fix.
+
+### Verification
+- `scripts/`-side: PBKDF2 was transcribed line-for-line into Python and
+  checked against `hashlib.pbkdf2_hmac` - 8/8 vectors including
+  multi-block, truncated, embedded-NUL and non-ASCII. That catches
+  counter-endianness and XOR-accumulation errors the analyzer cannot.
+- `test/secret_hash_test.dart` pins the DART transcription with those
+  fixed vectors plus the full legacy-migration matrix. Run
+  `flutter test test/secret_hash_test.dart`.
+- `crypto` promoted to a direct pubspec dependency (was transitive);
+  needs `flutter pub get`.
+
+### 65a/65b verification result (run on Windows by Dr. Sama)
+- `flutter analyze` -> 3 info lints, all introduced by this work, all fixed:
+  `unnecessary_this` (profile_select_screen) and two
+  `prefer_interpolation_to_compose_strings` (auth_service
+  normalizeParentPhone). Clean otherwise.
+- `flutter test test/secret_hash_test.dart` -> 18/18 passed, including the
+  PBKDF2 known vectors and the whole legacy-migration matrix.
+- `flutter pub get` picked up the new direct `crypto` dependency without
+  a version conflict.
+
+Reminder for future sessions: `flutter` is a Windows install and
+`device_bash` is a Linux VM with only the project folder mounted, so
+analyze/test/build always have to be handed to the user.
+
+---
+
+## Session 65c - Audit: what works vs what only looks like it does
+
+Full audit in the project doc `claude/audit-working-vs-not-working.md`.
+Method: build one in-memory index of every .dart file, then look for
+declared-but-never-called public methods. 61 found.
+
+### THE SWEEP'S OWN TRAP
+A first pass excluded the declaring file and reported
+`ContributionService.flushQueue` as dead - it is NOT, it runs on a
+2-minute timer inside the same class. Any such sweep must count
+self-calls (bare `name(`) as well as `.name(`, and tear-offs
+(`service.method` with no parens) are references too: the second sweep
+called `recordLessonCompleted` dead after it had just been wired as
+`auth.onLessonCompleted = service.recordLessonCompleted`.
+
+### Fixed this session
+- **`recordLessonCompleted` had no caller.** The weekly parent report's
+  lessons line could only ever read 0. Added
+  `AuthService.onLessonCompleted`, fired from `completeLesson` on FIRST
+  completion only (it is called every time a lesson screen opens, so an
+  unconditional fire would count re-reading as progress), and subscribed
+  in main.dart.
+- **THREE BADGES WERE UNOBTAINABLE.** `ProgressService.markLetterViewed`
+  and `markWordViewed` had no callers, so `viewed_letters` /
+  `viewed_words` were always empty and `alphabet_pro` (view all 31
+  letters), `word_collector` (10 words) and `vocabulary_champion` (67
+  words) could never unlock, while still being displayed to children as
+  locked badges. Wired: letter on card expand, word on flip-to-English
+  (not on mere display - swiping past a card is not learning).
+  Spaced repetition was NOT affected; it is seeded separately by
+  `recordSpacedRepetitionAnswer` from the quizzes.
+- **`test_webhook()` was a rubber stamp** and would pass the WRONG URL.
+  It POSTed `{"action":"ping"}` (handled by neither web app) with a bare
+  `urlopen`, which auto-follows the 302, turning the POST into a GET on
+  doGet, whose `{status:'ok'}` it read as success. Now uses
+  `_post_follow` with an unknown-action probe and FAILS on any reply
+  carrying doGet's `service` key. Same false pass that was fixed in
+  `test_dev_email` in 64c; this one was missed then.
+  `scripts/mock_apps_script.py` mocks three deployment shapes so this is
+  testable offline - 3/3. NOTE: a local mock cannot be on
+  googleusercontent.com, so the healthy case uses 303 (which
+  `_post_follow` also GETs) rather than the 302+host branch.
+- **build-ios.yml fired twice per release.** `push:` matched both
+  `branches:[main]` and `tags:['v*']`. Now tags-only; macOS runners bill
+  at 10x so this was the expensive half. build-android.yml deliberately
+  LEFT on both - ordinary pushes to main should still build something.
+- Corrected the main.dart comment claiming NotificationService is kept
+  for a "Send preview now" button that Session 67 deleted.
+
+### Confirmed working (do not re-investigate)
+- Offline contribution queue: `flushQueue()` on a 2-min timer.
+- Analytics dispatches `send_dev_code` / `new_user` via
+  `if (payload.action === ...)`, not a switch - a `case '` grep finds
+  nothing and looks broken.
+- `check_version` has no Dart caller because it serves
+  `apply_contributions.py`, not the app.
+- Lessons are tracked via `AuthService.completeLesson` ->
+  `UserProfile.lessonsCompleted`. `ProgressService.isLessonCompleted` is
+  a parallel unused API - two systems, one live.
+- Exam join is `joinByPin` over LAN; the Nearby discovery trio is dead
+  legacy.
+- Cloud AI: only `generateExample()` is live, and it is SAFE by design -
+  the model returns English only, every Awing word comes from the local
+  dictionary. `translate()`, `grade()` and `retrieval_service.dart` are
+  an unshipped path, not a hallucination risk.
+
+### Still dead, deliberately left
+`lib/services/retrieval_service.dart` and `lib/services/speech_service.dart`
+are imported by nothing. Deleting needs a device delete-permission
+prompt, so they were left in place rather than prompting mid-audit.
+
+### CORRECTION to the 64e notes
+`fcm_daily_push.gs` IS committed now (HEAD and the working copy both
+carry all 44 Brevo references). The note saying it had never been
+committed is stale. It is still in NO clasp project, so the repo copy
+may differ from what actually runs, and it has no trigger-creating
+function - both unverifiable from here.
+
+### Could not verify from here (network)
+Both the device VM and the cloud container get
+`Tunnel connection failed: 403 Forbidden` for script.google.com, so the
+live webhooks could not be probed. The new `test_webhook` is proven
+against the local mock only.
+
+### Build trap: OneDrive dehydrates build outputs mid-build
+Symptom (v1.23.6 build, 2026-09-28): `bundleRelease` SUCCEEDS, then
+`assembleRelease` dies with
+
+    Execution failed for task ':app:mergeReleaseNativeLibs'.
+    > Cannot access output property 'outputDir' ...
+      > java.io.IOException: Cannot snapshot
+        build\...\merged_native_libs\...\arm64-v8a\libcactus.so:
+        not a regular file
+
+"not a regular file" is Java refusing a REPARSE POINT. The repo lives in
+`C:\Users\samag\OneDrive\...`, and OneDrive Files On-Demand converts
+freshly written large files into cloud placeholders. `stat` on the file
+showed ctime two minutes LATER than mtime - written by the AAB build,
+then re-attributed by OneDrive while the APK build was running.
+libcactus.so is 30 MB, libflutter.so 163 MB; the big ones get dehydrated
+first.
+
+`/build/` being in .gitignore does NOT stop OneDrive.
+
+Recovery: move (do not `flutter clean` - that deletes the 1 GB AAB you
+just built) `build/app/intermediates/merged_native_libs` aside and
+re-run `flutter build apk --release` only.
+
+Real fix: move the repo OUT of OneDrive (e.g. C:\dev\Awing). That also
+explains why `git status` permanently shows hundreds of modified files
+under `cf-worker/node_modules/` and `contributions/*.json` - OneDrive
+sync churn, not real edits. Stopgap if it must stay:
+`attrib +P -U "<repo>\build\*" /S /D` (pin = always keep on this device).
+
+NOTE this was INFERRED, not directly observed: the Linux mount used by
+device_bash cannot see the Windows reparse attribute (and reading the
+file through it may hydrate it). Evidence = the OneDrive path, the
+ctime>mtime gap, and the exact Java error.
+
+### Play size limits - checked, NOT a problem
+The 1.08 GB AAB / 1015 MB install-time asset pack looks alarming but is
+fine. Play's cumulative limit for all modules + install-time asset packs
+is 4 GB, total download 34 GB, base module 500 MB. Do not "optimise" the
+asset pack on a false memory of a 1 GB cap.
+
+#### CORRECTION: the repo STAYS in OneDrive (Dr. Sama, 2026-09-28)
+"repo cannot and will not be removed from onedrive." Do not propose
+moving it again. Fix the BUILD OUTPUT instead - it is the only part that
+needs to be outside sync, and all of it lives under `<repo>\build\`
+(android/build.gradle.kts points `rootProject.layout.buildDirectory` at
+`../../build`, and every subproject under it).
+
+Preferred: make `build\`, `.dart_tool\` and `android\.gradle\` NTFS
+junctions to a local path (e.g. C:\dev\awing-build). OneDrive syncs a
+junction's contents once when it is created and then ignores all changes
+to them, so creating the junction while the folder is EMPTY means the
+build tree never enters sync at all - no dehydration, no 1 GB upload per
+build. `mklink /J` does not need admin.
+
+Fallbacks: `attrib +P -U "<repo>\build" /S /D` (pin = never dehydrate,
+but still uploads ~1 GB every build), or simply pause OneDrive before a
+release build.
+
+DO NOT junction `cf-worker\node_modules` - those files are TRACKED in
+git (they show as ` M` in status, which is what the CRLF/sync churn
+is). Removing them to make a junction would look like a mass deletion.
+
+`flutter clean` deletes through/over the junction - if it removes the
+junction itself, just recreate it. And remember clean also destroys the
+1 GB AAB, so copy any artifact you care about out of build\ first.
+
+#### A OneDrive placeholder is ALSO a reparse point
+Cost one failed run of ensure_local_build_dirs.ps1 (2026-09-28). The
+first version detected junctions with
+
+    $item.Attributes -band [IO.FileAttributes]::ReparsePoint
+
+which is TRUE for a OneDrive cloud placeholder as well. The real `build`
+directory was therefore classified as a junction, the script took the
+re-link branch, and called the NON-recursive
+`[System.IO.Directory]::Delete($link, $false)` on a full directory:
+
+    Exception calling "Delete" with "2" argument(s):
+    "The directory is not empty."
+
+Nothing was deleted, so no harm - but the lesson is that the reparse
+ATTRIBUTE only says "there is a reparse point here", not "this is a
+link". The TAG distinguishes them. A junction has a non-empty
+`.Target` / `LinkType` of `Junction`; a placeholder has neither.
+`Get-JunctionTarget` now checks for a real target and falls back to
+`fsutil reparsepoint query`, which names the tag outright.
+
+Directory removal uses `cmd /c rd /s /q`, not `Remove-Item -Recurse`:
+faster on a tree this size, and it unlinks a nested junction instead of
+recursing through it and deleting the target's contents.
+
+The script takes `-DryRun`. Use it before any first-time conversion -
+the real path deletes a directory tree.
+
+#### After junctioning: .gitignore trailing slashes stop matching
+Immediate fallout of the junction fix, caught before the commit. Git
+reports an NTFS junction as a SYMLINK, not a directory, and a pattern
+with a trailing slash matches DIRECTORIES ONLY. So `/build/` and
+`.dart_tool/` silently stopped matching and both reappeared as untracked
+`??` entries in `git status`.
+
+Fixed by dropping the trailing slash: `/build` and `.dart_tool`.
+`android/.gitignore` already used `/.gradle` with no slash, so it kept
+working - which is why only two of the three reappeared.
+
+Check after any future relinking:
+    git check-ignore -v build .dart_tool android/.gradle
+
+#### device_bash can no longer see build output
+The junction targets live at C:\dev\awing-build, OUTSIDE the connected
+folder, so the Linux mount returns "Input/output error" for `build/`,
+`.dart_tool/` and `android/.gradle/`. Build artifacts, AAB/APK sizes and
+Gradle intermediates are no longer inspectable from this side - ask Dr.
+Sama to paste output instead of trying to read them.
+
+#### android\.gradle must NOT be junctioned
+Junctioning `android\.gradle` to local disk made Gradle fail at startup
+every time, in 2 seconds, before any task ran:
+
+    Could not create service of type OutputFilesRepository ...
+    java.io.IOException: Cannot delete file:
+      ...\android\.gradle\buildOutputCleanup\buildOutputCleanup.lock
+
+Gradle rebuilds `buildOutputCleanup` at startup and could not delete its
+own lock file through the junction. Retrying did not help. NOT a stale
+daemon - `android/gradle.properties` sets `org.gradle.daemon=false`, so
+that theory was checked and discarded.
+
+Root cause never pinned down (Windows process/handle state is not
+visible from device_bash, and C:\dev is outside the connected folder).
+Not worth chasing: `build_and_run.bat` now passes
+`-Exclude "android\.gradle"`.
+
+ONLY `build\` ever needed to leave OneDrive. That is where the 1 GB of
+native libs and merged assets live and where mergeReleaseNativeLibs
+died. `android\.gradle` is tens of MB - too small for OneDrive to
+bother dehydrating. `.dart_tool` stays junctioned; pub get and analyze
+both ran clean through it.
+
+To undo an existing junction (removes the LINK, not the target):
+    [System.IO.Directory]::Delete("$PWD\android\.gradle", $false)
+
+---
+
+## STATE AT END OF SESSION 65 (2026-09-28)
+
+Commit `1d74dd1a` on `main` - 28 files, +3970/-412. **NOT PUSHED. NOT
+TAGGED.** Version is 1.23.6+142.
+
+Verified before committing: `flutter analyze` clean, `flutter test`
+24/24, `node scripts/test_parent_report.js` 22/22, AAB (1029.9 MB) +
+APK (100.7 MB) built, installed and launched on emulator-5554.
+
+Apps Script IS already deployed and ahead of the app:
+  contributions @198 (parent_report, parent_contact_verify,
+                      parent_contact_status, handlePinReset)
+  analytics     @179
+Self-verified during the build: check_version ok (v475), fetch_all
+correctly rejected unauthenticated.
+
+### Next actions, in order
+1. **Check BREVO_API_KEY exists in the CONTRIBUTIONS project's Script
+   Properties.** Without it `_sendEmail` silently falls back to MailApp
+   and spends the personal 100/day quota - the exact failure of 64e.
+   Nothing else is a prerequisite for testing.
+2. Device-test (emulator cannot do Google/Apple sign-in or FCM):
+   Parent Settings > Send a test report; add a second parent's email and
+   confirm the link gates delivery; Forgot PIN; fresh install > first
+   profile > contacts sheet appears once and is skippable; expand
+   alphabet cards and flip vocabulary words for the badges.
+3. `git push origin main`, then tag.
+4. `v1.23.5+141` tag push status STILL unknown from earlier sessions.
+5. WhatsApp broadcast for NACDA VA - held until Play shows 140
+   available rather than in review.
+
+### Known, deliberately not done
+- `lib/services/retrieval_service.dart` and
+  `lib/services/speech_service.dart` are imported by nothing. Deleting
+  needs a device delete-permission prompt.
+- `viewed_words`/`viewed_letters` now populate going forward only; a
+  child who already browsed every letter does NOT retroactively earn
+  Alphabet Pro.
+- No `.gitattributes`. Every `git add` prints "LF will be replaced by
+  CRLF" for ~23 files. Harmless, but it is the same normalisation noise
+  that makes cf-worker/node_modules permanently show as modified.

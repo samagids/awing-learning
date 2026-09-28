@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
 
 /// Cloud backup & sync settings screen.
@@ -291,6 +292,14 @@ class _BackupActionsCard extends StatelessWidget {
               // Safety: backup current data first so nothing is lost
               await backup.backupAll();
               final success = await backup.restoreAll();
+              // v1.23.6 — restoreAll() rewrites the accounts blob under
+              // AuthService's feet. Without this the UI keeps the
+              // pre-restore profiles, and any plaintext PIN that came
+              // down with the restore stays readable on disk until the
+              // next launch.
+              if (success && context.mounted) {
+                context.read<AuthService>().reloadAccountsFromStorage();
+              }
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

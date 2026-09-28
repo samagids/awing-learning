@@ -1,8 +1,15 @@
 name: Build iOS
 
 on:
+  # v1.23.6 (Session 65c): `branches: [main]` was removed. A tagged release
+  # push matches BOTH branches and tags, so every release started two
+  # identical iOS builds (and build-android.yml did the same, which is
+  # where "4 CI runs per push" came from). macOS runners bill at 10x, so
+  # this was the expensive half.
+  #
+  # iOS builds now run for releases and on demand only. Ordinary pushes to
+  # main are still covered by build-android.yml.
   push:
-    branches: [main]
     tags: ['v*']
   pull_request:
     branches: [main]

@@ -670,30 +670,82 @@ def deploy_webhooks():
 # ==================== Step 2: Test & Auto-Authorize ====================
 
 def test_webhook(url, name="webhook"):
-    """Test a single webhook URL. Returns True if working, False if needs auth."""
+    """Check that a webhook URL actually reaches doPost.
+
+    Returns True only when the deployment answered from doPost. Anything
+    else — including a perfectly healthy-looking reply that came from
+    doGet — returns False.
+
+    v1.23.6 (Session 65c). The previous version was a rubber stamp and
+    would pass on the WRONG URL. Two compounding faults:
+
+      1. It POSTed {"action": "ping"}. Neither web app has ever handled
+         "ping", so the probe proved nothing even if it did arrive.
+      2. It used a bare urlopen, which auto-follows Apps Script's 302.
+         Following that redirect turns the POST into a GET, which runs
+         doGet(), which returns {status:'ok', service:'...'} — and the
+         old code read that 'ok' as success.
+
+    Net effect: any reachable Apps Script deployment passed, including
+    one with no doPost at all. This is the same false pass that was
+    fixed in test_dev_email in Session 64c; this function was missed.
+
+    The probe below sends a deliberately unknown action and NO data, so
+    both web apps fall through to their error branch:
+
+        contributions -> {status:'error', message:'Unknown action'}
+        analytics     -> {status:'error', message:'No data provided'}
+
+    Either one proves doPost ran. Nothing is written and no mail is sent.
+    """
+    probe = json.dumps({
+        "action": "__connectivity_probe__",
+    }).encode("utf-8")
+    req = Request(url, data=probe,
+                  headers={"Content-Type": "application/json"})
+
     try:
-        data = json.dumps({"action": "ping", "test": True}).encode('utf-8')
-        req = Request(url, data=data, headers={'Content-Type': 'application/json'})
-        resp = urlopen(req, timeout=15)
-        body = resp.read().decode('utf-8')
-        try:
-            result = json.loads(body)
-            status = result.get('status', '')
-            if status == 'ok':
-                return True
-            # Some errors mean it's reachable but has issues
-            return True  # At least it responded with JSON
-        except json.JSONDecodeError:
-            # HTML response usually means auth issue or redirect
-            if 'authorization' in body.lower() or 'sign in' in body.lower():
-                return False
-            return True  # Non-JSON but reachable
+        body = _post_follow(req, timeout=20).decode("utf-8", "replace")
+    except AppsScriptNotReady as e:
+        # A fresh deployment that has not warmed up yet. Genuinely
+        # UNKNOWN, not broken — say so rather than reporting a failure
+        # the user would waste time chasing.
+        print(f"    [??] {name}: deployment still warming up ({e}) — "
+              f"inconclusive, re-run in a few seconds.")
+        return False
     except HTTPError as e:
-        if e.code == 401 or e.code == 403:
-            return False
+        print(f"    [!!] {name}: HTTP {e.code}"
+              + (" (needs re-authorization)" if e.code in (401, 403) else ""))
         return False
-    except (URLError, Exception):
+    except (URLError, Exception) as e:
+        print(f"    [!!] {name}: {e}")
         return False
+
+    try:
+        result = json.loads(body)
+    except json.JSONDecodeError:
+        low = body.lower()
+        if "authorization" in low or "sign in" in low or "<html" in low:
+            print(f"    [!!] {name}: got an HTML page, not JSON — the "
+                  f"deployment is probably not set to 'Anyone'.")
+        else:
+            print(f"    [!!] {name}: reply was not JSON.")
+        return False
+
+    # THE decisive check. doGet's health payload carries 'service'; no
+    # doPost reply does. Seeing it means the POST never landed.
+    if result.get("service"):
+        print(f"    [!!] {name}: reply came from doGet "
+              f"({result.get('service')!r}), so doPost was never reached. "
+              f"The URL is live but it is not the /exec of a deployment "
+              f"that handles POSTs.")
+        return False
+
+    if "status" not in result:
+        print(f"    [!!] {name}: unrecognised reply {body[:120]!r}")
+        return False
+
+    return True
 
 
 def test_dev_email(analytics_url):

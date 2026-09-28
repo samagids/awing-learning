@@ -175,9 +175,17 @@ void main() async {
     // WAT, delivered to devices via Google Play Services (bypasses
     // Doze / App Standby / battery optimization — same architecture
     // WhatsApp uses). NotificationService.initialize() is retained
-    // so the "Send preview now" button on Daily Words still works
-    // (immediate notifications via flutter_local_notifications are
-    // reliable — only scheduled ones are the problem).
+    // only so consumePendingAction() can route a notification TAP into
+    // the right screen.
+    //
+    // v1.23.6 (Session 65c): this comment used to say initialize() was
+    // kept "so the 'Send preview now' button on Daily Words still
+    // works". That button was removed in Session 67 along with the rest
+    // of the reminder settings. Every scheduling method on
+    // NotificationService — scheduleAllReminders, showPreview,
+    // fireTestNotification — now has no caller at all. They are kept
+    // deliberately, in case in-app reminder settings return, but nothing
+    // in the app calls them today.
   } catch (e) {
     debugPrint('NotificationService init failed: $e');
   }
@@ -367,15 +375,34 @@ class AwingApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: OnDeviceModelService.instance..initialize(),
         ),
-        ProxyProvider2<AuthService, ProgressService, ParentNotificationService>(
-          update: (_, auth, progress, previous) {
+        // v1.23.6 (Session 65a) — now depends on ContributionService because
+        // parent reports are delivered server-side (Brevo) instead of by
+        // opening WhatsApp on the child's device.
+        ProxyProvider3<AuthService, ProgressService, ContributionService,
+            ParentNotificationService>(
+          update: (_, auth, progress, contributions, previous) {
             if (previous != null) return previous;
             final service = ParentNotificationService(
               auth: auth,
               progress: progress,
-            )..initialize();
-            // Try to send weekly summary on app launch
-            service.sendWeeklySummaryIfDue();
+              contributions: contributions,
+            );
+            // Feed lesson completions into the weekly report. Without this
+            // the report's lessons line can only ever read 0.
+            auth.onLessonCompleted = service.recordLessonCompleted;
+            // Fire-and-forget on launch. Both calls await initialize()
+            // internally — the previous version called into the service
+            // before SharedPreferences was ready, which threw a
+            // LateInitializationError for any account that had a number set.
+            // Errors are swallowed on purpose: a report is never worth
+            // interrupting app start.
+            unawaited(() async {
+              try {
+                await service.initialize();
+                await service.sendDailyReportIfDue();
+                await service.sendWeeklySummaryIfDue();
+              } catch (_) {}
+            }());
             return service;
           },
         ),

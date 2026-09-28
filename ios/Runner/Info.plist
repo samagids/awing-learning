@@ -139,5 +139,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- v1.23.6: without this, canLaunchUrl('whatsapp://...') always returns
+	     false on iOS, so Parent Settings would hide the share button even for
+	     parents who do have WhatsApp. -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>whatsapp</string>
+	</array>
 </dict>
 </plist>

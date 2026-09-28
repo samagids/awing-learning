@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_alphabet.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/services/progress_service.dart';
 
 class AlphabetScreen extends StatefulWidget {
   const AlphabetScreen({Key? key}) : super(key: key);
@@ -104,7 +105,17 @@ class _LetterCardState extends State<_LetterCard> {
       elevation: 2,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () => setState(() => _expanded = !_expanded),
+        onTap: () {
+          setState(() => _expanded = !_expanded);
+          // v1.23.6 (Session 65c) — ProgressService.markLetterViewed had no
+          // caller anywhere, so `viewed_letters` was always empty and the
+          // "Alphabet Pro — view all 31 letters" badge could never unlock.
+          // Expanding a letter card is the moment a child has actually
+          // looked at it. Idempotent: the service ignores repeats.
+          if (_expanded) {
+            context.read<ProgressService>().markLetterViewed(letter.letter);
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

@@ -343,6 +343,164 @@ class ContributionService extends ChangeNotifier {
     }
   }
 
+  // ============ Authenticated webhook calls (v1.23.6) ============
+  //
+  // TRI-STATE on purpose — "couldn't read the reply" is NOT "failed", and
+  // telling a locked-out parent the wrong thing is how this class of bug has
+  // bitten us repeatedly (see about_screen's 2FA dialog).
+  //
+  // SECURITY: these send a Firebase ID token, never a trusted recipient
+  // address. The server verifies the token with Identity Toolkit and decides
+  // for itself who may be mailed. The caller does not get the final say.
+
+  /// POST a payload that must prove account ownership, and read the reply.
+  ///
+  /// Apps Script answers every POST with a 302 to a googleusercontent echo
+  /// URL; following it automatically turns the POST into a GET and lands on
+  /// `doGet`, so the redirect is followed by hand. The echo URL is not always
+  /// live the instant the 302 lands, which is why 404 is treated as transient.
+  ///
+  /// Returns the decoded reply, or null when the outcome is genuinely
+  /// UNKNOWN. Callers must not render null as failure.
+  Future<Map<String, dynamic>?> _postAuthenticatedJson(
+    Map<String, dynamic> payload, {
+    required String tag,
+  }) async {
+    if (_webhookUrl == null || _webhookUrl!.isEmpty) {
+      debugPrint('$tag: no webhook configured.');
+      return null;
+    }
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      debugPrint('$tag: not signed in — cannot prove account ownership.');
+      return {'status': 'error', 'message': 'not-signed-in'};
+    }
+    String? idToken;
+    try {
+      idToken = await user.getIdToken(true);
+    } catch (e) {
+      debugPrint('$tag: getIdToken failed ($e)');
+      return null;
+    }
+    if (idToken == null || idToken.isEmpty) return null;
+
+    payload['idToken'] = idToken;
+
+    HttpClient? client;
+    try {
+      client = HttpClient();
+      client.connectionTimeout = const Duration(seconds: 15);
+      final req = await client.postUrl(Uri.parse(_webhookUrl!));
+      req.headers.set('Content-Type', 'application/json; charset=utf-8');
+      req.followRedirects = false;
+      req.add(utf8.encode(jsonEncode(payload)));
+      final resp = await req.close();
+      await resp.drain<void>();
+
+      if (resp.statusCode != 302 && resp.statusCode != 301) {
+        debugPrint('$tag: unexpected POST status ${resp.statusCode}');
+        return null;
+      }
+      final loc = resp.headers.value('location');
+      if (loc == null) return null;
+
+      var getUri = Uri.parse(loc);
+      var transientTries = 0;
+      for (int i = 0; i < 8; i++) {
+        final getReq = await client.getUrl(getUri);
+        getReq.followRedirects = false;
+        final getResp = await getReq.close();
+
+        if (getResp.statusCode == 302 || getResp.statusCode == 301) {
+          await getResp.drain<void>();
+          final next = getResp.headers.value('location');
+          if (next == null) break;
+          getUri = Uri.parse(next);
+          continue;
+        }
+        final sc = getResp.statusCode;
+        // The echo URL is not always ready the instant the 302 lands.
+        if (sc == 404 || sc == 408 || sc == 429 || (sc >= 500 && sc < 600)) {
+          await getResp.drain<void>();
+          if (transientTries < 3) {
+            transientTries++;
+            await Future<void>.delayed(
+                Duration(milliseconds: 700 * transientTries));
+            continue;
+          }
+          debugPrint('$tag: echo URL still $sc — result unknown.');
+          return null;
+        }
+        final body = await getResp.transform(const Utf8Decoder()).join();
+        if (sc != 200) return null;
+        try {
+          final decoded = jsonDecode(body);
+          if (decoded is Map<String, dynamic>) return decoded;
+          return null;
+        } catch (_) {
+          return null;
+        }
+      }
+      return null;
+    } catch (e) {
+      debugPrint('$tag: $e');
+      return null;
+    } finally {
+      try { client?.close(); } catch (_) {}
+    }
+  }
+
+  /// Ask the server to email a PIN-reset code to the signed-in account.
+  ///
+  /// The server mails ONLY the address it derives from the verified ID token,
+  /// never one supplied in the payload.
+  Future<Map<String, dynamic>?> requestPinReset(String code) =>
+      _postAuthenticatedJson(
+        <String, dynamic>{'action': 'pin_reset', 'code': code},
+        tag: 'PinReset',
+      );
+
+  /// Deliver a parent activity report.
+  ///
+  /// [recipients] are filtered server-side: the address behind the verified
+  /// ID token is always allowed, any other address must already be confirmed
+  /// for this account. Without that filter the endpoint would be an open
+  /// relay for anyone holding a valid app login.
+  Future<Map<String, dynamic>?> sendParentReport({
+    required String kind,
+    required String subject,
+    required String body,
+    required List<String> recipients,
+  }) =>
+      _postAuthenticatedJson(
+        <String, dynamic>{
+          'action': 'parent_report',
+          'kind': kind,
+          'subject': subject,
+          'body': body,
+          'recipients': recipients,
+        },
+        tag: 'ParentReport',
+      );
+
+  /// Send a confirmation email to a second parent's address.
+  ///
+  /// Reports are not delivered there until the owner of that address clicks
+  /// the link, so adding an address cannot be used to mail someone reports
+  /// they never asked for.
+  Future<Map<String, dynamic>?> requestContactVerification(String email) =>
+      _postAuthenticatedJson(
+        <String, dynamic>{'action': 'parent_contact_verify', 'email': email},
+        tag: 'ContactVerify',
+      );
+
+  /// Which of this account's extra addresses have been confirmed.
+  Future<Map<String, dynamic>?> fetchConfirmedContacts() =>
+      _postAuthenticatedJson(
+        <String, dynamic>{'action': 'parent_contact_status'},
+        tag: 'ContactStatus',
+      );
+
   Future<bool> _postToWebhook(Map<String, dynamic> payload, {bool queue = true}) async {
     if (_webhookUrl == null) return false;
     // Stamp privileged calls with a Firebase ID token before sending.
