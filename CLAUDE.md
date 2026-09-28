@@ -9203,3 +9203,81 @@ proguard-rules.pro itself records that an emulator Google Sign-In
 ApiException-38003 was once an emulator OS-level account issue, NOT R8
 - so a sign-in failure on emulator is not proof of a regression.
 Apple sign-in cannot be tested on the Android emulator at all.
+
+---
+
+## Session 64e - v1.23.6 (server-side; no app release needed)
+
+### THE BUG: one wrong column index cost the whole mail quota
+Dev Mode sign-in stopped getting its 2FA email on Wed 2026-09-23. Cause
+was NOT Brevo and NOT the weekly tour (USE_BREVO is 'true' in the FCM
+project, verified). It was `handleApproval` in contributions_webapp.gs:
+
+    var subNotes = data[i][9] || '';   // WRONG - that is audioFileUrl
+
+The Submissions row is written as:
+  0 id | 1 ts | 2 profile | 3 type | 4 target | 5 correction |
+  6 english | 7 category | 8 notes | 9 audioFileUrl | 10 status
+(confirmed independently: getRange(i+1, 11) writes status, and getRange
+is 1-indexed, so index 10 == status.)
+
+So the 'Native recording' / 'auto-apply' markers were being searched for
+inside a Drive URL and could never match. `isDevAutoApproval` was always
+false, so EVERY auto-approved Dev Mode recording emailed the developer.
+The other half of the guard missed too: the Record tab sends
+`profileName: _activeRecorder` ('Joel', 'Joyce', 'Dr. Sama'), never the
+literal 'Developer'.
+
+Record ~100 words -> ~100 emails -> MailApp's 100/day account quota gone
+-> Dev Mode 2FA (a DIFFERENT Apps Script project) could not send,
+because MailApp quota is per GOOGLE ACCOUNT, not per script.
+
+Fixed to data[i][8]. Tested both directions: dev rows suppressed,
+tester rows still email.
+
+### Root cause behind the root cause: a duplicated predicate
+The same dev-auto test existed TWICE - once in handleSubmission (correct)
+and once in handleApproval (wrong column). Duplicated predicates drift.
+Now ONE function, `_isDevAutoContribution(profileName, notes)`, used by
+handleSubmission, handleApproval and the digest.
+
+RULE: if the same business rule is written in two places, it is already
+a bug waiting for a schema change.
+
+### Mail routing (deliberate split - do not "tidy" this)
+  handleSendDevCode  -> MailApp, direct to the developer's inbox.
+      OFF Brevo ON PURPOSE. Dev Mode sign-in must not depend on a
+      third-party API key being present and valid. It is the way back
+      in when other things are broken.
+  everything else    -> Brevo (300/day): tester contributions, the
+      daily digest, handleNewUser, the weekly tour.
+This split is only safe because the quota leak above is fixed.
+
+### Daily digest
+`sendDailyContributionDigest()` - Dev Mode recordings are silent
+per-word; one summary instead. DERIVED from the Submissions sheet
+against a LAST_DIGEST_AT watermark, so there is no queue to corrupt or
+lose. Tester contributions are excluded (they still email immediately,
+they need timely review).
+
+On send failure the watermark is NOT advanced, so the next run retries
+that window instead of silently dropping a day. Tested.
+
+SETUP: set LAST_DIGEST_AT to today FIRST (otherwise the first digest
+summarises the entire back catalogue), then run
+createDailyDigestTrigger() once.
+
+### Gotchas confirmed this session
+- BREVO_API_KEY lives ONLY in the FCM project's Script Properties.
+  Contributions and Analytics need it added or `_sendEmail` silently
+  falls back to MailApp (it logs, loudly).
+- fcm_daily_push.gs is NOT in any clasp project - it is deployed by
+  hand, and its ~400 lines of Brevo work had NEVER been committed.
+- MailApp quota is per Google account across ALL Apps Script projects.
+  A leak in one project takes down email in every other one.
+
+### Still open
+- Forgot-PIN email reset + forced cloud sign-in (the user who started
+  this thread is still locked out; PINs survive reinstall because
+  accountPin round-trips through the cloud backup).
+- v1.23.5+141 tagged locally but the tag was never pushed.

@@ -320,6 +320,91 @@ function safeEmailField(s) {
  *     so Sheets stores it as text instead of a formula (CSV injection
  *     defense — matters when a developer later opens the .xlsx export)
  */
+// ==================== Mail transport (v1.23.6, Session 64e) ==============
+// Everything in THIS project goes through Brevo (300/day). MailApp's
+// 100/day is reserved for Dev Mode 2FA in the Analytics project, which
+// must never be starved again — on 2026-09-23 an off-by-one in
+// handleApproval emailed the developer for every auto-approved dev
+// recording, burned all 100 MailApp sends, and took Dev Mode sign-in
+// down with it.
+//
+// Script Properties: BREVO_API_KEY, optionally USE_BREVO ('true'),
+// BREVO_SENDER, BREVO_FROM_NAME. Mirrors fcm_daily_push.gs so there is
+// one shape to reason about.
+
+function _sendViaBrevo(to, subject, textBody, htmlBody) {
+  var props = PropertiesService.getScriptProperties();
+  var apiKey = props.getProperty('BREVO_API_KEY');
+  if (!apiKey) {
+    throw new Error('BREVO_API_KEY script property not set.');
+  }
+  var senderEmail = props.getProperty('BREVO_SENDER') || DEVELOPER_EMAIL;
+  var senderName = props.getProperty('BREVO_FROM_NAME') || 'Awing AI Learning';
+  var payload = {
+    sender: { name: senderName, email: senderEmail },
+    to: [{ email: to }],
+    subject: subject,
+    textContent: textBody,
+    replyTo: { email: senderEmail, name: senderName }
+  };
+  if (htmlBody) { payload.htmlContent = htmlBody; }
+  var response = UrlFetchApp.fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { 'api-key': apiKey, 'accept': 'application/json' },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  });
+  var code = response.getResponseCode();
+  if (code < 200 || code >= 300) {
+    throw new Error('Brevo send failed ' + code + ': ' +
+        response.getContentText().substring(0, 300));
+  }
+}
+
+function _sendViaMailApp(to, subject, textBody) {
+  MailApp.sendEmail(to, subject, textBody);
+}
+
+/**
+ * Brevo when a key is present, MailApp only as a last resort. Throws on
+ * failure so callers keep their own try/catch semantics.
+ */
+function _sendEmail(to, subject, textBody, htmlBody) {
+  var props = PropertiesService.getScriptProperties();
+  var hasKey = !!props.getProperty('BREVO_API_KEY');
+  var disabled = props.getProperty('USE_BREVO') === 'false';
+  if (hasKey && !disabled) {
+    _sendViaBrevo(to, subject, textBody, htmlBody);
+    return;
+  }
+  Logger.log('Brevo unavailable (key=' + hasKey + ', disabled=' + disabled +
+      ') - falling back to MailApp, which shares the 100/day Dev Mode quota.');
+  _sendViaMailApp(to, subject, textBody);
+}
+
+/**
+ * Is this row a Dev-Mode auto-apply contribution (Record tab / re-record)?
+ *
+ * v1.23.6 (Session 64e) — ONE definition, used by handleSubmission,
+ * handleApproval AND the daily digest. There used to be two copies of
+ * this test; the approval copy read the wrong column (audioFileUrl
+ * instead of notes) so it never matched, and every auto-approved dev
+ * recording emailed the developer. Duplicated predicates drift. This
+ * one does not.
+ *
+ * NOTE profileName is the RECORDER's name ('Joel', 'Dr. Sama'), never
+ * the literal 'Developer', for anything coming from the Record tab —
+ * so the notes markers are what actually carry the signal.
+ */
+function _isDevAutoContribution(profileName, notes) {
+  if (profileName === 'Developer') return true;
+  if (!notes) return false;
+  return notes.indexOf('Native recording') !== -1 ||
+         notes.indexOf('Developer re-recording') !== -1 ||
+         notes.indexOf('auto-apply') !== -1;
+}
+
 function handleSubmission(payload) {
   var ss = getSheet();
   var submissions = ss.getSheetByName('Submissions');
@@ -495,12 +580,7 @@ function handleSubmission(payload) {
   // include any of the auto-apply markers we set client-side ('Native
   // recording', 'Developer re-recording', 'auto-apply'). Tester
   // contributions still notify normally so the dev knows when to review.
-  var isDevAutoSubmit =
-      safeProfile === 'Developer' ||
-      (safeNotes && (
-        safeNotes.indexOf('Native recording') !== -1 ||
-        safeNotes.indexOf('Developer re-recording') !== -1 ||
-        safeNotes.indexOf('auto-apply') !== -1));
+  var isDevAutoSubmit = _isDevAutoContribution(safeProfile, safeNotes);
 
   if (!isDevAutoSubmit) {
     // Send email notification to developer. Subject uses safeEmailField()
@@ -539,7 +619,7 @@ function handleSubmission(payload) {
       body += '\nOpen the Awing app > Developer Mode > Review to approve or reject.\n';
       body += '\nSheet: ' + ss.getUrl();
 
-      MailApp.sendEmail(DEVELOPER_EMAIL, subject, body);
+      _sendEmail(DEVELOPER_EMAIL, subject, body);
     } catch (emailErr) {
       Logger.log('Email error: ' + emailErr.toString());
     }
@@ -708,18 +788,23 @@ function handleApproval(payload) {
       // profileName is at column index 2, notes at column index 9
       // (per handleSubmit's appendRow column order).
       var subProfile = data[i][2] || '';
-      var subNotes = data[i][9] || '';
-      var isDevAutoApproval =
-          subProfile === 'Developer' ||
-          (subNotes && (
-            subNotes.indexOf('Native recording') !== -1 ||
-            subNotes.indexOf('Developer re-recording') !== -1 ||
-            subNotes.indexOf('auto-apply') !== -1));
+      // v1.23.6 (Session 64e) — WAS data[i][9], which is audioFileUrl.
+      // The submission row is written as:
+      //   0 id | 1 ts | 2 profile | 3 type | 4 target | 5 correction |
+      //   6 english | 7 category | 8 notes | 9 audioFileUrl | 10 status
+      // so this read the Drive URL and the 'Native recording' /
+      // 'auto-apply' markers could NEVER match. isDevAutoApproval was
+      // therefore always false and EVERY auto-approved dev recording
+      // emailed the developer. Recording ~100 words in one sitting
+      // exhausted MailApp's 100/day account quota, which then took Dev
+      // Mode 2FA down with it (same Google account quota).
+      var subNotes = data[i][8] || '';
+      var isDevAutoApproval = _isDevAutoContribution(subProfile, subNotes);
 
       if (!isDevAutoApproval) {
         // Email notification — tester contributions only
         try {
-          MailApp.sendEmail(
+          _sendEmail(
             DEVELOPER_EMAIL,
             '[Awing] Approved: "' + (payload.targetWord || '') + '" (v' + newVersion + ')',
             'Content version ' + newVersion + ' published.\n' +
@@ -1372,4 +1457,104 @@ function doGet(e) {
     service: 'Awing Contributions',
     timestamp: new Date().toISOString()
   });
+}
+
+
+// ==================== Daily contribution digest (v1.23.6) ================
+// Dev-Mode recordings are silent per-word (see _isDevAutoContribution).
+// This job sends ONE summary instead. Tester contributions are NOT
+// included — those still email immediately, because they need review.
+//
+// Derived from the Submissions sheet against a LAST_DIGEST_AT watermark,
+// so there is no queue to accumulate, corrupt or lose.
+//
+// SETUP: run createDailyDigestTrigger() once.
+
+var DIGEST_WATERMARK_PROP = 'LAST_DIGEST_AT';
+var DIGEST_MAX_LISTED = 120;
+
+function createDailyDigestTrigger() {
+  var existing = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < existing.length; i++) {
+    if (existing[i].getHandlerFunction() === 'sendDailyContributionDigest') {
+      ScriptApp.deleteTrigger(existing[i]);
+    }
+  }
+  ScriptApp.newTrigger('sendDailyContributionDigest')
+      .timeBased().atHour(20).everyDays(1).create();
+  Logger.log('Daily digest trigger created for ~20:00 project time.');
+}
+
+function sendDailyContributionDigest() {
+  var props = PropertiesService.getScriptProperties();
+  var since = props.getProperty(DIGEST_WATERMARK_PROP) || '';
+  var runAt = new Date().toISOString();
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) {
+    var files = DriveApp.getFilesByName(SHEET_NAME);
+    if (!files.hasNext()) { Logger.log('Digest: sheet not found.'); return; }
+    ss = SpreadsheetApp.open(files.next());
+  }
+  var submissions = ss.getSheetByName('Submissions');
+  if (!submissions) { Logger.log('Digest: no Submissions tab.'); return; }
+
+  var data = submissions.getDataRange().getValues();
+  var recorded = [];
+  var approved = [];
+
+  for (var i = 1; i < data.length; i++) {
+    var r = data[i];
+    var ts = r[1] ? String(r[1]) : '';
+    var profile = r[2] || '';
+    var target = r[4] || '';
+    var notes = r[8] || '';
+    var status = r[10] || '';
+    var reviewedAt = r[12] ? String(r[12]) : '';
+
+    if (!_isDevAutoContribution(profile, notes)) continue;
+    if (ts && (!since || ts > since)) {
+      recorded.push(target + '  (' + profile + ')');
+    }
+    if (status === 'approved' && reviewedAt && (!since || reviewedAt > since)) {
+      approved.push(String(target));
+    }
+  }
+
+  if (recorded.length === 0 && approved.length === 0) {
+    props.setProperty(DIGEST_WATERMARK_PROP, runAt);
+    Logger.log('Digest: nothing new since ' + (since || 'ever') + '.');
+    return;
+  }
+
+  function section(title, items) {
+    if (items.length === 0) return '';
+    var out = title + ' (' + items.length + ')\n';
+    var shown = items.slice(0, DIGEST_MAX_LISTED);
+    for (var k = 0; k < shown.length; k++) { out += '  - ' + shown[k] + '\n'; }
+    if (items.length > shown.length) {
+      out += '  ... and ' + (items.length - shown.length) + ' more\n';
+    }
+    return out + '\n';
+  }
+
+  var subject = '[Awing] Daily recording digest: ' + recorded.length +
+                ' recorded, ' + approved.length + ' approved';
+  var body =
+      'Dev Mode activity since ' + (since || 'the beginning') + '.\n\n' +
+      section('Recorded', recorded) +
+      section('Approved / published', approved) +
+      'Tester contributions are not listed here - those email you as they\n' +
+      'arrive so you can review them promptly.\n\n' +
+      'Sheet: ' + ss.getUrl() + '\n';
+
+  try {
+    _sendEmail(DEVELOPER_EMAIL, subject, body);
+    props.setProperty(DIGEST_WATERMARK_PROP, runAt);
+    Logger.log('Digest sent: ' + recorded.length + ' recorded, ' +
+               approved.length + ' approved.');
+  } catch (err) {
+    // Do NOT advance the watermark - next run retries this window.
+    Logger.log('Digest send failed, watermark held: ' + err);
+  }
 }

@@ -72,7 +72,9 @@ def main():
         return 2
     if r.get("message") == "Unauthorized email":
         print("        OK: handleSendDevCode is live and executing.")
-        print("        => the fault is inside MailApp, not the dispatch.")
+        print("        This proves dispatch + execution only. It says")
+        print("        NOTHING about whether MailApp can actually send —")
+        print("        the reject happens before MailApp is touched.")
     else:
         print("        UNEXPECTED: deployed code differs from the repo.")
         return 1

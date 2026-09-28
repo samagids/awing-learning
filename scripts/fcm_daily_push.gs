@@ -513,20 +513,62 @@ function sendReminderEmailToAll() {
 }
 
 /**
- * Weekly feature tour — set as a time-based trigger so testers get a
- * different one-paragraph tip every week. Rotates through FEATURES
- * in order, remembering position across runs via ScriptProperties.
+ * Weekly feature tour — set as time-based triggers so testers get a
+ * different curiosity question every week. Rotates through 224 words ×
+ * 10 subject templates, remembering position across runs via
+ * ScriptProperties.
  *
- * Setup: Triggers → Add Trigger → runWeeklyFeatureTour →
- *        Time-driven → Week timer → e.g. Wednesday 09:00-10:00 UTC
- *        (10:00-11:00 WAT — mid-morning, not competing with the
- *        Saturday share reminder).
+ * IMPORTANT: MailApp has a 100-recipient-per-day quota on personal
+ * Google accounts. We have ~104+ users. To stay under the cap, the
+ * send is SPLIT ACROSS TWO CONSECUTIVE DAYS:
  *
- * To add a new feature, append to the FEATURES array below and
- * re-paste this file into the Apps Script editor. The rotation
- * picks up the new entry automatically on its natural turn.
+ *   runWeeklyFeatureTourPart1  → Wednesday 10:00 UTC → first half
+ *   runWeeklyFeatureTourPart2  → Thursday  10:00 UTC → second half
+ *
+ * Both parts send the SAME word/template (so testers who compare
+ * notes see the same message). Only Part 2 (the last part) advances
+ * LAST_FEATURE_IDX to the next word.
+ *
+ * Setup:
+ *   Triggers → Add Trigger → runWeeklyFeatureTourPart1 → Time-driven
+ *              → Week timer → Wednesday 10:00-11:00 UTC
+ *   Triggers → Add Trigger → runWeeklyFeatureTourPart2 → Time-driven
+ *              → Week timer → Thursday  10:00-11:00 UTC
+ *
+ * If the audience grows past ~200 users, either add Part3 (Friday) or
+ * upgrade the sending account to Google Workspace (1500/day quota).
+ *
+ * Legacy: `runWeeklyFeatureTour()` (no suffix) is kept for backward
+ * compatibility — sends to ALL users at once, which will fail above
+ * 100. Use the Part1/Part2 pair instead. Delete the old trigger.
  */
-function runWeeklyFeatureTour() {
+function runWeeklyFeatureTourPart1() { _runWeeklyPart(0, 2); }
+function runWeeklyFeatureTourPart2() { _runWeeklyPart(1, 2); }
+function runWeeklyFeatureTour()      { _runWeeklyPart(0, 1); }
+
+/**
+ * Manual test helper — sends ONE weekly-tour email to samagids@gmail.com
+ * using the exact same template + footer pipeline as the real triggers,
+ * without advancing the word counter. Run from the Apps Script editor
+ * to preview a real render before shipping. Uses 1 MailApp quota unit.
+ * Change TEST_EMAIL to preview to a different address.
+ */
+function testWeeklyFeatureTourToMe() {
+  _runWeeklyPart(0, 1, ['samagids@gmail.com'], true);
+}
+
+/**
+ * Manual test helper — same as testWeeklyFeatureTourToMe but forces the
+ * send through Brevo regardless of the USE_BREVO flag. Use to preview
+ * the real weekly-tour HTML template as Brevo will deliver it (checks
+ * deliverability, spam classification, HTML rendering) BEFORE flipping
+ * USE_BREVO to 'true' on the whole audience. Uses 1 Brevo quota unit.
+ */
+function testWeeklyFeatureTourToMeBrevo() {
+  _runWeeklyPart(0, 1, ['samagids@gmail.com'], true, true);
+}
+
+function _runWeeklyPart(partIdx, totalParts, opt_overrideEmails, opt_holdCounter, opt_forceBrevo) {
   // Each week asks a curiosity-driven question that pulls the user
   // into the app to search for the answer themselves. We never state
   // the Awing word in the email — per the Session 30 rule the app
@@ -622,25 +664,362 @@ function runWeeklyFeatureTour() {
   var templateIdx = idx % TEMPLATES.length;
   var t = TEMPLATES[templateIdx];
   var re = /\{w\}/g;
+  // Strip the "Thank you!/Dr. Sama" sign-off from each template body
+  // because _weeklyFooter carries its own sign-off. Without this strip
+  // the reader sees "Thank you!" mid-email before the footer content.
+  var bodyNoSignoff = t.body.replace(/\s*Thank you!\s*Dr\. Sama\s*$/i, '');
+  var curiosityText = bodyNoSignoff.replace(re, word);
   var feature = {
     subject: t.subject.replace(re, word),
-    body: t.body.replace(re, word),
+    // Plain-text version — fallback for email clients that don't render
+    // HTML (Outlook 2003, plain-text Linux mail clients, some webmail
+    // security-view modes). Every recipient sees SOMETHING even in
+    // those edge cases.
+    body: curiosityText + _weeklyFooter(idx),
+    // HTML version — what Gmail, Apple Mail, Outlook 365, and every
+    // modern mobile mail client renders. Adds tappable WhatsApp / SMS /
+    // Email share buttons that pre-fill a ready-made message so
+    // recipients share in one tap instead of copy-pasting.
+    html: _bodyToHtml(curiosityText) + _weeklyFooterHtml(idx),
   };
-  var emails = fetchAllUserEmails();
-  Logger.log('runWeeklyFeatureTour: word=' + word + ' template=' + templateIdx +
-      ' (idx ' + idx + ' of ' + WORDS.length + '), ' + emails.length + ' users');
+  // Slice recipients into equal-ish parts. Part 0 gets the first
+  // ceil(N/totalParts) users, Part 1 gets the rest. Ensures no user
+  // is skipped and no user is emailed twice per week.
+  // Test helpers can pass an override list (e.g. just [samagids@gmail.com])
+  // to preview a real render without hitting the whole audience.
+  var allEmails = opt_overrideEmails || fetchAllUserEmails();
+  var per = Math.ceil(allEmails.length / totalParts);
+  var start = partIdx * per;
+  var end = Math.min(start + per, allEmails.length);
+  var slice = allEmails.slice(start, end);
+  Logger.log('_runWeeklyPart ' + (partIdx + 1) + '/' + totalParts +
+      ': word=' + word + ' template=' + templateIdx +
+      ' (idx ' + idx + ' of ' + WORDS.length + '), recipients ' +
+      start + '-' + end + ' of ' + allEmails.length);
   var sent = 0, failed = 0;
-  for (var i = 0; i < emails.length; i++) {
+  for (var i = 0; i < slice.length; i++) {
     try {
-      MailApp.sendEmail(emails[i], feature.subject, feature.body);
+      // opt_forceBrevo bypasses the USE_BREVO flag for test-only preview.
+      if (opt_forceBrevo) {
+        _sendViaBrevo(slice[i], feature.subject, feature.body, feature.html);
+      } else {
+        _sendEmail(slice[i], feature.subject, feature.body, feature.html);
+      }
       sent++;
       Utilities.sleep(200);
     } catch (err) {
-      Logger.log('Email to ' + emails[i] + ' failed: ' + err);
+      Logger.log('Email to ' + slice[i] + ' failed: ' + err);
       failed++;
     }
   }
-  props.setProperty('LAST_FEATURE_IDX', String(idx));
-  Logger.log('runWeeklyFeatureTour done — idx=' + idx +
-      ' word=' + word + ' sent=' + sent + ' failed=' + failed);
+  // Only the LAST part advances the word counter — so all parts of the
+  // same week's send use the same word, and the counter moves once per
+  // week total.
+  // Test helpers can request the counter be held so the real Wednesday
+  // trigger still uses the SAME idx (i.e. what you previewed is what
+  // real users will get).
+  if (partIdx === totalParts - 1 && !opt_holdCounter) {
+    props.setProperty('LAST_FEATURE_IDX', String(idx));
+  }
+  Logger.log('_runWeeklyPart ' + (partIdx + 1) + '/' + totalParts +
+      ' done — word=' + word + ' sent=' + sent + ' failed=' + failed +
+      (partIdx === totalParts - 1 && !opt_holdCounter
+          ? ' (counter advanced)' : ' (counter held)'));
+}
+
+/**
+ * Shared footer appended to every weekly feature-tour email. Carries
+ * three things missing from the curiosity paragraph alone:
+ *
+ *   1. A rotating "Have you tried this feature?" callout so testers
+ *      keep discovering parts of the app they've never opened.
+ *   2. Play Store + App Store install/update links so recipients who
+ *      don't have the app yet — or who are on an old build — can act
+ *      immediately.
+ *   3. An explicit "please share with a friend" ask, essential for
+ *      organic growth given the Awing-speaker audience is small and
+ *      diaspora-distributed.
+ *
+ * Rotates the feature callout independently of the word rotation.
+ * Uses the same idx that drives the word so the (word, feature) pair
+ * is deterministic — a tester who forwards two consecutive weeks to
+ * a friend will see the two features paired with the two words in
+ * the same order.
+ */
+function _weeklyFooter(idx) {
+  var FEATURES = [
+    'Study Sets — save your favorite words to practice later. Tap Explore -> Study Sets, then create a set of words for you and your kids.',
+    'Word of the Day — 3 fresh Awing words arrive every morning as a phone notification. No need to open the app to see them.',
+    'Translate — type any English word and instantly see its Awing translation with a speaker button. Tap Explore -> Translate.',
+    'Games — practice tones and words in fun, kid-friendly games. Tap Play from the home screen.',
+    'Contribute — help improve the app by suggesting new words, corrections, or recording your own pronunciation. Tap Explore -> Contribute.',
+    'Pronunciation practice — hear a native speaker say each word, then record your own voice and compare. Tap Beginner -> Pronunciation.',
+    'Voice characters — pick your favorite voice out of six: boy, girl, young man, young woman, man, or woman.',
+    'Stories — short Awing stories with English translations, perfect for evening reading with kids. Tap Beginner -> Stories.',
+    'Quiz — 10 quizzes per level (Beginner, Medium, Expert) to test what you know. Tap the level, then Quiz.',
+    'Numbers — learn to count in Awing. Tap Beginner -> Numbers.',
+    'Alphabet — every letter of the Awing alphabet with the sound and an example word. Tap Beginner -> Alphabet.',
+    'Tones — hear the difference between high, mid, low, rising, and falling tones. Tap Beginner -> Tones.',
+    'Conversations — listen to full Awing conversations at Expert level. Tap Expert -> Conversations.',
+    'Consonant clusters — Medium level dives into prenasalized (mb, nd, ng), palatalized (ny, ty), and labialized (kw, gw) sounds.',
+    'Noun classes — Medium level teaches how Awing groups nouns into 9 classes with different prefixes. Tap Medium -> Noun Classes.',
+    'Exams — Expert level lets teachers create a live exam over Wi-Fi that students join with a 6-digit PIN. Tap Expert -> Exams.',
+    'Vowels and syllables — Medium level covers the 9 Awing vowels and how syllables are built. Tap Medium -> Vowels.',
+    'Sound changes — Expert level explains how sounds shift when words combine. Tap Expert -> Sound Changes.',
+    'Elision — Expert level covers how Awing drops sounds when speaking quickly. Tap Expert -> Elision.',
+    'Proverbs — Expert-level Awing proverbs with English meaning. Tap Expert -> Proverbs.',
+  ];
+  var feature = FEATURES[idx % FEATURES.length];
+  return '\n\n' +
+      '----------------------------------------------------------\n' +
+      'HAVE YOU TRIED THIS FEATURE?\n' +
+      feature + '\n\n' +
+      'DO NOT HAVE THE APP YET, OR NEED TO UPDATE?\n' +
+      '  Android:  https://play.google.com/store/apps/details?id=com.awing.learning\n' +
+      '  iPhone:   https://apps.apple.com/app/id6764426877\n\n' +
+      'SHARE WITH A FRIEND\n' +
+      'If you enjoy Awing AI Learning, please forward this email\n' +
+      'to a friend or family member. Every Awing-speaking family\n' +
+      'that gets the app is one more chance to keep the language\n' +
+      'alive for the next generation.\n\n' +
+      'And an honest review on the Play Store or App Store helps\n' +
+      'other families discover the app.\n\n' +
+      'Thank you!\n' +
+      'Dr. Guidion Sama';
+}
+
+/**
+ * HTML version of _weeklyFooter — same content, but with tappable
+ * WhatsApp/SMS/Email share buttons that pre-fill a ready-made message
+ * so recipients share in one tap. Feature callout rotates in lockstep
+ * with _weeklyFooter (same FEATURES list, same idx modulo).
+ *
+ * Design choices:
+ *  - Inline styles only — many email clients strip <style> blocks.
+ *  - System font stack — renders native everywhere without loading
+ *    web fonts (which Gmail and iOS Mail block anyway).
+ *  - Awing green (#006432) for headings/links so the branding is
+ *    consistent with the app.
+ *  - Button colors chosen for platform recognition: WhatsApp brand
+ *    green (#25D366), iOS-Messages blue (#007AFF), Awing accent
+ *    gold (#DAA520) for the generic email button.
+ *  - `wa.me/?text=` opens WhatsApp with message pre-filled on both
+ *    Android and iOS. `sms:?body=` opens the phone's SMS app.
+ *    `mailto:?subject=...&body=...` opens the user's email app.
+ *  - Boxed <blockquote> version at the bottom for anyone who wants
+ *    to select-and-copy manually (Telegram, Facebook, Instagram DM,
+ *    or any platform we did not put a button for).
+ */
+function _weeklyFooterHtml(idx) {
+  var FEATURES = [
+    'Study Sets — save your favorite words to practice later. Tap Explore → Study Sets, then create a set of words for you and your kids.',
+    'Word of the Day — 3 fresh Awing words arrive every morning as a phone notification. No need to open the app to see them.',
+    'Translate — type any English word and instantly see its Awing translation with a speaker button. Tap Explore → Translate.',
+    'Games — practice tones and words in fun, kid-friendly games. Tap Play from the home screen.',
+    'Contribute — help improve the app by suggesting new words, corrections, or recording your own pronunciation. Tap Explore → Contribute.',
+    'Pronunciation practice — hear a native speaker say each word, then record your own voice and compare. Tap Beginner → Pronunciation.',
+    'Voice characters — pick your favorite voice out of six: boy, girl, young man, young woman, man, or woman.',
+    'Stories — short Awing stories with English translations, perfect for evening reading with kids. Tap Beginner → Stories.',
+    'Quiz — 10 quizzes per level (Beginner, Medium, Expert) to test what you know. Tap the level, then Quiz.',
+    'Numbers — learn to count in Awing. Tap Beginner → Numbers.',
+    'Alphabet — every letter of the Awing alphabet with the sound and an example word. Tap Beginner → Alphabet.',
+    'Tones — hear the difference between high, mid, low, rising, and falling tones. Tap Beginner → Tones.',
+    'Conversations — listen to full Awing conversations at Expert level. Tap Expert → Conversations.',
+    'Consonant clusters — Medium level dives into prenasalized (mb, nd, ng), palatalized (ny, ty), and labialized (kw, gw) sounds.',
+    'Noun classes — Medium level teaches how Awing groups nouns into 9 classes with different prefixes. Tap Medium → Noun Classes.',
+    'Exams — Expert level lets teachers create a live exam over Wi-Fi that students join with a 6-digit PIN. Tap Expert → Exams.',
+    'Vowels and syllables — Medium level covers the 9 Awing vowels and how syllables are built. Tap Medium → Vowels.',
+    'Sound changes — Expert level explains how sounds shift when words combine. Tap Expert → Sound Changes.',
+    'Elision — Expert level covers how Awing drops sounds when speaking quickly. Tap Expert → Elision.',
+    'Proverbs — Expert-level Awing proverbs with English meaning. Tap Expert → Proverbs.',
+  ];
+  var feature = FEATURES[idx % FEATURES.length];
+  var shareMsg =
+      'I am using Awing AI Learning to teach my kids our language. ' +
+      'Try it — it is free!\n\n' +
+      'Android: https://play.google.com/store/apps/details?id=com.awing.learning\n' +
+      'iPhone: https://apps.apple.com/app/id6764426877';
+  var enc = encodeURIComponent(shareMsg);
+  var waUrl = 'https://wa.me/?text=' + enc;
+  var smsUrl = 'sms:?body=' + enc;
+  var mailUrl = 'mailto:?subject=' +
+      encodeURIComponent('Try Awing AI Learning') + '&body=' + enc;
+
+  var h3Style = 'color: #006432; margin: 24px 0 8px 0; font-size: 16px; ' +
+      'font-family: system-ui, -apple-system, sans-serif;';
+  var pStyle = 'margin: 0 0 12px 0; font-family: system-ui, -apple-system, ' +
+      'sans-serif; line-height: 1.5; color: #333;';
+  var btnBase = 'display: inline-block; padding: 12px 20px; text-decoration: ' +
+      'none; border-radius: 6px; margin: 6px 8px 6px 0; font-weight: 600; ' +
+      'color: white; font-family: system-ui, -apple-system, sans-serif; ' +
+      'font-size: 14px;';
+
+  return '<hr style="border: none; border-top: 1px solid #ccc; margin: 28px 0;">' +
+      '<h3 style="' + h3Style + '">Have you tried this feature?</h3>' +
+      '<p style="' + pStyle + '">' + _escapeHtml(feature) + '</p>' +
+      '<h3 style="' + h3Style + '">Do not have the app yet, or need to update?</h3>' +
+      '<p style="' + pStyle + '">' +
+      '<a href="https://play.google.com/store/apps/details?id=com.awing.learning" ' +
+      'style="color: #006432;">Get it on Google Play</a><br>' +
+      '<a href="https://apps.apple.com/app/id6764426877" ' +
+      'style="color: #006432;">Get it on the App Store</a>' +
+      '</p>' +
+      '<h3 style="' + h3Style + '">Share with a friend</h3>' +
+      '<p style="' + pStyle + '">Every Awing-speaking family that gets ' +
+      'the app is one more chance to keep the language alive for the ' +
+      'next generation.</p>' +
+      '<p style="' + pStyle + '"><strong>Tap to share a ready-made message:</strong></p>' +
+      '<p style="margin: 0 0 20px 0;">' +
+      '<a href="' + waUrl + '" style="' + btnBase + 'background: #25D366;">Share on WhatsApp</a>' +
+      '<a href="' + smsUrl + '" style="' + btnBase + 'background: #007AFF;">Share by SMS</a>' +
+      '<a href="' + mailUrl + '" style="' + btnBase + 'background: #DAA520;">Share by Email</a>' +
+      '</p>' +
+      '<p style="' + pStyle + '"><strong>Or copy and paste this message anywhere:</strong></p>' +
+      '<blockquote style="border-left: 4px solid #006432; padding: 14px 18px; ' +
+      'margin: 8px 0 20px 0; background: #f5f5f5; white-space: pre-wrap; ' +
+      'font-family: system-ui, -apple-system, sans-serif; color: #333; ' +
+      'line-height: 1.5;">' + _escapeHtml(shareMsg) + '</blockquote>' +
+      '<p style="' + pStyle + ' font-style: italic; color: #555;">' +
+      'An honest review on the Play Store or App Store helps other ' +
+      'families discover the app.</p>' +
+      '<p style="' + pStyle + '">Thank you!<br>Dr. Guidion Sama</p>';
+}
+
+/**
+ * Convert a plain-text curiosity paragraph to HTML: escape HTML
+ * special chars, auto-link http(s) URLs, convert newlines to <br>,
+ * wrap in a container div with the same font/color as the footer
+ * so the whole email renders as a single visual unit.
+ */
+function _bodyToHtml(text) {
+  var esc = _escapeHtml(text);
+  var withLinks = esc.replace(
+      /(https?:\/\/[^\s<]+)/g,
+      '<a href="$1" style="color: #006432;">$1</a>');
+  var withBr = withLinks.replace(/\n/g, '<br>');
+  return '<div style="font-family: system-ui, -apple-system, ' +
+      'BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; line-height: ' +
+      '1.5; color: #333; max-width: 600px; font-size: 15px;">' +
+      withBr + '</div>';
+}
+
+/**
+ * Escape HTML special chars so user-facing text can never inject
+ * HTML tags into the rendered email body. Not strictly needed for
+ * our own content (we control every string) but keeps the code
+ * defensive if a future contributor adds user-generated text.
+ */
+function _escapeHtml(s) {
+  return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+}
+
+// ==================== Email dispatcher: MailApp vs Brevo ====================
+//
+// MailApp is capped at 100 recipients/day on personal Google accounts —
+// enough for ~200 users when we split Wed+Thu, but no headroom past that.
+// Brevo (formerly Sendinblue) gives 300/day free forever, no card, no
+// domain needed once the sender is verified. Once the user list crosses
+// what MailApp can handle, flip the USE_BREVO script property to 'true'
+// and every _sendEmail call routes through Brevo instead.
+//
+// Script Property keys used:
+//   USE_BREVO       — 'true' to route through Brevo, otherwise MailApp
+//   BREVO_API_KEY   — the xkeysib-... key from Brevo's SMTP & API page
+//   BREVO_SENDER    — verified sender email (default: samagids@gmail.com)
+//   BREVO_FROM_NAME — display name for the "From" header
+//                     (default: 'Dr. Guidion Sama')
+
+/**
+ * Single entry point for every email this script sends. Routes to Brevo
+ * or MailApp based on the USE_BREVO script property. Throws on failure
+ * so the caller's try/catch tracks failure counts correctly.
+ */
+function _sendEmail(to, subject, textBody, htmlBody) {
+  var useBrevo = PropertiesService.getScriptProperties()
+      .getProperty('USE_BREVO') === 'true';
+  if (useBrevo) {
+    _sendViaBrevo(to, subject, textBody, htmlBody);
+  } else {
+    _sendViaMailApp(to, subject, textBody, htmlBody);
+  }
+}
+
+function _sendViaMailApp(to, subject, textBody, htmlBody) {
+  MailApp.sendEmail({
+    to: to,
+    subject: subject,
+    body: textBody,
+    htmlBody: htmlBody,
+  });
+}
+
+/**
+ * POST one email to Brevo's transactional email API. The endpoint accepts
+ * up to 1000 "to" recipients per call, but we send one-per-call so
+ * per-recipient error handling in the caller loop still works.
+ *
+ * Reply-To is set to the sender so replies land in samagids@gmail.com
+ * even though Brevo's IPs actually deliver the message.
+ */
+function _sendViaBrevo(to, subject, textBody, htmlBody) {
+  var props = PropertiesService.getScriptProperties();
+  var apiKey = props.getProperty('BREVO_API_KEY');
+  if (!apiKey) {
+    throw new Error('BREVO_API_KEY script property not set. Add it under ' +
+        'Project settings -> Script properties.');
+  }
+  var senderEmail = props.getProperty('BREVO_SENDER') || 'samagids@gmail.com';
+  var senderName = props.getProperty('BREVO_FROM_NAME') || 'Dr. Guidion Sama';
+  var payload = {
+    sender: { name: senderName, email: senderEmail },
+    to: [{ email: to }],
+    subject: subject,
+    textContent: textBody,
+    htmlContent: htmlBody,
+    replyTo: { email: senderEmail, name: senderName },
+  };
+  var response = UrlFetchApp.fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: {
+      'api-key': apiKey,
+      'accept': 'application/json',
+    },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true,
+  });
+  var code = response.getResponseCode();
+  if (code < 200 || code >= 300) {
+    throw new Error('Brevo send failed ' + code + ': ' +
+        response.getContentText().substring(0, 300));
+  }
+}
+
+/**
+ * Smoke test — sends one email to samagids@gmail.com via Brevo directly,
+ * bypassing the weekly rotation and the USE_BREVO flag. Run this once
+ * to verify the API key works and the email actually lands in the inbox
+ * (not spam) before flipping USE_BREVO to 'true'. Uses 1 Brevo quota unit
+ * regardless of MailApp state.
+ */
+function testBrevoDirectly() {
+  var subject = 'Brevo smoke test — Awing AI Learning';
+  var text = 'This is a plain-text smoke test sent through Brevo.\n\n' +
+      'If you see this, the Brevo API key + sender verification are ' +
+      'both working, and it is safe to flip USE_BREVO to true.\n\n' +
+      'Sent at ' + new Date().toISOString();
+  var html = '<div style="font-family: system-ui, sans-serif; ' +
+      'max-width: 600px; line-height: 1.5; color: #333;">' +
+      '<h2 style="color: #006432;">Brevo smoke test</h2>' +
+      '<p>If you see this, the Brevo API key + sender verification are ' +
+      'both working, and it is safe to flip <code>USE_BREVO</code> to ' +
+      '<code>true</code>.</p>' +
+      '<p style="color: #888; font-size: 12px;">Sent at ' +
+      new Date().toISOString() + '</p></div>';
+  _sendViaBrevo('samagids@gmail.com', subject, text, html);
+  Logger.log('testBrevoDirectly: sent to samagids@gmail.com via Brevo');
 }

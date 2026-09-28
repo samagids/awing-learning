@@ -290,8 +290,13 @@ def main():
 
     manifest = build_manifest()
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    # v1.23.6 (Session 64e): newline="\n". Path.write_text uses Python's
+    # text mode, which on Windows translates \n -> \r\n, so EVERY build
+    # rewrote this LF-committed file as CRLF and produced a 1243-line
+    # phantom diff. Same bug class as config/webhooks.json in 1.23.4.
     OUTPUT.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2),
+        newline="\n",
         encoding="utf-8",
     )
 

@@ -148,6 +148,70 @@ function doPost(e) {
  * Send a 6-digit developer verification code via email.
  * This is the 2FA step for activating Developer Mode in the app.
  */
+// ==================== Mail transport (v1.23.6, Session 64e) ==============
+// DELIBERATE SPLIT:
+//   handleSendDevCode -> MailApp, straight to the developer's own inbox.
+//     Kept off Brevo on purpose: Dev Mode sign-in must not depend on a
+//     third-party API key being present and valid. MailApp is the
+//     fallback that always works from this account.
+//   everything else   -> Brevo (300/day).
+//
+// This split is only safe because the thing that used to eat MailApp's
+// 100/day is fixed: an off-by-one in the contributions project
+// (subNotes read audioFileUrl) emailed the developer for every
+// auto-approved dev recording. On 2026-09-23 that burned the whole
+// quota and Dev Mode 2FA went down with it.
+//
+// Script Properties: BREVO_API_KEY, optionally USE_BREVO ('false' to
+// force MailApp), BREVO_SENDER, BREVO_FROM_NAME.
+
+function _sendViaBrevo(to, subject, textBody, htmlBody) {
+  var props = PropertiesService.getScriptProperties();
+  var apiKey = props.getProperty('BREVO_API_KEY');
+  if (!apiKey) {
+    throw new Error('BREVO_API_KEY script property not set.');
+  }
+  var senderEmail = props.getProperty('BREVO_SENDER') || DEVELOPER_EMAIL;
+  var senderName = props.getProperty('BREVO_FROM_NAME') || 'Awing AI Learning';
+  var payload = {
+    sender: { name: senderName, email: senderEmail },
+    to: [{ email: to }],
+    subject: subject,
+    textContent: textBody,
+    replyTo: { email: senderEmail, name: senderName }
+  };
+  if (htmlBody) { payload.htmlContent = htmlBody; }
+  var response = UrlFetchApp.fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { 'api-key': apiKey, 'accept': 'application/json' },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  });
+  var code = response.getResponseCode();
+  if (code < 200 || code >= 300) {
+    throw new Error('Brevo send failed ' + code + ': ' +
+        response.getContentText().substring(0, 300));
+  }
+}
+
+/**
+ * Brevo when a key is present, MailApp otherwise. Used by every sender
+ * in this project EXCEPT handleSendDevCode - see the note above.
+ */
+function _sendEmail(to, subject, textBody, htmlBody) {
+  var props = PropertiesService.getScriptProperties();
+  var hasKey = !!props.getProperty('BREVO_API_KEY');
+  var disabled = props.getProperty('USE_BREVO') === 'false';
+  if (hasKey && !disabled) {
+    _sendViaBrevo(to, subject, textBody, htmlBody);
+    return;
+  }
+  Logger.log('Brevo unavailable (key=' + hasKey + ', disabled=' + disabled +
+      ') - falling back to MailApp, which shares the Dev Mode 2FA quota.');
+  MailApp.sendEmail(to, subject, textBody);
+}
+
 function handleSendDevCode(payload) {
   var code = payload.code || '000000';
   var email = payload.email || 'samagids@gmail.com';
@@ -168,6 +232,9 @@ function handleSendDevCode(payload) {
       'If you did not request this code, you can safely ignore this email.\n\n' +
       '-- Awing AI Learning App';
 
+    // v1.23.6: stays on MailApp BY DESIGN. Dev Mode sign-in must not
+    // depend on the Brevo key being present/valid - this is the path
+    // that lets the developer back in when other things are broken.
     MailApp.sendEmail(email, subject, body);
 
     return ContentService.createTextOutput(JSON.stringify({
@@ -238,7 +305,7 @@ function handleNewUser(payload) {
       'See Developer Mode > Users for the full list.\n\n' +
       '-- Awing AI Learning';
 
-    MailApp.sendEmail(DEVELOPER_EMAIL, subject, body);
+    _sendEmail(DEVELOPER_EMAIL, subject, body);
     props.setProperty(key, String(Date.now()));
 
     return ContentService.createTextOutput(JSON.stringify({
