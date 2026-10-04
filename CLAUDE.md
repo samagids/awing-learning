@@ -9821,3 +9821,88 @@ wrong build for three releases. The real list:
   analytics_service._appVersion · cloud_backup_service._kAppVersion
 developer_screen used to hold a seventh copy (hardcoded 'v1.6.1+28',
 stale for ~17 releases); it now derives from AboutScreen.
+
+#### Windows batch: no `for /f` with a pipe inside a `for ... do (` block
+Cost one broken run of `--purge-tts` (2026-10-04):
+
+    ('powershell was unexpected at this time.
+
+The offending line was a nested
+`for /f %%N in ^('powershell ... ^| Measure-Object ...'^) do echo ...`
+inside an outer `for %%V in (...) do (`. Inside a parenthesised block the
+`^(`/`^|` escaping does not mean what it looks like it means, and cmd
+emitted a literal `(` and gave up.
+
+Rule: inside a `for ... do (` block, stick to `if exist`, `rd`, `echo`
+and plain commands. If a count or a pipe is genuinely needed, do it in a
+separate PowerShell one-liner OUTSIDE the block, or move the whole thing
+into a .ps1.
+
+This is the FOURTH Windows-shell quoting slip this project has hit from
+me (cmd `^` continuation pasted into PowerShell twice, curl quoting
+once). Pattern: when a command needs escaping, prefer putting it in a
+.ps1 or .py file over inlining it in batch.
+
+#### Bulk asset changes invalidate Gradle's asset-pack snapshot
+After `--purge-tts` removed ~16,000 files, the next build died with
+
+    Execution failed for task ':app:assetPackReleasePreBundleTask'.
+    > java.nio.file.AccessDeniedException: ...\intermediates\
+      asset_pack_bundle\release\assetPackReleasePreBundleTask\
+      install_time_assets
+
+and the APK fallback then died the same way on
+`merged_native_libs\...\arm64-v8a`. AccessDenied on a DIRECTORY, not a
+file - different symptom from the OneDrive dehydration bug, same build
+step by coincidence.
+
+NOT a stale daemon: `Get-Process java,javaw` came back EMPTY, and
+`org.gradle.daemon=false` is set. The cause is Gradle holding an
+incremental snapshot describing a tree that no longer exists.
+
+Fix: `--purge-tts` now clears `build\app\intermediates\asset_pack_bundle`
+and `merged_native_libs` itself, so the purge leaves Gradle consistent.
+
+**REMEMBER THIS BEFORE REGENERATING THE 9,086 IMAGES.** Same bulk-change,
+same task, same failure. Clear those two intermediate directories after
+any mass add/remove under `android\install_time_assets\src\main\assets`.
+
+Manual recovery if it happens anyway (nothing of value is in there):
+    Remove-Item C:\dev\awing-build\build\* -Recurse -Force
+Do NOT use `flutter clean` - it deletes through the junction and takes
+`.dart_tool` with it, costing another `pub get` for no benefit.
+
+#### Asset pack after the TTS purge
+    audio/   12 MB   965 files  (native 8.3 MB + native_kids 3.6 MB)
+    images/           9,570 files  (~990 MB - now the ENTIRE size story)
+Audio was ~1,003 MB across 16,453 files. `community/` does not exist yet,
+so the only human audio shipping is Dr. Sama's and the family's.
+At ~103 KB per flat cartoon illustration the images are oversized; fold a
+WebP pass into the regeneration rather than doing it twice.
+
+#### CORRECTION: the size numbers above were wrong (measured 2026-10-04)
+The "Asset pack after the TTS purge" note claimed audio had been ~1,003 MB
+and images ~990 MB. Both were WRONG. They were derived by subtracting from
+a `du -sh` figure while ASSUMING images were small - never measured,
+because `du` kept timing out over the bridge. Measured properly with
+os.walk summing real bytes:
+
+    images   9,570 files   776.4 MB   avg 83.1 KB
+    audio      965 files    10.0 MB   avg 10.7 KB
+
+Removing 15,488 Edge TTS clips took the AAB from 1,029.9 MB to 931.4 MB -
+a 98.5 MB saving, not the ~1 GB predicted. Those clips are small opus
+files; `du` inflated them badly because 16,453 files at a 4 KB block size
+is mostly slack.
+
+IMAGES ARE THE ENTIRE SIZE STORY, and always were. 83 KB average for flat
+cartoon clipart is 4-8x what it should be. WebP at q80 typically lands
+such images at 10-25 KB, so the regeneration pass should get the pack from
+776 MB to roughly 100-240 MB. That is a far bigger win than the audio
+removal and it is free, because the images are being regenerated anyway.
+
+LESSON (again): `du -sh` reports ALLOCATED BLOCKS, not bytes, and is
+useless for many-small-files trees. Sum real sizes. And do not state a
+predicted number as a test ("if it comes out near 1 GB something is
+broken") when the prediction rests on an unmeasured assumption - that
+turns my own guess into a false alarm for Dr. Sama.

@@ -27,6 +27,13 @@ REM       for Play Asset Delivery. Base AAB stays under 150 MB Play Store limit.
 
 setlocal enabledelayedexpansion
 
+REM Play Asset Delivery output root. Defined HERE, before anything can use
+REM it. It used to be set ~230 lines down, which made `--purge-tts` a
+REM silent no-op: %PAD_ASSETS% was empty, every path collapsed to
+REM "\audio\boy", nothing existed, and the purge cheerfully reported
+REM "already absent" for all six voices while 15,488 clips sat untouched.
+set "PAD_ASSETS=android\install_time_assets\src\main\assets"
+
 echo ============================================
 echo  Awing AI Learning - Build and Run (Windows)
 echo ============================================
@@ -81,6 +88,48 @@ if !ERRORLEVEL! neq 0 (
     )
 )
 echo.
+
+REM ============================================================
+REM   --purge-tts : one-shot removal of the synthetic voices
+REM ============================================================
+REM Deliberately a separate, explicit invocation rather than something the
+REM normal build does. Deleting 15,488 generated files is not a thing a
+REM build should do as a side effect, and regenerating them is a 10-15
+REM minute network job.
+if /I "%~1"=="--purge-tts" (
+    call :purge_tts_voices
+    exit /b 0
+)
+
+REM ============================================================
+REM   Synthetic-audio guard - runs in FAST mode too
+REM ============================================================
+REM Deliberately ABOVE the fast-path jump. --fast skips steps 0-4,
+REM which is where this check used to live, so a fast build could
+REM silently re-ship ~1 GB of Edge TTS and nobody would notice: the
+REM app would just start making sound again.
+REM Fail the build if a synthetic voice directory reappears in the asset
+REM pack. Without this check a stray `generate_audio_edge.py` run, or an
+REM old directory left behind on one machine, silently re-ships ~1 GB of
+REM TTS and undoes the whole change - and nobody would notice, because
+REM the app would simply start playing audio again.
+set "TTS_FOUND="
+for %%V in (boy girl young_man young_woman man woman bible_trained) do (
+    if exist "%PAD_ASSETS%\audio\%%V" set "TTS_FOUND=!TTS_FOUND! %%V"
+)
+if defined TTS_FOUND (
+    echo.
+    echo        ERROR: synthetic voice directories are still present:
+    echo             !TTS_FOUND!
+    echo        under %PAD_ASSETS%\audio\
+    echo.
+    echo        v1.24.0 ships human recordings only. Move or delete those
+    echo        directories, then re-run. Keep native, native_kids and
+    echo        community - those are real people.
+    echo.
+    exit /b 1
+)
+echo        Verified: no synthetic voice directories in the asset pack.
 
 REM ============================================================
 REM   FAST PATH — Skip content gen when only Dart code changed
@@ -244,90 +293,40 @@ if !ERRORLEVEL! neq 0 (
 )
 echo.
 
-REM ---- Set PAD asset output directory ----
-set "PAD_ASSETS=android\install_time_assets\src\main\assets"
+REM ---- PAD asset output directory (defined at the top of the script) ----
 if not exist "%PAD_ASSETS%\audio" mkdir "%PAD_ASSETS%\audio"
 if not exist "%PAD_ASSETS%\images\vocabulary" mkdir "%PAD_ASSETS%\images\vocabulary"
 
-REM ---- Step 2: Edge TTS Character Voices (6 voices, full generation) ----
-REM Regenerates every audio clip for every voice. Awing-specific
-REM pronunciation IS the point of the app — if this fails silently, the
-REM APK ships with broken/stale audio and kids hear the wrong thing. The
-REM flutter_tts fallback in the app is a crash guard, not a substitute.
-REM So: abort the build if generation fails.
-echo [2/7] Generating Edge TTS character voice clips (incremental)...
-echo        6 voices: boy/girl (Beginner) + young_man/young_woman (Medium) + man/woman (Expert)
-echo        Output: %PAD_ASSETS%\audio\
-echo        Existing clips are SKIPPED. Pass --force-audio to regenerate everything.
-REM SKIP_TTS=1 escape hatch — set the env var to ship a build without
-REM regenerating any TTS clips. Useful when Microsoft's Edge TTS endpoint
-REM is throttling/down and you need to release. Stale clips for new
-REM vocabulary fall through to flutter_tts at runtime. Set with:
-REM     $env:SKIP_TTS="1"  (PowerShell)  or  set SKIP_TTS=1  (cmd)
-if defined SKIP_TTS (
-    echo        SKIP_TTS=%SKIP_TTS% set — skipping Edge TTS generation.
-    echo        Build will use existing audio clips on disk.
-    goto :step2_done
-)
-REM Only do the destructive pre-clean if explicitly asked. The default is
-REM incremental: generate_audio_edge.py skips files that already exist on
-REM disk. This turns audio gen from a 1-2 hour full regen into a few
-REM minutes for incremental changes (and ~10-15 min for full regen with
-REM concurrency=8 inside the script).
-if /I "%~1"=="--force-audio" call :clean_tts_audio
-if /I "%~2"=="--force-audio" call :clean_tts_audio
-pip install edge-tts --quiet 2>nul
-python scripts\generate_audio_edge.py --output-dir "%PAD_ASSETS%\audio" generate
-if !ERRORLEVEL! neq 0 (
-    echo.
-    echo        ERROR: Edge TTS generation failed. Build aborted.
-    echo        Run 'python scripts\generate_audio_edge.py generate' manually
-    echo        to see the full error. Common causes:
-    echo          - edge-tts package not installed ^(pip install edge-tts^)
-    echo          - No internet connection ^(Edge TTS needs Microsoft API^)
-    echo          - ffmpeg missing ^(needed for per-syllable tonal concat^)
-    echo.
-    echo        WORKAROUND: To ship without regenerating audio:
-    echo          PowerShell:   $env:SKIP_TTS="1"; .\scripts\build_and_run.bat
-    echo          cmd.exe:      set SKIP_TTS=1 ^& scripts\build_and_run.bat
-    exit /b 1
-)
-echo        Edge TTS clips generated.
-:step2_done
-echo.
+REM ---- Step 2: synthetic audio is GONE (v1.24.0) ----
+REM NACDA DMV feedback: no AI pronunciation. A Swahili neural voice
+REM cannot produce Awing tone, so Edge TTS was teaching children a
+REM confidently wrong pronunciation for the ~95%% of the dictionary with
+REM no human recording. The app now plays recordings only
+REM (pronunciation_service._buildSearchPaths) and offers a Record button
+REM where there is nothing to play (AwingAudioButton).
+REM
+REM What used to be here:
+REM   [2/7] generate_audio_edge.py  -> 15,488 clips across 6 character
+REM         voices (boy, girl, young_man, young_woman, man, woman)
+REM   [3/7] the same script in `regenerate` mode for approved
+REM         pronunciation_fix contributions
+REM Both deleted. scripts/generate_audio_edge.py is left on disk and in
+REM git history so the decision is reversible, but nothing calls it.
+REM
+REM A pronunciation_fix contribution is now applied by shipping the
+REM CONTRIBUTOR'S OWN recording (audio/community/), which is what the
+REM correction actually was - re-synthesising it was always a step
+REM backwards.
+echo [2/7] Audio: native recordings only ^(no synthetic voices^).
 
-REM ---- Step 3: Regenerate Pronunciation-Fixed Words (overwrites specific clips) ----
-REM If developer approved pronunciation_fix contributions with
-REM recorded audio, apply_contributions.py wrote regenerate_words.json
-REM with Whisper transcriptions as speakable_override. This step
-REM regenerates ONLY those words across all 6 voices using the
-REM override. Abort on failure — approved pronunciation corrections
-REM are explicit developer intent and should never be silently dropped.
-echo [3/7] Checking for pronunciation fixes to regenerate...
-if defined SKIP_TTS (
-    echo        SKIP_TTS=%SKIP_TTS% set — skipping pronunciation regeneration too.
-    goto :step3_done
-)
-REM Prefer regenerate_words_v2.json (Session 58 pattern-mine output) when present;
-REM fall back to legacy regenerate_words.json (apply_contributions.py output).
-set "REGEN_FILE="
-if exist "contributions\regenerate_words_v2.json" set "REGEN_FILE=contributions\regenerate_words_v2.json"
-if not defined REGEN_FILE if exist "contributions\regenerate_words.json" set "REGEN_FILE=contributions\regenerate_words.json"
-if defined REGEN_FILE (
-    echo        Found !REGEN_FILE! — regenerating specific words with corrected pronunciation...
-    python scripts\generate_audio_edge.py --output-dir "%PAD_ASSETS%\audio" regenerate --regenerate-file "!REGEN_FILE!"
-    if !ERRORLEVEL! neq 0 (
-        echo.
-        echo        ERROR: Pronunciation regeneration failed. Build aborted.
-        echo        Approved pronunciation corrections were not applied.
-        echo        Fix the error above and retry, or delete
-        echo        '!REGEN_FILE!' to skip this step
-        echo        ^(the corrections will be re-fetched on the next build^).
-        exit /b 1
-    )
-    echo        Pronunciation fixes regenerated successfully.
+
+REM Report what IS shipping, so a build that accidentally loses the
+REM native recordings is visible rather than silently quiet.
+if exist "%PAD_ASSETS%\audio\native" (
+    echo        native/ present - human recordings will ship.
 ) else (
-    echo        No pronunciation fixes to regenerate. Skipping.
+    echo        WARNING: no native/ directory. The app will be SILENT for
+    echo        every word. That is probably not what you want.
 )
 :step3_done
 echo.
@@ -449,12 +448,67 @@ echo ============================================
 pause
 goto :eof
 
-:clean_tts_audio
-REM Delete old TTS clips from PAD voice directories
+:purge_tts_voices
+REM v1.24.0 one-shot: remove the six synthetic character-voice directories
+REM from the asset pack. Run as:  scripts\build_and_run.bat --purge-tts
+REM
+REM This REPLACED :clean_tts_audio, which was also broken: it only deleted
+REM '*.mp3' from each voice/category folder, but step 4b converts
+REM everything to .opus, so it had been deleting nothing for releases.
+REM
+REM Only the six synthetic voices are touched. native, native_kids and
+REM community are recordings of real people and are never listed here.
 set "PAD_AUDIO=%PAD_ASSETS%\audio"
-for %%V in (boy girl young_man young_woman man woman) do (
-    for %%C in (alphabet vocabulary sentences stories) do (
-        powershell -NoProfile -Command "if (Test-Path '%PAD_AUDIO%\%%V\%%C\*.mp3') { Remove-Item '%PAD_AUDIO%\%%V\%%C\*.mp3' -Force }"
+echo.
+echo  Removing synthetic character-voice directories from the asset pack.
+echo  Keeping native, native_kids and community - those are real people.
+echo.
+for %%V in (boy girl young_man young_woman man woman bible_trained) do (
+    if exist "%PAD_AUDIO%\%%V" (
+        echo    removing %%V ...
+        rd /s /q "%PAD_AUDIO%\%%V"
+        if exist "%PAD_AUDIO%\%%V" (
+            echo    ERROR: could not remove %%V - close anything holding it, then retry.
+        ) else (
+            echo    %%V removed.
+        )
+    ) else (
+        echo    %%V: already absent.
     )
 )
+echo.
+echo  Remaining under audio\:
+dir /b "%PAD_AUDIO%" 2>nul
+
+REM Invalidate Gradle's recorded state for the asset-pack task.
+REM
+REM Removing ~16,000 files from the asset pack leaves
+REM :app:assetPackReleasePreBundleTask holding an incremental snapshot that
+REM describes a directory tree which no longer exists, and the next build
+REM dies with
+REM     java.nio.file.AccessDeniedException:
+REM       ...\intermediates\asset_pack_bundle\release\
+REM       assetPackReleasePreBundleTask\install_time_assets
+REM (it took mergeReleaseNativeLibs down with it). Verified NOT a stale
+REM daemon - Get-Process java came back empty, and gradle.properties sets
+REM org.gradle.daemon=false anyway.
+REM
+REM THE SAME APPLIES TO ANY BULK ASSET CHANGE, so remember this before
+REM regenerating the 9,086 images.
+echo.
+echo  Clearing Gradle's asset-pack state so the next build does not trip
+echo  over a snapshot of the files just removed...
+for %%D in (asset_pack_bundle merged_native_libs) do (
+    if exist "build\app\intermediates\%%D" (
+        rd /s /q "build\app\intermediates\%%D"
+        echo    cleared intermediates\%%D
+    ) else (
+        echo    intermediates\%%D: not present
+    )
+)
+echo.
+echo  Done. Re-run scripts\build_and_run.bat to build without them.
+echo  To get them back you would have to re-run
+echo  scripts\generate_audio_edge.py, which takes 10-15 minutes and needs
+echo  Microsoft's Edge TTS endpoint.
 goto :eof
