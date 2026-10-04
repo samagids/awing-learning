@@ -12,6 +12,14 @@
 	<true/>
 	<key>signingStyle</key>
 	<string>manual</string>
+	<!-- v1.24.0: the app was renamed to "Awing Learning", but BOTH strings
+	     below are external identifiers and must NOT be changed:
+	       - the key is the iOS bundle ID, fixed for the life of the app
+	       - the value is the provisioning profile NAME as registered in the
+	         Apple Developer portal; renaming it here breaks signing with
+	         "No profile matching ... found"
+	     Rename the profile in the portal first if you ever want these to
+	     read differently. -->
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.awing.awingAiLearning</key>

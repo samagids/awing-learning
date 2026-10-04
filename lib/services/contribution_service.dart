@@ -843,7 +843,7 @@ class ContributionService extends ChangeNotifier {
     final subject = 'Awing Contribution: $typeLabel — ${c.targetWord}';
 
     final bodyLines = <String>[
-      'Awing AI Learning — User Contribution',
+      'Awing Learning — User Contribution',
       '======================================',
       '',
       'From: $senderName ($senderEmail)',
@@ -886,7 +886,7 @@ class ContributionService extends ChangeNotifier {
       const JsonEncoder.withIndent('  ').convert(c.toJson()),
       '',
       '---',
-      'Sent from Awing AI Learning app',
+      'Sent from Awing Learning app',
     ]);
 
     final body = bodyLines.join('\n');

@@ -96,9 +96,9 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
     final reply = await contrib.sendParentReport(
       kind: 'test',
       subject: 'test',
-      body: 'This is a test report from Awing AI Learning.\n\n'
+      body: 'This is a test report from Awing Learning.\n\n'
           'If you can read this, activity reports for $child will reach '
-          'this address.\n\n-- Awing AI Learning',
+          'this address.\n\n-- Awing Learning',
       recipients: account.deliverableContacts.map((c) => c.email!).toList(),
     );
     if (!mounted) return;

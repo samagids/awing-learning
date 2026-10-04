@@ -57,26 +57,26 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Awing AI Learning needs microphone access for pronunciation practice and audio recording.</string>
+	<string>Awing Learning needs microphone access for pronunciation practice and audio recording.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Awing AI Learning uses speech recognition to check your Awing pronunciation.</string>
+	<string>Awing Learning uses speech recognition to check your Awing pronunciation.</string>
 	<!-- Local-network permission: required by network_info_plus + nsd packages.
 	     Used so a teacher's device can host a classroom exam session over Wi-Fi
 	     and student devices can discover and join via mDNS. -->
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Awing AI Learning uses your local Wi-Fi network so teachers can host classroom exam sessions and students can discover and join nearby sessions.</string>
+	<string>Awing Learning uses your local Wi-Fi network so teachers can host classroom exam sessions and students can discover and join nearby sessions.</string>
 	<!-- Location purpose string: iOS conflates Wi-Fi SSID detection with
 	     location permission, so network_info_plus references CoreLocation
 	     APIs even though the app never reads GPS coordinates. Apple's
 	     warning 90683 requires this key when ANY referenced API needs it. -->
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Awing AI Learning does not track your location. This permission is required only because the Wi-Fi network library (used by the classroom exam mode) references location APIs on iOS.</string>
+	<string>Awing Learning does not track your location. This permission is required only because the Wi-Fi network library (used by the classroom exam mode) references location APIs on iOS.</string>
 	<!-- v1.17.1+ — Builds 70 & 72 received ITMS-90683 specifically calling out
 	     NSLocationAlwaysAndWhenInUseUsageDescription. A transitive SDK (likely
 	     a Firebase or location-adjacent plugin) references the Always API even
 	     though the app never requests background location. Both keys required. -->
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Awing AI Learning does not track your location. This permission is required only because a third-party library bundled with the app references the Always location API on iOS. The app never requests background location access.</string>
+	<string>Awing Learning does not track your location. This permission is required only because a third-party library bundled with the app references the Always location API on iOS. The app never requests background location access.</string>
 	<!-- Photo library + camera purpose strings.
 	     v1.22.0 (Session 66) — the Contribute flow now uses image_picker to
 	     attach optional photos to word corrections, pronunciation
@@ -91,11 +91,11 @@
 	     app still doesn't SAVE anything back to the library — it only
 	     READS via NSPhotoLibraryUsageDescription. -->
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Awing AI Learning uses your photo library so you can attach a picture of a word to your correction, new-word suggestion, or pronunciation recording. Pictures help the teacher confirm the meaning.</string>
+	<string>Awing Learning uses your photo library so you can attach a picture of a word to your correction, new-word suggestion, or pronunciation recording. Pictures help the teacher confirm the meaning.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Awing AI Learning does not save anything to your photo library. This permission is required only because a third-party library bundled with the app references the Photos framework.</string>
+	<string>Awing Learning does not save anything to your photo library. This permission is required only because a third-party library bundled with the app references the Photos framework.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Awing AI Learning uses your camera so you can take a photo to attach to a word correction, new-word suggestion, or pronunciation recording. Pictures help the teacher confirm the meaning.</string>
+	<string>Awing Learning uses your camera so you can take a photo to attach to a word correction, new-word suggestion, or pronunciation recording. Pictures help the teacher confirm the meaning.</string>
 	<!-- Bonjour service types we register/browse via mDNS. The single service
 	     here is the Kahoot-style exam discovery service used by exam_service.dart.
 	     iOS 14+ requires every Bonjour service type to be declared here or

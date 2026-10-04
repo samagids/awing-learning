@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:awing_ai_learning/services/asset_pack_service.dart';
@@ -249,12 +250,6 @@ class PronunciationService {
     return null;
   }
 
-  /// Get the voice list for the same level as the current voice.
-  List<String> _sameLevelVoices() {
-    if (beginnerVoices.contains(_currentVoice)) return beginnerVoices;
-    if (mediumVoices.contains(_currentVoice)) return mediumVoices;
-    return expertVoices;
-  }
 
   /// Build search paths for a given audio key across voice directories.
   ///
@@ -308,45 +303,47 @@ class PronunciationService {
     // retry without addressing tones explicitly (e.g. pitch-
     // conditioned model or tone-aware text encoder).
 
-    // 1. Current character voice (Edge TTS Swahili — approximation,
-    //    used when none of the above tiers have a recording)
-    paths.add('assets/audio/$_currentVoice/$category/$key.opus');
-
-    // 2. Same-level alternate voice (e.g. girl if boy is selected)
-    for (final v in _sameLevelVoices()) {
-      if (v != _currentVoice) {
-        paths.add('assets/audio/$v/$category/$key.opus');
-      }
-    }
-
-    // No cross-level fallback — voices only contain their level's content
-
+    // v1.24.0 (NACDA DMV feedback): the Edge TTS character-voice tiers
+    // were REMOVED from here. They used Swahili neural voices to
+    // approximate Awing, which cannot model Awing tone — the same reason
+    // the Bible-trained VITS attempt failed above. A confident wrong
+    // pronunciation of a tonal language teaches children the wrong word,
+    // so this project now treats synthesized Awing as fabrication and
+    // ships silence instead.
+    //
+    // Every tier left in this list is a RECORDING OF A HUMAN:
+    //   native_kids/ — a family member
+    //   native/      — Dr. Sama
+    //   community/   — a contributor
+    //
+    // Do not re-add a synthetic tier here. If a word has no recording the
+    // UI shows a Record button (see hasNativeAudio) and asks the
+    // community for one.
     return paths;
   }
 
-  /// Speak an Awing word — tries real audio first, falls back to TTS.
+  /// Play a human recording of an Awing word, or do nothing.
+  ///
+  /// v1.24.0: there is no synthetic fallback any more. Silence is the
+  /// correct answer for a word nobody has recorded — ask
+  /// [hasNativeAudio] first and offer the Record button instead of a
+  /// speaker.
   Future<void> speakAwing(String awingWord) async {
     await init();
 
     final key = _audioKey(awingWord);
 
-    // Try all voice+category combinations
     for (final category in ['vocabulary', 'alphabet', 'dictionary', 'sentences']) {
       for (final path in _buildSearchPaths(key, category)) {
         if (await _playAudioAsset(path)) return;
       }
     }
 
-    // Fallback to TTS. On Swahili-capable devices, use the same
-    // awing_to_speakable() rules the build-time Edge TTS pipeline uses
-    // (so runtime-synthesized Awing matches pre-baked clips). On English-
-    // only devices, use the older awingToPhonetic English approximation.
-    final phonetic = _swahiliAvailable
-        ? awingToSpeakable(awingWord)
-        : awingToPhonetic(awingWord);
-    await _tts.setSpeechRate(0.4);
-    await _tts.speak(phonetic);
-    await _tts.setSpeechRate(0.35);
+    // No recording exists. Deliberately silent — see _buildSearchPaths.
+    if (kDebugMode) {
+      debugPrint('Pronunciation: no human recording for "$awingWord"; '
+          'staying silent (v1.24.0).');
+    }
   }
 
   /// Speak an Awing sentence — tries pre-generated clip first,
@@ -387,12 +384,11 @@ class PronunciationService {
       }
 
       if (!played) {
-        // Same Swahili-vs-English choice as speakAwing.
-        final phonetic = _swahiliAvailable
-            ? awingToSpeakable(cleanWord)
-            : awingToPhonetic(cleanWord);
-        await _tts.speak(phonetic);
-        await Future.delayed(const Duration(milliseconds: 300));
+        // v1.24.0: no synthetic Awing. A word with no recording is simply
+        // skipped, so the parts of the sentence that ARE recorded still
+        // read aloud correctly instead of being interrupted by a wrong
+        // machine pronunciation.
+        await Future.delayed(const Duration(milliseconds: 150));
       } else {
         await Future.delayed(const Duration(milliseconds: 600));
       }
@@ -440,57 +436,14 @@ class PronunciationService {
       if (await _playAudioAsset(path)) return;
     }
 
-    // Fallback to TTS — use phonemic sound, NOT the letter name
-    await _tts.setSpeechRate(0.3);
-    final soundGuide = _letterToSound(phoneme);
-    await _tts.speak(soundGuide);
-    await _tts.setSpeechRate(0.35);
-  }
-
-  /// Convert a letter/phoneme to its spoken SOUND for TTS.
-  /// For example, 'b' → 'buh', 'k' → 'kuh', not 'bee'/'kay'.
-  static String _letterToSound(String letter) {
-    final l = letter.toLowerCase().trim();
-    const soundMap = {
-      // Vowels — say the actual vowel sound
-      'a': 'ah',
-      'e': 'ay',
-      'i': 'ee',
-      'o': 'oh',
-      'u': 'oo',
-      'ɛ': 'eh',
-      'ə': 'uh',
-      'ɔ': 'aw',
-      'ɨ': 'ih',
-      // Consonants — say the sound, not the letter name
-      'b': 'buh',
-      'ch': 'chuh',
-      'd': 'duh',
-      'f': 'fuh',
-      'g': 'guh',
-      'gh': 'ghuh',
-      'j': 'juh',
-      'k': 'kuh',
-      'l': 'luh',
-      'm': 'muh',
-      'mm': 'mmuh',
-      'n': 'nuh',
-      'ny': 'nyuh',
-      'ŋ': 'nguh',
-      'p': 'puh',
-      's': 'sss',
-      'sh': 'shh',
-      't': 'tuh',
-      'ts': 'tsuh',
-      'w': 'wuh',
-      'y': 'yuh',
-      'z': 'zuh',
-      "'": 'uh',
-    };
-    // If not in the map, add 'uh' to make it sound like a phoneme, not a letter name
-    if (soundMap.containsKey(l)) return soundMap[l]!;
-    // For unknown short inputs, just return as-is (awingToPhonetic handles longer words)
-    return l.length <= 2 ? '${l}uh' : awingToPhonetic(l);
+    // v1.24.0: no synthetic fallback. A letter sound is Awing phonology,
+    // and an English or Swahili voice guessing it is exactly the wrong
+    // thing to teach. 27 of the 31 letters have native recordings; the
+    // remainder stay silent until someone records them.
+    if (kDebugMode) {
+      debugPrint('Pronunciation: no human recording for sound "$phoneme"; '
+          'staying silent (v1.24.0).');
+    }
   }
 
   /// Stop any current audio or speech
@@ -500,21 +453,46 @@ class PronunciationService {
   }
 
   /// Check if a real audio recording exists for this word.
-  Future<bool> hasRealAudio(String awingWord) async {
+  /// Whether a HUMAN recording exists for this word.
+  ///
+  /// v1.24.0 — this used to be broken in two ways, and it mattered once
+  /// the UI started depending on it:
+  ///   1. it ignored `_playAudioAsset`'s return value and returned `true`
+  ///      for the first path it tried, so it answered "yes" for every
+  ///      word in the dictionary;
+  ///   2. it answered by PLAYING the clip and then stopping it, so a
+  ///      silent existence check made noise.
+  /// It also had no callers, so neither fault was ever visible.
+  ///
+  /// Now it asks the asset pack whether the file is there and plays
+  /// nothing. Used by the UI to choose between a speaker button and a
+  /// Record button.
+  Future<bool> hasNativeAudio(String awingWord) async {
+    await init();
     final key = _audioKey(awingWord);
-    for (final category in ['vocabulary', 'alphabet', 'dictionary', 'sentences']) {
-      for (final path in _buildSearchPaths(key, category)) {
+    for (final category in [
+      'vocabulary',
+      'alphabet',
+      'dictionary',
+      'sentences'
+    ]) {
+      for (final asset in _buildSearchPaths(key, category)) {
         try {
-          await _playAudioAsset(path);
-          await _audioPlayer.stop();
-          return true;
+          if (await _assetPack.assetExists(asset.replaceFirst('assets/', ''))) {
+            return true;
+          }
         } catch (_) {
-          // Not found, try next path
+          // Unreadable pack entry — treat as absent and keep looking.
         }
       }
     }
     return false;
   }
+
+  /// Former name, kept so existing call sites keep compiling.
+  @Deprecated('Use hasNativeAudio — this name predates the v1.24.0 '
+      'removal of synthetic audio, when "real" still needed saying.')
+  Future<bool> hasRealAudio(String awingWord) => hasNativeAudio(awingWord);
 
   /// Public alias of [_audioKey] — used by RecordingsService and the
   /// Dev Mode Record tab to compute the canonical audio filename

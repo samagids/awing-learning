@@ -5,6 +5,7 @@ import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/screens/find_similar_sheet.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 
 class VocabularyScreen extends StatefulWidget {
@@ -379,21 +380,13 @@ class _FlashCard extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ElevatedButton.icon(
-                                onPressed: () =>
-                                    pronunciation.speakAwing(word.awing),
-                                icon: const Icon(Icons.volume_up, size: 24),
-                                label: const Text('Hear it',
-                                    style: TextStyle(fontSize: 17)),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFDAA520),
-                                  foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                ),
+                              // v1.24.0: was a plain "Hear it" button that
+                              // spoke synthetic Awing for any word. Now it
+                              // reads "Record it" and opens the recorder when
+                              // nobody has recorded the word.
+                              AwingAudioActionButton(
+                                awing: word.awing,
+                                word: word,
                               ),
                               const SizedBox(width: 10),
                               OutlinedButton.icon(

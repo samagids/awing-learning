@@ -410,7 +410,7 @@ class AwingApp extends StatelessWidget {
       child: Consumer<ThemeNotifier>(
         builder: (context, themeNotifier, _) {
           return MaterialApp(
-            title: 'Awing AI Learning',
+            title: 'Awing Learning',
             debugShowCheckedModeBanner: false,
             theme: ThemeNotifier.lightTheme(),
             darkTheme: ThemeNotifier.darkTheme(),

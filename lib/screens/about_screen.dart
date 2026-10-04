@@ -11,12 +11,19 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
-  static const String appVersion = '1.23.6';
-  static const String buildNumber = '140';
+  // v1.24.0: buildNumber was stuck at '140' through 1.23.5+141 and
+  // 1.23.6+142, so the About screen and the analytics payload both
+  // reported the wrong build for three releases. There are SIX places the
+  // version lives - pubspec.yaml, these two constants, analytics_service
+  // and cloud_backup_service - and only four were in the release
+  // checklist. developer_screen now derives from these instead of holding
+  // a seventh copy.
+  static const String appVersion = '1.24.0';
+  static const String buildNumber = '143';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
   static const String appDescription =
-      'Awing AI Learning is an interactive mobile application designed to '
+      'Awing Learning is an interactive mobile application designed to '
       'teach the Awing language — a Grassfields Bantu language spoken by '
       'about 19,000 people in the Mezam division, North West Province, '
       'Republic of Cameroon. The app targets kids and beginners with '
@@ -63,7 +70,7 @@ class _AboutScreenState extends State<AboutScreen> {
             const SizedBox(height: 16),
             // App name
             Text(
-              'Awing AI Learning',
+              'Awing Learning',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,

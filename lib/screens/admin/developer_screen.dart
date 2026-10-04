@@ -3357,7 +3357,10 @@ class _SettingsTabState extends State<_SettingsTab> {
       builder: (ctx) => AlertDialog(
         title: const Text('Debug Info'),
         content: Text(
-          'Awing AI Learning v1.6.1+28\n'
+          // v1.24.0: was hardcoded 'v1.6.1+28' and had been stale for
+          // ~17 releases. Reads the single source of truth instead so
+          // it cannot drift again.
+          'Awing Learning v${AboutScreen.appVersion}\n'
           'Flutter SDK: 3.22+\n'
           'Dart SDK: 3.4+\n'
           'Auth: Google Sign-In + SharedPreferences\n'

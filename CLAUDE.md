@@ -9755,3 +9755,69 @@ correctly rejected unauthenticated.
 - No `.gitattributes`. Every `git add` prints "LF will be replaced by
   CRLF" for ~23 files. Harmless, but it is the same normalisation noise
   that makes cf-worker/node_modules permanently show as modified.
+
+---
+
+## Session 66 - NACDA DMV feedback -> v1.24.0
+
+Five asks. 1.23.6+142 was NEVER pushed or tagged; it is folded into
+v1.24.0+143 by Dr. Sama's decision.
+
+### THE CORRECTION THAT MATTERS: "lots of duplicates" is mostly wrong
+NACDA reported words with "three or four spellings" that "should be one".
+Analysed all 6,687 active AwingWord entries. It splits three ways:
+
+  62 pairs / 63 entries  identical (awing, english) - TRUE duplicates
+  204 groups / 215       differ ONLY by tone mark or final e/a/ə
+  1,041 glosses          genuinely DIFFERENT Awing words
+
+That third group is the trap. Collapsing by English gloss would delete
+real vocabulary:
+  - `mine` has 15 forms, `yours` 20, `theirs` 19, `ours` 11, `this` 11,
+    `that` 10, `his` 9. These are NOUN-CLASS AGREEMENT forms - Awing is
+    Grassfields Bantu, the possessive agrees with the class of the thing
+    possessed. "my house" and "my child" are different words.
+  - `intensifier` has 35 entries: 35 distinct IDEOPHONES all lazily
+    glossed "intensifier" in English. The Awing is fine; the gloss is
+    impoverished.
+  - `dance group` has 13: thirteen different named groups.
+
+DONE: deleted the 63 exact duplicates (verified - 63 lines removed, 0
+added, paren/bracket imbalance identical before and after, which is
+pre-existing and comes from parens inside string literals, so never
+"balance-check" this file against zero).
+  -> contributions/duplicate_entries_removed.md
+
+NOT DONE, needs a ruling: contributions/near_duplicate_review.md lists
+the 204 groups (`əkwuná`/`əkwunə́` bed, `ngwûə`/`ngwü` dog, `aké`/`akə̌`
+what). Picking the keeper is an orthography decision. DO NOT GUESS.
+
+The 1,041 get a PRESENTATION fix instead - show noun class / fuller
+gloss so three results read as three words, not three duplicates.
+
+### Audio: native only, no synthetic anything (decided)
+223 of ~4,700 vocabulary words have native recordings, plus 27 letters.
+So ~95% of the dictionary goes SILENT with a Record button instead. That
+is the intended outcome: a Swahili neural voice guessing Awing tones is
+fabrication, which this project already bans. Removes ~15,488 Edge TTS
+clips across 6 character voices and most of the 1 GB install pack.
+Two synthetic layers must BOTH go: the pre-baked Edge TTS clips AND the
+runtime flutter_tts fallback in pronunciation_service.speakAwing().
+
+### Rename: done
+Launcher label was ALREADY just "Awing" on both platforms. Renamed ~18
+in-app strings + 7 iOS usage descriptions.
+NOT renamed, deliberately: `ios/ExportOptions.plist` holds the
+provisioning profile NAME as registered in the Apple Developer portal
+("Awing AI Learning App Store") and the bundle ID
+`com.awing.awingAiLearning`. Changing either breaks signing. Store
+listing titles change in Play Console / ASC, not in code.
+
+### THERE ARE SIX VERSION SITES, NOT FOUR
+`AboutScreen.buildNumber` was stuck at '140' through 1.23.5+141 AND
+1.23.6+142 - the About screen and the analytics payload reported the
+wrong build for three releases. The real list:
+  pubspec.yaml · about_screen.appVersion · about_screen.buildNumber ·
+  analytics_service._appVersion · cloud_backup_service._kAppVersion
+developer_screen used to hold a seventh copy (hardcoded 'v1.6.1+28',
+stale for ~17 releases); it now derives from AboutScreen.

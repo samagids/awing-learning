@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/services/dictionary_lookup.dart';
 import 'package:awing_ai_learning/services/example_sentences.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
@@ -337,18 +338,9 @@ class _ResultCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  iconSize: 32,
-                  icon: const Icon(Icons.volume_up),
-                  tooltip: 'Play pronunciation',
-                  onPressed: () async {
-                    try {
-                      await PronunciationService().speakAwing(result.awing);
-                    } catch (e) {
-                      debugPrint('Play failed: $e');
-                    }
-                  },
-                ),
+                // v1.24.0: speaker when a human recorded it, microphone
+                // inviting a recording when not. Never a dead speaker.
+                AwingAudioButton(awing: result.awing, iconSize: 32),
                 WrongTranslationReportButton(
                   english: result.english,
                   wrongAwing: result.awing,

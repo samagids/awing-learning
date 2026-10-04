@@ -163,7 +163,7 @@ class _BlockingUpdateScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     Text(
                       message ??
-                          'This version of Awing AI Learning is no longer '
+                          'This version of Awing Learning is no longer '
                               'supported. Please update to keep learning.',
                       textAlign: TextAlign.center,
                       style: theme.textTheme.bodyLarge,

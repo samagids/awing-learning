@@ -249,7 +249,7 @@ class ParentNotificationService {
       ..writeln('')
       ..writeln(_scoreAdvice(avg, quizzes.length))
       ..writeln('')
-      ..writeln('— Awing AI Learning');
+      ..writeln('— Awing Learning');
     return buf.toString();
   }
 
@@ -316,7 +316,7 @@ class ParentNotificationService {
       ..writeln('')
       ..writeln(_weeklyAdvice(lessons.length, quizzes.length, streak))
       ..writeln('')
-      ..writeln('— Awing AI Learning');
+      ..writeln('— Awing Learning');
 
     final result = await _deliver(
       kind: 'weekly',
@@ -426,7 +426,7 @@ class ParentNotificationService {
   /// Text of the most recent report, for sharing by hand.
   String composeShareableReport() {
     if (_pendingEvents.isNotEmpty) return _buildDailyBody(_pendingEvents);
-    return 'Awing Learning\n\nNo new activity to report yet.\n\n— Awing AI Learning';
+    return 'Awing Learning\n\nNo new activity to report yet.\n\n— Awing Learning';
   }
 
   // ==================== Queue ====================

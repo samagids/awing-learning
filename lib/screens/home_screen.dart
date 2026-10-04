@@ -109,12 +109,12 @@ class _HomeScreenState extends State<HomeScreen>
 
   Future<void> _shareApp() async {
     const shareText =
-        'I use Awing AI Learning to help my kids learn Awing. '
+        'I use Awing Learning to help my kids learn Awing. '
         'It has games, quizzes, stories and even a teacher exam mode. '
         '📱 Android: https://play.google.com/store/apps/details?id=com.awing.learning\n'
         '🍎 iPhone: https://apps.apple.com/app/id6764426877';
     try {
-      await Share.share(shareText, subject: 'Awing AI Learning');
+      await Share.share(shareText, subject: 'Awing Learning');
       AnalyticsService.instance.logActivity(event: 'share_app_from_reminder');
     } catch (_) {/* user cancelled or platform unavailable */}
   }
