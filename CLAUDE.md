@@ -11278,3 +11278,60 @@ and the gate falls back to the math question. And a federated user whose
 Firebase record simply carries no email is rejected earlier, by
 `verifyFirebaseIdToken_`'s `if (!u.email) return null`, which surfaces as
 'unauthorized' rather than 'not-signed-in'.
+
+## Session 66i — the PIN reset email has NEVER been sent. Not once.
+
+Evidence, not inference. Brevo transactional log, searched for "PIN reset"
+across 298 logs: **0 results.** The feature shipped in v1.23.6 (Session
+64e). Nothing has gone out since.
+
+That kills the earlier theories in this file. Worth recording because two
+of them were confident and wrong:
+
+- **Not Apple private relay.** The affected user's address is a yahoo.com
+  Apple ID, not `@privaterelay.appleid.com`.
+- **Not sender reputation or DMARC.** Brevo sends as
+  `samagids@12052134.brevosend.com`, a Brevo-verified subdomain. Delivery
+  of every other message type is clean in the same log.
+- **Not Firestore.** The reset path reads Firebase AUTHENTICATION through
+  Identity Toolkit, never Firestore. "The user is not in the users
+  collection" says nothing about it.
+
+### Where to look next (needs the console; the egress proxy blocks probing
+### the endpoint from here, both from the container and the device VM)
+
+Every execution in the Apps Script log runs **Version 200**, and this file
+already records that the contributions project is AT the 200-version cap
+where `clasp deploy` fails. `clasp push` updates @HEAD; the web app serves
+the pinned VERSION. `scripts/clasp_contributions/Code.js` contains
+`pin_reset`, but that proves what was PUSHED, not what is DEPLOYED.
+
+**Check: Apps Script > Deploy > Manage deployments — which version is live,
+and does that version contain `handlePinReset`?** If the live version
+predates it, `pin_reset` falls through `doPost`'s switch and no handler
+ever runs — which is exactly consistent with zero Brevo logs. The fix is
+then to free versions from the project history and redeploy, not to touch
+the handler at all.
+
+### The client defect that made this invisible
+
+Independent of the cause, and the reason it went unreported for so long:
+
+```dart
+if (reply == null) {
+  _info('Check your email',
+        'the code was most likely emailed to you ...');
+}
+// falls through to the code-entry dialog
+```
+
+`reply == null` means the answer could not be READ. The old text turned
+that into a claim that mail was probably sent, then showed the code box —
+so a user facing a backend that never ran was told to go and look for an
+email that does not exist, and neither they nor we could tell that apart
+from a slow inbox. That is the screenshot the parent sent.
+
+Now it says the send could not be confirmed, that there may be no email
+coming, and gives the developer address. The code box is still offered,
+because the POST does run server-side even when the reply cannot be read —
+but it is never again described as sent.

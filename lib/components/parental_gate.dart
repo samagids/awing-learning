@@ -321,13 +321,29 @@ class ParentalGate {
           'The reset code could not be sent ($msg). Please try again.');
       return;
     }
-    // reply == null means we could not READ the answer. The mail may well
-    // have gone out, so do NOT claim failure — offer the code entry.
+    // reply == null means we could not READ the answer.
+    //
+    // v1.24.1: this used to say the code "was most likely emailed to you"
+    // and then show the code-entry screen anyway. That guess was wrong and
+    // it was load-bearing: the Brevo transactional log shows ZERO PIN
+    // reset emails ever sent since the feature shipped in v1.23.6, so
+    // every user who reached this branch was told to go and look for a
+    // mail that does not exist. One of them reported exactly that — "it
+    // keeps telling me a code was sent but I do not see it" — and there
+    // was no way for them, or for us, to tell the difference between a
+    // slow inbox and a backend that never ran.
+    //
+    // Say what is actually known: the send could not be confirmed. Offer
+    // the code box anyway, because a code MAY have gone out (the POST runs
+    // server-side even when the reply cannot be read), but never claim it
+    // did, and always give the way out that does not depend on it.
     if (reply == null) {
-      await _info(context, 'Check your email',
-          'We could not confirm the send, but the code was most likely '
-          'emailed to you. Check your inbox, then enter it on the next '
-          'screen.');
+      await _info(context, 'Could not confirm',
+          'We could not reach the server to confirm the code was sent, so '
+          'there may be no email on its way.\n\n'
+          'Check your inbox and spam for a few minutes. If nothing '
+          'arrives, contact the developer at samagids@gmail.com — he can '
+          'clear the PIN for you.');
     }
 
     if (!context.mounted) return;
