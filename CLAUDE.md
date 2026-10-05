@@ -12051,26 +12051,28 @@ Two changes:
 of the 13 recordings it belongs to, so the person can be credited properly
 once their real name is known.
 
-### Resolved: 'Monto’oh' is Dr. Frida Fozoh
+### Resolved: 'Monto’oh' is Dr. Richard Alombah
 
-Confirmed by Dr. Sama. She is credited as **Dr. Frida Fozoh**, and
-`_AUDIO_CONTRIBUTOR_ALIASES` maps her device profile to that name so her
-next recording is attributed correctly instead of re-queuing.
+Confirmed by Dr. Sama from the contribution email: the 13 recordings came
+from Dr. Richard Alombah, contributing from a different device whose local
+profile is called 'Monto’oh'. He is **already** in the credits, so nothing
+was added — `_AUDIO_CONTRIBUTOR_ALIASES` now maps that profile to his
+existing entry alongside his `fozo` / `frichardfozo` aliases.
 
 Both apostrophes are aliased (`monto’oh` U+2019, `monto'oh` ASCII) plus the
 bare `montooh`, because the device submits the curly form and a keyboard may
-produce either. Verified across five spellings including the `default `
-prefix and uppercase.
+produce either. Verified: all nine spellings of his profile resolve to the
+one credit, he appears exactly once, and a future flush adds nothing.
 
-**She is a different person from Dr. Richard Alombah**, whose aliases
-include `fozo` and `frichardfozo` — similar surname, distinct people.
-Verified that both still resolve to their own names and that no two credits
-share a name fingerprint.
+**I briefly credited a 'Dr. Frida Fozoh' here on a misreading of "keep it to
+dr. richard alombah".** Attribution of someone's recordings on a public
+screen is not a thing to infer from a short message — ask. The corrected
+state is above.
 
-Her 13 recordings are already shipping in the native tier.
-
-**The pattern to keep:** a name that is not publishable goes to
+The pattern to keep: a name that is not publishable goes to
 `contributions/contributors_pending_review.json`, Dr. Sama supplies the real
-one, it is added to `audio_contributors.dart` AND aliased in
+one, and it is BOTH credited in `audio_contributors.dart` and aliased in
 `apply_contributions.py`. Without the alias the same profile re-queues on
 every future contribution.
+
+His 13 recordings are already shipping in the native tier.

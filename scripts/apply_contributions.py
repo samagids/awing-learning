@@ -739,18 +739,18 @@ _audio_contributors_collected = set()
 _AUDIO_CONTRIBUTOR_ALIASES = {
     'bb': 'Berlin Sama',
     # Session 66p — 'Monto’oh' is the name of a device profile, not a
-    # person. It reached the About screen because she signs in with
-    # Apple, which surrenders a display name only on the very first
-    # authorization, so googleDisplayName was null on all 13 of her
-    # recordings and the client fell back to profileName. Confirmed by
-    # Dr. Sama as Dr. Frida Fozoh. Both apostrophes are listed because
-    # the device submits U+2019 and a keyboard may produce ASCII.
+    # person. It reached the About screen because this contributor
+    # signs in with Apple, which surrenders a display name only on the
+    # very first authorization, so googleDisplayName was null on all 13
+    # recordings and the client fell back to profileName.
     #
-    # Distinct from 'fozo' -> Dr. Richard Alombah below; similar
-    # surname, different people.
-    'monto’oh': 'Dr. Frida Fozoh',
-    "monto'oh": 'Dr. Frida Fozoh',
-    'montooh': 'Dr. Frida Fozoh',
+    # Confirmed by Dr. Sama as Dr. Richard Alombah — the same person as
+    # the 'fozo' / 'frichardfozo' aliases below, reaching us from a
+    # different device. Both apostrophes are listed because the device
+    # submits U+2019 and a keyboard may produce ASCII.
+    'monto’oh': 'Dr. Richard Alombah',
+    "monto'oh": 'Dr. Richard Alombah',
+    'montooh': 'Dr. Richard Alombah',
     # Session 63 — resolve every variant of Dr. Richard's profileName
     # (his app auth might surface any of these depending on how his
     # Google profile is set) to the polished display name.
