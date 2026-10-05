@@ -1,0 +1,26 @@
+[
+  {
+    "awing": "alá'ə",
+    "english": "a lot",
+    "whisper_said": "alá'əəəəringe",
+    "rejected_because": "similarity 0.56 < 0.6"
+  },
+  {
+    "awing": "əfəŋə́",
+    "english": "a hole on the body caused by accident or illness",
+    "whisper_said": "əfsana",
+    "rejected_because": "similarity 0.33 < 0.6"
+  },
+  {
+    "awing": "ambáŋá",
+    "english": "a flip over",
+    "whisper_said": "I'm Buna",
+    "rejected_because": "word count 1 -> 2"
+  },
+  {
+    "awing": "aləmə̌",
+    "english": "a deep pool of water",
+    "whisper_said": "aləmə̌ aləmə̌ kiye",
+    "rejected_because": "word count 1 -> 3"
+  }
+]

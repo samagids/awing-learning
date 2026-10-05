@@ -559,6 +559,106 @@ def _install_vocabulary_image(image_url, awing_word, profile, dry_run=False):
 _WHISPER_WARNED = False
 
 
+# Words whose Whisper transcription was rejected as implausible, written
+# here for Dr. Sama to review. Never consumed by the build.
+WHISPER_REJECTED_FILE = os.path.join(
+    CONTRIBUTIONS_DIR, 'whisper_rejected.json')
+
+# Minimum character-level similarity between the submitted Awing and
+# Whisper's transcription before the transcription is trusted as a
+# speakable override. Calibrated on the 13 pronunciation fixes applied on
+# 2026-10-05: it keeps every plausible phonetic rendering and rejects
+# every hallucination. See _whisper_plausible().
+WHISPER_MIN_SIMILARITY = 0.60
+
+# Higher bar when Whisper returns pure ASCII for a word written with
+# non-ASCII Awing characters -- the signature of it resolving the audio
+# into English rather than transcribing it.
+WHISPER_ASCII_MIN_SIMILARITY = 0.75
+
+
+def _whisper_plausible(target, text):
+    """Is `text` a plausible ASR rendering of the Awing word `target`?
+
+    Whisper is an English/Swahili-trained model being asked to transcribe
+    Awing. When it has nothing to latch onto it does not fail — it
+    hallucinates confidently, and the result used to be written straight
+    into regenerate_words.json as the authoritative pronunciation. On
+    2026-10-05, 'ambáŋá' came back as "I'm Buna", 'alá'ə' as
+    'alá'əəəəringe', and 'aləmə̌' as 'aləmə̌ aləmə̌ kiye'.
+
+    That is fabricated Awing, which this project does not ship.
+
+    This is deliberately NOT an orthography judgement — it does not decide
+    what is correct, it only decides whether the ASR output corresponds to
+    the word that was submitted. On rejection the submitted spelling (Dr.
+    Sama's own input) stands and the word is flagged for review.
+
+    Returns (ok, reason).
+    """
+    import difflib
+    import unicodedata
+
+    t = unicodedata.normalize('NFC', (target or '').strip())
+    x = unicodedata.normalize('NFC', (text or '').strip())
+
+    if not x:
+        return False, 'empty transcription'
+    if x == t:
+        return True, 'exact match'
+
+    # A different number of words means Whisper heard extra speech, or
+    # dropped half the word. Both produce nonsense overrides.
+    tw, xw = len(t.split()), len(x.split())
+    if tw != xw:
+        return False, f'word count {tw} -> {xw}'
+
+    ratio = difflib.SequenceMatcher(None, t.casefold(), x.casefold()).ratio()
+
+    # Awing uses characters English does not. A transcription that comes
+    # back pure ASCII when the target is not has often been resolved into
+    # English, so hold it to a higher bar -- but do NOT veto it outright:
+    # 'nkagə' -> 'nkaga' is a schwa rendered as 'a', which is exactly the
+    # phonetic approximation this pipeline wants.
+    floor = WHISPER_MIN_SIMILARITY
+    note = ''
+    if any(ord(c) > 127 for c in t) and all(ord(c) < 128 for c in x):
+        floor = WHISPER_ASCII_MIN_SIMILARITY
+        note = ', ASCII-only transcription of a non-ASCII word'
+
+    if ratio < floor:
+        return False, f'similarity {ratio:.2f} < {floor}{note}'
+
+    return True, f'similarity {ratio:.2f}{note}'
+
+
+def _record_whisper_rejection(target, text, reason, english=''):
+    """Append a rejected transcription to the review file."""
+    rows = []
+    if os.path.exists(WHISPER_REJECTED_FILE):
+        try:
+            with open(WHISPER_REJECTED_FILE, 'r', encoding='utf-8') as f:
+                rows = json.load(f)
+            if not isinstance(rows, list):
+                rows = []
+        except Exception:
+            rows = []
+    rows = [r for r in rows if r.get('awing') != target]
+    rows.append({
+        'awing': target,
+        'english': english,
+        'whisper_said': text,
+        'rejected_because': reason,
+    })
+    try:
+        ensure_directories()
+        with open(WHISPER_REJECTED_FILE, 'w', encoding='utf-8') as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+            f.write('\n')
+    except Exception as e:
+        print(f"    (could not write {WHISPER_REJECTED_FILE}: {e})")
+
+
 def _whisper_transcribe(m4a_path, awing_hint=''):
     """Attempt to transcribe a recording with OpenAI Whisper.
 
@@ -1724,9 +1824,20 @@ def apply_contributions(contributions, dry_run=False, skip_applied=True):
             elif m4a_path and not dry_run:
                 whisper_text = _whisper_transcribe(m4a_path, awing_hint=target)
                 if whisper_text:
-                    speakable_override = whisper_text
-                    override_source = 'whisper'
-                else:
+                    ok, why = _whisper_plausible(target, whisper_text)
+                    if ok:
+                        speakable_override = whisper_text
+                        override_source = 'whisper'
+                    else:
+                        # Whisper hallucinated rather than failed. Keep the
+                        # submitted spelling; never ship invented Awing.
+                        print(f"  ⚠ REJECTED Whisper transcription for "
+                              f"'{target}': '{whisper_text}' ({why})")
+                        print(f"    → No override set. Logged to "
+                              f"contributions/whisper_rejected.json for review.")
+                        _record_whisper_rejection(
+                            target, whisper_text, why, english or '')
+                elif True:
                     # Whisper either isn't installed (banner already printed
                     # by _whisper_transcribe) or produced nothing for this
                     # recording — warn so the user understands this specific
@@ -2075,10 +2186,19 @@ def refetch_audio():
         else:
             whisper_text = _whisper_transcribe(m4a_path, awing_hint=target)
             if whisper_text:
-                speakable_override = whisper_text
-                override_source = 'whisper'
-                transcribed += 1
-            else:
+                ok, why = _whisper_plausible(target, whisper_text)
+                if ok:
+                    speakable_override = whisper_text
+                    override_source = 'whisper'
+                    transcribed += 1
+                else:
+                    print(f"    ⚠ REJECTED Whisper transcription for "
+                          f"'{target}': '{whisper_text}' ({why})")
+                    print(f"      → No override set. Logged to "
+                          f"contributions/whisper_rejected.json for review.")
+                    _record_whisper_rejection(
+                        target, whisper_text, why, english or '')
+            elif True:
                 print(f"    ⚠ Whisper produced no transcription — no override set for '{target}'")
 
         entry = {
