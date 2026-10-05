@@ -211,6 +211,28 @@ echo        Webhooks deployed and verified.
 :step1
 echo.
 
+REM ---- Step 0b: Build-script integrity -------------------------------
+REM v1.24.2 (Session 66p). sync_recordings.py ended mid-token at
+REM 'args = parser.parse_a' from 2026-06-02 to 2026-10-05 -- 11 lines
+REM lost in a truncated write. That fragment is VALID PYTHON, so
+REM py_compile passed and the failure was an AttributeError at run time,
+REM raised before the script printed anything. Step [1b/7] then showed
+REM the generic 'common causes' list below, blaming ffmpeg and the
+REM network, and silently synced nothing for four months.
+REM
+REM A truncated write loses the trailing newline. Checking that one byte
+REM costs nothing and has zero false positives across all 103 scripts.
+echo [0b/7] Checking build scripts are intact...
+python scripts\check_script_integrity.py
+if !ERRORLEVEL! neq 0 (
+    echo.
+    echo        ERROR: a build script is damaged. Build aborted.
+    echo        Restore it from git before continuing - a truncated
+    echo        script fails silently and ships missing content.
+    exit /b 1
+)
+echo.
+
 REM ---- Step 0c: Sync in-app version constants from pubspec.yaml ----
 REM v1.24.2 (Session 66p): build_and_run.sh has run sync_version.py at
 REM [0b/8] since v1.18.1, but this .bat never did -- and the .bat is what

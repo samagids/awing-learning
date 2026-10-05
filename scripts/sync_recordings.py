@@ -770,4 +770,32 @@ def main():
         help='Re-fetch + re-download every entry, even WAVs already on disk. '
              'Default: skip entries whose target WAV already exists locally '
              '(big speedup for re-syncs).')
-    args = parser.parse_a
+    args = parser.parse_args()
+
+    # v1.24.2 (Session 66p) — RESTORED. This file has ended mid-token at
+    # "args = parser.parse_a" since commit 2dd032fa (2026-06-02): the file
+    # grew 701 -> 743 lines and lost its last 11 lines in a truncated
+    # write. The previous commit, 2736bd46, ends cleanly with
+    # sys.exit(main()).
+    #
+    # Because that fragment is VALID PYTHON — an attribute access on
+    # `parser` — nothing caught it. py_compile passes, the import passes,
+    # and the failure is an AttributeError at run time, raised before the
+    # script prints its first line. build_and_run.bat then printed its
+    # generic "common causes" list, which named ffmpeg and the network,
+    # and the real cause was neither.
+    #
+    # So step [1b/7] has silently done nothing for four months, which is
+    # why contributed native recordings never reached the app. The
+    # `force` argument is passed through; it did not exist when the tail
+    # was lost.
+    return sync_recordings(
+        keep_all=args.keep_all,
+        dry_run=args.dry_run,
+        verbose=args.verbose,
+        force=args.force,
+    )
+
+
+if __name__ == '__main__':
+    sys.exit(main())

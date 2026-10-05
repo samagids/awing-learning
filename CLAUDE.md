@@ -12076,3 +12076,57 @@ one, and it is BOTH credited in `audio_contributors.dart` and aliased in
 every future contribution.
 
 His 13 recordings are already shipping in the native tier.
+
+## Session 66p — the two root causes, fixed
+
+### 1. pronunciationFix recordings now reach the app automatically
+
+`apply_contributions.py` archived the `.m4a` to `voice_references/`, queued
+the word in `regenerate_words.json`, printed a summary, and stopped. That
+queue is read only by `generate_audio_edge.py`, which v1.24.0 stopped calling
+when it deleted the six character voices. 358 recordings piled up unused
+while 452 words sat silent.
+
+It now calls `_promote_references_to_native()` right after archiving, which
+delegates to `apply_voice_references_as_native.py` so there is **one**
+conversion implementation — silence-trimmed via `trim_silence.py`, `.opus`
+48 kHz mono plus `.wav` 16 kHz mono, and **never overwriting an existing
+clip**. It never raises: a contribution run must not fail because ffmpeg is
+missing on the machine.
+
+Tested on the live tree: a new reference is promoted, re-running writes
+nothing and leaves the file untouched, a word that already has audio is
+skipped, a missing reference does not crash — and `asset_fingerprint.py`
+returned to the identical baseline hash afterwards.
+
+### 2. sync_recordings.py has been dead since 2026-06-02
+
+The file ended mid-token:
+
+    args = parser.parse_a
+
+Commit `2dd032fa` (v1.17.1+74) grew it 701 → 743 lines and lost the last 11.
+`2736bd46` before it ends cleanly with `sys.exit(main())`.
+
+**Why four months of silence.** That fragment is *valid Python* — an
+attribute access on `parser`. `py_compile` passes. The import passes. The
+failure is an `AttributeError` at run time, raised **before the script prints
+its first line**. `build_and_run.bat` saw a non-zero exit with no output and
+printed its generic "common causes" list, naming ffmpeg and the network. The
+real cause was neither, and I nearly chased ffmpeg because of that banner.
+
+**Read that banner as a list of guesses, never as a diagnosis.**
+
+Restored and verified running: it now reaches its own precondition checks and
+reports them by name. `force` is passed through; it did not exist when the
+tail was lost.
+
+### The guard: `scripts/check_script_integrity.py`, step `[0b/7]`
+
+A truncated write loses the trailing newline. Checking that one byte costs
+nothing and has **zero false positives across all 103 scripts**. It also
+compiles each file, catching the louder truncations that do break syntax
+(Sessions 49c / 60 / 61+). Verified it catches a deliberately truncated copy
+and passes once restored.
+
+Syntax checking alone would never have caught this one — that is the lesson.

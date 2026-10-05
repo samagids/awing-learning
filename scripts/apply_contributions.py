@@ -480,6 +480,66 @@ def _convert_m4a_to_mp3(m4a_path, mp3_path):
         return False
 
 
+def _promote_references_to_native(keys):
+    """Convert freshly archived voice references into native audio clips.
+
+    Delegates to scripts/apply_voice_references_as_native.py so there is
+    one implementation of the conversion: silence-trimmed via
+    scripts/trim_silence.py, written as .opus (48 kHz mono, playback) plus
+    .wav (16 kHz mono, the pronunciation grader reference), and skipped
+    entirely when the word already has a clip.
+
+    Trimming is the reason this delegates rather than shelling out to
+    ffmpeg here. Raw submissions carry the pause either side of the word;
+    untrimmed, the median clip measured 1.68s against 0.56s for audio
+    already shipping, worst case 9.34s.
+
+    Returns the number of clips written. Never raises -- a contribution
+    run must not fail because audio tooling is missing on this machine.
+    """
+    if not keys:
+        return 0
+    try:
+        import importlib.util
+        mod_path = os.path.join(SCRIPT_DIR, 'apply_voice_references_as_native.py')
+        if not os.path.exists(mod_path):
+            print('  (apply_voice_references_as_native.py not found -- '
+                  'recordings archived but not promoted)')
+            return 0
+        spec = importlib.util.spec_from_file_location('_promote', mod_path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        if not mod.have_ffmpeg():
+            print('  (ffmpeg not on PATH -- recordings archived but not '
+                  'promoted; re-run after installing ffmpeg)')
+            return 0
+
+        out_dir = os.path.join(mod.NATIVE_DIR, mod.DEFAULT_CATEGORY)
+        written = 0
+        for key in keys:
+            src = os.path.join(mod.REFS_DIR, key + '.m4a')
+            if not os.path.exists(src):
+                continue
+            if mod.existing_native(key):
+                continue          # never overwrite a clip that exists
+            os.makedirs(out_dir, exist_ok=True)
+            status, detail = mod.convert(
+                src,
+                os.path.join(out_dir, key + '.opus'),
+                os.path.join(out_dir, key + '.wav'))
+            if status == 'ok':
+                written += 1
+            elif status == 'silent':
+                print(f'  ⚠ {key}: recording is entirely silent — not shipped')
+            else:
+                print(f'  ⚠ {key}: could not promote ({detail})')
+        return written
+    except Exception as e:
+        print(f'  (promotion to native tier failed: {e!s:.120})')
+        return 0
+
+
 def _archive_voice_reference(audio_url, awing_word, dry_run=False):
     """Download the developer's recording and save it as a REFERENCE file
     at contributions/voice_references/{key}.m4a.
@@ -2029,14 +2089,35 @@ def apply_contributions(contributions, dry_run=False, skip_applied=True):
             print(f"\n✓ Wrote {len(regenerate_words)} word(s) to {REGENERATE_FILE}")
             print(f"  Edge TTS will force-regenerate these words for all 6 voices")
 
-        # Summarize archived voice references. These are training material
-        # for future fine-tuning of the character voices — the app never
-        # plays them directly.
+        # v1.24.2 (Session 66p) — PROMOTE the recordings into the native
+        # tier the app actually plays.
+        #
+        # Until now this step only printed a summary. The design was
+        # "reference only": the recording trained Edge TTS, which
+        # re-synthesised the word in six character voices so the learner
+        # heard a mode-appropriate voice rather than the contributor's.
+        #
+        # v1.24.0 deleted those six voices. Nothing replaced the last
+        # step, so the chain ended at regenerate_words.json — a queue only
+        # generate_audio_edge.py reads, and build_and_run.bat never calls
+        # it. Every recording approved since then went nowhere: 358 of
+        # them had piled up unused while 452 words sat silent in the app.
+        #
+        # The choice now is this recording or silence, so promote it.
+        # Never overwrites an existing clip; only fills silence.
         if archived_references:
             print(f"\n✓ Archived {len(archived_references)} developer recording(s) "
                   f"to {VOICE_REFERENCES_DIR}")
-            print(f"  These are future training material — the app plays the "
-                  f"character TTS voices, not the recording itself.")
+            promoted = _promote_references_to_native(
+                [r['key'] for r in archived_references])
+            if promoted:
+                print(f"  ✓ Promoted {promoted} into audio/native/vocabulary/ "
+                      f"— these words will now speak in the app.")
+                print(f"  Re-run build_and_run.bat so [4c/7] re-uploads the "
+                      f"PAD bundle, or CI will build without them.")
+            else:
+                print(f"  No new native clips (every word already had audio, "
+                      f"or ffmpeg/pydub is unavailable).")
 
         # Archive the processed file
         os.makedirs(APPLIED_DIR, exist_ok=True)
