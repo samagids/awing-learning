@@ -12481,3 +12481,41 @@ They do not ship, but any of them will report nonsense until pointed at
       grep -qE "def _?audio_key|def image_key" "scripts/$f" || continue
       grep -q "from awing_key import" "scripts/$f" && echo "OK  $f" || echo "!!  $f"
     done
+
+### I broke [4/7] while fixing the fifth derivation
+
+    NameError: name 'ENGLISH_SLUG_MAX' is not defined
+
+My patch to `generate_images.py` replaced `audio_key()` by cutting from its
+`def` **to the next `def`** — and `ENGLISH_SLUG_MAX = 32` sat between the two
+functions. The constant went with it.
+
+**Neither existing guard caught it.** The file still compiled, and it still
+ended with a newline, so `py_compile` and the trailing-newline test both
+passed. It died at run time, two steps into the build.
+
+Audited the other five patches made the same day for the same mistake:
+`cleanup_assets.py`, `sync_recordings.py`, `apply_recordings_as_audio.py`,
+`build_native_audio_manifest.py`, `apply_contributions.py` — **none lost a
+constant.** Only `generate_images.py` did.
+
+### check_script_integrity.py now runs pyflakes
+
+An undefined name is precisely the signature of a lost constant or import,
+and pyflakes finds it in milliseconds **without importing the module** —
+which matters here, since importing `generate_images.py` pulls in torch.
+
+Verified: with the constant removed it exits 1 naming the exact line; with it
+restored, 0.
+
+**Scoped to the build path.** Only the scripts `build_and_run.bat` actually
+invokes can fail the build; anything else is reported as a NOTE. The first
+run proved why — it found a genuine `undefined name
+'WEB_SINGLE_FILE_SOURCES'` in `build_bible_parallel.py`, a Bible-corpus tool
+that has not been part of this app since v1.12.3+59. Worth knowing, not worth
+blocking a release.
+
+**When replacing a function with a patch script, cut to the next `def` at the
+same indentation AND check what the diff removed.** The one-liner:
+
+    git diff <commit>~1 <commit> -- <file> | grep -E "^-[A-Za-z_]+ *="

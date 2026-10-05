@@ -1870,6 +1870,20 @@ def english_slug(english: str) -> str:
     return s
 
 
+# Maximum chars of the english slug appended to image filenames. Keeps
+# `{audio_key}__{english_slug}.png` filenames well under common filesystem
+# limits (Windows MAX_PATH + PAD asset name sanity) even when audio_key is
+# itself long (phrase_*/sentence_*/story_* namespaces already cap at 60).
+#
+# v1.24.2 (Session 66p): this was deleted by accident when audio_key()
+# above was replaced - the patch ran to the next "def", swallowing the
+# constant that sat between the two functions. The file still COMPILED
+# and still ended with a newline, so neither py_compile nor
+# check_script_integrity.py caught it; the build died at [4/7] with
+# NameError: name 'ENGLISH_SLUG_MAX' is not defined.
+ENGLISH_SLUG_MAX = 32
+
+
 def image_key(awing_word: str, english: str) -> str:
     """Filename key for the illustration of a single AwingWord entry.
 
