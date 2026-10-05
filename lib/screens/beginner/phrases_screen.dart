@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/image_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
@@ -226,14 +227,13 @@ class _PhraseCardState extends State<_PhraseCard> {
                       ),
                     ),
                   ),
-                  // Play button
-                  IconButton(
-                    onPressed: () => widget.pronunciation.speakSentence(
-                      phrase.awing,
-                      clipKey: phrase.clipKey,
-                    ),
-                    icon: Icon(Icons.volume_up, color: color),
-                    tooltip: 'Hear this phrase',
+                  // Play button. A phrase is not a word, so an unrecorded
+                  // one says so rather than offering the word recorder.
+                  AwingAudioButton(
+                    awing: phrase.awing,
+                    clipKey: phrase.clipKey,
+                    color: color,
+                    offerToRecord: false,
                   ),
                 ],
               ),

@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 /// Simple Awing sentences for the Medium module
 class AwingSentence {
@@ -10878,13 +10878,11 @@ class SentencesScreen extends StatefulWidget {
 }
 
 class _SentencesScreenState extends State<SentencesScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
   int _selectedMode = 0; // 0 = Reading, 1 = Building
 
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('medium_sentences');
     });
@@ -10925,8 +10923,8 @@ class _SentencesScreenState extends State<SentencesScreen> {
           // Content
           Expanded(
             child: _selectedMode == 0
-                ? _ReadingMode(pronunciation: _pronunciation)
-                : _BuildingMode(pronunciation: _pronunciation),
+                ? const _ReadingMode()
+                : const _BuildingMode(),
           ),
         ],
       ),
@@ -10974,9 +10972,7 @@ class _ModeTab extends StatelessWidget {
 }
 
 class _ReadingMode extends StatefulWidget {
-  final PronunciationService pronunciation;
-
-  const _ReadingMode({required this.pronunciation});
+  const _ReadingMode();
 
   @override
   State<_ReadingMode> createState() => _ReadingModeState();
@@ -11029,7 +11025,6 @@ class _ReadingModeState extends State<_ReadingMode> {
             itemCount: mediumSentences.length,
             itemBuilder: (context, index) => _SentenceCard(
               sentence: mediumSentences[index],
-              pronunciation: widget.pronunciation,
             ),
           ),
         ),
@@ -11040,11 +11035,9 @@ class _ReadingModeState extends State<_ReadingMode> {
 
 class _SentenceCard extends StatelessWidget {
   final AwingSentence sentence;
-  final PronunciationService pronunciation;
 
   const _SentenceCard({
     required this.sentence,
-    required this.pronunciation,
   });
 
   @override
@@ -11084,17 +11077,13 @@ class _SentenceCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  height: 40,
-                  child: FloatingActionButton.extended(
-                    backgroundColor: Colors.orange,
-                    onPressed: () => pronunciation.speakAwing(sentence.awing),
-                    icon: const Icon(Icons.volume_up, color: Colors.white),
-                    label: const Text(
-                      'Hear It',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+                AwingAudioActionButton(
+                  awing: sentence.awing,
+                  playColor: Colors.orange,
+                  // A sentence, not a word: the recorder is word-oriented,
+                  // so show "No recording" rather than send the user
+                  // somewhere that cannot accept this.
+                  offerToRecord: false,
                 ),
               ],
             ),
@@ -11145,10 +11134,15 @@ class _SentenceCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    FloatingActionButton.small(
-                      backgroundColor: Colors.blue,
-                      onPressed: () => pronunciation.speakAwing(word.word),
-                      child: const Icon(Icons.volume_up, color: Colors.white),
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        shape: BoxShape.circle,
+                      ),
+                      child: AwingAudioButton(
+                        awing: word.word,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -11162,9 +11156,7 @@ class _SentenceCard extends StatelessWidget {
 }
 
 class _BuildingMode extends StatefulWidget {
-  final PronunciationService pronunciation;
-
-  const _BuildingMode({required this.pronunciation});
+  const _BuildingMode();
 
   @override
   State<_BuildingMode> createState() => _BuildingModeState();

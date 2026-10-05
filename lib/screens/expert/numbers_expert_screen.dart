@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 
 /// Expert-level screen for advanced Awing numbers:
@@ -17,7 +17,6 @@ class NumbersExpertScreen extends StatefulWidget {
 
 class _NumbersExpertScreenState extends State<NumbersExpertScreen>
     with SingleTickerProviderStateMixin {
-  final PronunciationService _pronunciation = PronunciationService();
   late TabController _tabController;
   int? _selectedIndex;
 
@@ -46,7 +45,6 @@ class _NumbersExpertScreenState extends State<NumbersExpertScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('expert_numbers');
     });
@@ -128,10 +126,7 @@ class _NumbersExpertScreenState extends State<NumbersExpertScreen>
                 digit: digitValue,
                 word: word,
                 isSelected: isSelected,
-                onTap: () {
-                  setState(() => _selectedIndex = index);
-                  _pronunciation.speakAwing(word.awing);
-                },
+                onTap: () => setState(() => _selectedIndex = index),
               ),
             );
           }),
@@ -218,10 +213,7 @@ class _NumbersExpertScreenState extends State<NumbersExpertScreen>
                 digit: digitValue,
                 word: word,
                 isSelected: isSelected,
-                onTap: () {
-                  setState(() => _selectedIndex = index);
-                  _pronunciation.speakAwing(word.awing);
-                },
+                onTap: () => setState(() => _selectedIndex = index),
               ),
             );
           }),
@@ -233,56 +225,58 @@ class _NumbersExpertScreenState extends State<NumbersExpertScreen>
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () => _pronunciation.speakAwing(thousandItems.first.awing),
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    gradient: LinearGradient(
-                      colors: [Colors.red.shade600, Colors.red.shade900],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  gradient: LinearGradient(
+                    colors: [Colors.red.shade600, Colors.red.shade900],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    const Text(
+                      '1000',
+                      style: TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      const Text(
-                        '1000',
-                        style: TextStyle(
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(width: 24),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              thousandItems.first.awing,
-                              style: const TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
+                    const SizedBox(width: 24),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            thousandItems.first.awing,
+                            style: const TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
-                            const SizedBox(height: 4),
-                            const Text(
-                              'one thousand',
-                              style: TextStyle(fontSize: 16, color: Colors.white70),
-                            ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            'one thousand',
+                            style: TextStyle(fontSize: 16, color: Colors.white70),
+                          ),
+                        ],
                       ),
-                      const Icon(Icons.volume_up, color: Colors.white, size: 32),
-                    ],
-                  ),
+                    ),
+                    AwingAudioButton(
+                      awing: thousandItems.first.awing,
+                      word: thousandItems.first,
+                      iconSize: 32,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -504,10 +498,10 @@ class _ExpertNumberCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              Icons.volume_up,
-              color: isSelected ? Colors.white : Colors.red.withOpacity(0.5),
-              size: 24,
+            AwingAudioButton(
+              awing: word.awing,
+              word: word,
+              color: isSelected ? Colors.white : Colors.red,
             ),
           ],
         ),

@@ -29,7 +29,7 @@ Professional HTML privacy policy with:
 **Usage:** 
 - Host on web server and link in Play Console
 - Or upload directly to GitHub Pages
-- URL example: `https://samagids.github.io/awing-ai-learning/privacy`
+- Live URL: `https://samagids.github.io/awing-legal/privacy`
 
 ### 3. **privacy.md** (Markdown Version)
 GitHub Pages compatible markdown version of the privacy policy.
@@ -37,7 +37,7 @@ GitHub Pages compatible markdown version of the privacy policy.
 - Better for version control (in Git)
 - Renders nicely on GitHub
 
-**Usage:** Place in `/docs/privacy.md` on GitHub, GitHub Pages auto-publishes at `https://samagids.github.io/repo-name/privacy`
+**Usage:** `docs/privacy.md` in THIS repo is the source of truth. The published copy lives in the public **samagids/awing-legal** repo (see `site_legal/` and its `PUSH_ME.txt`), because this repo is private and GitHub Pages needs a public one.
 
 ### 4. **SUBMISSION_GUIDE.md** (Step-by-Step Instructions)
 Complete walkthrough for submitting to Google Play:
@@ -64,8 +64,7 @@ Complete walkthrough for submitting to Google Play:
 2. **Go to [Google Play Console](https://play.google.com/console)**
 3. **Paste into Store Listing > Main store listing**
 4. **Upload privacy policy:**
-   - Option A: Host `privacy_policy.html` on web server
-   - Option B: Use GitHub Pages URL: `https://samagids.github.io/awing-ai-learning/privacy`
+   - Use the live GitHub Pages URL: `https://samagids.github.io/awing-legal/privacy`
 5. **Follow `SUBMISSION_GUIDE.md`** for remaining steps
 
 ### For First-Time Setup:
@@ -120,11 +119,13 @@ Complete walkthrough for submitting to Google Play:
 
 After hosting, use these URLs in Play Console:
 
-**Option 1: GitHub Pages (Recommended)**
+**GitHub Pages — live**
 ```
-https://samagids.github.io/awing-ai-learning/privacy
+https://samagids.github.io/awing-legal/privacy
+https://samagids.github.io/awing-legal/support
 ```
-(Place `privacy.md` in `/docs/` folder on GitHub, enable GitHub Pages)
+Served from the public **samagids/awing-legal** repo. Do NOT add `.html` to
+these paths: Jekyll renders `privacy.md` to `/privacy`.
 
 **Option 2: Personal Website**
 ```
@@ -132,11 +133,8 @@ https://your-domain.com/awing-privacy-policy.html
 ```
 (Upload `privacy_policy.html` to your server)
 
-**Option 3: Direct GitHub Raw**
-```
-https://raw.githubusercontent.com/samagids/awing-ai-learning/main/docs/privacy.md
-```
-(Use raw GitHub link, though plain markdown renders less nicely)
+**Do NOT use a raw.githubusercontent link.** The app repo is private, so a
+raw link needs a token and returns 404 to a store reviewer.
 
 ---
 
@@ -180,8 +178,8 @@ Before submitting, verify:
 
 **Developer:** Dr. Guidion Sama, DIT  
 **Email:** samagids@gmail.com  
-**GitHub:** https://github.com/samagids/awing-ai-learning  
-**App Homepage:** https://github.com/samagids/awing-ai-learning
+**GitHub (private, not for store listings):** https://github.com/samagids/awing-learning  
+**App Homepage (public — use this one):** https://samagids.github.io/awing-legal/
 
 ---
 

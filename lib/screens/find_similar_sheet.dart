@@ -25,8 +25,8 @@
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/services/model_service.dart';
 import 'package:awing_ai_learning/services/vocab_embeddings.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 /// Show the Find Similar Words bottom sheet for [awing] / [english].
 void showFindSimilarSheet(
@@ -52,7 +52,6 @@ class _FindSimilarSheet extends StatefulWidget {
 }
 
 class _FindSimilarSheetState extends State<_FindSimilarSheet> {
-  final PronunciationService _pronunciation = PronunciationService();
   bool _loading = true;
   String? _error;
   List<MapEntry<String, double>> _neighbors = [];
@@ -60,7 +59,6 @@ class _FindSimilarSheetState extends State<_FindSimilarSheet> {
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     _findNeighbors();
   }
 
@@ -234,71 +232,65 @@ class _FindSimilarSheetState extends State<_FindSimilarSheet> {
           elevation: 1,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(14),
-            onTap: () => _pronunciation.speakAwing(aw),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 64,
-                    height: 64,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: PackImage(
-                        awingWord: aw,
-                        english: en,
-                        fit: BoxFit.cover,
-                      ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 64,
+                  height: 64,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: PackImage(
+                      awingWord: aw,
+                      english: en,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(aw,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 2),
-                        Text(en,
-                            style: TextStyle(
-                                fontSize: 13, color: Colors.grey.shade700),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: Colors.deepPurple.shade50,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                'AI match $pct%',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.deepPurple.shade700,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(aw,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 2),
+                      Text(en,
+                          style: TextStyle(
+                              fontSize: 13, color: Colors.grey.shade700),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurple.shade50,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              'AI match $pct%',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.deepPurple.shade700,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    tooltip: 'Hear it',
-                    icon: Icon(Icons.volume_up,
-                        color: Colors.deepPurple.shade400),
-                    onPressed: () => _pronunciation.speakAwing(aw),
-                  ),
-                ],
-              ),
+                ),
+                AwingAudioButton(
+                  awing: aw,
+                  color: Colors.deepPurple.shade400,
+                ),
+              ],
             ),
           ),
         );

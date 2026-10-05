@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/services/word_gloss.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/widgets/ai_mode_toggle.dart';
 import 'package:awing_ai_learning/widgets/wrong_translation_reporter.dart';
 import 'package:awing_ai_learning/components/awing_text_field.dart';
@@ -367,17 +367,16 @@ class _SentenceTranslateScreenState extends State<SentenceTranslateScreen> {
           ),
           if (token.awing != null && _englishToAwing) ...[
             const SizedBox(width: 4),
-            InkWell(
-              onTap: () async {
-                try {
-                  await PronunciationService().speakAwing(token.awing!);
-                } catch (_) {}
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(4),
-                child: Icon(Icons.volume_up,
-                    size: 18, color: color.shade700),
-              ),
+            // Inside a token chip, so it keeps the chip's tap target. The
+            // recorder is not offered here: it would navigate away from a
+            // sentence the user is part way through translating.
+            AwingAudioButton(
+              awing: token.awing!,
+              iconSize: 18,
+              color: color.shade700,
+              padding: const EdgeInsets.all(4),
+              constraints: const BoxConstraints(),
+              offerToRecord: false,
             ),
           ],
         ],

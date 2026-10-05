@@ -168,8 +168,18 @@ samagids@gmail.com
 
 ### PRIVACY POLICY URL
 ```
-https://samagids.github.io/awing-ai-learning/privacy
+https://samagids.github.io/awing-legal/privacy
 ```
+
+### SUPPORT URL
+```
+https://samagids.github.io/awing-legal/support
+```
+
+Both are served by the public repo **samagids/awing-legal**, which exists
+only to hold these two pages. The app repo (samagids/awing-learning) is
+private, and GitHub Pages needs a public repo on the free plan — which is
+why the old `samagids.github.io/awing-ai-learning/privacy` never resolved.
 
 ---
 

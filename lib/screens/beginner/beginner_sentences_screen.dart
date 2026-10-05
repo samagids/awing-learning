@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/screens/medium/sentences_screen.dart'
     show AwingSentence, beginnerSentences;
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 /// Beginner-mode short everyday sentences (≤ 5 Awing words).
 /// Sourced from the 2007 Awing English Dictionary, filtered by length.
@@ -15,12 +15,6 @@ class BeginnerSentencesScreen extends StatefulWidget {
 
 class _BeginnerSentencesScreenState extends State<BeginnerSentencesScreen> {
   int _index = 0;
-  // PronunciationService is a plain singleton in this codebase (not Provided
-  // via Provider.of). Session 64 fix: instantiate directly to match the
-  // beginner_home.dart / expert_home.dart pattern. Provider.of was throwing
-  // ProviderNotFoundException at build time → grey screen with no AppBar.
-  final PronunciationService _pronunciation = PronunciationService();
-
   void _next() {
     setState(() {
       _index = (_index + 1) % beginnerSentences.length;
@@ -96,15 +90,14 @@ class _BeginnerSentencesScreenState extends State<BeginnerSentencesScreen> {
                                     fontSize: 28, height: 1.4),
                               ),
                               const SizedBox(height: 16),
-                              ElevatedButton.icon(
-                                onPressed: () =>
-                                    _pronunciation.speakAwing(s.awing),
-                                icon: const Icon(Icons.volume_up),
-                                label: const Text('Hear it'),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green.shade400,
-                                  foregroundColor: Colors.white,
-                                ),
+                              AwingAudioActionButton(
+                                awing: s.awing,
+                                playColor: Colors.green.shade400,
+                                // A sentence, not a word: the recorder is
+                                // word-oriented, so show "No recording"
+                                // rather than send the user somewhere that
+                                // cannot accept this.
+                                offerToRecord: false,
                               ),
                             ],
                           ),

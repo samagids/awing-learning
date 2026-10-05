@@ -471,8 +471,58 @@ def get_script_id(name):
 
 # ==================== Step 1: Deploy Webhooks ====================
 
+def _gs_fingerprint(gs_file):
+    """sha256 of the .gs source we are about to deploy."""
+    import hashlib
+    try:
+        return hashlib.sha256(gs_file.read_bytes()).hexdigest()
+    except OSError:
+        return None
+
+
+def _deployed_fingerprint(name):
+    """Fingerprint recorded the last time `name` was actually deployed."""
+    return (load_webhooks().get("deployed_hashes") or {}).get(name)
+
+
+def _existing_url(config_key):
+    """The deployment URL currently recorded for this webhook, or None."""
+    return load_webhooks().get(f"{config_key}_url") or None
+
+
+def _record_fingerprint(name, fingerprint):
+    """Persist the fingerprint of what is now live for `name`."""
+    try:
+        data = load_webhooks()
+        data.setdefault("deployed_hashes", {})[name] = fingerprint
+        CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+        with open(WEBHOOKS_FILE, "w") as f:
+            json.dump(data, f, indent=2)
+            f.write("\n")
+    except Exception as exc:
+        print(f"  (could not record fingerprint for {name}: {exc})")
+
+
 def deploy_webhooks():
-    """Copy latest .gs files, push, deploy, and update webhooks.json."""
+    """Copy latest .gs files, push, deploy, and update webhooks.json.
+
+    SKIPS a webhook entirely when its .gs is byte-identical to what is
+    already live.
+
+    Apps Script has TWO separate quotas and this script only ever guarded
+    one of them. `cleanup_old_deployments()` keeps us under the 20
+    *deployment* cap — but `clasp undeploy` does not free *versions*, and
+    every push+deploy mints one. Running this on every single build walked
+    the contributions project to the 200-version cap:
+
+        Cannot create more versions: Script has reached the limit of 200
+        versions. To create more, delete a version from the project
+        history page.
+
+    which aborted the whole v1.24.0 build even though the webhook code had
+    not changed in weeks. Deploying unchanged code was always pointless;
+    now it is also harmless.
+    """
     print("\n" + "=" * 60)
     print("  [1/4] Deploy Google Apps Script Webhooks")
     print("=" * 60)
@@ -504,6 +554,27 @@ def deploy_webhooks():
 
         if not project_dir.exists():
             print(f"  ERROR: {project_dir} not found. Run clasp create first.")
+            continue
+
+        # Nothing to do if what we would push is already live. Saves an
+        # Apps Script VERSION, which is a finite, non-reclaimable resource
+        # (200 per script, and undeploy does not give them back).
+        fingerprint = _gs_fingerprint(gs_file)
+        existing_url = _existing_url(name)
+        if (fingerprint
+                and fingerprint == _deployed_fingerprint(name)
+                and existing_url):
+            print(f"  {gs_file.name} unchanged since last deploy "
+                  f"— skipping push/deploy (saves an Apps Script version).")
+            # KEY MUST MATCH THE DEPLOY PATH: that one writes
+            # urls[f"{name}_url"]. Writing urls[name] here looked harmless -
+            # the URL was still carried forward - but the required-webhook
+            # check below tests for 'contributions_url', so a skipped deploy
+            # failed the build with "contributions_url was not
+            # deployed/verified" while the webhook was in fact live and
+            # unchanged. It also wrote junk "analytics"/"contributions" keys
+            # into webhooks.json alongside the real ones.
+            urls[f"{name}_url"] = existing_url
             continue
 
         # Copy latest .gs code
@@ -581,6 +652,11 @@ def deploy_webhooks():
                 continue
 
         url = f"https://script.google.com/macros/s/{deploy_id}/exec"
+
+        # Remember exactly what is live, so the next build can skip this
+        # whole step instead of burning another Apps Script version.
+        if fingerprint:
+            _record_fingerprint(name, fingerprint)
 
         # Final verify on the new versioned URL. Apps Script sometimes
         # takes ~5-15s to propagate a fresh deployment (especially right

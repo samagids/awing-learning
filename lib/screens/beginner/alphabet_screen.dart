@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_alphabet.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 class AlphabetScreen extends StatefulWidget {
   const AlphabetScreen({Key? key}) : super(key: key);
@@ -15,13 +15,11 @@ class AlphabetScreen extends StatefulWidget {
 class _AlphabetScreenState extends State<AlphabetScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final PronunciationService _pronunciation = PronunciationService();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('beginner_alphabet');
     });
@@ -54,8 +52,8 @@ class _AlphabetScreenState extends State<AlphabetScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          _LetterGrid(letters: awingVowels, pronunciation: _pronunciation),
-          _LetterGrid(letters: awingConsonants, pronunciation: _pronunciation),
+          _LetterGrid(letters: awingVowels),
+          _LetterGrid(letters: awingConsonants),
         ],
       ),
     );
@@ -64,9 +62,7 @@ class _AlphabetScreenState extends State<AlphabetScreen>
 
 class _LetterGrid extends StatelessWidget {
   final List<AwingLetter> letters;
-  final PronunciationService pronunciation;
-
-  const _LetterGrid({required this.letters, required this.pronunciation});
+  const _LetterGrid({required this.letters});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +71,7 @@ class _LetterGrid extends StatelessWidget {
       itemCount: letters.length,
       itemBuilder: (context, index) {
         final letter = letters[index];
-        return _LetterCard(letter: letter, pronunciation: pronunciation);
+        return _LetterCard(letter: letter);
       },
     );
   }
@@ -83,9 +79,7 @@ class _LetterGrid extends StatelessWidget {
 
 class _LetterCard extends StatefulWidget {
   final AwingLetter letter;
-  final PronunciationService pronunciation;
-
-  const _LetterCard({required this.letter, required this.pronunciation});
+  const _LetterCard({required this.letter});
 
   @override
   State<_LetterCard> createState() => _LetterCardState();
@@ -166,18 +160,16 @@ class _LetterCardState extends State<_LetterCard> {
                       ],
                     ),
                   ),
-                  // Speak sound button
-                  IconButton(
-                    onPressed: () =>
-                        widget.pronunciation.speakSound(letter.letter),
-                    icon: Icon(
-                      Icons.volume_up,
-                      color: isVowel
-                          ? Colors.purple.shade400
-                          : Colors.blue.shade400,
-                    ),
-                    tooltip: 'Hear the sound',
+                  // Speaker when a native recording exists, invitation to
+                  // record when it does not. speakAwing() searches the
+                  // 'alphabet' category too, so a letter resolves the same
+                  // asset speakSound() used to.
+                  AwingAudioButton(
+                    awing: letter.letter,
                     iconSize: 28,
+                    color: isVowel
+                        ? Colors.purple.shade400
+                        : Colors.blue.shade400,
                   ),
                   Icon(
                     _expanded
@@ -232,16 +224,11 @@ class _LetterCardState extends State<_LetterCard> {
                               ],
                             ),
                           ),
-                          // Speak example word button
-                          IconButton(
-                            onPressed: () => widget.pronunciation
-                                .speakAwing(letter.exampleWord),
-                            icon: Icon(
-                              Icons.play_circle_fill,
-                              color: Colors.green.shade600,
-                            ),
-                            tooltip: 'Hear the word',
+                          // Speak example word, or offer to record it.
+                          AwingAudioButton(
+                            awing: letter.exampleWord,
                             iconSize: 32,
+                            color: Colors.green.shade600,
                           ),
                         ],
                       ),

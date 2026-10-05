@@ -151,12 +151,22 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Text(
-                            'Awing',
-                            style: TextStyle(
-                              fontSize: 42,
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFF006432),
+                          // Flexible + scaleDown: "Awing Learning" at 42px
+                          // is ~340px of text, which overflows this Row on
+                          // a 360dp phone once the 44px icon is allowed for.
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Awing Learning',
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 42,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFF006432),
+                                ),
+                              ),
                             ),
                           ),
                         ],

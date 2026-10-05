@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 
 /// Medium-level screen for learning Awing numbers 11-100.
@@ -129,10 +130,7 @@ class _NumbersMediumScreenState extends State<NumbersMediumScreen>
                 word: word,
                 isSelected: isSelected,
                 color: Colors.orange,
-                onTap: () {
-                  setState(() => _selectedIndex = index);
-                  _pronunciation.speakAwing(word.awing);
-                },
+                onTap: () => setState(() => _selectedIndex = index),
               ),
             );
           }),
@@ -199,10 +197,7 @@ class _NumbersMediumScreenState extends State<NumbersMediumScreen>
                 word: word,
                 isSelected: isSelected,
                 color: Colors.deepOrange,
-                onTap: () {
-                  setState(() => _selectedIndex = index);
-                  _pronunciation.speakAwing(word.awing);
-                },
+                onTap: () => setState(() => _selectedIndex = index),
               ),
             );
           }),
@@ -262,58 +257,60 @@ class _NumbersMediumScreenState extends State<NumbersMediumScreen>
             final digit = word.english == 'hundred' ? 100 : 1000;
             return Padding(
               padding: const EdgeInsets.only(bottom: 12),
-              child: GestureDetector(
-                onTap: () => _pronunciation.speakAwing(word.awing),
-                child: Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      gradient: LinearGradient(
-                        colors: [Colors.orange.shade300, Colors.deepOrange.shade400],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+              child: Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    gradient: LinearGradient(
+                      colors: [Colors.orange.shade300, Colors.deepOrange.shade400],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '$digit',
+                        style: const TextStyle(
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          '$digit',
-                          style: const TextStyle(
-                            fontSize: 48,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(width: 24),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                word.awing,
-                                style: const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              word.awing,
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                word.english,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white70,
-                                ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              word.english,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        const Icon(Icons.volume_up, color: Colors.white, size: 32),
-                      ],
-                    ),
+                      ),
+                      AwingAudioButton(
+                        awing: word.awing,
+                        word: word,
+                        iconSize: 32,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -452,10 +449,10 @@ class _NumberCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              Icons.volume_up,
-              color: isSelected ? Colors.white : color.withOpacity(0.6),
-              size: 24,
+            AwingAudioButton(
+              awing: word.awing,
+              word: word,
+              color: isSelected ? Colors.white : color,
             ),
           ],
         ),

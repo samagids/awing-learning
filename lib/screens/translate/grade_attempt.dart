@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/services/word_gloss.dart';
 import 'package:awing_ai_learning/services/dictionary_lookup.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/widgets/ai_mode_toggle.dart';
 import 'package:awing_ai_learning/components/awing_text_field.dart';
 import 'package:awing_ai_learning/widgets/wrong_translation_reporter.dart';
@@ -378,17 +378,15 @@ class _GradeAttemptScreenState extends State<GradeAttemptScreen> {
           ),
           if (g.level != _GradeLevel.notFound) ...[
             const SizedBox(width: 4),
-            InkWell(
-              onTap: () async {
-                try {
-                  await PronunciationService().speakAwing(g.source);
-                } catch (_) {}
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(4),
-                child: Icon(Icons.volume_up,
-                    size: 16, color: color.shade700),
-              ),
+            // A graded token chip. No record offer: the user is reading a
+            // result and should not be navigated out of it.
+            AwingAudioButton(
+              awing: g.source,
+              iconSize: 16,
+              color: color.shade700,
+              padding: const EdgeInsets.all(4),
+              constraints: const BoxConstraints(),
+              offerToRecord: false,
             ),
           ],
         ],

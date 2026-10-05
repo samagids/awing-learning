@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 class ConversationScreen extends StatefulWidget {
   const ConversationScreen({Key? key}) : super(key: key);
@@ -11,7 +11,6 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
   int _currentConversationIndex = 0;
   int _currentLineIndex = 0;
   bool _showEnglish = false;
@@ -19,7 +18,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('expert_conversation');
     });
@@ -196,16 +194,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       Row(
                         children: [
                           Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () => _pronunciation.speakAwing(currentLine['awing']!),
-                              icon: const Icon(Icons.volume_up),
-                              label: const Text('Hear it'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: currentLine['speaker'] == 'Person A'
-                                    ? Colors.blue
-                                    : Colors.green,
-                                foregroundColor: Colors.white,
-                              ),
+                            child: AwingAudioActionButton(
+                              awing: currentLine['awing']!,
+                              playColor: currentLine['speaker'] == 'Person A'
+                                  ? Colors.blue
+                                  : Colors.green,
+                              // A whole dialogue line, not a word — the
+                              // recorder takes an AwingWord.
+                              offerToRecord: false,
                             ),
                           ),
                           const SizedBox(width: 12),

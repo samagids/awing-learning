@@ -252,12 +252,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        'Awing',
-                        style: TextStyle(
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFF006432),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'Awing Learning',
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 48,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF006432),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 8),

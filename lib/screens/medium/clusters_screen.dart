@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_tones.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 class ClustersScreen extends StatefulWidget {
   const ClustersScreen({Key? key}) : super(key: key);
@@ -12,13 +12,11 @@ class ClustersScreen extends StatefulWidget {
 }
 
 class _ClustersScreenState extends State<ClustersScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
   int _selectedTabIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('medium_clusters');
     });
@@ -79,7 +77,6 @@ class _ClustersScreenState extends State<ClustersScreen> {
       itemCount: clusters.length,
       itemBuilder: (context, index) => _ClusterCard(
         cluster: clusters[index],
-        pronunciation: _pronunciation,
       ),
     );
   }
@@ -128,11 +125,9 @@ class _TabButton extends StatelessWidget {
 
 class _ClusterCard extends StatelessWidget {
   final ConsonantCluster cluster;
-  final PronunciationService pronunciation;
 
   const _ClusterCard({
     required this.cluster,
-    required this.pronunciation,
   });
 
   @override
@@ -224,10 +219,18 @@ class _ClusterCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                FloatingActionButton.small(
-                  backgroundColor: Colors.orange,
-                  onPressed: () => pronunciation.speakAwing(cluster.exampleWord),
-                  child: const Icon(Icons.volume_up, color: Colors.white),
+                // Was a FloatingActionButton.small playing unconditionally.
+                // The component renders an IconButton, so it sits in a
+                // circle of the same colour to keep the original look.
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    shape: BoxShape.circle,
+                  ),
+                  child: AwingAudioButton(
+                    awing: cluster.exampleWord,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),

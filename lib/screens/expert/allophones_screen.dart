@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_tones.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 /// Expert-level screen teaching consonant allophonic rules.
 /// Based on "A Phonological Sketch of Awing" (van den Berg, 2009).
@@ -14,13 +14,11 @@ class AllophonesScreen extends StatefulWidget {
 }
 
 class _AllophonesScreenState extends State<AllophonesScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
   int _currentRuleIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('expert_allophones');
     });
@@ -245,10 +243,9 @@ class _AllophonesScreenState extends State<AllophonesScreen> {
                       ],
                     ),
                   ),
-                  IconButton(
-                    tooltip: 'Hear it',
-                    icon: const Icon(Icons.volume_up, color: Colors.red),
-                    onPressed: () => _pronunciation.speakAwing(ex['word']!),
+                  AwingAudioButton(
+                    awing: ex['word']!,
+                    color: Colors.red,
                   ),
                 ],
               ),

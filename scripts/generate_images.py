@@ -28,6 +28,8 @@ import json
 import time
 import argparse
 import hashlib
+import itertools
+import math
 import unicodedata
 from pathlib import Path
 from io import BytesIO
@@ -94,19 +96,336 @@ CATEGORY_COLORS = {
 # Every prompt gets this suffix for consistent kid-friendly style
 # ============================================================
 
-STYLE_SUFFIX = (
+# v1.24.0 (NACDA DMV feedback): "change the images and items to mimic the
+# people. dark skin images for people or child in the images and other
+# objects should be things from Awing."
+#
+# The old suffix said nothing about who the children were, and SDXL's
+# unprompted default for "a cartoon child" is a light-skinned Western one.
+# Awing children opened this app and did not see themselves.
+#
+# Two separate levers, because they fail differently:
+#   PEOPLE_STYLE  - stated FIRST so it carries weight in CLIP's 77-token
+#                   budget. Skin tone described plainly and more than once;
+#                   a single adjective gets diluted by the rest of the
+#                   prompt and comes out inconsistent.
+#   STYLE_SUFFIX  - the shared look, now anchored in the Cameroonian
+#                   Grassfields rather than nowhere in particular.
+#
+# There is NO negative prompt: SDXL Turbo runs at guidance_scale=0, where
+# negative prompts are ignored. "no text, no words" in the positive prompt is
+# the only lever available. (An earlier comment here claimed negatives were
+# handled in generate_ai_image() - they never were.)
+# v1.24.0b: a FIXED PEOPLE_STYLE produced 9,000 pictures of the same boy -
+# same short afro, same yellow shirt, same green field. Dr. Sama, on seeing
+# the first sample: "wonderful if we can make it have variety or hair
+# styles". So the look is drawn per-word from these pools instead, keyed on
+# a hash of the image key: deterministic (the same word regenerates
+# identically) but spread across 9 x 8 x 4 x 5 = 1,440 combinations.
+# (subject, gender, is_child). Weighted toward children - this is a
+# children's app - but not exclusively, because "grandmother", "father" and
+# "farmer" are real vocabulary and a village has adults in it.
+PERSONA_PEOPLE = [
+    ("young boy", "m", True),
+    ("little boy", "m", True),
+    ("teenage boy", "m", True),
+    ("young girl", "f", True),
+    ("little girl", "f", True),
+    ("teenage girl", "f", True),
+    ("man", "m", False),
+    ("woman", "f", False),
+    ("grandfather", "m", False),
+    ("grandmother", "f", False),
+]
+
+# Gendered, because the first pass put two puff buns on a grandfather.
+PERSONA_HAIR = {
+    "m": [
+        "short natural afro hair", "a neatly shaved head", "short twists",
+        "long locs", "a high-top afro",
+    ],
+    "f": [
+        "cornrow braids", "two puff buns", "braided hair with colorful beads",
+        "short natural afro hair", "a bright patterned head wrap",
+        "long twists",
+    ],
+}
+
+PERSONA_SKIN = [
+    "dark brown skin", "deep brown skin", "rich dark skin",
+    "warm brown skin",
+]
+
+# Elders get their own pool rather than a "greying " prefix on the general
+# one - that produced "greying a neatly shaved head" and would have put grey
+# on a head WRAP rather than on hair.
+PERSONA_HAIR_ELDER = {
+    "m": [
+        "short grey hair", "a bald head with grey stubble",
+        "grey-flecked short afro hair",
+    ],
+    "f": [
+        "grey cornrow braids", "short grey afro hair",
+        "a bright patterned head wrap over grey hair",
+    ],
+}
+
+# Keyed on (gender, is_child), because the first pass also dressed a man in
+# a wrapper dress and a grandfather in a school uniform.
+# NACDA DMV asked for the people and the objects to look like Awing. One of
+# the adult-male options was "bright kente-pattern cloth", which is Ashanti
+# and Ewe - Ghana, 1,000 km west. Awing is in the Bamenda Grassfields of
+# Cameroon's North West Region, whose own regalia is TOGHU (atoghu): heavy
+# black velvet embroidered in red and white with sun, moon, star and animal
+# motifs, worn with a matching wrapper.
+#   https://mimimefoinfos.com/toghu-a-unique-cameroonian-identity/
+# Ankara print stays - it is everyday wear across the region - but the one
+# borrowed-from-elsewhere entry is replaced by the local one, and toghu is
+# offered to adult women too, where it is worn just as much.
+_TOGHU = "a black toghu robe with red and white embroidery"
+
+PERSONA_CLOTHES = {
+    ("m", True): [
+        "a colorful Ankara print shirt", "a simple bright t-shirt",
+        "a plain school uniform",
+    ],
+    ("f", True): [
+        "a colorful Ankara print dress", "a simple bright t-shirt",
+        "a plain school uniform",
+    ],
+    ("m", False): [
+        "a colorful Ankara print shirt", _TOGHU,
+        "a plain work shirt",
+    ],
+    ("f", False): [
+        "a colorful Ankara print dress", "a patterned wrapper dress",
+        _TOGHU,
+    ],
+}
+
+
+def _persona_bits(seed_key: str):
+    """Deterministic (hair, skin, clothes, subject) for one image key."""
+    h = hashlib.md5(("persona:" + (seed_key or "")).encode("utf-8")).digest()
+    subject, gender, is_child = PERSONA_PEOPLE[h[3] % len(PERSONA_PEOPLE)]
+    elder = subject.startswith("grand")
+    hair_pool = PERSONA_HAIR_ELDER[gender] if elder else PERSONA_HAIR[gender]
+    hair = hair_pool[h[0] % len(hair_pool)]
+    skin = PERSONA_SKIN[h[1] % len(PERSONA_SKIN)]
+    clothes_pool = PERSONA_CLOTHES[(gender, is_child)]
+    clothes = clothes_pool[h[2] % len(clothes_pool)]
+    return hair, skin, clothes, subject
+
+
+def people_style(seed_key: str) -> str:
+    """Opening clause for a prompt that must depict a person.
+
+    Replaces the old fixed PEOPLE_STYLE constant. Skin tone still leads -
+    CLIP weights early tokens most and a single adjective late in the prompt
+    gets diluted - but everything after it varies per word.
+    """
+    hair, skin, clothes, subject = _persona_bits(seed_key)
+    return (f"a Cameroonian {subject} with {skin}, {hair}, "
+            f"wearing {clothes}, ")
+
+
+# Back-compat for any caller that still wants a single fixed string (none in
+# this file; kept so an external script importing it does not break).
+PEOPLE_STYLE = people_style("")
+
+# NACDA DMV, Sept 2026: "change the images and items to mimic the people.
+# dark skin images for people or child in the images".
+#
+# PEOPLE_STYLE covers the prompts BUILT from a category, but ~387 of the 1,108
+# hand-written PROMPT_OVERRIDES name a human ("a child's hand waving hello",
+# "a cartoon family dinner table") and carry no skin descriptor at all, so
+# SDXL renders its default — white. Those overrides are the curated ones,
+# i.e. the common words children actually meet. Rather than hand-editing 387
+# strings, qualify the human noun at prompt-build time.
+#
+# Deliberately inserts BEFORE the noun rather than appending a clause: CLIP
+# weights early tokens more heavily, and a trailing ", dark skin" reads as a
+# separate subject often enough to be ignored.
+_HUMAN_NOUN_RE = re.compile(
+    r"\b(children|child|kids|kid|people|person|men|man|women|woman|"
+    r"boys|boy|girls|girl|babies|baby|toddler|"
+    r"mother|father|parents|parent|family|families|grandmother|grandfather|"
+    r"brother|sister|brothers|sisters|twins|friend|friends|"
+    r"teacher|student|pupil|farmer|hunter|fisherman|chief|elder|elders|"
+    r"adult|adults|villager|villagers|crowd|mourners|dancer|drummer|"
+    r"king|queen|nurse|doctor|trader|"
+    # Added after round 2: these appeared in glosses, were not matched, and
+    # so were rendered with SDXL's default (white) complexion.
+    r"enemy|enemies|warrior|warriors|soldier|soldiers|swimmer|swimmers|"
+    r"thief|thieves|fon|wizard|witch|worker|workers|guest|guests|"
+    r"stranger|strangers|neighbour|neighbor|bride|groom|widow|widower|"
+    r"singer|singers|rider|cook|seller|buyer|herder|weaver|potter|"
+    r"blacksmith|carpenter|messenger|servant|slave|orphan|patient|"
+    r"human|humans|person\'s|figure|figures|"
+    r"someone|somebody)\b",
+    re.I,
+)
+
+# Already carries a skin descriptor (PEOPLE_STYLE itself, or an override we
+# hand-wrote). Keeps the function idempotent, which matters because the
+# category prompts already start with PEOPLE_STYLE.
+_SKIN_DESCRIBED_RE = re.compile(
+    r"(?:dark|deep|rich|warm)\s+(?:brown\s+)?skin"
+    r"|dark[- ]skinned|Black African|Cameroonian",
+    re.I,
+)
+
+
+# Nouns that fix the gender of the figure, so hair can be chosen without
+# contradicting the gloss. Anything not listed here gets no hair clause.
+_NOUN_GENDER = {
+    "man": "m", "men": "m", "boy": "m", "boys": "m", "father": "m",
+    "grandfather": "m", "brother": "m", "brothers": "m", "king": "m",
+    "chief": "m", "fon": "m", "groom": "m", "widower": "m",
+    "fisherman": "m", "blacksmith": "m",
+    "woman": "f", "women": "f", "girl": "f", "girls": "f", "mother": "f",
+    "grandmother": "f", "sister": "f", "sisters": "f", "queen": "f",
+    "bride": "f", "widow": "f",
+}
+
+_ELDER_NOUNS = {"grandfather", "grandmother", "elder", "elders"}
+
+
+def africanize_people(prompt: str, seed_key: str = "") -> str:
+    """Qualify the first human noun in `prompt` as dark-skinned and African.
+
+    The override text keeps its own subject ("a cartoon mother holding a
+    baby" stays a mother), so only the LOOK varies per word - skin tone and
+    hair - never the subject. Age and gender come from the override itself.
+
+    No-op when the prompt names no person (a yam, a drum, the number 4) or
+    already says so. Returns the prompt unchanged in both cases, so it is
+    safe to run over every prompt rather than only the ones we think need it.
+    """
+    if _SKIN_DESCRIBED_RE.search(prompt):
+        return prompt
+    m = _HUMAN_NOUN_RE.search(prompt)
+    if not m:
+        return prompt
+    _hair, skin, _clothes, _subject = _persona_bits(seed_key)
+    noun = prompt[m.start() : m.end()].lower()
+
+    # Skin qualifier goes immediately before the noun - short, and it cannot
+    # break the phrase.
+    out = prompt[: m.start()] + f"Cameroonian {skin} " + prompt[m.start() :]
+
+    # Hair is APPENDED, never spliced mid-phrase, and only when the noun
+    # itself tells us the gender - otherwise we would put beads on a chief.
+    gender = _NOUN_GENDER.get(noun)
+    if gender:
+        pool = (PERSONA_HAIR_ELDER[gender]
+                if noun in _ELDER_NOUNS else PERSONA_HAIR[gender])
+        h = hashlib.md5(("hair:" + (seed_key or "")).encode("utf-8")).digest()
+        out = f"{out}, {pool[h[0] % len(pool)]}"
+
+    # "an dark brown skin ..." -> "a ..." (wrong article before a consonant).
+    out = re.sub(r"\ban (Cameroonian)", r"a \1", out)
+    return out
+
+
+# The first sample asked for "Grassfields setting" AND "white background" in
+# the same prompt. They fight, the setting won, and every object ended up
+# buried in a busy green field - an open gourd read as a doorway, a yam as
+# scenery. On a vocabulary card the ITEM has to be identifiable, which is
+# half of "ensure the pictures match the words".
+#
+# So: two suffixes. A person gets a simple Grassfields backdrop (that is the
+# whole point of the NACDA request). An object gets a plain background and
+# nothing competing with it.
+_STYLE_COMMON = (
     "cute cartoon illustration for children, "
     "simple flat design, bright colorful, "
     "friendly and cheerful, "
-    "white background, no text, no words, "
+    "no text, no words, no letters, "
     "digital art, clipart style"
 )
+
+# The trailing skin clause is on BOTH suffixes on purpose. africanize_people()
+# and people_style() only fire when the prompt is RECOGNISED as depicting a
+# person. Plenty do not get recognised: "be carried away by water current" is
+# categorised `things`, so it took the object path with no persona and no
+# skin guidance - and SDXL drew a (white) person anyway, because the gloss
+# means a person. A negative prompt cannot win against a gloss whose meaning
+# requires a human. So the instruction goes everywhere: if a person appears
+# at all, by any route, they are Black African.
+_SKIN_CLAUSE = "any people shown are Black African with dark brown skin"
+
+# ORDER MATTERS. CLIP truncates at 77 tokens and silently drops the tail.
+# The scene suffix used to end with the skin clause, so on the 1,548 prompts
+# that run long it was simply cut off - the log filled with
+#   "truncated ... ['black african with dark brown skin, digital art,
+#    clipart style']"
+# For a person-path prompt that was harmless (people_style() states skin at
+# character ~30), but a SENTENCE prompt gets no persona - skin is injected
+# only if africanize_people() finds a human noun, and "He went to the
+# market" has none. 94 sentence/story scenes lost their only skin
+# instruction that way. The clause now comes FIRST in the suffix, where it
+# cannot be truncated, and the suffix is shorter so less is lost generally.
+STYLE_SUFFIX_SCENE = (
+    f"{_SKIN_CLAUSE}, "
+    "cute cartoon illustration for children, "
+    "simple Cameroonian Grassfields background, "
+    "flat design, bright colorful, no text, no words, "
+    "digital art, clipart style"
+)
+
+# Deliberately SHORT. Every style token competes with the subject for the
+# model's attention, and the object suffix used to open with "cute cartoon
+# illustration FOR CHILDREN ... FRIENDLY AND CHEERFUL", which is a direct
+# instruction to draw a happy child. For an object prompt that phrasing was
+# actively causing the bug.
+STYLE_SUFFIX_PLAIN = (
+    f"{_SKIN_CLAUSE}, "
+    "simple flat cartoon clipart, bright colors, "
+    "single object centered, plain white background"
+)
+
+# Back-compat alias for anything importing the old name.
+STYLE_SUFFIX = STYLE_SUFFIX_SCENE
+
+
+def _is_person_prompt(prompt: str, category: str) -> bool:
+    """Does this prompt depict a person or a scene with people in it?
+
+    _SKIN_CLAUSE is stripped first: it contains the word "people", so once it
+    was appended to every suffix this matched EVERYTHING, and the object
+    negative prompt ("person, people, child...") silently stopped being used.
+    """
+    if category in ("phrase", "sentence", "story", "nature"):
+        return True
+    return bool(_HUMAN_NOUN_RE.search(prompt.replace(_SKIN_CLAUSE, "")))
+
+
+def _style_suffix_for(prompt: str, category: str) -> str:
+    """Scene backdrop for people and landscapes, plain for objects."""
+    return (STYLE_SUFFIX_SCENE if _is_person_prompt(prompt, category)
+            else STYLE_SUFFIX_PLAIN)
 
 # ============================================================
 # PROMPT OVERRIDES
 # Custom AI prompts for words where the English definition alone
 # doesn't produce good results. All prompts are kid-friendly.
 # ============================================================
+
+# Shared so the several glosses that all mean "achu" cannot drift apart.
+_ACHU_PLATE = (
+    "a cartoon plate of achu, a smooth white mound of pounded cocoyam with "
+    "a well of yellow palm oil soup in the middle, Cameroonian food"
+)
+_ACHU_BOWL = (
+    "a cartoon small round carved wooden bowl of yellow achu palm oil soup"
+)
+_COCOYAM_LEAF = (
+    "a large green heart-shaped cartoon cocoyam taro leaf"
+)
+_PLANT_COCOYAM = (
+    "a cartoon farmer planting taro cocoyam corms in a field"
+)
 
 PROMPT_OVERRIDES = {
     # Body parts — clear simple illustrations
@@ -143,7 +462,9 @@ PROMPT_OVERRIDES = {
     "soul": "a glowing cartoon heart with sparkles",
     "spirit": "a cartoon white dove flying in sunshine",
     "heart": "a big red cartoon heart with sparkles",
-    "cheek": "a cartoon child with rosy pink cheeks",
+    # NOT "rosy pink cheeks" — that phrase drags SDXL toward light skin no
+    # matter what africanize_people() prepends.
+    "cheek": "a cartoon child with round full cheeks",
     "chin": "a cartoon face pointing at chin",
     "elbow": "a cartoon arm bent at the elbow",
     "finger": "a cartoon hand with one finger pointing up",
@@ -152,7 +473,7 @@ PROMPT_OVERRIDES = {
     "rib": "a cartoon rib bones",
     "palm": "a cartoon open palm hand",
     "throat": "a cartoon child singing loudly",
-    "skin": "a cartoon child with smooth skin smiling",
+    "skin": "a cartoon child with smooth dark brown skin smiling",
     "waist": "a cartoon hula hoop around a child's waist",
 
     # Animals — cute cartoon versions
@@ -164,9 +485,9 @@ PROMPT_OVERRIDES = {
     "snake": "a cute friendly cartoon green snake smiling",
     "dog": "a happy cartoon puppy wagging its tail",
     "cat": "a cute cartoon kitten playing with yarn",
-    "chicken": "a cartoon hen with baby chicks",
+    "chicken": "a cartoon hen with her little chicks",
     "bird": "a colorful cartoon bird singing on a branch",
-    "elephant": "a cute baby cartoon elephant with big ears",
+    "elephant": "a cute small cartoon elephant with big ears",
     "lion": "a friendly cartoon lion cub with a fluffy mane",
     "hippo": "a happy cartoon hippo in water",
     "mosquito": "a funny cartoon mosquito with big eyes",
@@ -225,7 +546,8 @@ PROMPT_OVERRIDES = {
     "meal": "a cartoon family dinner table with food",
     "banana": "a bright yellow cartoon banana",
     "yam": "a cartoon yam tuber vegetable",
-    "cocoyam": "a cartoon taro root vegetable",
+    "cocoyam": ("a cartoon taro cocoyam root, rough brown hairy skin, "
+                "cut open showing white flesh"),
     "corn": "a cartoon yellow corn on the cob",
     "honey": "a cartoon honey jar with bees",
     "vegetable": "cartoon colorful vegetables in a basket",
@@ -672,7 +994,9 @@ PROMPT_OVERRIDES = {
     "red pepper": "a cartoon red hot pepper",
     "pumpkin": "a cartoon orange pumpkin",
     "carrot-like food": "a cartoon orange carrot",
-    "pounded cocoyam": "a cartoon bowl of pounded cocoyam fufu",
+    "pounded cocoyam": ("a cartoon plate of achu, a smooth white mound of "
+                        "pounded cocoyam with a well of yellow palm oil soup "
+                        "in the middle"),
 
     # Things/Objects (additional)
     "axe": "a cartoon woodcutting axe in a tree stump",
@@ -1283,6 +1607,55 @@ PROMPT_OVERRIDES = {
     "dream": "a cartoon child sleeping with colorful dream cloud",
     "journey": "a cartoon winding road leading to sunset mountains",
     "sing": "a cartoon child singing with floating music notes",
+
+    # ----------------------------------------------------------------
+    # AWING / CAMEROONIAN FOOD - achu and the cocoyam cluster
+    # ----------------------------------------------------------------
+    # Dr. Sama, Oct 2026, with reference photos and
+    # https://en.wikipedia.org/wiki/Achu_(soup) :
+    #   "achu or achue comes from cocoyam, what we call in the west taro"
+    #
+    # The generic prompts were drawing a bowl of pale mush. Achu is a
+    # specific dish and it looks specific: cocoyam (taro) boiled and pounded
+    # to a smooth white paste, SHAPED ON A PLATE with a crater pressed into
+    # the middle, and that crater filled with the yellow soup - yellow from
+    # palm oil, limestone water, spices and meat stock - with beef, cow
+    # skin, tripe or fish alongside. Not a bowl, not fufu, not brown stew.
+    #
+    # This is exactly the NACDA ask - "other objects should be things from
+    # Awing" - and it cannot be solved by style tokens. Each local item
+    # needs its own description. See contributions/cultural_image_review.md
+    # for the rest of the list awaiting Dr. Sama's descriptions.
+    "achu": _ACHU_PLATE,
+    "achu soup": ("a cartoon bowl of bright yellow Cameroonian achu palm "
+                  "oil soup"),
+    "pounded cocoyams": _ACHU_PLATE,
+    "cocoyams pounded and eaten with red": _ACHU_PLATE,
+    "cocoyams that are pounded and eaten": _ACHU_PLATE,
+    "cocoyams": ("cartoon taro cocoyam roots, rough brown hairy skin, "
+                 "in a pile"),
+    "little cocoyams": "small round cartoon taro cocoyam corms",
+    "little cocoyams attached to the main": (
+        "a cartoon taro cocoyam corm with small cormels attached"),
+    "leave of cocoyam": _COCOYAM_LEAF,
+    "the leave of a cocoyam": _COCOYAM_LEAF,
+    "seed of cocoyam": "a cartoon taro cocoyam corm ready for planting",
+    "plant cocoyam": _PLANT_COCOYAM,
+    "plant cocoyams": _PLANT_COCOYAM,
+    "plant a little": _PLANT_COCOYAM,
+    "a piece of metal used for": (
+        "a cartoon flat metal scraper for cleaning a wooden achu mortar"),
+    "a carved piece of wood used": (
+        "a cartoon carved wooden achu serving spoon"),
+    "plant disease that attacks cocoyams": (
+        "a cartoon cocoyam taro leaf with brown blight spots"),
+    "a container for achu soup": _ACHU_BOWL,
+    "container for achu soup": _ACHU_BOWL,
+    "achu motar spoon": ("a cartoon carved wooden achu serving spoon"),
+    "banana used for preparing achu": (
+        "cartoon green plantains for preparing achu"),
+    "metal used for cleaning an achu": (
+        "a cartoon flat metal scraper for cleaning a wooden achu mortar"),
 }
 
 
@@ -1842,17 +2215,195 @@ def shorten_english_for_prompt(english_word: str) -> str:
     if m:
         s = m.group(1).strip()
 
-    # 8. Collapse whitespace, cap at first 6 words. CLIP token budget after
+    # 8. Comma-separated synonym lists: "go, went" -> "go",
+    #    "cane, walking stick" -> "cane", "food, drinks given to" -> "food".
+    #
+    #    The Awing dictionary glosses many entries as alternatives rather than
+    #    a single word, and SDXL draws the whole string literally: "a cartoon
+    #    cane, walking stick" is two subjects competing for one image. Keeping
+    #    only the head also raises the PROMPT_OVERRIDES hit rate, because the
+    #    overrides are keyed on single headwords ("baby, child" misses, "baby"
+    #    hits a curated prompt).
+    #
+    #    Guarded: only when the head is 1-4 words, so a real clause whose
+    #    first comma falls early ("in the morning, before dawn" -> fine) is
+    #    kept but a one-token head of a longer description is not discarded
+    #    into meaninglessness.
+    if "," in s:
+        head = s.split(",", 1)[0].strip()
+        if 1 <= len(head.split()) <= 4:
+            s = head
+
+    # 9. Collapse whitespace, cap at first 6 words. CLIP token budget after
     #    the STYLE_SUFFIX is ~30 tokens; 6 short English words fits comfortably.
     s = re.sub(r"\s+", " ", s).strip(",.;: ")
     words = s.split()
     if len(words) > 6:
         s = " ".join(words[:6])
+
+    # 10. Trim a trailing function word. Step 9 cuts at a word count, not at
+    #     a phrase boundary, so 256 glosses arrived at SDXL ending mid-phrase:
+    #       "a sort of white substance from"
+    #       "school children's game played with a"
+    #       "men dance group led by an"
+    #       "third day of the week and"
+    #     A dangling preposition is not just untidy - it is a prompt asking
+    #     for a relationship whose object was cut off, and the model fills
+    #     the gap with whatever it likes. Trimming back to the last content
+    #     word asks for less and gets it right more often.
+    #
+    #     Trim is skipped if it would empty the gloss; a gloss that is ALL
+    #     function words is caught by is_illustratable() and drawn blank.
+    trimmed = list(words if len(words) <= 6 else words[:6])
+    while trimmed and trimmed[-1].strip(",.;:'\"").lower() in _FUNCTION_WORDS:
+        trimmed.pop()
+    if trimmed:
+        s = " ".join(trimmed)
+
     return s or english_word.strip().lower()
 
 
-def get_ai_prompt(english_word: str, category: str) -> str:
-    """Build an AI image generation prompt for a vocabulary word/phrase/sentence/story."""
+# Tokens that do not change what is being depicted, so the head word's
+# override still describes the whole gloss.
+_PROMPT_STOPWORDS = {
+    "a", "an", "the", "of", "to", "with", "in", "on", "at", "for", "and",
+    "or", "it", "its", "his", "her", "their", "them", "him", "someone",
+    "somebody", "something", "one", "s",
+}
+
+_PROMPT_MODIFIERS = {
+    "hastily", "quickly", "slowly", "away", "down", "up", "out", "off",
+    "over", "again", "well", "badly", "together", "apart", "around",
+    "hard", "softly", "loudly", "quietly", "carefully", "suddenly",
+    "repeatedly", "continuously", "first", "last", "much", "little",
+}
+
+
+def _safe_first_word(clean_word: str):
+    """First token of `clean_word`, but only when the rest adds no meaning.
+
+    Returns None when a trailing token is a content word, so the caller falls
+    through to a literal prompt instead of an override that describes a
+    different thing. See the comment at the call site.
+    """
+    toks = clean_word.split()
+    if len(toks) < 2:
+        return None
+    for t in toks[1:]:
+        t = t.strip(",.;:'\"")
+        if not t:
+            continue
+        if t not in _PROMPT_STOPWORDS and t not in _PROMPT_MODIFIERS:
+            return None
+    return toks[0]
+
+
+# --------------------------------------------------------------------------
+# WHICH WORDS GET AN IMAGE AT ALL
+# --------------------------------------------------------------------------
+# Dr. Sama, on the first sample: "ensure the pictures match the words".
+# Some entries CANNOT be matched. "at (preposition - point in time)", "from",
+# "the personal pronoun 'he'" - there is no picture of "from". The generator
+# drew them anyway, so the app showed a child standing in a field captioned
+# "a__from", which teaches nothing and looks like a mistake.
+#
+# This mirrors the decision already taken for audio: a word with no native
+# recording is left SILENT rather than given a synthetic voice. A word with
+# no depictable meaning is left with no image rather than a decorative one.
+# The app already handles a missing image - hasImageSync() filters such words
+# out of games and quizzes, and PackImage falls back - so a gap is safe.
+_UNILLUSTRATABLE_MARKERS = re.compile(
+    r"\b(preposition|pronoun|conjunction|interjection|particle|auxiliary|"
+    r"determiner|demonstrative|article|ideophone|intensifier|"
+    r"grammatical|morpheme|affix|prefix|suffix|clitic|"
+    r"noun class|class marker|concord|agreement marker|tense marker|"
+    r"plural marker|negation marker|negative marker|question marker|"
+    r"variant of|variant spelling|alternative form|short form of|"
+    r"same as|see entry|cross[- ]reference)\b",
+    re.I,
+)
+
+# An entry whose gloss is "verb stem of chaakə̌" is a morphological
+# cross-reference with no English content at all. 21 of them were being
+# drawn as a cartoon of the literal string.
+_STEM_ENTRY = re.compile(r"\b(verb|verbal|noun|nominal|adjective)\s+stem\b", re.I)
+
+# Dr. Sama's dictionary records named local institutions - "Women dance
+# group based in Tame Tangwing's compound", "name of a quarter in Awing".
+# These name one specific group or place in Awing, several of them defunct.
+# No generic cartoon is a picture of them, and a generic one is exactly the
+# "that is not an Awing thing" complaint from the NACDA DMV review. 19
+# entries; they get no image rather than a wrong one.
+_NAMED_INSTITUTION = re.compile(
+    r"'s\s+compound|\bbased in\b|\bname of a quarter\b", re.I)
+
+# Awing orthography surviving into the SHORTENED gloss means the English
+# field holds Awing text, not English - a sentence left untranslated, or an
+# entry glossed only by another Awing word. Tested AFTER shortening on
+# purpose: "neck (synonym of ndě)" shortens to "neck", which is perfectly
+# drawable, and testing the raw gloss would have thrown it away.
+_NON_ASCII = re.compile(r"[^\x00-\x7f]")
+
+# Bare function words: nothing to draw even without a marker word in the
+# gloss. Kept explicit rather than inferred - a short gloss is not by itself
+# a reason to skip ("yam", "hoe", "sun" are all short and all drawable).
+_FUNCTION_WORDS = {
+    "a", "an", "the", "at", "from", "to", "of", "in", "on", "by", "for",
+    "with", "into", "onto", "upon", "about", "above", "below", "under",
+    "over", "and", "but", "or", "nor", "so", "if", "then", "than", "that",
+    "this", "these", "those", "as", "because", "while", "when", "where",
+    "who", "whom", "whose", "what", "which", "why", "how",
+    "he", "she", "it", "they", "we", "you", "i", "me", "him", "her", "us",
+    "them", "his", "hers", "its", "their", "theirs", "our", "ours", "my",
+    "mine", "your", "yours", "myself", "himself", "herself", "itself",
+    "is", "are", "was", "were", "be", "been", "being", "am",
+    "not", "no", "yes", "very", "too", "also", "just", "only", "even",
+    "here", "there", "now", "thus", "hence", "indeed", "perhaps", "maybe",
+}
+
+
+def is_illustratable(english_word: str, category: str) -> bool:
+    """False when no honest picture of this entry exists.
+
+    Phrases, sentences and stories are always illustratable - they describe
+    a scene by construction.
+    """
+    if category in ("phrase", "sentence", "story"):
+        return True
+
+    raw = (english_word or "").strip().lower()
+    if not raw:
+        return False
+    if _UNILLUSTRATABLE_MARKERS.search(raw):
+        return False
+    if _STEM_ENTRY.search(raw):
+        return False
+    if _NAMED_INSTITUTION.search(raw):
+        return False
+
+    short = shorten_english_for_prompt(english_word)
+    clean = re.sub(r"\s*\(.*?\)", "", short).strip().strip(",.;:'\"")
+    if not clean:
+        return False
+    if _NON_ASCII.search(clean):
+        return False
+    # Every token is a function word -> nothing concrete in the gloss.
+    toks = [t.strip(",.;:'\"") for t in clean.split()]
+    toks = [t for t in toks if t]
+    if toks and all(t in _FUNCTION_WORDS for t in toks):
+        return False
+    return True
+
+
+def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
+    """Build an AI image generation prompt for a word/phrase/sentence/story.
+
+    `seed_key` is the image key. It only picks the persona (hair, skin,
+    clothes, subject) so every word gets a different-looking person while
+    staying stable across regenerations. Pass "" and you get one fixed
+    persona - which is exactly the uniformity this parameter exists to fix,
+    so callers should always pass the key.
+    """
 
     # Multi-word content (phrase / sentence / story) takes a different prompt
     # path. Their english field is a full translation like "He went to the
@@ -1871,7 +2422,8 @@ def get_ai_prompt(english_word: str, category: str) -> str:
             "sentence": f"a cartoon scene illustrating: {text}",
             "story": f"a cartoon storybook scene showing: {text}",
         }
-        return f"{templates[category]}, {STYLE_SUFFIX}"
+        body = africanize_people(templates[category], seed_key)
+        return f"{body}, {_style_suffix_for(body, category)}"
 
     word_lower = english_word.lower().strip()
 
@@ -1882,25 +2434,70 @@ def get_ai_prompt(english_word: str, category: str) -> str:
     # Strip parenthetical disambiguations like "(body part)" or "(drink)"
     clean_word = re.sub(r'\s*\(.*?\)', '', short_word).strip()
 
-    # Check overrides: short gloss first, then cleaned word, then first word
-    for w in [short_word, clean_word, clean_word.split()[0] if ' ' in clean_word else None]:
+    # Check overrides: exact gloss first, then the cleaned word, then - only
+    # if it is safe - the first word alone.
+    #
+    # The first-word fallback is where the WRONG pictures came from. "open
+    # gourd" matched the override for "open" and drew a child opening a
+    # door; "sweet potato" matched "sweet" and drew candies and lollipops;
+    # "oil palm" drew a bottle of cooking oil; "mother tongue" drew a mother
+    # hugging a child. 820 glosses reached an override this way and the head
+    # word was carrying only part of the meaning.
+    #
+    # Rule: take the first word's override only when every remaining token is
+    # a stopword or a modifier - "eat hastily", "throw away". If a trailing
+    # token is a content word, the gloss means something the head word does
+    # not, so fall through to the literal category prompt. A plain "a cartoon
+    # sweet potato" is always better than a confidently wrong lollipop.
+    # "plant (cocoyams)" shortens to "plant" because step 1 strips the
+    # parenthetical - and then matches the generic "plant a seed in soil"
+    # override, losing the cocoyam entirely. The parenthetical is usually the
+    # DISAMBIGUATOR, so try putting it back before falling further down.
+    disambiguated = None
+    _paren = re.findall(r"\(([^)]*)\)", english_word or "")
+    if _paren:
+        cand = f"{clean_word} {_paren[0].strip()}".lower().strip()
+        cand = re.sub(r"\s+", " ", cand)
+        if cand != clean_word:
+            disambiguated = cand
+
+    # Most specific FIRST. "plant (cocoyams)" shortens to "plant", which is
+    # itself an override key, so unless the disambiguated form is tried ahead
+    # of it the generic "planting a seed in soil" wins and the cocoyam is
+    # lost. Safe to put first: it only ever matches a key written
+    # deliberately for disambiguation - "work (n)" yields "work n", which is
+    # not a key, and falls straight through.
+    for w in [disambiguated, short_word, clean_word,
+              _safe_first_word(clean_word)]:
         if w and w in PROMPT_OVERRIDES:
-            return f"{PROMPT_OVERRIDES[w]}, {STYLE_SUFFIX}"
+            body = africanize_people(PROMPT_OVERRIDES[w], seed_key)
+            return f"{body}, {_style_suffix_for(body, category)}"
 
     # Default: build a prompt from the category
+    # v1.24.0: the four categories that depict PEOPLE lead with
+    # PEOPLE_STYLE. body/actions/family always show a person; descriptive
+    # usually does (happy, tired, strong...). animals, nature, things,
+    # numbers and food do not, so they keep a clean prompt and get the
+    # regional framing from STYLE_SUFFIX instead.
+    people = people_style(seed_key)
     category_prompts = {
-        "body": f"a cartoon illustration of {clean_word} body part",
+        "body": f"{people}showing their {clean_word}",
         "animals": f"a cute cartoon {clean_word} animal",
         "nature": f"a cartoon {clean_word} nature scene",
-        "food": f"a cartoon {clean_word} food",
-        "actions": f"a cartoon child doing {clean_word}",
+        "food": f"a cartoon {clean_word}, West African food",
+        "actions": f"{people}doing {clean_word}",
         "things": f"a cartoon {clean_word}",
-        "family": f"a cartoon friendly {clean_word}",
-        "descriptive": f"a cartoon illustration showing the concept of {clean_word}",
-        "numbers": f"cartoon number {clean_word} with objects to count",
+        "family": f"{people}{clean_word}, Cameroonian family",
+        "descriptive": f"{people}showing the feeling of {clean_word}",
+        # Reached only for entries the data files under `numbers` that are
+        # NOT numerals ("road, of dusty one", "prepare one's self") - real
+        # numerals never get here, they are composed by
+        # generate_counting_image() instead.
+        "numbers": f"a cartoon {clean_word}",
     }
     base = category_prompts.get(category, f"a cartoon illustration of {clean_word}")
-    return f"{base}, {STYLE_SUFFIX}"
+    body = africanize_people(base, seed_key)
+    return f"{body}, {_style_suffix_for(body, category)}"
 
 
 # ============================================================
@@ -1989,7 +2586,139 @@ def load_pipeline():
         return None
 
 
-def generate_ai_image(prompt: str, seed: int) -> Image.Image | None:
+# ---- output format ------------------------------------------------------
+# Set by main() from --format / --quality.
+#
+# Why this matters: 9,570 PNGs average 83 KB, which is 776 MB and the
+# overwhelming bulk of a 931 MB AAB. These are flat cartoon illustrations on
+# a solid background - exactly what WebP is good at - and q82 typically
+# lands them at 10-25 KB. PNG stays the default so nothing changes by
+# accident; the build passes --format webp explicitly.
+OUTPUT_FORMAT = "png"
+OUTPUT_QUALITY = 82
+
+
+# Every extension an image may be on disk as. Lookup order does not matter
+# here (these are local-filesystem checks, not asset-pack lookups), but the
+# SET must match ImageService._imageExtensions and the extensions accepted by
+# scripts/build_image_manifest.py.
+IMAGE_EXTENSIONS = (".webp", ".png")
+
+
+def _strip_ext(path_like) -> str:
+    """Drop a trailing IMAGE_EXTENSIONS entry, if there is one.
+
+    String slicing rather than Path.with_suffix("") because a key can contain
+    a dot - cmd_test names files after the English gloss, and glosses like
+    "etc." or "No. 1" exist - and with_suffix would eat that as the suffix.
+    """
+    s = str(path_like)
+    for ext in IMAGE_EXTENSIONS:
+        if s.endswith(ext):
+            return s[: -len(ext)]
+    return s
+
+
+def _target_path(key_or_path) -> "Path":
+    """The path this key WILL be written to, in the current OUTPUT_FORMAT."""
+    from pathlib import Path as _P
+    return _P(_strip_ext(key_or_path) + "." + OUTPUT_FORMAT)
+
+
+def _existing_image(stem_path):
+    """First existing file for this extension-less path, or None.
+
+    Used for *reporting* coverage (status, counts) where a PNG from an older
+    run counts as "we have an illustration". NOT used for the generate
+    skip-check: during a PNG -> WebP migration a stale PNG must not stop the
+    WebP from being written, so that check looks at _target_path only.
+    """
+    from pathlib import Path as _P
+    base = _strip_ext(stem_path)
+    for ext in IMAGE_EXTENSIONS:
+        cand = _P(base + ext)
+        if cand.exists():
+            return cand
+    return None
+
+
+def _save_image(img, output_path) -> None:
+    """Write `img` honouring OUTPUT_FORMAT, fixing up the extension.
+
+    Also removes the same stem in the OTHER format. Without this a PNG ->
+    WebP migration leaves both files behind: build_image_manifest.py and the
+    app both cope (stems are deduped, WebP wins the lookup), but the asset
+    pack would still ship the PNG and the whole point of the migration -
+    getting 776 MB down to ~150 MB - would be lost.
+    """
+    from pathlib import Path as _P
+    out = _target_path(output_path)
+    base = _strip_ext(out)
+    if OUTPUT_FORMAT == "webp":
+        # method=6 is the slowest/best encoder setting. At ~9,000 images the
+        # extra encode time is noise next to SDXL inference, and it buys a
+        # few percent.
+        img.save(str(out), "WEBP", quality=OUTPUT_QUALITY, method=6)
+    else:
+        img.save(str(out), "PNG", optimize=True)
+
+    for ext in IMAGE_EXTENSIONS:
+        stale = _P(base + ext)
+        if stale != out and stale.exists():
+            try:
+                stale.unlink()
+            except OSError as exc:
+                print(f"  ! could not remove stale {stale.name}: {exc}")
+
+
+# THE reason pictures did not match their words.
+#
+# The old settings were num_inference_steps=1, guidance_scale=0.0, with a
+# comment saying "1 step is enough" and "no guidance needed". Those are the
+# settings SDXL Turbo is *benchmarked* at, and they produce a plausible
+# image fast - but prompt ADHERENCE at 1 step with no guidance is poor. The
+# model locks onto whatever dominates the prompt semantically. Our prompt is
+# ~3 tokens of subject ("vomit") against ~40 tokens of style ("cute cartoon
+# illustration FOR CHILDREN... FRIENDLY AND CHEERFUL... Grassfields"), so
+# the style won every time and the subject was ignored. That is exactly what
+# the contact sheet showed: the style rendered faithfully, a cheerful child
+# in a field, and no vomit anywhere.
+#
+# 4 steps is still within Turbo's design range. guidance_scale above 1.0 is
+# off-label for Turbo but it is what makes the subject stick, and it is also
+# what ACTIVATES the negative prompt - at guidance 0 negatives are ignored
+# entirely, which is why "no text" never worked either.
+#
+# Both are CLI-tunable (--steps, --guidance) so they can be A/B'd on one
+# word instead of argued about.
+INFERENCE_STEPS = 4
+GUIDANCE_SCALE = 1.5
+
+_NEGATIVE_COMMON = (
+    "caucasian, pale skin, light skin, european features, "
+    "blonde hair, red hair, "
+    "text, words, letters, numbers, watermark, signature, caption, "
+    "blurry, deformed, extra limbs, extra fingers, ugly, "
+    "photograph, photorealistic, 3d render"
+)
+
+# For an object prompt, "person" is the failure mode, so name it.
+_NEGATIVE_OBJECT = (
+    "person, people, child, boy, girl, man, woman, face, portrait, crowd, "
+    + _NEGATIVE_COMMON
+)
+
+
+def get_negative_prompt(prompt: str, category: str) -> str:
+    """Negative prompt matching the positive one. Only has effect when
+    GUIDANCE_SCALE > 1.0."""
+    if _is_person_prompt(prompt, category):
+        return _NEGATIVE_COMMON
+    return _NEGATIVE_OBJECT
+
+
+def generate_ai_image(prompt: str, seed: int,
+                      negative_prompt: str = "") -> Image.Image | None:
     """Generate an image using SDXL Turbo on local GPU."""
     import torch
 
@@ -2000,14 +2729,19 @@ def generate_ai_image(prompt: str, seed: int) -> Image.Image | None:
     try:
         generator = torch.Generator("cuda").manual_seed(seed)
 
-        result = pipe(
+        kwargs = dict(
             prompt=prompt,
-            num_inference_steps=1,       # SDXL Turbo: 1 step is enough
-            guidance_scale=0.0,          # SDXL Turbo: no guidance needed
+            num_inference_steps=INFERENCE_STEPS,
+            guidance_scale=GUIDANCE_SCALE,
             width=GENERATION_SIZE,
             height=GENERATION_SIZE,
             generator=generator,
         )
+        # A negative prompt is only meaningful with classifier-free guidance.
+        if GUIDANCE_SCALE > 1.0 and negative_prompt:
+            kwargs["negative_prompt"] = negative_prompt
+
+        result = pipe(**kwargs)
 
         img = result.images[0]
         return img.convert("RGB")
@@ -2112,11 +2846,197 @@ def finalize_image(img: Image.Image, category: str, output_path: Path) -> bool:
         final_rgb = bg.convert("RGB")
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        final_rgb.save(str(output_path), "PNG", optimize=True)
+        _save_image(final_rgb, output_path)
         return True
 
     except Exception as e:
         print(f"  ERROR finalizing image: {e}")
+        return False
+
+
+# ============================================================
+# COUNTING IMAGES (numbers never go through the diffusion model)
+# ============================================================
+# "seven" generated a picture with about twenty birds in it. That is not a
+# tuning problem - diffusion models cannot count. Asking SDXL for exactly N
+# objects is unreliable past about three, and on a NUMBER card the count IS
+# the content. A card captioned "seven" showing twenty birds teaches the
+# child the wrong thing, which is worse than no card.
+#
+# So numerals are composed deterministically instead: N copies of one sprite,
+# placed by arithmetic. Exact by construction, no GPU, instant.
+
+_NUMBER_WORDS = {
+    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+    "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+    "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18,
+    "nineteen": 19, "twenty": 20, "thirty": 30, "forty": 40, "fourty": 40,
+    "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
+    "hundred": 100, "thousand": 1000,
+}
+
+# Twemoji codepoints that read clearly when small and repeated.
+_COUNTABLE_EMOJI = [
+    "1f34e",  # red apple
+    "2b50",   # star
+    "1f34c",  # banana
+    "26bd",   # football
+    "1f338",  # blossom
+    "1f41f",  # fish
+    "1f95a",  # egg
+    "1f350",  # pear
+]
+
+# At most this many sprites get tiled. Above it, counting 70 apples on a
+# 256px card helps nobody - show the numeral instead.
+_MAX_TILED_COUNT = 12
+
+
+def parse_count(english_word: str):
+    """Exact cardinal value of this gloss, or None.
+
+    Requires the WHOLE cleaned gloss to be a number - so "road, of dusty
+    one" (which the data files under `numbers`) does not match, and neither
+    do ordinals like "first" or "second", which need a different picture
+    entirely.
+    """
+    s = (english_word or "").strip().lower()
+    s = re.sub(r"\s*\(.*?\)", "", s).strip()
+    s = s.split(",")[0].split(";")[0].strip()
+    s = s.strip(".!? ")
+    if not s:
+        return None
+    if re.fullmatch(r"\d{1,4}", s):
+        return int(s)
+    # "twenty-one", "twenty one"
+    parts = re.split(r"[-\s]+", s)
+    if not parts or not all(p in _NUMBER_WORDS for p in parts):
+        return None
+    if len(parts) == 1:
+        return _NUMBER_WORDS[parts[0]]
+    if len(parts) == 2:
+        tens, units = _NUMBER_WORDS[parts[0]], _NUMBER_WORDS[parts[1]]
+        # "twenty one" = 21, but "one hundred" = 100.
+        if tens >= 20 and units < 10:
+            return tens + units
+        if units >= 100:
+            return tens * units
+    return None
+
+
+_FALLBACK_SPRITE_COLORS = [
+    (232, 93, 84), (247, 181, 56), (76, 163, 110),
+    (69, 137, 204), (150, 101, 196), (240, 138, 93),
+]
+
+
+def _fallback_sprite(color_byte: int) -> "Image.Image":
+    """A flat coloured disc, used when Twemoji cannot be downloaded."""
+    size = 192
+    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    color = _FALLBACK_SPRITE_COLORS[color_byte % len(_FALLBACK_SPRITE_COLORS)]
+    d.ellipse([6, 6, size - 7, size - 7], fill=color + (255,),
+              outline=(255, 255, 255, 255), width=6)
+    return img
+
+
+def _big_font(size: int):
+    """A bold TrueType face if one is findable, else PIL's bitmap default."""
+    for candidate in (
+        r"C:\Windows\Fonts\arialbd.ttf",
+        r"C:\Windows\Fonts\segoeuib.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    ):
+        try:
+            return ImageFont.truetype(candidate, size)
+        except Exception:
+            continue
+    try:
+        return ImageFont.load_default(size)
+    except Exception:
+        return ImageFont.load_default()
+
+
+def generate_counting_image(count: int, english_word: str, category: str,
+                            output_path: Path, seed_key: str = "") -> bool:
+    """Compose a card showing EXACTLY `count` identical objects.
+
+    Above _MAX_TILED_COUNT, draws the numeral instead - 70 sprites on a
+    256px card is a smear, not a counting exercise.
+    """
+    try:
+        card = Image.new("RGB", (IMAGE_SIZE, IMAGE_SIZE), (255, 255, 255))
+
+        if 1 <= count <= _MAX_TILED_COUNT:
+            h = hashlib.md5(("count:" + (seed_key or english_word)).encode()).digest()
+            # Try every sprite starting from the hashed one. A single failed
+            # Twemoji download must NOT abort the card: the caller would fall
+            # through to the diffusion model, which is the twenty-birds bug
+            # this whole function exists to prevent.
+            sprite = None
+            start = h[0] % len(_COUNTABLE_EMOJI)
+            for off in range(len(_COUNTABLE_EMOJI)):
+                sprite = download_twemoji(
+                    _COUNTABLE_EMOJI[(start + off) % len(_COUNTABLE_EMOJI)])
+                if sprite is not None:
+                    break
+            if sprite is None:
+                # Offline: draw our own. Plain, but the count is still exact,
+                # which is the only thing that matters on a number card.
+                sprite = _fallback_sprite(h[1])
+
+            cols = math.ceil(math.sqrt(count))
+            rows = math.ceil(count / cols)
+            margin = 18
+            cell_w = (IMAGE_SIZE - 2 * margin) / cols
+            cell_h = (IMAGE_SIZE - 2 * margin) / rows
+            size = int(min(cell_w, cell_h) * 0.78)
+            size = max(16, min(size, 96))
+            sprite = sprite.resize((size, size), Image.LANCZOS)
+
+            placed = 0
+            for r in range(rows):
+                # Centre the last, possibly short, row.
+                in_row = min(cols, count - placed)
+                row_w = in_row * cell_w
+                x0 = (IMAGE_SIZE - row_w) / 2
+                for c in range(in_row):
+                    x = int(x0 + c * cell_w + (cell_w - size) / 2)
+                    y = int(margin + r * cell_h + (cell_h - size) / 2)
+                    card.paste(sprite, (x, y), sprite)
+                    placed += 1
+            assert placed == count, f"placed {placed} != {count}"
+        else:
+            draw = ImageDraw.Draw(card)
+            text = str(count)
+            font = _big_font(140 if len(text) <= 2 else 100)
+            box = draw.textbbox((0, 0), text, font=font)
+            tw, th = box[2] - box[0], box[3] - box[1]
+            draw.text(((IMAGE_SIZE - tw) / 2 - box[0],
+                       (IMAGE_SIZE - th) / 2 - box[1]),
+                      text, font=font, fill=(40, 60, 120))
+
+        # Same border / rounded-corner treatment as every other card.
+        color = CATEGORY_COLORS.get(category, CATEGORY_COLORS["default"])
+        border_size = IMAGE_SIZE + BORDER_WIDTH * 2
+        canvas = Image.new("RGB", (border_size, border_size), color)
+        canvas.paste(card, (BORDER_WIDTH, BORDER_WIDTH))
+        final = canvas.resize((IMAGE_SIZE, IMAGE_SIZE), Image.LANCZOS)
+
+        mask = create_rounded_rect_mask((IMAGE_SIZE, IMAGE_SIZE), CORNER_RADIUS)
+        rgba = final.convert("RGBA")
+        bg = Image.new("RGBA", (IMAGE_SIZE, IMAGE_SIZE), (245, 245, 250, 255))
+        rgba.putalpha(mask)
+        bg.paste(rgba, (0, 0), rgba)
+
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        _save_image(bg.convert("RGB"), output_path)
+        return True
+
+    except Exception as e:
+        print(f"  ERROR creating counting image: {e}")
         return False
 
 
@@ -2155,7 +3075,7 @@ def generate_emoji_image(english_word: str, category: str, output_path: Path) ->
         final_rgb = bg.convert("RGB")
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        final_rgb.save(str(output_path), "PNG", optimize=True)
+        _save_image(final_rgb, output_path)
         return True
 
     except Exception as e:
@@ -2197,9 +3117,46 @@ def cmd_generate(args):
           f"{sentence_count} sentences + {story_count} stories "
           f"= {len(vocabulary)} total")
 
+    if getattr(args, "keys_file", None):
+        wanted = set()
+        with open(args.keys_file, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                # Only the first field is the key. A regen list is far more
+                # useful to a reviewer when each key carries the reason it is
+                # on the list, and a tab-annotated file used to match nothing
+                # at all because the whole line was compared.
+                wanted.add(line.split("\t")[0].split()[0])
+        missing = wanted - set(vocabulary)
+        if missing:
+            print(f"WARNING: {len(missing)} key(s) in {args.keys_file} match "
+                  f"no vocabulary entry and will be skipped, e.g. "
+                  f"{sorted(missing)[:3]}")
+        vocabulary = {k: v for k, v in vocabulary.items() if k in wanted}
+        if not vocabulary:
+            print(f"ERROR: no vocabulary entries matched {args.keys_file}")
+            sys.exit(1)
+        args.force = True
+        print(f"--keys-file {args.keys_file}: regenerating "
+              f"{len(vocabulary)} image(s).")
+
     if args.category:
-        vocabulary = {k: v for k, v in vocabulary.items() if v["category"] == args.category}
-        print(f"Generating {len(vocabulary)} images for category '{args.category}'...")
+        # Comma-separated so a prompt-change sample can span several
+        # categories in ONE run. Loading the SDXL pipeline costs ~40s, so
+        # five single-category runs waste more time than they generate.
+        wanted = {c.strip() for c in args.category.split(",") if c.strip()}
+        known = {v["category"] for v in vocabulary.values()}
+        unknown = wanted - known
+        if unknown:
+            print(f"ERROR: unknown category/categories: {', '.join(sorted(unknown))}")
+            print(f"  known: {', '.join(sorted(known))}")
+            sys.exit(1)
+        vocabulary = {k: v for k, v in vocabulary.items()
+                      if v["category"] in wanted}
+        print(f"Generating {len(vocabulary)} images for "
+              f"category/categories '{', '.join(sorted(wanted))}'...")
 
     # --word filter: match against audio_key, english_slug, full compound key, english gloss,
     # or Awing word (case-insensitive, substring OK for gloss and compound key).
@@ -2261,10 +3218,38 @@ def cmd_generate(args):
     failed = 0
     ai_hits = 0
     emoji_used = 0
+    not_depictable = 0
+    counted = 0
+    removed_stale = 0
     start_time = time.time()
 
-    for i, (key, word_data) in enumerate(sorted(vocabulary.items())):
-        output_file = OUTPUT_DIR / f"{key}.png"
+    limit = getattr(args, "limit", None)
+    items = sorted(vocabulary.items())
+    if limit:
+        # Round-robin by category so a capped sample SPANS the categories
+        # instead of taking 30 consecutive keys, which alphabetical order
+        # would draw almost entirely from one of them.
+        buckets = {}
+        for key, word_data in items:
+            buckets.setdefault(word_data["category"], []).append((key, word_data))
+        items = []
+        for row in itertools.zip_longest(*(buckets[c] for c in sorted(buckets))):
+            items.extend(x for x in row if x is not None)
+        print(f"--limit {limit}: stopping after {limit} newly written "
+              f"image(s), round-robin across "
+              f"{len(buckets)} categor{'y' if len(buckets) == 1 else 'ies'}.\n")
+
+    for i, (key, word_data) in enumerate(items):
+        # Counts images WRITTEN, not words examined, so --limit still yields a
+        # full sample on a run where most words are already done.
+        if limit and generated >= limit:
+            print(f"\nReached --limit {limit} - stopping "
+                  f"({len(vocabulary) - i} word(s) left unexamined).")
+            break
+
+        # Target format only - see _existing_image(). A leftover PNG must
+        # NOT make a WebP run skip the word.
+        output_file = _target_path(OUTPUT_DIR / key)
 
         if output_file.exists() and not args.force:
             skipped += 1
@@ -2272,14 +3257,54 @@ def cmd_generate(args):
 
         english = word_data["english"]
         category = word_data["category"]
+
+        # No honest picture exists for "from" or "the personal pronoun 'he'".
+        # Leave the image blank rather than draw a decorative child in a
+        # field - the same call already made for audio. --all-words overrides
+        # this if you want to see what it would have drawn.
+        if not getattr(args, "all_words", False) and \
+                not is_illustratable(english, category):
+            not_depictable += 1
+            # Skipping is not enough. These entries ALREADY have an image on
+            # disk from earlier runs - the child-in-a-field drawn for "from"
+            # and "the personal pronoun 'he'". Leaving it there means the
+            # pack still ships it and the decision to go blank is undone
+            # silently. Remove any existing image for this key.
+            stale = _existing_image(OUTPUT_DIR / key)
+            if stale is not None:
+                try:
+                    stale.unlink()
+                    removed_stale += 1
+                except OSError as exc:
+                    print(f"    ! could not remove stale {stale.name}: {exc}")
+            continue
+
+        # Numerals never touch the diffusion model - see
+        # generate_counting_image(). Exact count by construction.
+        count = parse_count(english)
+        if count is not None:
+            if generate_counting_image(count, english, category,
+                                       output_file, key):
+                generated += 1
+                counted += 1
+            else:
+                # Do NOT fall through to the diffusion model - it cannot
+                # count, and a number card with the wrong number of things
+                # on it is worse than no card. Leave it blank.
+                failed += 1
+                print(f"    ! could not compose counting card for "
+                      f"{english!r} ({count}) - left blank")
+            continue
+
         used_ai = False
 
         # Try GPU AI generation first
         if use_ai:
-            prompt = get_ai_prompt(english, category)
+            prompt = get_ai_prompt(english, category, key)
             seed = int(hashlib.md5(prompt.encode()).hexdigest()[:8], 16) % 2**31
 
-            ai_img = generate_ai_image(prompt, seed)
+            ai_img = generate_ai_image(
+                prompt, seed, get_negative_prompt(prompt, category))
 
             if ai_img:
                 if finalize_image(ai_img, category, output_file):
@@ -2289,7 +3314,7 @@ def cmd_generate(args):
                     if generated % 50 == 0 or generated <= 3:
                         elapsed = time.time() - start_time
                         rate = generated / elapsed if elapsed > 0 else 0
-                        remaining = (len(vocabulary) - skipped - generated) / rate if rate > 0 else 0
+                        remaining = (len(items) - skipped - generated) / rate if rate > 0 else 0
                         print(f"  [{generated:4d}/{len(vocabulary)}] {english:30} (GPU) "
                               f"[{rate:.1f} img/s, ~{remaining/60:.0f}m left]")
 
@@ -2307,7 +3332,14 @@ def cmd_generate(args):
     print(f"\nGeneration complete in {elapsed:.0f}s ({elapsed/60:.1f} min):")
     print(f"  Generated: {generated}")
     print(f"  Skipped:   {skipped} (existing)")
+    print(f"  No image:  {not_depictable} (nothing depictable - "
+          f"grammar words, markers; left blank on purpose)")
+    if removed_stale:
+        print(f"  Removed:   {removed_stale} stale image(s) for entries that "
+              f"are now left blank")
     print(f"  Failed:    {failed}")
+    if counted:
+        print(f"  Counted:   {counted} (numerals composed exactly, no GPU)")
     if use_ai:
         print(f"  AI images: {ai_hits}")
         print(f"  Emoji:     {emoji_used} (AI failed)")
@@ -2336,13 +3368,14 @@ def cmd_test(args):
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     for english, category in test_words:
-        prompt = get_ai_prompt(english, category)
+        prompt = get_ai_prompt(english, category, english)
+        negative = get_negative_prompt(prompt, category)
         seed = int(hashlib.md5(prompt.encode()).hexdigest()[:8], 16) % 2**31
-        output_file = OUTPUT_DIR / f"_test_{english}.png"
+        output_file = _target_path(OUTPUT_DIR / f"_test_{english}")
 
         print(f"  Generating: {english} ...")
         start = time.time()
-        img = generate_ai_image(prompt, seed)
+        img = generate_ai_image(prompt, seed, negative)
         elapsed = time.time() - start
 
         if img:
@@ -2352,7 +3385,8 @@ def cmd_test(args):
             print(f"    FAILED ({elapsed:.1f}s)")
 
     print(f"\nTest images saved to: {OUTPUT_DIR}")
-    print(f"Check _test_*.png files to verify quality before generating all images.")
+    print(f"Check _test_*.{OUTPUT_FORMAT} files to verify quality "
+          f"before generating all images.")
 
 
 def cmd_list(args):
@@ -2370,7 +3404,7 @@ def cmd_list(args):
         if not source:
             print(f"  {label:12}: (none)")
             return
-        existing = sum(1 for k in source if (OUTPUT_DIR / f"{k}.png").exists())
+        existing = sum(1 for k in source if _existing_image(OUTPUT_DIR / k))
         print(f"  {label:12}: {existing:4}/{len(source):4}  ({len(source) - existing} missing)")
 
     print(f"Image Status (by namespace):")
@@ -2381,10 +3415,10 @@ def cmd_list(args):
 
     total_source = len(words) + len(phrases) + len(sentences) + len(stories)
     total_generated = (
-        sum(1 for k in words     if (OUTPUT_DIR / f"{k}.png").exists())
-        + sum(1 for k in phrases   if (OUTPUT_DIR / f"{k}.png").exists())
-        + sum(1 for k in sentences if (OUTPUT_DIR / f"{k}.png").exists())
-        + sum(1 for k in stories   if (OUTPUT_DIR / f"{k}.png").exists())
+        sum(1 for k in words     if _existing_image(OUTPUT_DIR / k))
+        + sum(1 for k in phrases   if _existing_image(OUTPUT_DIR / k))
+        + sum(1 for k in sentences if _existing_image(OUTPUT_DIR / k))
+        + sum(1 for k in stories   if _existing_image(OUTPUT_DIR / k))
     )
     print(f"\nTotal: {total_generated}/{total_source} images generated "
           f"({total_source - total_generated} missing)")
@@ -2398,7 +3432,7 @@ def cmd_list(args):
     for cat in sorted(categories):
         count = categories[cat]
         existing = sum(1 for k, v in words.items()
-                       if v["category"] == cat and (OUTPUT_DIR / f"{k}.png").exists())
+                       if v["category"] == cat and _existing_image(OUTPUT_DIR / k))
         print(f"  {cat:15} : {existing:4}/{count:4}")
 
     print(f"\nImage source: SDXL Turbo (local GPU)")
@@ -2420,14 +3454,127 @@ def cmd_list(args):
         print(f"Emoji cache: {cached} files")
 
 
+def _all_image_keys():
+    """Every key that SHOULD have an image, across all four namespaces.
+
+    DANGEROUS TO GET WRONG. parse_vocabulary() returns WORDS ONLY - phrases,
+    sentences and stories live in their own namespaces and are merged in
+    separately by cmd_generate. An orphan check written against
+    parse_vocabulary() alone counts all 775 phrase/sentence/story images as
+    orphans and offers to delete them. Raises instead of returning a short
+    set, because a silent undercount here deletes good files.
+    """
+    keys = parse_vocabulary()
+    if not keys:
+        raise RuntimeError("parse_vocabulary() returned nothing - refusing "
+                           "to compute orphans from an empty word list")
+    for fn in (parse_phrases, parse_sentences, parse_stories):
+        part = fn() or {}
+        if not part:
+            raise RuntimeError(
+                f"{fn.__name__}() returned nothing. Either the data file "
+                f"moved or the parser broke. Refusing to continue - every "
+                f"image in that namespace would look like an orphan.")
+        keys.update(part)
+    return keys
+
+
+def cmd_prune(args):
+    """Delete images that no longer correspond to a vocabulary entry.
+
+    Two kinds, both of which survive a regeneration untouched because the
+    generate loop only ever writes keys it is currently producing:
+
+      ORPHANS  the entry was deleted or its gloss edited, so the old
+               filename matches nothing. 484 of these, left behind by the
+               duplicate removal and gloss edits.
+      BLANKS   the entry is now classed unillustratable, so nothing will be
+               written for it - but the old decorative picture is still
+               sitting there ("from" drawn as a child in a field).
+
+    Dry run unless --yes is passed.
+    """
+    if not OUTPUT_DIR.is_dir():
+        print(f"Image dir not found: {OUTPUT_DIR}")
+        return
+
+    try:
+        keys = _all_image_keys()
+    except RuntimeError as exc:
+        print(f"ABORT: {exc}")
+        sys.exit(1)
+
+    files = [f for f in OUTPUT_DIR.iterdir()
+             if f.is_file() and f.suffix.lower() in IMAGE_EXTENSIONS]
+    by_stem = {}
+    for f in files:
+        by_stem.setdefault(f.stem, []).append(f)
+
+    orphans = {st for st in by_stem if st not in keys}
+    blanks = {st for st in by_stem
+              if st in keys
+              and not is_illustratable(keys[st]["english"], keys[st]["category"])}
+
+    doomed = sorted(orphans | blanks)
+    doomed_files = [f for st in doomed for f in by_stem[st]]
+    mb = sum(f.stat().st_size for f in doomed_files) / 1024 / 1024
+
+    print(f"Image dir : {OUTPUT_DIR}")
+    print(f"On disk   : {len(files)} files, {len(by_stem)} stems")
+    print(f"Expected  : {len(keys)} keys across words/phrases/sentences/stories")
+    print()
+    print(f"  orphans (no entry at all)        {len(orphans):5}")
+    print(f"  blanks  (entry now unillustratable) {len(blanks):5}")
+    print(f"  ----------------------------------------")
+    print(f"  to delete                        {len(doomed_files):5} files, "
+          f"{mb:.1f} MB")
+    print()
+
+    # A parser regression would show up here as a wildly high number. Make
+    # the operator confirm rather than silently gutting the pack.
+    share = len(doomed) / max(1, len(by_stem))
+    if share > 0.25 and not args.force:
+        print(f"REFUSING: that is {share:.0%} of the pack. This usually means "
+              f"a parser broke,\n  not that the images are really stale. "
+              f"Re-run with --force if you are sure.")
+        sys.exit(1)
+
+    listing = Path(SCRIPT_DIR) / "images_to_delete.txt"
+    listing.write_text("\n".join(f.name for f in doomed_files) + "\n",
+                       encoding="utf-8")
+    print(f"Wrote the exact list to {listing}")
+
+    if not args.yes:
+        print()
+        print("DRY RUN - nothing deleted. Examples:")
+        for f in doomed_files[:15]:
+            why = "orphan" if f.stem in orphans else "blank"
+            print(f"   [{why}] {f.name}")
+        print()
+        print("Re-run with --yes to delete.")
+        return
+
+    ok = failed = 0
+    for f in doomed_files:
+        try:
+            f.unlink()
+            ok += 1
+        except OSError as exc:
+            print(f"  ! {f.name}: {exc}")
+            failed += 1
+    print(f"Deleted {ok} file(s), {failed} failed. "
+          f"{len(files) - ok} image(s) remain.")
+
+
 def cmd_clean(args):
     """Remove generated images."""
     count = 0
     if OUTPUT_DIR.exists():
-        for f in OUTPUT_DIR.glob("*.png"):
-            if f.name != ".gitkeep":
-                f.unlink()
-                count += 1
+        for ext in IMAGE_EXTENSIONS:
+            for f in OUTPUT_DIR.glob(f"*{ext}"):
+                if f.name != ".gitkeep":
+                    f.unlink()
+                    count += 1
     print(f"Cleaned {count} images from {OUTPUT_DIR}")
 
     if args.cache:
@@ -2462,7 +3609,10 @@ def ensure_venv():
 # ============================================================
 
 def main():
-    global OUTPUT_DIR
+    # All module-level knobs main() can rebind, declared up front - the help
+    # strings below READ them, and Python forbids a `global` after a read.
+    global OUTPUT_DIR, INFERENCE_STEPS, GUIDANCE_SCALE
+    global OUTPUT_FORMAT, OUTPUT_QUALITY
     ensure_venv()
 
     parser = argparse.ArgumentParser(
@@ -2473,13 +3623,44 @@ def main():
     subparsers = parser.add_subparsers(dest="command", help="Command to run")
 
     gen_parser = subparsers.add_parser("generate", help="Generate vocabulary images")
-    gen_parser.add_argument("--category", help="Generate for specific category only")
+    gen_parser.add_argument("--category",
+                            help="Generate for specific categories only "
+                                 "(comma-separated). "
+                                 "Example: --category=body,actions,family")
     gen_parser.add_argument("--force", action="store_true", help="Regenerate existing images")
     gen_parser.add_argument("--emoji-only", action="store_true", help="Use only emoji (skip GPU)")
     gen_parser.add_argument("--word",
                             help="Only regenerate specific words (comma-separated). "
                                  "Matches against audio_key, Awing word, or English gloss. "
                                  "Implies --force. Examples: --word=bird  --word=sange,mbene,goat")
+    gen_parser.add_argument("--format", choices=["png", "webp"], default="png",
+                            help="Output image format. webp is ~4-8x smaller "
+                                 "for this kind of flat art (default: png)")
+    gen_parser.add_argument("--quality", type=int, default=82,
+                            help="WebP quality 1-100 (default: 82)")
+    gen_parser.add_argument("--keys-file",
+                            help="Regenerate exactly the image keys listed in "
+                                 "this file, one per line. Implies --force. "
+                                 "For re-shooting a computed subset - a "
+                                 "comma-separated --word list does not scale "
+                                 "to hundreds of keys.")
+    gen_parser.add_argument("--steps", type=int, default=None,
+                            help=f"Diffusion steps (default "
+                                 f"{INFERENCE_STEPS}). 1 is fast but ignores "
+                                 f"the subject; 4 is why the pictures now "
+                                 f"match the words.")
+    gen_parser.add_argument("--guidance", type=float, default=None,
+                            help=f"Guidance scale (default {GUIDANCE_SCALE}). "
+                                 f"Above 1.0 also activates the negative "
+                                 f"prompt; at 0 negatives are ignored.")
+    gen_parser.add_argument("--all-words", action="store_true",
+                            help="Also generate for entries with nothing "
+                                 "depictable (prepositions, pronouns, "
+                                 "grammatical markers). Off by default - "
+                                 "those are left blank on purpose.")
+    gen_parser.add_argument("--limit", type=int, default=None,
+                            help="Stop after N images. For sampling a prompt "
+                                 "change before committing hours of GPU.")
     gen_parser.set_defaults(func=cmd_generate)
 
     test_parser = subparsers.add_parser("test", help="Generate 5 test images")
@@ -2487,6 +3668,15 @@ def main():
 
     list_parser = subparsers.add_parser("list", help="Show generation status")
     list_parser.set_defaults(func=cmd_list)
+
+    prune_parser = subparsers.add_parser(
+        "prune", help="Delete orphan / now-blank images (dry run by default)")
+    prune_parser.add_argument("--yes", action="store_true",
+                              help="Actually delete. Without it, dry run.")
+    prune_parser.add_argument("--force", action="store_true",
+                              help="Proceed even if the list exceeds 25%% of "
+                                   "the pack (normally a sign a parser broke)")
+    prune_parser.set_defaults(func=cmd_prune)
 
     clean_parser = subparsers.add_parser("clean", help="Remove generated images")
     clean_parser.add_argument("--cache", action="store_true", help="Also clear emoji cache")
@@ -2497,6 +3687,17 @@ def main():
     # Override output directory if specified
     if args.output_dir:
         OUTPUT_DIR = Path(args.output_dir)
+    if getattr(args, "steps", None):
+        INFERENCE_STEPS = args.steps
+    if getattr(args, "guidance", None) is not None:
+        GUIDANCE_SCALE = args.guidance
+    if args.command == "generate":
+        print(f"Inference: {INFERENCE_STEPS} steps, guidance {GUIDANCE_SCALE}")
+    if getattr(args, "format", None):
+        OUTPUT_FORMAT = args.format
+        OUTPUT_QUALITY = args.quality
+        print(f"Output format: {OUTPUT_FORMAT}"
+              + (f" (quality {OUTPUT_QUALITY})" if OUTPUT_FORMAT == "webp" else ""))
 
     if not args.command:
         parser.print_help()

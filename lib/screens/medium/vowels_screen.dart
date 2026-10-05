@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_tones.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 class VowelsScreen extends StatefulWidget {
   const VowelsScreen({Key? key}) : super(key: key);
@@ -12,13 +12,11 @@ class VowelsScreen extends StatefulWidget {
 }
 
 class _VowelsScreenState extends State<VowelsScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
   int _selectedTab = 0; // 0=chart, 1=long vowels, 2=syllables
 
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('medium_vowels');
     });
@@ -158,22 +156,25 @@ class _VowelsScreenState extends State<VowelsScreen> {
                     ).firstOrNull;
                     if (vowel == null) return const Expanded(child: SizedBox.shrink());
                     return Expanded(
-                      child: GestureDetector(
-                        onTap: () => _pronunciation.speakAwing(vowel.exampleWord),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.orange.shade100,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            children: [
-                              Text(vowel.vowel, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                              if (vowel.hasLongForm)
-                                Text('(${vowel.vowel}ː)', style: TextStyle(fontSize: 11, color: Colors.grey[600])),
-                            ],
-                          ),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.orange.shade100,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          children: [
+                            Text(vowel.vowel, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                            if (vowel.hasLongForm)
+                              Text('(${vowel.vowel}ː)', style: TextStyle(fontSize: 11, color: Colors.grey[600])),
+                            // The whole cell used to be tappable. With synthetic
+                            // Awing gone that was a dead tap for every vowel
+                            // whose example word has no recording, and a chart
+                            // cell has no room to explain itself. An explicit
+                            // control states which it is.
+                            AwingAudioButton(awing: vowel.exampleWord, iconSize: 18),
+                          ],
                         ),
                       ),
                     );
@@ -197,11 +198,7 @@ class _VowelsScreenState extends State<VowelsScreen> {
         ),
         title: Text(v.description, style: const TextStyle(fontSize: 14)),
         subtitle: Text('${v.exampleWord} = ${v.exampleEnglish}', style: const TextStyle(fontSize: 13)),
-        trailing: IconButton(
-          tooltip: 'Hear it',
-          icon: const Icon(Icons.volume_up, color: Colors.orange),
-          onPressed: () => _pronunciation.speakAwing(v.exampleWord),
-        ),
+        trailing: AwingAudioButton(awing: v.exampleWord),
       ),
     );
   }
@@ -255,10 +252,9 @@ class _VowelsScreenState extends State<VowelsScreen> {
                           ],
                         ),
                       ),
-                      IconButton(
-                        tooltip: 'Hear it',
-                        icon: const Icon(Icons.volume_up, color: Colors.orange),
-                        onPressed: () => _pronunciation.speakAwing(lv['word']!),
+                      AwingAudioButton(
+                        awing: lv['word']!,
+                        color: Colors.orange,
                       ),
                     ],
                   ),
@@ -362,10 +358,9 @@ class _VowelsScreenState extends State<VowelsScreen> {
                           ],
                         ),
                       ),
-                      IconButton(
-                        tooltip: 'Hear it',
-                        icon: const Icon(Icons.volume_up, color: Colors.orange),
-                        onPressed: () => _pronunciation.speakAwing(st.example),
+                      AwingAudioButton(
+                        awing: st.example,
+                        color: Colors.orange,
                       ),
                     ],
                   ),
@@ -402,11 +397,7 @@ class _VowelsScreenState extends State<VowelsScreen> {
               ),
               title: Text(vs.meaning, style: const TextStyle(fontSize: 14)),
               subtitle: Text('${vs.example} = ${vs.exampleEnglish}', style: const TextStyle(fontSize: 13)),
-              trailing: IconButton(
-                tooltip: 'Hear it',
-                icon: const Icon(Icons.volume_up, color: Colors.orange),
-                onPressed: () => _pronunciation.speakAwing(vs.example),
-              ),
+              trailing: AwingAudioButton(awing: vs.example),
             ),
           )),
         ],

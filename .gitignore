@@ -287,3 +287,7 @@ venv_openvoice/
 corpus/word_level/
 contributions/phonetic_rules_report.md
 contributions/phonetic_rules_candidates.csv
+
+# Public policy/support pages — their own repo (samagids/awing-legal).
+# See site_legal/PUSH_ME.txt.
+site_legal/

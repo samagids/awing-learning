@@ -5,7 +5,7 @@ Compares awing_vocabulary.dart entries against actual files in
 android/install_time_assets/src/main/assets/images/vocabulary/.
 
 Image key format (matches lib/services/image_service.dart):
-    {audio_key(awing)}__{english_slug(english)}.png
+    {audio_key(awing)}__{english_slug(english)}.{png|webp}
 
 Run: python scripts/check_image_coverage.py [--list]
 """
@@ -88,7 +88,11 @@ def main() -> int:
         expected_keys.add(key)
         entry_to_key.append((awing, english, key))
 
+    # Stems only, across both extensions — the library is WebP from
+    # v1.24.0 on, with PNGs still around from older builds and from
+    # apply_contributions.py.
     actual_files = {f.stem for f in IMAGES.glob("*.png")}
+    actual_files |= {f.stem for f in IMAGES.glob("*.webp")}
 
     missing = expected_keys - actual_files
     extra = actual_files - expected_keys
@@ -109,7 +113,7 @@ def main() -> int:
             (a, e, k) for (a, e, k) in entry_to_key if k in missing
         ]
         for awing, english, key in missing_with_context[:50]:
-            print(f"  {key}.png  ←  {awing!r} / {english[:40]!r}")
+            print(f"  {key}.*  ←  {awing!r} / {english[:40]!r}")
         if len(missing_with_context) > 50:
             print(f"  ... and {len(missing_with_context) - 50} more")
 

@@ -506,6 +506,7 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
     final svc = StudySetService.instance;
     final hasTeacherRec = (set.recordings[awing] ?? '').isNotEmpty;
     final hasNative = svc.wordHasNativeRecording(awing);
+    final hasAnyRecording = hasNative || hasTeacherRec;
     late final IconData icon;
     late final Color iconColor;
     late final String tooltip;
@@ -530,13 +531,24 @@ class _StudySetEditorScreenState extends State<StudySetEditorScreen> {
         // level-appropriate Edge TTS voice → flutter_tts fallback), so
         // this is what students will actually hear.
         IconButton(
+          // v1.24.0 removed synthetic Awing entirely, so there is no TTS
+          // tier left to promise. With neither recording this plays nothing.
           tooltip: hasNative
               ? 'Hear native recording'
               : (hasTeacherRec
                   ? 'Hear your recording'
-                  : 'Hear TTS pronunciation'),
-          icon: Icon(Icons.volume_up, color: Colors.blueGrey.shade700),
-          onPressed: () => _pronunciation.speakAwing(awing),
+                  : 'No recording yet'),
+          icon: Icon(
+            hasAnyRecording ? Icons.volume_up : Icons.volume_off,
+            color: hasAnyRecording
+                ? Colors.blueGrey.shade700
+                : Colors.grey.shade400,
+          ),
+          // Disabled rather than silent: this row already carries its own
+          // record button, so a word with nothing to play should point the
+          // teacher at that instead of swallowing the tap.
+          onPressed:
+              hasAnyRecording ? () => _pronunciation.speakAwing(awing) : null,
           visualDensity: VisualDensity.compact,
         ),
         IconButton(

@@ -16,9 +16,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/daily_suggestion_service.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 class DailyWordsScreen extends StatefulWidget {
   final DailyContentType contentType;
@@ -37,12 +37,10 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
   List<DailyWord> _picks = [];
   int _learnedCount = 0;
   bool _loading = true;
-  final PronunciationService _pronunciation = PronunciationService();
 
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     _load();
   }
 
@@ -277,11 +275,10 @@ class _DailyWordsScreenState extends State<DailyWordsScreen> {
                 ],
               ),
             ),
-            IconButton(
-              icon: Icon(Icons.volume_up, color: _accentColor),
+            AwingAudioButton(
+              awing: w.awing,
               iconSize: 32,
-              onPressed: () => _pronunciation.speakAwing(w.awing),
-              tooltip: 'Hear it',
+              color: _accentColor,
             ),
           ],
         ),

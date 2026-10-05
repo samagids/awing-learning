@@ -336,13 +336,24 @@ REM New vocabulary entries need matching SDXL Turbo illustrations. If
 REM this fails the new words render with placeholder icons instead of
 REM kid-friendly cartoons — a regression in quality. Abort so the
 REM failure gets fixed instead of papered over.
-echo [4/7] Generating vocabulary images...
+REM
+REM --format webp IS NOT OPTIONAL. The generator defaults to PNG, and
+REM _save_image() DELETES the sibling file in the other format after a
+REM successful write. So a plain `generate` here does not merely add PNGs:
+REM it converts the entire pack back to PNG and deletes the WebP, taking
+REM the asset pack from 137.7 MB to roughly 700 MB. This line shipped
+REM without the flag and started doing exactly that on the first v1.24.0
+REM build; the run had to be killed by hand at ~150 images.
+REM
+REM The flag must match whatever format the pack is currently in. If that
+REM ever changes, change it here too.
+echo [4/7] Generating vocabulary images ^(WebP^)...
 echo        Output: %PAD_ASSETS%\images\vocabulary\
-python scripts\generate_images.py --output-dir "%PAD_ASSETS%\images\vocabulary" generate
+python scripts\generate_images.py --output-dir "%PAD_ASSETS%\images\vocabulary" generate --format webp
 if !ERRORLEVEL! neq 0 (
     echo.
     echo        ERROR: Image generation failed. Build aborted.
-    echo        Run 'python scripts\generate_images.py generate' manually
+    echo        Run 'python scripts\generate_images.py generate --format webp' manually
     echo        to see the full error. Common causes:
     echo          - diffusers/transformers/accelerate not installed
     echo          - No NVIDIA GPU with CUDA support

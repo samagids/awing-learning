@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
 import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 
 /// Beginner-level screen for learning Awing numbers 1-10.
@@ -71,7 +72,7 @@ class _NumbersScreenState extends State<NumbersScreen> {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 1.3,
+                childAspectRatio: 1.0,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
               ),
@@ -82,10 +83,7 @@ class _NumbersScreenState extends State<NumbersScreen> {
                 final digitValue = index + 1;
 
                 return GestureDetector(
-                  onTap: () {
-                    setState(() => _selectedIndex = index);
-                    _pronunciation.speakAwing(word.awing);
-                  },
+                  onTap: () => setState(() => _selectedIndex = index),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     decoration: BoxDecoration(
@@ -137,6 +135,12 @@ class _NumbersScreenState extends State<NumbersScreen> {
                             fontSize: 12,
                             color: isSelected ? Colors.white70 : Colors.grey.shade600,
                           ),
+                        ),
+                        AwingAudioButton(
+                          awing: word.awing,
+                          word: word,
+                          iconSize: 20,
+                          color: isSelected ? Colors.white : Colors.green.shade800,
                         ),
                       ],
                     ),

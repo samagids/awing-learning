@@ -467,8 +467,23 @@ class PronunciationService {
   /// Now it asks the asset pack whether the file is there and plays
   /// nothing. Used by the UI to choose between a speaker button and a
   /// Record button.
-  Future<bool> hasNativeAudio(String awingWord) async {
+  /// [clipKey] is for callers that store a sentence clip under a name of
+  /// their own (the phrase book). Without it a phrase would be reported as
+  /// unrecorded even when its clip is in the pack, because the auto key is
+  /// derived from the text rather than the clip name.
+  Future<bool> hasNativeAudio(String awingWord, {String? clipKey}) async {
     await init();
+    if (clipKey != null) {
+      for (final asset in _buildSearchPaths(clipKey, 'sentences')) {
+        try {
+          if (await _assetPack.assetExists(asset.replaceFirst('assets/', ''))) {
+            return true;
+          }
+        } catch (_) {
+          // Unreadable pack entry — treat as absent and keep looking.
+        }
+      }
+    }
     final key = _audioKey(awingWord);
     for (final category in [
       'vocabulary',

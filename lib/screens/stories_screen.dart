@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 /// Data class for a single story
 class AwingStory {
@@ -431,16 +431,9 @@ class StoryViewerScreen extends StatefulWidget {
 }
 
 class _StoryViewerScreenState extends State<StoryViewerScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
   int _currentSentenceIndex = 0;
   bool _showEnglish = false;
   bool _storyCompleted = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _pronunciation.init();
-  }
 
   void _nextSentence() {
     if (_currentSentenceIndex < widget.story.sentences.length - 1) {
@@ -462,11 +455,6 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
         _showEnglish = false;
       });
     }
-  }
-
-  void _speakSentence() {
-    final sentence = widget.story.sentences[_currentSentenceIndex];
-    _pronunciation.speakAwing(sentence.awing);
   }
 
   @override
@@ -568,11 +556,14 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
                                 ),
                               ),
                             const SizedBox(height: 32),
-                            // Speaker button
-                            FloatingActionButton(
-                              onPressed: _speakSentence,
-                              backgroundColor: Colors.teal,
-                              child: const Icon(Icons.volume_up),
+                            // Speaker button. A story line is a sentence,
+                            // not a word, so an unrecorded one says so
+                            // instead of offering the word recorder.
+                            AwingAudioActionButton(
+                              awing: widget
+                                  .story.sentences[_currentSentenceIndex].awing,
+                              playColor: Colors.teal,
+                              offerToRecord: false,
                             ),
                           ],
                         ),
@@ -647,11 +638,6 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _pronunciation.dispose();
-    super.dispose();
-  }
 }
 
 class StoryQuizScreen extends StatefulWidget {
@@ -995,12 +981,8 @@ class StoryVocabularyView extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  tooltip: 'Hear it',
-                  onPressed: () {
-                    PronunciationService().speakAwing(entry.key);
-                  },
-                  icon: const Icon(Icons.volume_up),
+                AwingAudioButton(
+                  awing: entry.key,
                   color: Colors.teal,
                 ),
               ],

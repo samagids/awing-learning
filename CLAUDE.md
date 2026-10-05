@@ -2399,7 +2399,7 @@ d25c826 Add Firebase google-services.json and Gradle plugin for Google Sign-In
 **Background:** Previous sessions built the complete app (59 Dart files, 6-voice TTS, 1,700+ vocabulary, AI-generated images, Firebase cloud sync, release signing). This session focused on setting up the Google Play Console for first-time app publishing. Store listing images were already created in `store_listing/` folder.
 
 **Completed (across 2 context windows):**
-1. **Privacy policy** — Set URL: `https://samagids.github.io/awing-ai-learning/privacy`
+1. **Privacy policy** — Set URL: `https://samagids.github.io/awing-ai-learning/privacy`  <!-- 2026-10-05: that URL NEVER RESOLVED. Pages was never enabled, because the repo is private and Pages needs a public repo on the free plan. Live URL is now https://samagids.github.io/awing-legal/privacy — see Session 66f. -->
 2. **App access** — Declared "All functionality is available without special access"
 3. **Ads declaration** — Marked "No, my app does not contain ads"
 4. **Content rating** — Completed IARC questionnaire (no violence, no sexual content, no profanity, no substances, no gambling). Received rating: Rated for 3+ (PEGI 3, Everyone)
@@ -9906,3 +9906,1137 @@ useless for many-small-files trees. Sum real sizes. And do not state a
 predicted number as a test ("if it comes out near 1 GB something is
 broken") when the prediction rests on an unmeasured assumption - that
 turns my own guess into a false alarm for Dr. Sama.
+
+---
+
+## Session 66 — image regeneration: prompts + WebP plumbing
+
+Groundwork for NACDA DMV's "dark skin images for people" and for cutting
+776 MB of PNG. **Nothing has been regenerated yet** — a sample run is
+waiting on Dr. Sama's eyes before hours of GPU go in.
+
+### Prompt changes (`scripts/generate_images.py`)
+
+1. **`PEOPLE_STYLE`** — `"Black African child with dark brown skin,
+   Cameroonian, short natural afro hair, "` leads the prompt (CLIP weights
+   early tokens more), and `STYLE_SUFFIX` gained "West African Cameroonian
+   Grassfields setting".
+
+2. **`africanize_people()`** — the real gap. `PEOPLE_STYLE` only covers
+   prompts BUILT from a category, but 393 of the 1,108 hand-written
+   `PROMPT_OVERRIDES` name a human with no skin descriptor at all ("a
+   child's hand waving hello", "a cartoon family dinner table"), so SDXL
+   rendered its default: white. And the overrides are the *curated* ones —
+   the common words children actually meet. Rather than hand-editing 393
+   strings, the first human noun is qualified at prompt-build time:
+   `"a dark-skinned Black African child's hand waving hello"`. Idempotent
+   (skips anything already carrying a skin descriptor) and a no-op on
+   prompts with no person, so it runs over every prompt path: overrides,
+   category templates, and phrase/sentence/story. Verified 393/393.
+   Hand-fixed three that fought it: `cheek` ("rosy pink cheeks" drags SDXL
+   toward light skin regardless of any prefix), `skin`, and `chicken` /
+   `elephant` where "baby" meant an animal, not a child.
+
+3. **Comma-head glosses** — step 8 of `shorten_english_for_prompt()`. The
+   dictionary glosses many entries as alternatives, and SDXL drew the whole
+   string: "a cartoon cane, walking stick" is two subjects fighting for one
+   image. Keeping only a 1-4-word head also raises the override hit rate,
+   because overrides are keyed on single headwords. Measured over all 8,311
+   image keys:
+
+   | | before | after |
+   |---|---|---|
+   | hits a curated override | 2,685 (32%) | 2,943 (35%) |
+   | short usable gloss | 3,205 (39%) | 4,255 (51%) |
+   | still a definition fragment | 2,421 (29%) | 1,113 (13%) |
+
+### WebP, end to end
+
+`.png` was hardcoded in 7 places in `lib/services/image_service.dart`, and
+the manifest keys are extension-less stems, so WebP was NOT a one-line
+change. Now:
+
+* `ImageService._imageExtensions = ['.webp', '.png']`. The pack-path
+  helpers (`packPath`, `phrasePackPath`, …) return **extension-less**
+  stems; the extension is resolved at load time. `_lastHitExtension`
+  reorders the list so a homogeneous pack costs one platform-channel call
+  per image, not two — without hard-switching, because
+  `apply_contributions.py` still installs community images as PNG into an
+  otherwise-WebP pack.
+* `build_image_manifest.py` accepts both and dedupes stems via a set (the
+  same stem can briefly exist as both during a partial regeneration).
+* `check_image_coverage.py` globs both.
+* `_save_image()` **deletes the same stem in the other format** after a
+  successful write. Without that a PNG→WebP migration leaves both files and
+  the pack still ships the PNG — the whole 776 MB → ~150 MB point lost.
+* The generate skip-check uses `_target_path()` (current format only), so a
+  leftover PNG does NOT make a WebP run skip the word. Coverage *reporting*
+  uses `_existing_image()` (either format). `_strip_ext()` does string
+  slicing, not `Path.with_suffix`, because a key can contain a dot.
+
+### New / fixed CLI
+
+* `--format {png,webp}` (default png — the build passes webp explicitly),
+  `--quality` (default 82).
+* `--limit N` **was a dead flag** — declared in the parser, referenced
+  nowhere, so `--limit 30` would have silently generated all 9,086. Now
+  wired, counting images *written*, and it round-robins across categories
+  so a capped sample spans them: alphabetical order gave 27 of 30 from
+  `things`; round-robin gives 6/6/6/6/6.
+* `--category` now takes a comma-separated list and validates against the
+  real category set. Loading SDXL costs ~40s, so five single-category runs
+  waste more time than they generate.
+
+### Sample run, before the full regeneration
+
+    python scripts\generate_images.py --output-dir C:\dev\awing-image-sample ^
+        generate --format webp --limit 30 --force ^
+        --category body,actions,family,food,things
+
+Scratch output dir — production images untouched. Judge skin tone,
+Grassfields look and WebP quality, THEN run the full pass.
+
+### Still open
+
+* `PROMPT_OVERRIDES` has **42 duplicated keys** (44 dead entries). Python
+  silently keeps the last, so one hand-written prompt of each pair never
+  runs. Not a correctness bug; picking the survivor is an aesthetic call.
+* ~1,113 entries still prompt from a definition fragment ("growth on the
+  neck", "do a little"). A ceiling on image quality that no style change
+  fixes — it needs gloss edits, i.e. Dr. Sama.
+* Clear `intermediates\asset_pack_bundle` and `merged_native_libs` after
+  the regeneration — see the note above this section.
+
+### Sample round 1 feedback — variety + "pictures must match the words"
+
+Skin tone came out right. Two things wrong, both visible at a glance in a
+contact sheet: every picture was the same boy in the same yellow shirt in
+the same green field, and a lot of pictures showed the wrong thing.
+
+**Variety.** `PEOPLE_STYLE` was one fixed string, so 9,000 prompts shared an
+opening clause and md5-derived seeds that barely diverged. Replaced with
+`people_style(key)` drawing from pools keyed on a hash of the image key —
+deterministic per word, 600 distinct personas across the corpus. Pools are
+gender- and age-coherent after a first pass put two puff buns on a
+grandfather, a school uniform on a grandfather, and a wrapper dress on a
+man: hair is split `m`/`f` with a separate elder pool (a "greying " prefix
+produced "greying a neatly shaved head" and would have greyed a head
+*wrap*), and clothes are keyed on `(gender, is_child)`.
+
+**Three separate causes of wrong pictures:**
+
+1. **First-word override hijacking** — the override lookup fell back to
+   `clean_word.split()[0]`, so "open gourd" matched `open` and drew a child
+   opening a door (that is the stone doorway in the sample); "sweet potato"
+   matched `sweet` → candies and lollipops; "oil palm" → a bottle of cooking
+   oil; "mother tongue" → a mother hugging a child. 820 glosses reached an
+   override this way. `_safe_first_word()` now takes it only when every
+   trailing token is a stopword or modifier ("eat hastily", "throw away"),
+   so 363 fall through to a literal prompt instead. A plain "a cartoon sweet
+   potato" beats a confident lollipop.
+
+2. **Unillustratable entries got decorative pictures** — "at (preposition -
+   point in time)", "from", "the personal pronoun 'he'" were drawn as a
+   child standing in a field. `is_illustratable()` now leaves **338 entries
+   with no image at all**, the same call already made for audio: blank
+   rather than fake. `hasImageSync()` already filters such words out of
+   games and quizzes and `PackImage` falls back, so a gap is safe.
+   `--all-words` overrides it.
+
+3. **The style suffix contradicted itself** — it asked for "West African
+   Cameroonian Grassfields setting" AND "white background" in one prompt.
+   The setting won and buried every object in scenery. Split into
+   `STYLE_SUFFIX_SCENE` (people and landscapes: uncluttered Grassfields
+   backdrop) and `STYLE_SUFFIX_PLAIN` (objects: single centred subject,
+   plain background). 5,047 go plain, 2,926 scene.
+
+Also: the comment claiming negative prompting was "handled separately in
+generate_ai_image()" was false — there is no negative prompt anywhere, and
+SDXL Turbo at `guidance_scale=0` ignores them. "no text, no words, no
+letters" in the positive prompt is the only lever.
+
+All 8,311 prompts build without error. 7,973 will generate, 338 stay blank.
+
+**Known data problem, NOT fixable in the generator:** some entries are in
+the wrong category. "open gourd for washing twins" is categorised
+`descriptive`, so it renders as a person "showing the feeling of open gourd
+for washing twins". The prompt builder is doing what the category tells it.
+This needs category fixes in `lib/data/awing_vocabulary.dart` — Dr. Sama's
+call, not a guess.
+
+### Sample round 2 feedback — "I do not see vomit in the picture"
+
+`ajake__vomit_n.webp` was a smiling girl in a field. `asaambe__seven.webp`
+had about twenty birds. Two different root causes, neither of them wording.
+
+#### 1. The inference settings were throwing the subject away
+
+    num_inference_steps=1      # comment said "1 step is enough"
+    guidance_scale=0.0         # comment said "no guidance needed"
+
+Those are the settings SDXL Turbo is *benchmarked* at. They produce a
+plausible image fast, but prompt ADHERENCE at 1 step with zero guidance is
+poor — the model locks onto whatever dominates the prompt semantically. The
+prompt was ~3 tokens of subject ("vomit") against ~40 tokens of style
+("cute cartoon illustration FOR CHILDREN … FRIENDLY AND CHEERFUL …
+Grassfields"). The style won every time. That is precisely what the contact
+sheet showed: the style rendered faithfully, no subject anywhere.
+
+Now `INFERENCE_STEPS = 4`, `GUIDANCE_SCALE = 1.5`, both tunable with
+`--steps` / `--guidance` so they can be A/B'd rather than argued about.
+Guidance above 1.0 also **activates the negative prompt** — at 0 negatives
+are ignored entirely, which is why "no text" never worked either. Object
+prompts now carry a negative prompt naming the failure mode directly:
+`person, people, child, boy, girl, man, woman, face, portrait, crowd, …`.
+
+The object style suffix was also cut right down. It used to open with "cute
+cartoon illustration FOR CHILDREN … FRIENDLY AND CHEERFUL", which on an
+object prompt is a direct instruction to draw a happy child. It is now
+`"simple flat cartoon clipart, bright colors, single object centered, plain
+white background"`.
+
+Cost: 4 steps is ~4x the GPU time per image. That is the price of the
+picture matching the word.
+
+#### 2. Diffusion models cannot count
+
+"seven" produced ~20 birds. This is not tunable — exact object counts are
+unreliable past about three in any diffusion model, and on a NUMBER card the
+count IS the content. A card captioned "seven" showing twenty birds teaches
+the wrong thing.
+
+Numerals no longer touch the model. `parse_count()` recognises the 85
+entries whose gloss is a cardinal (rejecting ordinals, and rejecting the
+junk that the data files under `numbers` — "road, of dusty one", "prepare
+one's self"), and `generate_counting_image()` composes the card by
+arithmetic: N copies of one sprite, placed deterministically, `assert placed
+== count`. Above 12 it draws the numeral instead — 70 apples on a 256px card
+is a smear, not a counting exercise.
+
+Verified by counting connected non-white blobs in the rendered pixels:
+1→1, 2→2, … 12→12, exact.
+
+Robustness: a failed Twemoji download used to abort the card silently, and
+the loop then fell through to the diffusion model — straight back to the
+twenty-birds bug. Now it tries every sprite in the list, then falls back to
+a flat disc drawn locally (plain, but the count is still exact), and if the
+card still cannot be composed the entry is left BLANK rather than handed to
+the model.
+
+#### Routing after both fixes (8,311 entries)
+
+    left blank         338   nothing depictable
+    composed exactly    85   numerals, no GPU
+    diffusion        7,888   of which 4,962 plain-background objects
+                             and 2,926 people/scenes
+
+#### Cheap A/B before committing the GPU hours
+
+    python scripts\generate_images.py --output-dir C:\dev\awing-ab-old generate --format webp --word vomit,seven,yam,hand,drum,water --steps 1 --guidance 0
+    python scripts\generate_images.py --output-dir C:\dev\awing-ab-new generate --format webp --word vomit,seven,yam,hand,drum,water
+
+Same words, same seeds, old settings vs new. `--word` implies `--force`.
+
+### Sample round 3 — "some images still use white skin colors"
+
+Subjects now match the words (4 steps + guidance 1.5 did that). Remaining
+problem: a minority of figures still rendered light-skinned.
+
+**Cause: skin tone depended on DETECTION.** `people_style()` and
+`africanize_people()` only fire when a prompt is recognised as depicting a
+person. Plenty are not. "be carried away by water current" and "carry away
+by water" are categorised `things`, so they took the OBJECT path — no
+persona, no skin guidance, and a negative prompt saying "no person". SDXL
+drew a person anyway, because the gloss *means* a person, and with zero
+positive skin guidance that person defaulted to white. A negative prompt
+cannot beat a gloss whose meaning requires a human.
+
+**Fix — stop depending on detection.** Three layers:
+
+1. `_SKIN_CLAUSE` = "any people shown are Black African with dark brown skin"
+   is appended to **both** style suffixes. Every prompt in the corpus now
+   carries a skin instruction regardless of which path it took —
+   verified 0 of 7,888 without one.
+2. The negative prompt gained `caucasian, pale skin, light skin, european
+   features, blonde hair, red hair` — now actually effective, since guidance
+   1.5 activates negatives. **Never the bare word "white"**: the plain
+   suffix asks for a white *background* and the two would fight.
+3. `_HUMAN_NOUN_RE` gained the agent nouns that were being missed —
+   enemy/enemies, warrior, soldier, swimmer, thief, fon, wizard, worker,
+   guest, stranger, bride, groom, widow, herder, weaver, blacksmith,
+   messenger, human/humans, and others.
+
+**Two regressions this introduced, both caught before shipping:**
+
+- `_SKIN_CLAUSE` contains the word "people", so `_is_person_prompt()` matched
+  *every* prompt once the suffix was appended, and the object negative
+  ("person, people, child…") silently went dead. `_is_person_prompt()` now
+  strips the clause before matching. Restored: 4,884 object / 3,004 person.
+- `africanize_people()` spliced " with {hair}" straight after the matched
+  noun, mangling noun phrases — "the seventh fon of Awing" became "the
+  seventh Cameroonian warm brown skin fon with braided hair with colorful
+  beads of awing" — and gave the Fon, a male chief, hair from the female
+  pool. Hair is now APPENDED rather than spliced, and only when the noun
+  itself fixes the gender (`_NOUN_GENDER`); otherwise no hair clause at all.
+  Result: "the seventh Cameroonian dark brown skin fon of Awing, short
+  natural afro hair".
+
+Re-sample into a fresh directory:
+
+    python scripts\generate_images.py --output-dir C:\dev\awing-ab-skin generate --format webp --limit 40 --force --category things,actions,body,family,food,nature
+
+### Achu — and the class of problem it represents
+
+Dr. Sama, with reference photos and
+https://en.wikipedia.org/wiki/Achu_(soup) :
+*"achu or achue comes from cocoyam, what we call in the west taro"*.
+
+The generator was drawing it as a generic bowl of pale mush. Two existing
+overrides were both wrong:
+
+    "cocoyam"         -> "a cartoon taro root vegetable"            (vague)
+    "pounded cocoyam" -> "a cartoon bowl of pounded cocoyam fufu"   (wrong)
+
+Achu is a specific dish and it looks specific: cocoyam (taro) boiled and
+pounded to a smooth white paste, **shaped on a plate with a crater pressed
+into the middle**, that crater filled with the yellow soup — yellow from
+palm oil, limestone water, spices and meat stock — with beef, cow skin,
+tripe or fish alongside. Not a bowl. Not fufu. Not a brown stew.
+
+Rewrote both and added the rest of the cluster (28 entries: the dish, the
+corm, the leaf, the cormels, planting, blight, the carved achu spoon, the
+soup bowl, the metal mortar scraper). **26 of 28 now culturally specific**;
+the two left generic are correct as they stand ("banana, for preparing
+achu" is a banana; "finger; Achu is eaten with one finger" means finger).
+
+**Lookup fix this exposed.** "plant (cocoyams)" shortened to "plant", which
+is itself an override key, so it matched the generic "planting a seed in
+soil" and the cocoyam was lost — the parenthetical is usually the
+DISAMBIGUATOR and step 1 was throwing it away before the lookup. The
+override candidate list now tries `clean_word + parenthetical` **first**.
+Safe ahead of everything else because it only matches keys written
+deliberately for disambiguation — "work (n)" yields "work n", not a key,
+and falls straight through. Verified no regression on "work (n)" or
+"hand (body part)".
+
+**This is a whole class, not one dish.** No style tuning fixes it — each
+locally specific item needs someone who knows it to say what it looks like.
+Wrote `contributions/cultural_image_review.md`: **296 culturally-flagged
+entries** (traditional / ceremony / fon / raffia / calabash / mortar /
+dance / drum / palm wine / farm / shrine …) that currently fall through to
+a generic prompt, with the gloss, the override key to use, and what is
+being drawn today. 180 are `things`, 33 `nature`, 18 `family`, 17 `body`.
+Dr. Sama fills in only the rows that are actually wrong; blanks keep their
+current prompt. Same pattern as the achu entries.
+
+### Pre-regeneration cleanup — and a near-miss worth remembering
+
+Before the full run, two sets of images on disk would have survived it
+untouched, because the generate loop only ever writes keys it is currently
+producing:
+
+- **484 orphans** — the entry was deleted or its gloss edited, so the
+  filename matches nothing. Left behind by the duplicate removal and gloss
+  edits.
+- **338 blanks** — now classed unillustratable, so nothing gets written, but
+  the old decorative picture was still sitting there. `a__from.png` was
+  literally the first file in the directory listing. Skipping generation was
+  never enough; the generate loop now REMOVES the stale file too and reports
+  the count.
+
+822 files, 71.7 MB. 9,570 on disk − 822 = 8,748, which is exactly the
+9,086 keys − 338 blanks the generator will write. The arithmetic closing is
+the check that the two sets are right.
+
+#### NEAR-MISS: `parse_vocabulary()` is WORDS ONLY
+
+My first orphan count said **1,259**. It was computed against
+`parse_vocabulary()` alone — which returns only `AwingWord` entries.
+Phrases, sentences and stories live in their own namespaces and are merged
+in separately by `cmd_generate` (172 + 598 + 5 = 775 keys). Deleting on that
+basis would have destroyed **every phrase, sentence and story image in the
+pack**. The true number is 484.
+
+`_all_image_keys()` now assembles all four namespaces and **raises** if any
+parser returns an empty dict, rather than returning a short set — a silent
+undercount here deletes good files. `cmd_prune` additionally refuses when
+the delete list exceeds 25% of the pack, since that pattern means a parser
+broke rather than that the images are really stale.
+
+#### `scripts/images_to_delete.txt` was stale and dangerous
+
+It held **11,013 lines** from some earlier audit. `cleanup_orphan_images.bat`
+feeds that file straight into a PowerShell delete loop, so running it would
+have wiped most of the pack. `prune` now rewrites that file with the exact
+current list (822 lines, verified to contain zero `phrase_`/`sentence_`/
+`story_` entries) every time it runs, so the .bat and the generator can no
+longer disagree.
+
+#### Order of operations for the full regeneration
+
+    python scripts\generate_images.py prune              (dry run - read it)
+    python scripts\generate_images.py prune --yes        (822 files, 71.7 MB)
+    python scripts\generate_images.py generate --format webp --force
+    python scripts\build_image_manifest.py
+    Remove-Item -Recurse -Force -ErrorAction SilentlyContinue `
+      C:\dev\awing-build\build\app\intermediates\asset_pack_bundle
+    Remove-Item -Recurse -Force -ErrorAction SilentlyContinue `
+      C:\dev\awing-build\build\app\intermediates\merged_native_libs
+    scripts\build_and_run.bat
+
+The two `rd` lines are not optional — a mass add/remove under
+`android\install_time_assets` leaves Gradle holding an incremental snapshot
+of a tree that no longer exists, and the build dies with AccessDeniedException
+on a DIRECTORY. Same failure as the TTS purge.
+
+### CLIP's 77-token limit was eating the skin clause (caught mid-run)
+
+The full regeneration log filled with:
+
+    The following part of your input was truncated because CLIP can only
+    handle sequences up to 77 tokens:
+      ['black african with dark brown skin, digital art, clipart style']
+
+The tail being discarded was `_SKIN_CLAUSE` — the thing added specifically
+to guarantee skin tone no longer depends on detection. 1,548 of 8,656
+prompts (18%) run past 77 tokens.
+
+**Measured before advising anything, because the question was whether to
+kill a 2-hour job already 2,800 images in:**
+
+| | |
+|---|---|
+| prompts | 8,656 |
+| skin stated outside the trailing clause | 2,938 (median char offset **30**) |
+| skin only in the trailing clause | 5,718 |
+| ...of those, long enough to truncate | 832 |
+| ...of THOSE, subject actually names a person | **94** |
+
+Person-path prompts were never at risk: `people_style()` states skin at
+roughly character 30, nowhere near the cut. The genuinely affected set is
+**91 sentences + 2 stories + 1 false positive** — scene prompts, which get
+no persona (skin is injected only if `africanize_people()` finds a human
+noun, and "He went to the market" has none), and which are long enough to
+truncate. 94 images out of 8,656. **Not worth killing the run.**
+
+TWO WRONG NUMBERS ON THE WAY TO THAT, both mine, both caught:
+- A word-count heuristic said "4 affected". It only inspected `p[:220]`.
+- A person-detector then said "832 affected" — because `\bchildren\b`
+  matched *"cute cartoon illustration for children"* in the boilerplate.
+  Strip the boilerplate before looking for a subject.
+
+**Fix: `_SKIN_CLAUSE` now comes FIRST in both suffixes**, immediately after
+the subject, where truncation cannot reach it. The scene suffix was also
+shortened ("simple uncluttered West African Cameroonian Grassfields
+background" → "simple Cameroonian Grassfields background"; dropped "friendly
+and cheerful" and "no letters"). Worst-case offset of a skin statement
+across all 8,656 prompts is now **character 155** — comfortably inside the
+window, since 77 CLIP tokens is 300+ characters of English.
+
+**Re-shoot after the run** (not a full regeneration — 94 images, ~1 minute):
+
+    python scripts\generate_images.py generate --format webp ^
+        --keys-file contributions\reshoot_truncated_skin.txt
+
+New `--keys-file` flag: regenerates exactly the keys listed, one per line,
+implies `--force`. A comma-separated `--word` list does not scale to
+hundreds of keys.
+
+`contributions\_to_delete\_prompt_dump.json` is a 2.8 MB scratch file from
+this analysis — safe to delete.
+
+### Parallel work while the image run was going (v1.24.0)
+
+#### NACDA item 1 — app renamed to "Awing Learning"
+
+The launcher label was already plain `"Awing"`, not "Awing AI", so the
+change was `Awing` → `Awing Learning` in four places:
+
+    android/app/src/main/AndroidManifest.xml   android:label
+    ios/Runner/Info.plist                      CFBundleDisplayName
+    lib/screens/home_screen.dart               wordmark beside the app icon
+    lib/screens/auth/login_screen.dart         wordmark beside the app icon
+
+Both wordmarks are 42px and 48px bold, and "Awing Learning" is ~3x wider,
+so both got `FittedBox(fit: BoxFit.scaleDown)` (home_screen also `Flexible`,
+since it shares a Row with a 44px icon). Without it the Row overflows on a
+360dp phone.
+
+DELIBERATELY NOT CHANGED:
+- The Dart package name `awing_ai_learning`. It is the import prefix in
+  every file in the project; renaming it is hundreds of edits for zero
+  user-visible gain.
+- `CFBundleName` (still `awing_ai_learning`) — `CFBundleDisplayName` is what
+  users see; CFBundleName is referenced by tooling.
+- The App Check comments in `main.dart` naming the registered Firebase apps
+  "Awing AI Learning" / "Awing AI Learning iOS". Those are the real
+  registered names at Google/Apple — the comment documents external state.
+
+STILL TO DO BY HAND: the Play Store and App Store listing names live outside
+the repo.
+
+#### NACDA item 5 — Record button rollout, partial on purpose
+
+52 raw `speakAwing(` call sites remained. Classified by enclosing widget:
+
+| enclosing widget | sites |
+|---|---|
+| other | 20 |
+| method body | 15 |
+| IconButton | 7 |
+| ElevatedButton.icon | 4 |
+| GestureDetector | 3 |
+| InkWell | 2 |
+| TextButton | 1 |
+
+Only `IconButton` and `ElevatedButton.icon` are LIKE-FOR-LIKE swaps —
+`AwingAudioButton` renders an IconButton and `AwingAudioActionButton` an
+ElevatedButton.icon, so those keep their appearance. The other 41 sit inside
+custom tap targets (a whole card, a decorated Container, an InkWell with its
+own padding) or inside helper methods. Converting those is a visual design
+change, not a migration, and the device was busy generating images so none
+of it could be looked at. **Left alone deliberately** rather than silently
+restyling 30 screens nobody can review.
+
+Migrated this round: alphabet (letter + example word), daily words,
+allophones, find-similar sheet, vowels (x2), stories glossary,
+beginner sentences, expert proverbs.
+
+`AwingAudioActionButton` gained `offerToRecord` for parity with
+`AwingAudioButton`; false renders a disabled "No recording" instead of
+"Record it", and the amber record colour is suppressed so the two states
+never look interchangeable.
+
+SENTENCE SURFACES GET `offerToRecord: false`. `RecordAudioScreen` takes an
+`AwingWord`; offering to "record" a whole sentence or proverb opens the
+recorder with nothing selected. beginner_sentences and expert_proverbs are
+set accordingly.
+
+SKIPPED ON PURPOSE: `expert_quiz_screen` and `tone_mastery_screen` are
+`ElevatedButton.icon` but carry `onPressed: _answered ? null : ...`. The
+component has no "disabled while answered" state, so swapping would lose
+the quiz semantics.
+
+Also fixed: `study_set_editor_screen` tooltip still promised "Hear TTS
+pronunciation" — there has been no TTS tier since v1.24.0 removed synthetic
+Awing. Now reads "No recording yet".
+
+Dead code removed: `_pronunciation` fields in beginner_sentences and
+expert_proverbs (plus their now-unused imports), and the
+`pronunciation` parameter threaded through `_LetterGrid` → `_LetterCard` in
+alphabet_screen, which nothing used after the swap.
+
+NOT YET ANALYZED — `flutter` is not on the Linux-side PATH of the device
+bridge, so `flutter analyze` must be run from PowerShell.
+
+### Store listing rename (done in Chrome, 2026-10-04)
+
+#### Google Play — CHANGED AND SAVED, not submitted
+
+Developer account "Dr. Guidion Sama" → app "Awing AI Learning"
+(com.awing.learning) → Grow users → Store presence → Store listings →
+Default store listing.
+
+| field | before | after |
+|---|---|---|
+| App name | Awing AI Learning (17/30) | **Awing Learning** (14/30) |
+| Short description | Learn the Awing language with interactive **AI** lessons and pronunciation practice. (80/80) | Learn the Awing language with interactive lessons and pronunciation practice. (77/80) |
+
+Full description, 4 edits (3266 → 3269 chars, verified 0 remaining `\bAI\b`):
+
+1. "Awing **AI** Learning brings interactive, **AI-powered** education to kids
+   and beginners worldwide." → "Awing Learning brings interactive education
+   to kids and beginners worldwide."
+2. "✓ 6 Character Voices - Boy, girl, young man, young woman, man, and woman
+   characters guide your learning at each level" → "✓ Native-Speaker Audio -
+   Words are spoken by Awing speakers. Where no recording exists yet, the app
+   stays silent rather than guess the pronunciation."
+   **This line was not merely off-brand, it was FALSE.** The 6 character
+   voices were Edge TTS and v1.24.0 deleted them.
+3. "✓ **AI-Powered** Lessons - Content verified against official Awing
+   language sources" → "✓ Verified Content - Checked against official Awing
+   language sources" (the claim body was always about source verification,
+   not AI).
+4. "Awing **AI** Learning celebrates linguistic diversity…" → "Awing Learning
+   celebrates linguistic diversity…"
+
+Play says "Change saved. Send for review in Publishing overview." **Sending
+for review was deliberately left to Dr. Sama** — that is the step that
+changes the public listing, and there is already another update in review it
+could be bundled with.
+
+#### Apple App Store — BLOCKED, cannot be done yet
+
+App Store Connect → Awing AI Learning (Apple ID 6764426877) → App
+Information. The Name and Subtitle fields are `disabled: true`, with the
+banner:
+
+> To make changes to the app name, category, or privacy policy, create a new
+> app version. All other changes will be immediately available.
+
+So the iOS rename REQUIRES a new app version. Creating one is a release
+action, not a settings edit, so it was not done unilaterally — **the rename
+should ride along with the v1.24.0 submission**, where a new version is being
+created anyway.
+
+#### STILL CARRYING THE OLD NAME — image assets, cannot be fixed in a browser
+
+- **Play feature graphic** (1024x500): reads "Awing AI Learning / Learn the
+  Awing Language" in large type.
+- **iOS screenshots**: every one has an "Awing AI Learning" header bar.
+
+These are PNGs. They need regenerating before either store shows a
+consistent name — otherwise the listing will say "Awing Learning" above a
+banner that says "Awing AI Learning".
+
+### Store graphics regenerated for the rename
+
+#### New: `scripts/generate_store_graphics.py`
+
+`scripts/_deprecated/generate_store_graphics.py` could no longer run. Two
+reasons, both silent:
+
+- `OUTPUT_DIR` was hardcoded to `/sessions/vibrant-lucid-albattani/mnt/...`,
+  a sandbox path from some earlier session.
+- The font lookup was Linux-only (`/usr/share/fonts/truetype/dejavu/...`)
+  with a bare `except:` falling back to `ImageFont.load_default()`. On
+  Windows that is an 11px bitmap face, so a 1024x500 banner asking for an
+  80px title would have rendered microscopic text — and gone straight to the
+  store looking broken.
+
+The replacement keeps the live design EXACTLY (vertical green gradient, four
+outlined circles, centred title and subtitle, three white bubbles) and only
+changes the name. Font lookup tries Linux, Windows and macOS paths and
+**raises** rather than falling back to the bitmap default.
+
+    python scripts\generate_store_graphics.py --feature
+
+Output: `store_listing/feature_graphic.png` (1024x500), verified by eye.
+
+#### `scripts/generate_apple_screenshots.py`
+
+- `"Awing AI Learning"` appeared in 5 places, one per screenshot. Replaced
+  with a single `APP_NAME` constant.
+- **`screenshot_voices()` replaced by `screenshot_audio()`.** The old one
+  drew six character avatars (Boy / Girl / Young Man / Young Woman / Father
+  / Mother) under the tagline "Six character voices for kids". Those were
+  Edge TTS voices and v1.24.0 deleted them — the screenshot was advertising
+  a feature that no longer exists. The new one shows six word cards: three
+  with a green speaker and "Recorded", three with an amber microphone and
+  "Tap to record", tagline "Real voices, never synthetic". That is both true
+  and the actual NACDA story.
+- Card height raised 230 → 300 and gap 28 → 36. The first render reused the
+  old avatar grid's spacing (880px cells) and left roughly a third of the
+  canvas empty above the tagline band.
+
+All 10 files re-rendered (5 screenshots x 6.9" and 6.5").
+
+#### Checked and NOT changed
+
+`store_listing/screenshot_1..5.png` — the Play phone screenshots. They are
+in-app mockups ("Alphabet Lesson", "Tap to hear →") and never show the app
+name, so the rename does not touch them.
+
+`store_assets/feature_graphic.png` is a stale April duplicate of the Play
+banner; the live path is `store_listing/`. Left alone, but it is now
+inconsistent with its sibling.
+
+#### Still to do by hand
+
+Upload to the consoles. Play: Store listings → Graphics → Feature graphic.
+Apple: the screenshots go up with the new app version that the iOS rename
+requires anyway.
+
+#### Uploading store assets from Chrome does NOT work — do it by hand
+
+Attempted via Claude in Chrome. The sequence works right up to the upload:
+
+1. "Add assets" under Feature graphic is a plain `<button>`, not a file
+   input. Clicking it by SCREEN COORDINATES fails — the Play Console page
+   re-scrolls between the screenshot and the click, and the coordinate frame
+   changes (1501x812 vs 1545x784). Click it from JS instead:
+   `[...document.querySelectorAll('button,a')].filter(b=>/add assets/i.test(b.innerText))[1].click()`
+   (index 1 = Feature graphic; 0 = App icon, 2 = Phone screenshots).
+2. That creates a hidden `input[type=file]` accepting `.jpeg,.jpg,.png` and
+   opens the asset-library side panel. No native file dialog, so nothing
+   blocks.
+3. **`file_upload` then refuses every path.** Both
+   `C:\...\Awing\store_listing\feature_graphic.png` and the session's own
+   `/mnt/user-data/outputs/feature_graphic.png` come back with "only files
+   this session is allowed to read can be uploaded". The Chrome extension
+   runs on the local machine and its allow-list does not cover the
+   device-bridge folder OR the cloud container's paths.
+
+The built-in browser (`Claude_Browser`) has no file_upload tool at all, so
+there is no alternative route.
+
+**Conclusion: a human uploads the graphics.** Everything else on the listing
+can be done from here.
+
+### SHELL RULE — Dr. Sama runs PowerShell, not cmd.exe
+
+SIXTH slip of this project. `rd /s /q <dir>` is cmd.exe. In PowerShell `rd`
+is an ALIAS for `Remove-Item`, which rejects `/s` and `/q`:
+
+    Remove-Item : A positional parameter cannot be found that accepts
+    argument '/q'.
+
+I had even written the broken form into this file twice, so the mistake was
+set up to repeat itself. Both occurrences are now fixed.
+
+The running list of these, so the pattern is visible:
+
+| # | wrong | right |
+|---|---|---|
+| 1-4 | `for /f` with a pipe inside a `for ... do (` block; quoting slips | — |
+| 5 | `^` line continuation (cmd) in a PowerShell command | backtick `` ` ``, or one line |
+| 6 | `rd /s /q <dir>` | `Remove-Item -Recurse -Force <dir>` |
+
+RULE: every command handed to Dr. Sama is PowerShell. No `^`, no `/s /q`,
+no `%VAR%`. Use backtick for continuation or keep it on one line, and
+`-Recurse -Force -ErrorAction SilentlyContinue` for a quiet recursive
+delete. If a cmd-only construct is genuinely needed, wrap it:
+`cmd /c rd /s /q "<path>"`.
+
+### TWO AVOIDABLE RESTARTS ON THE v1.24.0 BUILD — read before the next one
+
+#### 1. `build_and_run.bat` step [4/7] silently reverted the pack to PNG
+
+The line was:
+
+    python scripts\generate_images.py --output-dir "%PAD_ASSETS%\images\vocabulary" generate
+
+No `--format webp`, so it took the PNG default. That is not merely wasteful:
+`_save_image()` DELETES the sibling file in the other format after a
+successful write, so the build was **converting the finished WebP pack back
+to PNG and deleting the WebP as it went** — 137.7 MB heading back to ~700 MB.
+Killed by hand at 236 images.
+
+Root cause: WebP support and the sibling-delete were added to
+generate_images.py without checking the one place in the build pipeline that
+calls it. Fixed, with the reasoning written beside the line so it survives.
+
+**If the pack format ever changes again, it must change in TWO places:**
+the generator default AND `build_and_run.bat` step [4/7].
+
+#### 2. `%PAD_ASSETS%` does not expand in PowerShell
+
+Recovering from (1), the fixed .bat line was copied straight into PowerShell:
+
+    python scripts\generate_images.py --output-dir "%PAD_ASSETS%\images\vocabulary" generate --format webp
+
+`%VAR%` is cmd.exe syntax. PowerShell passed it through literally, so the
+generator wrote into a directory named `%PAD_ASSETS%` in the repo root —
+553 files into a junk folder while the real pack sat untouched. Deleted.
+
+The .bat line is for the .bat ONLY. By hand, always:
+
+    python scripts\generate_images.py generate --format webp
+
+(no `--output-dir` — the generator already defaults to the PAD directory).
+
+LESSON FOR ME: when showing a fix made inside a batch file, do not present
+the edited line in a form that can be copied into a shell. Give the
+hand-run equivalent separately and explicitly. This is the same family as
+the `^` and `rd /s /q` slips — cmd syntax reaching a PowerShell prompt —
+and it is now the seventh.
+
+### Clearing TWO intermediates is not enough — wipe the whole build dir
+
+The v1.24.0 build failed twice after the image regeneration, in intermediates
+that were NOT on the list I had been handing out:
+
+    :app:cleanMergeReleaseAssets
+    > java.io.IOException: Unable to delete directory
+      '...\build\app\intermediates\assets\release\mergeReleaseAssets'
+      Failed to delete some children.
+
+then, on the APK fallback:
+
+    :app:extractReleaseNativeSymbolTables
+    > java.nio.file.AccessDeniedException:
+      ...\build\app\intermediates\native_symbol_tables\release\...\arm64-v8a
+
+Same family as the TTS-purge failure: Gradle holding an incremental snapshot
+that describes a tree which no longer exists. But the earlier note named only
+`asset_pack_bundle` and `merged_native_libs`, so those two got cleared and
+these two did not. **The list was never the point — ANY intermediate can hold
+a stale snapshot after 9,000 files change.**
+
+CORRECT RECOVERY after any mass add/remove under
+`android\install_time_assets` (this is what the older note already said under
+"manual recovery", and it should have been the first instruction, not the
+fallback):
+
+    Get-Process java,javaw -ErrorAction SilentlyContinue   # expect nothing
+    Remove-Item C:\dev\awing-build\build\* -Recurse -Force -ErrorAction SilentlyContinue
+    scripts\build_and_run.bat
+
+Costs a full cold Gradle build. Cheaper than two failed builds.
+
+STILL DO NOT USE `flutter clean` — it deletes through the junction and takes
+`.dart_tool` with it, costing another `pub get` for no benefit.
+
+NOTE: the device bridge CANNOT see inside `build/` — it is a junction to
+C:\dev\awing-build and the Linux VM will not traverse it (`readlink` returns
+nothing, the directory reads as empty). Anything under build/ has to be
+inspected or cleared by Dr. Sama in PowerShell.
+
+### Apps Script 200-VERSION cap — the build was burning one per run
+
+v1.24.0 build aborted at step [0/7]:
+
+    Cannot create more versions: Script has reached the limit of 200
+    versions. To create more, delete a version from the project history page.
+
+`setup_and_deploy.py` pushed and deployed BOTH webhooks on EVERY build,
+whether or not the .gs had changed. Each push+deploy mints an Apps Script
+version. The contributions project walked to 200 and stopped.
+
+**TWO SEPARATE QUOTAS, and only one was ever guarded:**
+
+| quota | limit | guarded? |
+|---|---|---|
+| versioned *deployments* per script | 20 | yes — `cleanup_old_deployments(keep=4)` |
+| *versions* per script | 200 | **no** |
+
+`clasp undeploy` frees deployments. It does NOT give versions back. Versions
+are finite and effectively non-reclaimable from the CLI.
+
+#### Fix: fingerprint skip
+
+`deploy_webhooks()` now sha256s the .gs it is about to push and compares it
+to `deployed_hashes[<name>]` in `config/webhooks.json`. Identical and a URL
+already recorded → skip push and deploy entirely. Deploying unchanged code
+was always pointless; now it is also free.
+
+Seeded both fingerprints by hand, which is accurate and verifiable:
+`contributions_webapp.gs` and `clasp_contributions/Code.js` are md5-identical
+(2d2afb1e…), analytics likewise (5f7df7d2…), and neither .gs is modified in
+git. So what is live at @200 IS the current source.
+
+`config/webhooks.json` gained `deployed_hashes` only — checked, still no
+secrets in that file, and the rule that none ever go there is unchanged.
+
+#### What this does NOT fix
+
+The contributions project is still AT the cap. The skip means normal builds
+no longer touch it — but **the next time `contributions_webapp.gs` actually
+changes, the deploy will fail again** until versions are freed from the Apps
+Script project history page (Google's own error message points there; I have
+not verified that UI path myself).
+
+#### Unblocking a build right now
+
+    scripts\build_and_run.bat --fast
+
+Skips webhook deploy, contributions, audio gen and image gen, straight to
+the Flutter build. Correct to use when those are already done — which they
+were: webhooks live and verified, 2 contributions applied, 8,748 images
+complete, audio unchanged.
+
+### v1.24.0 BUILD GREEN — the size result
+
+    AAB   931.4 MB  ->  292.5 MB     (-639 MB)
+    APK   100.7 MB  ->  100.7 MB     (unchanged — see below)
+
+The arithmetic closes exactly, which is the check that nothing else moved:
+images went 776.4 MB -> 137.7 MB, a 638.7 MB saving, and
+931.4 - 638.7 = 292.7 ~= 292.5. No surprise contributions.
+
+Built, installed and launched on emulator-5554. Home screen confirmed
+reading "Awing Learning" with no clipping — the Flexible+FittedBox on the
+42px wordmark works.
+
+#### OPEN QUESTION: the APK size did not move AT ALL
+
+100.7 MB before the WebP work and 100.7 MB after. If the APK carried the
+vocabulary pack, removing 638 MB of PNG would have changed it. It did not,
+which suggests `flutter build apk` / `assembleRelease` does NOT bundle the
+install-time asset pack, and only the AAB does.
+
+CONSEQUENCE: testing vocabulary images on an APK install (emulator or
+sideloaded device) may not exercise the real asset path at all. If images
+are missing in that build, that is probably this — not a regression.
+Verify before chasing it. The honest test is an AAB installed through
+bundletool or an internal-testing track.
+
+(Unverified. The device bridge cannot see inside build/ — it is a junction
+to C:\dev\awing-build and the Linux VM will not traverse it.)
+
+## Session 66e — browse-surface audio controls, and three prompt bugs that were not culture bugs
+
+Continuation of v1.24.0. Nothing in this section has been built or
+analysed by Flutter yet — **`flutter analyze` has not run since these
+edits** and must, before the commit. Flutter is not on the device
+bridge's PATH; Dr. Sama runs it.
+
+### Part 1 — NACDA #5 finished: every browse surface now states its audio truth
+
+v1.24.0 removed synthetic Awing, so a speaker button on a word nobody has
+recorded does nothing. `AwingAudioButton` / `AwingAudioActionButton`
+replace it with a microphone that opens the recorder, or a visibly
+disabled control where the recorder would not help. The remaining browse
+surfaces were converted this session:
+
+| file | what changed |
+|---|---|
+| `medium/vowels_screen.dart` | 3 sites: the 3x3 vowel chart cell (was a dead whole-cell tap), the vowel card, the verb-suffix card |
+| `find_similar_sheet.dart` | removed a dead whole-card `InkWell` tap — the card already had an `AwingAudioButton` |
+| `beginner/numbers_screen.dart` | card tap now only selects; audio is its own control. `childAspectRatio` 1.3 -> 1.0 to fit it |
+| `beginner/tone_screen.dart` | tone example word + minimal-pair rows |
+| `medium/noun_classes_screen.dart` | `_ExampleBox` takes `speakAwing: String?` instead of `onSpeak: VoidCallback?` |
+| `medium/numbers_medium_screen.dart` | `_NumberCard` trailing icon was decorative; big-number card had a dead `GestureDetector` |
+| `expert/numbers_expert_screen.dart` | same two shapes |
+| `medium/sentences_screen.dart` | sentence "Hear It" (`offerToRecord: false`), per-word breakdown button (record offer kept) |
+| `beginner/phrases_screen.dart` | needed `clipKey` support — see below |
+| `stories_screen.dart` | story line player; also deleted a `_pronunciation.dispose()` that tore down the shared singleton for every other screen |
+| `translate/sentence_translate.dart`, `word_translate.dart`, `grade_attempt.dart` | token chips and the example-sentence player |
+| `study_sets/study_set_editor_screen.dart` | this row has its own record button, so the play button is now DISABLED when there is nothing to play rather than converted |
+
+**Still deliberately NOT converted** — the record offer would lose the
+user's place: `quiz_screen`, `expert_quiz_screen`, `writing_quiz_screen`,
+`tone_mastery_screen`, `student_exam_screen`, the three `games/` screens,
+and the "count aloud" sequences in the two numbers screens. The recorder
+and dev screens are excluded by nature.
+
+Two component additions, both forced by a real call site:
+
+- **`clipKey`** on `AwingAudioButton`, and `hasNativeAudio(awing,
+  {clipKey})`. The phrase book files its sentence clips under names of
+  their own, so the auto key derived from the text misses them and every
+  phrase would have reported "no recording" even with a clip in the pack.
+- **`padding` / `constraints`** passthrough. A token chip inside a
+  translated sentence cannot afford `IconButton`'s default 48x48.
+
+Dead code removed on the way: the `pronunciation` parameter chains
+through `_ClusterCard`, `_ToneCard`, `_MinimalPairCard`, `_NounClassCard`,
+`_PluralGuessingExercise`, `_ReadingMode`, `_BuildingMode`,
+`_SentenceCard`, and `_ExampleBox`; six now-unused
+`PronunciationService` fields and their `init()` calls (`speakAwing` and
+`hasNativeAudio` both `await init()` themselves, so the per-screen
+warm-up was never load-bearing); and four unused imports.
+
+### Part 2 — NACDA #2 was mostly not a culture problem
+
+`contributions/cultural_image_review.md` listed 296 entries "that still
+get a generic cartoon" and asked Dr. Sama to describe each one. That was
+the wrong instinct — and it is what produced "i do not understand. what
+do you want from me?" Reading the actual prompts showed three mechanical
+defects, all fixable without asking anyone anything:
+
+1. **Truncated glosses — 248 images.** Step 9 of
+   `shorten_english_for_prompt()` caps at 6 words, and it cut mid-phrase:
+   `"a sort of white substance from"`, `"men dance group led by an"`,
+   `"school children's game played with a"`, `"third day of the week
+   and"`. A dangling preposition is a prompt asking for a relationship
+   whose object was cut off, and SDXL supplies one. New step 10 trims
+   back to the last content word. Every one of the samples improves.
+
+2. **Ghanaian clothing — 192 images.** `PERSONA_CLOTHES[("m", False)]`
+   offered `"bright kente-pattern cloth"`. Kente is Ashanti and Ewe —
+   Ghana, ~1,000 km west of Awing. Replaced with **toghu**: black velvet
+   embroidered in red and white, the regalia of the Bamenda Grassfields
+   (Northwest Region, which is Awing's own region). Offered to adult
+   women too, where it replaced `"a bright headscarf and wrapper"`;
+   everyday wear is still covered by the wrapper dress and Ankara print.
+   Source: https://mimimefoinfos.com/toghu-a-unique-cameroonian-identity/
+   **Do not add it as a 4th pool entry** — the pool length is the hash
+   modulus, so growing a pool reshuffles every persona in it and turns a
+   192-image regeneration into thousands.
+
+3. **Entries with no honest picture — 68 images.** `is_illustratable()`
+   gained three rules:
+   - `_STEM_ENTRY` — "verb stem of chaakə̌" was being drawn as a cartoon
+     of that literal string (21 entries).
+   - `_NON_ASCII` on the **shortened** gloss — the English field holding
+     Awing text (28). Tested after shortening on purpose: "neck (synonym
+     of ndě)" shortens to "neck", which is perfectly drawable, and
+     testing the raw gloss would have thrown it away.
+   - `_NAMED_INSTITUTION` — "Women dance group based in Tame Tangwing's
+     compound", "name of a quarter in Awing" (19). One specific group or
+     place, several defunct. No generic cartoon is a picture of them, and
+     a generic one is precisely the NACDA complaint.
+
+   `cmd_generate` already deletes the existing file for a key that has
+   become unillustratable, so a `--keys-file` run removes these.
+
+**492 images need regenerating**, listed with a reason per key in
+`contributions/regen_keys_v1240b.txt` (232 trimmed-tail, 176 toghu, 16
+both, 68 now-blank). Verified all 492 match a real key. ~4 minutes on the
+5070, not the 2 hours a full run takes:
+
+    python scripts\generate_images.py `
+      --output-dir "android\install_time_assets\src\main\assets\images\vocabulary" `
+      generate --format webp --keys-file contributions\regen_keys_v1240b.txt
+    python scripts\build_image_manifest.py
+
+That path is written out in full on purpose. It is `%PAD_ASSETS%` in
+`build_and_run.bat`, PowerShell does not expand `%VAR%`, and pasting the
+.bat form once created a literal `%PAD_ASSETS%` directory and 553 junk
+files. (8th time cmd-vs-PowerShell has cost something in this project.)
+
+`--keys-file` also now takes only the first whitespace/tab field of each
+line, so an annotated list works. Before this it compared the whole line
+and an annotated file matched nothing.
+
+### What is left on the 296 list
+
+A much shorter list, and it is genuinely Dr. Sama's: items whose English
+gloss is fine and drawable but whose *thing* is local — raffia baskets,
+bamboo chairs and cupboards, gourds, the peace plant, achu equipment. A
+generic basket is a weak picture, not a wrong one. The
+confidently-wrong class is what is now gone, and the app ships without
+the rest.
+
+## Session 66f — the privacy policy URL has never worked
+
+Found while fixing what looked like a cosmetic problem: the store listings
+pointed at `samagids.github.io/awing-ai-learning/privacy` because the slug
+carried the old app name. Renaming the repo would not have fixed it.
+
+**GitHub Pages had never been enabled, and could not be.**
+`samagids/awing-learning` is a **private** repo, and the Pages settings page
+answers plainly: *"Upgrade or make this repository public to enable Pages."*
+Pages needs a public repo on the free plan. So the privacy URL in both store
+listings has 404'd from the day it was written, and both Apple and Google
+fetch that URL during review.
+
+### The fix: a separate public repo for the two pages
+
+Making `awing-learning` public was rejected on purpose — it would also
+publish the Awing dictionary PDFs, the family audio recordings, the
+Firestore and Storage rules and the whole commit history, and forks and
+caches make that irreversible.
+
+Created **`samagids/awing-legal`** (public, empty). Its content is prepared
+in `site_legal/` in this repo — Jekyll Markdown, so GitHub Pages renders it
+with no build step:
+
+| file | serves |
+|---|---|
+| `index.md` | `https://samagids.github.io/awing-legal/` |
+| `privacy.md` | `.../awing-legal/privacy` |
+| `support.md` | `.../awing-legal/support` |
+
+`site_legal/` is in `.gitignore` — it is its OWN git repo, not part of this
+one. `site_legal/PUSH_ME.txt` has the six commands.
+
+**LIVE as of 2026-10-05.** Pushed, Pages enabled (main / root, HTTPS
+enforced), first build 43s. All three URLs verified by an UNAUTHENTICATED
+fetch, which is how a store reviewer sees them — checking them in a
+logged-in browser would have proved nothing, since that was exactly how the
+private repo looked readable all along. `PUSH_ME.txt` is still in the public
+repo; harmless, delete it next time you touch that repo.
+
+**Do not add `.html` to those paths.** Jekyll renders `privacy.md` to
+`/privacy`.
+
+### Two policy problems found on the way
+
+1. **`docs/privacy-policy.html` contradicted `docs/privacy.md`.** The HTML
+   (April 8) said *"The App does not maintain any external servers or
+   databases"* and described cloud backup going to **Google Drive**. Both
+   are false: optional sync goes to **Firebase Firestore**, which is an
+   external database, and there is no Drive backup. The .md (April 12) is
+   correct. For a children's app, a published policy that understates
+   collection is the fastest route to removal from both stores, so the HTML
+   is now a stub that redirects to the .md and records why.
+
+2. **The policy described Microsoft Edge TTS**, which v1.24.0 removed from
+   the build (commit `ba26500a`) — and claimed it *"processes text
+   locally"*, which was never true of a cloud TTS service. Replaced with a
+   plain statement that all pronunciation audio is a bundled human
+   recording.
+
+Also in `docs/privacy.md`: "Awing AI Learning" -> "Awing Learning" (11
+places), repo slug fixed (3), Last Updated -> October 5 2026, Version ->
+1.24.0.
+
+### Store listing docs now distinguish two URLs
+
+`store_listing/` kept pointing reviewers at `github.com/samagids/...` as the
+app homepage. That repo is private and 404s for a reviewer. The homepage is
+now `https://samagids.github.io/awing-legal/`, and a **support URL**
+(Apple requires one separate from the privacy URL) is
+`.../awing-legal/support`. A `raw.githubusercontent.com` link to the private
+repo was removed for the same reason.
+
+### Local repo
+
+`git remote origin` was still `awing-ai-learning`; set to
+`https://github.com/samagids/awing-learning.git`. GitHub redirects the old
+name, so pushes were working and would have kept working silently.
+
+### Both consoles updated 2026-10-05 — and a correction
+
+I said earlier that the privacy URL was dead "in both store listings". That
+was wrong, and it was wrong because I inferred it from `store_listing/*.md`
+instead of opening the consoles. **Play was fine.** Its privacy URL pointed
+at `https://sites.google.com/view/awingailearning`, a Google Sites copy of
+the same policy that has worked all along. (An unauthenticated fetch of that
+page returns an empty shell — Google Sites renders client-side — so it looks
+broken to any text-based check. Only a real browser shows the content. Worth
+remembering before declaring a Sites page dead.)
+
+**Apple was the broken one**, in three places:
+
+| field | was | now |
+|---|---|---|
+| Privacy Policy URL | `samagids.github.io/awing-ai-learning/privacy` | `.../awing-legal/privacy` |
+| Support URL | `samagids.github.io/awing-ai-learning/` | `.../awing-legal/support` |
+| Marketing URL | `samagids.github.io/awing-ai-learning/` | `.../awing-legal/` |
+
+All three 404'd, and the privacy one was **already published** on the live
+1.23.6 listing. Apple fetches the support URL during review; a 404 there is a
+standard rejection.
+
+Play also had `https://github.com/samagids/awing-ai-learning` as the store
+listing **Website** — a private repo, 404 for every user who tapped it on the
+store page. Changed to `https://samagids.github.io/awing-legal/` and
+published (that field publishes immediately; the privacy URL change is
+pending in Publishing overview, as is Apple's, which releases with 1.24.0).
+
+Play's privacy URL was also moved to the GitHub Pages copy, so there is now
+ONE canonical policy. The Google Sites page still says "Awing AI Learning"
+and still describes Edge TTS; it is no longer referenced by anything and can
+be deleted.
+
+### Lesson: `form_input` and raw JS value-setting both fail on these consoles
+
+Setting `.value` through the native property descriptor plus synthetic
+input/change/blur events updated the DOM but React ignored it — the App Store
+Connect privacy modal's Save stayed disabled and the change silently
+reverted on reload. The same trick HAD worked on the version page's Support
+and Marketing URL fields, which is what made it look reliable.
+
+What works everywhere: click the field, `ctrl+a`, then `type`. Real key
+events. The tell that it registered is the Save button going from grey to
+blue (and, on Apple, an "Edited" badge appearing).
+
+Also: a `triple_click` on a Play Console field that is still in READ-ONLY
+view selects the whole page instead, and the following `ctrl+a` + `type`
+goes nowhere. Click the section's **Edit** button first.
+
+### Build break from the deploy-skip (same session, found by running it)
+
+`scripts\build_and_run.bat` aborted at step [0/7]:
+
+    analytics_webapp.gs unchanged since last deploy — skipping push/deploy.
+    contributions_webapp.gs unchanged since last deploy — skipping push/deploy.
+    ERROR: contributions_url was not deployed/verified.
+    ERROR: Webhook deploy failed. Build aborted.
+
+The fingerprint skip added earlier this release wrote `urls[name]`. The
+deploy path it short-circuits writes `urls[f"{name}_url"]`, and the
+required-webhook check tests for `'contributions_url'`. So a webhook that
+was live, unchanged and perfectly healthy failed the build — and
+`existing.update(urls)` also wrote junk `"analytics"` / `"contributions"`
+keys into `config/webhooks.json` beside the real ones.
+
+Both fixed; the junk keys removed from the config. The lesson is narrow and
+worth keeping: **a fast path must produce the same keys as the slow path it
+replaces.** The URL was being carried forward correctly, so the skip looked
+right in isolation; only the caller's key lookup showed otherwise. This only
+surfaced because the second run of the build was the first one where
+BOTH scripts were unchanged.

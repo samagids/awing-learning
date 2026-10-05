@@ -1,12 +1,12 @@
-# Awing AI Learning - Privacy Policy
+# Awing Learning - Privacy Policy
 
-**Last Updated:** April 12, 2026
+**Last Updated:** October 5, 2026
 
 ## Our Commitment to Privacy
 
-At Awing AI Learning, we are committed to protecting your privacy and ensuring you have a positive experience on our app. This Privacy Policy outlines how we collect, use, and safeguard your information when you use our mobile application.
+At Awing Learning, we are committed to protecting your privacy and ensuring you have a positive experience on our app. This Privacy Policy outlines how we collect, use, and safeguard your information when you use our mobile application.
 
-Awing AI Learning is designed to be **offline-first**, meaning you can use the app to learn the Awing language without ever needing to create an account or connect to the internet. All core learning features work without any data collection.
+Awing Learning is designed to be **offline-first**, meaning you can use the app to learn the Awing language without ever needing to create an account or connect to the internet. All core learning features work without any data collection.
 
 ---
 
@@ -83,9 +83,11 @@ Your cloud data persists as long as your account is active. You can request dele
 
 Google's use of your data is governed by [Google's Privacy Policy](https://policies.google.com/privacy).
 
-### Microsoft Edge TTS
+### Pronunciation Audio
 
-Awing AI Learning uses Microsoft Edge TTS for text-to-speech pronunciation audio. Edge TTS does not collect personal data — it processes text locally without storing or logging your requests.
+All pronunciation audio in the app is a recording made by a human Awing
+speaker and bundled with the app. Nothing is sent anywhere to produce it,
+and the app no longer uses any text-to-speech service for Awing.
 
 ### Third-Party Libraries
 
@@ -95,7 +97,7 @@ The app uses open-source libraries listed in pubspec.yaml. These libraries do no
 
 ## Data We Do NOT Collect
 
-**Awing AI Learning does NOT:**
+**Awing Learning does NOT:**
 
 - Collect location data
 - Collect device identifiers (IMEI, phone number, etc.)
@@ -110,7 +112,7 @@ The app uses open-source libraries listed in pubspec.yaml. These libraries do no
 
 ## Children's Privacy (COPPA Compliance)
 
-Awing AI Learning is designed for children ages 5 and up. We comply with the Children's Online Privacy Protection Act (COPPA) and other child safety regulations.
+Awing Learning is designed for children ages 5 and up. We comply with the Children's Online Privacy Protection Act (COPPA) and other child safety regulations.
 
 ### Our Commitments to Children's Safety
 
@@ -183,7 +185,7 @@ While we implement best practices, no method of data transmission is 100% secure
 
 ## International Data Transfer
 
-If you use Firebase cloud sync, your data may be transferred, stored, and processed in the United States and other countries where Google operates data centers. By using Awing AI Learning, you consent to such transfers. These transfers are protected by standard contractual clauses and Google's security commitments.
+If you use Firebase cloud sync, your data may be transferred, stored, and processed in the United States and other countries where Google operates data centers. By using Awing Learning, you consent to such transfers. These transfers are protected by standard contractual clauses and Google's security commitments.
 
 ---
 
@@ -204,9 +206,9 @@ Your continued use of the app following the posting of revised Privacy Policy me
 If you have questions, concerns, or requests about this Privacy Policy or our privacy practices, please contact:
 
 **Dr. Guidion Sama, DIT**  
-Creator of Awing AI Learning  
+Creator of Awing Learning  
 **Email:** samagids@gmail.com  
-**GitHub:** https://github.com/samagids/awing-ai-learning
+**GitHub:** https://github.com/samagids/awing-learning
 
 We will respond to all privacy inquiries within 30 days.
 
@@ -225,19 +227,19 @@ This Privacy Policy complies with:
 
 ### No Sale of Personal Information
 
-We do not sell, rent, trade, or share personal information with third parties for commercial purposes. Your data is used only to provide and improve Awing AI Learning.
+We do not sell, rent, trade, or share personal information with third parties for commercial purposes. Your data is used only to provide and improve Awing Learning.
 
 ---
 
 ## Disclaimer
 
-This Privacy Policy is provided as-is. While we strive to protect your privacy, we make no warranties or guarantees about the absolute security of your data. Use of Awing AI Learning is at your own risk.
+This Privacy Policy is provided as-is. While we strive to protect your privacy, we make no warranties or guarantees about the absolute security of your data. Use of Awing Learning is at your own risk.
 
 ---
 
 ## Summary
 
-**Awing AI Learning** is committed to:
+**Awing Learning** is committed to:
 
 ✓ Protecting your privacy and data security  
 ✓ Collecting minimal data and only with your consent  
@@ -246,9 +248,9 @@ This Privacy Policy is provided as-is. While we strive to protect your privacy, 
 ✓ Being transparent about data usage  
 ✓ Respecting your privacy rights at all times  
 
-By using Awing AI Learning, you agree to this Privacy Policy. For more information, visit: [github.com/samagids/awing-ai-learning](https://github.com/samagids/awing-ai-learning)
+By using Awing Learning, you agree to this Privacy Policy. For more information, visit: [github.com/samagids/awing-learning](https://github.com/samagids/awing-learning)
 
 ---
 
-**Last Updated:** April 12, 2026  
-**Version:** 1.2.0
+**Last Updated:** October 5, 2026  
+**Version:** 1.24.0

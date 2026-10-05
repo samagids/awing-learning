@@ -2,7 +2,8 @@
 """build_image_manifest.py — write assets/image_manifest.json.
 
 Scans the PAD asset pack images directory and produces a tiny JSON manifest
-of every image filename stem (without .png). The Flutter app loads this
+of every image filename stem (without the extension). The Flutter app
+loads this
 manifest at startup so it can synchronously check whether an image exists
 BEFORE selecting a vocabulary word for a game / quiz / exam round.
 
@@ -49,11 +50,19 @@ def main():
         print('  Run scripts/generate_images.py first.')
         return 1
 
-    keys = []
+    # Accept both extensions. v1.24.0 regenerates the library as WebP, but
+    # PNGs linger (older builds, community images installed by
+    # apply_contributions.py), and during a partial regeneration the SAME
+    # stem can exist as both — hence the set, so the manifest never lists a
+    # key twice. ImageService._imageExtensions must accept the same set.
+    exts = ('.webp', '.png')
+    stems = set()
     for fn in os.listdir(IMG_DIR):
-        if fn.endswith('.png'):
-            keys.append(fn[:-4])
-    keys.sort()
+        for ext in exts:
+            if fn.endswith(ext):
+                stems.add(fn[:-len(ext)])
+                break
+    keys = sorted(stems)
 
     os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
     payload = {

@@ -35,6 +35,8 @@ OUT_65 = REPO / "store_listing" / "ios" / "iphone_6_5"  # 1284 x 2778
 SIZE_69 = (1320, 2868)
 SIZE_65 = (1284, 2778)
 
+APP_NAME = "Awing Learning"   # NACDA DMV: the "AI" is gone
+
 # Awing brand palette
 AWING_GREEN = (0, 100, 50)         # #006432 — primary
 AWING_DARK = (0, 70, 35)            # darker green for header
@@ -160,7 +162,7 @@ def screenshot_hero(canvas_w, canvas_h):
 
     # Top status strip
     _draw_status_bar(draw, canvas_w, None)
-    _draw_centered_text(draw, "Awing AI Learning", 130, title_font,
+    _draw_centered_text(draw, APP_NAME, 130, title_font,
                         AWING_GREEN, canvas_w)
     _draw_centered_text(draw, "Learn the Awing language", 290,
                         subtitle_font, MED_TEXT, canvas_w)
@@ -212,7 +214,7 @@ def screenshot_alphabet(canvas_w, canvas_h):
     tagline_font = _find_font(64, bold=True)
 
     _draw_status_bar(draw, canvas_w, None)
-    _draw_centered_text(draw, "Awing AI Learning", 130, title_font,
+    _draw_centered_text(draw, APP_NAME, 130, title_font,
                         AWING_GREEN, canvas_w)
     _draw_centered_text(draw, "Learn the Awing language", 290,
                         subtitle_font, MED_TEXT, canvas_w)
@@ -272,7 +274,7 @@ def screenshot_vocabulary(canvas_w, canvas_h):
     tagline_font = _find_font(64, bold=True)
 
     _draw_status_bar(draw, canvas_w, None)
-    _draw_centered_text(draw, "Awing AI Learning", 130, title_font,
+    _draw_centered_text(draw, APP_NAME, 130, title_font,
                         AWING_GREEN, canvas_w)
     _draw_centered_text(draw, "Learn the Awing language", 290,
                         subtitle_font, MED_TEXT, canvas_w)
@@ -350,7 +352,7 @@ def screenshot_quiz(canvas_w, canvas_h):
     tagline_font = _find_font(64, bold=True)
 
     _draw_status_bar(draw, canvas_w, None)
-    _draw_centered_text(draw, "Awing AI Learning", 130, title_font,
+    _draw_centered_text(draw, APP_NAME, 130, title_font,
                         AWING_GREEN, canvas_w)
     _draw_centered_text(draw, "Learn the Awing language", 290,
                         subtitle_font, MED_TEXT, canvas_w)
@@ -407,77 +409,93 @@ def screenshot_quiz(canvas_w, canvas_h):
 
 # ===== Screenshot 5: Six Character Voices =====
 
-def screenshot_voices(canvas_w, canvas_h):
+def screenshot_audio(canvas_w, canvas_h):
+    """Native-speaker audio, and the invitation to record what is missing.
+
+    REPLACES the old screenshot_voices(), which showed six character avatars
+    under the tagline "Six character voices for kids". Those voices were Edge
+    TTS and v1.24.0 deleted them, so that screenshot had become an advert for
+    a feature that no longer exists. This shows what the app does now: play a
+    human recording where one exists, and offer to record the word where one
+    does not.
+    """
     img = Image.new("RGB", (canvas_w, canvas_h), BG_GRAY)
     draw = ImageDraw.Draw(img)
 
     title_font = _find_font(108, bold=True)
     subtitle_font = _find_font(56)
     section_font = _find_font(72, bold=True)
-    voice_label_font = _find_font(56, bold=True)
-    voice_role_font = _find_font(40)
+    word_font = _find_font(62, bold=True)
+    gloss_font = _find_font(44)
+    state_font = _find_font(38, bold=True)
     tagline_font = _find_font(64, bold=True)
 
     _draw_status_bar(draw, canvas_w, None)
-    _draw_centered_text(draw, "Awing AI Learning", 130, title_font,
-                        AWING_GREEN, canvas_w)
+    _draw_centered_text(draw, APP_NAME, 130, title_font, AWING_GREEN, canvas_w)
     _draw_centered_text(draw, "Learn the Awing language", 290,
                         subtitle_font, MED_TEXT, canvas_w)
 
-    # Section header
     sec_y = 450
     draw.rectangle([(0, sec_y), (canvas_w, sec_y + 120)], fill=AWING_GREEN)
-    draw.text((60, sec_y + 30), "Choose a voice",
-              font=section_font, fill=CARD_WHITE)
+    draw.text((60, sec_y + 30), "Real voices", font=section_font,
+              fill=CARD_WHITE)
 
-    # 6 voice avatars in a 3x2 grid — bigger to fill the canvas
-    voices = [
-        ("Boy",         "Beginner", AWING_LIGHT),
-        ("Girl",        "Beginner", (255, 153, 153)),
-        ("Young Man",   "Medium",   (51, 153, 51)),
-        ("Young Woman", "Medium",   (204, 102, 204)),
-        ("Father",      "Expert",   (87, 84, 64)),
-        ("Mother",      "Expert",   (179, 102, 51)),
+    # (awing, english, has_recording)
+    rows = [
+        ("mbe",   "two",   True),
+        ("azoe",  "yam",   True),
+        ("achue", "achu",  True),
+        ("nkie",  "water", False),
+        ("ngee",  "stone", False),
+        ("atie",  "tree",  False),
     ]
-    cols = 3
-    rows = 2
-    cell_w = (canvas_w - 160) // cols
-    cell_h = 880
-    gap = 30
-    grid_x = 80
-    grid_y = sec_y + 220
-    for i, (label, role, color) in enumerate(voices):
-        row = i // cols
-        col = i % cols
-        x0 = grid_x + col * (cell_w + gap)
-        y0 = grid_y + row * (cell_h + gap)
-        # Circle avatar — much bigger
-        avatar_r = 200
-        cx = x0 + cell_w // 2
-        cy = y0 + 280
-        draw.ellipse([(cx - avatar_r, cy - avatar_r),
-                      (cx + avatar_r, cy + avatar_r)], fill=color)
-        # Initial inside circle
-        initial = label[0]
-        initial_font = _find_font(220, bold=True)
-        bbox = draw.textbbox((0, 0), initial, font=initial_font)
-        iw = bbox[2] - bbox[0]
-        ih = bbox[3] - bbox[1]
-        draw.text((cx - iw // 2, cy - ih // 2 - 12),
-                  initial, font=initial_font, fill=CARD_WHITE)
-        # Name
-        bbox = draw.textbbox((0, 0), label, font=voice_label_font)
-        nw = bbox[2] - bbox[0]
-        draw.text((cx - nw // 2, y0 + 560),
-                  label, font=voice_label_font, fill=DARK_TEXT)
-        # Role
-        bbox = draw.textbbox((0, 0), role, font=voice_role_font)
-        rw = bbox[2] - bbox[0]
-        draw.text((cx - rw // 2, y0 + 680),
-                  role, font=voice_role_font, fill=MED_TEXT)
+
+    # Sized to fill the canvas between the section header and the tagline
+    # band: 6 cards x (card_h + gap) ~= 2018px of available height. The old
+    # avatar grid used 880px cells, so reusing its numbers left a third of
+    # the screenshot empty.
+    y = sec_y + 200
+    card_h = 300
+    gap = 36
+    margin = 70
+    for awing, english, has in rows:
+        _rounded_rect(draw, [(margin, y), (canvas_w - margin, y + card_h)],
+                      28, CARD_WHITE)
+        draw.text((margin + 50, y + 48), awing, font=word_font, fill=DARK_TEXT)
+        draw.text((margin + 50, y + 132), english, font=gloss_font,
+                  fill=MED_TEXT)
+
+        br = 72
+        bx = canvas_w - margin - 60 - br
+        by = y + card_h // 2
+        colour = AWING_GREEN if has else AWING_GOLD
+        draw.ellipse([(bx - br, by - br), (bx + br, by + br)], fill=colour)
+        if has:
+            draw.polygon([(bx - 26, by - 14), (bx - 8, by - 14),
+                          (bx + 10, by - 34), (bx + 10, by + 34),
+                          (bx - 8, by + 14), (bx - 26, by + 14)],
+                         fill=CARD_WHITE)
+            for r in (24, 38):
+                draw.arc([(bx + 2 - r, by - r), (bx + 2 + r, by + r)],
+                         -55, 55, fill=CARD_WHITE, width=7)
+        else:
+            draw.rounded_rectangle([(bx - 17, by - 38), (bx + 17, by + 10)],
+                                   17, fill=CARD_WHITE)
+            draw.arc([(bx - 32, by - 18), (bx + 32, by + 30)],
+                     0, 180, fill=CARD_WHITE, width=8)
+            draw.line([(bx, by + 30), (bx, by + 46)], fill=CARD_WHITE, width=8)
+            draw.line([(bx - 20, by + 46), (bx + 20, by + 46)],
+                      fill=CARD_WHITE, width=8)
+
+        label = "Recorded" if has else "Tap to record"
+        bbox = draw.textbbox((0, 0), label, font=state_font)
+        draw.text((bx - (bbox[2] - bbox[0]) // 2, y + card_h - 46),
+                  label, font=state_font,
+                  fill=AWING_GREEN if has else AWING_GOLD)
+        y += card_h + gap
 
     _draw_tagline_band(draw, canvas_w, canvas_h,
-                       "Six character voices for kids", tagline_font)
+                       "Real voices, never synthetic", tagline_font)
     return img
 
 
@@ -488,7 +506,7 @@ SCREENSHOTS = [
     ("screenshot_2.png", screenshot_alphabet),
     ("screenshot_3.png", screenshot_vocabulary),
     ("screenshot_4.png", screenshot_quiz),
-    ("screenshot_5.png", screenshot_voices),
+    ("screenshot_5.png", screenshot_audio),
 ]
 
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/services/dictionary_lookup.dart';
 import 'package:awing_ai_learning/services/example_sentences.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/widgets/ai_mode_toggle.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/ai_toggle_service.dart';
@@ -447,17 +446,14 @@ class _ExampleTile extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
+          // An example sentence, not a word: the recorder is word-oriented,
+          // so this says "no recording" rather than offering to make one.
+          AwingAudioButton(
+            awing: example.awing,
             iconSize: 22,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
-            icon: const Icon(Icons.volume_up),
-            tooltip: 'Play example',
-            onPressed: () async {
-              try {
-                await PronunciationService().speakAwing(example.awing);
-              } catch (_) {}
-            },
+            offerToRecord: false,
           ),
         ],
       ),

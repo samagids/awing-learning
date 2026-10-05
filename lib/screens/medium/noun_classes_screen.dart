@@ -2,8 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 class NounClassesScreen extends StatefulWidget {
   const NounClassesScreen({Key? key}) : super(key: key);
@@ -13,14 +13,12 @@ class NounClassesScreen extends StatefulWidget {
 }
 
 class _NounClassesScreenState extends State<NounClassesScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
   late PageController _pageController;
   int _currentClassIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     _pageController = PageController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('medium_noun_classes');
@@ -70,15 +68,12 @@ class _NounClassesScreenState extends State<NounClassesScreen> {
               itemCount: nounClasses.length,
               itemBuilder: (context, index) => _NounClassCard(
                 nounClass: nounClasses[index],
-                pronunciation: _pronunciation,
               ),
             ),
           ),
           // Exercise section
           Expanded(
-            child: _PluralGuessingExercise(
-              pronunciation: _pronunciation,
-            ),
+            child: const _PluralGuessingExercise(),
           ),
         ],
       ),
@@ -88,11 +83,9 @@ class _NounClassesScreenState extends State<NounClassesScreen> {
 
 class _NounClassCard extends StatelessWidget {
   final NounClass nounClass;
-  final PronunciationService pronunciation;
 
   const _NounClassCard({
     required this.nounClass,
-    required this.pronunciation,
   });
 
   @override
@@ -124,7 +117,7 @@ class _NounClassCard extends StatelessWidget {
             word: nounClass.singularExample,
             english: nounClass.english.split('/')[0],
             color: Colors.blue.shade50,
-            onSpeak: () => pronunciation.speakAwing(nounClass.singularExample),
+            speakAwing: nounClass.singularExample,
           ),
           const SizedBox(height: 16),
           // Arrow icon
@@ -138,9 +131,8 @@ class _NounClassCard extends StatelessWidget {
                 ? nounClass.english.split('/')[1]
                 : nounClass.english,
             color: Colors.green.shade50,
-            onSpeak: nounClass.pluralExample != '--'
-                ? () => pronunciation.speakAwing(nounClass.pluralExample)
-                : null,
+            speakAwing:
+                nounClass.pluralExample != '--' ? nounClass.pluralExample : null,
           ),
           const SizedBox(height: 20),
           // Pattern explanation
@@ -181,14 +173,17 @@ class _ExampleBox extends StatelessWidget {
   final String word;
   final String english;
   final Color color;
-  final VoidCallback? onSpeak;
+
+  /// The Awing text to play, or null where there is nothing to play at all
+  /// (a class with no plural form).
+  final String? speakAwing;
 
   const _ExampleBox({
     required this.label,
     required this.word,
     required this.english,
     required this.color,
-    this.onSpeak,
+    this.speakAwing,
   });
 
   @override
@@ -228,15 +223,16 @@ class _ExampleBox extends StatelessWidget {
               color: Colors.grey[700],
             ),
           ),
-          if (onSpeak != null) ...[
+          if (speakAwing != null) ...[
             const SizedBox(height: 12),
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: FloatingActionButton.small(
-                backgroundColor: Colors.orange,
-                onPressed: onSpeak,
-                child: const Icon(Icons.volume_up, color: Colors.white),
+            Container(
+              decoration: const BoxDecoration(
+                color: Colors.orange,
+                shape: BoxShape.circle,
+              ),
+              child: AwingAudioButton(
+                awing: speakAwing!,
+                color: Colors.white,
               ),
             ),
           ],
@@ -247,11 +243,7 @@ class _ExampleBox extends StatelessWidget {
 }
 
 class _PluralGuessingExercise extends StatefulWidget {
-  final PronunciationService pronunciation;
-
-  const _PluralGuessingExercise({
-    required this.pronunciation,
-  });
+  const _PluralGuessingExercise();
 
   @override
   State<_PluralGuessingExercise> createState() => _PluralGuessingExerciseState();

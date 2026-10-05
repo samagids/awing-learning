@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 class ElisionScreen extends StatefulWidget {
   const ElisionScreen({Key? key}) : super(key: key);
@@ -12,14 +12,12 @@ class ElisionScreen extends StatefulWidget {
 }
 
 class _ElisionScreenState extends State<ElisionScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
   int _currentRuleIndex = 0;
   bool _showAnswer = false;
 
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('expert_elision');
     });
@@ -181,14 +179,9 @@ class _ElisionScreenState extends State<ElisionScreen> {
                       Row(
                         children: [
                           Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () => _pronunciation.speakAwing(currentRule['practiceWord']!),
-                              icon: const Icon(Icons.volume_up),
-                              label: const Text('Hear it'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
-                                foregroundColor: Colors.white,
-                              ),
+                            child: AwingAudioActionButton(
+                              awing: currentRule['practiceWord']!,
+                              playColor: Colors.blue,
                             ),
                           ),
                         ],

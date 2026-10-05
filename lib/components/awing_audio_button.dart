@@ -37,7 +37,19 @@ class AwingAudioButton extends StatefulWidget {
   /// recorder pre-filled.
   final AwingWord? word;
 
+  /// Set on surfaces whose audio is a sentence clip filed under a name of
+  /// its own (the phrase book) rather than keyed off the text. It changes
+  /// both the existence check and the playback call; without it a phrase
+  /// with a shipped clip would report "no recording".
+  final String? clipKey;
+
   final double iconSize;
+
+  /// Dense surfaces (a token chip inside a translated sentence, a table
+  /// cell) cannot afford an IconButton's default 48×48 tap target. Passing
+  /// these keeps the control the size the surrounding layout was built for.
+  final EdgeInsetsGeometry? padding;
+  final BoxConstraints? constraints;
 
   /// Colour of the speaker when audio exists. The record state uses its own
   /// colour on purpose — it is a different action and should not masquerade
@@ -52,7 +64,10 @@ class AwingAudioButton extends StatefulWidget {
     Key? key,
     required this.awing,
     this.word,
+    this.clipKey,
     this.iconSize = 24,
+    this.padding,
+    this.constraints,
     this.color,
     this.offerToRecord = true,
   }) : super(key: key);
@@ -86,10 +101,19 @@ class _AwingAudioButtonState extends State<AwingAudioButton> {
 
   Future<void> _check() async {
     final target = widget.awing;
-    final has = await PronunciationService().hasNativeAudio(target);
+    final has = await PronunciationService()
+        .hasNativeAudio(target, clipKey: widget.clipKey);
     // The word may have moved on while the pack was being read.
     if (!mounted || target != widget.awing) return;
     setState(() => _hasAudio = has);
+  }
+
+  Future<void> _play() {
+    if (widget.clipKey != null) {
+      return PronunciationService()
+          .speakSentence(widget.awing, clipKey: widget.clipKey);
+    }
+    return PronunciationService().speakAwing(widget.awing);
   }
 
   AwingWord? _resolveWord() {
@@ -122,6 +146,8 @@ class _AwingAudioButtonState extends State<AwingAudioButton> {
     if (has == null) {
       return IconButton(
         iconSize: widget.iconSize,
+        padding: widget.padding,
+        constraints: widget.constraints,
         onPressed: null,
         icon: Icon(Icons.volume_up, size: widget.iconSize, color: Colors.grey.shade300),
         tooltip: 'Checking for a recording…',
@@ -131,10 +157,12 @@ class _AwingAudioButtonState extends State<AwingAudioButton> {
     if (has) {
       return IconButton(
         iconSize: widget.iconSize,
+        padding: widget.padding,
+        constraints: widget.constraints,
         color: widget.color ?? _kGreen,
         icon: Icon(Icons.volume_up, size: widget.iconSize),
         tooltip: 'Play ${widget.awing}',
-        onPressed: () => PronunciationService().speakAwing(widget.awing),
+        onPressed: _play,
       );
     }
 
@@ -143,6 +171,8 @@ class _AwingAudioButtonState extends State<AwingAudioButton> {
       // nothing when pressed.
       return IconButton(
         iconSize: widget.iconSize,
+        padding: widget.padding,
+        constraints: widget.constraints,
         onPressed: null,
         icon: Icon(Icons.volume_off, size: widget.iconSize, color: Colors.grey.shade400),
         tooltip: 'No recording yet',
@@ -151,6 +181,8 @@ class _AwingAudioButtonState extends State<AwingAudioButton> {
 
     return IconButton(
       iconSize: widget.iconSize,
+      padding: widget.padding,
+      constraints: widget.constraints,
       color: Colors.orange.shade800,
       icon: Icon(Icons.mic_none, size: widget.iconSize),
       tooltip: 'No recording yet — tap to record ${widget.awing}',
@@ -218,11 +250,17 @@ class AwingAudioActionButton extends StatefulWidget {
   /// the two actions never look interchangeable.
   final Color playColor;
 
+  /// Same meaning as on [AwingAudioButton]: false on quiz / game / exam
+  /// surfaces, where sending the user off to the recorder mid-question
+  /// would lose their place. Those show a disabled "No recording" instead.
+  final bool offerToRecord;
+
   const AwingAudioActionButton({
     Key? key,
     required this.awing,
     this.word,
     this.playColor = const Color(0xFFDAA520),
+    this.offerToRecord = true,
   }) : super(key: key);
 
   @override
@@ -269,7 +307,9 @@ class _AwingAudioActionButtonState extends State<AwingAudioActionButton> {
     final style = ElevatedButton.styleFrom(
       backgroundColor: has == true
           ? widget.playColor
-          : (has == null ? Colors.grey.shade300 : Colors.orange.shade800),
+          : (has == null || !widget.offerToRecord
+              ? Colors.grey.shade300
+              : Colors.orange.shade800),
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -290,6 +330,21 @@ class _AwingAudioActionButtonState extends State<AwingAudioActionButton> {
         style: style,
         icon: const Icon(Icons.volume_up, size: 24),
         label: const Text('Hear it', style: TextStyle(fontSize: 17)),
+      );
+    }
+
+    if (!widget.offerToRecord) {
+      return ElevatedButton.icon(
+        onPressed: null,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.grey.shade300,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20)),
+        ),
+        icon: const Icon(Icons.volume_off, size: 24),
+        label: const Text('No recording', style: TextStyle(fontSize: 17)),
       );
     }
 

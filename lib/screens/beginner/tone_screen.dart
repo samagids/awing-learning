@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/data/awing_tones.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 
 class ToneScreen extends StatefulWidget {
@@ -13,12 +13,10 @@ class ToneScreen extends StatefulWidget {
 }
 
 class _ToneScreenState extends State<ToneScreen> {
-  final PronunciationService _pronunciation = PronunciationService();
 
   @override
   void initState() {
     super.initState();
-    _pronunciation.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AuthService>().completeLesson('beginner_tones');
     });
@@ -81,7 +79,7 @@ class _ToneScreenState extends State<ToneScreen> {
           ),
           const SizedBox(height: 12),
           ...awingTones
-              .map((tone) => _ToneCard(tone: tone, pronunciation: _pronunciation)),
+              .map((tone) => _ToneCard(tone: tone)),
           const SizedBox(height: 24),
           // Minimal pairs
           const Text(
@@ -96,7 +94,7 @@ class _ToneScreenState extends State<ToneScreen> {
           ),
           const SizedBox(height: 12),
           ...toneMinimalPairs
-              .map((pair) => _MinimalPairCard(pair: pair, pronunciation: _pronunciation)),
+              .map((pair) => _MinimalPairCard(pair: pair)),
           const SizedBox(height: 24),
           // Tips
           const Text(
@@ -128,9 +126,8 @@ class _ToneScreenState extends State<ToneScreen> {
 
 class _ToneCard extends StatelessWidget {
   final ToneInfo tone;
-  final PronunciationService pronunciation;
 
-  const _ToneCard({required this.tone, required this.pronunciation});
+  const _ToneCard({required this.tone});
 
   Color get _color {
     switch (tone.name) {
@@ -229,18 +226,10 @@ class _ToneCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 4),
-                      InkWell(
-                        onTap: () =>
-                            pronunciation.speakAwing(tone.exampleWord),
-                        borderRadius: BorderRadius.circular(16),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Icon(
-                            Icons.volume_up,
-                            size: 20,
-                            color: _color,
-                          ),
-                        ),
+                      AwingAudioButton(
+                        awing: tone.exampleWord,
+                        iconSize: 20,
+                        color: _color,
                       ),
                     ],
                   ),
@@ -256,9 +245,8 @@ class _ToneCard extends StatelessWidget {
 
 class _MinimalPairCard extends StatelessWidget {
   final ToneMinimalPair pair;
-  final PronunciationService pronunciation;
 
-  const _MinimalPairCard({required this.pair, required this.pronunciation});
+  const _MinimalPairCard({required this.pair});
 
   @override
   Widget build(BuildContext context) {
@@ -286,22 +274,14 @@ class _MinimalPairCard extends StatelessWidget {
   Widget _pairRow(String word, String english, String tone) {
     return Row(
       children: [
-        // Speak button
-        InkWell(
-          onTap: () => pronunciation.speakAwing(word),
-          borderRadius: BorderRadius.circular(16),
-          child: Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: const Color(0xFFE8F5E9),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(
-              Icons.volume_up,
-              size: 18,
-              color: const Color(0xFF006432),
-            ),
+        // Minimal pairs are the one place tone is the whole lesson, so a
+        // missing recording has to be visible rather than a silent tap.
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFFE8F5E9),
+            borderRadius: BorderRadius.circular(12),
           ),
+          child: AwingAudioButton(awing: word, iconSize: 18),
         ),
         const SizedBox(width: 10),
         Expanded(

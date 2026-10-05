@@ -63,9 +63,10 @@ If you don't have one already:
 Complete all required sections:
 
 1. **Dashboard** → **App information**
-   - App name: Awing AI Learning
+   - App name: Awing Learning
    - Contact email: samagids@gmail.com
-   - Website: https://github.com/samagids/awing-ai-learning (if applicable)
+   - Website: https://samagids.github.io/awing-legal/
+     (NOT the github.com repo — that one is private and 404s for reviewers)
 
 ---
 
@@ -217,7 +218,13 @@ Navigate to **Setup** → **App content** → **Privacy policy**
 Enter the privacy policy URL:
 
 ```
-https://samagids.github.io/awing-ai-learning/privacy
+https://samagids.github.io/awing-legal/privacy
+```
+
+Support URL (Apple requires one separate from the privacy URL):
+
+```
+https://samagids.github.io/awing-legal/support
 ```
 
 **Or if you prefer to host the HTML directly:**
@@ -312,7 +319,7 @@ Once live:
 #### 6.3 Communicate Launch
 
 Share the news:
-- Update [GitHub README.md](https://github.com/samagids/awing-ai-learning)
+- Update [GitHub README.md](https://github.com/samagids/awing-learning)
 - Post on social media (if applicable)
 - Email users/testers
 

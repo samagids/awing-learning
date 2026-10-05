@@ -3,8 +3,8 @@ import 'package:awing_ai_learning/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/data/awing_vocabulary.dart';
-import 'package:awing_ai_learning/services/pronunciation_service.dart';
 import 'package:awing_ai_learning/components/pack_image.dart';
+import 'package:awing_ai_learning/components/awing_audio_button.dart';
 
 class VocabularyReviewScreen extends StatefulWidget {
   const VocabularyReviewScreen({Key? key}) : super(key: key);
@@ -380,21 +380,9 @@ class _VocabularyReviewScreenState extends State<VocabularyReviewScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: 16),
-                                ElevatedButton.icon(
-                                  onPressed: () async {
-                                    final pronService = Provider.of<PronunciationService>(
-                                      context,
-                                      listen: false,
-                                    );
-                                    await pronService.speakAwing(currentWord.word);
-                                  },
-                                  icon: const Icon(Icons.volume_up),
-                                  label: const Text('Hear it'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.beginner, // Session 64 (M5)
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                                  ),
+                                AwingAudioActionButton(
+                                  awing: currentWord.word,
+                                  playColor: AppColors.beginner, // Session 64 (M5)
                                 ),
                               ],
                             ),
