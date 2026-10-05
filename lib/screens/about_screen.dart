@@ -18,8 +18,8 @@ class AboutScreen extends StatefulWidget {
   // and cloud_backup_service - and only four were in the release
   // checklist. developer_screen now derives from these instead of holding
   // a seventh copy.
-  static const String appVersion = '1.24.0';
-  static const String buildNumber = '143';
+  static const String appVersion = '1.24.2';
+  static const String buildNumber = '146';
   static const String developerName = 'Dr. Guidion Sama, DIT';
   static const String developerEmail = 'samagids@gmail.com';
   static const String appDescription =

@@ -197,6 +197,26 @@ echo        Webhooks deployed and verified.
 :step1
 echo.
 
+REM ---- Step 0c: Sync in-app version constants from pubspec.yaml ----
+REM v1.24.2 (Session 66p): build_and_run.sh has run sync_version.py at
+REM [0b/8] since v1.18.1, but this .bat never did -- and the .bat is what
+REM actually gets run on Windows. So the two drifted silently: v1.24.1+145
+REM shipped with about_screen.dart and analytics_service.dart still saying
+REM 1.24.0, which means the About page lied and every analytics event from
+REM that release is attributed to the wrong version.
+REM
+REM Idempotent: rewrites about_screen.dart, analytics_service.dart and
+REM cloud_backup_service.dart only when they disagree with pubspec.yaml.
+REM Non-fatal -- a stale version string is bad, but not worth killing a
+REM build over, and the next line of output says exactly what it did.
+echo [0c/7] Syncing in-app version constants from pubspec.yaml...
+python scripts\sync_version.py
+if !ERRORLEVEL! neq 0 (
+    echo        WARNING: sync_version.py failed - in-app version strings may
+    echo        be stale. Continuing.
+)
+echo.
+
 REM ---- Step 1: Apply Approved Contributions ----
 REM Applies any approved contributions (spelling fixes, new words,
 REM pronunciation overrides) to lib\data\*.dart files. If this fails we

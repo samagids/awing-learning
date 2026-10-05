@@ -905,6 +905,57 @@ def save_last_version(version):
         f.write(str(new))
 
 
+# v1.24.2 (Session 66p): every webhook call in this file used to be a
+# single attempt. setup_and_deploy._verify() has retried 3x with
+# exponential backoff since v1.23.3 and survived two consecutive 404s in
+# a real run on 2026-10-05 — while download_approved(), one step later in
+# the same build, died on the first read timeout and aborted everything.
+#
+# The asymmetry was worse than it looks. The deploy's verification calls
+# check_version with currentVersion=999999, so the server returns no
+# updates and answers instantly. download_approved() calls it with the
+# REAL local version, so Apps Script has to gather and serialise every
+# update since then. At 507 vs a server on 518 that is 11 versions of
+# contributions in one response body. The heavier call had the shorter
+# timeout and no retry.
+def _post_webhook(url, payload_dict, timeout=120, attempts=3, label=''):
+    """POST to an Apps Script webhook with retry and exponential backoff.
+
+    Returns the decoded JSON dict. Raises the last exception if every
+    attempt fails, so callers keep their existing except: handling and
+    the tri-state "we learned nothing" contract is preserved.
+
+    Always goes through _post_follow: Apps Script answers every POST with
+    a 302, and letting urllib follow it converts POST -> GET, landing on
+    doGet() and returning the health payload. See the long note in
+    download_approved() for the history of that trap.
+    """
+    import time as _time
+    from setup_and_deploy import _post_follow as _pf
+
+    data = json.dumps(payload_dict).encode('utf-8')
+    last_err = None
+    for attempt in range(attempts):
+        try:
+            req = urllib.request.Request(
+                url,
+                data=data,
+                headers={'Content-Type': 'application/json; charset=utf-8'},
+                method='POST',
+            )
+            return json.loads(_pf(req, timeout=timeout).decode('utf-8'))
+        except Exception as e:
+            last_err = e
+            if attempt < attempts - 1:
+                wait = 3 * (attempt + 1)
+                what = f' {label}' if label else ''
+                print(f"    [retry]{what} {type(e).__name__}: {e} — "
+                      f"waiting {wait}s and retrying "
+                      f"({attempt + 2}/{attempts})")
+                _time.sleep(wait)
+    raise last_err
+
+
 def download_approved():
     """Download approved contributions from the Google Apps Script webhook.
 
@@ -945,16 +996,22 @@ def download_approved():
         _pf = None
 
     try:
-        req = urllib.request.Request(
-            webhook_url,
-            data=payload,
-            headers={'Content-Type': 'application/json'},
-            method='POST',
-        )
         if _pf is not None:
-            result = json.loads(_pf(req, timeout=30).decode('utf-8'))
+            # 120s, not 30s: this response carries every update since
+            # our local version, so it grows with how far behind we are.
+            result = _post_webhook(
+                webhook_url,
+                {'action': 'check_version',
+                 'currentVersion': current_version},
+                timeout=120, label='check_version')
         else:
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            req = urllib.request.Request(
+                webhook_url,
+                data=payload,
+                headers={'Content-Type': 'application/json'},
+                method='POST',
+            )
+            with urllib.request.urlopen(req, timeout=120) as resp:
                 result = json.loads(resp.read().decode('utf-8'))
     except urllib.error.URLError as e:
         print(f"  UNREACHABLE: could not reach webhook: {e}")
@@ -1931,22 +1988,19 @@ def refetch_audio():
         'ids': ids,
         'scriptSecret': secret,
     }
-    payload = json.dumps(payload_dict).encode('utf-8')
     try:
-        req = urllib.request.Request(
-            webhook_url,
-            data=payload,
-            headers={'Content-Type': 'application/json; charset=utf-8'},
-            method='POST',
-        )
         # v1.23.4 (Session 64c): was a bare urlopen. On the 302 leak
         # doGet's health payload arrives, whose status IS 'ok', so the
         # check below passed, `audio` came back empty, and the user was
         # told "the deployed version doesn't implement fetch_audio yet,
         # or none of these have a recording" -- blaming the deployment
         # or the data for a request that never reached doPost.
-        from setup_and_deploy import _post_follow as _pf
-        result = json.loads(_pf(req, timeout=30).decode('utf-8'))
+        # _post_webhook keeps that no-follow behaviour and adds retry.
+        #
+        # Downloads audio URLs for every id in one call, so this grows
+        # with the batch size the same way check_version does.
+        result = _post_webhook(webhook_url, payload_dict,
+                               timeout=120, label='fetch_audio')
     except Exception as e:
         print(f"  ✗ Webhook call failed: {e}")
         print(f"     Make sure you've redeployed the webhook:")
@@ -2145,23 +2199,18 @@ def main():
         # Save the server version so we don't re-download these next time
         if webhook_url:
             try:
-                # Re-check to get the latest version number
-                payload = json.dumps({
-                    'action': 'check_version',
-                    'currentVersion': 999999,
-                }).encode('utf-8')
-                req = urllib.request.Request(
-                    webhook_url,
-                    data=payload,
-                    headers={'Content-Type': 'application/json'},
-                    method='POST',
-                )
+                # Re-check to get the latest version number.
                 # v1.23.4 (Session 64c): was a bare urlopen, which let
                 # Apps Script's 302 turn this POST into a GET on
                 # doGet(). Its health payload carries no 'version', so
                 # the `, 0)` default fired and reset the counter.
-                from setup_and_deploy import _post_follow as _pf
-                result = json.loads(_pf(req, timeout=15).decode('utf-8'))
+                # Cheap call (999999 means no updates come back), but
+                # losing it silently re-applies every contribution on
+                # the next build, so retry it as well.
+                result = _post_webhook(
+                    webhook_url,
+                    {'action': 'check_version', 'currentVersion': 999999},
+                    timeout=30, label='save_version')
                 if 'version' in result:
                     save_last_version(result['version'])
                 else:
