@@ -11040,3 +11040,97 @@ replaces.** The URL was being carried forward correctly, so the skip looked
 right in isolation; only the caller's key lookup showed otherwise. This only
 surfaced because the second run of the build was the first one where
 BOTH scripts were unchanged.
+
+## Session 66g — CI shipped July's assets. The AAB was 958 MB.
+
+v1.24.0+143 was tagged, built green, and uploaded to the Play **alpha**
+track. The AAB artifact was **958 MB**. The local build of the same commit
+was **292.5 MB**. That gap is the whole story.
+
+### What happened
+
+`build-android.yml` does not use the asset tree on the dev machine. It
+downloads `pad-assets.tar.gz` from the `pad-assets` GitHub release:
+
+    gh release download pad-assets --pattern 'pad-assets.tar.gz'
+    tar -xzf pad-assets.tar.gz -C android/install_time_assets/src/main/assets
+
+That tarball was last uploaded **2026-07-05** and is **857 MB**. The local
+tree is now **222 MB**. Nobody re-ran `scripts/pack_and_upload_assets.sh`
+after the WebP migration, the Edge TTS removal, or the 492-image
+regeneration — so the shipped alpha contains:
+
+- the old PNG images (the 639 MB saving is absent)
+- **none** of the 492 corrected images — kente still on the personas,
+  truncated glosses, the pre-achu drawings
+- the 68 images that should now be blank
+- the Edge TTS voices v1.24.0 deliberately removed
+
+`assets/image_manifest.json` ships in the MAIN bundle, not the pack, so the
+app also carries an 8,680-key WebP manifest describing a pack it never got.
+
+### Why nothing caught it
+
+Every guard was about presence, not freshness. The workflow fails a tag
+build only when the release is **missing**; a stale one is indistinguishable
+from a current one. `pack_and_upload_assets.sh` has a floor check that read
+"should be ~900 MB+" — written when 900 MB was right, and now describing the
+*stale* state as healthy. Green CI meant "an asset bundle was found", never
+"the right one".
+
+**The AAB size was the only honest signal, and it is on the run page.**
+958 MB vs a known-good 292.5 MB. Worth checking on every tag build.
+
+This also settles the open question from the build before: the AAB *does*
+carry the install-time pack (958 MB proves it) and the APK does *not* (the
+main-branch run's APK artifact was 46.3 MB). Testing images on an APK proves
+nothing.
+
+### Recovery
+
+versionCode comes from pubspec's `+N` (`versionCode = flutter.versionCode`),
+and Play has now consumed **143** on alpha. A corrected build must be
+**+144** — the same number cannot be re-uploaded.
+
+    # 1. cancel Build iOS #308 (still running, macOS = 10x billing)
+    # 2. WSL:
+    bash scripts/pack_and_upload_assets.sh      # packs 222 MB, --clobber
+    # 3. bump pubspec.yaml to 1.24.0+144, commit, push main, wait green
+    # 4. delete the bad tag so the auto-promoter can never reach it:
+    git push origin :refs/tags/v1.24.0+143
+    git tag -d v1.24.0+143
+    # 5. tag v1.24.0+144 and push
+
+**Deadline.** `promote-alpha-to-production.yml` runs Mon+Thu 09:00 UTC and
+promotes any `v*+N` tag older than a 7-day soak. Tag 143 becomes eligible
+around **2026-10-12**. Deleting the tag is the reliable stop; halting the
+alpha release in Play Console works too.
+
+### The fix that matters more than this release
+
+The size floor message now says ~220 MB (done). But the real hole is that CI
+cannot tell a fresh bundle from a stale one. Worth adding, next time this is
+touched: have `pack_and_upload_assets.sh` write a manifest fingerprint into
+the release (or just upload `image_manifest.json` beside the tarball) and
+have the workflow fail when it does not match the committed
+`assets/image_manifest.json`. That turns "assets exist" into "assets match
+this commit", which is the property anyone actually wanted.
+
+### The guard that would have caught it (added, both workflows)
+
+A new step **"Verify asset bundle is current"** runs immediately after the
+pad-assets download in `build-android.yml` and `build-ios.yml`. It fails the
+build when:
+
+1. the extracted pack's image stems do not match `assets/image_manifest.json`
+   exactly — the manifest ships in the MAIN bundle and drives
+   `hasImageSync`, so a mismatch is a runtime bug as well as a staleness
+   signal; or
+2. fewer than 95% of the vocabulary images are `.webp` — a pre-v1.24.0 PNG
+   pack fails on the spot.
+
+Dry-run against the current tree: manifest 8680, pack 8680, webp 8680/8680,
+0 missing, 0 extra — passes. Run it against July's tarball and check 2 fails
+immediately.
+
+Both files are YAML-validated after the edit.

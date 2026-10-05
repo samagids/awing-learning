@@ -51,9 +51,13 @@ fi
 
 ASSET_BYTES=$(du -sb "$ASSET_DIR" | awk '{print $1}')
 ASSET_HUMAN=$(du -sh "$ASSET_DIR" | awk '{print $1}')
+# v1.24.0: the expected size CHANGED. Images went PNG -> WebP (776 MB ->
+# 138 MB) and the Edge TTS voices were removed from the build, so the
+# tree is now ~220 MB, not ~900 MB. The floor stays at 100 MB because
+# what it is really catching is "generation did not run at all".
 if [ "$ASSET_BYTES" -lt 100000000 ]; then
   echo "ERROR: $ASSET_DIR is only $ASSET_HUMAN — that's way smaller than expected" >&2
-  echo "(should be ~900 MB+). Did the audio/image generation finish?" >&2
+  echo "(should be ~220 MB for v1.24.0+). Did the audio/image generation finish?" >&2
   exit 1
 fi
 
