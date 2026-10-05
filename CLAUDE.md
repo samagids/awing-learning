@@ -11215,3 +11215,33 @@ relay address masks correctly, empty input returns `''`.
 Changing the `.gs` means the next build WILL push a new Apps Script version
 (the fingerprint skip sees the change) — that is correct, and it is one
 version against the 200 cap.
+
+### Follow-up: developer copy + a way out when no email arrives (v1.24.1+145)
+
+**Q: does the email go out if the user is not synced with Firebase?**
+**No — nothing is sent, and nothing even leaves the device.**
+`_postAuthenticatedJson` returns `{'message': 'not-signed-in'}` locally when
+`FirebaseAuth.instance.currentUser` is null; the request is never made.
+A parent who set a PIN while signed out therefore has NO email on file and
+no email path back in at all. That dialog now names the developer as the
+way out.
+
+**Developer copy.** `handlePinReset` now also mails `DEVELOPER_EMAIL` with
+the account, the code, the 10-minute expiry and whether Apple is relaying
+it, so Dr. Sama can read the code back to a parent who never received it.
+
+Two deliberate choices:
+- It goes to the **DEVELOPER_EMAIL constant**, never anything from the
+  payload — same rule as `handleNewUser`.
+- It is a **separate send, not a BCC**, so the parent's own mail is
+  unchanged and the developer copy can carry context the parent does not
+  need.
+- It is wrapped in its own try/catch. A failure to copy the developer must
+  never break the parent's reset.
+
+On the security question: this does not widen anyone's access. The
+developer already holds the Brevo key, the Apps Script and the Firestore
+rules, so anything the copy enables was already possible from the console.
+What it genuinely adds is a second copy of a live credential sitting in one
+mailbox — short-lived (10 min) and clearly labelled as such, but worth
+remembering if that mailbox is ever compromised.

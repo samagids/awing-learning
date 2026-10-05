@@ -1650,6 +1650,8 @@ function handlePinReset(payload) {
     return jsonResponse({ status: 'error', message: 'too many requests' });
   }
 
+  var relay = /@privaterelay\.appleid\.com$/i.test(email);
+
   try {
     var subject = '[Awing] Parent PIN reset code: ' + code;
     var body =
@@ -1663,6 +1665,41 @@ function handlePinReset(payload) {
       '-- Awing AI Learning';
 
     _sendEmail(email, subject, body);
+
+    // Developer copy (v1.24.1). Asked for after a parent on an Apple
+    // private-relay address never received their code and had no way
+    // forward: with this, Dr. Sama can read it back to them.
+    //
+    // This does NOT widen anyone's access. The developer already holds the
+    // Brevo key, the script and the Firestore rules — anything this copy
+    // enables was already possible from the console. What it adds is a
+    // second copy of a live 10-minute code sitting in one mailbox, so it
+    // goes to the DEVELOPER_EMAIL CONSTANT and never to anything from the
+    // payload, and it says plainly how short-lived it is.
+    //
+    // Sent separately rather than as a BCC so the parent's own mail is
+    // untouched, and so this copy can carry context the parent does not
+    // need (which account, whether Apple is relaying it).
+    try {
+      _sendEmail(
+        DEVELOPER_EMAIL,
+        '[Awing] PIN reset code issued for ' + email,
+        'A parent asked to clear their Awing Learning parent PIN.\n\n' +
+        '  account : ' + email + '\n' +
+        '  code    : ' + code + '\n' +
+        '  expires : 10 minutes from now\n' +
+        '  delivery: ' + (relay
+            ? 'Apple private relay — Apple may have dropped it if the\n' +
+              '            Brevo sender is not registered for Sign in with\n' +
+              '            Apple Email Communication.'
+            : 'direct to the address above') + '\n\n' +
+        'You are receiving this so you can read the code back if they ask.\n' +
+        'It stops working after 10 minutes.\n\n' +
+        '-- Awing Learning');
+    } catch (devErr) {
+      // Never let the developer copy break the parent's reset.
+      Logger.log('pin_reset: developer copy failed: ' + devErr.toString());
+    }
 
     fresh.push(nowMs);
     props.setProperty(bucketKey, JSON.stringify(fresh));
@@ -1678,7 +1715,6 @@ function handlePinReset(payload) {
     // Masked, because this reply crosses the network to a client that
     // already knows the account but need not be handed the full address
     // in a log or a screenshot.
-    var relay = /@privaterelay\.appleid\.com$/i.test(email);
     if (relay) {
       // Worth a server-side log: Apple's relay only forwards mail from a
       // sender address registered under "Sign in with Apple for Email

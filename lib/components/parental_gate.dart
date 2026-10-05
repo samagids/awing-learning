@@ -264,9 +264,15 @@ class ParentalGate {
     final viaRelay = reply != null && reply['privateRelay'] == true;
 
     if (reply != null && msg == 'not-signed-in') {
+      // NOTHING is sent in this case — the request never leaves the
+      // device (see _postAuthenticatedJson). A parent who set a PIN while
+      // signed out has no email on file to send to, so without the
+      // developer fallback below they have no way back in at all.
       await _info(context, 'Sign in first',
           'To reset the PIN we need to confirm you own this account. '
-          'Sign in with Google or Apple, then try again.');
+          'Sign in with Google or Apple, then try again.\n\n'
+          'If you cannot sign in, contact the developer at '
+          'samagids@gmail.com.');
       return;
     }
     if (reply != null && status == 'error' && msg == 'too many requests') {
@@ -325,6 +331,17 @@ class ParentalGate {
                 ),
               ),
             ],
+            const SizedBox(height: 12),
+            // v1.24.1: there has to be a way out that does not depend on
+            // the email arriving. A parent whose code is swallowed by
+            // Apple's relay previously had no next step at all. The
+            // developer is copied on every code, so he can read it back.
+            const Text(
+              'No email after a few minutes? Check spam, then contact the '
+              'developer at samagids@gmail.com and he can give you the '
+              'code.',
+              style: TextStyle(fontSize: 12.5, color: Colors.black54),
+            ),
             const SizedBox(height: 16),
             TextField(
               controller: entered,
