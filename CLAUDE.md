@@ -12437,3 +12437,47 @@ commit is needed and `verify_asset_bundle.py` passes.
 **Count the derivations before declaring them unified.** I said "all four"
 and then "all four" again; it was five. `grep -rn "def .*audio_key\|char_map"
 scripts/` is the check.
+
+### There were twenty-one, not five
+
+After fixing `generate_images.py` I finally counted properly:
+
+    grep -rn "def .*audio_key\|def .*image_key\|char_map\s*=" scripts/*.py
+
+**21 copies of the key derivation.** I had claimed "all four unified", then
+"all five", and both were wrong.
+
+What matters is the **build path**. `build_and_run.bat` invokes eleven
+scripts; six of them derive keys:
+
+| script | status |
+|---|---|
+| `apply_contributions.py` | delegates |
+| `apply_recordings_as_audio.py` | delegates |
+| `build_native_audio_manifest.py` | delegates |
+| `generate_images.py` | delegates |
+| **`cleanup_assets.py`** | **was not** — now delegates |
+| **`sync_recordings.py`** | **was not** — now delegates |
+
+`cleanup_assets.py` is the dangerous one: it decides which images are
+*needed*, so a stale derivation there could delete an image the app wants or
+keep one it can never request. `sync_recordings.py` names the downloaded
+WAVs, seeding every downstream filename.
+
+**Verified: 6 modules × 8,610 spellings, zero mismatches.**
+
+The other 15 are diagnostics and one-offs — `audit_images.py`,
+`check_image_coverage.py`, `find_orphan_recordings.py`,
+`invalidate_schwa_clips.py`, `merge_dict_v2.py`, `record_audio.py`,
+`test_schwa_rule.py`, the MMS/voice-clone experiments,
+`generate_audio_edge.py` (dead since v1.24.0), and the recorder builders.
+They do not ship, but any of them will report nonsense until pointed at
+`awing_key.py`.
+
+**The check, before claiming this is done again:**
+
+    for f in $(grep -oE 'python scripts\\[a-z_0-9]+\.py' scripts/build_and_run.bat \
+               | sed 's/python scripts.//' | sort -u); do
+      grep -qE "def _?audio_key|def image_key" "scripts/$f" || continue
+      grep -q "from awing_key import" "scripts/$f" && echo "OK  $f" || echo "!!  $f"
+    done

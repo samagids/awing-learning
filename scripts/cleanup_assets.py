@@ -51,13 +51,18 @@ _REPL = {"ɛ":"e","Ɛ":"E","ɔ":"o","Ɔ":"O","ə":"e","Ə":"E",
          "ɨ":"i","Ɨ":"I","ŋ":"ng","Ŋ":"Ng","ɣ":"g","Ɣ":"G"}
 
 def audio_key(awing):
-    s = awing.replace("'", "").replace("ʼ", "").replace("’", "").replace("‘", "")
-    s = unicodedata.normalize("NFD", s)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    for k, v in _REPL.items():
-        s = s.replace(k, v)
-    s = re.sub(r"[^A-Za-z0-9]+", "_", s).strip("_").lower()
-    return s
+    """Delegates to scripts/awing_key.py — the single derivation shared
+    with Dart's PronunciationService._audioKey().
+
+    v1.24.2 (Session 66p): cleanup_assets decides which images are NEEDED; a stale derivation here
+    could delete an image the app wants, or keep one it cannot request.
+    """
+    import os as _os, sys as _sys
+    _d = _os.path.dirname(_os.path.abspath(__file__))
+    if _d not in _sys.path:
+        _sys.path.insert(0, _d)
+    from awing_key import audio_key as _ak
+    return _ak(awing)
 
 def english_slug(eng):
     s = re.sub(r"[^A-Za-z0-9]+", "_", eng.lower()).strip("_")

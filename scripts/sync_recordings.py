@@ -196,23 +196,18 @@ _REPLACEMENTS = {
 
 
 def audio_key(awing):
-    """ASCII-safe filename derived from Awing text. Mirrors the
-    convention used by apply_recordings_as_audio.py::audio_key."""
-    if not awing:
-        return ''
-    decomp = unicodedata.normalize("NFD", awing)
-    decomp = "".join(c for c in decomp if c not in _TONE_DIACRITICS)
-    s = unicodedata.normalize("NFC", decomp)
-    for src, dst in _REPLACEMENTS.items():
-        s = s.replace(src, dst)
-    s = re.sub(r"[^a-zA-Z0-9_-]+", "_", s)
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s.lower() or "_"
+    """Delegates to scripts/awing_key.py — the single derivation shared
+    with Dart's PronunciationService._audioKey().
 
-
-# ---------------------------------------------------------------------------
-# Auth + HTTP helpers (mirror apply_contributions.py)
-# ---------------------------------------------------------------------------
+    v1.24.2 (Session 66p): sync_recordings names the downloaded WAVs, so a stale derivation here
+    seeds every downstream filename wrong.
+    """
+    import os as _os, sys as _sys
+    _d = _os.path.dirname(_os.path.abspath(__file__))
+    if _d not in _sys.path:
+        _sys.path.insert(0, _d)
+    from awing_key import audio_key as _ak
+    return _ak(awing)
 
 def _load_webhook_url():
     if not os.path.exists(WEBHOOKS_FILE):
