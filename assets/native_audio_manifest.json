@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generated_at": "2026-10-05T22:05:43.058389+00:00",
+  "generated_at": "2026-10-05T22:18:54.994877+00:00",
   "categories": {
     "alphabet": {
       "a": {
@@ -170,29 +170,29 @@
       },
       "agha_ghena": {
         "canonical": true,
+        "kids": []
+      },
+      "agha_yia": {
+        "canonical": true,
+        "kids": []
+      },
+      "aghaghena": {
+        "canonical": true,
         "kids": [
           "jadyne",
           "janelle",
           "joel",
           "joyce"
-        ]
+        ],
+        "canonical_recorder": "samagids"
       },
-      "agha_yia": {
+      "aghayia": {
         "canonical": true,
         "kids": [
           "janelle",
           "joel",
           "joyce"
-        ]
-      },
-      "aghaghena": {
-        "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
-      },
-      "aghayia": {
-        "canonical": true,
-        "kids": [],
+        ],
         "canonical_recorder": "samagids"
       },
       "aghenge": {
@@ -423,6 +423,10 @@
         "canonical": true,
         "kids": [],
         "canonical_recorder": "samagids"
+      },
+      "an_endae": {
+        "canonical": true,
+        "kids": []
       },
       "anema": {
         "canonical": true,
@@ -873,6 +877,10 @@
           "joyce"
         ],
         "canonical_recorder": "samagids"
+      },
+      "efo_wingo": {
+        "canonical": true,
+        "kids": []
       },
       "efowingo": {
         "canonical": true,
@@ -1901,10 +1909,6 @@
         "kids": [],
         "canonical_recorder": "samagids"
       },
-      "n_ng_nefenge": {
-        "canonical": true,
-        "kids": []
-      },
       "na": {
         "canonical": true,
         "kids": []
@@ -2669,7 +2673,8 @@
       },
       "nkyimege": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nna": {
         "canonical": true,
@@ -2677,6 +2682,10 @@
         "canonical_recorder": "samagids"
       },
       "nnang": {
+        "canonical": true,
+        "kids": []
+      },
+      "nngnefenge": {
         "canonical": true,
         "kids": []
       },
@@ -3322,7 +3331,8 @@
       },
       "zoobe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       }
     }
   }

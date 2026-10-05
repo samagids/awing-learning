@@ -12325,3 +12325,36 @@ Measured correctly now: **1,114 of 6,347 distinct spellings have playable
 audio (17.6%)**.
 
 95 clip keys remain unreachable; they are orphans with no matching word.
+
+### The warning banner that lied for months
+
+`[1b/7]` printed its failure banner on a run where `sync_recordings.py`
+**succeeded** — full summary, 2 recordings downloaded, exit 0.
+
+The old `.bat` text was:
+
+    echo          - SCRIPT_SECRET not configured (env var, config/webhooks.json,
+    echo            or ~/.awing_script_secret)
+
+Inside a bracketed `IF` block, cmd counts round brackets. That closing one
+**ended the block early**, so the last two lines — `- ffmpeg not on PATH`
+and `- Network issue reaching the webhook` — sat OUTSIDE the `IF` and
+printed on **every single run, pass or fail**.
+
+So the banner was never evidence of anything. It is what sent this session
+chasing ffmpeg when the real fault was a file truncated for four months.
+
+Replaced with two honest lines and no guessed causes: the script prints its
+own. **Keep that block free of round brackets** — cmd counts them even in
+`REM` lines, which my first replacement got wrong too.
+
+### The fourth key derivation
+
+`apply_recordings_as_audio.py` had its own `audio_key()`, still on
+`re.sub(r"[^a-zA-Z0-9_-]+", "_", s)`. That build wrote `efo_wingo.mp3` for
+`əfo wíŋɔ́` while the app asks for `efowingo` — a clip shipped and
+unreachable, created *after* the earlier fix.
+
+All four now delegate to `scripts/awing_key.py`. **Verified identical across
+8,610 spellings × 3 modules: zero mismatches.** 33 more underscore-keyed
+clips renamed; the `__<n>` dedup suffixes are left alone.

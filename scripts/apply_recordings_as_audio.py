@@ -181,16 +181,20 @@ _REPLACEMENTS = {
 
 
 def audio_key(awing: str) -> str:
-    """ASCII-safe filename derived from Awing text. Mirrors
-    pronunciation_service.dart's _audioKey."""
-    decomp = unicodedata.normalize("NFD", awing)
-    decomp = "".join(c for c in decomp if c not in _TONE_DIACRITICS)
-    s = unicodedata.normalize("NFC", decomp)
-    for src, dst in _REPLACEMENTS.items():
-        s = s.replace(src, dst)
-    s = re.sub(r"[^a-zA-Z0-9_-]+", "_", s)
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s.lower() or "_"
+    """Delegates to scripts/awing_key.py — the single derivation shared with
+    Dart's PronunciationService._audioKey().
+
+    v1.24.2 (Session 66p): this used
+    re.sub(r"[^a-zA-Z0-9_-]+", "_", s), so a space became '_'. Dart strips
+    it. The 2026-10-05 build wrote 'efo_wingo.mp3' for 'əfo wíŋɔ́' while the
+    app looks for 'efowingo' — a clip shipped and unreachable. 190 keys on
+    disk had reached that state."""
+    import os as _os, sys as _sys
+    _d = _os.path.dirname(_os.path.abspath(__file__))
+    if _d not in _sys.path:
+        _sys.path.insert(0, _d)
+    from awing_key import audio_key as _ak
+    return _ak(awing)
 
 
 def convert_wav_to_mp3(wav_path: Path, mp3_path: Path) -> bool:

@@ -302,13 +302,17 @@ REM exits cleanly and the build continues with Edge TTS only.
 echo [1b/7] Syncing native recordings from contributors...
 python scripts\sync_recordings.py
 if !ERRORLEVEL! neq 0 (
-    echo        WARNING: sync_recordings.py failed.
-    echo        The build will continue — TTS will fill in for missing native
-    echo        audio. Common causes:
-    echo          - SCRIPT_SECRET not configured (env var, config/webhooks.json,
-    echo            or ~/.awing_script_secret)
-    echo          - ffmpeg not on PATH
-    echo          - Network issue reaching the webhook
+    echo        WARNING: sync_recordings.py failed - see its output above.
+    echo        The build continues; words without a native recording stay silent.
+    REM v1.24.2 Session 66p: the old text listed common causes and used
+    REM UNESCAPED round brackets. Inside a bracketed IF block cmd counts
+    REM brackets even in REM lines, so the closing one ended the block
+    REM early and the last two lines printed on EVERY run, pass or fail.
+    REM For months that made a succeeding step look like it failed on
+    REM ffmpeg or the network, and sent a debugging session chasing ffmpeg
+    REM when the real fault was a truncated file. Guessed causes do not
+    REM belong here - the script prints its own. Keep this block free of
+    REM round brackets.
     echo.
 )
 echo.
