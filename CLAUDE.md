@@ -12358,3 +12358,27 @@ unreachable, created *after* the earlier fix.
 All four now delegate to `scripts/awing_key.py`. **Verified identical across
 8,610 spellings × 3 modules: zero mismatches.** 33 more underscore-keyed
 clips renamed; the `__<n>` dedup suffixes are left alone.
+
+### Why [1c/7] re-trimmed 238 clips — it is not a cache bug
+
+The cache in `apply_recordings_as_audio.py` is correct, and was already
+taught in v1.23.4 to accept a `.opus` when `[4b/7]` has deleted the `.mp3`.
+It re-encodes when **the source WAV is newer than the output**, which is
+right.
+
+Checked against the real manifest, using the script's own
+`_SOURCE_TO_CATEGORY` map: **311 pending re-encodes, all 311 because the
+source WAV is newer. Zero from a missing output.** Those are the 317
+recordings `sync_recordings.py` pulled once it was restored — four months of
+backlog arriving at once with today's mtimes. Encode them and it settles,
+because the outputs are then newer than their sources.
+
+**Do not "fix" this.** Three of my own checks got it wrong first: the
+manifest field is `source`, not `category`, and it must be resolved through
+`_SOURCE_TO_CATEGORY` — an unknown value such as `vocabulary_gap` falls back
+to `vocabulary` rather than naming a directory.
+
+Latent, not biting today: that map sends `stories` to a `stories/` directory
+the app never searches — `speakAwing()` tries `vocabulary, alphabet,
+dictionary, sentences`. No manifest row uses `stories` yet, so nothing is
+lost; it would be silently unreachable if one did.
