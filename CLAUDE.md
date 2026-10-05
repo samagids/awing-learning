@@ -11598,3 +11598,70 @@ The real fix for this recurring wall is to stop burning a version per
 build. `setup_and_deploy.py` already skips when the `.gs` is unchanged;
 what it cannot avoid is a version per genuine change. 150 used of 200 is
 breathing room, not a solution.
+
+## Session 66o — v1.24.1+145 tagged
+
+The local build went fully green before tagging:
+
+    [0/7]  contributions_webapp.gs unchanged since last deploy — skipping
+           ✓ check_version ok (v507)
+    [4/7]  Generated: 0, Skipped: 8680 (existing), No image: 406
+    [5b/7] Analyzing Awing... No issues found! (ran in 242.5s)
+    [6/7]  ✓ app-release.aab (290.6MB)   ✓ app-release.apk (100.7MB)
+    [7/7]  APK installed successfully! App launched!
+
+290.6 MB local vs the 281 MB CI produced for +144 — a normal local/CI
+delta, and categorically different from the 958 MB stale-asset build.
+
+### Pre-tag checks that were actually run
+
+Checking something adjacent to the claim is how the 958 MB AAB shipped,
+so each of these verified the claim itself:
+
+- **The PAD tarball is the current tree, not a stale one.**
+  `sha256sum pad-assets.tar.gz` locally = `b13772d310b31443f61c084fe...`,
+  which is byte-for-byte the sha256 GitHub shows on the `pad-assets`
+  release asset. 190 MB, uploaded ~03:57 UTC; the image tree was last
+  regenerated 02:31 and the tarball packed 03:41. CI downloads the right
+  bundle. (Release-page presence alone proves nothing — that was the
+  July 5 failure.)
+- **The manifest diffs were noise.** `assets/image_manifest.json` and
+  `assets/native_audio_manifest.json` showed as modified, but a parsed
+  key-by-key compare found `generated_at` as the only difference — zero
+  added, removed or changed image keys. Reverted rather than committed.
+- **`vocab_embeddings_keys.txt`** shows 8911 added / 8911 removed and is
+  pure CRLF churn (`git diff --ignore-all-space` is empty). Still no
+  `.gitattributes`; this will keep reappearing.
+
+### The one real change: config/webhooks.json
+
+Committed as `90c172f6`. It records the `@201` contributions deploy:
+
+    "deployed_at": "2026-10-05T13:34:33"
+    "contributions": "b48f2a75fe9148bfecbbf657c272927cc8a1e5e8491047cd05c40ca649d1be9e"
+
+**This commit is load-bearing.** CI reads the fingerprint from the repo.
+Left uncommitted, the CI build would not see `@201` as deployed and would
+deploy again — spending one of the ~50 Apps Script version slots that
+Session 66n freed. Commit the fingerprint after every local deploy.
+
+No secrets are in this file; the two URLs are public `/exec` endpoints and
+the values are content hashes. That has not changed and must not.
+
+### Pushing
+
+`device_bash` runs in a Linux VM with no git credential helper, so
+`git push` from this session fails with "could not read Username for
+'https://github.com'". Pushes are run by Dr. Sama from his own Windows
+terminal, where GCM is configured. Do not try to work around this.
+
+### Tag
+
+`v1.24.1+145` points at `90c172f6`, lightweight, matching the format of
+`v1.24.0+144`. A tag push starts `build-android.yml` (tags: `v*`) and
+`build-ios.yml`, whose macOS runners bill at 10x — v1.23.6 removed
+`branches: [main]` from the iOS workflow so a release fires one iOS build
+rather than two.
+
+Watch for after the push: `promote-alpha-to-production.yml` is the 7-day
+auto-promoter. It reaches this build unless the tag is deleted first.
