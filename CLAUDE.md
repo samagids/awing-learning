@@ -12164,3 +12164,60 @@ and it came from the promotion, not the sync.
 **77 clips now sit in the bundle under names the app can never request**
 (~2 MB). Low priority, but the three disagreeing key derivations are still
 there, and they will keep producing unreachable files.
+
+## Session 66p — NACDA #3: 61 near-duplicates settled by the dictionary
+
+Dr. Sama's rule: **take the spelling that comes from the Awing dictionary.**
+
+### The Bible corpus is not a valid source here
+
+The previous `near_duplicate_review.md` scored every candidate on **B —
+occurrences in the Awing Bible corpus (7,952 verses)**, and its "evidence
+says" column was driven by it. **Bible material was removed from this app in
+`f0f009dc` (v1.12.3+59).** Verified: zero live entries carry `bible:`
+provenance, and both "From Bible NT corpus" sections are empty. The corpus
+survives under `corpus/raw/bible/` but is not in `pubspec` assets and not in
+the PAD pack, so nothing leaked into the app.
+
+But it means the old rankings were made against a source this project
+deliberately dropped. **Dr. Sama caught that before it was applied.** Scoring
+is now against the 2007 Awing English Dictionary OCR only (220 pages,
+455k chars, `contributions/mistral_ocr/`).
+
+### What was applied
+
+**61 rows**, each with exactly one candidate attested in the dictionary with
+**2 or more** occurrences. Losers are commented out in
+`awing_vocabulary.dart` with a `Session 66p: dropped` marker — reversible,
+never deleted. One row had no live keeper and was respelt instead.
+
+Checked before applying: **no merge orphans audio or an image.** 45 of the
+rows' variants share one `audioKey` (tone marks are stripped, so `njùbtə`,
+`njúbtə` and `njǔbtə` are all `njubte`), and for the other 18 the keeper
+already had whatever the dropped variant had. Distinct glosses: 6,184 before,
+6,184 after — no word lost its only entry.
+
+### Single-occurrence hits are NOT applied
+
+23 rows had exactly one dictionary hit at **D=1**. The dictionary text is
+Mistral OCR, and tone diacritics are the first thing OCR loses — which is
+precisely what separates these near-duplicates. One hit is not evidence.
+
+**`dust` proves the point.** The OCR count favours `akəpóglə` (4 hits), but
+Session 63 Part H read **dictionary page 157 directly** and recorded
+`akəpóglə́`. A page-verified read outranks a token count, so that row was
+reverted and left for Dr. Sama.
+
+### Still open: 143 rows
+
+- 23 — single dictionary occurrence, possible OCR artefact
+- 12 — several spellings attested; the rule does not pick
+- 103 — dictionary silent; only Dr. Sama's ear can settle them
+- 5 — special cases, including `dry` and `that`, whose old ruling came from
+  Bible counts and therefore no longer stands
+
+All in `contributions/near_duplicate_review.md` with a `keep` column.
+
+**Standing rule, unchanged: do not guess an Awing spelling.** A dictionary
+token count is evidence, not a ruling, and it is weaker than a human reading
+the page.
