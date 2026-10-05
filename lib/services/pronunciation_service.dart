@@ -542,6 +542,41 @@ class PronunciationService {
     // Remove glottal stops and special characters
     key = key.replaceAll("'", '').replaceAll("\u2019", '').replaceAll("\u2018", '');
 
+    // v1.24.2 (Session 66p) — map the remaining pre-composed letters
+    // BEFORE the strip below deletes them outright.
+    //
+    // The strip is a catch-all for leftover combining marks, which is
+    // correct: 'kə̌' -> 'ke' loses only the caron. But a pre-composed
+    // letter that never reached the maps above is a whole letter, and the
+    // strip removed it silently. 'apʉə' keyed to 'ape' and therefore
+    // played a DIFFERENT word's recording; 'tśəmə' ("stand") keyed to
+    // 'teme'; 'tă' keyed to 't', colliding with the alphabet letter clip.
+    //
+    // These are the exact characters present in lib/data, counted from
+    // the content rather than guessed: ń×37 ü×35 ʉ×27 ś×11 ä×7 ō×6 and a
+    // tail of singletons. Several are plainly OCR damage (Greek ε for ɛ,
+    // ł, ø, ğ) but mapping them to a sensible base letter still beats
+    // deleting them.
+    key = key
+        .replaceAll('ʃ', 'sh').replaceAll('ɣ', 'gh')
+        .replaceAll('ń', 'n')
+        .replaceAll('ü', 'u').replaceAll('ʉ', 'u').replaceAll('ū', 'u')
+        .replaceAll('ŭ', 'u')
+        .replaceAll('ś', 's').replaceAll('š', 's')
+        .replaceAll('ä', 'a').replaceAll('ā', 'a').replaceAll('ă', 'a')
+        .replaceAll('ạ', 'a')
+        .replaceAll('ō', 'o').replaceAll('õ', 'o').replaceAll('ø', 'o')
+        .replaceAll('ī', 'i')
+        .replaceAll('ē', 'e').replaceAll('ĕ', 'e')
+        .replaceAll('ε', 'e').replaceAll('έ', 'e')
+        .replaceAll('ł', 'l').replaceAll('ğ', 'g');
+
+    // Glottal stop and the modifier apostrophe join the plain apostrophe
+    // handled above; the aspiration modifier carries no segment.
+    key = key
+        .replaceAll('\u02bc', '').replaceAll('\u0294', '')
+        .replaceAll('\u02b0', '');
+
     // Remove any remaining non-ASCII characters
     key = key.replaceAll(RegExp(r'[^a-z0-9]'), '');
 

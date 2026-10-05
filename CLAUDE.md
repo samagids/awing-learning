@@ -12266,3 +12266,62 @@ to `ta`, which has audio.
 Around 140 spellings lose a whole letter this way. Not fixed here — it
 changes key derivation, which moves audio and image lookups, so it needs its
 own pass with the asset tree in view.
+
+## Session 66p — audioKey fixed, and one derivation for everyone
+
+### The bug
+
+`PronunciationService._audioKey()` maps the accented vowels, then strips
+everything outside `[a-z0-9]`. The strip is a correct catch-all for leftover
+**combining marks** — `kə̌` → `ke` loses only the caron. But a **pre-composed
+letter** that never reached the maps is a whole letter, and it was deleted
+silently:
+
+    apʉə  ("ashes")  -> 'ape'    and so played a DIFFERENT word's recording
+    tśəmə ("stand")  -> 'teme'   likewise
+    tă    ("father") -> 't'      colliding with the alphabet letter clip
+
+This is a **correctness** bug, not a coverage one. The app was confidently
+playing the wrong audio.
+
+29 characters were affected, counted from the content: `ń`×37, `ü`×35,
+`ʉ`×27, `ś`×11, `ä`×7, `ō`×6 and a tail of singletons, several of them plain
+OCR damage (Greek `ε` for `ɛ`; `ł`, `ø`, `ğ`).
+
+### scripts/awing_key.py — the single derivation
+
+There were **three** key derivations and two disagreed with the app. Python
+used `re.sub(r"[^a-zA-Z0-9_-]+", "_", s)`, so a space became `_`: it wrote
+`afae_apimne.opus` while the app asked for `afaeapimne`. That is why
+recorded, converted, shipped audio was unreachable.
+
+`build_native_audio_manifest.py` and `apply_contributions.py` now delegate to
+`scripts/awing_key.py`. **Verified identical to the Dart function across all
+8,610 spellings — zero disagreements.** Change that file and the Dart
+function together, never one alone.
+
+### Assets were migrated, not just the code
+
+Changing the key without moving the files would have silenced words. 136
+spellings changed key:
+
+- 156 asset operations — **62 copies, 94 moves**. A copy where the OLD key is
+  still the correct key for a *different* word: `kye.opus` is `ńkyé`'s under
+  the new scheme but also `kyé`'s, so renaming it would have stolen it.
+- then 97 legacy `_`-separated clips renamed, which **made 95 silent words
+  speak**.
+
+**Verified: 0 words lost audio, 0 lost an image.**
+
+### Correction to earlier numbers in this session
+
+The coverage figures reported earlier (7.3% → 16.4%) used a regex that only
+matched **single-quoted** `awing:` values. 2,086 of 8,610 entries are
+double-quoted — any spelling containing an apostrophe, such as
+`"akəmə aŋwa'lə̌"`. So the denominator was undercounted and the real
+percentages were lower than stated.
+
+Measured correctly now: **1,114 of 6,347 distinct spellings have playable
+audio (17.6%)**.
+
+95 clip keys remain unreachable; they are orphans with no matching word.

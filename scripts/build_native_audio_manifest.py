@@ -226,20 +226,20 @@ _REPLACEMENTS = {
 
 
 def _audio_key(awing):
-    """Same audio_key derivation as scripts/apply_recordings_as_audio.py
-    so canonical owner lookups match the actual MP3 filenames on disk."""
-    import unicodedata
-    import re
-    if not awing:
-        return ''
-    decomp = unicodedata.normalize("NFD", awing)
-    decomp = "".join(c for c in decomp if c not in _TONE_DIACRITICS)
-    s = unicodedata.normalize("NFC", decomp)
-    for src, dst in _REPLACEMENTS.items():
-        s = s.replace(src, dst)
-    s = re.sub(r"[^a-zA-Z0-9_-]+", "_", s)
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s.lower() or "_"
+    """Delegates to scripts/awing_key.py — the single derivation shared
+    with Dart's PronunciationService._audioKey().
+
+    v1.24.2 (Session 66p): this used
+    re.sub(r"[^a-zA-Z0-9_-]+", "_", s), turning a space into '_'. Dart
+    strips it. So this wrote 'afae_apimne.opus' while the app asked for
+    'afaeapimne', and 119 of 396 clip keys on disk were unreachable.
+    """
+    import os as _os, sys as _sys
+    _d = _os.path.dirname(_os.path.abspath(__file__))
+    if _d not in _sys.path:
+        _sys.path.insert(0, _d)
+    from awing_key import audio_key as _ak
+    return _ak(awing)
 
 
 def build_manifest():

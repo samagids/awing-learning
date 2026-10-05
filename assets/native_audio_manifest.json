@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generated_at": "2026-10-05T21:24:53.013344+00:00",
+  "generated_at": "2026-10-05T22:05:43.058389+00:00",
   "categories": {
     "alphabet": {
       "a": {
@@ -152,12 +152,12 @@
       },
       "afue_azane": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "afueazane": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "agha": {
         "canonical": true,
@@ -175,8 +175,7 @@
           "janelle",
           "joel",
           "joyce"
-        ],
-        "canonical_recorder": "samagids"
+        ]
       },
       "agha_yia": {
         "canonical": true,
@@ -184,16 +183,17 @@
           "janelle",
           "joel",
           "joyce"
-        ],
-        "canonical_recorder": "samagids"
+        ]
       },
       "aghaghena": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "aghayia": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "aghenge": {
         "canonical": true,
@@ -202,12 +202,12 @@
       },
       "aghenge_ntsoole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "aghengentsoole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ajume": {
         "canonical": true,
@@ -235,8 +235,7 @@
       },
       "akang_ye_shi_na": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "akangetue": {
         "canonical": true,
@@ -244,7 +243,8 @@
       },
       "akangyeshina": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ake": {
         "canonical": true,
@@ -312,12 +312,12 @@
       },
       "akwele_meneeme": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "akwelemeneeme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "akwenge": {
         "canonical": true,
@@ -331,12 +331,12 @@
       },
       "akwengo_eshue": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "akwengoeshue": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "akweta": {
         "canonical": true,
@@ -424,14 +424,14 @@
         "kids": [],
         "canonical_recorder": "samagids"
       },
-      "an_endae": {
-        "canonical": true,
-        "kids": []
-      },
       "anema": {
         "canonical": true,
         "kids": [],
         "canonical_recorder": "samagids"
+      },
+      "anendae": {
+        "canonical": true,
+        "kids": []
       },
       "angkea": {
         "canonical": true,
@@ -508,21 +508,21 @@
       },
       "apo_ye_kwaabe": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "apo_ye_teene": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "apoyekwaabe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "apoyeteene": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "apue": {
         "canonical": true,
@@ -574,21 +574,21 @@
       },
       "ateele_akoole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ateele_apo": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ateeleakoole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ateeleapo": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ateeme": {
         "canonical": true,
@@ -610,12 +610,12 @@
       },
       "atia_notaona": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "atianotaona": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "atie": {
         "canonical": true,
@@ -628,30 +628,30 @@
       },
       "atie_kokonole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "atie_maghole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "atie_neteene": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "atiekokonole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "atiemaghole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "atieneteene": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "atogle": {
         "canonical": true,
@@ -836,13 +836,11 @@
       },
       "efeng_fie_apo": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "efeng_nelwie": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "efenge": {
         "canonical": true,
@@ -850,20 +848,22 @@
       },
       "efenge_akoole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "efengeakoole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "efengfieapo": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "efengnelwie": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "efo": {
         "canonical": true,
@@ -874,7 +874,7 @@
         ],
         "canonical_recorder": "samagids"
       },
-      "efo_wingo": {
+      "efowingo": {
         "canonical": true,
         "kids": [],
         "canonical_recorder": "samagids"
@@ -940,8 +940,7 @@
       },
       "engang_nelenge": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "engange": {
         "canonical": true,
@@ -950,7 +949,8 @@
       },
       "engangnelenge": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "epa": {
         "canonical": true,
@@ -1039,12 +1039,12 @@
       },
       "fid_nelwie": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "fidnelwie": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "fie": {
         "canonical": true,
@@ -1053,21 +1053,21 @@
       },
       "fie_akoole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "fie_apo": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "fieakoole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "fieapo": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "file": {
         "canonical": true,
@@ -1101,18 +1101,15 @@
       },
       "fu_meloe": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "fu_moloo": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "fu_nenonge": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "fufue": {
         "canonical": true,
@@ -1121,15 +1118,18 @@
       },
       "fumeloe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "fumoloo": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "funenonge": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "fyaale": {
         "canonical": true,
@@ -1495,18 +1495,15 @@
       },
       "ma_peme": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ma_peta": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ma_wingo": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "maa": {
         "canonical": true,
@@ -1549,12 +1546,12 @@
       },
       "manong_ma_mbaeme": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "manongmambaeme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "manuma": {
         "canonical": true,
@@ -1563,11 +1560,13 @@
       },
       "mapeme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "mapeta": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "mata": {
         "canonical": true,
@@ -1580,7 +1579,8 @@
       },
       "mawingo": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "mawume": {
         "canonical": true,
@@ -1661,111 +1661,111 @@
       },
       "meghem_mem_mbe": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_mem_mbe_ne_nekwa": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_mem_mbe_ne_pem_pe": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_mem_mbe_ne_pen_teele": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_mem_mbe_ne_pen_tene": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_mem_mbe_ne_tae": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_mem_nefeeme": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_men_nekwa": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_men_nepue": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_men_ntoge": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_men_teele": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghem_men_tene": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "meghemmemmbe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmemmbenenekwa": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmemmbenepempe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmemmbenepenteele": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmemmbenepentene": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmemmbenetae": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmemnefeeme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmennekwa": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmennepue": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmenntoge": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmenteele": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "meghemmentene": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "mejie": {
         "canonical": true,
@@ -1821,23 +1821,19 @@
       },
       "mo_manggye": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "mo_mbyangne": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "mo_na_mbelaloe": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "mo_yi_mboole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "moga": {
         "canonical": true,
@@ -1850,24 +1846,27 @@
       },
       "mom_napooola": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "momanggye": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "mombyangne": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "momnapooola": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "monambelaloe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "mongke": {
         "canonical": true,
@@ -1885,7 +1884,8 @@
       },
       "moyimboole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "msom": {
         "canonical": true,
@@ -1903,8 +1903,7 @@
       },
       "n_ng_nefenge": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "na": {
         "canonical": true,
@@ -1966,8 +1965,7 @@
       },
       "nde_monga": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ndee": {
         "canonical": true,
@@ -1980,7 +1978,8 @@
       },
       "ndemonga": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ndene": {
         "canonical": true,
@@ -2035,12 +2034,12 @@
       },
       "ndzeble_mesae": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ndzeblemesae": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ndzele": {
         "canonical": true,
@@ -2134,8 +2133,7 @@
       },
       "nela_no_akoole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nelage": {
         "canonical": true,
@@ -2147,7 +2145,8 @@
       },
       "nelanoakoole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nele": {
         "canonical": true,
@@ -2160,12 +2159,12 @@
       },
       "nelenge_no_apo": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nelengenoapo": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nelwei": {
         "canonical": true,
@@ -2181,6 +2180,11 @@
         ],
         "canonical_recorder": "samagids"
       },
+      "nengnefenge": {
+        "canonical": true,
+        "kids": [],
+        "canonical_recorder": "samagids"
+      },
       "nengooma": {
         "canonical": true,
         "kids": [],
@@ -2193,8 +2197,7 @@
       },
       "nenong_no_atue": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nenonge": {
         "canonical": true,
@@ -2206,7 +2209,8 @@
       },
       "nenongnoatue": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nepe": {
         "canonical": true,
@@ -2301,12 +2305,12 @@
       },
       "netsong_no_akoole": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "netsongnoakoole": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "netue": {
         "canonical": true,
@@ -2419,13 +2423,11 @@
       },
       "ngwub_mbeeme": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ngwub_nelage": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ngwuba": {
         "canonical": true,
@@ -2433,11 +2435,13 @@
       },
       "ngwubmbeeme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ngwubnelage": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ngwue": {
         "canonical": true,
@@ -2491,8 +2495,7 @@
       },
       "nka_senge": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nkadte": {
         "canonical": true,
@@ -2523,43 +2526,44 @@
       },
       "nkasenge": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nked_pe": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nked_teele": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nked_tene": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nked_zen_nekwa": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nkedpe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nkedteele": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nkedtene": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nkedzennekwa": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nkeebe": {
         "canonical": true,
@@ -2588,12 +2592,12 @@
       },
       "nkene_apo": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "nkeneapo": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "nkie": {
         "canonical": true,
@@ -2647,10 +2651,14 @@
       },
       "nkya_sange": {
         "canonical": true,
+        "kids": []
+      },
+      "nkyasange": {
+        "canonical": true,
         "kids": [],
         "canonical_recorder": "samagids"
       },
-      "nkyasange": {
+      "nkye": {
         "canonical": true,
         "kids": []
       },
@@ -2669,10 +2677,6 @@
         "canonical_recorder": "samagids"
       },
       "nnang": {
-        "canonical": true,
-        "kids": []
-      },
-      "nngnefenge": {
         "canonical": true,
         "kids": []
       },
@@ -2710,6 +2714,10 @@
         "kids": [],
         "canonical_recorder": "samagids"
       },
+      "ntenge": {
+        "canonical": true,
+        "kids": []
+      },
       "ntie": {
         "canonical": true,
         "kids": [],
@@ -2725,84 +2733,84 @@
       },
       "ntseb_asaambe": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntseb_me": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntseb_nefeeme": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntseb_nepue": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntseb_ntoge": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntseb_pe": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntseb_teele": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntseb_tene": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntseb_zen_nekwa": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntsebasaambe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsebme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsebnefeeme": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsebnepue": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsebntoge": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsebpe": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsebteele": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsebtene": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsebzennekwa": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsedndzeme": {
         "canonical": true,
@@ -2810,12 +2818,12 @@
       },
       "ntso_nde": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "ntsonde": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "ntsonge": {
         "canonical": true,
@@ -2920,12 +2928,12 @@
       },
       "pee_atue": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "peeatue": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "pege": {
         "canonical": true,
@@ -3052,8 +3060,7 @@
       },
       "shi_sonte": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "shiee": {
         "canonical": true,
@@ -3067,7 +3074,8 @@
       },
       "shisonte": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "shwinge": {
         "canonical": true,
@@ -3101,8 +3109,7 @@
       },
       "ta_peta": {
         "canonical": true,
-        "kids": [],
-        "canonical_recorder": "samagids"
+        "kids": []
       },
       "taa": {
         "canonical": true,
@@ -3120,7 +3127,8 @@
       },
       "tapeta": {
         "canonical": true,
-        "kids": []
+        "kids": [],
+        "canonical_recorder": "samagids"
       },
       "tate": {
         "canonical": true,
@@ -3206,6 +3214,10 @@
         "canonical": true,
         "kids": [],
         "canonical_recorder": "samagids"
+      },
+      "tseme": {
+        "canonical": true,
+        "kids": []
       },
       "tue": {
         "canonical": true,

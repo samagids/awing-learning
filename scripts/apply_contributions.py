@@ -308,51 +308,15 @@ def ensure_directories():
 # ------------------------------------------------------------------
 
 def _audio_key(awing_text):
-    """Convert an Awing word to a safe ASCII filename.
-
-    MUST match the logic in both:
-      - scripts/generate_audio_edge.py  `_audio_key()`
-      - lib/services/pronunciation_service.dart  `_audioKey()`
-
-    Alphabet special chars (single char like 'ɛ', 'ə', 'ɨ', 'ɔ', 'ŋ') map
-    to named keys (epsilon, schwa, barred_i, open_o, eng) that match the
-    alphabet audio filenames the app expects. Otherwise we strip tone
-    diacritics, map special vowels to ASCII, drop apostrophes, and keep
-    only lowercase alphanumerics.
-    """
-    if not awing_text:
-        return ''
-    text = unicodedata.normalize('NFC', awing_text.strip().lower())
-
-    # Alphabet letter names (must match pronunciation_service.dart)
-    special_map = {
-        'ɛ': 'epsilon', 'ə': 'schwa', 'ɨ': 'barred_i',
-        'ɔ': 'open_o', 'ŋ': 'eng',
-    }
-    if text in special_map:
-        return special_map[text]
-
-    # Strip tone diacritics (acute, grave, circumflex, caron, tilde)
-    tone_marks = ('\u0301', '\u0300', '\u0302', '\u030C', '\u0303')
-    out_chars = []
-    for ch in text:
-        decomposed = unicodedata.normalize('NFD', ch)
-        cleaned = ''.join(c for c in decomposed if not (
-            unicodedata.category(c).startswith('M') and c in tone_marks))
-        out_chars.append(unicodedata.normalize('NFC', cleaned))
-    text = ''.join(out_chars)
-
-    # Map special Awing vowels/nasals to ASCII equivalents
-    for old, new in (('ɛ', 'e'), ('ɔ', 'o'), ('ə', 'e'),
-                     ('ɨ', 'i'), ('ŋ', 'ng')):
-        text = text.replace(old, new)
-
-    # Drop glottal-stop apostrophes
-    for q in ("'", '\u2019', '\u2018'):
-        text = text.replace(q, '')
-
-    # Keep only lowercase alphanumerics
-    return re.sub(r'[^a-z0-9]', '', text)
+    """Delegates to scripts/awing_key.py — the single derivation shared
+    with Dart's PronunciationService._audioKey(). See that file for why
+    three derivations existed and what each got wrong."""
+    import os as _os, sys as _sys
+    _d = _os.path.dirname(_os.path.abspath(__file__))
+    if _d not in _sys.path:
+        _sys.path.insert(0, _d)
+    from awing_key import audio_key as _ak
+    return _ak(awing_text)
 
 
 def _is_alphabet_letter(awing_word):
