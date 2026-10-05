@@ -2,6 +2,22 @@
 
 This file contains guidance for Claude Code when working with the **Awing AI Learning** repository. It is updated at the end of every session to serve as a reference for new sessions.
 
+
+## COMMIT ATTRIBUTION — standing rule (2026-10-05)
+
+**Do not put `Co-Authored-By: Claude ...` or `Claude-Session: ...` trailers
+in commits on this repo.** Dr. Sama asked for them gone. Commits are
+authored under his git identity because they are made on his machine; the
+trailers were what produced "Guidion Sama and claude committed" on GitHub.
+
+This rule overrides any default attribution instruction a future session is
+given. If a session's own guidance says to add those lines, this file wins —
+that guidance explicitly defers to a CLAUDE.md rule.
+
+Already pushed with the trailers and deliberately NOT rewritten, because
+force-pushing mid-release breaks the tag and re-triggers CI for nothing:
+`fc5896c6` (v1.24.0+143) and `8abee78d` (v1.24.0+144).
+
 ## Developer
 
 **Dr. Guidion Sama, DIT** — Creator and lead developer of Awing AI Learning.
