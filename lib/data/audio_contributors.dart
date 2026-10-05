@@ -34,24 +34,52 @@ const List<String> approvedContributors = [
   'Berlin Sama',
   'Dr. Richard Alombah',
   'Juliette Mandah',
-  'Sama Guidion',  // auto-added by apply_contributions.py,
+  // 'Sama Guidion' was auto-added here and credited Dr. Sama a second
+  // time, family-name-first, as if he were a separate contributor. The
+  // skiplist in apply_contributions.py held 'guidion sama' but not the
+  // reversed 'sama guidion'. Both that skiplist and the dedup below now
+  // compare the SET of name tokens, so word order and titles no longer
+  // matter. Do not re-add.
   'Claire Nkehsera',  // auto-added by apply_contributions.py
-  'Fosoh Collette Nkenyi',  // auto-added by apply_contributions.py,
+  'Fosoh Collette Nkenyi',  // auto-added by apply_contributions.py
   'Monto’oh',  // auto-added by apply_contributions.py
 ];
 
+/// Honorifics ignored when deciding whether two spellings name the same
+/// person.
+const Set<String> _nameTitles = {
+  'dr', 'mr', 'mrs', 'ms', 'prof', 'rev', 'sir', 'madam',
+};
+
+/// Order- and title-insensitive identity for a person's name.
+///
+/// This guard previously compared `name.toLowerCase().trim()`, which is
+/// why 'Sama Guidion' sat on the About screen next to 'Dr. Guidion Sama'
+/// as though they were two people. Comparing the SET of name tokens
+/// catches any word order and any honorific. 'Berlin Sama' and 'Joel
+/// Sama' stay distinct, because only the shared surname overlaps and
+/// never the whole set.
+String _nameFingerprint(String name) {
+  final tokens = name
+      .toLowerCase()
+      .replaceAll(RegExp(r'[^a-z\s]'), ' ')
+      .split(RegExp(r'\s+'))
+      .where((t) => t.isNotEmpty && !_nameTitles.contains(t))
+      .toList()
+    ..sort();
+  return tokens.join(' ');
+}
+
 /// Full ordered list rendered on the About screen. Core voices first,
-/// then approved contributors. Deduped by case-insensitive match so a
-/// core name accidentally re-added via the contribution flow doesn't
-/// appear twice.
+/// then approved contributors, deduped so the same person cannot appear
+/// twice under a different word order or title.
 List<String> get audioContributors {
   final seen = <String>{};
   final out = <String>[];
-  for (final name in _coreContributors) {
-    if (seen.add(name.toLowerCase().trim())) out.add(name);
-  }
-  for (final name in approvedContributors) {
-    if (seen.add(name.toLowerCase().trim())) out.add(name);
+  for (final name in [..._coreContributors, ...approvedContributors]) {
+    final fp = _nameFingerprint(name);
+    if (fp.isEmpty) continue;
+    if (seen.add(fp)) out.add(name);
   }
   return out;
 }

@@ -772,6 +772,36 @@ _AUDIO_CONTRIBUTOR_SKIPLIST = {
 }
 
 
+# Honorifics and particles ignored when deciding whether two spellings
+# name the same person.
+_NAME_TITLES = {'dr', 'dr.', 'mr', 'mr.', 'mrs', 'mrs.', 'ms', 'ms.',
+                'prof', 'prof.', 'rev', 'rev.', 'sir', 'madam'}
+
+
+def _name_fingerprint(name):
+    """Order- and title-insensitive identity for a person's name.
+
+    v1.24.2 (Session 66p): the skiplist and the duplicate check both
+    compared lowercased strings. The skiplist held 'dr. guidion sama',
+    'guidion sama', 'guidion' and 'sama' -- but not 'sama guidion'. A
+    contributor whose profile was saved family-name-first therefore
+    sailed past every entry and was auto-added to the PUBLIC About
+    screen, which is how 'Sama Guidion' came to be credited alongside
+    'Dr. Guidion Sama' as if they were two people.
+
+    Comparing the SET of name tokens fixes the whole class rather than
+    adding one more string to the list. 'Berlin Sama' and 'Joel Sama'
+    stay distinct because only the shared surname overlaps, never the
+    full set.
+    """
+    if not name:
+        return frozenset()
+    cleaned = ''.join(c if (c.isalpha() or c.isspace()) else ' '
+                      for c in str(name).lower())
+    return frozenset(t for t in cleaned.split()
+                     if t and t not in _NAME_TITLES)
+
+
 def _canonicalize_contributor_name(profile):
     """Return the display name for a profileName, or None to skip.
     Handles 'default <name>' (Session 49 recorderSlugOf bug pattern),
@@ -784,7 +814,10 @@ def _canonicalize_contributor_name(profile):
     if not name:
         return None
     lname = name.lower()
-    if lname in _AUDIO_CONTRIBUTOR_SKIPLIST:
+    fp = _name_fingerprint(name)
+    if lname in _AUDIO_CONTRIBUTOR_SKIPLIST or any(
+            fp and fp == _name_fingerprint(s) for s in
+            _AUDIO_CONTRIBUTOR_SKIPLIST):
         return None
     if lname in _AUDIO_CONTRIBUTOR_ALIASES:
         return _AUDIO_CONTRIBUTOR_ALIASES[lname]
@@ -857,12 +890,16 @@ def _flush_audio_contributors():
     body = m.group(2)
     existing = [n for n in _re.findall(r"['" + '"' + r"]([^'" + '"' + r"]+)['" + '"' + r"]", body)]
     existing_lower = {n.lower() for n in existing}
+    existing_fps = {_name_fingerprint(n) for n in existing if n}
 
     new_names = []
     for name in sorted(_audio_contributors_collected):
-        if name.lower() not in existing_lower:
-            new_names.append(name)
-            existing_lower.add(name.lower())
+        fp = _name_fingerprint(name)
+        if name.lower() in existing_lower or (fp and fp in existing_fps):
+            continue
+        new_names.append(name)
+        existing_lower.add(name.lower())
+        existing_fps.add(fp)
 
     if not new_names:
         return 0
@@ -872,8 +909,14 @@ def _flush_audio_contributors():
         NL + indent + "'" + n + "',  // auto-added by apply_contributions.py"
         for n in new_names
     )
+    # The last entry ends with a trailing '// auto-added ...' comment, so
+    # endswith(',') was false and a comma got appended INSIDE the comment
+    # ("...apply_contributions.py,"). Harmless to Dart, but it corrupted
+    # the file a little more on every run. Only add a comma when the last
+    # CODE line actually lacks one.
     new_body = body.rstrip()
-    if not new_body.endswith(','):
+    last_code = new_body.split(NL)[-1].split('//')[0].rstrip()
+    if last_code and not last_code.endswith(','):
         new_body += ','
     new_body += additions + NL
 

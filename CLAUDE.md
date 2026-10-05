@@ -11976,3 +11976,36 @@ three `-SERV1` files are the orphans. The two unreadable files were
 therefore the ones the app needs; they were deleted so `[4/7]` regenerates
 them, and `pack_and_upload_assets.sh` refreshes the image manifest
 immediately before packing, so the count self-corrects.
+
+### The About screen credited Dr. Sama twice
+
+The contributor chips showed both **'Dr. Guidion Sama'** and **'Sama
+Guidion'** — one person, credited as two, on a public screen.
+
+`_AUDIO_CONTRIBUTOR_SKIPLIST` held `'dr. guidion sama'`, `'guidion sama'`,
+`'guidion'` and `'sama'` — but **not the reversed `'sama guidion'`**. A
+contribution whose profileName was saved family-name-first therefore missed
+every entry and was auto-added.
+
+**The Dart guard that existed to stop exactly this also failed.** Its
+comment read "Deduped by case-insensitive match so a core name accidentally
+re-added via the contribution flow doesn't appear twice" — but it compared
+`name.toLowerCase().trim()`, whole-string, so a different word order sailed
+through.
+
+Both layers now compare the **set of name tokens**, with honorifics
+stripped. That fixes the class rather than adding one more string to a list.
+'Berlin Sama' and 'Joel Sama' stay distinct because only the shared surname
+overlaps, never the whole set — verified against every current credit, zero
+collisions, and the Python side tested on 11 skip cases and 8 keep cases.
+
+Also fixed: the auto-adder appended its trailing comma **inside the previous
+line's comment** (`// auto-added by apply_contributions.py,`) because the
+last line ends in a comment, so `endswith(',')` was always false. It now
+looks at the last line's code, ignoring the comment.
+
+**Standing risk, not yet addressed:** any profileName typed by any
+contributor is auto-published to the About screen of a children's app with
+no human review. Dedup is now correct, but nothing checks that a name is a
+real name. `Monto'oh` arrived today from a profile literally called
+`default Monto'oh`.
