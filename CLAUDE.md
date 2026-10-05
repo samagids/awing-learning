@@ -11665,3 +11665,87 @@ rather than two.
 
 Watch for after the push: `promote-alpha-to-production.yml` is the 7-day
 auto-promoter. It reaches this build unless the tag is deleted first.
+
+## Session 66p — v1.24.2+146: contributions retry + the Windows version drift
+
+v1.24.1+145 shipped: tag pushed, Build Android #316 and Build iOS #310 both
+green. versionCode 145 is spent, so new recordings go out as **1.24.2+146**.
+
+### The build that aborted
+
+    ✓ check_version ok (v518); fetch_all correctly rejected unauthenticated call.
+    [1/7] Applying approved contributions...
+      Checking for new approved contributions (local version: 507)...
+      UNREACHABLE: download failed: The read operation timed out
+
+Local 507, server **518** — eleven versions of approved contributions pending,
+including the new recordings. Not an empty queue; a failed fetch.
+
+**The defect is an asymmetry.** `setup_and_deploy._verify()` has retried 3x
+with backoff since v1.23.3, and in this very run it ate two consecutive 404s
+and succeeded on attempt 3. One step later `download_approved()` got one 30s
+attempt and killed the build.
+
+Worse: the deploy's check calls `check_version` with `currentVersion=999999`,
+so no updates come back and it answers instantly. `download_approved()` passes
+the REAL local version, so Apps Script serialises every update since then —
+eleven versions in one response body. **The heavier call had the shorter
+timeout and no retry.**
+
+Fix: `_post_webhook()` in `apply_contributions.py` — 3 attempts, 3s/6s backoff,
+120s for the two calls whose payload grows with how far behind you are
+(`check_version`, `fetch_audio`), 30s for the cheap bookkeeping one. Still
+routed through `_post_follow`, so the 302 cannot turn the POST into a GET on
+`doGet()`.
+
+It **re-raises** the last exception instead of returning a sentinel, so
+`download_approved()` still returns `None` and the build still aborts on a
+genuinely unreachable webhook. Retrying must never become a quiet way to ship
+without approved content. Tested: first-try success, recovery on attempt 3,
+failure after 3 re-raising, 404 recovery, and that the request stays a POST
+with its body attached.
+
+### build_and_run.bat never ran sync_version.py
+
+`build_and_run.sh` has run it at `[0b/8]` since v1.18.1. **The `.bat` — the one
+actually run on Windows — never did.** They drifted silently:
+
+    [fixed] lib/screens/about_screen.dart: 1.24.0 -> 1.24.2
+    [fixed] lib/screens/about_screen.dart: 143 -> 146
+    [fixed] lib/services/analytics_service.dart: 1.24.0 -> 1.24.2
+
+So **v1.24.1+145 shipped showing "1.24.0" on the About page**, two releases
+behind, and every analytics event from it is attributed to 1.24.0. Nothing
+caught it because the only guard lived in the script nobody runs.
+
+Added `[0c/7]` to the `.bat`, placed **after the `:step1` label** so it also
+runs on the path that skips the webhook deploy when clasp is missing.
+Non-fatal.
+
+`_kAppVersion` in `cloud_backup_service.dart` is also bumped, which re-arms the
+one-shot `_ensureCloudPresence()` backfill — wanted here, it is what pushes
+Apple relay users' contact emails into Firestore.
+
+### THE PACK-AND-UPLOAD ANSWER FOR THIS RELEASE: YES
+
+New recordings change `android/install_time_assets/src/main/assets/audio/`.
+CI does **not** build from the dev machine's tree — it downloads
+`pad-assets.tar.gz` from the `pad-assets` release. Tagging without re-uploading
+ships the old audio. That is exactly the July-5-tarball failure.
+
+Order: build → `pack_and_upload_assets.sh` → commit → push → tag.
+
+Verify the upload by **hash, not by the release page**: `sha256sum
+pad-assets.tar.gz` locally must equal the sha256 GitHub shows on the asset.
+Presence proves nothing; the 958 MB build had a present tarball.
+
+### device_bash cannot delete files
+
+A commit from the Claude session left `.git/HEAD.lock` and
+`.git/objects/maintenance.lock` behind ("Operation not permitted"), and a
+zero-byte `HEAD.lock` blocks the next ref update. Cleared by **rename**, not
+delete — `mv` needs no unlink — into `.git/_stale_locks/`. Safe to delete that
+folder from Windows at any time.
+
+Pushes still have to come from Dr. Sama's Windows terminal; the session's shell
+has no credential helper.
