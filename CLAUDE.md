@@ -11245,3 +11245,36 @@ rules, so anything the copy enables was already possible from the console.
 What it genuinely adds is a second copy of a live credential sitting in one
 mailbox — short-lived (10 min) and clearly labelled as such, but worth
 remembering if that mailbox is ever compromised.
+
+### The actual lockout, and why "sign in first" was a dead end
+
+Chasing "what if the email never synced" found a loop rather than a missing
+email.
+
+`hasAccountPin` reads `_currentAccount?.hasAccountPin`, and
+`_currentAccount` is restored from local prefs keyed on `_keyCurrentEmail`.
+`FirebaseAuth.instance.currentUser` is independent of it. So a device can
+sit in a state where:
+
+- the app shows a signed-in account, so **every gate asks for the PIN** —
+  including Sign Out on the profile screen, and
+- `FirebaseAuth` has **no session**, so `_postAuthenticatedJson` refuses
+  before the request and no reset code can ever be sent.
+
+The old message told the parent to "sign in", while the app looked signed
+in to them, and the one action that would have fixed it — signing out — was
+behind the PIN they had forgotten. No way out from inside the app.
+
+**Fix:** that branch now offers to sign out, and performs it directly
+without the gate. That is safe precisely because of what it has just
+proved: with no Firebase session nothing on the account can be read or
+changed, profiles and progress restore on the next sign-in, and the PIN
+comes back with them from the cloud backup. The worst a child can do with
+the button is send themselves to the login screen.
+
+**Note the non-cases.** A parent who is genuinely signed OUT is not locked
+out at all: `logout()` nulls `_currentAccount`, so `hasAccountPin` is false
+and the gate falls back to the math question. And a federated user whose
+Firebase record simply carries no email is rejected earlier, by
+`verifyFirebaseIdToken_`'s `if (!u.email) return null`, which surfaces as
+'unauthorized' rather than 'not-signed-in'.

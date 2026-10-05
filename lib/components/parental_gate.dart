@@ -265,14 +265,49 @@ class ParentalGate {
 
     if (reply != null && msg == 'not-signed-in') {
       // NOTHING is sent in this case — the request never leaves the
-      // device (see _postAuthenticatedJson). A parent who set a PIN while
-      // signed out has no email on file to send to, so without the
-      // developer fallback below they have no way back in at all.
-      await _info(context, 'Sign in first',
-          'To reset the PIN we need to confirm you own this account. '
-          'Sign in with Google or Apple, then try again.\n\n'
-          'If you cannot sign in, contact the developer at '
-          'samagids@gmail.com.');
+      // device (see _postAuthenticatedJson), because there is no Firebase
+      // session to prove who owns the account.
+      //
+      // This is the REAL lockout, and it is a loop. The app still shows a
+      // signed-in account (it is restored from local prefs keyed on the
+      // email), so hasAccountPin is true and every gate asks for the PIN —
+      // including Sign Out. But FirebaseAuth has no session, so the email
+      // reset cannot run. The parent is told to "sign in", looks signed
+      // in, and the one action that would fix it is itself behind the PIN
+      // they have forgotten.
+      //
+      // Signing out is the way through, and it is safe to allow here
+      // WITHOUT the PIN: we have just proved there is no Firebase session,
+      // so nothing can be read or changed on the account anyway, profiles
+      // and progress are restored on the next sign-in, and the PIN itself
+      // comes back with them from the cloud backup. The worst a child
+      // could do with it is return themselves to the login screen.
+      final signOut = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Sign in again to reset'),
+          content: const Text(
+            'Your account is not currently signed in to the server, so we '
+            'cannot email a code yet.\n\n'
+            'Signing out and back in fixes this. Nothing is lost — your '
+            'profiles, progress and PIN all come back when you sign in.\n\n'
+            'Still stuck? Contact the developer at samagids@gmail.com.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Not now'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: const Text('Sign out'),
+            ),
+          ],
+        ),
+      );
+      if (signOut == true) {
+        await auth.logout();
+      }
       return;
     }
     if (reply != null && status == 'error' && msg == 'too many requests') {
