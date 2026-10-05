@@ -1813,42 +1813,25 @@ EMOJI_CODEPOINTS = {
 # ============================================================
 
 def audio_key(awing_word: str) -> str:
-    """Convert Awing word to safe ASCII filename (matches pronunciation_service.dart).
+    """Delegates to scripts/awing_key.py — the single derivation shared with
+    Dart's PronunciationService._audioKey().
 
-    This is the AUDIO namespace key — one clip per (awing) spelling regardless
-    of English gloss. Used by generate_audio_edge.py for MP3 filenames AND by
-    the app's pronunciation_service.dart to look up recordings.
+    v1.24.2 (Session 66p): this held its own char_map, the FIFTH copy of the
+    derivation in this repo. After the Dart side was fixed to stop deleting
+    pre-composed letters, this one still produced the old keys, so [4/7] saw
+    'aeo__cave' missing and generated it again. 92 orphan images went into
+    the pack that the app can never request, and CI failed with
+    "92 image file(s) in the pack are NOT in assets/image_manifest.json".
 
-    For IMAGE filenames, use `image_key(awing, english)` instead — that key
-    appends a slug of the English gloss so homonyms (té1 "learn" vs té2 "sit")
-    each get their own illustration.
+    For IMAGE filenames use image_key(awing, english): it appends a slug of
+    the English gloss so homonyms each get their own illustration.
     """
-    char_map = {
-        '\u025b': 'e', '\u0254': 'o', '\u0259': 'e', '\u0268': 'i',
-        '\u014b': 'ng', "'": '', '"': '', "\u2019": '', "\u2018": '',
-        '\u00e1': 'a', '\u00e0': 'a', '\u00e2': 'a', '\u01ce': 'a',
-        '\u00e9': 'e', '\u00e8': 'e', '\u00ea': 'e', '\u011b': 'e',
-        '\u00ed': 'i', '\u00ec': 'i', '\u00ee': 'i', '\u01d0': 'i',
-        '\u00f3': 'o', '\u00f2': 'o', '\u00f4': 'o', '\u01d2': 'o',
-        '\u00fa': 'u', '\u00f9': 'u', '\u00fb': 'u', '\u01d4': 'u',
-        '\u025b\u0301': 'e', '\u025b\u0302': 'e', '\u025b\u030c': 'e',
-        '\u0259\u0301': 'e', '\u0259\u0302': 'e', '\u0259\u030c': 'e',
-        '\u0254\u0301': 'o', '\u0254\u0302': 'o', '\u0254\u030c': 'o',
-        '\u0268\u0301': 'i', '\u0268\u0302': 'i', '\u0268\u030c': 'i',
-    }
-    result = ""
-    for char in awing_word:
-        result += char_map.get(char, char)
-    result = result.lower()
-    result = re.sub(r'[^a-z0-9]', '', result)
-    return result
-
-
-# Maximum chars of the english slug appended to image filenames. Keeps
-# `{audio_key}__{english_slug}.png` filenames well under common filesystem
-# limits (Windows MAX_PATH + PAD asset name sanity) even when audio_key is
-# itself long (phrase_*/sentence_*/story_* namespaces already cap at 60).
-ENGLISH_SLUG_MAX = 32
+    import os as _os, sys as _sys
+    _d = _os.path.dirname(_os.path.abspath(__file__))
+    if _d not in _sys.path:
+        _sys.path.insert(0, _d)
+    from awing_key import audio_key as _ak
+    return _ak(awing_word)
 
 
 def english_slug(english: str) -> str:

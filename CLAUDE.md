@@ -12406,3 +12406,34 @@ Three of my checks were wrong before I got this right, each the same way:
 Latent, not biting today: that map routes `stories` to a `stories/` folder
 the app never searches — `speakAwing()` tries `vocabulary, alphabet,
 dictionary, sentences`. No row uses `stories` yet.
+
+### CI failure on efe8c02 — a FIFTH key derivation
+
+Build Android #321 failed in 2m48s:
+
+    92 image file(s) in the pack are NOT in assets/image_manifest.json,
+    e.g. ['aeo__cave', 'afe__curative_of_any_sort', 'afe__drugs', ...]
+    pad-assets is STALE or incomplete.
+
+Those are **old keys**: `aeo` was `aɣə'ɔ́` before the audioKey fix, `afe` was
+`afʉə`.
+
+**`generate_images.py` had its own `audio_key()` with a private `char_map`** —
+the fifth copy in this repo, and the one I missed when unifying the others.
+After the Dart side was fixed, that copy still produced the old keys, so
+`[4/7]` saw `aeo__cave` missing and generated it. 92 orphan images went into
+the pack, and `verify_asset_bundle.py` in CI caught the mismatch exactly as
+it is meant to.
+
+**The guard worked.** It refused a bundle whose contents did not match the
+committed manifest, which is the whole reason it exists after the 958 MB
+failure.
+
+Fixed: `generate_images.py` delegates to `scripts/awing_key.py`. Verified
+identical across 8,610 spellings. The 92 orphans were deleted; the manifest
+rebuilt to **8,739 keys — exactly the committed count**, so no manifest
+commit is needed and `verify_asset_bundle.py` passes.
+
+**Count the derivations before declaring them unified.** I said "all four"
+and then "all four" again; it was five. `grep -rn "def .*audio_key\|char_map"
+scripts/` is the check.
