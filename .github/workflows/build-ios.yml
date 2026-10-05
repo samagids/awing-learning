@@ -121,48 +121,13 @@ jobs:
             fi
           fi
 
-
-      # === VERIFY THE ASSET BUNDLE MATCHES THIS COMMIT ===
-      # v1.24.0+143 shipped a 958 MB AAB to the Play alpha track built from a
-      # pad-assets tarball last uploaded three months earlier: old PNGs, the
-      # Edge TTS voices the release had removed, and none of the 492
-      # regenerated images. Every existing guard checked that an asset bundle
-      # EXISTED. A stale one is indistinguishable from a fresh one by that
-      # test, and green CI meant nothing.
-      #
-      # These two checks are what "fresh" actually means:
-      #   1. the pack's image stems match assets/image_manifest.json exactly
-      #      (the manifest ships in the main bundle and drives hasImageSync,
-      #      so a mismatch is also a real runtime bug)
-      #   2. the images are WebP — a PNG-era pack fails instantly
+      # The one check that would have caught v1.24.0+143 shipping a
+      # 958 MB AAB built from a three-month-old asset tarball. Tested
+      # both ways before it landed: passes on a current tree, fails on
+      # a PNG-era one with missing kid recordings.
       - name: Verify asset bundle is current
-        run: |
-          python3 - <<'PY'
-          import json, os, sys
-          IMG = "ios/Runner/PADAssets/images/vocabulary"
-          if not os.path.isdir(IMG):
-              print("::warning::no image dir — placeholder build, skipping check")
-              sys.exit(0)
-          files = os.listdir(IMG)
-          disk = {os.path.splitext(f)[0] for f in files}
-          man = set(json.load(open("assets/image_manifest.json"))["keys"])
-          webp = sum(1 for f in files if f.lower().endswith(".webp"))
-          missing, extra = man - disk, disk - man
-          print(f"manifest {len(man)} | pack {len(disk)} | webp {webp}/{len(files)}")
-          bad = []
-          if missing:
-              bad.append(f"{len(missing)} key(s) in the manifest are NOT in the pack, e.g. {sorted(missing)[:3]}")
-          if extra:
-              bad.append(f"{len(extra)} file(s) in the pack are NOT in the manifest, e.g. {sorted(extra)[:3]}")
-          if files and webp / len(files) < 0.95:
-              bad.append(f"only {webp}/{len(files)} images are WebP — this looks like a pre-v1.24.0 PNG pack")
-          if bad:
-              for b in bad:
-                  print("::error::" + b)
-              print("::error::pad-assets is STALE. Run scripts/pack_and_upload_assets.sh, then re-run.")
-              sys.exit(1)
-          print("Asset bundle matches this commit.")
-          PY
+        run: python3 scripts/verify_asset_bundle.py ios/Runner/PADAssets
+
       - name: Install dependencies
         run: flutter pub get
 

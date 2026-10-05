@@ -11116,21 +11116,41 @@ have the workflow fail when it does not match the committed
 `assets/image_manifest.json`. That turns "assets exist" into "assets match
 this commit", which is the property anyone actually wanted.
 
-### The guard that would have caught it (added, both workflows)
+### The guard that would have caught it — `scripts/verify_asset_bundle.py`
 
-A new step **"Verify asset bundle is current"** runs immediately after the
-pad-assets download in `build-android.yml` and `build-ios.yml`. It fails the
-build when:
+One script, called from `build-android.yml`, `build-ios.yml`, AND from
+`pack_and_upload_assets.sh` before it packs (uploading a bad bundle just
+moves the failure to CI twenty minutes later). It fails when the extracted
+pack disagrees with the two committed manifests:
 
-1. the extracted pack's image stems do not match `assets/image_manifest.json`
-   exactly — the manifest ships in the MAIN bundle and drives
-   `hasImageSync`, so a mismatch is a runtime bug as well as a staleness
-   signal; or
-2. fewer than 95% of the vocabulary images are `.webp` — a pre-v1.24.0 PNG
-   pack fails on the spot.
+- image stems vs `assets/image_manifest.json` — missing or extra
+- fewer than 95% of images are `.webp` — a PNG-era pack dies here even when
+  the stems line up, because a PNG and a WebP of the same key share a stem
+- every `canonical` entry in `assets/native_audio_manifest.json` present
+  under `audio/native/<cat>/`
+- every `kids[]` entry present under `audio/native_kids/<kid>/<cat>/`
 
-Dry-run against the current tree: manifest 8680, pack 8680, webp 8680/8680,
-0 missing, 0 extra — passes. Run it against July's tarball and check 2 fails
-immediately.
+**Tested both directions before it landed**, which is the part that matters:
 
-Both files are YAML-validated after the edit.
+    current tree  -> images 8680/8680 webp, audio 250 canonical + 119 kid, PASS
+    simulated July -> 8380 missing images, 0/300 webp, 119 missing kid, FAIL
+
+The first draft of this check FAILED on the real tree because I guessed the
+kid audio layout as `native_kids/<kid>/<key>` when it is
+`native_kids/<kid>/<cat>/<key>`. Shipping that would have broken every
+build. Run the negative test too; a guard nobody has seen fail is not a
+guard.
+
+### The audio half of this, which is worse than the images
+
+**369 audio files in the tree are newer than the Jul 5 tarball**, including
+a batch from Sep 22. The pack CI used had none of them. v1.23.5+141 and
+v1.23.6+142 both shipped from that same July tarball, so native recordings
+contributed between July and now have almost certainly never reached a
+single user — while the app showed a working speaker button for them,
+because `native_audio_manifest.json` ships in the MAIN bundle and said they
+existed. That is the exact dead-button problem v1.24.0 set out to remove,
+caused by the build pipeline rather than by the code.
+
+Worth confirming against a real install once +144 is out.
+

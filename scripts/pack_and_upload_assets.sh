@@ -93,6 +93,16 @@ if [ "$DRY_RUN" -eq 0 ]; then
   fi
 fi
 
+# Verify BEFORE packing. Uploading a bundle that does not match the
+# committed manifests just moves the failure to CI 20 minutes later.
+echo "Verifying the asset tree against the committed manifests ..."
+if ! python3 scripts/verify_asset_bundle.py "$ASSET_DIR" 2>/dev/null \
+   && ! python scripts/verify_asset_bundle.py "$ASSET_DIR"; then
+  echo "ERROR: asset tree does not match the committed manifests." >&2
+  echo "Fix that first — uploading now ships the mismatch." >&2
+  exit 1
+fi
+
 # === Pack ===
 echo "[1/3] Packing $ASSET_DIR ($ASSET_HUMAN) into $TARBALL ..."
 echo "      This takes ~2-5 minutes for ~1 GB of files."
