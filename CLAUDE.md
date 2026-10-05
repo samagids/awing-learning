@@ -11385,3 +11385,65 @@ Firebase Auth under a privaterelay address, NOT under their yahoo one.
 **Searching the user list for the address the parent gives you will find
 nothing even when they are there.** Filter by provider = Apple instead, and
 match on the sign-in date they report.
+
+## Session 66k — you cannot get the real email. Get a second one instead.
+
+Console evidence, Oct 5:
+
+- **Firebase Auth has 222 users**, and the Apple ones are all
+  `@privaterelay.appleid.com` — `dy52jz9dbz@` (Oct 4, almost certainly the
+  parent who reported this), `yjbmmnhc9d@` (Sep 2), `hwmj6h954j@` (Jul 31),
+  `5db4phjgcb@` and `fd6n7fjyfb@` (Jul 28).
+- **Apple Developer > Sign in with Apple for Email Communication > Email
+  Sources: "No result found."** Nothing registered, so Apple drops every
+  message this app has ever sent to a relay address.
+- **Firestore `users` has no relay documents at all.** The collection is
+  alphabetical and runs `derbewda@`, `dffboracaytwo2024@`,
+  `djoundagilbert@`, `dubdffplay01@` with nothing between, and starts at
+  `abiforlack@` so no digit-prefixed ids exist either.
+- And a Google user, `abiforlack@gmail_dot_com`, carries
+  `app_version "1.21.0+120"`, `updated_at 2026-08-11`. Three releases
+  stale. The sync gap is not Apple-specific.
+
+### The question that matters: can we sync their REAL email?
+
+**No. Not ever.** Hide My Email exists precisely so the app never learns
+it, and there is no API that resolves a relay address back to an inbox.
+Firebase stores what Apple minted, which is the relay. Anyone who chose
+"Share My Email" at sign-in already gives us the real one; for everyone
+else the relay IS the address.
+
+So there are only two honest routes, and we now do both:
+
+**1. Make the relay work.** Register an email source with Apple. The Brevo
+sender is `samagids@12052134.brevosend.com`, and `brevosend.com` is Brevo's
+domain, not ours — so either register that exact address (Apple allows
+individual addresses and brevosend.com publishes SPF) or, properly,
+authenticate an owned domain in Brevo and register the domain. DNS and
+portal work; no code can do it.
+
+**2. Ask the parent for an address we CAN reach.** This already existed and
+was unused by the reset path: `handleParentContactVerify` mails a one-time
+link and records the address only once its owner clicks it, so `confirmed`
+carries the same proof of ownership the ID token gives for the account
+address. `handlePinReset` now sends the code to the account address AND to
+every confirmed contact (capped at `PARENT_MAX_RECIPIENTS`, each send in
+its own try/catch so one bad address cannot stop the rest).
+
+Reusing `confirmed` does NOT loosen the open-relay guard: the caller still
+never chooses a recipient, and an address only enters that list when its
+real owner clicks a link.
+
+The reset dialog now lists the backup recipients, and for a relay user with
+none it says what to do — add a backup email under Parent Settings >
+Activity reports, which is the one action that makes them reachable
+forever.
+
+### Still open
+
+Brevo has ZERO PIN reset sends, which none of the above explains: for this
+user verification would have SUCCEEDED, so `_sendEmail` should have logged
+an attempt even though Apple would then have eaten it. Check
+**Apps Script > Deploy > Manage deployments** — every execution runs
+Version 200 and this project sits at the 200-version cap where
+`clasp deploy` fails.

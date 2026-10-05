@@ -262,6 +262,10 @@ class ParentalGate {
     // saying the app kept claiming a code was sent and nothing arrived.
     final sentTo = reply == null ? '' : (reply['sentTo']?.toString() ?? '');
     final viaRelay = reply != null && reply['privateRelay'] == true;
+    final alsoSent = reply == null
+        ? const <String>[]
+        : ((reply['alsoSentTo'] as List?)?.map((e) => e.toString()).toList() ??
+            const <String>[]);
 
     if (reply != null && msg == 'not-signed-in') {
       // NOTHING is sent in this case — the request never leaves the
@@ -363,6 +367,13 @@ class ParentalGate {
                   : 'We emailed a 6-digit code to $sentTo. Enter it to '
                       'clear the parent PIN.',
             ),
+            if (alsoSent.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                'Also sent to ${alsoSent.join(", ")}.',
+                style: const TextStyle(fontSize: 12.5),
+              ),
+            ],
             if (viaRelay) ...[
               const SizedBox(height: 12),
               Container(
@@ -372,13 +383,23 @@ class ParentalGate {
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.amber.shade300),
                 ),
-                child: const Text(
-                  'That is an Apple "Hide My Email" address. Apple forwards '
-                  'it to your real inbox — check there, including spam. If '
-                  'nothing arrives, open Settings > your name > Sign in '
-                  'with Apple > Awing Learning and check the forwarding '
-                  'address is one you still read.',
-                  style: TextStyle(fontSize: 12.5),
+                child: Text(
+                  alsoSent.isEmpty
+                      // The important case. Apple never tells the app the
+                      // real inbox behind a relay address, so if Apple does
+                      // not forward, we have nowhere else to send. The way
+                      // out is an address the parent gives us themselves —
+                      // Parent Settings already verifies one by emailing a
+                      // confirmation link.
+                      ? 'That is an Apple "Hide My Email" address. Apple '
+                          'forwards it to your real inbox, so check there '
+                          'and in spam.\n\nSo this cannot happen again, '
+                          'add a backup email under Parent Settings > '
+                          'Activity reports. Codes will go there too.'
+                      : 'That is an Apple "Hide My Email" address, so the '
+                          'copy sent to your backup email above is the one '
+                          'most likely to arrive.',
+                  style: const TextStyle(fontSize: 12.5),
                 ),
               ),
             ],

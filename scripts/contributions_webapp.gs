@@ -1666,6 +1666,39 @@ function handlePinReset(payload) {
 
     _sendEmail(email, subject, body);
 
+    // v1.24.1 — ALSO send to this account's confirmed contacts.
+    //
+    // Apple's Hide My Email means the address on the account can be
+    // <random>@privaterelay.appleid.com, and Apple drops relayed mail from
+    // any sender not registered under "Sign in with Apple for Email
+    // Communication". There is no API that resolves a relay address back
+    // to the real inbox — that is the entire point of the feature — so the
+    // only way to reach such a parent is an address THEY gave us.
+    //
+    // That mechanism already exists: handleParentContactVerify mails a
+    // one-time link and only records an address once its owner clicks it.
+    // `confirmed` therefore carries the same proof of ownership the ID
+    // token gives for the account address, so reusing it here does not
+    // lower the bar that keeps this endpoint from being an open relay.
+    var extras = [];
+    try {
+      var contacts = _loadParentContacts(_parentOwnerKey(email));
+      var confirmed = (contacts && contacts.confirmed) || [];
+      for (var c = 0; c < confirmed.length && extras.length < PARENT_MAX_RECIPIENTS; c++) {
+        if (confirmed[c] && confirmed[c] !== email) extras.push(confirmed[c]);
+      }
+    } catch (ctErr) {
+      Logger.log('pin_reset: could not read confirmed contacts: ' + ctErr);
+    }
+    for (var x = 0; x < extras.length; x++) {
+      try {
+        _sendEmail(extras[x], subject, body);
+      } catch (exErr) {
+        // One bad address must not stop the others, or the owner's own.
+        Logger.log('pin_reset: extra send to ' + extras[x] + ' failed: ' + exErr);
+      }
+    }
+
     // Developer copy (v1.24.1). Asked for after a parent on an Apple
     // private-relay address never received their code and had no way
     // forward: with this, Dr. Sama can read it back to them.
@@ -1730,7 +1763,9 @@ function handlePinReset(payload) {
       status: 'ok',
       message: 'reset code sent',
       sentTo: _maskEmail(email),
-      privateRelay: relay
+      privateRelay: relay,
+      alsoSentTo: extras.map(_maskEmail),
+      hasBackupContact: extras.length > 0
     });
   } catch (err) {
     return jsonResponse({
