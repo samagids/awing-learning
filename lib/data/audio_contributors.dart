@@ -36,7 +36,8 @@ const List<String> approvedContributors = [
   'Juliette Mandah',
   'Sama Guidion',  // auto-added by apply_contributions.py,
   'Claire Nkehsera',  // auto-added by apply_contributions.py
-  'Fosoh Collette Nkenyi',  // auto-added by apply_contributions.py
+  'Fosoh Collette Nkenyi',  // auto-added by apply_contributions.py,
+  'Monto’oh',  // auto-added by apply_contributions.py
 ];
 
 /// Full ordered list rendered on the About screen. Core voices first,

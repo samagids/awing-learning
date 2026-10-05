@@ -11872,3 +11872,75 @@ queries `_manifestKeys.contains(...)` for a word it is already showing and
 never iterates it, so an orphan key cannot surface in the app. Manifest and
 disk now agree exactly (8683 = 8683). `scripts/cleanup_orphan_images.bat`
 exists if they should go.
+
+## Session 66p — the audio audit, and 452 words that now speak
+
+Measured, not inferred: ported `PronunciationService._audioKey()` from Dart
+exactly, applied it to every `awing:` literal in `lib/data/*.dart`, matched
+against the `.opus` actually in the PAD pack.
+
+| | before | after |
+|---|---|---|
+| distinct Awing strings | 4,991 | 4,991 |
+| with playable audio | **364 (7.3%)** | **816 (16.3%)** |
+| silent | 4,627 | 4,175 |
+
+**7.3% was by design.** v1.24.0 deleted the six Edge TTS voices;
+`speakAwing()` ends with "Deliberately silent (v1.24.0)". Honest silence
+beats a wrong synthetic pronunciation. Not a bug.
+
+**452 words silent while their recording sat on disk was the bug.** The
+`pronunciationFix` chain was recording → `voice_references/{key}.m4a` →
+`regenerate_words.json` → `generate_audio_edge.py` re-synthesises in 6
+voices. v1.24.0 removed the last step and nothing replaced it.
+`generate_audio_edge` appears in `build_and_run.bat` **only inside
+comments**. 427 references on disk, 69 already had audio, **358 never
+promoted.**
+
+### scripts/apply_voice_references_as_native.py
+
+Promotes a reference into `native/vocabulary/`. Never overwrites an
+existing clip — it only fills silence. 358 written, 0 silent, 0 failed.
+
+**It must trim, and the first run did not.** Raw submissions carry the
+pause either side of the word. Untrimmed, the median promoted clip ran
+**1.68s against 0.56s** for clips already shipping, worst case 9.34s — a
+child taps a word and waits. `apply_recordings_as_audio.py` has always
+trimmed via `scripts/trim_silence.py`, so the promoter now uses the same
+helper and inherits its thresholds and its all-silent drop. After trimming:
+median **0.63s**, p90 1.03s. Needs `pydub` + `numpy`; it refuses to write
+rather than ship untrimmed audio if they are missing.
+
+Encoding matches disk exactly: `.opus` 48 kHz mono 32k (playback), `.wav`
+16 kHz mono PCM-16 (grader). The opus is encoded from the TRIMMED wav so
+both outputs are the same audio.
+
+**Verification that the undo was exact:** the 716 untrimmed files were
+removed and `asset_fingerprint.py` returned to the *identical* baseline
+hash. That is how you prove a cleanup touched nothing else.
+
+### Clip length corroborates the Whisper rejections
+
+Of the 4 transcriptions rejected as fabrications, two have outlier clips:
+
+    alae     3.40s  (5x median)   Whisper heard "alá'əəəəringe"
+    aleme    4.28s  (7x median)   Whisper heard "aləmə̌ aləmə̌ kiye"
+    ambanga  0.58s  (normal)      Whisper heard "I'm Buna"
+    efenge   0.61s  (normal)      Whisper heard "əfsana"
+
+So `alae` and `aleme` are recordings that genuinely contain extra speech
+and may want re-recording; `ambanga` and `efenge` are clean recordings that
+Whisper simply got wrong. Different problems, different fixes.
+
+### Still open
+
+- **The pipeline still dead-ends.** The next approved pronunciationFix goes
+  to the same unread queue. `apply_contributions.py` should promote
+  straight into the native tier.
+- **7 clips unreachable by key.** Dart strips every non-alphanumeric
+  (`agha ghena` → `aghaghena`) while `build_native_audio_manifest.py` and
+  `apply_recordings_as_audio.py` emit `agha_ghena`. 119 of 396 keys on disk
+  contain `_`; only these 7 map to live silent words, the rest are orphans.
+  **Three key derivations exist in this repo and two disagree with the app.**
+- `sync_recordings.py` still fails for an unknown reason. The `.bat`'s three
+  causes are a generic list, not a diagnosis.
