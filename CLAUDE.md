@@ -11749,3 +11749,51 @@ folder from Windows at any time.
 
 Pushes still have to come from Dr. Sama's Windows terminal; the session's shell
 has no credential helper.
+
+### The PAD re-upload is now automatic (Session 66p)
+
+Dr. Sama's instruction: when new audio or images are approved and processed,
+the build should run the pack-and-upload itself, before proceeding.
+
+**`scripts/asset_fingerprint.py`** — sha256 over sorted `<relpath>\t<size>`
+lines for the whole asset dir. `stat()` only, nothing is read, so it costs
+seconds over ~9.6k files. Exit **0** = release matches this tree, **10** =
+stale, **1** = error. `--record --tarball <path>` writes
+`config/asset_bundle_state.json`; `--force` always says stale.
+
+Size, not mtime, deliberately: mtime churns whenever OneDrive re-syncs, and a
+spurious 10-30 minute upload is a real cost. A genuine change — new recording,
+regenerated image, deleted stem — always moves the file list or a file's size.
+
+Verified against the live tree, all four directions: a new file → 10; an
+existing file one byte larger (a re-record, file count unchanged) → 10;
+restored → 0; `Thumbs.db` and `*.tmp` → 0, correctly ignored.
+
+**`build_and_run.bat` step `[4c/7]`**, placed after the assets are final and
+before the AAB is built, so a green local build can never coexist with a stale
+release. On exit 10 it runs the upload in WSL, since `gh` lives there and not
+in Windows:
+
+    wsl bash -lc "cd '<wslpath of %CD%>' && bash scripts/pack_and_upload_assets.sh"
+
+`--no-upload` skips it. `--fast` also skips it (it skips steps 0-4 entirely),
+and its banner now says not to tag a `--fast` build.
+
+**`pack_and_upload_assets.sh`**: `gh release upload` was an *unchecked* call —
+a dropped residential upload still printed "✓ DONE. Asset bundle uploaded."
+The next CI build then pulled whatever was there before. That is precisely how
+the 958 MB AAB shipped. It now aborts on failure, and records the fingerprint
+**only after a confirmed upload**.
+
+### The tarball hash is not a fingerprint of the tree
+
+Re-packing an unchanged tree produces a *different* tarball — tar and gzip
+embed mtimes. Today's bundle was `b13772d3...` at 03:41 and `5451d0d3...` at
+18:08 at the identical byte count, from the same files. So compare the tarball
+sha256 against **the release asset** right after an upload (that is what
+confirms it landed), and use the file-list fingerprint for "did anything
+change". Never the reverse.
+
+Baseline recorded 2026-10-05: 9652 files, 202.6 MB, tree `84cff5e0...`,
+tarball `5451d0d3...` — confirmed identical to the sha256 GitHub shows on the
+pad-assets asset.

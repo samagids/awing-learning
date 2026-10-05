@@ -102,6 +102,18 @@ if /I "%~1"=="--purge-tts" (
 )
 
 REM ============================================================
+REM   --no-upload : skip the automatic PAD bundle re-upload
+REM ============================================================
+REM For iterating locally when you know the release is already
+REM current, or when the connection is too poor for a 190 MB push.
+REM A build run with this flag MUST NOT be tagged without running
+REM scripts/pack_and_upload_assets.sh first.
+set "SKIP_ASSET_UPLOAD="
+for %%A in (%*) do (
+    if /I "%%~A"=="--no-upload" set "SKIP_ASSET_UPLOAD=1"
+)
+
+REM ============================================================
 REM   Synthetic-audio guard - runs in FAST mode too
 REM ============================================================
 REM Deliberately ABOVE the fast-path jump. --fast skips steps 0-4,
@@ -146,6 +158,8 @@ if defined FAST_MODE (
     echo *** FAST MODE: skipping webhook deploy, contributions,
     echo *** audio gen, and image gen. Going straight to flutter build.
     echo *** Use this only when no vocabulary/sentences/images changed.
+    echo *** The PAD bundle freshness check ^(step 4c^) is SKIPPED too,
+    echo *** so do not tag a release from a --fast build.
     echo.
     goto :step5
 )
@@ -396,6 +410,85 @@ if !ERRORLEVEL! neq 0 (
     echo        WARNING: audio compression had errors. Continuing with mixed pack.
     echo        Check ffmpeg is on PATH ^(winget install Gyan.FFmpeg^).
 )
+echo.
+
+REM ---- Step 4c: Re-upload the PAD asset bundle if it changed ----------
+REM v1.24.2 (Session 66p). CI does NOT build from this machine's asset
+REM tree -- it downloads pad-assets.tar.gz from the 'pad-assets' GitHub
+REM release. Between 2026-07-05 and 2026-10-04 nobody re-uploaded it, so
+REM v1.24.0+143 shipped a 958 MB AAB built from July's assets while the
+REM local build of the same commit was 292.5 MB.
+REM
+REM Leaving the re-upload as a step a human remembers is what failed.
+REM asset_fingerprint.py hashes the file list (path + size, stat only --
+REM no reads), compares it to what was recorded after the last confirmed
+REM upload, and exits 10 when they differ. So this costs a few seconds
+REM when nothing changed and runs the upload exactly when new approved
+REM audio or images have landed.
+REM
+REM Placed HERE, after the assets are final and before the AAB is built,
+REM so a green local build can never coexist with a stale release.
+REM
+REM gh lives in WSL on this machine, not in Windows, so the upload runs
+REM there -- the same command you would type by hand:
+REM   bash scripts/pack_and_upload_assets.sh
+echo [4c/7] Checking whether the PAD asset bundle needs re-uploading...
+if defined SKIP_ASSET_UPLOAD (
+    echo        --no-upload given - SKIPPING.
+    echo        Do not tag this build without running
+    echo        scripts/pack_and_upload_assets.sh first.
+    echo.
+    goto :step5
+)
+python scripts\asset_fingerprint.py
+if !ERRORLEVEL! equ 0 (
+    echo        Release bundle already matches this tree. Skipping upload.
+    echo.
+    goto :step5
+)
+if !ERRORLEVEL! neq 10 (
+    echo.
+    echo        ERROR: could not determine whether the asset bundle is
+    echo        stale. Build aborted - shipping on an unknown bundle is
+    echo        how v1.24.0+143 went out at 958 MB.
+    exit /b 1
+)
+
+where wsl >nul 2>nul
+if !ERRORLEVEL! neq 0 (
+    echo.
+    echo        ERROR: assets changed but WSL was not found, so the bundle
+    echo        cannot be uploaded. Build aborted.
+    echo        Upload manually, then re-run:
+    echo            wsl
+    echo            cd /mnt/c/...  ^&^&  bash scripts/pack_and_upload_assets.sh
+    exit /b 1
+)
+
+REM %CD% is a Windows path; wslpath wants forward slashes to survive the
+REM trip through cmd quoting.
+set "WINDIR_FWD=%CD:\=/%"
+set "WSLDIR="
+for /f "delims=" %%P in ('wsl wslpath -a "%WINDIR_FWD%" 2^>nul') do set "WSLDIR=%%P"
+if not defined WSLDIR (
+    echo.
+    echo        ERROR: could not translate %CD% to a WSL path. Build aborted.
+    exit /b 1
+)
+
+echo        Assets changed - uploading the bundle via WSL.
+echo        This can take 10-30 minutes on a residential connection.
+echo        WSL path: !WSLDIR!
+wsl bash -lc "cd '!WSLDIR!' && bash scripts/pack_and_upload_assets.sh"
+if !ERRORLEVEL! neq 0 (
+    echo.
+    echo        ERROR: asset bundle upload failed. Build aborted.
+    echo        The release still holds the PREVIOUS tarball, so tagging
+    echo        now would ship stale assets to the stores.
+    echo        Fix the error above and re-run this script.
+    exit /b 1
+)
+echo        Asset bundle uploaded and fingerprint recorded.
 echo.
 
 REM ---- Step 5: Flutter Deps ----

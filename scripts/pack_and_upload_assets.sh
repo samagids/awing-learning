@@ -136,7 +136,37 @@ fi
 # === Upload (replace if exists) ===
 echo "[3/3] Uploading $TARBALL to release '$RELEASE_TAG' ..."
 echo "      This can take 10-30 minutes on a residential upload depending on size + connection."
-gh release upload "$RELEASE_TAG" "$TARBALL" --clobber
+# v1.24.2 (Session 66p): this was an unchecked call. gh could fail -- a
+# dropped connection two thirds of the way through a 190 MB residential
+# upload is the ordinary case -- and the script would still print
+# "DONE. Asset bundle uploaded." The next CI build then pulled whatever
+# tarball was there before, which is precisely how the 958 MB AAB shipped
+# in v1.24.0+143.
+if ! gh release upload "$RELEASE_TAG" "$TARBALL" --clobber; then
+  echo >&2
+  echo "==========================================================================" >&2
+  echo "ERROR: upload FAILED. The release still holds the PREVIOUS tarball." >&2
+  echo "==========================================================================" >&2
+  echo "Do not tag a release until this succeeds -- CI builds from the" >&2
+  echo "pad-assets release, not from this machine, so tagging now would ship" >&2
+  echo "the old assets." >&2
+  echo >&2
+  echo "Re-run:  bash scripts/pack_and_upload_assets.sh" >&2
+  exit 1
+fi
+
+# Record the asset-tree fingerprint ONLY after a confirmed upload, so
+# build_and_run.bat knows the release matches this tree and can skip the
+# next upload. Recording before the upload, or regardless of its exit
+# code, would reintroduce exactly the staleness this guards against.
+if command -v python3 >/dev/null 2>&1; then
+  python3 "$REPO_ROOT/scripts/asset_fingerprint.py" --record --tarball "$TARBALL"
+elif command -v python >/dev/null 2>&1; then
+  python "$REPO_ROOT/scripts/asset_fingerprint.py" --record --tarball "$TARBALL"
+else
+  echo "WARNING: no python on PATH -- could not record the asset fingerprint."
+  echo "         The next build will re-upload unnecessarily (harmless)."
+fi
 
 echo
 echo "=========================================================================="
