@@ -1606,6 +1606,14 @@ function sendDailyContributionDigest() {
 
 var PIN_RESET_MAX_PER_HOUR = 5;
 
+/** "guidion.sama@gmail.com" -> "g•••@gmail.com". Enough for a user to
+ *  recognise the inbox, not enough to be worth harvesting. */
+function _maskEmail(addr) {
+  var at = String(addr || '').indexOf('@');
+  if (at < 1) return '';
+  return String(addr).charAt(0) + '\u2022\u2022\u2022' + String(addr).substring(at);
+}
+
 function handlePinReset(payload) {
   var idToken = payload.idToken || '';
   if (!idToken) {
@@ -1659,7 +1667,35 @@ function handlePinReset(payload) {
     fresh.push(nowMs);
     props.setProperty(bucketKey, JSON.stringify(fresh));
 
-    return jsonResponse({ status: 'ok', message: 'reset code sent' });
+    // Tell the client WHERE it went. A user who signed in with Apple and
+    // chose "Hide My Email" owns an address like
+    // a1b2c3d4@privaterelay.appleid.com that they have never seen and do
+    // not monitor; "we emailed the address this account is signed in
+    // with" is useless to them, and the first real report of this bug was
+    // exactly that — "the app keeps telling me a code was sent but I do
+    // not see it".
+    //
+    // Masked, because this reply crosses the network to a client that
+    // already knows the account but need not be handed the full address
+    // in a log or a screenshot.
+    var relay = /@privaterelay\.appleid\.com$/i.test(email);
+    if (relay) {
+      // Worth a server-side log: Apple's relay only forwards mail from a
+      // sender address registered under "Sign in with Apple for Email
+      // Communication" in the developer portal. If BREVO_SENDER is not
+      // registered there, Apple DROPS this silently — Brevo still returns
+      // 2xx, so nothing in this function can tell.
+      Logger.log('pin_reset: delivered to an Apple private relay address. ' +
+                 'If the user reports nothing arrived, check that the ' +
+                 'Brevo sender is registered with Apple for Email ' +
+                 'Communication.');
+    }
+    return jsonResponse({
+      status: 'ok',
+      message: 'reset code sent',
+      sentTo: _maskEmail(email),
+      privateRelay: relay
+    });
   } catch (err) {
     return jsonResponse({
       status: 'error',

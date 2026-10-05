@@ -255,6 +255,13 @@ class ParentalGate {
 
     final status = reply == null ? null : reply['status'];
     final msg = reply == null ? '' : (reply['message']?.toString() ?? '');
+    // v1.24.1: the server now says WHERE it sent, masked. Without this the
+    // dialog said "the address this account is signed in with", which an
+    // Apple "Hide My Email" user cannot act on — their address is a
+    // relay they have never seen. First real report of this was a parent
+    // saying the app kept claiming a code was sent and nothing arrived.
+    final sentTo = reply == null ? '' : (reply['sentTo']?.toString() ?? '');
+    final viaRelay = reply != null && reply['privateRelay'] == true;
 
     if (reply != null && msg == 'not-signed-in') {
       await _info(context, 'Sign in first',
@@ -292,10 +299,32 @@ class ParentalGate {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'We emailed a 6-digit code to the address this account is '
-              'signed in with. Enter it to clear the parent PIN.',
+            Text(
+              sentTo.isEmpty
+                  ? 'We emailed a 6-digit code to the address this account '
+                      'is signed in with. Enter it to clear the parent PIN.'
+                  : 'We emailed a 6-digit code to $sentTo. Enter it to '
+                      'clear the parent PIN.',
             ),
+            if (viaRelay) ...[
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.amber.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.amber.shade300),
+                ),
+                child: const Text(
+                  'That is an Apple "Hide My Email" address. Apple forwards '
+                  'it to your real inbox — check there, including spam. If '
+                  'nothing arrives, open Settings > your name > Sign in '
+                  'with Apple > Awing Learning and check the forwarding '
+                  'address is one you still read.',
+                  style: TextStyle(fontSize: 12.5),
+                ),
+              ),
+            ],
             const SizedBox(height: 16),
             TextField(
               controller: entered,

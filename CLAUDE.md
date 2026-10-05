@@ -11170,3 +11170,48 @@ caused by the build pipeline rather than by the code.
 
 Worth confirming against a real install once +144 is out.
 
+
+## Session 66h — "a code was sent but I do not see it" (Apple user)
+
+A parent on iOS reported the forgot-PIN flow saying a code had been emailed
+and nothing arriving. The server code is correct and was not the bug.
+
+### What actually happens
+
+`handlePinReset` never takes a recipient from the caller. It verifies the
+Firebase ID token with Identity Toolkit and mails whatever address Google
+says owns the account. For a user who signed in with Apple and chose
+**"Hide My Email"**, that address is `<random>@privaterelay.appleid.com`.
+
+Apple's relay forwards to the user's real inbox **only when the sending
+address is registered under "Sign in with Apple for Email Communication"**
+in the developer portal. Mail from an unregistered sender is dropped
+silently — no bounce. Brevo still returns 2xx, so `_sendEmail` sees
+success, `handlePinReset` returns `ok`, and the app truthfully reports
+"sent". Everything in the chain believes it worked.
+
+**ROOT-CAUSE CHECK (Dr. Sama, developer portal):** is `BREVO_SENDER`
+registered and verified under Certificates, Identifiers & Profiles >
+Services > Sign in with Apple for Email Communication? If not, EVERY
+private-relay user is silently unreachable — PIN reset codes, parent
+reports, the lot. That is the fix that makes mail arrive; nothing in the
+repo can substitute for it.
+
+### What was fixed in code (v1.24.1+145)
+
+The second defect was that the user could not tell where the mail went.
+The dialog said "the address this account is signed in with" — useless to
+someone whose address is a relay string they have never seen.
+
+- `handlePinReset` now returns `sentTo` (masked, `a•••@domain`) and
+  `privateRelay: true/false`, and logs when it delivers to a relay address.
+- `parental_gate.dart` shows the destination, and for a relay address adds
+  a note telling the parent to check the forwarding address under
+  Settings > their name > Sign in with Apple > Awing Learning.
+
+`_maskEmail` unit-tested: `guidion.sama@gmail.com` -> `g•••@gmail.com`,
+relay address masks correctly, empty input returns `''`.
+
+Changing the `.gs` means the next build WILL push a new Apps Script version
+(the fingerprint skip sees the change) — that is correct, and it is one
+version against the 200 cap.
