@@ -11494,3 +11494,56 @@ click is what makes it safe to mail secrets there.
   only lock out the people this exists for.
 - Failure is swallowed and logged. Sign-in must never fail because a
   confirmation email did not send.
+
+## Session 66m — step 1 DONE, step 2 answered (and it was not the answer I predicted)
+
+### 1. Apple email source: REGISTERED
+
+Apple Developer > Certificates, Identifiers & Profiles > Sign in with
+Apple for Email Communication > Email Sources now contains:
+
+    samagids@12052134.brevosend.com    Email address    SPF
+
+Registered as an individual ADDRESS, not a domain, because
+`12052134.brevosend.com` is Brevo's domain — we cannot set DNS on it or
+prove control. Apple accepted it and shows status **SPF**, meaning it
+validated against Brevo's SPF record. Apple will now forward mail from
+that sender to private-relay users instead of dropping it.
+
+This unblocks everything addressed to a relay user: PIN codes, the new
+contact-confirmation link, parent reports, feature-tour mail.
+
+**If Brevo ever changes that sending subdomain, this silently breaks
+again.** The durable version is an owned domain authenticated in Brevo and
+registered here as a Domain.
+
+### 2. The deployment was NOT stale. The version cap is the real wall.
+
+I expected to find the live web app pinned to a version predating
+`handlePinReset`. It is not:
+
+- Live deployment ID `AKfycbxOAMCv8PtzcByzUG...` — **matches the
+  `contributions_url` in `config/webhooks.json` exactly**, and `git log -L`
+  shows that URL unchanged since `ff524f60`, so v1.23.6 and today's build
+  call the same endpoint. No stranded-URL problem.
+- It serves **Version 200, created Oct 4 2026 8:57 PM** — recent, and well
+  after `pin_reset` was written.
+
+So the handler IS deployed now. What the dialog also says, in red:
+
+> This project has reached the limit of 200 versions. To create more
+> versions, please delete unused versions from the Project history page.
+
+**That is a hard blocker for the v1.24.1 server changes.** The confirmed-
+contact fan-out and the `sentTo` / `privateRelay` reply cannot go live
+until versions are freed. `clasp push` will update @HEAD and `clasp deploy`
+will fail, exactly as it did before — and the build's fingerprint skip will
+happily report "unchanged, skipping" for the push half.
+
+### What this implies about the original report
+
+Version 200 is from Oct 4, 8:57 PM. If the parent tried Forgot PIN before
+that, the then-live version may genuinely not have had the handler, which
+fits the zero Brevo logs. **Ask them to try again now** — with the handler
+deployed and the Apple source registered, a code should both send and
+arrive. That is a free test that costs nothing and could close this out.
