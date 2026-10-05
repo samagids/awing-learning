@@ -109,7 +109,43 @@ echo "      This takes ~2-5 minutes for ~1 GB of files."
 
 # tar -C avoids absolute paths inside the archive; the contents extract
 # directly as audio/, images/ at whatever target the CI specifies.
-tar -czf "$TARBALL" -C "$ASSET_DIR" .
+# v1.24.2 (Session 66p): `set -euo pipefail` already aborts here, so a
+# truncated tarball is never uploaded -- but the operator was left staring
+# at raw tar output. On 2026-10-05 the pack died on two files:
+#
+#   tar: ./images/vocabulary/akoge__....webp: Read error at byte 0,
+#        while reading 3072 bytes: Input/output error
+#
+# Both had a normal size in `ls` and returned EINVAL on read: OneDrive
+# cloud-only placeholders whose contents were never hydrated on this
+# machine. 2 of 8,683 images. The repo already fights OneDrive in step
+# [0a/7] by moving build output off it; this is the same class of problem
+# reaching the assets themselves.
+if ! tar -czf "$TARBALL" -C "$ASSET_DIR" .; then
+  echo >&2
+  echo "==========================================================================" >&2
+  echo "ERROR: packing failed. Nothing was uploaded." >&2
+  echo "==========================================================================" >&2
+  echo "If the errors above say 'Input/output error' or 'Cannot open', the" >&2
+  echo "named files are almost certainly OneDrive placeholders that are not" >&2
+  echo "actually on this disk -- they show a size in 'ls' but fail to read." >&2
+  echo >&2
+  echo "Find every unreadable file in the asset tree:" >&2
+  echo "    python3 - <<'EOF'" >&2
+  echo "    import os" >&2
+  echo "    for r,_,fs in os.walk('$ASSET_DIR'):" >&2
+  echo "        for f in fs:" >&2
+  echo "            p=os.path.join(r,f)" >&2
+  echo "            try:" >&2
+  echo "                open(p,'rb').read(1) or print('EMPTY', p)" >&2
+  echo "            except OSError as e: print('UNREADABLE', p, e)" >&2
+  echo "    EOF" >&2
+  echo >&2
+  echo "Then either force OneDrive to download them (File Explorer ->" >&2
+  echo "right-click -> 'Always keep on this device'), or delete them and let" >&2
+  echo "build_and_run.bat regenerate them at step [4/7]." >&2
+  exit 1
+fi
 
 TARBALL_BYTES=$(stat -c '%s' "$TARBALL" 2>/dev/null || stat -f '%z' "$TARBALL")
 TARBALL_HUMAN=$(du -h "$TARBALL" | awk '{print $1}')

@@ -11944,3 +11944,35 @@ Whisper simply got wrong. Different problems, different fixes.
   **Three key derivations exist in this repo and two disagree with the app.**
 - `sync_recordings.py` still fails for an unknown reason. The `.bat`'s three
   causes are a generic list, not a diagnosis.
+
+### The pack failed on two OneDrive placeholder files
+
+The first real `[4c/7]` run detected the change correctly (+716 files,
+202.6 → 212.0 MB), handed off to WSL, and the pack died:
+
+    tar: ./images/vocabulary/akoge__stupid_person_stupidity_imbecile.webp:
+         Read error at byte 0 ... Input/output error
+    tar: ./images/vocabulary/akwengoeshue__fish_bone.webp: ... Input/output error
+
+Both files showed a normal size in `ls` (24,152 and 20,882 bytes) and
+returned **EINVAL on read**. They were OneDrive cloud-only placeholders
+whose contents were never on this disk. Created in the same minute
+(Oct 5 00:23), so one sync hiccup. **A full scan found exactly 2 bad out of
+10,366 files** — contained, not widespread corruption.
+
+This repo already fights OneDrive at `[0a/7]` by moving build output off it.
+This is the same class of problem reaching the assets themselves.
+
+**The two upload guards both worked.** `set -euo pipefail` aborted before
+any upload, so no truncated tarball was published, and the `[4c/7]` check
+failed the build rather than letting a release be tagged against stale
+assets. The tar step now also prints what the failure means and how to find
+every unreadable file, instead of leaving raw tar output.
+
+**Which twin matters.** `ImageService.imageKey()` is
+`audioKey(awing) + '__' + englishSlug(english)` — it never produces a
+`-SERV1` suffix. So the **non-SERV1** names are what the app loads, and the
+three `-SERV1` files are the orphans. The two unreadable files were
+therefore the ones the app needs; they were deleted so `[4/7]` regenerates
+them, and `pack_and_upload_assets.sh` refreshes the image manifest
+immediately before packing, so the count self-corrects.
