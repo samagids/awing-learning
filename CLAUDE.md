@@ -12009,3 +12009,44 @@ contributor is auto-published to the About screen of a children's app with
 no human review. Dedup is now correct, but nothing checks that a name is a
 real name. `Monto'oh` arrived today from a profile literally called
 `default Monto'oh`.
+
+### Why 'Monto’oh' was credited: Apple gives a name exactly once
+
+The contributor signed in with Apple. `contribution_service.dart` already
+tries hard — Google silent sign-in, then the Firebase display name — but for
+all 13 submissions `googleDisplayName` came back **null**, so it fell back to
+`profileName`, which was `default Monto’oh`: a device profile, not a person.
+
+`login_screen.dart` has captured the Apple name since v1.23.3, but its own
+comment says why that is not enough:
+
+    // Apple returns fullName ONLY on the very first sign-in
+
+Anyone who authorized before that code shipped has a permanently empty
+Firebase `displayName`, and Apple will never hand it over again. For those
+accounts the name is unrecoverable — **asking is the only way**.
+
+Two changes:
+
+1. **`apply_contributions.py` requires a full name.** Two name tokens, or the
+   name goes to `contributions/contributors_pending_review.json` instead of
+   onto a public screen. Applies to the Google-name path and the profileName
+   fallback alike.
+
+   The first cut of this check used `_name_fingerprint()`, which turns every
+   non-letter into a space — so `Monto’oh` looked like the two-word name
+   "monto oh" and was published anyway. A person's name is separated by
+   **whitespace**, not punctuation. Tested on 12 cases: `O'Brien`, `Jean-Luc`
+   and `Dr. Fon` are correctly rejected as single names, while
+   `Mary O'Brien` and `Fosoh Collette Nkenyi` pass.
+
+2. **`login_screen.dart` asks.** When Apple gives no name and Firebase has
+   none stored, the parent is asked once, next to the existing contact-email
+   prompt, and the answer is written to the Firebase display name so every
+   later contribution carries it. Skippable — a skipped name is simply never
+   published. The dialog enforces the same two-token rule, so it cannot
+   collect something that would only be quarantined.
+
+`'Monto’oh'` is removed from the credits and queued for review with a note
+of the 13 recordings it belongs to, so the person can be credited properly
+once their real name is known.

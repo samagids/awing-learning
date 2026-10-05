@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Monto’oh",
+    "from_profile_name": "default Monto’oh",
+    "had_google_display_name": false,
+    "why": "not a full name (fewer than two name tokens); device profile name",
+    "action": "Apple sign-in gave no display name. Ask the contributor for their real name and add it to lib/data/audio_contributors.dart by hand.",
+    "contributions": "13 pronunciationFix recordings applied 2026-10-05 (v508-518)"
+  }
+]

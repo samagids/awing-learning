@@ -42,7 +42,15 @@ const List<String> approvedContributors = [
   // matter. Do not re-add.
   'Claire Nkehsera',  // auto-added by apply_contributions.py
   'Fosoh Collette Nkenyi',  // auto-added by apply_contributions.py
-  'Monto’oh',  // auto-added by apply_contributions.py
+  // 'Monto’oh' was auto-added from profileName 'default Monto’oh' — a
+  // device profile, not a person. The contributor signed in with Apple,
+  // which hands over a name only on the very first authorization, so
+  // Firebase had no displayName and the client fell back to whatever was
+  // typed on the device. apply_contributions.py now requires two name
+  // tokens and queues anything else in
+  // contributions/contributors_pending_review.json instead of publishing
+  // it, and login_screen.dart asks Apple users for a name when we have
+  // none. Credit them here by hand once their real name is known.
 ];
 
 /// Honorifics ignored when deciding whether two spellings name the same

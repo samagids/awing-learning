@@ -828,6 +828,72 @@ def _canonicalize_contributor_name(profile):
     return name
 
 
+# Names that reached the publish step but were not full names. Written
+# here for Dr. Sama rather than onto the About screen.
+CONTRIBUTORS_PENDING_FILE = os.path.join(
+    CONTRIBUTIONS_DIR, 'contributors_pending_review.json')
+
+
+def _looks_like_a_full_name(name):
+    """Two or more name tokens, i.e. something a person is actually called.
+
+    v1.24.2 (Session 66p): the About screen of a children's app credited
+    'Monto’oh', which is not a person -- it is a device profile, submitted
+    as profileName 'default Monto’oh'.
+
+    The client already tries to do better: contribution_service.dart asks
+    Google silent sign-in for a display name, then falls back to the
+    Firebase display name. Both can legitimately return null -- an Apple
+    contributor who never had a display name populated, or someone not
+    signed in at all -- and the code then falls back to the local profile
+    name, which is whatever was typed on the device.
+
+    A credit is a person's name, so require at least two tokens. One-word
+    profile names go to CONTRIBUTORS_PENDING_FILE for review instead of
+    straight onto a public screen.
+    """
+    # Split on WHITESPACE, not on punctuation. _name_fingerprint() turns
+    # every non-letter into a space, which is right for identity matching
+    # but wrong here: it made "Monto’oh" look like the two-word name
+    # "monto oh" and published it. A person's name is separated by spaces.
+    tokens = []
+    for raw in str(name).split():
+        letters = ''.join(c for c in raw if c.isalpha())
+        if len(letters) > 1 and letters.lower() not in _NAME_TITLES:
+            tokens.append(letters)
+    return len(tokens) >= 2
+
+
+def _record_pending_contributor(display_name, profile, had_google_name):
+    """Queue a name that is not publishable as-is for human review."""
+    rows = []
+    if os.path.exists(CONTRIBUTORS_PENDING_FILE):
+        try:
+            with open(CONTRIBUTORS_PENDING_FILE, 'r', encoding='utf-8') as f:
+                rows = json.load(f)
+            if not isinstance(rows, list):
+                rows = []
+        except Exception:
+            rows = []
+    if any(r.get('name') == display_name for r in rows):
+        return
+    rows.append({
+        'name': display_name,
+        'from_profile_name': profile,
+        'had_google_display_name': bool(had_google_name),
+        'why': 'not a full name (fewer than two name tokens)',
+        'action': ("Add the contributor's real name to "
+                   "lib/data/audio_contributors.dart by hand, or ignore."),
+    })
+    try:
+        ensure_directories()
+        with open(CONTRIBUTORS_PENDING_FILE, 'w', encoding='utf-8') as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+            f.write('\n')
+    except Exception as e:
+        print(f"    (could not write {CONTRIBUTORS_PENDING_FILE}: {e})")
+
+
 def _collect_audio_contributor(profile, ctype, has_audio,
                                 google_display_name=None):
     """Add a contributor to the pending list if their submission was
@@ -851,12 +917,19 @@ def _collect_audio_contributor(profile, ctype, has_audio,
     if google_display_name:
         gname = str(google_display_name).strip()
         if gname and gname.lower() not in _AUDIO_CONTRIBUTOR_SKIPLIST:
-            _audio_contributors_collected.add(gname)
+            if _looks_like_a_full_name(gname):
+                _audio_contributors_collected.add(gname)
+            else:
+                _record_pending_contributor(gname, profile, True)
             return
     # Fallback: canonicalize the local profileName.
     canon = _canonicalize_contributor_name(profile)
     if canon:
-        _audio_contributors_collected.add(canon)
+        if _looks_like_a_full_name(canon):
+            _audio_contributors_collected.add(canon)
+        else:
+            # A one-word profile name is not a credit. Do not publish it.
+            _record_pending_contributor(canon, profile, False)
 
 
 def _flush_audio_contributors():

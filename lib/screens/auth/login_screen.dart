@@ -80,7 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
       // already has the name from before, so this falls through fine.
       final givenName = appleCredential.givenName;
       final familyName = appleCredential.familyName;
-      final displayName = [givenName, familyName]
+      // Not final: when Apple gives us nothing and Firebase has nothing
+      // stored, we ask the parent below and fill it in.
+      var displayName = [givenName, familyName]
           .where((p) => p != null && p.isNotEmpty)
           .join(' ')
           .trim();
@@ -127,6 +129,33 @@ class _LoginScreenState extends State<LoginScreen> {
       // profile screen has still given us a way to reach them.
       if (mounted && _looksLikePrivateRelay(email)) {
         await _promptForContactEmail(context, accountEmail: email);
+      }
+
+      // v1.24.2 (Session 66p) — ask for a name when we have none.
+      //
+      // Apple returns fullName ONLY on the very first authorization. The
+      // v1.23.3 code above captures it, but anyone who signed in before
+      // that shipped has an empty Firebase displayName and Apple will
+      // never hand it over again. The contribution client then falls back
+      // to the local profileName, and that is how 'Monto’oh' — a device
+      // profile, submitted as 'default Monto’oh' — ended up credited by
+      // name on the public About screen.
+      //
+      // Asking is the only way to recover it for those accounts. Skipping
+      // is fine: apply_contributions.py now queues any non-full name for
+      // review instead of publishing it.
+      if (mounted &&
+          displayName.isEmpty &&
+          (firebaseUser?.displayName?.trim() ?? '').isEmpty) {
+        final typed = await _promptForContributorName(context);
+        if (typed != null && typed.isNotEmpty) {
+          displayName = typed;
+          try {
+            await firebaseUser?.updateDisplayName(typed);
+          } catch (e) {
+            debugPrint('Apple: updateDisplayName (prompted) failed: $e');
+          }
+        }
       }
 
       // NOTE: deliberately NO `if (!mounted) return;` here. Returning
@@ -269,6 +298,71 @@ class _LoginScreenState extends State<LoginScreen> {
   /// Skippable on purpose. A parent who dismisses it still gets an
   /// account; they just keep the relay-only delivery they already had,
   /// and Parent Settings can add one later.
+  /// Ask an Apple contributor for the name we should credit them under.
+  ///
+  /// Returns the trimmed name, or null if they skipped. Requires two name
+  /// tokens for the same reason apply_contributions.py does: a credit on
+  /// the About screen should be a person's name, not a one-word handle.
+  Future<String?> _promptForContributorName(BuildContext context) async {
+    final controller = TextEditingController();
+    final entered = await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: const Text('What name should we use?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Signing in with Apple did not share your name with us, and '
+              'Apple only offers it once, so we cannot ask them again.',
+              style: TextStyle(fontSize: 13.5),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'If you record Awing words for the app, this is the name you '
+              'will be credited under on the About screen.',
+              style: TextStyle(fontSize: 13.5),
+            ),
+            const SizedBox(height: 14),
+            TextField(
+              controller: controller,
+              textCapitalization: TextCapitalization.words,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                labelText: 'Your full name',
+                hintText: 'Guidion Sama',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, null),
+            child: const Text('Skip'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final v = controller.text.trim();
+              // Two name tokens, matching _looks_like_a_full_name() in
+              // apply_contributions.py. A single word would just be
+              // queued for review and never published.
+              final parts = v
+                  .split(RegExp(r'\s+'))
+                  .where((p) => p.replaceAll(RegExp(r'[^A-Za-z]'), '').length > 1);
+              if (parts.length >= 2) Navigator.pop(ctx, v);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+    final value = entered?.trim();
+    return (value == null || value.isEmpty) ? null : value;
+  }
+
   Future<void> _promptForContactEmail(
     BuildContext context, {
     required String accountEmail,
