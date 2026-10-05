@@ -11547,3 +11547,54 @@ that, the then-live version may genuinely not have had the handler, which
 fits the zero Brevo logs. **Ask them to try again now** — with the handler
 deployed and the Apple source registered, a code should both send and
 arrive. That is a free test that costs nothing and could close this out.
+
+## Session 66n — Apps Script version cap: 50 freed, build unblocked
+
+The v1.24.1 build aborted at [0/7] exactly as predicted:
+
+    Cannot create more versions: Script has reached the limit of 200
+    versions. To create more, delete a version from the project history page.
+    In-place update failed (exit 1). Falling back to a fresh deploy...
+    [same error]
+
+**Good news on the fingerprint:** `_record_fingerprint()` sits AFTER the
+`if rc != 0: continue`, so a failed deploy does NOT record the new hash.
+`config/webhooks.json` still holds the OLD contributions hash
+(`8272543...`), which means the next build correctly sees the change and
+retries rather than silently skipping. The deploy-skip does not poison
+itself on failure.
+
+### Freeing versions
+
+Editor > Project History > trash icon opens a **Delete versions** dialog:
+
+- "This project has 200 versions out of which 4 are in use by active
+  deployments. Actively deployed versions are hidden."
+- "Only 100 versions can be deleted at a time"
+- Sort by Version is clickable; ascending puts the OLDEST first, which is
+  what you want to delete.
+
+Deleted **versions 1–52** (Apr 6 – Apr 30, 2026) in two batches of 25.
+**200 -> 150.** The 4 deployed versions were protected by Google and never
+appeared in the list, so there was no way to delete the live one by
+accident.
+
+Stopped at 50 rather than the intended 100: the dialog's state resets if
+you re-sort after a delete, and each round costs several careful clicks.
+50 free slots unblocks this build and roughly 50 more. Repeating the flow
+takes about a minute per 25.
+
+**The flow that works, exactly:**
+1. trash icon → dialog opens, sorted newest-first
+2. click the **Version** column arrow once → oldest first
+3. click the header checkbox → verify the ticks before going on
+4. **Delete** → a confirmation dialog lists the exact versions → **Delete**
+5. "25 versions were deleted" → **Done**
+6. reopen the trash icon for the next round; do NOT re-sort mid-round
+
+### Still true
+
+The real fix for this recurring wall is to stop burning a version per
+build. `setup_and_deploy.py` already skips when the `.gs` is unchanged;
+what it cannot avoid is a version per genuine change. 150 used of 200 is
+breathing room, not a solution.
