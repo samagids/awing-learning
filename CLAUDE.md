@@ -12359,26 +12359,50 @@ All four now delegate to `scripts/awing_key.py`. **Verified identical across
 8,610 spellings × 3 modules: zero mismatches.** 33 more underscore-keyed
 clips renamed; the `__<n>` dedup suffixes are left alone.
 
-### Why [1c/7] re-trimmed 238 clips — it is not a cache bug
+### [1c/7] WAS in an infinite loop — corrected
 
-The cache in `apply_recordings_as_audio.py` is correct, and was already
-taught in v1.23.4 to accept a `.opus` when `[4b/7]` has deleted the `.mp3`.
-It re-encodes when **the source WAV is newer than the output**, which is
-right.
+I first said the re-trimming was a one-off backlog that would settle. **That
+was wrong**, and Dr. Sama was right to keep asking. The next build showed it:
 
-Checked against the real manifest, using the script's own
-`_SOURCE_TO_CATEGORY` map: **311 pending re-encodes, all 311 because the
-source WAV is newer. Zero from a missing output.** Those are the 317
-recordings `sync_recordings.py` pulled once it was restored — four months of
-backlog arriving at once with today's mtimes. Encode them and it settles,
-because the outputs are then newer than their sources.
+    [1c/7] Written: 309   Skipped (cached): 378
+    [4b/7] Converted: 0   Skipped: 309 (already had .opus)   Deleted MP3: 309
 
-**Do not "fix" this.** Three of my own checks got it wrong first: the
-manifest field is `source`, not `category`, and it must be resolved through
-`_SOURCE_TO_CATEGORY` — an unknown value such as `vocabulary_gap` falls back
-to `vocabulary` rather than naming a directory.
+Every one of those 309 trims was thrown away, and the same 309 would have
+been redone on **every build from then on**.
 
-Latent, not biting today: that map sends `stories` to a `stories/` directory
+**The loop.** `cleanup_assets.py` tier 2 skipped on `opus_path.exists()`
+alone, with no freshness test:
+
+1. `[1c/7]` re-encodes because the source WAV is newer than the OPUS, and
+   writes a fresh MP3
+2. `[4b/7]` sees an OPUS already there, skips the conversion, and **deletes
+   the MP3**
+3. the OPUS is still the old one, still older than the WAV — so step 1
+   repeats, forever
+
+The OPUS could never become fresh, because the only thing that would have
+refreshed it was the step that kept skipping. Measured: **311 `.opus` files
+older than their source WAV.**
+
+**Fix:** tier 2 now skips only when the OPUS is **at least as new as the
+MP3**. A newer MP3 means upstream deliberately re-encoded, so the OPUS is
+stale by definition. First run after the fix: `Converted: 309, Skipped: 0`,
+where before it was `Converted: 0, Skipped: 309`.
+
+Verified closed: the next `[1c/7]` skips **685 of 687**. The other two are
+Jadyne's, which go to `native_kids/jadyne/` — they exist and are fresh, so
+the real pending count is **0**.
+
+### Reading the manifest correctly
+
+Three of my checks were wrong before I got this right, each the same way:
+
+- the field is `source`, **not** `category`
+- it must be resolved through `_SOURCE_TO_CATEGORY`; an unknown value such
+  as `vocabulary_gap` falls back to `vocabulary` rather than naming a folder
+- a row with a `recorder` goes to `native_kids/<slug>/<cat>/`, **not**
+  `native/<cat>/`
+
+Latent, not biting today: that map routes `stories` to a `stories/` folder
 the app never searches — `speakAwing()` tries `vocabulary, alphabet,
-dictionary, sentences`. No manifest row uses `stories` yet, so nothing is
-lost; it would be silently unreachable if one did.
+dictionary, sentences`. No row uses `stories` yet.

@@ -129,8 +129,24 @@ def tier1_orphan_delete(dry_run=False):
 def _convert_one(mp3_path: Path):
     """Convert one MP3 to OPUS at 32k mono. Returns (success, bytes_in, bytes_out, err)."""
     opus_path = mp3_path.with_suffix('.opus')
-    if opus_path.exists() and opus_path.stat().st_size > 0:
-        # Already converted — skip
+    # v1.24.2 (Session 66p): skip only when the OPUS is at least as new as
+    # the MP3. Testing existence alone created a loop that never closed:
+    #
+    #   [1c/7] re-encodes because the source WAV is newer than the OPUS
+    #          -> writes a fresh MP3
+    #   [4b/7] sees an OPUS already there, skips, and DELETES the MP3
+    #   next build: the OPUS is still the old one, still older than the
+    #          WAV, so [1c/7] re-encodes again. Forever.
+    #
+    # Observed on 2026-10-05: "Written: 309" at [1c/7], then "Converted: 0,
+    # Skipped: 309 (already had .opus), Deleted MP3: 309" at [4b/7]. Every
+    # one of those 309 trims was thrown away and would have been redone on
+    # every build from then on.
+    #
+    # A newer MP3 means upstream deliberately re-encoded, so the OPUS is
+    # stale by definition and must be refreshed.
+    if (opus_path.exists() and opus_path.stat().st_size > 0
+            and opus_path.stat().st_mtime >= mp3_path.stat().st_mtime):
         return ('skip', mp3_path.stat().st_size, opus_path.stat().st_size, None)
     try:
         result = subprocess.run(
