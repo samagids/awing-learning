@@ -12221,3 +12221,48 @@ All in `contributions/near_duplicate_review.md` with a `keep` column.
 **Standing rule, unchanged: do not guess an Awing spelling.** A dictionary
 token count is evidence, not a ruling, and it is weaker than a human reading
 the page.
+
+### All 204 near-duplicates resolved — and what that does and does not mean
+
+Dr. Sama: use best judgement on the rest, keep one of each duplicate.
+
+| basis | rows |
+|---|---|
+| Dictionary, 2+ occurrences | 61 |
+| Dictionary, single occurrence | 22 |
+| Dictionary, most occurrences | 9 |
+| Orthography Guide / Phonology Sketch | 3 |
+| Both attested, kept the one with audio | 2 |
+| **No source evidence — dedup only** | **102** |
+
+`lib/data/awing_vocabulary.dart`: 8,818 → 8,611 live entries. **Distinct
+glosses 6,184 before and after — no word lost its only entry.** Losers are
+commented out with their reason, never deleted.
+
+**Section E is not a linguistic ruling and must not be read as one.** For
+those 102 rows no approved source attests either spelling — not the 2007
+dictionary, not the Orthography Guide, not the Phonology Sketch. Both forms
+were already in the app, so keeping one is data hygiene; the more-used form
+was kept purely to minimise churn. The standing rule holds: **a tone pattern
+this project cannot source is not something to invent.**
+
+Two rows were decided on audio instead: where both spellings are attested,
+the one that already has a recording was kept so the word keeps speaking.
+
+### A bug found on the way: audioKey silently deletes whole letters
+
+`PronunciationService._audioKey()` maps `á à â ǎ` and friends, then strips
+everything outside `[a-z0-9]`. Combining marks dropping out is correct
+(`kə̌` → `ke`). **Precomposed letters that are not in the map are deleted
+entirely:**
+
+    ń  37 spellings      ü  36      ʉ  27      ś  11
+    ä   9                ō   6      ă   4      ī   3   (and ~15 more)
+
+So `tă` keys to **`t`** — the vowel is gone, and `t` collides with the
+alphabet letter recording. That is why 'father; parent' kept `tâ`: it keys
+to `ta`, which has audio.
+
+Around 140 spellings lose a whole letter this way. Not fixed here — it
+changes key derivation, which moves audio and image lookups, so it needs its
+own pass with the asset tree in view.
