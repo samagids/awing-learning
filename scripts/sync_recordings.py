@@ -251,8 +251,37 @@ def _get_script_secret():
     return None
 
 
-def _post_json(url, payload, timeout=45):
-    """POST JSON, follow Apps Script's 302→GET pattern, return parsed."""
+def _post_json(url, payload, timeout=120, attempts=3):
+    """POST JSON, follow Apps Script's 302→GET pattern, return parsed.
+
+    v1.24.2 (Session 66p): this was a single attempt at 45s, the same
+    defect that killed apply_contributions.py on 2026-10-05. Apps
+    Script edge instances go cold and answer the first request with a
+    404 or a long stall -- in that build setup_and_deploy ate two
+    consecutive 404s and succeeded on the third try, while the two
+    scripts without retry both failed outright.
+
+    Retries re-raise the last exception, so a genuinely unreachable
+    webhook still fails the step rather than silently syncing nothing.
+    """
+    import time as _time
+    last_err = None
+    for _attempt in range(attempts):
+        try:
+            return _post_json_once(url, payload, timeout)
+        except Exception as e:
+            last_err = e
+            if _attempt < attempts - 1:
+                wait = 3 * (_attempt + 1)
+                print(f'    [retry] {type(e).__name__}: {e} — '
+                      f'waiting {wait}s and retrying '
+                      f'({_attempt + 2}/{attempts})')
+                _time.sleep(wait)
+    raise last_err
+
+
+def _post_json_once(url, payload, timeout):
+    """One POST attempt. See _post_json for the retry wrapper."""
     body = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(
         url,

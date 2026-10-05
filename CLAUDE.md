@@ -11797,3 +11797,78 @@ change". Never the reverse.
 Baseline recorded 2026-10-05: 9652 files, 202.6 MB, tree `84cff5e0...`,
 tarball `5451d0d3...` — confirmed identical to the sha256 GitHub shows on the
 pad-assets asset.
+
+## Session 66p (cont.) — why 13 approved contributions changed nothing
+
+The retry fix worked: `[1/7]` pulled **13 new contributions (507 → 518)** and
+`[0c/7]` synced the version. But `[4c/7]` reported the asset bundle
+**unchanged**, and that is correct — nothing shippable changed. Here is why,
+and it is a dead pipeline, not a bug in the detector.
+
+All 13 are **pronunciationFix** contributions. Each one:
+
+1. archives the recording to `contributions/voice_references/{key}.m4a` —
+   which the script itself says is "future training material; the app plays
+   the character TTS voices, not the recording itself";
+2. queues the word in `contributions/regenerate_words.json` "for all 6
+   character voices".
+
+**Nothing consumes that queue.** `regenerate_words.json` is read only by
+`generate_audio_edge.py`, and v1.24.0 deleted the six synthetic voices.
+`build_and_run.bat` never calls that script — `[2/7]` just prints "Audio:
+native recordings only (no synthetic voices)". `grep` finds
+`generate_audio_edge` in the `.bat` **only inside comments.**
+
+So the recorder still invites pronunciation fixes, Dr. Sama still approves
+them, and they reach nothing. The two ways to make them matter are to accept
+pronunciation fixes only as *native* recordings (the `native/` tier the app
+actually plays), or to retire the pronunciationFix type in the recorder.
+**That is a product decision, not a code fix.**
+
+`[1b/7] sync_recordings.py` — the step that WOULD produce shippable audio —
+failed. The three lines the `.bat` prints are a generic list of common causes,
+**not a diagnosis**; do not read "ffmpeg not on PATH" off that banner. It had
+the same no-retry defect (one 45s attempt), now fixed the same way, 120s × 3
+with backoff. **Re-run `python scripts\sync_recordings.py` alone to see the
+real error.**
+
+### Whisper was fabricating Awing
+
+`_whisper_transcribe()`'s output was accepted unconditionally at both call
+sites: `if whisper_text: speakable_override = whisper_text`. Whisper is an
+English/Swahili model being asked to transcribe Awing; given nothing to latch
+onto it does not fail, it invents. Four of the thirteen:
+
+| submitted | Whisper wrote |
+|---|---|
+| `ambáŋá` | **"I'm Buna"** |
+| `alá'ə` | `alá'əəəəringe` |
+| `aləmə̌` | `aləmə̌ aləmə̌ kiye` |
+| `əfəŋə́` | `əfsana` |
+
+Those became the authoritative pronunciation for the word. That is fabricated
+Awing — the one thing this project must never ship.
+
+`_whisper_plausible()` now gates both sites. It is **not** an orthography
+judgement: it never decides what is correct, only whether the ASR output
+corresponds to the word submitted. On rejection the submitted spelling stands
+and the word goes to `contributions/whisper_rejected.json` for review.
+
+Word count must match; similarity ≥ 0.60; pure-ASCII output for a non-ASCII
+word is held to 0.75. That last is a higher bar, **not a veto** — `nkagə` →
+`nkaga` is a schwa rendered as `a`, exactly the approximation wanted, and an
+outright ASCII ban rejected it. Validated 19/19 on the real 13 plus 6
+adversarial cases.
+
+`regenerate_words.json` on disk is cleaned (it is gitignored); the 9 good
+entries are untouched.
+
+### Three orphan images, inert
+
+The manifest went 8680 → 8683 keys: `akoge…-SERV1`, `akwengoeshue…-SERV1`,
+`zona…-SERV1`. All three were already on disk — the PAD fingerprint did not
+move — and none has a vocabulary entry in `lib/data/`. `ImageService` only ever
+queries `_manifestKeys.contains(...)` for a word it is already showing and
+never iterates it, so an orphan key cannot surface in the app. Manifest and
+disk now agree exactly (8683 = 8683). `scripts/cleanup_orphan_images.bat`
+exists if they should go.
