@@ -12130,3 +12130,37 @@ compiles each file, catching the louder truncations that do break syntax
 and passes once restored.
 
 Syntax checking alone would never have caught this one — that is the lesson.
+
+## Session 66p — what the sync_recordings fix actually recovered
+
+With `[1b/7]` working for the first time since 2026-06-02, the next build
+pulled **317 recordings** that had been sitting on the server unreachable:
+
+    training_data/recordings   369 -> 686 wav
+    native/vocabulary          581 -> 662 opus
+    native audio manifest      608 -> 689 entries
+    PAD bundle              10,368 -> 10,534 files, 211.9 -> 214.4 MB
+
+`[4c/7]` noticed and re-uploaded on its own — tarball `c5263f3d…`.
+
+**But coverage barely moved: 816 → 820 words.** Worth understanding before
+anyone counts this as a big win.
+
+Of the 81 new vocabulary keys, **74 contain `_`** — written by
+`apply_recordings_as_audio.py`, which uses
+`re.sub(r"[^a-zA-Z0-9_-]+", "_", s)`, while Dart's `audioKey()` strips
+*every* non-alphanumeric. The app looks for `akwengoeshue`; the file is
+`akwengo_eshue.opus`.
+
+66 of those map to a real app word, so renaming them looks like a 63-word
+win. It is not: **64 already have a correctly-named clip** from the voice
+reference promotion earlier in the session. Renaming gains **2 words**.
+
+So the 317 recovered recordings largely duplicate what promoting the voice
+references already delivered — the same submissions arriving by a second
+route. The real coverage story of this session stands at **7.3% → 16.4%**,
+and it came from the promotion, not the sync.
+
+**77 clips now sit in the bundle under names the app can never request**
+(~2 MB). Low priority, but the three disagreeing key derivations are still
+there, and they will keep producing unreachable files.
