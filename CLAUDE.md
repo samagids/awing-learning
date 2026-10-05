@@ -12050,3 +12050,27 @@ Two changes:
 `'Monto’oh'` is removed from the credits and queued for review with a note
 of the 13 recordings it belongs to, so the person can be credited properly
 once their real name is known.
+
+### Resolved: 'Monto’oh' is Dr. Frida Fozoh
+
+Confirmed by Dr. Sama. She is credited as **Dr. Frida Fozoh**, and
+`_AUDIO_CONTRIBUTOR_ALIASES` maps her device profile to that name so her
+next recording is attributed correctly instead of re-queuing.
+
+Both apostrophes are aliased (`monto’oh` U+2019, `monto'oh` ASCII) plus the
+bare `montooh`, because the device submits the curly form and a keyboard may
+produce either. Verified across five spellings including the `default `
+prefix and uppercase.
+
+**She is a different person from Dr. Richard Alombah**, whose aliases
+include `fozo` and `frichardfozo` — similar surname, distinct people.
+Verified that both still resolve to their own names and that no two credits
+share a name fingerprint.
+
+Her 13 recordings are already shipping in the native tier.
+
+**The pattern to keep:** a name that is not publishable goes to
+`contributions/contributors_pending_review.json`, Dr. Sama supplies the real
+one, it is added to `audio_contributors.dart` AND aliased in
+`apply_contributions.py`. Without the alias the same profile re-queues on
+every future contribution.
