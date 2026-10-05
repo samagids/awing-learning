@@ -12,7 +12,10 @@ const Duration _autoSyncDebounce = Duration(minutes: 2);
 /// Keep in sync with AboutScreen.appVersion and AboutScreen.buildNumber.
 /// Stamped on every Firestore doc so Developer Mode can see which client
 /// last wrote a given user's data.
-const String _kAppVersion = '1.24.0+143';
+// Hand-maintained; bump with pubspec. Used as the cloud-presence
+// backfill key, so a stale value here means returning users are never
+// backfilled after an upgrade.
+const String _kAppVersion = '1.24.1+145';
 
 /// Cloud backup service using Firebase Firestore.
 ///
@@ -28,6 +31,8 @@ const String _kAppVersion = '1.24.0+143';
 ///   - No billing account required
 class CloudBackupService extends ChangeNotifier {
   static const String _keyAutoSync = 'cloud_auto_sync';
+  /// Last app version whose forced cloud-presence backfill succeeded.
+  static const String _keyCloudPresenceVersion = 'cloud_presence_version';
   static const String _keyLastBackup = 'cloud_last_backup';
   /// v1.23.6 (Session 65b) — set once the legacy plaintext PIN fields have
   /// been deleted from this account's cloud document.
@@ -139,6 +144,48 @@ class CloudBackupService extends ChangeNotifier {
     debugPrint('Auth: adopted ${firebaseProviders().join(",")} '
         'session for $resolved');
     notifyListeners();
+
+    // v1.24.1 — the force cloud sync that was asked for in v1.23.6 and
+    // never actually written.
+    //
+    // Until now the ONLY things that ever created a user's cloud
+    // documents were onDataChanged() (which returns early unless
+    // _autoSync is on AND data happens to change) and the two manual
+    // Backup buttons. A signed-in user could therefore exist on a device
+    // for months with nothing in Firestore at all.
+    //
+    // That is not cosmetic. handlePinReset verifies the caller through
+    // Identity Toolkit and mails the address it returns; a user with no
+    // cloud presence has nothing to verify against, so forgot-PIN is
+    // structurally impossible for them — which is exactly the report that
+    // started this. Fire-and-forget: it must never delay or fail sign-in.
+    unawaited(_ensureCloudPresence());
+  }
+
+  /// One forced backup per app version, whatever the auto-sync setting.
+  ///
+  /// Keyed on the version rather than a plain bool so that an upgrade
+  /// backfills every returning user exactly once — which is what makes
+  /// this fix reach the people already affected, instead of only new
+  /// installs.
+  Future<void> _ensureCloudPresence() async {
+    if (_connectedEmail == null) return;
+    try {
+      if (_initialized &&
+          _prefs.getString(_keyCloudPresenceVersion) == _kAppVersion) {
+        return;
+      }
+      final ok = await backupAll();
+      if (ok && _initialized) {
+        _prefs.setString(_keyCloudPresenceVersion, _kAppVersion);
+      }
+      debugPrint('Cloud presence backfill for $_connectedEmail: '
+          '${ok ? "written" : "failed, will retry next sign-in"}');
+    } catch (e) {
+      // Never surface this. The user is signing in; a failed backfill is
+      // retried on their next sign-in.
+      debugPrint('Cloud presence backfill error: $e');
+    }
   }
 
   /// Watches Firebase Auth so our cached session state can never outlive

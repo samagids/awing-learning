@@ -11335,3 +11335,53 @@ Now it says the send could not be confirmed, that there may be no email
 coming, and gives the developer address. The code box is still offered,
 because the POST does run server-side even when the reply cannot be read —
 but it is never again described as sent.
+
+## Session 66j — the force cloud sync asked for in v1.23.6 was never written
+
+Dr. Sama's point, and he is right: PIN reset cannot work for a user who is
+not in Firebase, and v1.23.6 was supposed to force their details up.
+
+**It is not in the code.** Searched the whole of `lib/` — no `forceSync`,
+no upgrade migration, no one-shot backfill. The ONLY things that have ever
+created a user's cloud documents are:
+
+- `onDataChanged()`, which returns early unless `_autoSync` is on **and**
+  data happens to change, and
+- the two manual Backup buttons (`backup_screen`, `developer_screen`).
+
+So a signed-in user could live on a device for months with nothing in
+Firestore. That is not cosmetic: `handlePinReset` verifies the caller
+through Identity Toolkit and mails the address it returns, so a user with
+no cloud presence has nothing to verify against and forgot-PIN is
+structurally impossible for them.
+
+### Fix (v1.24.1+145)
+
+`CloudBackupService._ensureCloudPresence()`, called fire-and-forget from
+`adoptFirebaseSession()` — the one point where "we have a Firebase session
+and know who it is" becomes true, and which BOTH the Google and Apple login
+paths already call.
+
+It forces one `backupAll()` **per app version, regardless of the auto-sync
+setting**, keyed on `cloud_presence_version`. Version-keyed rather than a
+bool on purpose: an upgrade then backfills every returning user exactly
+once, so the fix reaches the people already affected instead of only new
+installs. Failure is logged and retried on the next sign-in; it can never
+delay or fail sign-in.
+
+Also: `_kAppVersion` was still the literal `'1.24.0+143'`. It is now the
+backfill key, so a stale value silently means "nobody gets backfilled".
+Bumped to `1.24.1+145` with a comment saying to move it with pubspec.
+
+### Before searching Firebase for a missing user, read this
+
+The Apple path signs into Firebase FIRST and refuses to continue without an
+email, so anyone who completed Apple sign-in does have an Auth record. But
+`login_screen.dart` says it plainly: Firebase resolves an Apple user to
+"either their real address or an **@privaterelay.appleid.com** forwarder".
+
+A parent whose Apple ID is a yahoo.com address will therefore appear in
+Firebase Auth under a privaterelay address, NOT under their yahoo one.
+**Searching the user list for the address the parent gives you will find
+nothing even when they are there.** Filter by provider = Apple instead, and
+match on the sign-in date they report.
