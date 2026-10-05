@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/cloud_backup_service.dart';
+import 'package:awing_ai_learning/services/contribution_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -111,6 +112,22 @@ class _LoginScreenState extends State<LoginScreen> {
       // _tryCloudRestore() for brand-new accounts and the restore needs
       // _connectedEmail already populated.
       await cloud.adoptFirebaseSession(email: email);
+
+      // v1.24.1 — ask an Apple user for an address we can actually reach,
+      // BEFORE the account and its first profile exist.
+      //
+      // Apple's Hide My Email gives us <random>@privaterelay.appleid.com
+      // and no way to resolve it to a real inbox. That address is also the
+      // one firestore.rules evaluates as request.auth.token.email, so it
+      // MUST stay the identity key — re-keying anything on a typed
+      // address would make every write permission-denied. What we collect
+      // here is a CONTACT address, used for mail only.
+      //
+      // Runs before loginWithApple() so a parent who closes the app at the
+      // profile screen has still given us a way to reach them.
+      if (mounted && _looksLikePrivateRelay(email)) {
+        await _promptForContactEmail(context, accountEmail: email);
+      }
 
       // NOTE: deliberately NO `if (!mounted) return;` here. Returning
       // between adopting the session and creating the local account
@@ -224,6 +241,118 @@ class _LoginScreenState extends State<LoginScreen> {
         _error = 'Google Sign-In failed: $e';
         _isLoading = false;
       });
+    }
+  }
+
+
+  /// Did Apple hand us a forwarder instead of a real inbox?
+  static bool _looksLikePrivateRelay(String email) =>
+      email.toLowerCase().trim().endsWith('@privaterelay.appleid.com');
+
+  /// Ask an Apple "Hide My Email" user for an address we can reach.
+  ///
+  /// WHY THIS DOES NOT REPLACE THE ACCOUNT EMAIL
+  /// firestore.rules derives every document key from
+  /// `request.auth.token.email`, which is the relay address. Re-keying
+  /// anything on a typed address would make every read and write
+  /// permission-denied. So the relay stays the IDENTITY and this is the
+  /// CONTACT address — what the server actually mails.
+  ///
+  /// WHY IT IS VERIFIED RATHER THAN TRUSTED
+  /// It is sent through the existing parent-contact flow, which emails a
+  /// one-time link and only records the address once its owner clicks it.
+  /// Without that, anyone with a minute of access to an unlocked phone
+  /// could point this at their own inbox and collect the parent's PIN
+  /// reset codes later. The click is what makes it safe to mail secrets
+  /// there.
+  ///
+  /// Skippable on purpose. A parent who dismisses it still gets an
+  /// account; they just keep the relay-only delivery they already had,
+  /// and Parent Settings can add one later.
+  Future<void> _promptForContactEmail(
+    BuildContext context, {
+    required String accountEmail,
+  }) async {
+    final controller = TextEditingController();
+    final entered = await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Where should we email you?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'You signed in with Apple using Hide My Email, so all we have '
+              'is $accountEmail — a forwarding address we cannot read.',
+              style: const TextStyle(fontSize: 13.5),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Give us an address you actually read. We use it for parent '
+              'PIN reset codes and activity reports — nothing else.',
+              style: TextStyle(fontSize: 13.5),
+            ),
+            const SizedBox(height: 14),
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.emailAddress,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                labelText: 'Your email',
+                hintText: 'you@example.com',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'We will send a short confirmation link to check it works.',
+              style: TextStyle(fontSize: 12, color: Colors.black54),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, null),
+            child: const Text('Skip'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final v = controller.text.trim();
+              // Deliberately loose. A real check is the confirmation mail
+              // actually arriving; rejecting odd-but-valid addresses here
+              // would only lock out the people this exists to help.
+              if (v.contains('@') && v.contains('.') && v.length >= 5) {
+                Navigator.pop(ctx, v);
+              }
+            },
+            child: const Text('Send link'),
+          ),
+        ],
+      ),
+    );
+
+    final value = entered?.trim();
+    if (value == null || value.isEmpty) return;
+
+    try {
+      final contrib = context.read<ContributionService>();
+      final reply = await contrib.requestContactVerification(value);
+      if (!context.mounted) return;
+      final ok = reply != null && reply['status'] == 'success';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(ok
+              ? 'Check $value for a confirmation link.'
+              : 'Could not send the confirmation to $value. You can add it '
+                  'later under Parent Settings.'),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+    } catch (e) {
+      debugPrint('Contact email prompt failed: $e');
+      // Never block sign-in on this.
     }
   }
 

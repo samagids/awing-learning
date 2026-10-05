@@ -11447,3 +11447,50 @@ an attempt even though Apple would then have eaten it. Check
 **Apps Script > Deploy > Manage deployments** — every execution runs
 Version 200 and this project sits at the 200-version cap where
 `clasp deploy` fails.
+
+## Session 66l — ask Apple users for a reachable email (v1.24.1)
+
+After Apple sign-in, before the account and first profile are created, a
+user whose Firebase email is `@privaterelay.appleid.com` is asked for an
+address we can actually reach. `login_screen.dart`:
+`_looksLikePrivateRelay()` + `_promptForContactEmail()`.
+
+### Why it is a CONTACT address and not the account email
+
+The instruction was "use the email for everything". That is not possible,
+and the reason is worth keeping:
+
+`firestore.rules` derives every document key from
+`request.auth.token.email` — the relay address — in `emailKey()`, and the
+`/users/{userId}` and `/registry/{emailKeyDoc}` rules both compare against
+it. Re-keying anything on a typed address makes every read and write
+**permission-denied**. The relay therefore stays the IDENTITY. What the
+prompt collects is the CONTACT address: the thing the server mails.
+
+With `487fbadb` already sending PIN codes to confirmed contacts, that is
+enough to make these users reachable for everything that matters —
+reset codes and activity reports.
+
+### Why it is verified rather than trusted
+
+The address goes through `requestContactVerification`, which mails a
+one-time link and records it only once its owner clicks. Skipping that
+would mean anyone with a minute on an unlocked phone could point the
+account at their own inbox and collect the parent's reset codes later. The
+click is what makes it safe to mail secrets there.
+
+### Deliberate choices
+
+- **Only for relay addresses.** A user who chose "Share My Email" already
+  gave us a real inbox; asking again would be friction for nothing.
+- **Skippable.** Dismissing it still creates the account — they keep the
+  relay-only delivery they already had, and Parent Settings can add one
+  later. Blocking account creation on an email prompt would be worse than
+  the bug.
+- **Before `loginWithApple()`**, so a parent who closes the app at the
+  profile screen has still given us a way to reach them.
+- **Loose validation** (`@`, `.`, length). The real check is whether the
+  confirmation mail arrives; rejecting odd-but-valid addresses here would
+  only lock out the people this exists for.
+- Failure is swallowed and logged. Sign-in must never fail because a
+  confirmation email did not send.
