@@ -12568,18 +12568,109 @@ Each now has a guard that fails the build rather than a comment.
 6. **When a patch replaces a function, check what the diff removed.**
    `git diff <c>~1 <c> -- <file> | grep -E "^-[A-Za-z_]+ *="`
 
+### Session 66q (2026-10-06) — the audio nobody had listened to
+
+`.gitattributes` finally landed, in two passes, and then the EOL work turned
+into something much more useful: while checking what else was uncommitted,
+14 `voice_references/*.m4a` showed as modified. They were not corruption —
+they were **re-recorded takes from 2026-10-05 that the repo still held the
+old versions of**. Chasing whether those reached the app led to measuring
+every shipped native clip, and most of them were not what they looked like.
+
+**What the measurement found** (920 clips, absolute dBFS gate, not the
+relative one in `trim_silence.py`):
+
+| fault | clips | worst case |
+|---|---|---|
+| dead air at one or both edges | 157 | `aligheno` 2.47s long for 0.83s of speech |
+| peak below -14dB, inaudible on a phone | 9 | `maa` -21.7dB, `mama` -19.5dB |
+| 98% silence — a speaker button that played nothing | 1 | `ghele`, mean -46.8dB |
+| more than one utterance in the clip | 21 | `atena` 4.06s, three takes |
+
+**Why `trim_silence.py` missed all of it.** Its threshold is
+`max(peak * 0.05, 0.005)` — relative to the clip's own peak. A take recorded
+far from the mic has a low peak, gets a low threshold, and its room noise
+reads as speech, so nothing is trimmed. And when it does judge a clip
+entirely silent it **returns the original array untouched**, so a dud ships
+anyway. Those parameters mirror `lib/utils/silence_trim.dart` sample for
+sample and drive pronunciation grading, so they were left alone.
+
+**`scripts/audit_native_clips.py`** is the separate audit:
+
+- detects dead edges at -32dB, cuts at -36dB with 50ms of pad, so a breathy
+  onset or a nasal release survives. -40dB was tried first and was too
+  strict — the room floor on these recordings sits near -38dB, so the cut
+  gate found nothing and visibly padded clips went unfixed forever.
+- peak-normalises quiet takes to -3dB. **A quiet take is a gain problem, not
+  a bad recording** — quarantining one would throw away real field audio.
+  Only a clip with under 10% of itself above the silence gate is pulled.
+- rewrites `.opus` and `.wav` in one ffmpeg pass each, **together**: the opus
+  is what the child hears, the wav is what the grader scores against.
+- **never auto-cuts a multi-utterance clip.** Cutting a genuine multi-word
+  phrase down to its first word would be silent data loss. Those 21 are
+  reported for Dr. Sama.
+- **not wired into `build_and_run.bat`.** It is a periodic audit run on
+  demand; the build still only trims genuinely new audio.
+
+Result: 215 files repaired, `ghele` quarantined to
+`contributions/quarantined_clips/` and dropped from the manifest
+(vocabulary 668 -> 667) so the app honestly shows no audio for it. Bundle
+219.9 MB -> 219.0 MB. Verified against a full before/after of all 197
+touched clips: measured speech is unchanged or higher on 195, and the two
+outliers differ by 0.11s — one opus re-encode generation at the measurement
+gate, not lost audio.
+
+Also committed: the 14 re-recorded references, and **328 voice references
+that had never been tracked at all**. The derived clips are gitignored
+because they ship in the release tarball, so the only copy of those field
+recordings was one machine.
+
+**Two gate bugs worth remembering.** `ffmpeg` picks its muxer from the
+output extension, so a temp file must be `x.tmp.opus`, never `x.opus.tmp` —
+the latter fails with "Unable to find a suitable output format" and 36
+rewrites silently did nothing on the first run. And `silencedetect` reports
+a run's start on a window boundary, so a clip that is dead air from sample
+zero reports `silence_start: 0.0502`; a 0.05s edge tolerance reads that as
+an interior gap and never trims it. `EDGE_TOLERANCE` is 0.12s.
+
+### What this session should teach the next one
+
+1. **An uncommitted binary is a question, not a nuisance.** Those 14 modified
+   `.m4a` files looked like EOL noise next to 16 genuinely-EOL files. They
+   were new recordings.
+2. **Shipping is not the same as working.** `ghele` had a clip, a manifest
+   entry and a speaker button for months, and played nothing.
+3. **Separate the audit from the mirrored algorithm.** `trim_silence.py`
+   has to match the Dart grader. That is a reason to write a second tool,
+   not a reason to leave bad audio shipping.
+4. **Run the fixer until it reports zero.** Three passes here: a muxer bug,
+   then an edge-tolerance bug, then a gate that was too strict. Each one
+   looked like convergence.
+5. **Check the detector against the cutter.** Detecting at one threshold and
+   cutting at another is right, but if the gap is too wide the tool reports
+   the same clips forever — which is how the `[1c/7]` re-trim loop felt.
+
 ### Open, in order of worth
 
-1. **102 near-duplicates were decided with no attestation in any approved
+0. **The pad-assets release must be re-uploaded.** `asset_fingerprint.py`
+   reports stale (219.9 -> 219.0 MB). CI builds from the release tarball, so
+   until `scripts/pack_and_upload_assets.sh` runs in WSL the next build
+   ships the old untrimmed, quiet audio. Five commits are also unpushed:
+   `device_bash` has no GitHub credential, so `git push` and the pack upload
+   both have to run on the Windows/WSL side.
+1. **21 multi-utterance clips** listed in `contributions/native_clip_audit.json`
+   need a human to say whether each is a repeated take (cut to the first) or
+   a real multi-word phrase (leave it). `ghele` needs re-recording.
+2. **102 near-duplicates were decided with no attestation in any approved
    source.** Kept the more-established spelling to remove the duplicate —
    data hygiene, not a ruling on what Awing is, and labelled as such in
    `contributions/near_duplicate_review.md`. A native-speaker pass over that
    list is the single most valuable linguistic task left.
-2. `contributions/whisper_rejected.json` — 4 words needing a human
-   pronunciation. `alae` and `aleme` also have outlier-length recordings that
-   genuinely contain extra speech.
-3. Apps Script 150/200 versions.
-4. Store listings still to submit; Firebase API keys still unrestricted.
-5. `build_bible_parallel.py` has a real undefined name — harmless, retired
+3. `contributions/whisper_rejected.json` — 4 words needing a human
+   pronunciation. All four do have audible clips; only the auto-transcription
+   was discarded, correctly.
+4. Apps Script 150/200 versions.
+5. Store listings still to submit; Firebase API keys still unrestricted.
+6. `build_bible_parallel.py` has a real undefined name — harmless, retired
    tooling, reported as a NOTE on every build.
-6. Still no `.gitattributes`; 13 dependabot alerts, all cf-worker dev deps.
+7. 13 dependabot alerts, all cf-worker dev deps.
