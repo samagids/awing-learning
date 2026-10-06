@@ -34,3 +34,26 @@ cf-worker/node_modules/** -text -diff linguist-vendored
 *.pdf  binary
 *.tflite binary
 *.bin  binary
+
+# ---- Second pass: the remaining churners ----------------------------------
+
+# Generated files. family_recorder.html is emitted by
+# scripts/build_family_recorder.py from the template below it; pubspec.lock is
+# emitted by Flutter. Both are written with CRLF on this machine and have
+# shown as fully rewritten with zero content change.
+family_recorder.html -text
+pubspec.lock         -text
+
+# Hand-edited, but edited on Windows. The template is a sibling of the
+# generated file above and must keep the same endings.
+scripts/family_recorder_template.html -text
+
+# Windows shells genuinely need CRLF. Pin it rather than leaving it to
+# core.autocrlf, so the bytes are the same on every clone.
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+
+# This one has a shebang, so it must stay LF or `./build_family_recorder.py`
+# fails with "bad interpreter: /usr/bin/env python3^M" under WSL.
+scripts/build_family_recorder.py text eol=lf
