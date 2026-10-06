@@ -12519,3 +12519,67 @@ blocking a release.
 same indentation AND check what the diff removed.** The one-liner:
 
     git diff <commit>~1 <commit> -- <file> | grep -E "^-[A-Za-z_]+ *="
+
+## v1.24.3+147 SHIPPED — 2026-10-06
+
+Tag green on both runners: **Build Android #323** (15m26s) and **Build iOS
+#312** (19m50s), commit `94372aa`. The 7-day auto-promoter will reach it
+unless the tag is deleted.
+
+**The Forgot-PIN report that started this session is closed.** The parent
+retried and it worked. The hypothesis held: Apps Script version 200 carried
+the handler but went live after their first attempt, which is why Brevo
+showed zero sends.
+
+### What shipped
+
+- **452 words that were silent now speak**, and approved recordings reach the
+  app by themselves from here
+- `apʉə` and friends stopped playing a **different word's** recording
+- All 204 near-duplicate spellings resolved — 0 still duplicated, 6,184
+  distinct glosses intact
+- Whisper can no longer write a fabrication as an Awing pronunciation
+- The About screen credits each person once, under their real name
+
+### Five faults that had been live for months
+
+| fault | how long | why nothing caught it |
+|---|---|---|
+| `sync_recordings.py` truncated mid-token | **4 months** | `args = parser.parse_a` is valid Python |
+| `[1b/7]` banner printed on success | months | unescaped brackets closed the `IF` early |
+| `.bat` never ran `sync_version.py` | since v1.18.1 | only the `.sh` had it |
+| `[1c/7]` re-trim loop | since the sync was restored | tier 2 skipped on existence, never freshness |
+| `audioKey` deleted whole letters | since forever | the strip is correct for combining marks |
+
+Each now has a guard that fails the build rather than a comment.
+
+### What this session should teach the next one
+
+1. **Audit before fixing.** Four fixes went in before anything measured the
+   system, which is why 358 unused recordings only surfaced on a dry run.
+2. **Count before claiming.** "All four derivations unified", then "all
+   five" — it was 21. The check is in this file.
+3. **A banner is not a diagnosis.** Those three "common causes" sent a whole
+   debugging session after ffmpeg while the real fault was a truncated file.
+4. **Never infer an attribution.** A short reply was read as a name and a
+   person who does not exist was briefly credited on a public screen.
+5. **Verify by hash, never by presence.** Presence on the release page is
+   exactly what the 958 MB bundle had.
+6. **When a patch replaces a function, check what the diff removed.**
+   `git diff <c>~1 <c> -- <file> | grep -E "^-[A-Za-z_]+ *="`
+
+### Open, in order of worth
+
+1. **102 near-duplicates were decided with no attestation in any approved
+   source.** Kept the more-established spelling to remove the duplicate —
+   data hygiene, not a ruling on what Awing is, and labelled as such in
+   `contributions/near_duplicate_review.md`. A native-speaker pass over that
+   list is the single most valuable linguistic task left.
+2. `contributions/whisper_rejected.json` — 4 words needing a human
+   pronunciation. `alae` and `aleme` also have outlier-length recordings that
+   genuinely contain extra speech.
+3. Apps Script 150/200 versions.
+4. Store listings still to submit; Firebase API keys still unrestricted.
+5. `build_bible_parallel.py` has a real undefined name — harmless, retired
+   tooling, reported as a NOTE on every build.
+6. Still no `.gitattributes`; 13 dependabot alerts, all cf-worker dev deps.
