@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generated_at": "2026-10-05T22:29:38.915134+00:00",
+  "generated_at": "2026-10-06T13:26:44.234068+00:00",
   "categories": {
     "alphabet": {
       "a": {
@@ -1170,10 +1170,6 @@
         "canonical": true,
         "kids": [],
         "canonical_recorder": "samagids"
-      },
-      "ghele": {
-        "canonical": true,
-        "kids": []
       },
       "ghelo": {
         "canonical": true,

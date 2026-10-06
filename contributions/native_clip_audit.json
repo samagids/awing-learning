@@ -1,0 +1,315 @@
+{
+  "native/boy/afana.opus": {
+    "duration": 1.3265,
+    "peak_db": -4.2,
+    "mean_db": -17.4,
+    "head": 0.377417,
+    "tail": 0.0,
+    "inner_gaps": 0,
+    "speech_ratio": 0.7797616283452694,
+    "flags": [
+      "head"
+    ]
+  },
+  "native/boy/afange.opus": {
+    "duration": 1.7465,
+    "peak_db": -3.1,
+    "mean_db": -18.1,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.646316633266533,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/boy/falendze.opus": {
+    "duration": 1.62825,
+    "peak_db": -3.7,
+    "mean_db": -20.6,
+    "head": 0.0,
+    "tail": 0.24425000000000008,
+    "inner_gaps": 1,
+    "speech_ratio": 0.5095575003838476,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/girl/afankonue.opus": {
+    "duration": 1.9265,
+    "peak_db": -4.5,
+    "mean_db": -17.6,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7592893848948871,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/girl/afenge.opus": {
+    "duration": 1.2115,
+    "peak_db": -4.0,
+    "mean_db": -17.8,
+    "head": 0.506729,
+    "tail": 0.0,
+    "inner_gaps": 0,
+    "speech_ratio": 0.5817342137845646,
+    "flags": [
+      "head"
+    ]
+  },
+  "native/girl/afooghaame.opus": {
+    "duration": 1.8065,
+    "peak_db": -1.5,
+    "mean_db": -16.0,
+    "head": 0.235917,
+    "tail": 0.20941999999999994,
+    "inner_gaps": 1,
+    "speech_ratio": 0.5660791585939663,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/girl/afune.opus": {
+    "duration": 1.9865,
+    "peak_db": -0.8,
+    "mean_db": -18.6,
+    "head": 0.0,
+    "tail": 0.2597499999999999,
+    "inner_gaps": 1,
+    "speech_ratio": 0.4574125346086081,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/man/achaaka.opus": {
+    "duration": 1.5065,
+    "peak_db": 0.0,
+    "mean_db": -15.7,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.6469326252904083,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/man/afenge__2.opus": {
+    "duration": 1.8065,
+    "peak_db": -0.6,
+    "mean_db": -18.3,
+    "head": 0.0,
+    "tail": 0.3527100000000001,
+    "inner_gaps": 1,
+    "speech_ratio": 0.39443122059230556,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/man/afinonkange.opus": {
+    "duration": 1.7465,
+    "peak_db": -1.3,
+    "mean_db": -17.4,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7622026910964786,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/man/lenepoo.opus": {
+    "duration": 1.3765,
+    "peak_db": 0.0,
+    "mean_db": -15.8,
+    "head": 0.516896,
+    "tail": 0.0,
+    "inner_gaps": 0,
+    "speech_ratio": 0.6244852887758808,
+    "flags": [
+      "head"
+    ]
+  },
+  "native/man/mamaatembitengeghoghenoleefo.opus": {
+    "duration": 3.2835,
+    "peak_db": -1.2,
+    "mean_db": -15.8,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.895175879396985,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/man/mbachiapenenembyabtenkoeatie.opus": {
+    "duration": 4.1465,
+    "peak_db": -2.6,
+    "mean_db": -17.8,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.8591824430242373,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/man/ngwuyeatugepenggyepenpepemenggobmenmenteelonetaengwue.opus": {
+    "duration": 7.5365,
+    "peak_db": -2.4,
+    "mean_db": -17.6,
+    "head": 0.195021,
+    "tail": 0.0,
+    "inner_gaps": 2,
+    "speech_ratio": 0.7024797983148675,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/man/pomangyieleefepoghenolenkie.opus": {
+    "duration": 3.1255,
+    "peak_db": -2.0,
+    "mean_db": -16.0,
+    "head": 0.0,
+    "tail": 0.37135000000000007,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7625595904655255,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/ajumetsee.opus": {
+    "duration": 3.6165,
+    "peak_db": -2.2,
+    "mean_db": -19.3,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.8465090557168532,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/akoole.opus": {
+    "duration": 2.2465,
+    "peak_db": -6.1,
+    "mean_db": -25.0,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.5833429779657244,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/alue.opus": {
+    "duration": 0.996542,
+    "peak_db": -7.0,
+    "mean_db": -22.3,
+    "head": 0.419917,
+    "tail": 0.0,
+    "inner_gaps": 0,
+    "speech_ratio": 0.6351965095299545,
+    "flags": [
+      "head"
+    ]
+  },
+  "native/vocabulary/atena.opus": {
+    "duration": 4.0565,
+    "peak_db": -4.5,
+    "mean_db": -24.1,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7814566744730679,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/awege.opus": {
+    "duration": 2.4265,
+    "peak_db": -2.8,
+    "mean_db": -22.0,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7971691737069854,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/meghem_mem_mbe_ne_pem_pe.opus": {
+    "duration": 2.3865,
+    "peak_db": -8.3,
+    "mean_db": -21.1,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7634024722396815,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/meghem_mem_mbe_ne_pen_tene.opus": {
+    "duration": 1.936542,
+    "peak_db": -8.5,
+    "mean_db": -21.7,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7674463037723943,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/meghemmemmbenepempe.opus": {
+    "duration": 2.3865,
+    "peak_db": -8.3,
+    "mean_db": -21.1,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7634024722396815,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/meghemmemmbenepentene.opus": {
+    "duration": 1.936542,
+    "peak_db": -8.5,
+    "mean_db": -21.7,
+    "head": 0.0,
+    "tail": 0.0,
+    "inner_gaps": 1,
+    "speech_ratio": 0.7674463037723943,
+    "flags": [
+      "multi"
+    ]
+  },
+  "native/vocabulary/ndua.opus": {
+    "duration": 0.936542,
+    "peak_db": -3.5,
+    "mean_db": -17.1,
+    "head": 0.419833,
+    "tail": 0.0,
+    "inner_gaps": 0,
+    "speech_ratio": 0.666815796835593,
+    "flags": [
+      "head"
+    ]
+  },
+  "native/vocabulary/neto.opus": {
+    "duration": 2.536542,
+    "peak_db": -7.4,
+    "mean_db": -26.8,
+    "head": 0.0,
+    "tail": 0.6870219999999998,
+    "inner_gaps": 1,
+    "speech_ratio": 0.22554446171204728,
+    "flags": [
+      "tail",
+      "multi"
+    ]
+  }
+}

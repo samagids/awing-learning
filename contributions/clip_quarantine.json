@@ -1,0 +1,13 @@
+[
+  {
+    "clip": "native/vocabulary/ghele.opus",
+    "moved": [
+      "ghele.opus",
+      "ghele.wav"
+    ],
+    "peak_db": -18.6,
+    "mean_db": -46.8,
+    "speech_ratio": 0.018,
+    "reason": "almost entirely silence - needs re-recording"
+  }
+]
