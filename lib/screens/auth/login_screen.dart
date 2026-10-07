@@ -597,7 +597,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 24),
                 Center(
                   child: Text(
-                    'Parent: sign in with your Google account.\nThen create profiles for your kids to use.',
+                    // v1.24.4 — was "sign in with your Google
+                    // account", printed directly under a Sign in with
+                    // Apple button. Both providers are equally
+                    // supported since v1.23.3, and on an Apple review
+                    // device the old line read as if Apple were a
+                    // fallback.
+                    'Parent: sign in to get started.\nThen create profiles for your kids to use.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 13,
