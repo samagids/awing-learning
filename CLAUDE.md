@@ -12650,9 +12650,121 @@ an interior gap and never trims it. `EDGE_TOLERANCE` is 0.12s.
    cutting at another is right, but if the gap is too wide the tool reports
    the same clips forever — which is how the `[1c/7]` re-trim loop felt.
 
+### Session 66r (2026-10-07) — rejected by App Review, three grounds
+
+1.24.3 (147) was rejected on 2026-10-07, review device iPhone 17 Pro Max,
+submission `812f01ae-d6a7-4a7a-9ea5-c6318c4ef7b6`. One ground needed code;
+two needed text that was already wrong and had never been checked.
+
+**5.1.1(v) — no account deletion.** The app has had Google and Apple
+sign-in since v1.23.3 and has never had a way to delete the account.
+Parent Settings now has **Delete Account**, behind the parent PIN when one
+is set and a typed DELETE either way. No PIN is forced on someone who has
+none: Apple accepts confirmation steps but not detours, and making a
+parent invent a PIN in order to leave is a detour.
+
+What a parent account touches was read out of the code and
+`firestore.rules`, not assumed — if a new per-user collection is ever
+added it belongs in `AccountDeletionService` too, or deletion quietly
+stops being complete:
+
+| surface | what is there |
+|---|---|
+| `users/{emailKey}/data/accounts` | profiles, hashed PINs |
+| `users/{emailKey}/data/progress` | XP, lessons, quizzes, streaks |
+| `users/{emailKey}/data/settings` | preferences **and the FCM push token** |
+| `users/{emailKey}` | the parent doc |
+| `registry/{emailKey}` | the "this address uses Awing" marker |
+| `study_sets/*` | sets this user created |
+| `study_sets/*` | their entry on OTHER teachers' rosters |
+| `recordings/*` | donated clips, carrying `recorded_by_email` |
+| Firebase Auth | the user record |
+| SharedPreferences | the local account and session |
+
+**Order matters.** Every rule in this app keys off
+`request.auth.token.email`, so the Firebase Auth user is destroyed LAST.
+Destroying it first would strand every remaining document with nobody on
+earth able to delete it. `requires-recent-login` is handled as the normal
+branch it is — re-run the provider sign-in for a fresh credential — not as
+an error to report.
+
+**One writer.** `AccountDeletionService` does not touch SharedPreferences.
+`AuthService.forgetDeletedAccount()` does, because that class owns
+`auth_accounts` and holds the decoded map in memory. A second writer is
+the stale-after-restore bug that `reloadAccountsFromStorage` exists to fix.
+
+**Donated recordings get a question, not an assumption.** A clip is a
+contribution to a language with a few thousand speakers. The dialog asks;
+both answers remove the person. Keep → `recorded_by_email` and
+`recorded_by_name` are stripped, the audio stays. Delete → the document
+goes. Leaving an email on a kept clip was never on the table.
+
+**Two `firestore.rules` widenings, both argued in place.** `recordings`
+delete was developer-only; the recorder may now delete their own.
+`study_sets` update now has a branch letting a student remove THEMSELF
+from a roster and nothing else — their address sits in a teacher's
+document and the creator rule does not reach it. That branch uses
+`.get('partnerEmails', [])`, because a bare read of a field a legacy set
+never had is an evaluation error, which denies the write — and a student
+stranded on an old roster is exactly the case it exists to fix.
+
+**`firestore.rules` must be pasted into the Firebase Console before 148
+reaches anyone**, or both paths fail with permission-denied. There is no
+`firebase.json` in this repo; rules have always been deployed by hand.
+
+**2.3.10 — Android references in What's New.**
+`fastlane/metadata/en-US/release_notes.txt` is **iOS-only** — the Android
+workflow does not read fastlane metadata at all — and it still said
+"What's new in 1.20.0" with a bullet about "newer Android versions". It
+had been shipping that to the App Store for four versions and nobody
+looked. Rewritten for 1.24.4.
+
+**2.3.6 — Age Rating claims In-App Controls.** The app has parental
+controls (Parent PIN, Reset Child Progress) but no age assurance, and the
+rating claimed both. Fixed on App Store Connect by setting Age Assurance
+to None, with a reply telling the reviewer where the parental controls
+live.
+
+**Two false statements found while fixing the above**, both corrected in
+148 because a reviewer reading the privacy policy next to a deletion flow
+is looking straight at them:
+
+- `backup_screen.dart` said data is "stored securely in your Google Drive
+  app folder". `cloud_backup_service.dart` writes to **Firestore**. The
+  Google account is the identity, not the destination.
+- The Parent Settings footer said **"No data is stored on any server"**,
+  directly above a card offering cloud backup.
+
+The published privacy policy also said deletion was by emailing
+samagids@gmail.com — the exact customer-service detour 5.1.1(v) rejects.
+`site_legal/` is a **separate git repo** pushing to
+`samagids/awing-legal`; it has its own commit and its own push.
+
+### What this session should teach the next one
+
+1. **Store metadata is code that nobody compiles.** A stale What's New
+   shipped four times. Nothing in the build path reads it, so nothing
+   could have caught it.
+2. **Read the copy next to the thing you are fixing.** Two flatly untrue
+   sentences about where user data lives were sitting on the screens the
+   deletion flow was being added to.
+3. **Deletion order follows the security rules, not the data model.** The
+   auth user is the key to every other delete.
+4. **Ask when the answer is the user's.** Whether a donated recording
+   survives its contributor is not a technical choice.
+
 ### Open, in order of worth
 
-0. **The pad-assets release must be re-uploaded.** `asset_fingerprint.py`
+0. **Blocking the 1.24.4 resubmission**, in order:
+   a. paste `firestore.rules` into the Firebase Console and publish;
+   b. run `scripts\build_and_run.bat` — `[5b/7] flutter analyze` is what
+      compile-checks the new deletion code, which was written on a machine
+      with no Flutter;
+   c. record the deletion flow on a physical device (Apple asked for it
+      explicitly and wants it in App Review Information > Notes);
+   d. set Age Assurance to None in App Information;
+   e. push `site_legal` and tag `v1.24.4+148`.
+1. **The pad-assets release must be re-uploaded.** `asset_fingerprint.py`
    reports stale (219.9 -> 219.0 MB). CI builds from the release tarball, so
    until `scripts/pack_and_upload_assets.sh` runs in WSL the next build
    ships the old untrimmed, quiet audio. Five commits are also unpushed:
