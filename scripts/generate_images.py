@@ -1835,39 +1835,17 @@ def audio_key(awing_word: str) -> str:
 
 
 def english_slug(english: str) -> str:
-    """Slugify an English gloss for use as a filename suffix.
+    """Delegates to scripts/awing_key.py — the single derivation.
 
-    Design goals:
-    - Deterministic across runs so cached images are reused.
-    - Short (<= ENGLISH_SLUG_MAX chars) — filename hygiene.
-    - Preserves enough word identity that homonyms produce different slugs,
-      while collapsing punctuation/case differences so trivial edits to the
-      gloss don't invalidate the cache.
-    - Must match `_englishSlug()` in lib/services/image_service.dart — same
-    normalization, same truncation point. Any change here MUST be mirrored
-    there or the app will look for images under a different filename than
-    the generator wrote.
-
-    Examples:
-      "neck (body part)"              -> "neck_body_part"
-      "learn; study"                  -> "learn_study"
-      "to walk quickly"               -> "to_walk_quickly"
-      "a very long definition ..."    -> truncated to ENGLISH_SLUG_MAX
+    v1.24.5: moved there so apply_contributions.py could use the same one.
+    It had been computing a contributor's image filename itself, without
+    the English suffix, so every approved photo landed under a name the app
+    never asks for. Equivalence with the previous local implementation was
+    asserted over all 7,180 (awing, english) pairs before this delegation
+    was committed.
     """
-    s = english.lower()
-    # Strip accents/diacritics so the slug is pure ASCII.
-    s = unicodedata.normalize("NFD", s)
-    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
-    # Anything non-alphanumeric -> underscore.
-    s = re.sub(r"[^a-z0-9]+", "_", s)
-    s = s.strip("_")
-    if not s:
-        # Pathological: english field was all punctuation. Fall back to a
-        # stable hash so we still produce a unique filename.
-        s = hashlib.md5(english.encode("utf-8")).hexdigest()[:8]
-    if len(s) > ENGLISH_SLUG_MAX:
-        s = s[:ENGLISH_SLUG_MAX].rstrip("_")
-    return s
+    from awing_key import english_slug as _es
+    return _es(english)
 
 
 # Maximum chars of the english slug appended to image filenames. Keeps
@@ -1881,23 +1859,21 @@ def english_slug(english: str) -> str:
 # and still ended with a newline, so neither py_compile nor
 # check_script_integrity.py caught it; the build died at [4/7] with
 # NameError: name 'ENGLISH_SLUG_MAX' is not defined.
-ENGLISH_SLUG_MAX = 32
+#
+# v1.24.5: the value now lives in awing_key.py with the slug function it
+# belongs to. Re-exported here, not redefined, so there is still exactly
+# one number — and so the NameError above cannot come back.
+from awing_key import ENGLISH_SLUG_MAX  # noqa: E402  (re-export)
 
 
 def image_key(awing_word: str, english: str) -> str:
-    """Filename key for the illustration of a single AwingWord entry.
+    """Delegates to scripts/awing_key.py — the single derivation.
 
-    Format: '{audio_key(awing_word)}__{english_slug(english)}'
-
-    Unlike `audio_key()`, this includes the English gloss so homonyms
-    (té1/té2) and near-homonyms that collapse under the lossy audio_key
-    normalization (high-tone vs low-tone pairs) each produce their own image.
-
-    Double underscore separator is chosen because `audio_key` output is
-    `[a-z0-9]` only — no underscores — so the separator is unambiguous and
-    the suffix can be split back off if needed.
+    '{audio_key(awing)}__{english_slug(english)}'. See english_slug above
+    for why this moved.
     """
-    return f"{audio_key(awing_word)}__{english_slug(english)}"
+    from awing_key import image_key as _ik
+    return _ik(awing_word, english)
 
 
 def parse_vocabulary() -> dict:
@@ -2309,6 +2285,35 @@ def _safe_first_word(clean_word: str):
 # no depictable meaning is left with no image rather than a decorative one.
 # The app already handles a missing image - hasImageSync() filters such words
 # out of games and quizzes, and PackImage falls back - so a gap is safe.
+# v1.24.5 — images a native speaker submitted and Dr. Sama approved are
+# off limits to this script. apply_contributions.py records each key in
+# contributions/contributed_images.json when it installs the photo.
+#
+# Without this the pipeline quietly undoes itself: the generator writes
+# `{key}.webp`, _save_image() deletes the other format at the same stem,
+# and the contributed `{key}.png` is gone. Nothing errors, nothing logs,
+# the card just goes back to the AI picture on the next build.
+CONTRIBUTED_IMAGES_FILE = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    'contributions', 'contributed_images.json')
+
+
+def _contributed_keys():
+    """Image keys installed from an approved contribution. Never touched."""
+    try:
+        if not os.path.exists(CONTRIBUTED_IMAGES_FILE):
+            return set()
+        import json as _json
+        with open(CONTRIBUTED_IMAGES_FILE, 'r', encoding='utf-8') as f:
+            return {e.get('key') for e in _json.load(f) if e.get('key')}
+    except Exception as exc:
+        # Fail CLOSED: if the list cannot be read, protect nothing is the
+        # wrong answer — but so is crashing the build. Warn loudly and
+        # protect nothing, because a stale protection set would be worse.
+        print(f"  ! could not read {CONTRIBUTED_IMAGES_FILE}: {exc}")
+        return set()
+
+
 _UNILLUSTRATABLE_MARKERS = re.compile(
     r"\b(preposition|pronoun|conjunction|interjection|particle|auxiliary|"
     r"determiner|demonstrative|article|ideophone|intensifier|"
@@ -3216,6 +3221,8 @@ def cmd_generate(args):
     ai_hits = 0
     emoji_used = 0
     not_depictable = 0
+    protected_skipped = 0
+    protected_keys = _contributed_keys()
     counted = 0
     removed_stale = 0
     start_time = time.time()
@@ -3259,7 +3266,19 @@ def cmd_generate(args):
         # Leave the image blank rather than draw a decorative child in a
         # field - the same call already made for audio. --all-words overrides
         # this if you want to see what it would have drawn.
-        if not getattr(args, "all_words", False) and \
+        # A contributor's photo outranks anything this script would draw,
+        # and outranks the blank-by-design rule below. Skip the key whole:
+        # no generate, no delete, no counting it as missing.
+        if key in protected_keys:
+            protected_skipped += 1
+            continue
+
+        # v1.24.5 — Dr. Sama: "all words and numbers basically everything
+        # should have images". The default is now to draw for every entry.
+        # The earlier call was to leave grammar words blank rather than show
+        # a child in a field captioned "from"; --only-depictable restores
+        # that if the drawings turn out worse than nothing.
+        if getattr(args, "only_depictable", False) and \
                 not is_illustratable(english, category):
             not_depictable += 1
             # Skipping is not enough. These entries ALREADY have an image on
@@ -3329,6 +3348,9 @@ def cmd_generate(args):
     print(f"\nGeneration complete in {elapsed:.0f}s ({elapsed/60:.1f} min):")
     print(f"  Generated: {generated}")
     print(f"  Skipped:   {skipped} (existing)")
+    if protected_skipped:
+        print(f"  Contributed: {protected_skipped} (a native speaker's "
+              f"approved photo - left untouched)")
     print(f"  No image:  {not_depictable} (nothing depictable - "
           f"grammar words, markers; left blank on purpose)")
     if removed_stale:
@@ -3651,10 +3673,13 @@ def main():
                                  f"Above 1.0 also activates the negative "
                                  f"prompt; at 0 negatives are ignored.")
     gen_parser.add_argument("--all-words", action="store_true",
-                            help="Also generate for entries with nothing "
-                                 "depictable (prepositions, pronouns, "
-                                 "grammatical markers). Off by default - "
-                                 "those are left blank on purpose.")
+                            help=argparse.SUPPRESS)  # now the default; kept
+                            # so older invocations keep working
+    gen_parser.add_argument("--only-depictable", action="store_true",
+                            help="Leave entries with nothing depictable "
+                                 "(prepositions, pronouns, grammatical "
+                                 "markers) without an image. This was the "
+                                 "default until v1.24.5.")
     gen_parser.add_argument("--limit", type=int, default=None,
                             help="Stop after N images. For sampling a prompt "
                                  "change before committing hours of GPU.")

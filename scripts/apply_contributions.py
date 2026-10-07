@@ -539,42 +539,138 @@ def _archive_voice_reference(audio_url, awing_word, dry_run=False):
     return True, key, dest_path
 
 
-def _install_vocabulary_image(image_url, awing_word, profile, dry_run=False):
-    """v1.22.0 (Session 66): download a user-contributed photo and install
-    it as the vocabulary card image for `awing_word`, overriding any
-    SDXL-generated placeholder at the same key.
+# v1.24.5: approved contributor images are recorded here so
+# generate_images.py knows never to overwrite or delete one. Without it the
+# next build regenerates the SDXL picture over the top and the contribution
+# vanishes with no error anywhere.
+CONTRIBUTED_IMAGES_FILE = os.path.join(
+    CONTRIBUTIONS_DIR, 'contributed_images.json')
 
-    Destination: android/install_time_assets/src/main/assets/images/
-                 vocabulary/{audio_key(awing_word)}.png
 
-    Even though the client uploads JPEG (image_picker default), we save
-    with a .png extension because that's what generate_images.py + the
-    Flutter PackImage widget both expect. Drive serves whatever bytes
-    the client uploaded — the app treats them as opaque image content,
-    so the extension mismatch is safe (Android's ImageDecoder sniffs
-    the header, not the filename).
+def _record_contributed_image(key, awing_word, english, profile):
+    """Append one image key to the protected list. Idempotent."""
+    try:
+        existing = []
+        if os.path.exists(CONTRIBUTED_IMAGES_FILE):
+            with open(CONTRIBUTED_IMAGES_FILE, 'r', encoding='utf-8') as f:
+                existing = json.load(f)
+        if any(e.get('key') == key for e in existing):
+            return
+        existing.append({
+            'key': key,
+            'awing': awing_word,
+            'english': english,
+            'contributor': profile,
+            'installed_at': datetime.now().isoformat(),
+        })
+        os.makedirs(CONTRIBUTIONS_DIR, exist_ok=True)
+        with open(CONTRIBUTED_IMAGES_FILE, 'w', encoding='utf-8') as f:
+            json.dump(existing, f, indent=2, ensure_ascii=False)
+    except Exception as exc:
+        print(f"  ⚠ Could not record contributed image {key}: {exc}")
+
+
+def _glosses_for(awing_word, vocab_content):
+    """Every English gloss the vocabulary carries for this exact Awing word.
+
+    A contributor photographs a WORD, but the app looks images up by
+    (awing, english) so homonyms get their own picture. One photo of a
+    cheek should therefore be installed for every gloss of that spelling,
+    or the card the contributor was actually looking at may be the one
+    that stays blank.
     """
-    key = _audio_key(awing_word)
-    if not key:
-        print(f"  ✗ Could not derive image key from '{awing_word}'")
+    out = []
+    pattern = re.compile(
+        r"AwingWord\(\s*awing:\s*'((?:[^'\\]|\\.)*)'\s*,\s*"
+        r"english:\s*'((?:[^'\\]|\\.)*)'")
+    for m in pattern.finditer(vocab_content):
+        if m.group(1) == awing_word:
+            out.append(m.group(2))
+    return out
+
+
+def _install_vocabulary_image(image_url, awing_word, profile,
+                              vocab_content=None, english_hint='',
+                              dry_run=False):
+    """Download an approved contributor photo and install it as the
+    vocabulary card image for `awing_word`.
+
+    v1.24.5 — THIS WAS BROKEN FROM THE DAY IT SHIPPED (v1.22.0).
+
+    It saved `{audio_key(awing)}.png`. The app asks for
+    `{audio_key(awing)}__{english_slug(english)}` — see
+    ImageService.packPath. No contributed image has ever appeared on a
+    card: the file landed in the pack under a name nothing requests, and
+    because a missing image is a silent fallback, nobody saw an error.
+    Evidence at the time of the fix: zero .png files in the vocabulary
+    image folder, and every one of the 9,025 pack images carrying the
+    `__` that this function never wrote.
+
+    Now installs under the real key, once per gloss of that spelling, and
+    records each key so the generator leaves it alone.
+    """
+    if not awing_word:
+        print("  ✗ No target word for image install")
         return False
 
-    dest_path = os.path.join(VOCAB_IMAGES_DIR, f'{key}.png')
+    glosses = []
+    if vocab_content:
+        glosses = _glosses_for(awing_word, vocab_content)
+    if not glosses and english_hint:
+        # A brand-new word is not in the vocabulary yet when its image
+        # arrives alongside it; the submission's own English is right.
+        glosses = [english_hint]
+    if not glosses:
+        print(f"  ✗ No English gloss known for '{awing_word}' — cannot "
+              f"build the image key the app looks up. Image not installed.")
+        return False
+
+    keys = []
+    for gloss in glosses:
+        try:
+            from awing_key import image_key as _ik
+            keys.append((_ik(awing_word, gloss), gloss))
+        except Exception as exc:
+            print(f"  ✗ Could not derive image key for "
+                  f"'{awing_word}' / '{gloss}': {exc}")
+    if not keys:
+        return False
 
     if dry_run:
         print(f"  [DRY RUN] Would download {image_url}")
-        print(f"  [DRY RUN] Would install to images/vocabulary/{key}.png "
-              f"(from {profile})")
+        for key, gloss in keys:
+            print(f"  [DRY RUN] Would install images/vocabulary/{key}.png "
+                  f"({gloss}, from {profile})")
         return True
 
     os.makedirs(VOCAB_IMAGES_DIR, exist_ok=True)
-    print(f"  → Downloading vocabulary image from Drive...")
-    if not _download_drive_file(image_url, dest_path):
+    print("  → Downloading vocabulary image from Drive...")
+
+    first_key = keys[0][0]
+    first_path = os.path.join(VOCAB_IMAGES_DIR, f'{first_key}.png')
+    if not _download_drive_file(image_url, first_path):
         return False
 
-    size_kb = os.path.getsize(dest_path) / 1024.0
-    print(f"  ✓ Installed image: images/vocabulary/{key}.png "
-          f"({size_kb:.1f} KB, from {profile})")
+    size_kb = os.path.getsize(first_path) / 1024.0
+    for i, (key, gloss) in enumerate(keys):
+        dest = os.path.join(VOCAB_IMAGES_DIR, f'{key}.png')
+        if i > 0:
+            shutil.copyfile(first_path, dest)
+        # The generator writes .webp. A contributed .png at the same stem
+        # would lose the lookup to it (the app resolves webp first), so the
+        # generated one goes. The key is recorded below, so it will not
+        # come back on the next run.
+        stale_webp = os.path.join(VOCAB_IMAGES_DIR, f'{key}.webp')
+        if os.path.exists(stale_webp):
+            try:
+                os.remove(stale_webp)
+                print(f"    removed generated {key}.webp — "
+                      f"the contributed photo wins")
+            except OSError as exc:
+                print(f"    ! could not remove {key}.webp: {exc}")
+        _record_contributed_image(key, awing_word, gloss, profile)
+        print(f"  ✓ Installed image: images/vocabulary/{key}.png "
+              f"({size_kb:.1f} KB, {gloss}, from {profile})")
     return True
 
 
@@ -1750,6 +1846,8 @@ def apply_contributions(contributions, dry_run=False, skip_applied=True):
         if image_url and target:
             try:
                 _install_vocabulary_image(image_url, target, profile,
+                                          vocab_content=vocab_content,
+                                          english_hint=english,
                                           dry_run=dry_run)
             except Exception as e:
                 print(f"  ⚠ Image install failed for '{target}': {e}")

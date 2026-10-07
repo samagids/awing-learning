@@ -80,6 +80,64 @@ def audio_key(awing_word):
     return re.sub(r'[^a-z0-9]', '', key)
 
 
+
+# ---------------------------------------------------------------------------
+# Image keys
+# ---------------------------------------------------------------------------
+# Moved here from generate_images.py in v1.24.5. Same reason this module
+# exists at all: apply_contributions.py needed the image key to install a
+# contributor's photo, computed its own, and got it wrong -- it saved
+# `{audio_key}.png` with no English suffix, so the app (which asks for
+# `{audio_key}__{english_slug}`) never found a single contributed image.
+# The feature shipped in v1.22.0 and had never once put a picture on a card.
+#
+# generate_images.py now delegates here. Equivalence over all 6,417 live
+# words was asserted before the delegation was committed, not assumed.
+
+# Maximum chars of the english slug appended to image filenames. Keeps
+# `{audio_key}__{english_slug}` well under common filesystem limits even
+# when audio_key is itself long (phrase_*/sentence_*/story_* namespaces
+# already cap at 60).
+ENGLISH_SLUG_MAX = 32
+
+
+def english_slug(english: str) -> str:
+    """Slugify an English gloss for use as a filename suffix.
+
+    MUST match `_englishSlug()` in lib/services/image_service.dart -- same
+    normalization, same truncation point. If this changes, that changes, or
+    the app looks for a filename the generator never wrote.
+
+      "neck (body part)"  -> "neck_body_part"
+      "learn; study"      -> "learn_study"
+    """
+    import hashlib
+    import unicodedata
+    s = english.lower()
+    # Strip accents/diacritics so the slug is pure ASCII.
+    s = unicodedata.normalize('NFD', s)
+    s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
+    s = re.sub(r'[^a-z0-9]+', '_', s)
+    s = s.strip('_')
+    if not s:
+        # Pathological: english was all punctuation. Stable hash so the
+        # filename is still unique.
+        s = hashlib.md5(english.encode('utf-8')).hexdigest()[:8]
+    if len(s) > ENGLISH_SLUG_MAX:
+        s = s[:ENGLISH_SLUG_MAX].rstrip('_')
+    return s
+
+
+def image_key(awing_word: str, english: str) -> str:
+    """Filename key for one AwingWord's illustration.
+
+    '{audio_key(awing)}__{english_slug(english)}'. The English is included
+    so homonyms, and near-homonyms that collapse under audio_key's lossy
+    tone-stripping, each get their own picture. The double underscore is
+    unambiguous because audio_key output is [a-z0-9] only.
+    """
+    return f'{audio_key(awing_word)}__{english_slug(english)}'
+
 if __name__ == '__main__':
     import sys
     for arg in sys.argv[1:]:
