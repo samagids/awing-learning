@@ -1,8 +1,8 @@
 {
-  "fingerprint": "ced007d7b72a05849c37ca0fdad1bf2da6add582420542118529efeb3b3fdc5c",
+  "fingerprint": "96054e7c9341883971bc114244a8887e21b2cd2a6f73e49f5b414a41a44dde8a",
   "files": 10886,
-  "bytes": 230606107,
-  "recorded_at": "2026-10-05T22:52:24.970784+00:00",
-  "tarball_sha256": "fb797722ce29a9b9905d1084f6052d05e8d5c98712b36c0d8957c23aa6b568f3",
-  "tarball_bytes": 214175408
+  "bytes": 229685716,
+  "recorded_at": "2026-10-07T15:39:03.004633+00:00",
+  "tarball_sha256": "39361ea405feba9d62c86ccf2c0045762c18837c0a136ac94abd096c9d838c06",
+  "tarball_bytes": 213404042
 }
