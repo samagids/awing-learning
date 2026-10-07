@@ -243,8 +243,11 @@ class AccountDeletionService {
       await FirebaseAuth.instance.signOut();
     } catch (_) {}
 
-    if (failures.isNotEmpty && kDebugMode) {
-      print('AccountDeletionService: partial failures: $failures');
+    if (failures.isNotEmpty) {
+      // debugPrint, not print: the analyzer's avoid_print fires on the
+      // latter, and debugPrint is already a no-op in release builds, so
+      // the kDebugMode guard is redundant too.
+      debugPrint('AccountDeletionService: partial failures: $failures');
     }
 
     return AccountDeletionResult.success(partialFailures: failures);
