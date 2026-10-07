@@ -204,6 +204,39 @@ service cloud.firestore {
                           )
                         )
                       )
+                      // v1.24.4 (Session 66r) — a student may take THEMSELF
+                      // off a roster, and nothing else.
+                      //
+                      // Needed by the account-deletion flow required under
+                      // App Store guideline 5.1.1(v): a teacher's roster
+                      // holds student addresses verbatim, so after a
+                      // student deletes their account their email would
+                      // otherwise sit in someone else's document with
+                      // nobody able to remove it. The creator rule above
+                      // does not help - the student is not the creator.
+                      //
+                      // The shape is the partner-leave check, applied to
+                      // sharedWithEmails: every other field byte-identical,
+                      // the new roster a subset of the old, exactly one
+                      // entry gone, and the caller not in the new list. So
+                      // the only edit this branch can express is "remove
+                      // me". A student still cannot rename the set, touch
+                      // its words, or drop a classmate.
+                      || (
+                        request.auth.token.email.lower() in resource.data.sharedWithEmails
+                        && request.resource.data.teacherEmail == resource.data.teacherEmail
+                        // .get(..., []) rather than a bare field read: a set
+                        // created before partnerEmails existed has no such
+                        // field, and a bare read of a missing field is an
+                        // evaluation error, which denies the write. A
+                        // student stranded on an old roster is exactly the
+                        // case this branch exists to fix.
+                        && request.resource.data.get('partnerEmails', [])
+                           == resource.data.get('partnerEmails', [])
+                        && resource.data.sharedWithEmails.hasAll(request.resource.data.sharedWithEmails)
+                        && !(request.auth.token.email.lower() in request.resource.data.sharedWithEmails)
+                        && resource.data.sharedWithEmails.size() - request.resource.data.sharedWithEmails.size() == 1
+                      )
                     );
       // Only the creator can delete.
       allow delete: if request.auth != null
@@ -289,7 +322,27 @@ service cloud.firestore {
                     && (resource.data.recorded_by_email ==
                           request.auth.token.email
                         || isDeveloper());
-      allow delete: if isDeveloper();
+      // v1.24.4 (Session 66r) — the recorder may now delete their OWN
+      // recordings, where before only the developer could.
+      //
+      // This widens the rule, so the reason is written down. App Store
+      // guideline 5.1.1(v) requires account deletion to be completable
+      // inside the app; 1.24.3 was rejected for not having it. These
+      // documents carry recorded_by_email and recorded_by_name, so they
+      // are part of what has to go. The deletion dialog asks whether to
+      // keep the audio: "keep" takes the update path above and strips the
+      // attribution, "remove" takes this one.
+      //
+      // What this gives up is the curation property in the comment above:
+      // a recorder can now withdraw a bad take instead of only the
+      // developer pruning it. That is a small loss against a requirement
+      // the app cannot ship without, and it is still strictly their own
+      // document - the equality check is on the stored recorded_by_email,
+      // so nobody can reach another person's clip.
+      allow delete: if isDeveloper()
+                    || (request.auth != null
+                        && resource.data.recorded_by_email ==
+                           request.auth.token.email);
     }
   }
 }

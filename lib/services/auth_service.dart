@@ -797,6 +797,36 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  /// Forget an account whose remote data has already been destroyed.
+  ///
+  /// v1.24.4 (Session 66r) — the local half of the account deletion
+  /// required by App Store guideline 5.1.1(v).
+  ///
+  /// Why this lives here and not in AccountDeletionService: this class
+  /// owns `auth_accounts`, and keeps the decoded map in memory. A second
+  /// writer touching SharedPreferences directly would leave `_accounts`
+  /// holding the deleted account until the next cold start — the same
+  /// stale-after-restore bug that `reloadAccountsFromStorage` exists to
+  /// fix. One owner, one writer.
+  ///
+  /// Deliberately narrower than wiping preferences: the offline-AI model
+  /// bookkeeping, asset-pack version and other app-wide settings belong
+  /// to the device, not to this person, and a reinstall-sized download is
+  /// not part of what the parent asked for.
+  ///
+  /// Clearing the session fires notifyListeners(), so the Consumer in
+  /// main.dart drops to the login screen without anyone navigating.
+  void forgetDeletedAccount(String email) {
+    _accounts.remove(email);
+    _accounts.remove(email.toLowerCase());
+    _saveAccounts();
+    _currentAccount = null;
+    _currentProfile = null;
+    _prefs.remove(_keyCurrentEmail);
+    _prefs.remove(_keyCurrentProfileId);
+    notifyListeners();
+  }
+
   // ==================== Persistence ====================
 
   void _loadAccounts() {

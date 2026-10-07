@@ -1,30 +1,35 @@
-What's new in 1.20.0:
+What's new in 1.24.4:
 
-Big update this release — three major additions and a lot of polish.
+MORE WORDS THAT SPEAK
+452 more words now play in a real Awing voice instead of staying
+silent. Tap the speaker on a word and you hear someone from the
+community say it.
 
-STUDY SETS (new)
-Teachers can now build curated wordlists for their classes. Search
-the dictionary or add words that aren't in the app yet. Add notes,
-reorder, edit anytime. Recording, sharing with students, and
-class-only exams are all coming in the next updates.
+CLEARER RECORDINGS
+Every native recording in the app was measured and repaired this
+release. Clips that began with a second of silence now start when
+you tap. Clips recorded too quietly to hear on a phone have been
+brought up to a normal level. One recording that turned out to be
+silent has been removed, so the app no longer shows a speaker
+button for a word it cannot say yet.
 
-OFFLINE AI (new)
-Turn off Cloud AI and example sentences now generate on your
-device — no internet needed once the model is downloaded on
-Wi-Fi (~500 MB, one-time). Diagnostic messages tell you exactly
-what happens if something goes wrong. Full sentence extraction so
-you always get a clean sentence, never raw AI chain-of-thought.
+DELETE YOUR ACCOUNT
+Parent Settings now has Delete My Account. It permanently removes
+your account, every child profile on it, all progress and settings,
+and your backup. If you have donated recordings to the Awing
+corpus, you choose whether they stay (with your name and email
+removed) or go.
 
-AWING KEYBOARD (new)
-Every text field that accepts Awing (Contribute, Translate, Report
-wrong translation) now shows an in-app keyboard with all the special
-letters (ɛ ɔ ə ɨ ŋ), the glottal stop, and tone marks (á à â ǎ).
-No more fighting with your phone's English keyboard.
+CLEANER DICTIONARY
+Removed 207 duplicate spellings of words that were already in the
+dictionary under another form, so searching gives one clear result
+instead of near-identical twins.
 
-POLISH
-• Fresh-download reliability for the offline AI model.
-• Better error messages across the board.
-• Full-screen support for newer Android versions.
-• Assorted bug fixes and voice tuning.
+FIXES
+- Forgotten parent PIN reset now works reliably.
+- Words with tone marks and special letters find their own
+  recording instead of a similar word's.
+- Corrected the backup screen's description of where your data is
+  kept.
 
 Built with love for the Awing community.

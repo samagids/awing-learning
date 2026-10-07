@@ -25,7 +25,10 @@ class BackupScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Google Drive connection card
+                // Cloud backup connection card. The Google account is
+                // the IDENTITY used to sign in; the data itself lives in
+                // this app's cloud database, not in the user's Drive.
+                // v1.24.4 corrected four strings here that said Drive.
                 _ConnectionCard(backup: backup),
                 const SizedBox(height: 20),
 
@@ -94,7 +97,7 @@ class _ConnectionCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              backup.isSignedIn ? 'Connected to Google Drive' : 'Not Connected',
+              backup.isSignedIn ? 'Backup is on' : 'Not Connected',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -119,7 +122,7 @@ class _ConnectionCard extends StatelessWidget {
                     builder: (ctx) => AlertDialog(
                       title: const Text('Disconnect?'),
                       content: const Text(
-                        'Auto-sync will stop. Your data on Google Drive will not be deleted.',
+                        'Auto-sync will stop. Your backed-up data will not be deleted.',
                       ),
                       actions: [
                         TextButton(
@@ -156,7 +159,7 @@ class _ConnectionCard extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                label: const Text('Connect Google Drive'),
+                label: const Text('Turn on backup'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.indigo,
                   foregroundColor: Colors.white,
@@ -200,7 +203,9 @@ class _BackupActionsCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Your data is stored securely in your Google Drive app folder.',
+              'Your profiles and progress are stored in the Awing app\'s secure\n'
+              'cloud database, tied to the account you signed in with. '
+              'You can delete all of it from Parent Settings.',
               style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
             ),
             const SizedBox(height: 16),

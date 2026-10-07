@@ -8,6 +8,8 @@ import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
 import 'package:awing_ai_learning/components/parent_contacts_editor.dart';
 import 'package:awing_ai_learning/screens/settings/backup_screen.dart';
+import 'package:awing_ai_learning/services/account_deletion_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 /// Settings screen for parents to manage WhatsApp notifications,
 /// update their contact info, and send test/weekly summary messages.
@@ -295,6 +297,312 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
   }
 
   /// Verify the parent PIN and, on success, confirm + reset child progress.
+  // ==================== Account deletion (5.1.1(v)) ====================
+
+  /// Three screens: what will go, confirm by typing, then progress.
+  ///
+  /// The parent PIN is required first when one is set, for the same reason
+  /// Reset Child Progress requires it — a child who picks up an unlocked
+  /// tablet must not be able to destroy the family's account. When no PIN
+  /// is set we do NOT force the parent to create one: Apple's guideline
+  /// says confirmation steps are fine but customer-service detours are
+  /// not, and making someone invent a PIN to leave is a detour. The typed
+  /// DELETE confirmation carries that case.
+  Future<void> _showDeleteAccountFlow(AuthService auth) async {
+    final email = FirebaseAuth.instance.currentUser?.email ?? auth.currentEmail;
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('You are not signed in.')),
+      );
+      return;
+    }
+
+    if (auth.hasAccountPin) {
+      final ok = await _verifyParentPin(
+        auth,
+        'Enter your parent PIN to delete the account.',
+      );
+      if (ok != true || !mounted) return;
+    }
+
+    final profileCount = auth.currentAccount?.profiles.length ?? 0;
+    bool keepRecordings = true;
+
+    final confirmController = TextEditingController();
+    String? confirmError;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text('Delete your account?'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'This permanently deletes the account for $email.',
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'What goes:\n'
+                  '•  ${profileCount == 1 ? '1 child profile' : '$profileCount child profiles'}, '
+                  'with their XP, lessons, quizzes and levels\n'
+                  '•  Your parent PIN, guardian contacts and settings\n'
+                  '•  Your cloud backup\n'
+                  '•  Study sets you created, and your place on any class '
+                  'list you were added to',
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+                ),
+                const SizedBox(height: 16),
+                // The one genuine choice in this dialog. A donated clip is
+                // a contribution to a language with a few thousand
+                // speakers, so it is worth asking rather than assuming.
+                // Both answers remove the name and address from the
+                // recording; the question is only whether the audio stays.
+                CheckboxListTile(
+                  value: !keepRecordings,
+                  onChanged: (v) => setDialogState(() {
+                    keepRecordings = !(v ?? false);
+                  }),
+                  contentPadding: EdgeInsets.zero,
+                  controlAffinity: ListTileControlAffinity.leading,
+                  dense: true,
+                  title: const Text(
+                    'Also delete my recordings from the Awing corpus',
+                    style: TextStyle(fontSize: 13),
+                  ),
+                  subtitle: Text(
+                    keepRecordings
+                        ? 'Leave this off and your recordings stay to help '
+                          'others learn Awing, with your name and email '
+                          'removed from them.'
+                        : 'Your recordings will be deleted. They will no '
+                          'longer be available to anyone learning Awing.',
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Type DELETE to confirm.',
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: confirmController,
+                  autofocus: true,
+                  textCapitalization: TextCapitalization.characters,
+                  decoration: const InputDecoration(
+                    hintText: 'DELETE',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (_) {
+                    if (confirmError != null) {
+                      setDialogState(() => confirmError = null);
+                    }
+                  },
+                ),
+                if (confirmError != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    confirmError!,
+                    style: TextStyle(color: Colors.red.shade700, fontSize: 13),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Keep my account'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red.shade700,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () {
+                if (confirmController.text.trim().toUpperCase() != 'DELETE') {
+                  setDialogState(() => confirmError = 'Type DELETE to confirm.');
+                  return;
+                }
+                Navigator.pop(ctx, true);
+              },
+              child: const Text('Delete Account'),
+            ),
+          ],
+        ),
+      ),
+    );
+    confirmController.dispose();
+    if (confirmed != true || !mounted) return;
+
+    // --- run it, showing each stage -------------------------------------
+    // Deleting a large account is a dozen round trips. A bare spinner on
+    // a destructive action reads as a hang, and a parent who force-quits
+    // halfway leaves the job half done.
+    String status = 'Starting…';
+    // Nullable, not `late`: the first onProgress callback can fire before
+    // the dialog's builder has run, and reading an unset `late` throws.
+    StateSetter? setProgress;
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setter) {
+          setProgress = setter;
+          return AlertDialog(
+            content: Row(
+              children: [
+                const SizedBox(
+                  width: 22,
+                  height: 22,
+                  child: CircularProgressIndicator(strokeWidth: 2.5),
+                ),
+                const SizedBox(width: 16),
+                Expanded(child: Text(status)),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+
+    final result = await AccountDeletionService.instance.deleteAccount(
+      keepRecordings: keepRecordings,
+      onProgress: (m) {
+        status = m;
+        try {
+          setProgress?.call(() {});
+        } catch (_) {
+          // Dialog already dismissed; nothing to update.
+        }
+      },
+      reauthenticate: () async {
+        final providerId =
+            FirebaseAuth.instance.currentUser?.providerData.isNotEmpty == true
+                ? FirebaseAuth.instance.currentUser!.providerData.first.providerId
+                : '';
+        return ReauthHelper.forProvider(providerId);
+      },
+    );
+
+    if (!mounted) return;
+    Navigator.of(context, rootNavigator: true).pop(); // close progress
+
+    if (!result.deleted) {
+      await showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Not finished'),
+          content: Text(result.message ?? 'The account could not be deleted.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    // Local state last, and through AuthService so there is one writer.
+    // This clears the session, which drops the Consumer in main.dart back
+    // to the login screen on its own — no navigation from here.
+    auth.forgetDeletedAccount(email);
+
+    if (!mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Account deleted'),
+        content: Text(
+          result.partialFailures.isEmpty
+              ? 'Your account and all of its data have been deleted. '
+                'Thank you for helping your family learn Awing.'
+              : 'Your account has been deleted. A few items could not be '
+                'reached and will be cleared shortly: '
+                '${result.partialFailures.join('; ')}.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Parent PIN check, shared by deletion. Returns true only on a match.
+  Future<bool?> _verifyParentPin(AuthService auth, String reason) async {
+    final controller = TextEditingController();
+    String? error;
+    final ok = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text('Enter Parent PIN'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                reason,
+                style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                obscureText: true,
+                autofocus: true,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(12),
+                ],
+                decoration: const InputDecoration(
+                  labelText: 'Parent PIN',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              if (error != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  error!,
+                  style: TextStyle(color: Colors.red.shade700, fontSize: 13),
+                ),
+              ],
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (!auth.verifyAccountPin(controller.text)) {
+                  setDialogState(() => error = 'Incorrect PIN.');
+                  return;
+                }
+                Navigator.pop(ctx, true);
+              },
+              child: const Text('Continue'),
+            ),
+          ],
+        ),
+      ),
+    );
+    controller.dispose();
+    return ok;
+  }
+
   Future<void> _showResetFlow(AuthService auth) async {
     final profile = auth.currentProfile;
     if (profile == null) return;
@@ -859,7 +1167,7 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Back up profiles and progress to Google Drive so data is safe if the app is reinstalled.',
+                        'Back up profiles and progress to your Awing account so data is safe if the app is reinstalled.',
                         style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                       ),
                       const SizedBox(height: 12),
@@ -889,13 +1197,62 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                 ),
                 const SizedBox(height: 20),
 
+                // Delete Account — App Store guideline 5.1.1(v).
+                //
+                // Must be reachable from inside the app, must actually
+                // delete rather than deactivate, and must not route the
+                // parent to email or a phone call. It sits last and in red
+                // so nobody meets it by accident, but it is a plain button
+                // on a screen the parent already visits, not buried.
+                _SectionCard(
+                  title: 'Delete Account',
+                  icon: Icons.person_remove_outlined,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Permanently delete your Awing account, every child '
+                        'profile on it, and all progress, PINs and settings '
+                        'stored for you. This cannot be undone.',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: () => _showDeleteAccountFlow(auth),
+                          icon: const Icon(Icons.delete_forever_outlined),
+                          label: const Text('Delete My Account'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.red.shade700,
+                            side: BorderSide(color: Colors.red.shade300),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
                 // Info footer
                 const SizedBox(height: 24),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    'Messages are sent via WhatsApp on this device. '
-                    'No data is stored on any server.',
+                    // v1.24.4 — the old line read "No data is stored on
+                    // any server", directly above a card offering cloud
+                    // backup. Profiles and progress ARE stored, in this
+                    // app's cloud database, which is what the Delete
+                    // Account button below removes.
+                    'Reports are emailed to the guardians you add. '
+                    'Profiles and progress are backed up to your Awing '
+                    'account and can be deleted at any time.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 12,
