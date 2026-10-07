@@ -12753,17 +12753,92 @@ samagids@gmail.com — the exact customer-service detour 5.1.1(v) rejects.
 4. **Ask when the answer is the user's.** Whether a donated recording
    survives its contributor is not a technical choice.
 
+### Session 66s (2026-10-07) — every PIN field was readable off a screen recording
+
+Found while redacting the account-deletion recording App Review asked for.
+The parent PIN was legible **frame by frame, in 48pt type**. Not a recording
+artefact — the app does this, and has since the parental gate was written.
+
+`obscureText: true` does **not** mask the character you just typed.
+`EditableText.buildTextSpan()` reveals it first:
+
+```dart
+text = widget.obscuringCharacter * text.length;
+final int? o = _obscureShowCharTicksPending > 0 ? _obscureLatestCharIndex : null;
+if (o != null) text = text.replaceRange(o, o + 1, _value.text.substring(o, o + 1));
+```
+
+At 30fps that is ~10 frames per digit, so an 8-digit PIN leaves all eight
+digits in the file, one per frame. Anyone who steps through it reads the
+lot. Shoulder-surfing works the same way.
+
+**The fix masks in the CONTROLLER.** When `obscureText` is true EditableText
+builds the span itself and never consults the controller — so `obscureText`
+goes off and `lib/utils/pin_text_controller.dart` emits bullets.
+`PinTextController` has no reveal path to disable: it cannot see which
+character was typed last, so there is nothing to time.
+
+Applied to **all 15** obscured fields — parental gate (5), parent settings
+(5), profile PINs (3), developer code (1), profile select (1). Every field
+keeps its own styling; only the controller type changed, plus three flags.
+
+**Those flags are not optional.** `obscureText: true` implied
+`autocorrect: false`, `enableSuggestions: false` and
+`enableIMEPersonalizedLearning: false`. Dropping it without setting them by
+hand would feed PINs to the keyboard's predictive dictionary — trading a
+visual leak for a stored one.
+
+Committed as `54f37eb1`, `flutter analyze` clean, **not version-bumped**:
+build 148 was already on TestFlight and prepared on App Store Connect, and
+this is pre-existing rather than a regression, so it rides 1.24.5.
+
+### The 1.24.4 submission, and why CI went red
+
+`Build iOS #313` failed, but **the build was fine** — the IPA uploaded and
+`deliver` selected build 148. It failed on the last line:
+
+```
+[16:24:11]: Successfully selected build
+[!] Cannot submit for review - A review submission is already in progress
+```
+
+The rejected submission was still open, and Apple allows one at a time.
+**Re-running the workflow does not help** — it burns 22 minutes and fails at
+the same place. The fix is Resubmit from App Store Connect.
+
+`deliver` had already renamed the version record 1.24.3 → 1.24.4 and kept
+every piece of metadata, so the Age Assurance change, the rewritten What's
+New and the ACCOUNT DELETION review notes all carried over intact.
+
+Also seen on both runs: `Failed to CreateArtifact: Artifact storage quota
+has been hit`. Account-level, chronic, unrelated to this release.
+
+### What this session should teach the next one
+
+1. **A masked field is not a masked field.** `obscureText` is a convenience,
+   not a security control. Anything that must survive a camera has to be
+   masked where the text is drawn.
+2. **Redact before sharing, and verify the redaction by measurement.** The
+   recording was checked at 0.1s resolution across every window boundary,
+   not by eye — eyes miss a single frame, and a single frame is a digit.
+3. **A green main build and a red tag build mean the publish step failed,
+   not the code.** Read the last line before re-running anything.
+4. **Check that a Save actually saved.** Both App Store Connect and the
+   Firebase console took two clicks before the change stuck.
+
 ### Open, in order of worth
 
-0. **Blocking the 1.24.4 resubmission**, in order:
-   a. paste `firestore.rules` into the Firebase Console and publish;
-   b. run `scripts\build_and_run.bat` — `[5b/7] flutter analyze` is what
-      compile-checks the new deletion code, which was written on a machine
-      with no Flutter;
-   c. record the deletion flow on a physical device (Apple asked for it
-      explicitly and wants it in App Review Information > Notes);
-   d. set Age Assurance to None in App Information;
-   e. push `site_legal` and tag `v1.24.4+148`.
+0. **`firestore.rules` is STILL not published.** The console timeline tops
+   out at Sep 22, on `sanguine-frame-291822` (the project
+   google-services.json points at) and nothing on `sama-play` either. This
+   does NOT block the review — a reviewer's fresh account has no recordings
+   and no roster entries, so both queries return empty and no denied delete
+   happens, which is why the recording shows the clean "Account deleted"
+   message. It blocks **real contributors**, who would see "a few items
+   could not be reached". Must land before 148 reaches anyone.
+1. **Resubmit 1.24.4 from App Store Connect**, not by re-running CI.
+   Attach `store_assets/awing_account_deletion_1.24.4.mp4` to App Review
+   Information first — the notes now say a recording is attached.
 1. **The pad-assets release must be re-uploaded.** `asset_fingerprint.py`
    reports stale (219.9 -> 219.0 MB). CI builds from the release tarball, so
    until `scripts/pack_and_upload_assets.sh` runs in WSL the next build
