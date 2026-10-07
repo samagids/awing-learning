@@ -12826,16 +12826,51 @@ has been hit`. Account-level, chronic, unrelated to this release.
 4. **Check that a Save actually saved.** Both App Store Connect and the
    Firebase console took two clicks before the change stuck.
 
+### Session 66t (2026-10-07) — the flashcard, and two kinds of "missing image"
+
+A Galaxy S24 Ultra report: words missing pictures, and pictures being cut
+off. Two unrelated causes.
+
+**The cropping.** `_FlashCard` was a hardcoded `Row` on every screen size —
+image left at `BoxFit.cover`, text right. `cover` fills its box by cropping,
+so on a 20:9 phone most of a square illustration was cut away while the
+40pt Awing word was squeezed into half the width. Now `LayoutBuilder`
+branches at 600dp: phone stacks word-above-whole-picture (42% of card
+height), tablet keeps picture-left/word-right, `BoxFit.contain` in both.
+The text block scrolls instead of overflowing when the English is revealed.
+
+**"Missing" images are two different things.**
+
+- `nəghagə́` / cheek genuinely had no image on the shipped build. It exists
+  now (`neghage__cheek.webp`, generated 2026-10-04), so 1.24.4 fixes it.
+- `ghǒ` "you (singular)" shows a picture on the old build and **will go
+  blank** — on purpose. `generate_images.py` leaves **319 of 6,417** live
+  words unillustrated and deletes images drawn for them in earlier runs.
+  The script quotes the decision: *"ensure the pictures match the words …
+  there is no picture of 'from'"*. All 319 are pronouns, particles,
+  interrogatives, linkers, demonstratives.
+
+The card now calls `ImageService.hasImageSync()` first, so those 319 show a
+centred word rather than the grey broken-image box that prompted the
+report. **Before "fixing" a missing image, check whether it is the policy
+working.**
+
+Shipping: **1.24.5**, not 1.24.4. 148 was already Waiting for Review and
+cancelling it would have sent the rejection fix to the back of Apple's
+queue.
+
 ### Open, in order of worth
 
-0. **`firestore.rules` is STILL not published.** The console timeline tops
-   out at Sep 22, on `sanguine-frame-291822` (the project
-   google-services.json points at) and nothing on `sama-play` either. This
-   does NOT block the review — a reviewer's fresh account has no recordings
-   and no roster entries, so both queries return empty and no denied delete
-   happens, which is why the recording shows the clean "Account deleted"
-   message. It blocks **real contributors**, who would see "a few items
-   could not be reached". Must land before 148 reaches anyone.
+0. **`firestore.rules` IS published** (2026-10-07), confirmed by reading the
+   live rule text. Recorded because it cost time: the console's left-hand
+   **version timeline is not a reliable signal** - it still read "Sep 22"
+   long after the publish landed, and that panel was used to assert twice
+   that the rules were missing. The editor is CodeMirror 6 and virtualizes,
+   so reading `.cm-content` returns only the ~80 rendered lines and
+   successive reads differ (852, 2717, 4109, 4213 chars). Setting
+   `scrollTop` does nothing. What works: click into the editor, send a real
+   `ctrl+End`, then read. **Check the rule text, never the timeline.**
+
 1. **Resubmit 1.24.4 from App Store Connect**, not by re-running CI.
    Attach `store_assets/awing_account_deletion_1.24.4.mp4` to App Review
    Information first — the notes now say a recording is attached.
