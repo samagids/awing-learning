@@ -4,6 +4,7 @@ import 'package:awing_ai_learning/services/analytics_service.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/progress_service.dart';
 import 'package:awing_ai_learning/screens/settings/feedback_screen.dart';
+import 'package:awing_ai_learning/utils/pin_text_controller.dart';
 
 /// Kid-friendly player profile screen with gamification stats, badges, and progress tracking
 class ProfileScreen extends StatefulWidget {
@@ -663,7 +664,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // If changing, verify current PIN first
     if (hasExisting && profile != null && profile.hasPin) {
-      final currentPinController = TextEditingController();
+      final currentPinController = PinTextController();
       final verified = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -677,7 +678,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 controller: currentPinController,
                 keyboardType: TextInputType.number,
                 maxLength: 8,
-                obscureText: true,
+                // Masked by PinTextController, not obscureText: that reveals
+                // each character for ~10 frames, which a screen recording keeps.
+                autocorrect: false,
+                enableSuggestions: false,
+                enableIMEPersonalizedLearning: false,
                 textAlign: TextAlign.center,
                 autofocus: true,
                 style: const TextStyle(fontSize: 28, letterSpacing: 8),
@@ -717,7 +722,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // Now show the new PIN dialog
-    final newPinController = TextEditingController();
+    final newPinController = PinTextController();
     if (!mounted) return;
     final newPin = await showDialog<String>(
       context: context,
@@ -732,7 +737,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               controller: newPinController,
               keyboardType: TextInputType.number,
               maxLength: 8,
-              obscureText: true,
+              // Masked by PinTextController, not obscureText: that reveals
+              // each character for ~10 frames, which a screen recording keeps.
+              autocorrect: false,
+              enableSuggestions: false,
+              enableIMEPersonalizedLearning: false,
               textAlign: TextAlign.center,
               autofocus: true,
               style: const TextStyle(fontSize: 28, letterSpacing: 8),
@@ -792,7 +801,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final profile = auth.currentProfile;
     if (profile == null || !profile.hasPin) return;
 
-    final controller = TextEditingController();
+    final controller = PinTextController();
     final verified = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -806,7 +815,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               controller: controller,
               keyboardType: TextInputType.number,
               maxLength: 8,
-              obscureText: true,
+              // Masked by PinTextController, not obscureText: that reveals
+              // each character for ~10 frames, which a screen recording keeps.
+              autocorrect: false,
+              enableSuggestions: false,
+              enableIMEPersonalizedLearning: false,
               textAlign: TextAlign.center,
               autofocus: true,
               style: const TextStyle(fontSize: 28, letterSpacing: 8),

@@ -4,6 +4,7 @@ import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/models/user_model.dart';
 import 'package:awing_ai_learning/components/parental_gate.dart';
 import 'package:awing_ai_learning/components/parent_contacts_editor.dart';
+import 'package:awing_ai_learning/utils/pin_text_controller.dart';
 
 class ProfileSelectScreen extends StatefulWidget {
   const ProfileSelectScreen({Key? key}) : super(key: key);
@@ -264,7 +265,7 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
   }
 
   Future<bool> _showProfilePinDialog(UserProfile profile) async {
-    final controller = TextEditingController();
+    final controller = PinTextController();
     final result = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -280,7 +281,11 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
           controller: controller,
           keyboardType: TextInputType.number,
           maxLength: 8,
-          obscureText: true,
+          // Masked by PinTextController, not obscureText: that reveals
+          // each character for ~10 frames, which a screen recording keeps.
+          autocorrect: false,
+          enableSuggestions: false,
+          enableIMEPersonalizedLearning: false,
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 28, letterSpacing: 8),
           decoration: InputDecoration(

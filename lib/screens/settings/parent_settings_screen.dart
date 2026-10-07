@@ -10,6 +10,7 @@ import 'package:awing_ai_learning/components/parent_contacts_editor.dart';
 import 'package:awing_ai_learning/screens/settings/backup_screen.dart';
 import 'package:awing_ai_learning/services/account_deletion_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:awing_ai_learning/utils/pin_text_controller.dart';
 
 /// Settings screen for parents to manage WhatsApp notifications,
 /// update their contact info, and send test/weekly summary messages.
@@ -151,9 +152,9 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
   /// Show a dialog to set or change the parent PIN.
   /// PIN must be at least 6 digits.
   Future<void> _showPinSetupDialog(AuthService auth, bool isChange) async {
-    final currentPinController = TextEditingController();
-    final newPinController = TextEditingController();
-    final confirmPinController = TextEditingController();
+    final currentPinController = PinTextController();
+    final newPinController = PinTextController();
+    final confirmPinController = PinTextController();
     String? errorText;
 
     final result = await showDialog<bool>(
@@ -183,7 +184,11 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                       TextField(
                         controller: currentPinController,
                         keyboardType: TextInputType.number,
-                        obscureText: true,
+                        // Masked by PinTextController, not obscureText: that reveals
+                        // each character for ~10 frames, which a screen recording keeps.
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        enableIMEPersonalizedLearning: false,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                           LengthLimitingTextInputFormatter(12),
@@ -198,7 +203,11 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                     TextField(
                       controller: newPinController,
                       keyboardType: TextInputType.number,
-                      obscureText: true,
+                      // Masked by PinTextController, not obscureText: that reveals
+                      // each character for ~10 frames, which a screen recording keeps.
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      enableIMEPersonalizedLearning: false,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(12),
@@ -212,7 +221,11 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                     TextField(
                       controller: confirmPinController,
                       keyboardType: TextInputType.number,
-                      obscureText: true,
+                      // Masked by PinTextController, not obscureText: that reveals
+                      // each character for ~10 frames, which a screen recording keeps.
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      enableIMEPersonalizedLearning: false,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(12),
@@ -541,7 +554,7 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
 
   /// Parent PIN check, shared by deletion. Returns true only on a match.
   Future<bool?> _verifyParentPin(AuthService auth, String reason) async {
-    final controller = TextEditingController();
+    final controller = PinTextController();
     String? error;
     final ok = await showDialog<bool>(
       context: context,
@@ -560,7 +573,11 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
               TextField(
                 controller: controller,
                 keyboardType: TextInputType.number,
-                obscureText: true,
+                // Masked by PinTextController, not obscureText: that reveals
+                // each character for ~10 frames, which a screen recording keeps.
+                autocorrect: false,
+                enableSuggestions: false,
+                enableIMEPersonalizedLearning: false,
                 autofocus: true,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
@@ -639,7 +656,7 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
     }
 
     // Verify the PIN.
-    final pinController = TextEditingController();
+    final pinController = PinTextController();
     String? pinError;
     final verified = await showDialog<bool>(
       context: context,
@@ -663,7 +680,11 @@ class _ParentSettingsScreenState extends State<ParentSettingsScreen> {
                   TextField(
                     controller: pinController,
                     keyboardType: TextInputType.number,
-                    obscureText: true,
+                    // Masked by PinTextController, not obscureText: that reveals
+                    // each character for ~10 frames, which a screen recording keeps.
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    enableIMEPersonalizedLearning: false,
                     autofocus: true,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,

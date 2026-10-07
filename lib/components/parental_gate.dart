@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awing_ai_learning/services/auth_service.dart';
 import 'package:awing_ai_learning/services/contribution_service.dart';
+import 'package:awing_ai_learning/utils/pin_text_controller.dart';
 
 /// Parental gate that protects destructive actions from kids.
 ///
@@ -61,7 +62,7 @@ class ParentalGate {
     required String title,
     required String message,
   }) async {
-    final controller = TextEditingController();
+    final controller = PinTextController();
     bool? result = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -82,7 +83,11 @@ class ParentalGate {
               controller: controller,
               keyboardType: TextInputType.number,
               maxLength: 8,
-              obscureText: true,
+              // Masked by PinTextController, not obscureText: that reveals
+              // each character for ~10 frames, which a screen recording keeps.
+              autocorrect: false,
+              enableSuggestions: false,
+              enableIMEPersonalizedLearning: false,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 28, letterSpacing: 8),
               decoration: InputDecoration(
@@ -482,7 +487,7 @@ class ParentalGate {
 
     // If changing an existing PIN, verify the current one first
     if (auth.hasAccountPin) {
-      final currentPinController = TextEditingController();
+      final currentPinController = PinTextController();
       final verified = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -502,7 +507,11 @@ class ParentalGate {
                 controller: currentPinController,
                 keyboardType: TextInputType.number,
                 maxLength: 8,
-                obscureText: true,
+                // Masked by PinTextController, not obscureText: that reveals
+                // each character for ~10 frames, which a screen recording keeps.
+                autocorrect: false,
+                enableSuggestions: false,
+                enableIMEPersonalizedLearning: false,
                 textAlign: TextAlign.center,
                 autofocus: true,
                 style: const TextStyle(fontSize: 24, letterSpacing: 8),
@@ -541,8 +550,8 @@ class ParentalGate {
       if (verified != true || !context.mounted) return;
     }
 
-    final controller = TextEditingController();
-    final confirmController = TextEditingController();
+    final controller = PinTextController();
+    final confirmController = PinTextController();
 
     await showDialog(
       context: context,
@@ -568,7 +577,11 @@ class ParentalGate {
               controller: controller,
               keyboardType: TextInputType.number,
               maxLength: 8,
-              obscureText: true,
+              // Masked by PinTextController, not obscureText: that reveals
+              // each character for ~10 frames, which a screen recording keeps.
+              autocorrect: false,
+              enableSuggestions: false,
+              enableIMEPersonalizedLearning: false,
               textAlign: TextAlign.center,
               autofocus: true,
               style: const TextStyle(fontSize: 24, letterSpacing: 8),
@@ -584,7 +597,11 @@ class ParentalGate {
               controller: confirmController,
               keyboardType: TextInputType.number,
               maxLength: 8,
-              obscureText: true,
+              // Masked by PinTextController, not obscureText: that reveals
+              // each character for ~10 frames, which a screen recording keeps.
+              autocorrect: false,
+              enableSuggestions: false,
+              enableIMEPersonalizedLearning: false,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 24, letterSpacing: 8),
               decoration: InputDecoration(
@@ -605,7 +622,7 @@ class ParentalGate {
             TextButton(
               onPressed: () async {
                 // Confirm removal — require current PIN first
-                final pinController = TextEditingController();
+                final pinController = PinTextController();
                 final confirmed = await showDialog<bool>(
                   context: ctx,
                   builder: (ctx2) => AlertDialog(
@@ -619,7 +636,11 @@ class ParentalGate {
                           controller: pinController,
                           keyboardType: TextInputType.number,
                           maxLength: 8,
-                          obscureText: true,
+                          // Masked by PinTextController, not obscureText: that reveals
+                          // each character for ~10 frames, which a screen recording keeps.
+                          autocorrect: false,
+                          enableSuggestions: false,
+                          enableIMEPersonalizedLearning: false,
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 24, letterSpacing: 8),
                           decoration: InputDecoration(

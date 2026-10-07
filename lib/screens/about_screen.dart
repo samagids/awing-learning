@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:awing_ai_learning/services/auth_service.dart';
+import 'package:awing_ai_learning/utils/pin_text_controller.dart';
 
 /// About screen — credits, version, app information, and hidden developer mode entry.
 class AboutScreen extends StatefulWidget {
@@ -832,7 +833,7 @@ class _AboutScreenState extends State<AboutScreen> {
     }
 
     // Step 2: Enter access code
-    final codeController = TextEditingController();
+    final codeController = PinTextController();
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -852,7 +853,11 @@ class _AboutScreenState extends State<AboutScreen> {
             const SizedBox(height: 16),
             TextField(
               controller: codeController,
-              obscureText: true,
+              // Masked by PinTextController, not obscureText: that reveals
+              // each character for ~10 frames, which a screen recording keeps.
+              autocorrect: false,
+              enableSuggestions: false,
+              enableIMEPersonalizedLearning: false,
               decoration: InputDecoration(
                 labelText: 'Access Code',
                 border: OutlineInputBorder(
