@@ -2937,9 +2937,11 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
     # prompt (with STYLE_SUFFIX appended) stays under CLIP's 77-token budget.
     if category in ("phrase", "sentence", "story"):
         text = english_word.strip().rstrip(".!?\"'").strip()
-        words = text.split()
-        if len(words) > 15:
-            text = " ".join(words[:15])
+        # Cut at a phrase boundary, not at word 15. "...that can lift it in"
+        # and "...if their child turns out to" are prompts asking for a
+        # relationship whose object was cut off, and the model fills the gap
+        # itself - the same defect that was fixed on the word path.
+        text = _trim_to_phrase(text, 15).rstrip(",;: ")
         templates = {
             "phrase": f"a cartoon scene of a child saying: {text}",
             "sentence": f"a cartoon scene illustrating: {text}",
