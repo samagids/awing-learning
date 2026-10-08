@@ -4551,7 +4551,24 @@ def cmd_generate(args):
                     print(f"  ! could not remove {stale.name}: {exc}")
             continue
 
-        if getattr(args, "only_depictable", False) and \
+        # ON BY DEFAULT since 2026-10-08. --draw-everything turns it off.
+        #
+        # This morning Dr. Sama asked for every word to have an image, so
+        # the check was made opt-in. Every white-person card he has found
+        # since has been a word this check would have stopped:
+        #
+        #   "the personal pronoun 'he'; the personal pronoun 'she'"
+        #     -> prompt: "the personal pronoun, personal pronoun clearly
+        #        visible in the picture"
+        #     -> a red-haired woman and two boys at laptops
+        #
+        # There is no person in that prompt to attach a skin tone to, and no
+        # object either, so SDXL invents a scene and invents the people in
+        # it. The same words produced the grid of random cars for "he" and
+        # the jumble for "that". A blank card teaches nothing; a classroom
+        # of white Europeans captioned with an Awing pronoun teaches
+        # something worse.
+        if not getattr(args, "draw_everything", False) and \
                 not is_illustratable(english, category):
             not_depictable += 1
             # Skipping is not enough. These entries ALREADY have an image on
@@ -5040,6 +5057,14 @@ def main():
     gen_parser.add_argument("--all-words", action="store_true",
                             help=argparse.SUPPRESS)  # now the default; kept
                             # so older invocations keep working
+    gen_parser.add_argument("--draw-everything", action="store_true",
+                            help="Draw even entries with nothing depictable "
+                                 "(prepositions, pronouns, grammar markers). "
+                                 "OFF by default: those prompts have no "
+                                 "subject, so SDXL invents a scene and "
+                                 "invents the people in it - every "
+                                 "white-person card found on 2026-10-08 was "
+                                 "one of these.")
     gen_parser.add_argument("--only-depictable", action="store_true",
                             help="Leave entries with nothing depictable "
                                  "(prepositions, pronouns, grammatical "
