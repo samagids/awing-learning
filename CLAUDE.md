@@ -13439,3 +13439,59 @@ Flutter UI, not only to SDXL output.
 or `U+1F3FF` modifier.** The sweep that found these is in the session log;
 it walks `lib/**/*.dart` and flags any emoji in the human-capable
 codepoint ranges that is not followed by a modifier.
+
+---
+
+## Session 66v — developer re-recording (2026-10-08)
+
+Dr. Sama: *"fix the dev mode so i can search for a word and rerecord even
+though a recording already exist for it. This will help me correct wrong
+sounding words."*
+
+The duplicate-recording block lived in **four** places. Fixing fewer than
+all four would have looked like it worked and changed nothing:
+
+1. `record_picker_screen` hides every word that has a recording — correct
+   for a contributor. A developer-only search bar now spans the whole
+   vocabulary, with each row's state shown and a play button on it.
+2. `record_audio_screen`'s own autocomplete applied the same filter.
+3. `record_audio_screen` refused both `_startRecording` and `_submit` on
+   `_alreadyRecorded`. Both now test `_blockedAsDuplicate`
+   (`_alreadyRecorded && !isDeveloper`).
+4. **`apply_contributions.py` dropped it at the last step** —
+   `if mod.existing_native(key): continue  # never overwrite`. A
+   re-recording would be submitted, approved, archived and then silently
+   discarded. New `--replace-audio` flag, off by default, copies the
+   displaced clip to `contributions/replaced_native_audio/` first.
+
+**RULE: when lifting a restriction in the app, follow the value all the
+way to where it lands on disk.** Three of the four blocks were in Flutter
+and the fourth was in Python, two repositories' worth of distance from the
+button the user presses.
+
+Developer replacement run:
+
+```powershell
+python scripts\apply_contributions.py --replace-audio
+```
+
+## Session 66v — auditing the image pack
+
+`scripts/audit_pack.py` runs the three existing checkers against the three
+rules and — this is the point — **splits the result by what would actually
+fix it**:
+
+- **REGENERATE** (`scripts/_reshoot_<date>.txt`): the key is missing, or
+  CLIP says there is a white person in it. The prompt is fine; a new shot
+  fixes it.
+- **NEEDS A PROMPT** (`contributions/needs_prompt_<date>.json`): the
+  picture does not show its meaning, or many words collapsed onto one
+  picture. **Reshooting these changes nothing** — the prompt is what is
+  wrong. They need a hand-written `PROMPT_OVERRIDE`.
+
+Shooting the second group is how three earlier rounds were spent.
+
+```powershell
+.\venv\Scripts\python.exe scripts\audit_pack.py        # full, needs GPU
+python scripts\audit_pack.py --no-gpu                  # rule 1 + duplicates
+```
