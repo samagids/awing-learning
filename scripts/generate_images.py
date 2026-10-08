@@ -4329,6 +4329,9 @@ def cmd_generate(args):
     ai_hits = 0
     emoji_used = 0
     oom_keys = []
+    emoji_fallback = bool(getattr(args, "emoji_fallback", False)
+                          or getattr(args, "emoji_only", False))
+    ai_attempts = 0
     not_depictable = 0
     protected_skipped = 0
     protected_keys = _contributed_keys()
@@ -4440,6 +4443,8 @@ def cmd_generate(args):
                 except Exception:
                     pass
 
+            ai_attempts += 1
+
             if ai_img == "OOM":
                 # The GPU ran out of memory, twice, after freeing the cache.
                 # That is a fact about the machine, not about this word.
@@ -4449,9 +4454,10 @@ def cmd_generate(args):
                 # them from a deliberate choice. Leave whatever is on disk
                 # and record the key so the run can be finished later.
                 oom_keys.append(key)
-                ai_img = None
                 used_ai = True          # suppress the emoji fallback below
                 continue
+
+            if ai_img:
                 if finalize_image(ai_img, category, output_file):
                     generated += 1
                     ai_hits += 1
@@ -4463,8 +4469,38 @@ def cmd_generate(args):
                         print(f"  [{generated:4d}/{len(vocabulary)}] {english:30} (GPU) "
                               f"[{rate:.1f} img/s, ~{remaining/60:.0f}m left]")
 
-        # Fall back to emoji
-        if not used_ai:
+        # ABORT if the GPU is producing nothing at all.
+        #
+        # Three separate full runs today each produced 0 AI images and
+        # thousands of files anyway - twice from a real CUDA OOM, once from
+        # a bug of mine that dropped the save branch so every image was
+        # generated correctly and thrown away. In all three the run said
+        # "Generation complete". Whatever the cause, 20 attempts with no
+        # output means something is broken, and continuing for another
+        # 5,400 words only makes the mess bigger.
+        if use_ai and ai_attempts >= 20 and ai_hits == 0:
+            print()
+            print("ABORTING: 20 GPU attempts, 0 images saved.")
+            print("  Something is wrong with generation, not with the words.")
+            print("  Nothing further will be written. Check the errors above,")
+            print("  or run the one-image probe:")
+            print("    python scripts/generate_images.py test")
+            sys.exit(1)
+
+        # Fall back to emoji - ONLY when asked for.
+        #
+        # 2026-10-08: a GPU failure early in a full run sent 5,314 of 5,445
+        # words down this path and the pack silently became Twemoji on
+        # gradient squares. Right filenames, right folder, "Generation
+        # complete". Nothing said it had happened.
+        #
+        # Mirrors the v1.24.0 audio decision: a word with no native
+        # recording is left SILENT rather than given a synthetic voice. A
+        # word the GPU could not draw is left with no image rather than a
+        # generic emoji. hasImageSync() filters an image-less word out of
+        # games and quizzes, so a gap is safe - and a gap is VISIBLE, where
+        # an emoji looks like somebody's decision.
+        if not used_ai and emoji_fallback:
             if generate_emoji_image(english, category, output_file):
                 generated += 1
                 emoji_used += 1
@@ -4472,6 +4508,8 @@ def cmd_generate(args):
                     print(f"  [{generated:4d}/{len(vocabulary)}] {english:30} (emoji fallback)")
             else:
                 failed += 1
+        elif not used_ai:
+            failed += 1
 
     elapsed = time.time() - start_time
     print(f"\nGeneration complete in {elapsed:.0f}s ({elapsed/60:.1f} min):")
