@@ -22,6 +22,12 @@ Requirements:
 """
 
 import os
+
+# Must be set BEFORE torch initialises CUDA, so it lives at the top of the
+# module rather than next to the pipeline. expandable_segments lets the
+# allocator grow a block instead of hunting for a contiguous one, which is
+# what fails after thousands of generations in one process.
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 import sys
 import re
 import json
@@ -3635,12 +3641,18 @@ def load_pipeline():
         )
         _pipeline = _pipeline.to("cuda")
 
-        # Optimize memory
+        # Optimize memory. A full run is thousands of generations in one
+        # process and VRAM fragments: the 5,000th image OOMs on a card that
+        # drew the first 4,000 fine. VAE slicing is the one that matters -
+        # decoding is the peak - and attention slicing trades a little speed
+        # for headroom.
         _pipeline.set_progress_bar_config(disable=True)
-        try:
-            _pipeline.enable_attention_slicing()
-        except Exception:
-            pass
+        for opt in ("enable_attention_slicing", "enable_vae_slicing",
+                    "enable_vae_tiling"):
+            try:
+                getattr(_pipeline, opt)()
+            except Exception:
+                pass
 
         print(f"Model loaded successfully!\n")
         return _pipeline
@@ -3789,9 +3801,15 @@ def get_negative_prompt(prompt: str, category: str) -> str:
 
 
 def generate_ai_image(prompt: str, seed: int,
-                      negative_prompt: str = "") -> Image.Image | None:
-    """Generate an image using SDXL Turbo on local GPU."""
-    import torch
+                      negative_prompt: str = "", _retry: int = 0):
+    """Generate an image using SDXL Turbo on local GPU.
+
+    Returns the image, None if the pipeline is unavailable or the prompt
+    genuinely failed, or the string "OOM" when the GPU ran out of memory -
+    which is transient and must not be treated as "this word cannot be
+    drawn". See the caller.
+    """
+    import torch, time
 
     pipe = load_pipeline()
     if pipe is None:
@@ -3818,8 +3836,29 @@ def generate_ai_image(prompt: str, seed: int,
         return img.convert("RGB")
 
     except Exception as e:
+        msg = str(e)
+        oom = ("out of memory" in msg.lower()
+               or "cuda error" in msg.lower()
+               or e.__class__.__name__ == "OutOfMemoryError")
+        if oom and _retry < 2:
+            # VRAM fragments over a long run. Freeing the cache and waiting
+            # a moment recovers it most of the time, and an OOM is transient
+            # - it says nothing about whether this word can be drawn.
+            try:
+                import gc
+                gc.collect()
+                torch.cuda.empty_cache()
+                torch.cuda.synchronize()
+            except Exception:
+                pass
+            time.sleep(3)
+            print(f"    GPU out of memory, freed cache, retry {_retry + 1}/2")
+            return generate_ai_image(prompt, seed, negative_prompt,
+                                     _retry=_retry + 1)
         print(f"    GPU generation failed: {e}")
-        return None
+        # Signalled separately from "this word has no picture": the caller
+        # must NOT substitute an emoji for a transient GPU fault.
+        return "OOM" if oom else None
 
 
 # ============================================================
@@ -4289,6 +4328,7 @@ def cmd_generate(args):
     failed = 0
     ai_hits = 0
     emoji_used = 0
+    oom_keys = []
     not_depictable = 0
     protected_skipped = 0
     protected_keys = _contributed_keys()
@@ -4391,7 +4431,27 @@ def cmd_generate(args):
             ai_img = generate_ai_image(
                 prompt, seed, get_negative_prompt(prompt, category))
 
-            if ai_img:
+            # Housekeeping every 200 images. Cheap, and it keeps the
+            # allocator from fragmenting its way into the failure above.
+            if generated and generated % 200 == 0:
+                try:
+                    import torch as _t
+                    _t.cuda.empty_cache()
+                except Exception:
+                    pass
+
+            if ai_img == "OOM":
+                # The GPU ran out of memory, twice, after freeing the cache.
+                # That is a fact about the machine, not about this word.
+                # Writing the emoji fallback here would bake a wrong picture
+                # into the pack and look finished - a run that OOM'd on 300
+                # words would ship 300 emoji with nothing to distinguish
+                # them from a deliberate choice. Leave whatever is on disk
+                # and record the key so the run can be finished later.
+                oom_keys.append(key)
+                ai_img = None
+                used_ai = True          # suppress the emoji fallback below
+                continue
                 if finalize_image(ai_img, category, output_file):
                     generated += 1
                     ai_hits += 1
@@ -4431,6 +4491,19 @@ def cmd_generate(args):
     if use_ai:
         print(f"  AI images: {ai_hits}")
         print(f"  Emoji:     {emoji_used} (AI failed)")
+    if oom_keys:
+        _oom_file = os.path.join("contributions", "oom_keys.txt")
+        try:
+            os.makedirs("contributions", exist_ok=True)
+            with open(_oom_file, "w", encoding="utf-8") as fh:
+                fh.write("\n".join(oom_keys) + "\n")
+        except Exception as exc:
+            print(f"  ! could not write {_oom_file}: {exc}")
+        print(f"  GPU OUT OF MEMORY on {len(oom_keys)} words. These were "
+              f"SKIPPED, not drawn and not given an emoji.")
+        print(f"  Keys written to {_oom_file}. Finish them with:")
+        print(f"      python scripts/generate_images.py generate --force "
+              f"--format webp --keys-file {_oom_file}")
     if generated > 0:
         print(f"  Speed:     {generated / elapsed:.1f} images/second")
     print(f"  Output:    {OUTPUT_DIR}")
@@ -4734,6 +4807,13 @@ def main():
                                  "Example: --category=body,actions,family")
     gen_parser.add_argument("--force", action="store_true", help="Regenerate existing images")
     gen_parser.add_argument("--emoji-only", action="store_true", help="Use only emoji (skip GPU)")
+    gen_parser.add_argument("--emoji-fallback", action="store_true",
+                            help="When GPU generation fails, write a Twemoji "
+                                 "graphic instead of leaving the word without "
+                                 "an image. OFF by default since 2026-10-08: "
+                                 "a CUDA OOM early in a full run turned 5,314 "
+                                 "of 5,445 cards into emoji and the run still "
+                                 "reported success.")
     gen_parser.add_argument("--word",
                             help="Only regenerate specific words (comma-separated). "
                                  "Matches against audio_key, Awing word, or English gloss. "
