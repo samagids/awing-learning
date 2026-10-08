@@ -277,6 +277,22 @@ _HUMAN_NOUN_RE = re.compile(
     r"runner|runners|traveller|traveler|travellers|travelers|tailor|"
     r"crier|passer-by|passerby|listener|listeners|lender|borrower|"
     r"official|officials|diviner|diviners|shepherd|shepherds|prisoner|"
+    # Round 4, Session 66v. Found by listing every gloss whose head is a
+    # person role and checking whether africanize_people() fired: 15 did
+    # not, so "a priest" and "a slaughterer" went to SDXL with no tone
+    # named at all. These are the role nouns the dictionary actually uses.
+    # Deliberately NOT here: male, female (adjectives - "a male goat"),
+    # host, guide (not always a person), god, angel, demon, nobody.
+    r"accuser|ancestor|ancestors|apostle|bachelor|baptist|barber|beggar|"
+    r"bishop|boss|boyfriend|butcher|butler|catcher|clerk|co-wife|"
+    r"companion|councillor|cripple|daughter|daughter-in-law|delegate|"
+    r"descendant|disciple|divorcee|drunkard|dwarf|escort|fool|gentile|"
+    r"giant|girlfriend|giver|glutton|godfather|godmother|guard|heir|"
+    r"heiress|hunchback|husband|hypocrite|imbecile|judge|junior|liar|"
+    r"midwife|mourner|murderer|namesake|nephew|niece|photographer|priest|"
+    r"priests|prophet|prostitute|roofer|ruler|saviour|senior|simpleton|"
+    r"sinner|slaughterer|son|son-in-law|sorcerer|spinster|stepdaughter|"
+    r"stepfather|stepmother|stepson|traitor|unbeliever|wife|youth|"
     r"prisoners|secretary|treasurer|announcer|tailors|"
     r"youngster|youngsters|tapper|carver|builder|carrier|sweeper|"
     r"visitor|visitors|owner|master|helper|leader|speaker|writer|reader|"
@@ -1237,7 +1253,7 @@ PROMPT_OVERRIDES = {
     "descend": "a cartoon child going down a slide",
     "destroy": "a cartoon child knocking down a block tower",
     "die": "a cartoon withered flower drooping",
-    "disappear": "a cartoon magician making a rabbit vanish with poof",
+    "disappear": "an empty wooden stool with a puff of smoke above it where something has just gone",
     "dream": "a cartoon child sleeping with dream cloud above",
     "drip": "a cartoon water faucet dripping drops",
     "drown (intr)": "a cartoon person in water waving for help with lifering",
@@ -1285,7 +1301,7 @@ PROMPT_OVERRIDES = {
     "look for something": "a cartoon child searching under furniture for a lost toy",
     "love": "a cartoon big red heart with sparkles",
     "make": "a cartoon child making something with clay",
-    "marry": "a cartoon happy wedding couple",
+    "marry": "a Cameroonian bride and groom with dark brown skin standing together in wedding dress, smiling",
     "measure": "a cartoon child using a ruler to measure height",
     "melt": "a cartoon snowman melting in the sun",
     "mix": "a cartoon child stirring a bowl of colorful batter",
@@ -2298,8 +2314,8 @@ PROMPT_OVERRIDES = {
     "but": "an arrow travelling forward and bouncing back off a brick wall",
     "from": "an arrow curving out of an open clay pot towards a basket",
     "future tense marker": "a calendar with tomorrow circled in red and an arrow pointing forward to it",
-    "he": "a woven boy's hat on a stool with an arrow pointing to it",
-    "he/him pronoun": "a woven boy's hat on a stool with an arrow pointing to it",
+    "he": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
+    "he/him pronoun": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
     "here": "a bright X marked on the ground with a stone on it, close to the viewer",
     "hers": "a girl's bright headscarf folded on a basket of maize beside a stool",
     "his": "a boy's woven hat resting on a basket of maize beside a stool",
@@ -2345,15 +2361,32 @@ PROMPT_OVERRIDES = {
     "from starting source preposition": "an arrow curving out of an open clay pot towards a basket",
     "impersonal animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
     "it impersonal animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
-    "personal pronoun": "a woven boy's hat on one stool and a girl's headscarf on another, an arrow pointing to each",
+    "personal pronoun": "a Cameroonian boy and a Cameroonian girl, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
     "plural marker": "one mango beside a heap of five mangoes, an arrow from the one to the heap",
     "preposition at": "a red map pin standing upright on a small drawn map",
     "question marker": "a large bold question mark beside a closed wooden box with its lid ajar",
     "singular pronoun you": "a basket of mangoes held out towards the viewer by two dark brown hands",
     "the impersonal or animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
-    "the personal pronoun": "a woven boy's hat on one stool and a girl's headscarf on another, an arrow pointing to each",
+    "the personal pronoun": "a Cameroonian boy and a Cameroonian girl, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
     "the singular pronoun you": "a basket of mangoes held out towards the viewer by two dark brown hands",
     "verb complement": "a row of wooden blocks with one extra block fitted onto the end",
+    "she": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
+    "she/her pronoun": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
+    "her": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
+    "him": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
+    "the personal pronoun he": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
+    "the personal pronoun she": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
+    "he she personal pronoun": "a Cameroonian boy and a Cameroonian girl, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
+    "the personal pronoun he the personal pronoun she": "a Cameroonian boy and a Cameroonian girl, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
+    "personal pronoun he": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
+    "personal pronoun she": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
+    "personal pronoun them": "a group of Cameroonian children with very dark brown skin standing together, a bold arrow sweeping across all of them",
+    "you": "a Cameroonian child with very dark brown skin facing the viewer, a bold arrow pointing out of the picture at the viewer",
+    "the pronoun you": "a Cameroonian child with very dark brown skin facing the viewer, a bold arrow pointing out of the picture at the viewer",
+    "you plural": "a Cameroonian child with very dark brown skin facing the viewer, a bold arrow pointing out of the picture at the viewer",
+    "i": "a Cameroonian child with very dark brown skin pointing at their own chest with both hands",
+    "me": "a Cameroonian child with very dark brown skin pointing at their own chest with both hands",
+    "the pronoun i": "a Cameroonian child with very dark brown skin pointing at their own chest with both hands",
 }
 
 
@@ -3302,6 +3335,80 @@ _VERB_HEADS = {
     "squeeze", "stir", "pound", "grind", "sweep", "scrape", "bend",
 }
 
+# Session 66v. The list above was a hand-written whitelist, so _is_verbish()
+# answered False for "shave", "borrow", "curse", "clear" - for almost every
+# verb in the dictionary - and the last-resort person injection in
+# get_ai_prompt() never fired. Those glosses went to SDXL as "a shave",
+# naming no subject at all, and the model invented one: the white man with
+# the razor, the office of white workers for "from". That was the engine
+# behind every white card, not the negative prompt and not the guidance.
+#
+# Why it was not caught by the category: 5,392 of 8,227 rows carry
+# category "things" because that is what the dictionary import defaulted to.
+# "shave" is things. "she" is things. The category cannot be trusted to say
+# whether a gloss is an action, so the gloss head has to.
+#
+# UNAMBIGUOUS VERBS ONLY. A lemma that is also a common concrete noun
+# ("work", "trap", "dress", "fight", "cross", "curse", "trip") is left out:
+# routing one of those to the person path would put a person on a card whose
+# subject is an object, which is the mistake the retired _SKIN_CLAUSE made.
+# A verb-only lemma cannot be an object, so this direction is safe.
+_VERB_HEADS |= {
+    "abandon", "abstain", "accompany", "accumulate", "admire", "admit",
+    "admonish", "alter", "announce", "apply", "approach", "attack", "bake",
+    "baptise", "bathe", "befit", "beg", "begin", "behave", "belch",
+    "bellow", "bewail", "bewitch", "blacken", "blame", "blaspheme",
+    "bleed", "bless", "blink", "blow", "borrow", "brag", "burst", "cancel",
+    "capsize", "caress", "castrate", "celebrate", "change", "chat", "chew",
+    "choke", "choose", "claim", "clap", "climb", "clot", "collect",
+    "complain", "conceive", "condemn", "confess", "congratulate",
+    "connect", "console", "consult", "contaminate", "continue",
+    "contradict", "convert", "cooperate", "correct", "cough", "crawl",
+    "create", "criticise", "crunch", "crush", "cry", "cultivate", "dance",
+    "daub", "deceive", "decide", "decorate", "decrease", "dedicate",
+    "defeat", "defecate", "defend", "degrade", "delay", "deliver",
+    "demand", "demonstrate", "depend", "describe", "despise", "destroy",
+    "develop", "die", "disappear", "disperse", "distress", "disturb",
+    "divide", "divorce", "domesticate", "drag", "draw", "dream", "drip",
+    "drive", "drizzle", "drown", "dry", "embrace", "entertain", "escape",
+    "escort", "evaporate", "exaggerate", "exchange", "exile", "exorcise",
+    "expel", "explain", "explode", "expose", "express", "extinguish",
+    "fade", "fail", "faint", "fall", "fasten", "feed", "fetch", "finalise",
+    "flash", "float", "flow", "fold", "follow", "forge", "forgive",
+    "frown", "fry", "fulfill", "fumble", "gather", "generate", "germinate",
+    "gird", "glue", "grasp", "grow", "grunt", "gush", "hang", "harden",
+    "hasten", "heal", "hit", "hope", "hunt", "hurt", "imagine", "imitate",
+    "immerse", "imprison", "increase", "incubate", "inhabit", "inherit",
+    "initiate", "inquire", "insist", "insult", "intend", "invite", "join",
+    "judge", "jump", "justify", "kill", "kiss", "knock", "lack", "laugh",
+    "launder", "lay", "lead", "leak", "leap", "learn", "lend", "lengthen",
+    "lick", "link", "listen", "live", "lock", "lose", "lurk", "marry",
+    "measure", "meet", "melt", "mix", "moan", "mold", "moor", "mourn",
+    "mumble", "murder", "nip", "notice", "obey", "obstruct", "offer",
+    "order", "overflow", "overtake", "paddle", "pass", "peck", "perch",
+    "perspire", "pick", "pierce", "pile", "pity", "plaster", "plunder",
+    "polish", "pray", "prepare", "press", "pretend", "prosper", "protect",
+    "protrude", "provoke", "puff", "punish", "purge", "quarrel", "quench",
+    "raise", "rap", "rape", "read", "receive", "recover", "redeem",
+    "reduce", "rejoice", "rescue", "resemble", "resist", "respect", "rest",
+    "return", "reward", "ripen", "rise", "roast", "rob", "ruminate",
+    "sacrifice", "save", "scare", "scoop", "scramble", "scream", "screech",
+    "scrutinise", "search", "settle", "sew", "shake", "share", "sharpen",
+    "shave", "shiver", "shoot", "shorten", "shout", "shut", "sift", "sigh",
+    "sin", "sing", "skip", "slander", "slash", "slice", "smash", "smear",
+    "smell", "smile", "sneeze", "soar", "soften", "solidify", "spit",
+    "spoil", "sprinkle", "sprout", "spy", "squat", "stab", "stagger",
+    "stamp", "startle", "steer", "step", "stoop", "stretch", "stumble",
+    "stutter", "succeed", "suckle", "support", "surround", "survive",
+    "swear", "swim", "tame", "taste", "teach", "tear", "tempt", "thank",
+    "threaten", "thresh", "throb", "translate", "transplant", "travel",
+    "traverse", "treat", "tremble", "trickle", "twist", "twitch",
+    "ululate", "unearth", "unload", "urinate", "verify", "visit", "vomit",
+    "wag", "wail", "wave", "weave", "whistle", "whitewash", "wink",
+    "winnow", "wipe", "wither", "wonder", "worry", "worship", "wrap",
+    "wring", "yawn", "yell",
+}
+
 
 def _as_noun_phrase(phrase: str) -> str:
     """Grammatical noun phrase - an article only when there is not one.
@@ -3497,7 +3604,11 @@ _ADULT_ENTRY = re.compile(
     r"naked|nakedness|nude|nudity|undress|strip off|"
     r"breast|breasts|nipple|buttock|buttocks|"
     r"circumcis\w*|menstruat\w*|menstrat\w*|mestruat\w*|virgin|womb|puberty|"
-    r"private part\w*|groin|loin)\b", re.I)
+    r"private part\w*|groin|loin|"
+    # Session 66v: four more that slipped through. "close-up of the
+    # clitoris of a Cameroonian young boy" is what the `body` category
+    # path would otherwise have built.
+    r"clitoris|testicle\w*|scrotum|semen|sperm|concubine|anus)\b", re.I)
 
 _UNILLUSTRATABLE_MARKERS = re.compile(
     r"\b(preposition|pronoun|conjunction|interjection|particle|auxiliary|"
@@ -3752,8 +3863,16 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
         # the eye that comes out usually after sleep"), and wrapping one in
         # "close-up of the ... of a Cameroonian girl" produced "close-up of
         # the a sort of white substance ... of a Cameroonian teenage girl".
+        # ...and not when the gloss is an ACTION. "shave (of hair)
+        # improperly" is filed under `body`, and the close-up frame turned
+        # it into "close-up of the shave one's self improperly of a
+        # Cameroonian teenage girl". A verb is something a person DOES, so
+        # it belongs on the action path below, not in a body-part frame.
         "body": (f"close-up of the {clean_word} of {who}"
-                 if (len(clean_word.split()) <= 4 and not owns_subject)
+                 if (len(clean_word.split()) <= 4 and not owns_subject
+                     and not _is_verbish(clean_word))
+                 else f"{_as_gerund(clean_word)}, done by {who}"
+                 if (_is_verbish(clean_word) and not owns_subject)
                  else f"{clean_word}, {who}"),
         "animals": f"{subject_np}, animal",
         "nature": f"{subject_np}, nature scene",
