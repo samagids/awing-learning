@@ -13030,3 +13030,33 @@ instead of the rule text.
 `is_illustratable()` and would be drawn by a full regeneration run. That is
 a content decision for Dr. Sama, not a mechanism bug — flagged, not
 filtered.
+
+### 66u addendum — `build_and_run` does NOT apply a prompt change
+
+Dr. Sama asked whether `build_and_run` would do the same thing as the
+regeneration run. It will not, and there was a bug sitting underneath the
+question.
+
+`generate` skips a word when `_target_path()` exists — the path **in the
+current output format**. That is deliberate (a stale PNG must not block the
+WebP during a migration), but it means the format flag decides what counts
+as "already drawn":
+
+- `build_and_run.bat` passes `--format webp`. Correct: all 9,025 existing
+  images are seen, all are skipped, the build is fast and the prompt change
+  has **no effect**.
+- `build_and_run.sh` (the WSL one Dr. Sama runs) passed **no** `--format`, so
+  `OUTPUT_FORMAT` defaulted to `png`. It looked for 9,025 `.png` files, found
+  none beside the 9,025 `.webp` that are there, and would have redrawn the
+  entire corpus on the GPU **on every build** — then shipped both sets,
+  roughly doubling the pack. Fixed in `97e22aa2`.
+
+So the two runs are different jobs and both are needed:
+
+| | what it does |
+|---|---|
+| `generate_images.py generate --force --format webp` | redraws existing images with the new prompts — this is what applies the fix |
+| `build_and_run.sh` | fills gaps only, then builds the app — never reshoots |
+
+`--force` is the whole difference. A build will never apply a prompt change,
+by design.
