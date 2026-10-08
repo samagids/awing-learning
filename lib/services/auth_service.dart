@@ -12,9 +12,14 @@ import 'package:awing_ai_learning/services/user_registry_service.dart';
 
 /// Authentication and user management service.
 ///
-/// Enforces Google Sign-In only. Stores accounts locally via SharedPreferences.
-/// Each Google email can hold multiple user profiles (e.g. siblings sharing
-/// one device — parent signs in, creates child profiles).
+/// Stores accounts locally via SharedPreferences.
+///
+/// Each account email holds multiple learner profiles: a parent signs in
+/// once and creates one profile per child. The profiles belong to the
+/// LOGIN, not to the handset — they are backed up under the account email
+/// and restored onto any device that signs in with it, so two children can
+/// be on two tablets under one parent's account. Anything that assumes
+/// "one family, one device" is wrong about this app.
 class AuthService extends ChangeNotifier {
   static const String _keyAccounts = 'auth_accounts';
   static const String _keyCurrentEmail = 'auth_current_email';
