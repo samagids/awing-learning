@@ -15,7 +15,7 @@ const Duration _autoSyncDebounce = Duration(minutes: 2);
 // Hand-maintained; bump with pubspec. Used as the cloud-presence
 // backfill key, so a stale value here means returning users are never
 // backfilled after an upgrade.
-const String _kAppVersion = '1.24.4+148';
+const String _kAppVersion = '1.24.4+149';
 
 /// Cloud backup service using Firebase Firestore.
 ///
