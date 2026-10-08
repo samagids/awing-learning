@@ -63,6 +63,10 @@ def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--list", action="store_true",
                    help="List every missing image key")
+    p.add_argument("--write-keys", metavar="PATH", default=None,
+                   help="Write every missing key, one per line, to PATH - "
+                        "feed it straight to generate_images.py --keys-file. "
+                        "Rule 1: every word must have an image.")
     args = p.parse_args()
 
     if not VOCAB.exists():
@@ -104,6 +108,12 @@ def main() -> int:
     print(f"  - covered (expected ∩ actual): {len(have)}")
     print(f"  - missing (need to generate): {len(missing)}")
     print(f"  - orphan (image without entry): {len(extra)}")
+
+    if args.write_keys:
+        out = Path(args.write_keys)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text("\n".join(sorted(missing)) + "\n", encoding="utf-8")
+        print(f"\n  wrote {len(missing)} missing keys -> {out}")
 
     if args.list and missing:
         print()

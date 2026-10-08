@@ -15,6 +15,13 @@ Usage:
                                                            # contribution from the
                                                            # webhook (useful after a
                                                            # server-side schema change)
+    python scripts/apply_contributions.py --replace-audio  # Let a re-recording
+                                                           # OVERWRITE the native clip
+                                                           # it replaces. Off by
+                                                           # default. The displaced
+                                                           # clip is copied to
+                                                           # contributions/replaced_
+                                                           # native_audio/ first.
     python scripts/apply_contributions.py --download       # Download only, don't apply
     python scripts/apply_contributions.py --refetch-audio  # Re-download m4a + re-run
                                                            # Whisper for pronunciation
@@ -444,6 +451,13 @@ def _convert_m4a_to_mp3(m4a_path, mp3_path):
         return False
 
 
+# Set by --replace-audio. Off by default, and it must stay off by
+# default: a contributor's recording must never silently overwrite a clip
+# that is already shipping. It is turned on only for a developer run that
+# exists specifically to fix a clip that sounds wrong.
+REPLACE_EXISTING_AUDIO = False
+
+
 def _promote_references_to_native(keys):
     """Convert freshly archived voice references into native audio clips.
 
@@ -485,8 +499,25 @@ def _promote_references_to_native(keys):
             src = os.path.join(mod.REFS_DIR, key + '.m4a')
             if not os.path.exists(src):
                 continue
-            if mod.existing_native(key):
+            prior = mod.existing_native(key)
+            if prior and not REPLACE_EXISTING_AUDIO:
                 continue          # never overwrite a clip that exists
+            if prior:
+                # Keep the displaced clip. A replacement can be worse than
+                # what it replaced, and without this there is nothing to
+                # go back to - the original only existed inside the AAB.
+                bak_dir = os.path.join(PROJECT_DIR, 'contributions',
+                                       'replaced_native_audio')
+                os.makedirs(bak_dir, exist_ok=True)
+                stamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                for ext in ('.opus', '.wav', '.mp3'):
+                    old_p = os.path.splitext(prior)[0] + ext
+                    if os.path.exists(old_p):
+                        shutil.copy2(
+                            old_p,
+                            os.path.join(bak_dir, f'{key}_{stamp}{ext}'))
+                print(f'  ↻ {key}: replacing the existing clip '
+                      f'(old one kept in contributions/replaced_native_audio/)')
             os.makedirs(out_dir, exist_ok=True)
             status, detail = mod.convert(
                 src,
@@ -2503,6 +2534,20 @@ def main():
     if '--help' in args or '-h' in args:
         print(__doc__)
         return
+
+    # --replace-audio: let a re-recording overwrite the clip it is meant
+    # to replace. Without it, a developer can re-record a wrong-sounding
+    # word in the app, the submission is approved, and the promotion step
+    # silently drops it because a clip already exists - the app looks like
+    # it worked and nothing changed.
+    global REPLACE_EXISTING_AUDIO
+    if '--replace-audio' in args:
+        REPLACE_EXISTING_AUDIO = True
+        args = [a for a in args if a != '--replace-audio']
+        print('⚠ --replace-audio: existing native clips WILL be overwritten '
+              'by matching re-recordings.')
+        print('  Displaced clips are copied to '
+              'contributions/replaced_native_audio/ first.')
 
     # Always ensure directories exist
     ensure_directories()

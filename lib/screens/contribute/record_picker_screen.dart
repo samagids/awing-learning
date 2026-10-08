@@ -72,11 +72,65 @@ class _RecordPickerScreenState extends State<RecordPickerScreen> {
   Set<String> _pendingKeys = {};
   Map<String, List<AwingWord>> _unrecordedByCategory = {};
 
+  // ---- developer re-record search ----------------------------------
+  //
+  // The picker's whole job is to HIDE words that already have a native
+  // voice, so a contributor is never sent to re-record something that is
+  // done. That is right for a contributor and wrong for Dr. Sama: when a
+  // clip is simply wrong - mispronounced, clipped, the wrong word - the
+  // one person who can replace it is the one person the filter stops.
+  //
+  // So in developer mode only, a search box over the WHOLE vocabulary,
+  // recorded or not, with the existing clip playable from the row so the
+  // bad one can be heard before it is replaced.
+  final TextEditingController _searchCtrl = TextEditingController();
+  String _query = '';
+  static const int _kMaxSearchResults = 80;
+
   @override
   void initState() {
     super.initState();
     _initUnlockState();
     _loadAll();
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
+  /// Every vocabulary entry matching [_query], ignoring the recorded and
+  /// pending filters entirely. Developer mode only.
+  List<AwingWord> get _searchResults {
+    final q = _query.trim().toLowerCase();
+    if (q.isEmpty) return const [];
+    final out = <AwingWord>[];
+    for (final w in allVocabulary) {
+      if (w.awing.isEmpty || w.english.isEmpty) continue;
+      if (w.awing.toLowerCase().contains(q) ||
+          w.english.toLowerCase().contains(q) ||
+          PronunciationService.audioKey(w.awing).contains(q)) {
+        out.add(w);
+        if (out.length >= _kMaxSearchResults) break;
+      }
+    }
+    out.sort((a, b) =>
+        a.english.toLowerCase().compareTo(b.english.toLowerCase()));
+    return out;
+  }
+
+  Future<void> _reRecord(AwingWord w) async {
+    final done = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (_) => RecordAudioScreen(preSelectedWord: w),
+      ),
+    );
+    if (done == true) {
+      await _refreshPending();
+      _rebuild();
+      if (mounted) setState(() {});
+    }
   }
 
   void _initUnlockState() {
@@ -153,13 +207,18 @@ class _RecordPickerScreenState extends State<RecordPickerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDev = context.watch<AuthService>().isDeveloper;
+    final searching = isDev && _query.trim().isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildHeader(),
+        if (isDev) _buildDevSearchBar(),
         const Divider(height: 1),
         if (_loading)
           const Expanded(child: Center(child: CircularProgressIndicator()))
+        else if (searching)
+          Expanded(child: _buildSearchResults())
         else
           Expanded(
             child: RefreshIndicator(
@@ -168,6 +227,161 @@ class _RecordPickerScreenState extends State<RecordPickerScreen> {
             ),
           ),
       ],
+    );
+  }
+
+  Widget _buildDevSearchBar() {
+    return Container(
+      color: Colors.amber.shade50,
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.build, size: 15, color: Color(0xFF8A6D00)),
+              const SizedBox(width: 6),
+              Text(
+                'Developer: re-record any word',
+                style: TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.amber.shade900,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _searchCtrl,
+            onChanged: (v) => setState(() => _query = v),
+            textInputAction: TextInputAction.search,
+            autocorrect: false,
+            decoration: InputDecoration(
+              isDense: true,
+              hintText: 'Search Awing or English — recorded words included',
+              hintStyle: const TextStyle(fontSize: 13),
+              prefixIcon: const Icon(Icons.search, size: 20),
+              suffixIcon: _query.isEmpty
+                  ? null
+                  : IconButton(
+                      icon: const Icon(Icons.clear, size: 20),
+                      tooltip: 'Clear',
+                      onPressed: () {
+                        _searchCtrl.clear();
+                        setState(() => _query = '');
+                      },
+                    ),
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchResults() {
+    final results = _searchResults;
+    if (results.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Text(
+            'No word matches "${_query.trim()}".',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+          ),
+        ),
+      );
+    }
+    final inv = NativeAudioInventory.instance;
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      itemCount: results.length + 1,
+      separatorBuilder: (_, __) => const Divider(height: 1),
+      itemBuilder: (_, i) {
+        if (i == results.length) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+            child: Text(
+              results.length >= _kMaxSearchResults
+                  ? 'Showing the first $_kMaxSearchResults matches. '
+                      'Type more to narrow it down.'
+                  : '${results.length} match'
+                      '${results.length == 1 ? '' : 'es'}.',
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            ),
+          );
+        }
+        final w = results[i];
+        final key = PronunciationService.audioKey(w.awing);
+        final recorded = inv.hasAnyRecording(key);
+        final pending = _pendingKeys.contains(key);
+        return ListTile(
+          leading: SizedBox(
+            width: 48,
+            height: 48,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: PackImage(
+                awingWord: w.awing,
+                english: w.english,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          title: Text(
+            w.awing,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(w.english, style: const TextStyle(fontSize: 13)),
+              const SizedBox(height: 2),
+              Text(
+                pending
+                    ? 'Submitted from this device — recording again replaces it'
+                    : recorded
+                        ? 'Has a native recording — recording again replaces it'
+                        : 'No recording yet',
+                style: TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w600,
+                  color: (recorded || pending)
+                      ? Colors.orange.shade800
+                      : Colors.grey.shade600,
+                ),
+              ),
+            ],
+          ),
+          isThreeLine: true,
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Hear the bad clip before replacing it. Without this the
+              // only way to tell which of five near-spellings is the one
+              // that sounds wrong is to record all five.
+              if (recorded)
+                IconButton(
+                  icon: const Icon(Icons.volume_up, color: _kGreen),
+                  tooltip: 'Play the current recording',
+                  onPressed: () => PronunciationService().speakAwing(w.awing),
+                ),
+              IconButton(
+                icon: const Icon(Icons.mic, color: _kGreen),
+                tooltip: recorded ? 'Re-record' : 'Record',
+                onPressed: () => _reRecord(w),
+              ),
+            ],
+          ),
+          onTap: () => _reRecord(w),
+        );
+      },
     );
   }
 

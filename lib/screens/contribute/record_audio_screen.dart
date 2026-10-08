@@ -86,6 +86,24 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
     return NativeAudioInventory.instance.hasAnyRecording(key);
   }
 
+  /// The duplicate-contribution block, with one exception.
+  ///
+  /// The rule is for contributors: nobody should spend their time
+  /// recording a word a native speaker has already covered, and nobody
+  /// should be able to record over Dr. Sama's canonical clip.
+  ///
+  /// But a clip can be WRONG - mispronounced, clipped, the wrong word for
+  /// the gloss - and then the block protects the mistake. The only person
+  /// who can judge that is the one it locks out. So in developer mode the
+  /// block lifts and a new recording replaces the old one.
+  ///
+  /// [_alreadyRecorded] still answers the factual question, so the UI can
+  /// say "this already has a recording" while allowing the replacement.
+  bool get _blockedAsDuplicate {
+    if (!_alreadyRecorded) return false;
+    return !context.read<AuthService>().isDeveloper;
+  }
+
   @override
   void dispose() {
     _ticker?.cancel();
@@ -100,7 +118,7 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
     // approved native recording (Session 60+ block-duplicates rule).
     // The UI also hides the record button in this case, but we
     // defensively check here in case the build state was stale.
-    if (_alreadyRecorded) {
+    if (_blockedAsDuplicate) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -191,7 +209,7 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
     if (_selected == null || !_hasRecording || _submitting) return;
     // Defensive: if somehow the user got past the UI and recorded over
     // a canonical-recorded word, bail before hitting the server.
-    if (_alreadyRecorded) {
+    if (_blockedAsDuplicate) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -312,16 +330,20 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
             // (NativeAudioInventory.hasCanonical), we hide the record
             // controls and show a clear "already recorded" panel
             // instead. Users can pick a different word from the picker.
+            //
+            // Developer mode is the exception: the banner still appears,
+            // because knowing a clip exists is exactly the point when you
+            // are about to replace it, but the controls stay on under it.
             if (_selected != null && _alreadyRecorded)
               _buildAlreadyRecordedBanner(),
-            if (_selected != null && !_alreadyRecorded)
+            if (_selected != null && !_blockedAsDuplicate)
               _buildRecordControls(),
             // v1.22.0 (Session 66) — optional photo alongside the
             // recording. Visible whenever a word is selected + not
             // already natively recorded; independent of whether the
             // user has captured the audio yet, so they can attach
             // the photo before or after recording.
-            if (_selected != null && !_alreadyRecorded && !_submitted) ...[
+            if (_selected != null && !_blockedAsDuplicate && !_submitted) ...[
               const SizedBox(height: 16),
               ImageAttachmentPicker(
                 imagePath: _imagePath,
@@ -333,7 +355,7 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
             ],
             const SizedBox(height: 24),
             if (_selected != null &&
-                !_alreadyRecorded &&
+                !_blockedAsDuplicate &&
                 _hasRecording &&
                 !_submitted)
               SizedBox(
@@ -375,6 +397,7 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
         final matches = <AwingWord>[];
         final seen = <String>{};
         final inv = NativeAudioInventory.instance;
+        final devSearch = context.read<AuthService>().isDeveloper;
         for (final w in allVocabulary) {
           if (matches.length >= 30) break;
           final key = "${w.awing}|${w.english}";
@@ -382,8 +405,12 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
           // Skip words with any existing native recording -- per
           // Dr. Sama, words already covered by SOMEONE (canonical adult
           // or kid) should not be re-recordable.
+          //
+          // Except in developer mode, where the whole point of the search
+          // is to FIND the already-recorded word whose clip is wrong. A
+          // search that hides it is a search that cannot fix it.
           final audioKey = PronunciationService.audioKey(w.awing);
-          if (inv.hasAnyRecording(audioKey)) continue;
+          if (!devSearch && inv.hasAnyRecording(audioKey)) continue;
           if (w.awing.toLowerCase().contains(q) ||
               w.english.toLowerCase().contains(q)) {
             matches.add(w);
@@ -477,6 +504,7 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
   /// Shown in place of the record controls when the selected word
   /// already has an approved native recording (Session 60+ rule).
   Widget _buildAlreadyRecordedBanner() {
+    final isDev = context.watch<AuthService>().isDeveloper;
     return Card(
       color: Colors.amber.shade50,
       shape: RoundedRectangleBorder(
@@ -494,7 +522,8 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Already recorded",
+                    isDev ? "Already recorded — replacing it"
+                          : "Already recorded",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -503,13 +532,35 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    "This word already has an approved native recording. "
-                    "Please pick a different word from the search above.",
+                    isDev
+                        ? "A native recording for this word already exists. "
+                          "Listen to it first — what you record next will "
+                          "replace it."
+                        : "This word already has an approved native "
+                          "recording. Please pick a different word from the "
+                          "search above.",
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.amber.shade900,
                     ),
                   ),
+                  if (isDev && _selected != null) ...[
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: OutlinedButton.icon(
+                        onPressed: () => PronunciationService()
+                            .speakAwing(_selected!.awing),
+                        icon: const Icon(Icons.volume_up, size: 18),
+                        label: const Text('Play the current recording'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.amber.shade900,
+                          side: BorderSide(color: Colors.amber.shade400),
+                          visualDensity: VisualDensity.compact,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
