@@ -316,7 +316,18 @@ def africanize_people(prompt: str, seed_key: str = "") -> str:
 
     # Hair is APPENDED, never spliced mid-phrase, and only when the noun
     # itself tells us the gender - otherwise we would put beads on a chief.
-    gender = _NOUN_GENDER.get(noun)
+    #
+    # v1.24.5: and only when the person is the SUBJECT. On a prompt whose
+    # point is an object or a body feature the person is context, and a
+    # hair clause tacked on the end lands where the prompt is weakest:
+    #
+    #   "the curved rounded hump on the upper back of a standing man seen
+    #    from the side, his back bent forward, long locs"
+    #
+    # The last thing the model reads is hair, on a card that exists to show
+    # a hump. If the human noun does not appear near the front, the persona
+    # is not what is being depicted and the tokens belong to the subject.
+    gender = _NOUN_GENDER.get(noun) if m.start() <= 25 else None
     if gender:
         pool = (PERSONA_HAIR_ELDER[gender]
                 if noun in _ELDER_NOUNS else PERSONA_HAIR[gender])
@@ -1745,7 +1756,7 @@ PROMPT_OVERRIDES = {
     "disunity": "a thick rope snapped in two, children pulling away in opposite directions",
     "electricity": "a yellow lightning bolt beside a glowing light bulb",
     "emotional instability": "a face split down the middle, laughing on one side and crying on the other",
-    "emptiness": "a clay pot lying on its side, tipped over, open mouth facing the viewer",
+    "emptiness": "an overturned clay pot lying sideways on bare ground, its dark open mouth facing the viewer",
     "equivalence": "a balance scale with equal weights on both pans, perfectly level",
     "express sadness": "a child crying with tears running down both cheeks",
     "false witness": "a child pointing accusingly at another child, nose growing long",
@@ -1838,6 +1849,46 @@ PROMPT_OVERRIDES = {
     "control sth using a stick": "a hand holding a long thin wooden stick, its blackened tip pushed into the glowing red embers of a small cooking fire",
     "piece of stick or iron used": "a long thin wooden stick with its blackened tip resting in the glowing red embers of a small cooking fire, stirring the embers",
     "stick for handling sth": "a long thin wooden stick with its blackened tip resting in the glowing red embers of a small cooking fire, stirring the embers",
+
+    # ----------------------------------------------------------------
+    # THE SAMPLE RUN, 2026-10-08 - words the prompt alone could not carry
+    # ----------------------------------------------------------------
+    # Dr. Sama on the regenerated sample: "hump should not be a person.
+    # such and many others should be fixs before we can analyze and push
+    # and generate all." Right - and all of these failed for one of two
+    # reasons the prompt mechanism cannot fix by itself.
+    #
+    # 1. THE ENGLISH IS A HOMOGRAPH and the dictionary means the rarer
+    #    sense. "iron" is the metal here; SDXL drew a sewing machine and a
+    #    clothes iron, which is the commoner sense and a reasonable reading
+    #    of the word on its own. "crunch" is a texture word with no object,
+    #    so it drew coloured tiles. No amount of prompt repair picks the
+    #    right sense - only naming the object does.
+    #
+    # 2. THE GLOSS IS MISSPELLED. "inhygenic" is not a word, so the model
+    #    dropped the prefix it did not recognise and drew a CLEAN river -
+    #    the exact opposite of the entry. Worth hunting as a class: a typo
+    #    in a gloss can invert the picture silently.
+    #
+    # "hump" is both at once: three senses (a man's bent back, a hunchback,
+    # a zebu's shoulder) sharing one headword, in category `body`, where
+    # the template asks for a close-up of a person - which is why the card
+    # was a girl's face.
+
+    "a piece of rough iron used": "a rough grey iron sharpening bar held against the blade of a machete, sparks at the edge",
+    "crunch": "a dog biting down hard on a bone, the bone cracking between its teeth",
+    "crunch soft bone": "a dog biting down hard on a bone, the bone cracking between its teeth",
+    "divide": "two hands cutting one round loaf into equal halves with a knife",
+    "divide or share": "a child sharing a plate of food into two equal portions for two children",
+    "hump": "the curved rounded hump on the upper back of a standing man seen from the side, his back bent forward",
+    "hump of cow": "a zebu cow seen from the side with a large rounded muscular hump on its shoulders above the front legs",
+    "hump of hunchback": "the curved rounded hump on the upper back of a standing man seen from the side, his back bent forward",
+    "inhygenic environment": "a dirty village yard with scattered rubbish, a pool of dirty standing water and flies buzzing",
+    "iron": "a heavy grey bar of raw iron metal lying on a workbench, rough unpolished surface",
+    "melt iron": "a blacksmith at a forge pouring glowing orange molten iron from a crucible, red hot coals below",
+    "metal bar": "a heavy grey bar of raw iron metal lying on a workbench, rough unpolished surface",
+    "slight injury or pain": "a small scrape on a child's knee with a plaster on it",
+    "unhygienic environment": "a dirty village yard with scattered rubbish, a pool of dirty standing water and flies buzzing",
 }
 
 
@@ -2502,6 +2553,77 @@ def _trim_to_phrase(s: str, max_words: int) -> str:
     return " ".join(kept) if kept else " ".join(words[:max_words])
 
 
+# --------------------------------------------------------------------------
+# TYPOS IN THE GLOSS, CORRECTED FOR THE PROMPT ONLY
+# --------------------------------------------------------------------------
+# Dr. Sama, on the sample: "such and many others should be fixs before we
+# can analyze and push and generate all."
+#
+# One whole class of those is a misspelled gloss. `nafena` is glossed
+# "inhygenic environment"; SDXL does not know "inhygenic", so it dropped
+# the prefix it could not parse and drew a CLEAN river - the exact opposite
+# of the entry, and nothing in the prompt mechanism can catch that.
+#
+# A spellcheck over all 8,605 glosses found 242 unrecognised forms. Most are
+# not errors: British spellings (honour, behaviour, baptise), Awing and
+# Cameroonian words (fon, achu, egusi, njangi), proper names (Njom,
+# Mbachia), and dictionary abbreviations (esp, prn, colloq). The list below
+# is only the ones where the intended English word is not in doubt.
+#
+# These are applied to the PROMPT, not to the card. The gloss on screen is
+# still what the dictionary says - changing that is a lexicon edit and
+# Dr. Sama's call. Full list of suspects, including the ones I was not sure
+# enough about to include here, is in
+# contributions/gloss_spelling_suspects.json.
+_GLOSS_TYPOS = {
+    "matchetes": "machetes", "matchete": "machete",
+    "mbecile": "imbecile", "controling": "controlling",
+    "matress": "mattress", "sinagogue": "synagogue",
+    "scabbies": "scabies", "unhygenic": "unhygienic",
+    "inhygenic": "unhygienic", "exzema": "eczema",
+    "motar": "mortar", "distruction": "destruction",
+    "ampit": "armpit", "refered": "referred",
+    "refering": "referring", "commiting": "committing",
+    "overful": "overfull", "colanuts": "kolanuts",
+    "delapidation": "dilapidation", "millett": "millet",
+    "dieing": "dying", "ressurrection": "resurrection",
+    "earings": "earrings", "digusting": "disgusting",
+    "adultry": "adultery", "continously": "continuously",
+    "continous": "continuous", "someting": "something",
+    "sometning": "something", "alchoholic": "alcoholic",
+    "ressemble": "resemble", "adress": "address",
+    "aproximately": "approximately", "commplement": "complement",
+    "menstration": "menstruation", "ocassion": "occasion",
+    "mushoom": "mushroom", "phleme": "phlegm",
+    "shuve": "shove", "symtom": "symptom",
+    "beewax": "beeswax", "embelishment": "embellishment",
+    "influencial": "influential", "descriminating": "discriminating",
+    "gabbage": "garbage", "immitation": "imitation",
+    "deliever": "deliver", "catabash": "calabash",
+    "savana": "savanna", "demishing": "diminishing",
+    "deminishing": "diminishing", "scritching": "scratching",
+    "scritch": "scratch", "achache": "ache",
+    "exageration": "exaggeration", "decieve": "deceive",
+    "annoint": "anoint", "stupify": "stupefy",
+    "potatoe": "potato", "unfertile": "infertile",
+    "infront": "in front", "lier": "liar",
+    "hardwork": "hard work", "alot": "a lot",
+    "diagnos": "diagnose", "grinded": "ground",
+    "unhealing": "non-healing", "strongness": "strength",
+    "beforeuse": "before use", "headpad": "head pad",
+    "childrens": "children's", "somebodys": "somebody's",
+    "ladt": "lady", "ston": "stone", "anothern": "another",
+}
+
+_TYPO_RE = re.compile(
+    r"\b(" + "|".join(sorted(_GLOSS_TYPOS, key=len, reverse=True)) + r")\b", re.I)
+
+
+def fix_gloss_typos(text: str) -> str:
+    """Correct known misspellings before the gloss becomes a prompt."""
+    return _TYPO_RE.sub(lambda m: _GLOSS_TYPOS[m.group(1).lower()], text)
+
+
 def concrete_gloss_for_prompt(english_word: str, max_words: int = 12) -> str:
     """The most DRAWABLE rendering of an English gloss.
 
@@ -2510,7 +2632,7 @@ def concrete_gloss_for_prompt(english_word: str, max_words: int = 12) -> str:
     word count. 12 words is ~16 CLIP tokens; with the template and
     STYLE_SUFFIX_OBJECT the prompt lands near 35 of the 77 available.
     """
-    raw = (english_word or "").strip().lower()
+    raw = fix_gloss_typos((english_word or "").strip().lower())
     if not raw:
         return ""
     _SYNONYM_HEADS = set()
@@ -2971,7 +3093,7 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
     # meaning. Use the full sentence, capped at ~15 words so the final
     # prompt (with STYLE_SUFFIX appended) stays under CLIP's 77-token budget.
     if category in ("phrase", "sentence", "story"):
-        text = english_word.strip().rstrip(".!?\"'").strip()
+        text = fix_gloss_typos(english_word.strip()).rstrip(".!?\"'").strip()
         # Cut at a phrase boundary, not at word 15. "...that can lift it in"
         # and "...if their child turns out to" are prompts asking for a
         # relationship whose object was cut off, and the model fills the gap
@@ -2989,6 +3111,7 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
 
     # Reduce long dictionary definitions to short gloss BEFORE override lookup
     # so the override check actually matches the headword (not the long defn).
+    english_word = fix_gloss_typos(english_word)
     short_word = shorten_english_for_prompt(english_word)
 
     # Strip parenthetical disambiguations like "(body part)" or "(drink)"

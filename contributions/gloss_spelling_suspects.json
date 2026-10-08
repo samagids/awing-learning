@@ -1,0 +1,2174 @@
+{
+ "etc": [
+  {
+   "key": "kemte__sprinkle_a_little_powder_ground",
+   "english": "sprinkle a little (powder, ground etc) on something"
+  },
+  {
+   "key": "tue__pay_for_goods_services_etc",
+   "english": "pay (for goods, services, etc.)"
+  },
+  {
+   "key": "akobka__covering_of_door_cupboard_car_hu",
+   "english": "covering (of door, cupboard, car, hut, blanket etc.)"
+  },
+  {
+   "key": "akeme__piece_half_of_liquids_objects_et",
+   "english": "piece, half (of liquids, objects etc.)"
+  },
+  {
+   "key": "akwelembenge__flock_of_sheep_goats_etc",
+   "english": "flock (of sheep, goats etc.)"
+  },
+  {
+   "key": "nefele__the_manner_of_going_out_to_parti",
+   "english": "the manner of going out (to parties, bars etc)"
+  },
+  {
+   "key": "atange__half_full_not_full_liquids_and_u",
+   "english": "half full, not full (liquids and uncountables like rice, beans etc.)"
+  },
+  {
+   "key": "keme__apply_powder_sprinkle_ground_etc",
+   "english": "apply powder, sprinkle ground etc on something"
+  },
+  {
+   "key": "akonge__stalk_of_maize_millet_etc",
+   "english": "stalk (of maize, millet, etc.)"
+  },
+  {
+   "key": "mbena__a_word_used_at_the_beginning_of",
+   "english": "a word used at the beginning of an expression (phrase, sentence, etc) to mark surprise (exclamation)"
+  },
+  {
+   "key": "nefele__manner_of_going_out_to_parties_b",
+   "english": "manner of going out (to parties, bars etc)"
+  }
+ ],
+ "quiny": [
+  {
+   "key": "atienepiembenge__quiny_tree",
+   "english": "quiny tree"
+  },
+  {
+   "key": "nepiembenge__quiny",
+   "english": "quiny"
+  },
+  {
+   "key": "zangke__quiny",
+   "english": "quiny"
+  },
+  {
+   "key": "naplembenge__quiny",
+   "english": "quiny"
+  },
+  {
+   "key": "atienaplembenge__tree_of_quiny",
+   "english": "tree, of quiny"
+  },
+  {
+   "key": "atienepiambenge__quiny_tree",
+   "english": "quiny tree"
+  },
+  {
+   "key": "nepiembenge__quiny_medicinal_fruit",
+   "english": "Quiny medicinal fruit"
+  },
+  {
+   "key": "sentence_atenopembengeloatembwodne",
+   "english": "A quiny tree is a peaceful tree."
+  },
+  {
+   "key": "sentence_nentanenepiembengleafue",
+   "english": "The fruit of a quiny tree is used as medicine."
+  }
+ ],
+ "njom": [
+  {
+   "key": "mokame__a_dance_group_in_njom",
+   "english": "A dance group in Njom"
+  },
+  {
+   "key": "nchile__women_dance_group_in_njom_no_lon",
+   "english": "Women dance group in Njom, no longer active, but still have their drums and other things"
+  },
+  {
+   "key": "ngone__dance_group_in_njom_no_longer_ac",
+   "english": "dance group in Njom, no longer active"
+  },
+  {
+   "key": "ngwepae__biggest_dance_group_in_awing_bas",
+   "english": "biggest dance group in Awing based in Njom"
+  },
+  {
+   "key": "leelo__a_njom_dance_group_which_is_no_l",
+   "english": "a Njom dance group which is no longer active"
+  },
+  {
+   "key": "leele__a_njom_dance_group_which_is_no_l",
+   "english": "A Njom dance group which is no longer active"
+  },
+  {
+   "key": "mebenge__a_dance_group_in_njom",
+   "english": "A dance group in Njom"
+  },
+  {
+   "key": "nchateese__leave_family_group_in_njom_no_lo",
+   "english": "leave family group in Njom, no longer active"
+  },
+  {
+   "key": "nchinde__women_dance_group_in_njom_no_lon",
+   "english": "Women dance group in Njom, no longer active"
+  }
+ ],
+ "fon's": [
+  {
+   "key": "mekomoefo__fon_s_messenger",
+   "english": "fon's messenger"
+  },
+  {
+   "key": "nefeme__a_secret_place_especially_in_the",
+   "english": "a secret place, especially in the fon's palace"
+  },
+  {
+   "key": "megmeefo__fon_s_investigator",
+   "english": "fon's investigator"
+  },
+  {
+   "key": "mekemeefo__fon_s_messenger",
+   "english": "fon's messenger"
+  },
+  {
+   "key": "efoontee__fon_s_name_fon_of_the_palace",
+   "english": "fon's name (fon of the palace)"
+  },
+  {
+   "key": "tae__secret_place_in_fon_s_palace",
+   "english": "secret place in fon's palace"
+  },
+  {
+   "key": "nefameone__a_secret_place_especially_in_the",
+   "english": "a secret place, especially in the fon's palace"
+  }
+ ],
+ "behaviour": [
+  {
+   "key": "akefengentsoole__obscene_immoral_behaviour",
+   "english": "obscene/immoral behaviour"
+  },
+  {
+   "key": "awakanteeme__loose_and_shameless_behaviour",
+   "english": "loose and shameless behaviour"
+  },
+  {
+   "key": "achana__behaviour_disgusting",
+   "english": "behaviour, disgusting"
+  },
+  {
+   "key": "awakontaeme__behaviour_loose_and_shameless",
+   "english": "behaviour, loose and shameless"
+  },
+  {
+   "key": "aweameeme__loose_and_shameless_behaviour",
+   "english": "loose and shameless behaviour"
+  },
+  {
+   "key": "akefengntsoole__obscene_behaviour_immoral_behavi",
+   "english": "obscene behaviour, immoral behaviour"
+  },
+  {
+   "key": "akefengntsoole__obscene_behaviour_immoral_behavi",
+   "english": "obscene behaviour, immoral behaviour"
+  }
+ ],
+ "multicoloured": [
+  {
+   "key": "chieapabpeeba__be_multicoloured_or_having_many",
+   "english": "be multicoloured or having many different marks"
+  },
+  {
+   "key": "epabpeeba__multicoloured_spotted",
+   "english": "multicoloured; spotted"
+  },
+  {
+   "key": "apabpeebe__multicoloured",
+   "english": "multicoloured"
+  },
+  {
+   "key": "chiaapabpeebe__multicoloured",
+   "english": "multicoloured"
+  },
+  {
+   "key": "apepeebe__multicoloured_spotted",
+   "english": "multicoloured; spotted"
+  },
+  {
+   "key": "chieapebepebe__be_multicoloured_or_having_many",
+   "english": "be multicoloured or having many different marks"
+  }
+ ],
+ "honour": [
+  {
+   "key": "ghoke__respect_honour_praise_worship",
+   "english": "respect, honour, praise; worship"
+  },
+  {
+   "key": "mesoe__robe_of_honour_and_respect_for_m",
+   "english": "robe of honour and respect for men"
+  },
+  {
+   "key": "ghoke__honour_praise",
+   "english": "honour, praise"
+  },
+  {
+   "key": "ghoke__respect_honour_praise",
+   "english": "respect, honour, praise"
+  },
+  {
+   "key": "mase__robe_of_honour_and_respect_for_m",
+   "english": "robe of honour and respect for men"
+  },
+  {
+   "key": "sentence_ghokeesenentseembiaaleamemngeebenggabmbia",
+   "english": "Honour God on the first day of the week."
+  }
+ ],
+ "tata": [
+  {
+   "key": "awenkie__a_women_dance_group_in_akuhle_qu",
+   "english": "A women dance group in Akuhle quarter, based in Tata Mofolo's compound"
+  },
+  {
+   "key": "kanada__women_dance_group_originally_bas",
+   "english": "women dance group (originally based in Tata Alota's compound, no longer active)"
+  },
+  {
+   "key": "klobe__women_dance_group_based_in_tata",
+   "english": "women dance group based in Tata Ngonyo's compound (from English)"
+  },
+  {
+   "key": "awenkie__women_dance_group_in_akuhle_quar",
+   "english": "women dance group in Akuhle quarter, based in Tata Mofolos compound"
+  },
+  {
+   "key": "phrase_loanuetataakendechiepo",
+   "english": "It is true: Tata (grandfather) is not in the house"
+  },
+  {
+   "key": "sentence_kofenetata",
+   "english": "Take this and give to Tata."
+  }
+ ],
+ "prn": [
+  {
+   "key": "yile__demonstrative_prn_you",
+   "english": "demonstrative prn 'you'"
+  },
+  {
+   "key": "memee__possessive_prn_plural_yours",
+   "english": "possessive prn plural 'yours'"
+  },
+  {
+   "key": "meme__possessive_prn_singular_yours",
+   "english": "possessive prn singular 'yours'"
+  },
+  {
+   "key": "aze__possessive_singular_prn_yours",
+   "english": "possessive singular prn 'yours'"
+  },
+  {
+   "key": "ape__possessive_singular_prn_yours",
+   "english": "possessive singular prn 'yours'"
+  },
+  {
+   "key": "naze__possessive_singular_prn_yours",
+   "english": "possessive singular prn 'yours'"
+  }
+ ],
+ "potatoe": [
+  {
+   "key": "angkeelengwue__finger_like_potatoe_used_as_medi",
+   "english": "finger-like potatoe used as medicine (genson)"
+  },
+  {
+   "key": "angkeolanegwue__potatoe_sort_of",
+   "english": "potatoe, sort of"
+  },
+  {
+   "key": "natoe__sweet_potatoe",
+   "english": "sweet potatoe"
+  },
+  {
+   "key": "angkeelengwue__finger_like_potatoe",
+   "english": "finger-like potatoe"
+  },
+  {
+   "key": "akwe__pounded_irish_potatoe_and_banana",
+   "english": "pounded irish potatoe and banana"
+  }
+ ],
+ "esp": [
+  {
+   "key": "kyime__cut_off_sth_attached_to_another",
+   "english": "Cut off sth attached to another, esp"
+  },
+  {
+   "key": "ntooma__pillar_wedge_esp",
+   "english": "pillar, wedge, esp"
+  },
+  {
+   "key": "akwange__pensiveness_esp",
+   "english": "pensiveness, esp"
+  },
+  {
+   "key": "ntoeme__wedge_esp",
+   "english": "wedge, esp"
+  },
+  {
+   "key": "keme__break_or_bring_down_esp_a_buildi",
+   "english": "Break or bring down esp a building or structure"
+  }
+ ],
+ "humour": [
+  {
+   "key": "atseebanakwae__joke_humour",
+   "english": "joke, humour"
+  },
+  {
+   "key": "atsoebenakwae__humour",
+   "english": "humour"
+  },
+  {
+   "key": "atseebankwae__joke_humour",
+   "english": "joke, humour"
+  },
+  {
+   "key": "atseebezemazeme__joke_humour",
+   "english": "joke, humour"
+  },
+  {
+   "key": "atseebenkamue__joke_humour_parable_proverb",
+   "english": "joke, humour, parable, proverb"
+  }
+ ],
+ "mbah": [
+  {
+   "key": "nkwe__masqueraders_based_in_tame_mbah",
+   "english": "masqueraders based in Tame Mbah Ako's compound"
+  },
+  {
+   "key": "awaametemedte__women_dance_group_based_in_ta_mb",
+   "english": "Women dance group based in Ta Mbah Ta's compound"
+  },
+  {
+   "key": "atsematsame__ats_matsam_t_mbah_ta_a_s_compoun",
+   "english": "Atsəmatsamə̌ tə̌ Mbah Ta'a's compound"
+  },
+  {
+   "key": "awaamametemedte__women_dance_group_based_in_ta_mb",
+   "english": "Women dance group based in Ta Mbah Ta's compound"
+  },
+  {
+   "key": "nkwane__masquerades_based_in_tame_mbah_a",
+   "english": "masquerades based in Tame Mbah Ako's compound"
+  }
+ ],
+ "unfertile": [
+  {
+   "key": "kenge__large_piece_of_land_which_is_not",
+   "english": "large piece of land which is not necessarily unfertile; extensive unfertile land"
+  },
+  {
+   "key": "kenge__large_piece_of_land_which_is_not",
+   "english": "large piece of land which is not necessarily unfertile; extensive unfertile land"
+  },
+  {
+   "key": "konge__unfertile_land_extensive",
+   "english": "unfertile land, extensive"
+  },
+  {
+   "key": "konge__large_piece_of_land_which_is_not",
+   "english": "large piece of land which is not necessarily unfertile; extensive unfertile land"
+  },
+  {
+   "key": "konge__large_piece_of_land_which_is_not",
+   "english": "large piece of land which is not necessarily unfertile; extensive unfertile land"
+  }
+ ],
+ "motorable": [
+  {
+   "key": "alangomakala__motorable_road_paved_road",
+   "english": "motorable road; paved road"
+  },
+  {
+   "key": "alangamakale__road_motorable",
+   "english": "road, motorable"
+  },
+  {
+   "key": "alangemokale__motorable_road_paved_road",
+   "english": "motorable road; paved road"
+  },
+  {
+   "key": "alangmakale__motorable_road",
+   "english": "motorable road"
+  }
+ ],
+ "exageration": [
+  {
+   "key": "aseke__exageration_giving_of_false_valu",
+   "english": "exageration, giving of false value"
+  },
+  {
+   "key": "ashwadke__exageration_giving_of_false_valu",
+   "english": "exageration, giving of false value"
+  },
+  {
+   "key": "asaka__exageration",
+   "english": "exageration"
+  },
+  {
+   "key": "ashwadka__exageration",
+   "english": "exageration"
+  }
+ ],
+ "labour": [
+  {
+   "key": "atatenge__white_fluid_that_flows_from_the",
+   "english": "white fluid that flows from the vagina as a sign of labour (birth production)"
+  },
+  {
+   "key": "shie__exchange_labour_for_food",
+   "english": "exchange labour for food"
+  },
+  {
+   "key": "shine__use_one_s_labour_in_exchange_for",
+   "english": "use one's labour in exchange for farm products"
+  },
+  {
+   "key": "atate__white_fluid_that_flows_from_the",
+   "english": "white fluid that flows from the vagina as a sign of labour"
+  }
+ ],
+ "unhealing": [
+  {
+   "key": "atasseeme__a_wound_that_has_scabbies_and_is",
+   "english": "A wound that has scabbies and is unhealing"
+  },
+  {
+   "key": "ataesoeme__wound_unhealing_sort_of",
+   "english": "wound (unhealing), sort of"
+  },
+  {
+   "key": "ateseame__a_wound_that_has_scabbies_and_is",
+   "english": "A wound that has scabbies and is unhealing"
+  },
+  {
+   "key": "sentence_atugeataseemeakoye",
+   "english": "He has an unhealing wound on his leg Pl."
+  }
+ ],
+ "baminyam": [
+  {
+   "key": "ewaglapeneme__a_boundary_stick_which_its_leave",
+   "english": "a boundary stick which its leaves are used for making a public announcement; a Baminyam boundary stick"
+  },
+  {
+   "key": "fie__unearth_baminyam_people_unearth",
+   "english": "unearth; Baminyam people unearth a corpse for fear of witchcraft"
+  },
+  {
+   "key": "sentence_atieawaglepenemeachilapeneme",
+   "english": "A Baminyam boundary stick is found in Baminyam."
+  },
+  {
+   "key": "sentence_atieawaglepenemeachilapeneme",
+   "english": "A Baminyam boundary stick is found in Baminyam."
+  }
+ ],
+ "bororo": [
+  {
+   "key": "sentence_elolopoakenoakwelombengtgoakoowochipo",
+   "english": "There is no Bororo man without a flock of sheep."
+  },
+  {
+   "key": "sentence_mbelaloechialaamemmendemapenge",
+   "english": "Bororo people live in thatched houses."
+  },
+  {
+   "key": "sentence_mbeloloafeloaliloponoyengomonaoghooboameeno",
+   "english": "Bororo people migrate when there is no grass for their cattle."
+  },
+  {
+   "key": "sentence_mbeleloepomemendemobleneatetsantiefyaamenembeeme",
+   "english": "Bororo people build their houses with mud, and then daub with whitewash."
+  }
+ ],
+ "mbachia": [
+  {
+   "key": "mbachi__mbachia_name",
+   "english": "Mbachia (name)"
+  },
+  {
+   "key": "phrase_mbachiapenenembyabtenkoeatie",
+   "english": "Mbachia, Apena and Mbyaabo are climbing a tree"
+  },
+  {
+   "key": "story_mbachiapenenembyabtenkoeatie",
+   "english": "Mbachia, Apena and Mbyaabo are climbing a tree."
+  }
+ ],
+ "apena": [
+  {
+   "key": "apene__apena_name",
+   "english": "Apena (name)"
+  },
+  {
+   "key": "phrase_mbachiapenenembyabtenkoeatie",
+   "english": "Mbachia, Apena and Mbyaabo are climbing a tree"
+  },
+  {
+   "key": "story_mbachiapenenembyabtenkoeatie",
+   "english": "Mbachia, Apena and Mbyaabo are climbing a tree."
+  }
+ ],
+ "fons": [
+  {
+   "key": "efengngonge__ruler_s_bangle_especially_that_w",
+   "english": "ruler's bangle, especially that worn by fons"
+  },
+  {
+   "key": "efengnggonge__ruler_s_bangle_especially_that_w",
+   "english": "ruler's bangle, especially that worn by fons"
+  },
+  {
+   "key": "mekemeafe__fons_messenger",
+   "english": "fons messenger"
+  }
+ ],
+ "scrutinise": [
+  {
+   "key": "chigenange__scrutinise_examine_well",
+   "english": "scrutinise; examine well"
+  },
+  {
+   "key": "chigananga__scrutinise",
+   "english": "scrutinise"
+  },
+  {
+   "key": "chiganange__scrutinise_examine_well",
+   "english": "scrutinise, examine well"
+  }
+ ],
+ "insultively": [
+  {
+   "key": "faete__large_and_pointed_used_insultive",
+   "english": "large and pointed (used insultively for buttocks)"
+  },
+  {
+   "key": "kwume__teach_a_lesson_referring_to_sanc",
+   "english": "teach a lesson, referring to sanctioning especially thrashing (used colloquially and insultively)"
+  },
+  {
+   "key": "feete__large_and_pointed_insultively_fo",
+   "english": "large and pointed insultively for buttocks"
+  }
+ ],
+ "stupify": [
+  {
+   "key": "gheeke__disturb_stupify",
+   "english": "disturb, stupify"
+  },
+  {
+   "key": "ghoake__stupify",
+   "english": "stupify"
+  },
+  {
+   "key": "gheenke__disturb_stupify_a_baby_disturbs",
+   "english": "disturb, stupify; a baby disturbs the mother so much"
+  }
+ ],
+ "egussi": [
+  {
+   "key": "kaebe__shell_of_groundnuts_and_egussi",
+   "english": "shell, of groundnuts and egussi"
+  },
+  {
+   "key": "keaba__shell_of_nuts_and_egussi",
+   "english": "shell, of nuts and egussi"
+  },
+  {
+   "key": "njie__egussi",
+   "english": "egussi"
+  }
+ ],
+ "annoint": [
+  {
+   "key": "zonemeghole__annoint_rub_with_oil",
+   "english": "annoint, rub with oil"
+  },
+  {
+   "key": "zonemaghidle__annoint",
+   "english": "annoint"
+  },
+  {
+   "key": "phrase_zonemeghole",
+   "english": "annoint, rub with oil"
+  }
+ ],
+ "vapour": [
+  {
+   "key": "ajwele__vapour",
+   "english": "vapour"
+  },
+  {
+   "key": "ajwale__vapour",
+   "english": "vapour"
+  },
+  {
+   "key": "sentence_ajweloafeloamomnoyenoamemosono",
+   "english": "Vapour rises from the grass early in the morning."
+  }
+ ],
+ "inflammables": [
+  {
+   "key": "akwaake__inflammables_something_that_keep",
+   "english": "inflammables; something that keeps fire burning"
+  },
+  {
+   "key": "manyatoga__inflammables",
+   "english": "inflammables"
+  },
+  {
+   "key": "akwalke__inflammables",
+   "english": "inflammables"
+  }
+ ],
+ "divorcee": [
+  {
+   "key": "efedndzoe__divorcee",
+   "english": "divorcee"
+  },
+  {
+   "key": "afedndzee__divorcee",
+   "english": "divorcee"
+  },
+  {
+   "key": "efedndzee__divorcee",
+   "english": "divorcee"
+  }
+ ],
+ "baptise": [
+  {
+   "key": "feenkie__baptise",
+   "english": "baptise"
+  },
+  {
+   "key": "kwaangkla__baptise",
+   "english": "baptise"
+  },
+  {
+   "key": "fenkie__baptise",
+   "english": "baptise"
+  }
+ ],
+ "cowpies": [
+  {
+   "key": "mekwumaakokie__cowpies",
+   "english": "cowpies"
+  },
+  {
+   "key": "matameakoebe__cowpies",
+   "english": "cowpies"
+  },
+  {
+   "key": "mekwumeakekie__cowpies",
+   "english": "cowpies"
+  }
+ ],
+ "satedness": [
+  {
+   "key": "ndzela__satisfaction_of_sth_especially_f",
+   "english": "satisfaction (of sth especially food), satedness"
+  },
+  {
+   "key": "ndzele__satedness",
+   "english": "satedness"
+  },
+  {
+   "key": "ndzele__satisfaction_of_sth_especially_f",
+   "english": "satisfaction of sth especially food, satedness"
+  }
+ ],
+ "colloq": [
+  {
+   "key": "afueatie__franc_cfa_1000_note_colloq",
+   "english": "franc CFA 1000 note (colloq.)"
+  },
+  {
+   "key": "akwe__lie_colloq",
+   "english": "lie (colloq)"
+  },
+  {
+   "key": "waale__murder_colloq",
+   "english": "murder (colloq"
+  }
+ ],
+ "mbiwi": [
+  {
+   "key": "ajwiyepe__ajwij_p_as_d_m_gye_mbiwi_l_ts_p",
+   "english": "Ajwíjə̌ pə̌ asədə̌ məŋgyê mbiwiŋ lə̌ tsə̌pə̌"
+  },
+  {
+   "key": "ajwiie__ajwi_asod_ma_gye_mbiwi_la_ts_p",
+   "english": "Ajwiɔ́ asódə maŋgyê mbiwiŋ là tsə̌pə̌"
+  },
+  {
+   "key": "alasmatie__name_of_a_quarter_in_mbiwi",
+   "english": "name of a quarter in Mbiwiŋ"
+  }
+ ],
+ "ideo": [
+  {
+   "key": "femtefemte__ideo",
+   "english": "ideo"
+  },
+  {
+   "key": "taletaale__ideo",
+   "english": "ideo"
+  },
+  {
+   "key": "taletele__ideo",
+   "english": "ideo"
+  }
+ ],
+ "men's": [
+  {
+   "key": "azoangwuna__a_sort_of_yam_attributed_to_men",
+   "english": "A sort of yam attributed to men and usually harvested and kept in men's houses"
+  },
+  {
+   "key": "masoe__men_s_garment",
+   "english": "men's garment"
+  }
+ ],
+ "hospitalised": [
+  {
+   "key": "chieawata__be_hospitalised_be_in_hospital_b",
+   "english": "be hospitalised, be in hospital bed"
+  },
+  {
+   "key": "chiaawate__hospitalised",
+   "english": "hospitalised"
+  }
+ ],
+ "infront": [
+  {
+   "key": "chiembie__be_infront_be_ahead",
+   "english": "be infront; be ahead"
+  },
+  {
+   "key": "chiambie__infront",
+   "english": "infront"
+  }
+ ],
+ "decieve": [
+  {
+   "key": "fige__decieve",
+   "english": "decieve"
+  },
+  {
+   "key": "figte__decieve_many_times",
+   "english": "decieve many times"
+  }
+ ],
+ "fishtrap": [
+  {
+   "key": "koote__take_hold_of_many_things_as_a_fi",
+   "english": "take hold of many things (as a fishtrap traps fish)"
+  },
+  {
+   "key": "sentence_ateeneashueakootemeshue",
+   "english": "The fishtrap traps fish."
+  }
+ ],
+ "fiancee": [
+  {
+   "key": "saemengye__marry_by_taking_the_fiancee_by_t",
+   "english": "marry by taking the fiancee by trickery or by physical force"
+  },
+  {
+   "key": "saemongye__take_a_fiancee_by_trickery",
+   "english": "take a fiancee by trickery"
+  }
+ ],
+ "alot": [
+  {
+   "key": "tsable__talk_nonsense_talk_foolishly_tal",
+   "english": "talk nonsense, talk foolishly, talk alot"
+  },
+  {
+   "key": "tsable__talk_alot",
+   "english": "talk alot"
+  }
+ ],
+ "lier": [
+  {
+   "key": "asongetezeene__false_witness_lier",
+   "english": "false witness; lier"
+  },
+  {
+   "key": "asongetazena__lier",
+   "english": "lier"
+  }
+ ],
+ "matchetes": [
+  {
+   "key": "kogha__a_piece_of_rough_iron_used_for_s",
+   "english": "a piece of rough iron used for sharpening metals eg matchetes and knifes"
+  },
+  {
+   "key": "koghe__a_piece_of_rough_iron_used_for_s",
+   "english": "A piece of rough iron used for sharpening metals eg matchetes and knives"
+  }
+ ],
+ "vocant": [
+  {
+   "key": "alietengwune__desolate_or_vocant_place",
+   "english": "desolate or vocant place"
+  },
+  {
+   "key": "aliongwune__desolate_or_vocant_place",
+   "english": "desolate or vocant place"
+  }
+ ],
+ "akuhle": [
+  {
+   "key": "awenkie__a_women_dance_group_in_akuhle_qu",
+   "english": "A women dance group in Akuhle quarter, based in Tata Mofolo's compound"
+  },
+  {
+   "key": "awenkie__women_dance_group_in_akuhle_quar",
+   "english": "women dance group in Akuhle quarter, based in Tata Mofolos compound"
+  }
+ ],
+ "surty": [
+  {
+   "key": "azuke__surty_guarantee",
+   "english": "surty, guarantee"
+  },
+  {
+   "key": "azake__surty",
+   "english": "surty"
+  }
+ ],
+ "mbecile": [
+  {
+   "key": "azoamakala__mbecile_fool_stupid_person",
+   "english": "mbecile, fool, stupid person"
+  },
+  {
+   "key": "akegbe__mbecile",
+   "english": "mbecile"
+  }
+ ],
+ "nobleship": [
+  {
+   "key": "ekeme__nobleship",
+   "english": "nobleship"
+  },
+  {
+   "key": "jiakeme__take_title_of_nobleship",
+   "english": "take title of nobleship"
+  }
+ ],
+ "controling": [
+  {
+   "key": "fyaabe__piece_of_stick_or_iron_used_for",
+   "english": "piece of stick or iron used for controling embers, also a"
+  },
+  {
+   "key": "fyaabe__a_piece_of_stick_or_iron_used_fo",
+   "english": "a piece of stick or iron used for controling embers"
+  }
+ ],
+ "afese's": [
+  {
+   "key": "koepume__work_wood_afese_s_job_is_wood_wo",
+   "english": "work wood (Afese's job is wood work)"
+  },
+  {
+   "key": "sentence_afaeafeselaafaeakoomepumeatankoepulaakekongngangwutseajwaeyi",
+   "english": "Afese's job is wood work."
+  }
+ ],
+ "strongness": [
+  {
+   "key": "keng__intensifies_the_strongness_of_so",
+   "english": "intensifies the strongness of something (something is usually strong 'kong')"
+  },
+  {
+   "key": "koge__intensifies_the_strongness_of_so",
+   "english": "intensifies the strongness of something"
+  }
+ ],
+ "flowerish": [
+  {
+   "key": "mankoe__decorate_make_something_floweris",
+   "english": "decorate, make something flowerish or beautiful"
+  },
+  {
+   "key": "phrase_mankoe",
+   "english": "decorate, make something flowerish or beautiful"
+  }
+ ],
+ "matress": [
+  {
+   "key": "mentalasa__matress",
+   "english": "matress"
+  },
+  {
+   "key": "sentence_mentelaseapwodnelongatab",
+   "english": "Matress is so soft."
+  }
+ ],
+ "bororos": [
+  {
+   "key": "ndeela__a_sort_of_feast_celebrated_by_bo",
+   "english": "A sort of feast celebrated by Bororos"
+  },
+  {
+   "key": "ndele__feast_for_bororos",
+   "english": "feast, for Bororos"
+  }
+ ],
+ "beewax": [
+  {
+   "key": "nekyenonue__beewax_bee_bread",
+   "english": "beewax; bee-bread"
+  },
+  {
+   "key": "nakyenenue__beewax",
+   "english": "beewax"
+  }
+ ],
+ "ako's": [
+  {
+   "key": "nkwe__masqueraders_based_in_tame_mbah",
+   "english": "masqueraders based in Tame Mbah Ako's compound"
+  },
+  {
+   "key": "nkwane__masquerades_based_in_tame_mbah_a",
+   "english": "masquerades based in Tame Mbah Ako's compound"
+  }
+ ],
+ "sinagogue": [
+  {
+   "key": "sinagoga__sinagogue",
+   "english": "sinagogue"
+  },
+  {
+   "key": "sinegege__sinagogue",
+   "english": "sinagogue"
+  }
+ ],
+ "scabbies": [
+  {
+   "key": "atasseeme__a_wound_that_has_scabbies_and_is",
+   "english": "A wound that has scabbies and is unhealing"
+  },
+  {
+   "key": "ateseame__a_wound_that_has_scabbies_and_is",
+   "english": "A wound that has scabbies and is unhealing"
+  }
+ ],
+ "unhygenic": [
+  {
+   "key": "nefenge__the_act_of_being_unhygenic",
+   "english": "the act of being unhygenic"
+  },
+  {
+   "key": "nafengne__unhygenic_nature",
+   "english": "unhygenic nature"
+  }
+ ],
+ "behavioural": [
+  {
+   "key": "achie__gene_behavioural_patterns_common",
+   "english": "gene; behavioural patterns common to a family"
+  },
+  {
+   "key": "achie__behavioural_patterns_or_anything",
+   "english": "behavioural patterns or anything that is common to a particular family or group of people"
+  }
+ ],
+ "ndong's": [
+  {
+   "key": "kenge__masqueraders_based_in_tame_ndong",
+   "english": "masqueraders based in Tame Ndong's compound, no longer active"
+  },
+  {
+   "key": "konge__masquerades_based_in_tame_ndong",
+   "english": "masquerades based in Tame Ndong's compound, no longer active"
+  }
+ ],
+ "fundle": [
+  {
+   "key": "kwumto__touch_many_times_fundle_caress",
+   "english": "touch, many times; fundle, caress"
+  },
+  {
+   "key": "kwamte__fundle",
+   "english": "fundle"
+  }
+ ],
+ "balafon": [
+  {
+   "key": "ndzange__balafon",
+   "english": "balafon"
+  },
+  {
+   "key": "ndzangke__balafon",
+   "english": "balafon"
+  }
+ ],
+ "exzema": [
+  {
+   "key": "nepe__exzema",
+   "english": "exzema"
+  },
+  {
+   "key": "nape__exzema",
+   "english": "exzema"
+  }
+ ],
+ "scritch": [
+  {
+   "key": "ngwudlonge__scritch_owl",
+   "english": "scritch owl"
+  },
+  {
+   "key": "ngwudlenge__scritch_owl",
+   "english": "scritch owl"
+  }
+ ],
+ "motar": [
+  {
+   "key": "asoe__achu_motar_spoon_carved",
+   "english": "achu motar spoon (carved)"
+  },
+  {
+   "key": "asoe__a_carved_piece_of_wood_used_for",
+   "english": "a carved piece of wood used for lifting achu from the motar"
+  }
+ ],
+ "distruction": [
+  {
+   "key": "asoeme__distruction",
+   "english": "distruction"
+  },
+  {
+   "key": "esoome__distruction_that_springs_from_je",
+   "english": "distruction that springs from jealousy, envy"
+  }
+ ],
+ "derog": [
+  {
+   "key": "faele__eat_heavily_derog",
+   "english": "eat heavily (derog.)"
+  },
+  {
+   "key": "nyingke__expose_one_s_teeth_derog",
+   "english": "expose one's teeth (derog)"
+  }
+ ],
+ "ampit": [
+  {
+   "key": "alaobandage__growth_in_the_ampit",
+   "english": "growth, in the ampit"
+  },
+  {
+   "key": "aloebenafange__growth_in_the_ampit_as_a_sign_th",
+   "english": "growth, in the ampit as a sign that one has a wound"
+  }
+ ],
+ "inhygenic": [
+  {
+   "key": "nafena__inhygenic_environment",
+   "english": "inhygenic environment"
+  },
+  {
+   "key": "kwuneeme__inhygenic_person",
+   "english": "inhygenic person"
+  }
+ ],
+ "refered": [
+  {
+   "key": "o__it_thing_refered_to",
+   "english": "it, thing refered to"
+  },
+  {
+   "key": "aliyeewe__there_place_refered_to",
+   "english": "there (place refered to)"
+  }
+ ],
+ "excl": [
+  {
+   "key": "apoena__ours_excl",
+   "english": "ours (excl)"
+  },
+  {
+   "key": "gha__word_that_marks_excl",
+   "english": "word that marks excl"
+  }
+ ],
+ "programme": [
+  {
+   "key": "kame__put_off_a_programme",
+   "english": "put off a programme"
+  },
+  {
+   "key": "sentence_akepongemetagneanupikempo",
+   "english": "It is not good to set a programme and put it off again."
+  }
+ ],
+ "overful": [
+  {
+   "key": "jaaba__reduce_of_sth_overful",
+   "english": "reduce, of sth overful"
+  },
+  {
+   "key": "sentence_ajumealwenketoshulepojaabe",
+   "english": "If something is overful, it has to be reduced."
+  }
+ ],
+ "colanuts": [
+  {
+   "key": "atienapie__tree_of_colanuts",
+   "english": "tree, of colanuts"
+  },
+  {
+   "key": "sentence_atenopeazemelonope",
+   "english": "A cola nut tree bears colanuts."
+  }
+ ],
+ "delapidation": [
+  {
+   "key": "kodke__peel_off_usually_as_a_sign_of_de",
+   "english": "peel off, usually as a sign of delapidation"
+  },
+  {
+   "key": "kedke__peel_off_usually_as_a_sign_of_de",
+   "english": "peel off, usually as a sign of delapidation"
+  }
+ ],
+ "other's": [
+  {
+   "key": "achwingne__act_of_provocation_or_threat_don",
+   "english": "Act of provocation or threat, done by twitching each other's fingers"
+  },
+  {
+   "key": "sentence_eatshwinen78",
+   "english": "Act of provocation or threat, done by twitching each other's fingers Sg."
+  }
+ ],
+ "hardwork": [
+  {
+   "key": "afednegene__the_like_hardwork_but_likes_to_e",
+   "english": "the like hardwork but likes to enjoy the proceeds thereof"
+  },
+  {
+   "key": "sentence_afaeakendongpongpoajuyeeshinepambongeya",
+   "english": "A lazy man does not like hardwork but likes to enjoy the proceeds thereof."
+  }
+ ],
+ "somebodys": [
+  {
+   "key": "kwumafeeme__expression_used_as_insult_split",
+   "english": "expression used as insult, split somebodys forehead with a masons tool"
+  },
+  {
+   "key": "achietapenge__bad_sign_happening_when_blood_tw",
+   "english": "Bad sign, happening when blood twitches somebodys eyes"
+  }
+ ],
+ "naye": [
+  {
+   "key": "naayenge__m_naye",
+   "english": "mə nayeŋə"
+  },
+  {
+   "key": "nanayenge__m_naye",
+   "english": "mənayeŋə"
+  }
+ ],
+ "mbyaabo": [
+  {
+   "key": "phrase_mbachiapenenembyabtenkoeatie",
+   "english": "Mbachia, Apena and Mbyaabo are climbing a tree"
+  },
+  {
+   "key": "story_mbachiapenenembyabtenkoeatie",
+   "english": "Mbachia, Apena and Mbyaabo are climbing a tree."
+  }
+ ],
+ "mbachi": [
+  {
+   "key": "sentence_propernounsmbachiapenenambyabtankoeatie",
+   "english": "Mbachi, Apene and Mbyabe PROG climb tree Mbachi, Apene and Mbyabe are climbing a tree."
+  },
+  {
+   "key": "sentence_propernounsmbachiapenenambyabtankoeatie",
+   "english": "Mbachi, Apene and Mbyabe PROG climb tree Mbachi, Apene and Mbyabe are climbing a tree."
+  }
+ ],
+ "apene": [
+  {
+   "key": "sentence_propernounsmbachiapenenambyabtankoeatie",
+   "english": "Mbachi, Apene and Mbyabe PROG climb tree Mbachi, Apene and Mbyabe are climbing a tree."
+  },
+  {
+   "key": "sentence_propernounsmbachiapenenambyabtankoeatie",
+   "english": "Mbachi, Apene and Mbyabe PROG climb tree Mbachi, Apene and Mbyabe are climbing a tree."
+  }
+ ],
+ "mbyabe": [
+  {
+   "key": "sentence_propernounsmbachiapenenambyabtankoeatie",
+   "english": "Mbachi, Apene and Mbyabe PROG climb tree Mbachi, Apene and Mbyabe are climbing a tree."
+  },
+  {
+   "key": "sentence_propernounsmbachiapenenambyabtankoeatie",
+   "english": "Mbachi, Apene and Mbyabe PROG climb tree Mbachi, Apene and Mbyabe are climbing a tree."
+  }
+ ],
+ "genson": [
+  {
+   "key": "angkeelengwue__finger_like_potatoe_used_as_medi",
+   "english": "finger-like potatoe used as medicine (genson)"
+  }
+ ],
+ "children's": [
+  {
+   "key": "adochene__school_children_s_game_played_wi",
+   "english": "school children's game played with a small ball"
+  }
+ ],
+ "millett": [
+  {
+   "key": "mesangmaaluma__sorghum_millett_of_the_dry_seaso",
+   "english": "sorghum; millett of the dry season"
+  }
+ ],
+ "arabica": [
+  {
+   "key": "timo__a_kind_of_insecticide_used_to_sp",
+   "english": "a kind of insecticide used to spray on arabica coffee"
+  }
+ ],
+ "defenceless": [
+  {
+   "key": "chimboketange__be_powerless_be_weak_be_defencel",
+   "english": "be powerless, be weak, be defenceless"
+  }
+ ],
+ "dieing": [
+  {
+   "key": "chientsonewue__be_dieing_or_about_to_die",
+   "english": "be dieing or about to die"
+  }
+ ],
+ "baptised": [
+  {
+   "key": "kwaankie__be_baptised",
+   "english": "be baptised"
+  }
+ ],
+ "ressurrection": [
+  {
+   "key": "mejumnanenewue__ressurrection",
+   "english": "ressurrection"
+  }
+ ],
+ "earings": [
+  {
+   "key": "toge__pierce_of_ears_for_earings",
+   "english": "pierce (of ears) for earings"
+  }
+ ],
+ "flavoured": [
+  {
+   "key": "tsoo__taste_poorly_not_flavoured_of_fo",
+   "english": "taste poorly, not flavoured; of food"
+  }
+ ],
+ "digusting": [
+  {
+   "key": "anyadle__digusting_dirty",
+   "english": "digusting, dirty"
+  }
+ ],
+ "smithing": [
+  {
+   "key": "aleeme__smithing",
+   "english": "smithing"
+  }
+ ],
+ "neighbourhood": [
+  {
+   "key": "alietepimne__disunited_place_or_neighbourhood",
+   "english": "disunited place or neighbourhood"
+  }
+ ],
+ "drasina": [
+  {
+   "key": "alube__drasina",
+   "english": "drasina"
+  }
+ ],
+ "deminishing": [
+  {
+   "key": "atseke__criticism_the_act_of_deminishing",
+   "english": "criticism, the act of deminishing the value of something, the act of making something appear less important"
+  }
+ ],
+ "commiting": [
+  {
+   "key": "atsoobe__fine_or_levy_for_commiting_a_cri",
+   "english": "fine or levy for commiting a crime"
+  }
+ ],
+ "mofolo's": [
+  {
+   "key": "awenkie__a_women_dance_group_in_akuhle_qu",
+   "english": "A women dance group in Akuhle quarter, based in Tata Mofolo's compound"
+  }
+ ],
+ "odour": [
+  {
+   "key": "azaga__odour_smell",
+   "english": "odour, smell"
+  }
+ ],
+ "refering": [
+  {
+   "key": "babtise__baptist_refering_to_a_christian",
+   "english": "baptist, refering to a christian denomination and also to those who belong to it"
+  }
+ ],
+ "alota's": [
+  {
+   "key": "kanada__women_dance_group_originally_bas",
+   "english": "women dance group (originally based in Tata Alota's compound, no longer active)"
+  }
+ ],
+ "ngonyo's": [
+  {
+   "key": "klobe__women_dance_group_based_in_tata",
+   "english": "women dance group based in Tata Ngonyo's compound (from English)"
+  }
+ ],
+ "fonka's": [
+  {
+   "key": "kwakwa__a_dance_group_in_tame_fonka_s_co",
+   "english": "a dance group in Tame Fonka's compound"
+  }
+ ],
+ "sunyewe's": [
+  {
+   "key": "mangasa__women_dance_group_based_in_sam_s",
+   "english": "Women dance group based in Sam Sunyewe's compound"
+  }
+ ],
+ "efoomba's": [
+  {
+   "key": "mbagealeme__a_dance_group_in_tame_efoomba_s",
+   "english": "A dance group in Tame Efoomba's compound"
+  }
+ ],
+ "adultry": [
+  {
+   "key": "maghaba__adultry",
+   "english": "adultry"
+  }
+ ],
+ "continously": [
+  {
+   "key": "ndadkandadka__continously_non_stop",
+   "english": "continously, non-stop"
+  }
+ ],
+ "headpad": [
+  {
+   "key": "nekeele__headpad",
+   "english": "headpad"
+  }
+ ],
+ "someting": [
+  {
+   "key": "nyenenyene__sound_word_that_describes_the_sl",
+   "english": "sound (word) that describes the slowness of someting or somebody"
+  }
+ ],
+ "ancetre": [
+  {
+   "key": "pelo__ancestors_les_ancetre",
+   "english": "ancestors; les ancetre"
+  }
+ ],
+ "sometning": [
+  {
+   "key": "vip__sound_word_that_describes_the_fa",
+   "english": "sound (word) that describes the fastness of sometning or somebody"
+  }
+ ],
+ "tangwing's": [
+  {
+   "key": "yoyo__women_dance_group_based_in_tame",
+   "english": "Women dance group based in Tame Tangwing's compound"
+  }
+ ],
+ "fertilisation": [
+  {
+   "key": "angkwe__semen_sperm_male_fertilisation_f",
+   "english": "semen, sperm, male fertilisation fluid"
+  }
+ ],
+ "alchoholic": [
+  {
+   "key": "alue__yeast_the_substance_that_makes_r",
+   "english": "yeast, the substance that makes raffia palm turn alchoholic"
+  }
+ ],
+ "uncountables": [
+  {
+   "key": "atange__half_full_not_full_liquids_and_u",
+   "english": "half full, not full (liquids and uncountables like rice, beans etc.)"
+  }
+ ],
+ "disorganised": [
+  {
+   "key": "chieashamneashamne__be_scattered_or_disorganised",
+   "english": "be scattered or disorganised"
+  }
+ ],
+ "colour": [
+  {
+   "key": "ekeene__colour",
+   "english": "colour"
+  }
+ ],
+ "ressemble": [
+  {
+   "key": "fie__ressemble",
+   "english": "ressemble"
+  }
+ ],
+ "beforeuse": [
+  {
+   "key": "nde__elder_a_senior_affix_before_the",
+   "english": "elder, a senior; affix before the names of elderly people beforeuse by their juniors"
+  }
+ ],
+ "continous": [
+  {
+   "key": "to__marks_continous_action",
+   "english": "marks continous action"
+  }
+ ],
+ "adress": [
+  {
+   "key": "tate__adress_to_an_old_man",
+   "english": "adress, to an old man"
+  }
+ ],
+ "aproximately": [
+  {
+   "key": "ando__aproximately",
+   "english": "aproximately"
+  }
+ ],
+ "commplement": [
+  {
+   "key": "nge__commplement",
+   "english": "commplement"
+  }
+ ],
+ "litre": [
+  {
+   "key": "nkage__container_of_20_litre",
+   "english": "container, of 20 litre"
+  }
+ ],
+ "demonstrtive": [
+  {
+   "key": "we__demonstrtive_adj_that",
+   "english": "demonstrtive adj 'that'"
+  }
+ ],
+ "diagnos": [
+  {
+   "key": "chwaale__diagnos",
+   "english": "diagnos"
+  }
+ ],
+ "dieng": [
+  {
+   "key": "chiantsonawue__dieng",
+   "english": "dieng"
+  }
+ ],
+ "derogatively": [
+  {
+   "key": "kengke__drive_used_derogatively",
+   "english": "drive (used derogatively)"
+  }
+ ],
+ "ecrete": [
+  {
+   "key": "nyiee__ecrete",
+   "english": "ecrete"
+  }
+ ],
+ "finalise": [
+  {
+   "key": "tsedndzeme__finalise",
+   "english": "finalise"
+  }
+ ],
+ "gabbage": [
+  {
+   "key": "akeele__gabbage_dump_idiomatic",
+   "english": "gabbage dump (idiomatic)"
+  }
+ ],
+ "genitle": [
+  {
+   "key": "jentale__genitle",
+   "english": "genitle"
+  }
+ ],
+ "immitation": [
+  {
+   "key": "afinankange__immitation",
+   "english": "immitation"
+  }
+ ],
+ "menstration": [
+  {
+   "key": "atuese__menstration_of_first_ocassion",
+   "english": "menstration, of first ocassion"
+  }
+ ],
+ "ocassion": [
+  {
+   "key": "atuese__menstration_of_first_ocassion",
+   "english": "menstration, of first ocassion"
+  }
+ ],
+ "mushoom": [
+  {
+   "key": "aghoe__mushoom_sort_of",
+   "english": "mushoom, sort of"
+  }
+ ],
+ "mysyery": [
+  {
+   "key": "anuefejie__mysyery",
+   "english": "mysyery"
+  }
+ ],
+ "kokoneis": [
+  {
+   "key": "atiekokoneis__palm_sort_of_mostly_kokoneis",
+   "english": "palm, sort of (mostly kokoneis)"
+  }
+ ],
+ "phleme": [
+  {
+   "key": "akwage__phleme",
+   "english": "phleme"
+  }
+ ],
+ "incl": [
+  {
+   "key": "apena__ours_incl",
+   "english": "ours (incl)"
+  }
+ ],
+ "sadduceee": [
+  {
+   "key": "saduse__sadduceee",
+   "english": "sadduceee"
+  }
+ ],
+ "shuve": [
+  {
+   "key": "koeme__shuve",
+   "english": "shuve"
+  }
+ ],
+ "shrewe": [
+  {
+   "key": "shwemendage__shrewe_name_of_animal",
+   "english": "shrewe, name of animal"
+  }
+ ],
+ "scritching": [
+  {
+   "key": "nya__sound_scritching",
+   "english": "sound, scritching"
+  }
+ ],
+ "alk": [
+  {
+   "key": "akee__steep_place_of_alk",
+   "english": "steep place, of alk'ə"
+  }
+ ],
+ "ston": [
+  {
+   "key": "napemnelumne__ston_achache",
+   "english": "ston achache"
+  }
+ ],
+ "achache": [
+  {
+   "key": "napemnelumne__ston_achache",
+   "english": "ston achache"
+  }
+ ],
+ "symtom": [
+  {
+   "key": "anaaleghoone__symtom_of_disease",
+   "english": "symtom of disease"
+  }
+ ],
+ "anothern": [
+  {
+   "key": "aghandae__time_anothern",
+   "english": "time, anothern"
+  }
+ ],
+ "obj": [
+  {
+   "key": "chikokange__trap_of_obj",
+   "english": "trap, of obj"
+  }
+ ],
+ "chaak": [
+  {
+   "key": "nchaake__verb_stem_of_chaak",
+   "english": "verb stem of chaakə̌"
+  }
+ ],
+ "chaan": [
+  {
+   "key": "nchaane__verb_stem_of_chaan_be_abundant",
+   "english": "verb stem of chaanə̌ (be abundant)"
+  }
+ ],
+ "chag": [
+  {
+   "key": "nchage__verb_stem_of_chag",
+   "english": "verb stem of chagə"
+  }
+ ],
+ "chagt": [
+  {
+   "key": "nchagte__verb_stem_of_chagt",
+   "english": "verb stem of chagtə̌"
+  }
+ ],
+ "chak": [
+  {
+   "key": "nchake__verb_stem_of_chak",
+   "english": "verb stem of chakə̌"
+  }
+ ],
+ "kyeet": [
+  {
+   "key": "nkyeete__verb_stem_of_kyeet_bring_togethe",
+   "english": "verb stem of kyeetə (bring together)"
+  }
+ ],
+ "ladt": [
+  {
+   "key": "ndadte__verb_stem_of_ladt_tangle",
+   "english": "verb stem of ladtə (tangle)"
+  }
+ ],
+ "catabash": [
+  {
+   "key": "atoeme__catabash",
+   "english": "catabash"
+  }
+ ],
+ "roofier": [
+  {
+   "key": "efengmelae__roofier_of_thatched_houses",
+   "english": "roofier of thatched houses"
+  }
+ ],
+ "rolfier": [
+  {
+   "key": "efenge__rolfier_of_thatched_houses",
+   "english": "rolfier of thatched houses"
+  }
+ ],
+ "childrens": [
+  {
+   "key": "adochene__act_of_school_childrens_game_pla",
+   "english": "Act of school childrens' game played with a small ball"
+  }
+ ],
+ "ajw": [
+  {
+   "key": "ajwiyepe__ajwij_p_as_d_m_gye_mbiwi_l_ts_p",
+   "english": "Ajwíjə̌ pə̌ asədə̌ məŋgyê mbiwiŋ lə̌ tsə̌pə̌"
+  }
+ ],
+ "ajwi": [
+  {
+   "key": "ajwiie__ajwi_asod_ma_gye_mbiwi_la_ts_p",
+   "english": "Ajwiɔ́ asódə maŋgyê mbiwiŋ là tsə̌pə̌"
+  }
+ ],
+ "unk": [
+  {
+   "key": "akae__aka_p_a_t_p_unk",
+   "english": "Aka'ə pəŋ á tə̌ pə̌ ŋunkə"
+  }
+ ],
+ "atsam": [
+  {
+   "key": "anuateme__anu_atsam_l_ts",
+   "english": "anuə atsam lə̌ tsɔ"
+  }
+ ],
+ "embelishment": [
+  {
+   "key": "anyange__decoration_embelishment",
+   "english": "decoration, embelishment"
+  }
+ ],
+ "influencial": [
+  {
+   "key": "asegle__important_great_powerful_influen",
+   "english": "important, great, powerful, influencial"
+  }
+ ],
+ "nople": [
+  {
+   "key": "atienepie__nople_fig_tree",
+   "english": "nople, fig tree"
+  }
+ ],
+ "kog": [
+  {
+   "key": "atseme__kog_w",
+   "english": "kog wə"
+  }
+ ],
+ "matsam": [
+  {
+   "key": "atsematsame__ats_matsam_t_mbah_ta_a_s_compoun",
+   "english": "Atsəmatsamə̌ tə̌ Mbah Ta'a's compound"
+  }
+ ],
+ "ta'a's": [
+  {
+   "key": "atsematsame__ats_matsam_t_mbah_ta_a_s_compoun",
+   "english": "Atsəmatsamə̌ tə̌ Mbah Ta'a's compound"
+  }
+ ],
+ "agh": [
+  {
+   "key": "bandeche__agh_na",
+   "english": "aghə̌ ná"
+  }
+ ],
+ "agho": [
+  {
+   "key": "chwaale__agho_yi_wi_ji_po",
+   "english": "agho yi wí jí pô"
+  }
+ ],
+ "interrog": [
+  {
+   "key": "efo__where_interrog",
+   "english": "where? interrog"
+  }
+ ],
+ "neema": [
+  {
+   "key": "natse__neema",
+   "english": "neema"
+  }
+ ],
+ "papab": [
+  {
+   "key": "pabte__papab_n_g",
+   "english": "papabə̌nəŋgə̌'ə"
+  }
+ ],
+ "knub": [
+  {
+   "key": "pae__peel_off_knub_out_peel_off_somet",
+   "english": "peel off, knub out, peel off something"
+  }
+ ],
+ "blasphemne": [
+  {
+   "key": "wegose__blasphemne_belittle_god",
+   "english": "blasphemne; belittle God"
+  }
+ ],
+ "descriminating": [
+  {
+   "key": "wengke__smile_a_lot_smile_frequently_esp",
+   "english": "smile a lot, smile frequently especially without descriminating with whom this is done"
+  }
+ ],
+ "nda": [
+  {
+   "key": "chue__no_anu_l_mba_nda_ta_nchu",
+   "english": "nó anuə, lə̌ mbâ ndaŋ ta ńchú"
+  }
+ ],
+ "afw": [
+  {
+   "key": "fwoe__machina_afw_ati_a_chi_ts_as",
+   "english": "Machîna afwə̌'ə atîə á chi tsɔ̀ʼ ásə̀"
+  }
+ ],
+ "taana": [
+  {
+   "key": "jie__wun_ji_m_ji_la_a_ma_tug_na_mataa",
+   "english": "Ŋwùnə̀ ə ji məji là á má túg na mátaana"
+  }
+ ],
+ "grinded": [
+  {
+   "key": "naghee__manner_of_grinding_something_or",
+   "english": "manner of grinding something or style with which something is grinded"
+  }
+ ],
+ "panjwa": [
+  {
+   "key": "anjwa__panjwa",
+   "english": "panjwa"
+  }
+ ],
+ "atsed": [
+  {
+   "key": "atsele__atsed",
+   "english": "atsed"
+  }
+ ],
+ "demishing": [
+  {
+   "key": "atsake__criticism_the_act_of_demishing_t",
+   "english": "criticism, the act of demishing the value of something"
+  }
+ ],
+ "owela": [
+  {
+   "key": "awele__owela",
+   "english": "owela"
+  }
+ ],
+ "mofolos": [
+  {
+   "key": "awenkie__women_dance_group_in_akuhle_quar",
+   "english": "women dance group in Akuhle quarter, based in Tata Mofolos compound"
+  }
+ ],
+ "mafi": [
+  {
+   "key": "efaane__mafi",
+   "english": "mafi"
+  }
+ ],
+ "mafwoga": [
+  {
+   "key": "efegwe__mafwoga",
+   "english": "mafwoga"
+  }
+ ],
+ "bamiyam": [
+  {
+   "key": "awaglapenema__bamiyam_boundary_stick",
+   "english": "Bamiyam boundary stick"
+  }
+ ],
+ "bepoor": [
+  {
+   "key": "fame__bepoor",
+   "english": "bepoor"
+  }
+ ],
+ "kwakwa": [
+  {
+   "key": "kwakwe__kwakwa",
+   "english": "kwakwa"
+  }
+ ],
+ "fia": [
+  {
+   "key": "mefieapo__fia_apo",
+   "english": "fia apo"
+  }
+ ],
+ "lo'a": [
+  {
+   "key": "ndememalee__nde_malo_a",
+   "english": "ndé málo'a"
+  }
+ ],
+ "mbwodna": [
+  {
+   "key": "nengmbwodne__ne_mbwodna",
+   "english": "neŋ mbwodna"
+  }
+ ],
+ "tsa'a": [
+  {
+   "key": "nekemeatsae__n_k_m_tsa_a",
+   "english": "nəkə mə tsa'a"
+  }
+ ],
+ "manteema": [
+  {
+   "key": "neteeme__manteema",
+   "english": "manteema"
+  }
+ ],
+ "njubt": [
+  {
+   "key": "njubte__njubt_dry_corn",
+   "english": "njubt — dry corn"
+  }
+ ],
+ "litres": [
+  {
+   "key": "nkage__a_20_litres_container",
+   "english": "a 20 litres container"
+  }
+ ],
+ "voc": [
+  {
+   "key": "tata__voc",
+   "english": "voc"
+  }
+ ],
+ "ntsednd": [
+  {
+   "key": "ntsedndzeme__ntsednd",
+   "english": "ntsednd"
+  }
+ ],
+ "porchile": [
+  {
+   "key": "nchile__porchile",
+   "english": "porchile"
+  }
+ ],
+ "uth": [
+  {
+   "key": "kyaale__lift_uth_soft_or_rotten",
+   "english": "Lift uth soft or rotten"
+  }
+ ],
+ "anothers": [
+  {
+   "key": "shage__steal_palm_wine_from_anothers_pa",
+   "english": "steal palm wine from anothers palm bush"
+  }
+ ],
+ "femtefemte": [
+  {
+   "key": "femtefemte__femtefemte",
+   "english": "femtefemte"
+  }
+ ],
+ "ghoo": [
+  {
+   "key": "ghoo__ghoo",
+   "english": "ghoo"
+  }
+ ],
+ "wuu": [
+  {
+   "key": "wuu__wuu",
+   "english": "wuu"
+  }
+ ],
+ "eka": [
+  {
+   "key": "phrase_yeekaelia",
+   "english": "disturb or annoy. V.s: ńgyéeka əli'"
+  }
+ ],
+ "afa'a": [
+  {
+   "key": "sentence_onethousandfrancscfanotecolloquial",
+   "english": "Afa'a alé mbĩ ali' pətsə lá afũa atĩa."
+  }
+ ],
+ "atechi": [
+  {
+   "key": "sentence_paulmbangwanadr",
+   "english": "Samuel Atechi, Mbatu Alex and Polote Gideon who worked with me as a team in the early stages of the project."
+  }
+ ],
+ "mbatu": [
+  {
+   "key": "sentence_paulmbangwanadr",
+   "english": "Samuel Atechi, Mbatu Alex and Polote Gideon who worked with me as a team in the early stages of the project."
+  }
+ ],
+ "polote": [
+  {
+   "key": "sentence_paulmbangwanadr",
+   "english": "Samuel Atechi, Mbatu Alex and Polote Gideon who worked with me as a team in the early stages of the project."
+  }
+ ],
+ "mengyenji": [
+  {
+   "key": "sentence_mengyenjiaajienuealogolofosoeghaetsomo",
+   "english": "Mengyenji is intelligent, she is always first."
+  }
+ ],
+ "adocheng": [
+  {
+   "key": "sentence_kayewuneatantemeadochenge",
+   "english": "Children are playing adocheng."
+  }
+ ],
+ "amiti": [
+  {
+   "key": "sentence_mbwngnembegenchelealaemetie",
+   "english": "Awing people were first staying in Ala- amiti quarter."
+  }
+ ],
+ "mindedly": [
+  {
+   "key": "sentence_oanaaneneenkamognoegnembiejimboaloememogeetooneye",
+   "english": "If one sits by the fire absent- mindedly, he can be burned by the flames."
+  }
+ ],
+ "nkab": [
+  {
+   "key": "sentence_nkabloalepaasaonuoachinoalambiiwingo",
+   "english": "Nkab is a day that announcements are made in Awing."
+  }
+ ],
+ "afish": [
+  {
+   "key": "sentence_ateeneakooleeshueachilealinkiachineawe",
+   "english": "Afish trap is found where there is water."
+  }
+ ],
+ "realise": [
+  {
+   "key": "sentence_pipeleeseaekwulemegmebmechae",
+   "english": "When people wake up from bed they realise their eyes bear a white substance."
+  }
+ ],
+ "tyres": [
+  {
+   "key": "sentence_nekadnemutonechagelembeajuntseme",
+   "english": "The tyres of a car smashes all sorts of things."
+  }
+ ],
+ "endeavours": [
+  {
+   "key": "sentence_chatesepambootadoonegamenumomonyine",
+   "english": "Pray, if you want to succeed in all your endeavours."
+  }
+ ],
+ "earlymen": [
+  {
+   "key": "sentence_ngangngonanchintablelantenggaponambongetsea",
+   "english": "The earlymen were naked because they lacked dresses."
+  }
+ ],
+ "akofo": [
+  {
+   "key": "sentence_akofoakodndzoezatmbela",
+   "english": "Akofo has eaten beans and mine is left."
+  }
+ ],
+ "flavour": [
+  {
+   "key": "sentence_mojimefenglopejimemembongeshine",
+   "english": "Food which is cold does not have a good flavour."
+  }
+ ],
+ "deeped": [
+  {
+   "key": "sentence_nopoopognoloyopofomnomboamomowo",
+   "english": "Soap that gets bad is that which fingers have been deeped into it."
+  }
+ ],
+ "baminnyam": [
+  {
+   "key": "sentence_mbetofieakwewubogemese",
+   "english": "Baminnyam people unearth a corpse for fear of witchcraft."
+  }
+ ],
+ "deliever": [
+  {
+   "key": "sentence_nchateseafogengwuneamemngee",
+   "english": "A spiritual healer deliever somebody from trouble."
+  }
+ ],
+ "dowrying": [
+  {
+   "key": "sentence_mboghwuneakemengyezoteghooleatupo",
+   "english": "One cannot marry without dowrying the woman."
+  }
+ ],
+ "bamilike": [
+  {
+   "key": "sentence_bamilikeajitenenkabtsshune",
+   "english": "A Bamilike man is too greedy for money."
+  }
+ ],
+ "savana": [
+  {
+   "key": "sentence_mogtenkeleandukongyinjbte",
+   "english": "Fire is burning on dry savana."
+  }
+ ],
+ "kosham": [
+  {
+   "key": "sentence_pipetseponokoshamlaandomejie",
+   "english": "Some people drink kosham as if it is food."
+  }
+ ],
+ "another's": [
+  {
+   "key": "sentence_mbeopeenemengwumbieghoakwue",
+   "english": "If you hate another's child and give birth to yours it will die."
+  }
+ ],
+ "rumours": [
+  {
+   "key": "sentence_pesongnggengwuneapengeamemeakoobe",
+   "english": "Rumours are that somebody is missing in the forest."
+  }
+ ],
+ "feng": [
+  {
+   "key": "sentence_ngatsepetsemeapmeanueatseletsoegefebekechemefenetepe",
+   "english": "A dishonest person will accept 'feng' to every thing but will never put one into action."
+  }
+ ],
+ "nyanya": [
+  {
+   "key": "sentence_pemngngkwapokendzoelenekyengpopepwodeghaetsemepochuengenyany",
+   "english": "Midwives keep hearing the cries of babies, as they cry nyanya."
+  }
+ ]
+}
