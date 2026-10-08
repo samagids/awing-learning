@@ -83,7 +83,7 @@ class _StudentExamScreenState extends State<StudentExamScreen> {
       case 'identify_tone':
         return '🎵 What tone does "$q" use?';
       case 'spelling':
-        return '✍️ How do you spell "$q" in Awing?';
+        return '✍🏾 How do you spell "$q" in Awing?';
       case 'letter_to_sound':
         return '🔤 What sound does the letter "$q" make?';
       case 'sound_to_letter':

@@ -42,12 +42,12 @@ const Map<String, _CategoryMeta> _kCategories = {
   'things':       _CategoryMeta('Things', '🧺'),
   'descriptive':  _CategoryMeta('Descriptive', '✨'),
   'numbers':      _CategoryMeta('Numbers', '🔢'),
-  'pronouns':     _CategoryMeta('Pronouns', '🙋'),
+  'pronouns':     _CategoryMeta('Pronouns', '🙋🏾'),
   'time':         _CategoryMeta('Time', '⏰'),
   'classroom':    _CategoryMeta('Classroom', '🏫'),
   'daily':        _CategoryMeta('Daily', '📅'),
   'question':     _CategoryMeta('Question', '❓'),
-  'greeting':     _CategoryMeta('Greetings', '👋'),
+  'greeting':     _CategoryMeta('Greetings', '👋🏾'),
 };
 
 class _CategoryMeta {

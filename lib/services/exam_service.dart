@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:nsd/nsd.dart' as nsd;
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:awing_ai_learning/models/user_model.dart'
+    show darkenHumanAvatar;
 
 /// Represents an exam question created by the teacher.
 class ExamQuestion {
@@ -84,7 +86,7 @@ class ExamParticipant {
   ExamParticipant({
     required this.profileId,
     required this.displayName,
-    this.avatarEmoji = '🧒',
+    this.avatarEmoji = '🧒🏾',
     this.level = 'beginner',
     this.socket,
     this.isReady = false,
@@ -458,7 +460,8 @@ class ExamService extends ChangeNotifier {
         _pendingJoins.add(PendingJoinRequest(
           profileId: profileId,
           displayName: (json['displayName'] as String?) ?? 'Student',
-          avatarEmoji: (json['avatarEmoji'] as String?) ?? '🧒',
+          avatarEmoji: darkenHumanAvatar(
+              (json['avatarEmoji'] as String?) ?? '🧒🏾'),
           level: level,
           socket: socket,
         ));

@@ -14,7 +14,10 @@ class ProfileSelectScreen extends StatefulWidget {
 }
 
 class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
-  static const _avatars = ['🧒', '👧', '👦', '🧒🏾', '👧🏾', '👦🏾', '🧑', '👩', '👨', '🦸', '🧙', '🐯'];
+  // Rule: every human avatar must be black or brown. Bare emoji (no skin-tone
+  // modifier) render yellow/light on most platforms, so each human figure
+  // carries an explicit U+1F3FE (medium-dark) or U+1F3FF (dark) modifier.
+  static const _avatars = ['🧒🏾', '👧🏾', '👦🏾', '🧒🏿', '👧🏿', '👦🏿', '🧑🏾', '👩🏾', '👨🏾', '🦸🏿', '🧙🏿', '🐯'];
 
   void _createProfile() {
     final nameController = TextEditingController();

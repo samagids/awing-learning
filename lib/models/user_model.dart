@@ -1,5 +1,32 @@
 import 'package:awing_ai_learning/models/secret_hash.dart';
 
+/// Human avatars must render black or brown.
+///
+/// A bare emoji such as U+1F9D2 (child) with no skin-tone modifier renders
+/// yellow on most platforms and light-skinned on a few. Profiles created
+/// before v1.24.4 stored those bare forms, so every path into a profile
+/// upgrades them here rather than in a one-shot startup migration (the same
+/// reasoning as the PIN hash upgrade above): local load, cloud restore and an
+/// older device's write coming back down all pass through fromJson.
+///
+/// Non-human avatars (the tiger) and avatars that already carry a modifier are
+/// returned unchanged.
+String darkenHumanAvatar(String emoji) {
+  if (emoji.isEmpty) return emoji;
+  const modifiers = {0x1F3FB, 0x1F3FC, 0x1F3FD, 0x1F3FE, 0x1F3FF};
+  if (emoji.runes.any(modifiers.contains)) return emoji;
+  const toneable = {
+    0x1F9D2, 0x1F467, 0x1F466, 0x1F9D1, 0x1F469, 0x1F468, // child/girl/boy/adult/woman/man
+    0x1F9B8, 0x1F9B9, 0x1F9D9, 0x1F9DA, 0x1F9DD, // hero/villain/mage/fairy/elf
+    0x1F476, 0x1F474, 0x1F475, 0x1F478, 0x1F934, // baby/old man/old woman/princess/prince
+    0x1F64B, 0x1F646, 0x1F645, 0x1F481, 0x1F647, // gesture people
+    0x1F44B, 0x1F44D, 0x1F44E, 0x1F44F, 0x1F64F, 0x1F590, 0x270B, 0x1F44C, // hands
+  };
+  final first = emoji.runes.first;
+  if (!toneable.contains(first)) return emoji;
+  return '$emoji\u{1F3FE}';
+}
+
 /// A single user profile within an email account.
 /// One email can have multiple profiles (e.g. siblings sharing a tablet).
 class UserProfile {
@@ -31,7 +58,7 @@ class UserProfile {
   UserProfile({
     required this.id,
     required this.displayName,
-    this.avatarEmoji = '🧒',
+    this.avatarEmoji = '🧒🏾',
     this.currentLevel = 'beginner',
     this.beginnerUnlocked = true,
     this.mediumUnlocked = false,
@@ -222,7 +249,8 @@ class UserProfile {
     final profile = UserProfile(
         id: json['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
         displayName: json['displayName'] ?? 'Learner',
-        avatarEmoji: json['avatarEmoji'] ?? '🧒',
+        avatarEmoji:
+            darkenHumanAvatar(json['avatarEmoji'] ?? '🧒🏾'),
         currentLevel: json['currentLevel'] ?? 'beginner',
         beginnerUnlocked: json['beginnerUnlocked'] ?? true,
         mediumUnlocked: json['mediumUnlocked'] ?? false,

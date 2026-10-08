@@ -128,7 +128,7 @@ final List<AwingStory> awingStories = [
   AwingStory(
     titleEnglish: 'The Baby on the Bed',
     titleAwing: 'Móonə',
-    illustration: '👶',
+    illustration: '👶🏾',
     sentences: [
       // Orthography PDF p.11, corrected by Dr. Sama (native speaker)
       // to the natural spoken form — Awing drops "a tə" progressive aux
@@ -160,7 +160,7 @@ final List<AwingStory> awingStories = [
   AwingStory(
     titleEnglish: 'Where Are You Going?',
     titleAwing: 'Əfó?',
-    illustration: '🚶',
+    illustration: '🚶🏾',
     sentences: [
       // Orthography PDF p.12, exact quote
       StorySentence(

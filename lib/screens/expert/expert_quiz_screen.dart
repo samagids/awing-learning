@@ -305,7 +305,7 @@ class _ExpertQuizScreenState extends State<ExpertQuizScreen> {
       emoji = '🌟';
     } else if (percentage >= 70) {
       message = 'Great job! You are becoming an expert!';
-      emoji = '👍';
+      emoji = '👍🏾';
     } else if (percentage >= 60) {
       message = 'Good effort! Keep studying and practicing!';
       emoji = '💪';
