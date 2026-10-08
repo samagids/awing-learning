@@ -4016,8 +4016,30 @@ def _save_image(img, output_path) -> None:
 #
 # Both are CLI-tunable (--steps, --guidance) so they can be A/B'd on one
 # word instead of argued about.
-INFERENCE_STEPS = 4
-GUIDANCE_SCALE = 1.5
+# 2026-10-08: raised from 1.5. The negative prompt has named "caucasian,
+# white person, pale skin" all day and has been ignored all day. Evidence,
+# from one run:
+#
+#   koole__shave          prompt names no person  -> a white bearded man
+#   sentence_koome...     prompt names children   -> two Black children
+#
+# Same model, same negative, same minute. Where the positive prompt says
+# who is in the picture the skin is right; where it does not, the model
+# invents a person and the negative does not stop it being white. At
+# guidance 1.5 a negative prompt barely participates - that is a property
+# of classifier-free guidance, not a quirk of this model - so no amount of
+# extra wording in the negative was ever going to win.
+#
+# Turbo is designed for guidance 0-1 and 1.5 was already off-label, chosen
+# so the SUBJECT would stick. 3.0 is further off-label; it makes both the
+# prompt and the negative count for more, at some cost in the soft cartoon
+# look. Steps go 4 -> 6 because higher guidance needs a little more room
+# to resolve.
+#
+# Both are CLI-tunable (--guidance, --steps). If this trade is wrong, it
+# is one constant to change back, not a list to maintain.
+INFERENCE_STEPS = 6
+GUIDANCE_SCALE = 3.0
 
 _NEGATIVE_COMMON = (
     # FIRST, on every single prompt, because this is a children's app and
