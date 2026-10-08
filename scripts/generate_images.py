@@ -318,6 +318,10 @@ _HUMAN_REF_RE = re.compile(
 # onto the `finger` card after three rounds of strengthening the wording.
 _SKIN_DESCRIBED_RE = re.compile(
     r"(?:dark|deep|rich|warm)\s+(?:brown\s+)?skin"
+    # "a dark brown hand" states the tone without the word "skin", and was
+    # being qualified a second time: "a dark brown very dark brown Black
+    # African hand".
+    r"|(?:dark|deep|rich|warm)\s+brown\b"
     r"|dark[- ]skinned|Black African",
     re.I,
 )
@@ -2260,6 +2264,96 @@ PROMPT_OVERRIDES = {
     "gird up": "two hands tightening a cloth belt around a full-length robe",
     "loincloth": "a folded length of patterned cloth laid out on a wooden bench",
     "loincloth of some sort worn in the olden days": "a folded length of patterned cloth laid out on a wooden bench",
+
+    # ----------------------------------------------------------------
+    # GRAMMAR WORDS GET AN OBJECT, NOT A SKIPPED CARD
+    # ----------------------------------------------------------------
+    # Dr. Sama: "every work must have an image still stand. it must not be
+    # human but has the object in the image match the word. any human in
+    # any image must be black or brown."
+    #
+    # I had gated these out instead, because "the personal pronoun 'he'"
+    # was drawing a classroom of white Europeans. Skipping was the easy
+    # answer and the wrong one. The reason that card failed is that its
+    # prompt named NOTHING - no person, no object - so the model invented a
+    # scene and invented the people in it.
+    #
+    # Give the word an object and the problem disappears at the source:
+    #   this   a hand pointing at a calabash right beside it
+    #   that   the same hand pointing at a calabash across the yard
+    #   and    two mangoes with a plus sign between them
+    #   but    an arrow bouncing back off a wall
+    #   from   an arrow curving OUT of a pot; "to" curves IN
+    #
+    # Where a person is unavoidable (we, they, reflexive) the prompt says
+    # Cameroonian so africanize_people() colours them, and hands are named
+    # "dark brown" directly.
+
+    "a dance group": "a group of Cameroonian dancers in matching dress with drummers behind them",
+    "above": "one calabash floating directly over another calabash, a gap between them",
+    "at": "a red map pin standing upright on a small drawn map",
+    "be": "an empty wooden chair standing in a swept courtyard",
+    "because": "one wooden domino falling and knocking the next one over",
+    "biggest dance group in awing based": "a large group of Cameroonian dancers in matching dress with drummers",
+    "but": "an arrow travelling forward and bouncing back off a brick wall",
+    "from": "an arrow curving out of an open clay pot towards a basket",
+    "future tense marker": "a calendar with tomorrow circled in red and an arrow pointing forward to it",
+    "he": "a woven boy's hat on a stool with an arrow pointing to it",
+    "he/him pronoun": "a woven boy's hat on a stool with an arrow pointing to it",
+    "here": "a bright X marked on the ground with a stone on it, close to the viewer",
+    "hers": "a girl's bright headscarf folded on a basket of maize beside a stool",
+    "his": "a boy's woven hat resting on a basket of maize beside a stool",
+    "if": "a path splitting into two, a signpost standing at the fork",
+    "intensifier": "a small drum beside a very large drum of the same shape, a bold arrow growing from small to large",
+    "it": "one clay pot standing alone in the middle of a plain mat",
+    "mine": "a basket of mangoes with a red ribbon tied to its handle, a dark brown hand resting on it",
+    "my": "a basket of mangoes with a red ribbon tied to its handle, a dark brown hand resting on it",
+    "name of a quarter in awing": "a painted wooden village signboard on a post beside a red earth road",
+    "negation marker": "a red circle with a diagonal line drawn across a mango",
+    "no": "a bold red cross mark on a white card",
+    "not": "a red circle with a diagonal line drawn across a mango",
+    "noun class marker": "three baskets of different shapes, each with a different coloured tag tied to it",
+    "of": "a bunch of bananas with one single banana drawn separately beside it",
+    "or": "two mangoes with a forked arrow pointing to one and then the other",
+    "ours": "one large basket of groundnuts with four dark brown hands resting on its rim",
+    "perhaps": "a coin spinning in mid-air above an open palm",
+    "prefix of awing gerunds": "a row of wooden blocks with one extra block being fitted onto the front end",
+    "reflexive pronoun": "a Cameroonian child looking at their own face in a hand mirror",
+    "so": "a dark rain cloud with an arrow leading down to a puddle below",
+    "tense marker": "a calendar with yesterday, today and tomorrow marked by three coloured dots",
+    "that": "a dark brown hand pointing across a yard at one calabash far away on a stool",
+    "theirs": "a basket of yams standing apart, two baskets of its own kind behind it",
+    "then": "two clocks side by side, the left showing an earlier time than the right",
+    "there": "a bright X marked on the ground on a far hillside, a path leading to it",
+    "these": "a dark brown hand held over three calabashes together on a mat in front",
+    "they": "a group of Cameroonian children standing together, seen from behind",
+    "this": "a dark brown hand pointing down at one calabash right beside it on a mat",
+    "this is": "a dark brown hand resting on one calabash on a mat, the calabash lit brightly",
+    "those": "a dark brown hand pointing at three calabashes far away on a distant hill",
+    "to": "an arrow curving from a basket into an open clay pot",
+    "us": "a circle of Cameroonian children standing together holding hands",
+    "we": "a circle of Cameroonian children standing together holding hands",
+    "whom": "an empty silhouette outline of a head and shoulders with a question mark inside",
+    "with": "a spoon and a bowl tied together with a short cord",
+    "women dance group": "a group of Cameroonian women in matching wrappers dancing in a circle",
+    "yes": "a bold green tick mark on a white card",
+    "yours": "a basket of mangoes held out towards the viewer by two dark brown hands",
+    "at preposition point in time": "a red map pin standing on a calendar page, one date circled",
+    "class marker": "three baskets of different shapes, each with a different coloured tag tied to it",
+    "complement": "a row of wooden blocks with one extra block fitted onto the end",
+    "demonstrative": "a dark brown hand pointing down at one calabash right beside it on a mat",
+    "from starting source preposition": "an arrow curving out of an open clay pot towards a basket",
+    "impersonal animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
+    "it impersonal animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
+    "personal pronoun": "a woven boy's hat on one stool and a girl's headscarf on another, an arrow pointing to each",
+    "plural marker": "one mango beside a heap of five mangoes, an arrow from the one to the heap",
+    "preposition at": "a red map pin standing upright on a small drawn map",
+    "question marker": "a large bold question mark beside a closed wooden box with its lid ajar",
+    "singular pronoun you": "a basket of mangoes held out towards the viewer by two dark brown hands",
+    "the impersonal or animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
+    "the personal pronoun": "a woven boy's hat on one stool and a girl's headscarf on another, an arrow pointing to each",
+    "the singular pronoun you": "a basket of mangoes held out towards the viewer by two dark brown hands",
+    "verb complement": "a row of wooden blocks with one extra block fitted onto the end",
 }
 
 
@@ -4568,7 +4662,21 @@ def cmd_generate(args):
         # the jumble for "that". A blank card teaches nothing; a classroom
         # of white Europeans captioned with an Awing pronoun teaches
         # something worse.
-        if not getattr(args, "draw_everything", False) and \
+        # DRAW EVERYTHING. Dr. Sama, restating it after I had gated the
+        # grammar words out: "every work must have an image still stand. it
+        # must not be human but has the object in the image match the word.
+        # any human in any image must be black or brown."
+        #
+        # So the answer to "the personal pronoun 'he'" drawing a classroom
+        # of white Europeans is NOT to skip the word. It is to give the word
+        # a real picture made of OBJECTS - see the grammar-word overrides.
+        # A pronoun has a picture: a hand pointing at a near calabash is
+        # "this", the same hand pointing at a far one is "that". Skipping is
+        # what I reached for because it was easy; it is not what was asked.
+        #
+        # --only-depictable restores the skip for anyone who wants it. The
+        # adult gate above is separate and stays unconditional.
+        if getattr(args, "only_depictable", False) and \
                 not is_illustratable(english, category):
             not_depictable += 1
             # Skipping is not enough. These entries ALREADY have an image on
