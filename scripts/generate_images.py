@@ -1870,19 +1870,33 @@ PROMPT_OVERRIDES = {
     #    the exact opposite of the entry. Worth hunting as a class: a typo
     #    in a gloss can invert the picture silently.
     #
-    # "hump" is both at once: three senses (a man's bent back, a hunchback,
-    # a zebu's shoulder) sharing one headword, in category `body`, where
-    # the template asks for a close-up of a person - which is why the card
-    # was a girl's face.
+    # "hump" is both at once: three senses sharing one headword, in
+    # category `body`, where the template asks for a close-up of a person -
+    # which is why the card was a girl's face.
+    #
+    # Dr. Sama, after the first attempt drew a hunched man: "hump should
+    # not have humans in it. use camel or other animals with hump to show
+    # hump. It is not that difficult."
+    #
+    # Right on both counts. A hunched man is the literal gloss and a bad
+    # card: SDXL renders a man who looks ordinary, so the hump - the whole
+    # point - is the part that does not survive. A camel's hump is the
+    # clearest hump there is, a child names it instantly, and it carries no
+    # suggestion that a disabled body is the illustration for a noun. Zebu
+    # for the "of cow" sense, which is the one Awing children actually see.
+    #
+    # GENERAL RULE this is an instance of: when a feature is the word, pick
+    # the creature or object where that feature is unmissable, not the one
+    # the gloss happens to name.
 
     "a piece of rough iron used": "a rough grey iron sharpening bar held against the blade of a machete, sparks at the edge",
     "crunch": "a dog biting down hard on a bone, the bone cracking between its teeth",
     "crunch soft bone": "a dog biting down hard on a bone, the bone cracking between its teeth",
     "divide": "two hands cutting one round loaf into equal halves with a knife",
     "divide or share": "a child sharing a plate of food into two equal portions for two children",
-    "hump": "the curved rounded hump on the upper back of a standing man seen from the side, his back bent forward",
-    "hump of cow": "a zebu cow seen from the side with a large rounded muscular hump on its shoulders above the front legs",
-    "hump of hunchback": "the curved rounded hump on the upper back of a standing man seen from the side, his back bent forward",
+    "hump": "a camel standing in profile on sand, two large rounded humps rising from its back",
+    "hump of cow": "a zebu cow standing in profile, one large rounded hump rising from its shoulders above the front legs",
+    "hump of hunchback": "a camel standing in profile on sand, two large rounded humps rising from its back",
     "inhygenic environment": "a dirty village yard with scattered rubbish, a pool of dirty standing water and flies buzzing",
     "iron": "a heavy grey bar of raw iron metal lying on a workbench, rough unpolished surface",
     "melt iron": "a blacksmith at a forge pouring glowing orange molten iron from a crucible, red hot coals below",
@@ -2524,6 +2538,13 @@ _INVERTED_GLOSS = re.compile(
 # lexicographer's hedge, not something that can appear in a drawing, and as
 # the leading tokens of the prompt it was stealing weight from the only word
 # that could be drawn.
+# A comma tail that QUALIFIES the head rather than restating it.
+_QUALIFIER_TAIL = re.compile(
+    r"^(?:for|of|in|on|at|with|without|from|to|by|as|like|used|using|"
+    r"made|worn|kept|found|grown|eaten|done|that|which|who|whose|when|"
+    r"where|especially|usually|normally|generally|often|only|mostly|"
+    r"the|a|an)\b", re.I)
+
 _LEADING_HEDGE = re.compile(
     r"^(?:a|an|the)?\s*(?:sort|kind|type|manner|way)\s+of\s+", re.I)
 
@@ -2672,8 +2693,19 @@ def concrete_gloss_for_prompt(english_word: str, max_words: int = 12) -> str:
                 # belong to elders" has a one-word head and keeps its
                 # qualifier.
                 if "," in part:
-                    head = part.split(",", 1)[0].strip()
-                    if len(_content_tokens(head)) >= 2:
+                    head, rest = (x.strip() for x in part.split(",", 1))
+                    # ONLY when the remainder is an ALTERNATIVE gloss. When
+                    # it is a qualifier the distinction IS the entry, and
+                    # dropping it collapsed 14 different trees onto one
+                    # picture:
+                    #   "tree, for boundaries"  -> "tree"
+                    #   "tree, of colanuts"     -> "tree"
+                    #   "clean a little, using a hoe" -> "clean a little"
+                    # A qualifier announces itself with a preposition or a
+                    # relative word; an alternative gloss starts with its
+                    # own noun or verb.
+                    if (len(_content_tokens(head)) >= 2
+                            and not _QUALIFIER_TAIL.match(rest)):
                         _SYNONYM_HEADS.add(head)
                         clauses.append(head)
     if not clauses:
@@ -3150,8 +3182,29 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
     # lost. Safe to put first: it only ever matches a key written
     # deliberately for disambiguation - "work (n)" yields "work n", which is
     # not a key, and falls straight through.
-    for w in [disambiguated, short_word, clean_word,
-              _safe_first_word(clean_word)]:
+    # A QUALIFIED gloss must not match the override for its bare head.
+    # "tree, for boundaries", "tree, of kolanuts" and "tree, for building
+    # bridges" are three different trees; all three shortened to "tree",
+    # hit the generic tree override, and came back as one picture. 14 cards,
+    # one image. Same failure shape as "sweet potato" matching "sweet",
+    # which _safe_first_word() already guards - this is that guard applied
+    # one level up, to the head of a qualified gloss.
+    #
+    # The disambiguated form is still tried first, so a deliberately written
+    # key like "plant (cocoyams)" keeps working.
+    _concrete = concrete_gloss_for_prompt(english_word)
+    _qualified = len(_content_tokens(_concrete)) > len(_content_tokens(clean_word))
+
+    _candidates = [disambiguated, short_word, clean_word,
+                   _safe_first_word(clean_word)]
+    if _qualified:
+        _candidates = [disambiguated, english_word.strip().lower(), _concrete]
+        # A multi-word override key is not a generic head - it was written
+        # for a specific gloss ("a piece of rough iron used"). Keep it.
+        if len(_content_tokens(short_word)) >= 3:
+            _candidates.append(short_word)
+
+    for w in _candidates:
         if w and w in PROMPT_OVERRIDES:
             body = africanize_people(PROMPT_OVERRIDES[w], seed_key)
             return f"{body}, {_style_suffix_for(body, category)}"
