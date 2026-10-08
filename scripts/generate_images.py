@@ -1803,6 +1803,32 @@ PROMPT_OVERRIDES = {
     "wakefulness": "a child wide awake with big open eyes at night beside a small oil lamp",
     "working relationship": "two farmers hoeing one field side by side",
     "worship": "a group of people singing with raised hands inside a village church",
+
+    # ----------------------------------------------------------------
+    # fyaabə - from Dr. Sama directly, 2026-10-08
+    # ----------------------------------------------------------------
+    # "fyaabə is like mushmellow rusting stick" - i.e. the stick you hold
+    # into a fire, like a marshmallow roasting stick. The dictionary gloss
+    # ("piece of stick or iron used for controling embers") is accurate but
+    # it does not tell SDXL what the thing LOOKS like, so the card drew a
+    # workshop. The analogy does: a long stick, tip in the embers.
+    #
+    # "marshmallow" is deliberately NOT in the prompt. It was his analogy
+    # for the shape, not the object, and a marshmallow is not an Awing
+    # thing - putting one on the card is the "that is not an Awing thing"
+    # complaint from the NACDA review.
+    #
+    # Six cards across four spellings (fyaabə, fyaabə̂, fyaabə̌, fyaaba) all
+    # mean this, and one of them is miscategorised `body` - which is why it
+    # was drawing a grandmother. An override bypasses the category template,
+    # so all six now draw the stick. The spelling question stays open in
+    # near_duplicate_review.md.
+
+    "a piece of stick or iron": "a long thin wooden stick with its blackened tip resting in the glowing red embers of a small cooking fire, stirring the embers",
+    "control embers using a piece": "a hand holding a long thin wooden stick, its blackened tip pushed into the glowing red embers of a small cooking fire",
+    "control sth using a stick": "a hand holding a long thin wooden stick, its blackened tip pushed into the glowing red embers of a small cooking fire",
+    "piece of stick or iron used": "a long thin wooden stick with its blackened tip resting in the glowing red embers of a small cooking fire, stirring the embers",
+    "stick for handling sth": "a long thin wooden stick with its blackened tip resting in the glowing red embers of a small cooking fire, stirring the embers",
 }
 
 
