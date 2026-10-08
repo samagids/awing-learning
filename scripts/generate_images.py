@@ -345,8 +345,12 @@ def africanize_people(prompt: str, seed_key: str = "") -> str:
         # part itself.
         mp = _BODY_PART_RE.search(prompt)
         if mp:
-            return (prompt[:mp.start()] + "dark brown skinned "
-                    + prompt[mp.start():])
+            # "a cartoon dark brown skinned hand with one finger pointing
+            # up" still came back a tan hand. At 4 steps a single adjective
+            # in front of the noun is not enough; naming the people as well
+            # as the tone is. Verified on ntsenge__finger.
+            return (prompt[:mp.start()] + "very dark brown Black African "
+                    + prompt[mp.start():] + ", deep dark brown skin tone")
         return prompt
     _hair, skin, _clothes, _subject = _persona_bits(seed_key)
     noun = prompt[m.start() : m.end()].lower()
@@ -485,12 +489,26 @@ def _style_suffix_for(prompt: str, category: str) -> str:
     """
     if _is_person_prompt(prompt, category):
         return STYLE_SUFFIX_SCENE
-    # No whole person, but a hand or a face is still skin on the card, and
-    # skin with no instruction comes out white. Plain backdrop, skin clause
-    # kept.
-    if _HUMAN_REF_RE.search(prompt.replace(_SKIN_CLAUSE, "")):
-        return STYLE_SUFFIX_PLAIN
-    return STYLE_SUFFIX_OBJECT
+    # EVERYTHING ELSE KEEPS THE SKIN CLAUSE. Dr. Sama, after another sample:
+    # "still white people in one of the images. this should not happen in
+    # the generate all run."
+    #
+    # He is right that detection is the wrong basis for this. I removed the
+    # clause from object prompts because for a gloss with no concrete noun
+    # it became the subject ("a cartoon emptiness, any people shown are
+    # Black African..." drew a Black African). Then I spent two rounds
+    # widening the list of words that count as a person, and he found
+    # another miss each time. A rule that fails open on an unlisted word is
+    # the wrong rule.
+    #
+    # So it goes on every prompt, and the ORIGINAL failure is handled by the
+    # thing that actually prevents it: _NEGATIVE_OBJECT names "person,
+    # people, child, boy, girl, man, woman, face, portrait, crowd" and is
+    # live at GUIDANCE_SCALE 1.5. On a true object prompt the negative
+    # suppresses the people the clause mentions; on a prompt that needs a
+    # person the clause says which person. Belt and braces, and it cannot
+    # fail open on a word I forgot to list.
+    return STYLE_SUFFIX_PLAIN
 
 # ============================================================
 # PROMPT OVERRIDES
@@ -3211,7 +3229,13 @@ def _safe_first_word(clean_word: str):
         t = t.strip(",.;:'\"")
         if not t:
             continue
-        if t not in _PROMPT_STOPWORDS and t not in _PROMPT_MODIFIERS:
+        # Any -ly adverb is manner, not subject. "announce publicly" was
+        # failing this test and falling through to a literal prompt, which
+        # drew a crowd of pale cartoon figures instead of using the written
+        # "announce" scene. _PROMPT_MODIFIERS lists adverbs one at a time;
+        # the suffix covers the ones nobody thought to add.
+        if (t not in _PROMPT_STOPWORDS and t not in _PROMPT_MODIFIERS
+                and not (len(t) > 4 and t.endswith("ly"))):
             return None
     return toks[0]
 
@@ -3740,7 +3764,9 @@ INFERENCE_STEPS = 4
 GUIDANCE_SCALE = 1.5
 
 _NEGATIVE_COMMON = (
-    "caucasian, pale skin, light skin, european features, "
+    "caucasian, white person, white man, white woman, white child, "
+    "pale skin, light skin, fair skin, tan skin, peach skin, olive skin, "
+    "light brown skin, beige skin, european features, "
     "blonde hair, red hair, "
     "text, words, letters, numbers, watermark, signature, caption, "
     "blurry, deformed, extra limbs, extra fingers, ugly, "
