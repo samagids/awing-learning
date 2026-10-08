@@ -299,10 +299,12 @@ _BODY_PART_RE = re.compile(
 
 _HUMAN_REF_RE = re.compile(
     _HUMAN_NOUN_RE.pattern[:-3]  # drop the trailing )\b
-    + r"|hand|hands|palm|palms|finger|fingers|thumb|arm|arms|elbow|wrist|"
-      r"foot|feet|leg|legs|knee|knees|toe|toes|shoulder|shoulders|"
-      r"face|faces|head|heads|cheek|cheeks|chin|neck|chest|back|"
-      r"eye|eyes|mouth|lips|ear|ears|nose|tongue|tooth|teeth|hair|skin)\b",
+    # Only parts that are unmistakably a PERSON'S. "back", "hair", "mouth",
+    # "head", "eye" and "face" all belong to animals too: the camel prompt
+    # ("two large rounded humps rising from its back") matched on "back" and
+    # was handed a clause about people.
+    + r"|hand|hands|palm|palms|finger|fingers|thumb|thumbs|"
+      r"arm|arms|elbow|elbows|wrist|wrists|knee|knees|cheek|cheeks)\b",
     re.I,
 )
 
@@ -482,7 +484,10 @@ def _is_person_prompt(prompt: str, category: str) -> bool:
     was appended to every suffix this matched EVERYTHING, and the object
     negative prompt ("person, people, child...") silently stopped being used.
     """
-    if category in ("phrase", "sentence", "story", "nature"):
+    # "nature" was in this list, so every landscape got the Grassfields
+    # scene suffix AND the skin clause, and a turf of grass came back with
+    # people standing on it. A nature scene does not need a person in it.
+    if category in ("phrase", "sentence", "story"):
         return True
     return bool(_HUMAN_NOUN_RE.search(prompt.replace(_SKIN_CLAUSE, "")))
 
@@ -495,27 +500,25 @@ def _style_suffix_for(prompt: str, category: str) -> str:
     """
     if _is_person_prompt(prompt, category):
         return STYLE_SUFFIX_SCENE
-    # EVERYTHING ELSE KEEPS THE SKIN CLAUSE. Dr. Sama, after another sample:
-    # "still white people in one of the images. this should not happen in
-    # the generate all run."
+    # A prompt with a hand or a face in it is skin, and skin with no
+    # instruction comes out white. A prompt with NEITHER must not carry the
+    # clause at all: it says "any people shown are Black African with dark
+    # brown skin", and on "a what" or "a turf of grass" that phrase is the
+    # only concrete noun in the prompt, so SDXL draws the people.
     #
-    # He is right that detection is the wrong basis for this. I removed the
-    # clause from object prompts because for a gloss with no concrete noun
-    # it became the subject ("a cartoon emptiness, any people shown are
-    # Black African..." drew a Black African). Then I spent two rounds
-    # widening the list of words that count as a person, and he found
-    # another miss each time. A rule that fails open on an unlisted word is
-    # the wrong rule.
+    # I made this unconditional this morning to stop white hands, having
+    # failed three times to list every word that counts as a person. That
+    # traded one fault for a worse one - Dr. Sama: "why do all the images
+    # have people in them. ake for instance meaning what has people in it."
     #
-    # So it goes on every prompt, and the ORIGINAL failure is handled by the
-    # thing that actually prevents it: _NEGATIVE_OBJECT names "person,
-    # people, child, boy, girl, man, woman, face, portrait, crowd" and is
-    # live at GUIDANCE_SCALE 1.5. On a true object prompt the negative
-    # suppresses the people the clause mentions; on a prompt that needs a
-    # person the clause says which person. Belt and braces, and it cannot
-    # fail open on a word I forgot to list.
-    return STYLE_SUFFIX_PLAIN
-
+    # Conditional again, but it is no longer the same gamble: _HUMAN_REF_RE
+    # now covers role nouns AND body parts, and _NEGATIVE_OBJECT names
+    # person/people/child/face/crowd plus caucasian, white person, pale,
+    # tan, peach and olive skin. An object prompt is defended by the
+    # negative; a person prompt is defended by the clause.
+    if _HUMAN_REF_RE.search(prompt.replace(_SKIN_CLAUSE, "")):
+        return STYLE_SUFFIX_PLAIN
+    return STYLE_SUFFIX_OBJECT
 # ============================================================
 # PROMPT OVERRIDES
 # Custom AI prompts for words where the English definition alone
@@ -2162,6 +2165,42 @@ PROMPT_OVERRIDES = {
     "whole": "one complete round orange, uncut, beside a knife laid down",
     "worry": "a child sitting with hands on cheeks, forehead creased, looking at the ground",
     "youngster": "a lively child of about eight running with a stick and hoop",
+
+    # ----------------------------------------------------------------
+    # QUESTION WORDS
+    # ----------------------------------------------------------------
+    # Dr. Sama: "ake for instance meaning what has people in it. instead of
+    # image of what". Two faults in one card. The people came from the skin
+    # clause, fixed above. But "a what" was never a picture of anything
+    # either - there is no object called a what, so the model drew whatever
+    # noun it could find in the prompt.
+    #
+    # An interrogative does have a picture: the SITUATION of asking it. A
+    # question mark beside a box you cannot see into is "what"; a signpost
+    # at a crossroads is "where"; a clock and a calendar is "when". Same
+    # principle as celibate being a person standing alone.
+    #
+    # "no text, no words" is in the style suffix and a question mark is a
+    # mark rather than a word, so it survives where a caption would not.
+
+    "how": "a open instruction sheet showing three numbered steps with small diagrams",
+    "how many": "a row of five mangoes with a question mark above the row",
+    "how many?": "a row of five mangoes with a question mark above the row",
+    "how?": "a open instruction sheet showing three numbered steps with small diagrams",
+    "know": "an open book with a glowing light bulb rising from its pages",
+    "know how": "an open instruction sheet showing three numbered steps with small diagrams",
+    "what": "a large bold question mark beside a closed wooden box with its lid ajar",
+    "what?": "a large bold question mark beside a closed wooden box with its lid ajar",
+    "when": "a wall clock and a calendar side by side, a question mark above them",
+    "when?": "a wall clock and a calendar side by side, a question mark above them",
+    "where": "a signpost at a crossroads with arrows pointing three different ways",
+    "where?": "a signpost at a crossroads with arrows pointing three different ways",
+    "which": "two identical calabashes side by side with a question mark between them",
+    "which?": "two identical calabashes side by side with a question mark between them",
+    "who": "an empty silhouette outline of a head and shoulders with a question mark inside",
+    "who?": "an empty silhouette outline of a head and shoulders with a question mark inside",
+    "why": "a large bold question mark standing alone on plain ground",
+    "why?": "a large bold question mark standing alone on plain ground",
 }
 
 
