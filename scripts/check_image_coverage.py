@@ -23,39 +23,33 @@ VOCAB = ROOT / "lib" / "data" / "awing_vocabulary.dart"
 IMAGES = ROOT / "android" / "install_time_assets" / "src" / "main" / "assets" / "images" / "vocabulary"
 
 
-def audio_key(awing: str) -> str:
-    """Mirror Dart's audioKey(): NFD-strip diacritics, ɛ→e, ɔ→o, ə→e, ɨ→i, ŋ→ng,
-    apostrophes/quotes → '', then lowercase + strip non-alnum."""
-    s = awing
-    # Strip combining marks
-    s = "".join(c for c in unicodedata.normalize("NFD", s)
-                if unicodedata.category(c) != "Mn")
-    # Special vowels / consonants
-    s = s.replace("ɛ", "e").replace("ɔ", "o").replace("ə", "e")
-    s = s.replace("ɨ", "i").replace("ŋ", "ng").replace("ɣ", "g")
-    s = s.replace("Ɛ", "e").replace("Ɔ", "o")
-    # Quotes / apostrophes → drop
-    for q in "'‘’“”′ʼ":
-        s = s.replace(q, "")
-    s = s.lower()
-    s = re.sub(r"[^a-z0-9]", "", s)
-    return s
+# THE KEY IS NOT REIMPLEMENTED HERE.
+#
+# This file used to carry its own audio_key() and english_slug(). They were
+# the ORIGINAL format - english_slug() took only the first word of the gloss
+# - and they were never updated when the key became
+# audio_key(awing) + "__" + english_slug(whole gloss, truncated at 32),
+# which is what scripts/awing_key.py, scripts/generate_images.py and
+# lib/services/image_service.dart all use.
+#
+# So this checker measured the pack with a ruler nothing else used. On
+# 2026-10-08, mid-generation, it reported "6,003 expected, 5,430 missing,
+# 1,403 orphan" when 2,607 of the 4,600 rows simply hashed to a different
+# name here than everywhere else. A coverage checker that disagrees with
+# the thing it is checking is worse than no checker: it sends you looking
+# for 4,000 images that are already on disk.
+#
+# RULE: awing_key.py is the only implementation. Import it.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from awing_key import audio_key, english_slug, image_key  # noqa: E402
 
 
-def english_slug(english: str) -> str:
-    """First word, lowercase, alnum only."""
-    s = english.split(",")[0].split(";")[0].split("(")[0].strip()
-    s = s.split()[0] if s.split() else s
-    s = "".join(c for c in unicodedata.normalize("NFD", s)
-                if unicodedata.category(c) != "Mn")
-    s = s.lower()
-    s = re.sub(r"[^a-z0-9]", "", s)
-    return s
-
-
+# An awing word containing an apostrophe is written with double quotes in
+# the Dart source ("afa'e apimne"), so a single-quote-only pattern silently
+# skipped every one of them.
 AWINGWORD_LINE = re.compile(
-    r"AwingWord\(\s*awing:\s*'((?:[^'\\]|\\.)*?)'\s*,"
-    r"\s*english:\s*'((?:[^'\\]|\\.)*?)'"
+    r"""AwingWord\(\s*awing:\s*(?:'((?:[^'\\]|\\.)*?)'|"([^"]*?)")\s*,"""
+    r"""\s*english:\s*'((?:[^'\\]|\\.)*?)'"""
 )
 
 
@@ -77,18 +71,24 @@ def main() -> int:
         return 1
 
     text = VOCAB.read_text(encoding="utf-8")
-    entries = AWINGWORD_LINE.findall(text)
+
+    # Session 66u commented out ~3,900 duplicate rows rather than deleting
+    # them, so the file still CONTAINS them. Counting a commented row as a
+    # word to illustrate inflated "expected" from 4,600 to 8,551 and turned
+    # a nearly-finished run into "4,005 missing". A commented row is not a
+    # card in the app; drop it before anything else.
+    live = "\n".join(l for l in text.splitlines()
+                     if not l.lstrip().startswith("//"))
+    entries = AWINGWORD_LINE.findall(live)
 
     expected_keys = set()
     entry_to_key = []
-    for awing_raw, english_raw in entries:
-        awing = awing_raw.replace(r"\'", "'")
+    for awing_sq, awing_dq, english_raw in entries:
+        awing = (awing_sq or awing_dq).replace(r"\'", "'")
         english = english_raw.replace(r"\'", "'")
-        ak = audio_key(awing)
-        es = english_slug(english)
-        if not ak or not es:
+        if not audio_key(awing) or not english_slug(english):
             continue
-        key = f"{ak}__{es}"
+        key = image_key(awing, english)
         expected_keys.add(key)
         entry_to_key.append((awing, english, key))
 
@@ -107,7 +107,16 @@ def main() -> int:
     print(f"Existing image files: {len(actual_files)}")
     print(f"  - covered (expected ∩ actual): {len(have)}")
     print(f"  - missing (need to generate): {len(missing)}")
-    print(f"  - orphan (image without entry): {len(extra)}")
+    # Sentence and phrase cards are not in awing_vocabulary.dart - they
+    # live in the screens - so counting them as orphans here is noise, and
+    # noise is what gets a checker ignored.
+    sent = {k for k in extra if k.startswith(("sentence_", "phrase_"))}
+    real = extra - sent
+    print(f"  - sentence/phrase images (not checked here): {len(sent)}")
+    print(f"  - orphan (image with no live vocabulary row): {len(real)}")
+    if real:
+        print(f"      these are rows that were commented out; prune with:")
+        print(f"      python scripts/generate_images.py prune")
 
     if args.write_keys:
         out = Path(args.write_keys)
