@@ -3696,6 +3696,16 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
                    _safe_first_word(clean_word)]
     if _qualified:
         _candidates = [disambiguated, english_word.strip().lower(), _concrete]
+        # ...but a SHORT gloss is not really "qualified". The guard exists
+        # to stop "tree, for boundaries" matching the generic tree
+        # override; it was also blocking "from, starting source
+        # (preposition)" from reaching the override written for "from",
+        # so that card got a literal prompt naming nothing and SDXL drew an
+        # office full of white people. Three content words or fewer: trust
+        # the head.
+        if len(_content_tokens(_concrete)) <= 3:
+            _candidates.append(clean_word)
+            _candidates.append(short_word)
         # A multi-word override key is not a generic head - it was written
         # for a specific gloss ("a piece of rough iron used"). Keep it.
         if len(_content_tokens(short_word)) >= 3:
@@ -3779,6 +3789,24 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
     # path, not to a hand-picked list. Skipped when the phrase is already
     # the whole body (nothing to reinforce) so a one-word gloss does not
     # become "a hump, hump clearly visible".
+    # LAST RESORT: a prompt that names neither a person nor a thing.
+    #
+    # "shave, as with a blade" is categorised `numbers` in the data, so it
+    # took the object path, and the object path had no object to offer. The
+    # prompt went to SDXL naming nothing at all, and the model filled the
+    # empty space with an invented scene - a white man being shaved, an
+    # office of white workers for "from". Every white card Dr. Sama has
+    # sent has been one of these.
+    #
+    # A verb needs somebody to do it. If nothing in the body is a person
+    # and the gloss reads as an action, give it one, named and coloured, so
+    # the model is not left to invent both the subject and its skin.
+    if (not _HUMAN_REF_RE.search(body)
+            and _is_verbish(clean_word)
+            and not _has_own_subject(clean_word)):
+        _h, _skin, _c, _who = _persona_bits(seed_key)
+        body = f"a Cameroonian {_who} with {_skin} {_as_gerund(clean_word)}"
+
     focus = _focus_phrase(clean_word)
     suffix = _style_suffix_for(body, category)
     if (focus and focus.lower() != body.strip().lower()
