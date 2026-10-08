@@ -417,6 +417,28 @@ _STYLE_COMMON = (
 # means a person. A negative prompt cannot win against a gloss whose meaning
 # requires a human. So the instruction goes everywhere: if a person appears
 # at all, by any route, they are Black African.
+# RETIRED as a suffix, 2026-10-08. Kept only so _is_person_prompt() can
+# strip it from a legacy string.
+#
+# This one clause caused the whole day's back-and-forth. It is a sentence
+# whose subject is "people", so:
+#   * on every prompt  -> it is the only noun phrase in "a what" or "a turf
+#                         of grass", and SDXL draws the people.
+#   * conditionally    -> every word I forgot to list (runner, tailor,
+#                         crier, hands) got no skin instruction at all and
+#                         came back white.
+# Both failures are the same bug: a SENTENCE ABOUT PEOPLE cannot double as
+# an ADJECTIVE ON THE SUBJECT.
+#
+# Replaced by two mechanisms that cannot fail open, neither of which needs
+# to guess whether a person is present:
+#   1. africanize_people() inserts "Cameroonian <skin>" immediately BEFORE
+#      a human noun. It only fires when there IS one, so it can never add a
+#      person to an object card - and when it fires, the skin is attached
+#      to the subject where CLIP weights it, not trailing at the end.
+#   2. _NEGATIVE_COMMON bans caucasian / white / pale / tan / peach / olive
+#      skin on EVERY prompt, with no detection involved. If a person
+#      appears by a route nobody predicted, that is what catches them.
 _SKIN_CLAUSE = "any people shown are Black African with dark brown skin"
 
 # ORDER MATTERS. CLIP truncates at 77 tokens and silently drops the tail.
@@ -430,8 +452,8 @@ _SKIN_CLAUSE = "any people shown are Black African with dark brown skin"
 # market" has none. 94 sentence/story scenes lost their only skin
 # instruction that way. The clause now comes FIRST in the suffix, where it
 # cannot be truncated, and the suffix is shorter so less is lost generally.
+# NO SKIN CLAUSE IN THE SUFFIX, on purpose. See the note on _SKIN_CLAUSE.
 STYLE_SUFFIX_SCENE = (
-    f"{_SKIN_CLAUSE}, "
     "cute cartoon illustration for children, "
     "simple Cameroonian Grassfields background, "
     "flat design, bright colorful, no text, no words, "
@@ -449,7 +471,7 @@ _PLAIN_BODY = (
 )
 
 # WITH the skin clause - kept for any caller that wants the old string.
-STYLE_SUFFIX_PLAIN = f"{_SKIN_CLAUSE}, {_PLAIN_BODY}"
+STYLE_SUFFIX_PLAIN = _PLAIN_BODY
 
 # WITHOUT it, and this is what an object prompt gets now.
 #
@@ -570,7 +592,7 @@ PROMPT_OVERRIDES = {
     "breast": "a cartoon mother holding a baby lovingly",
     "knee": "a cartoon child with a bandage on knee",
     "wing": "a cartoon bird with colorful spread wings",
-    "navel": "a cartoon baby belly button",
+    "navel": "a simple labelled outline diagram of a torso wearing a t-shirt, an arrow pointing to the middle",
     "thigh": "a cartoon chicken drumstick",
     "soul": "a glowing cartoon heart with sparkles",
     "spirit": "a cartoon white dove flying in sunshine",
@@ -587,8 +609,7 @@ PROMPT_OVERRIDES = {
     "palm": "a cartoon open palm hand",
     "throat": "a cartoon child singing loudly",
     "skin": "a cartoon child with smooth dark brown skin smiling",
-    "waist": "a cartoon hula hoop around a child's waist",
-
+    "waist": "a Cameroonian woman in a full-length wrapper dress, a wide cloth belt tied at the waist",
     # Animals — cute cartoon versions
     "ram": "a cute cartoon ram with curly horns",
     "louse": "a tiny cartoon louse bug with big eyes",
@@ -706,7 +727,7 @@ PROMPT_OVERRIDES = {
     "run": "a cartoon child running fast",
     "jump": "a cartoon child jumping with joy",
     "dance": "a cartoon child dancing to music",
-    "swim": "a cartoon child swimming in a pool",
+    "swim": "a Cameroonian boy in a full swimming costume swimming in a river, water up to his shoulders",
     "climb": "a cartoon child climbing a tree",
     "fall": "a cartoon leaf falling from a tree",
     "fight": "two cartoon kids play-wrestling and laughing",
@@ -2201,6 +2222,37 @@ PROMPT_OVERRIDES = {
     "who?": "an empty silhouette outline of a head and shoulders with a question mark inside",
     "why": "a large bold question mark standing alone on plain ground",
     "why?": "a large bold question mark standing alone on plain ground",
+
+    # ----------------------------------------------------------------
+    # CLOTHED BY CONSTRUCTION
+    # ----------------------------------------------------------------
+    # Dr. Sama found a naked card: "I just hope the naked picture will not
+    # be shown to kids."
+    #
+    # The words that caused it are now gated out entirely (see
+    # _ADULT_ENTRY). These are the OTHER ones - swim, bathe, waist, thigh,
+    # pregnant - which are ordinary vocabulary a child should have, and
+    # which a 4-step model will happily draw unclothed if the prompt says
+    # only "bathe".
+    #
+    # So every one of them names the clothing explicitly: a full swimming
+    # costume, shorts, a full-length wrapper, a hospital gown. The negative
+    # prompt bans nudity on every prompt as well, but a negative is a
+    # preference and the positive is an instruction. Both, for these.
+
+    "abdomen": "a simple labelled outline diagram of a torso wearing a t-shirt, an arrow pointing to the middle",
+    "bath": "a tin bucket of water with a sponge and a bar of soap beside it",
+    "bath room or any shade for bathing": "a small woven grass bathing shelter beside a house, a bucket inside",
+    "bath, room or any shade for bathing": "a small woven grass bathing shelter beside a house, a bucket inside",
+    "bathe": "a Cameroonian child in shorts washing their arms with a sponge beside a bucket of water",
+    "bathing": "a Cameroonian child in shorts washing their arms with a sponge beside a bucket of water",
+    "be pregnant": "a Cameroonian woman in a loose full-length dress with a rounded belly, both hands resting on it",
+    "bottom": "a wooden stool seen from the side, its flat underside facing the viewer",
+    "conceive a child": "a Cameroonian woman in a loose full-length dress with a rounded belly, both hands resting on it",
+    "give birth": "a Cameroonian mother in a hospital gown holding a newborn wrapped in a blanket",
+    "tradition of bathing": "a tin bucket of water with a sponge and a bar of soap beside it",
+    "bathe wash body": "a Cameroonian child in shorts washing their arms with a sponge beside a bucket of water",
+    "swimming": "a Cameroonian boy in a full swimming costume swimming in a river, water up to his shoulders",
 }
 
 
@@ -3328,9 +3380,23 @@ def _contributed_keys():
         return set()
 
 
+# No picture at all. The first list was sexual acts; Dr. Sama then found a
+# NAKED card, which came from "be naked" - an ordinary dictionary entry that
+# SDXL renders literally. A 4-step model given "naked", "undress", "breast"
+# or "buttock" draws exactly that, and a negative prompt is a preference,
+# not a guarantee. For a children's vocabulary card the only safe answer is
+# no image: hasImageSync() filters the word out of games and quizzes, so
+# the word still exists, still has its audio, and simply shows no picture.
+#
+# Innocuous-but-risky words - swim, bathe, navel, waist - are NOT here.
+# They get a clothed, explicit override below instead, so the card survives.
 _ADULT_ENTRY = re.compile(
     r"\b(prostitut\w*|adultery|pudenda|sexual\w*|penis|vagina|genital\w*|"
-    r"brothel|fornicat\w*|copulat\w*|incest\w*|rape|have sex)\b", re.I)
+    r"brothel|fornicat\w*|copulat\w*|incest\w*|rape|have sex|"
+    r"naked|nakedness|nude|nudity|undress|strip off|"
+    r"breast|breasts|nipple|buttock|buttocks|"
+    r"circumcis\w*|menstruat\w*|virgin|womb|puberty|"
+    r"private part\w*|groin|loin)\b", re.I)
 
 _UNILLUSTRATABLE_MARKERS = re.compile(
     r"\b(preposition|pronoun|conjunction|interjection|particle|auxiliary|"
@@ -3815,6 +3881,12 @@ INFERENCE_STEPS = 4
 GUIDANCE_SCALE = 1.5
 
 _NEGATIVE_COMMON = (
+    # FIRST, on every single prompt, because this is a children's app and
+    # no amount of clever gating is worth one nude card. Dr. Sama, on
+    # finding one: "I just hope the naked picture will not be shown to
+    # kids."
+    "nude, naked, nudity, topless, bare chest, bare breasts, underwear, "
+    "lingerie, undressed, exposed body, suggestive, sexual, "
     "caucasian, white person, white man, white woman, white child, "
     "pale skin, light skin, fair skin, tan skin, peach skin, olive skin, "
     "light brown skin, beige skin, european features, "
