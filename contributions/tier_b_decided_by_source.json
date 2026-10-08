@@ -1,0 +1,3562 @@
+[
+ {
+  "keep": {
+   "line": 122,
+   "awing": "alu'ə",
+   "english": "hip",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// Session 56 audit: was \"alu'ɔ̀\" — dict says \"alu'ə\""
+  },
+  "remove": [
+   {
+    "line": 9385,
+    "awing": "alú'ə",
+    "english": "hip",
+    "category": "body",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 239,
+   "awing": "akəpóglə́",
+   "english": "dust",
+   "category": "nature",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// CORRECT Session 63 Part H 2026-07-22: was 'ndùə' — dict PDF p157 dust n. akəpóglə́  // Session 66p: NOT dropped. The "
+  },
+  "remove": [
+   {
+    "line": 8163,
+    "awing": "akəpóglə",
+    "english": "dust",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24663,
+   "awing": "na'ə",
+   "english": "soup, sauce",
+   "category": "food",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_099"
+  },
+  "remove": [
+   {
+    "line": 284,
+    "awing": "ná'ə",
+    "english": "soup/sauce",
+    "category": "food",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 5724,
+    "awing": "ná'ə",
+    "english": "soup, sauce",
+    "category": "food",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 381,
+   "awing": "kəŋtə̂",
+   "english": "be pleased",
+   "category": "actions",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// Session 56 audit: was \"kòŋtə́\" — dict says \"kəŋtə̂\""
+  },
+  "remove": [
+   {
+    "line": 11037,
+    "awing": "kəŋtə",
+    "english": "pleased",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 393,
+   "awing": "pe'ə atúə",
+   "english": "carry on head",
+   "category": "actions",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// CORRECT Session 63 Part H 2026-07-22: was 'dɛ̀ŋə' — dict Mistral p148 (may need a↔ə refinement) [Session 64: fixed un"
+  },
+  "remove": [
+   {
+    "line": 2330,
+    "awing": "pe'ə atûə",
+    "english": "carry on head",
+    "category": "body",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 7100,
+    "awing": "pe'ə atúə",
+    "english": "carry on head",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 549,
+   "awing": "ndí'ə",
+   "english": "poison",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// Session 56 audit: was \"ndá'ɔ́\" — dict says \"ndí'ə\""
+  },
+  "remove": [
+   {
+    "line": 11053,
+    "awing": "ndî'ə",
+    "english": "poison",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14418,
+   "awing": "tâ",
+   "english": "father; parent",
+   "category": "family",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_128"
+  },
+  "remove": [
+   {
+    "line": 581,
+    "awing": "tǎ",
+    "english": "father/parent",
+    "category": "family",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15406,
+   "awing": "ali'ə̌",
+   "english": "cultivated ground",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_032"
+  },
+  "remove": [
+   {
+    "line": 598,
+    "awing": "ali'ə",
+    "english": "cultivated ground",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 2530,
+    "awing": "alí'ə",
+    "english": "cultivated ground",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 642,
+   "awing": "teelə́",
+   "english": "three",
+   "category": "numbers",
+   "rank": 1,
+   "src": "session audit",
+   "note": "// Session 60 audit ADD: was missing"
+  },
+  "remove": [
+   {
+    "line": 4645,
+    "awing": "teelə",
+    "english": "three (alternate form)",
+    "category": "numbers",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14145,
+   "awing": "nəpu'ə",
+   "english": "nine",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_108"
+  },
+  "remove": [
+   {
+    "line": 648,
+    "awing": "nəpu'ə́",
+    "english": "nine",
+    "category": "numbers",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 652,
+   "awing": "ntsəb pé",
+   "english": "twelve",
+   "category": "numbers",
+   "rank": 1,
+   "src": "session audit",
+   "note": "// Session 60 audit FIX: was \"əghám nə əpá\""
+  },
+  "remove": [
+   {
+    "line": 4643,
+    "awing": "ntsəb pê",
+    "english": "twelve (12)",
+    "category": "numbers",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14584,
+   "awing": "ntsəb nəpu'ə",
+   "english": "nineteen (19)",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_118"
+  },
+  "remove": [
+   {
+    "line": 659,
+    "awing": "ntsəb nəpu'ə́",
+    "english": "nineteen",
+    "category": "numbers",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 26046,
+   "awing": "məghəm mém mbé nə̌ tá'ə",
+   "english": "twenty-one (21)",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_097"
+  },
+  "remove": [
+   {
+    "line": 672,
+    "awing": "məghə́m mém mbê nə́ tá'ə",
+    "english": "twenty-one",
+    "category": "numbers",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14013,
+   "awing": "ashí'nə",
+   "english": "trade",
+   "category": "food",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_038"
+  },
+  "remove": [
+   {
+    "line": 748,
+    "awing": "ashî'nə",
+    "english": "trade",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 3833,
+    "awing": "ashi'nə",
+    "english": "trade",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 761,
+   "awing": "chigə",
+   "english": "truly/really",
+   "category": "descriptive",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// CORRECT Session 63 Part H 2026-07-22: was 'chígɔ́' — dict Mistral p192 (may need a↔ə refinement)"
+  },
+  "remove": [
+   {
+    "line": 4864,
+    "awing": "chígə́",
+    "english": "truly, really",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 767,
+   "awing": "njǔbtə",
+   "english": "dry",
+   "category": "descriptive",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// CORRECT Session 63 Part H 2026-07-22: was 'tsɛ̀ŋə' — dict PDF p156 dry adj. njǔbtə"
+  },
+  "remove": [
+   {
+    "line": 3548,
+    "awing": "njúbtə",
+    "english": "dry",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 8149,
+    "awing": "njùbtə",
+    "english": "dry",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 2209,
+   "awing": "yaalə̂",
+   "english": "carry heavy load",
+   "category": "actions",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// ADD Session 63 Part H 2026-07-22: dict PDF p149 carry of heavy load (colloq) v. yaalə̂"
+  },
+  "remove": [
+   {
+    "line": 7098,
+    "awing": "yaalə",
+    "english": "carry, of heavy load (colloquial)",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 19658,
+   "awing": "fú mə̌lo'ə̌",
+   "english": "palm wine",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_072"
+  },
+  "remove": [
+   {
+    "line": 2293,
+    "awing": "fú məlo'ə",
+    "english": "palm wine",
+    "category": "body",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 10794,
+    "awing": "fû məlo'ə",
+    "english": "palm wine",
+    "category": "body",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 19661,
+   "awing": "fugə̌",
+   "english": "kind of bag used to carry products from the farm",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_072"
+  },
+  "remove": [
+   {
+    "line": 2594,
+    "awing": "fugə",
+    "english": "a kind of bag used to carry products from the farm",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24199,
+   "awing": "ntítü'ə",
+   "english": "mid-night",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_117"
+  },
+  "remove": [
+   {
+    "line": 2650,
+    "awing": "ntîtú'ə",
+    "english": "mid-night",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 10346,
+    "awing": "ntîtû'ə",
+    "english": "mid-night",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14588,
+   "awing": "nwí'ə̌",
+   "english": "plant (of seeds) too close to each other",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_118"
+  },
+  "remove": [
+   {
+    "line": 2652,
+    "awing": "nwí'ə",
+    "english": "plant (of seeds) too close to each other",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14408,
+   "awing": "shí'nə̌",
+   "english": "use one's labour in exchange for farm products",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_128"
+  },
+  "remove": [
+   {
+    "line": 2662,
+    "awing": "shí'nə",
+    "english": "use one's labour in exchange for farm products",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21200,
+   "awing": "atsa'ə",
+   "english": "the different divisions of a banana bunch",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_042"
+  },
+  "remove": [
+   {
+    "line": 2696,
+    "awing": "atsá'ə",
+    "english": "the different divisions of a banana bunch",
+    "category": "food",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22218,
+   "awing": "ka'lə",
+   "english": "wine container made from a kind of pumpkin",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_077"
+  },
+  "remove": [
+   {
+    "line": 2711,
+    "awing": "ká'lə̂",
+    "english": "wine container made from a kind of pumpkin",
+    "category": "food",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21260,
+   "awing": "chí' mbəəmə",
+   "english": "puff up or demonstrate pride",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_050"
+  },
+  "remove": [
+   {
+    "line": 2780,
+    "awing": "chi' mbəəmə",
+    "english": "puff up or demonstrate pride",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14492,
+   "awing": "chí'ə̌",
+   "english": "rub",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_051"
+  },
+  "remove": [
+   {
+    "line": 2802,
+    "awing": "chi'ə",
+    "english": "rub",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 11738,
+    "awing": "chí'ə",
+    "english": "rub",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15997,
+   "awing": "chiə nəlyaŋnə̌",
+   "english": "be in a hidden place",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_054"
+  },
+  "remove": [
+   {
+    "line": 2824,
+    "awing": "chîə nəlyaŋnə",
+    "english": "in a hidden place",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 19242,
+   "awing": "chú'ə̌",
+   "english": "pound",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_056"
+  },
+  "remove": [
+   {
+    "line": 2844,
+    "awing": "chú'ə",
+    "english": "pound",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 2900,
+   "awing": "fəmkə",
+   "english": "drown (transitive)",
+   "category": "actions",
+   "rank": 1,
+   "src": "session audit",
+   "note": "// Session 61: bumped to expert (inappropriate for beginner)"
+  },
+  "remove": [
+   {
+    "line": 8139,
+    "awing": "fə̂mkə",
+    "english": "drown(tr)",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21799,
+   "awing": "fí'nə",
+   "english": "imitate",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_068"
+  },
+  "remove": [
+   {
+    "line": 2906,
+    "awing": "fi'nə̂",
+    "english": "imitate",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 9535,
+    "awing": "fî'nə",
+    "english": "imitate",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16608,
+   "awing": "fí'tə̌",
+   "english": "tell",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_071"
+  },
+  "remove": [
+   {
+    "line": 2907,
+    "awing": "fi'tə̂",
+    "english": "tell",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 5444,
+    "awing": "fi'tə̂",
+    "english": "tell",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 12859,
+    "awing": "fî'tə",
+    "english": "tell",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22291,
+   "awing": "kwüə",
+   "english": "die, be dead",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_087"
+  },
+  "remove": [
+   {
+    "line": 3069,
+    "awing": "kwûə",
+    "english": "be dead; die",
+    "category": "actions",
+    "rank": 1,
+    "src": "session audit",
+    "note": "// Session 61: bumped to expert (inappropriate for beginner)"
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22293,
+   "awing": "kwü'kə",
+   "english": "make sb or sth stoop, bend or bow",
+   "category": "actions",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_087"
+  },
+  "remove": [
+   {
+    "line": 3071,
+    "awing": "kwú'kə",
+    "english": "make sb or sth stoop, bend or bow",
+    "category": "actions",
+    "rank": 1,
+    "src": "session audit",
+    "note": "// Session 61: bumped to expert (inappropriate for beginner)"
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 13867,
+   "awing": "kyê'kə",
+   "english": "develop openings or cracks (intr)",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_088"
+  },
+  "remove": [
+   {
+    "line": 3086,
+    "awing": "kye'kə̂",
+    "english": "develop openings or cracks (intr)",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 13874,
+   "awing": "lá'ə",
+   "english": "hook",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_088"
+  },
+  "remove": [
+   {
+    "line": 3094,
+    "awing": "lá'ə",
+    "english": "hook",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 9429,
+    "awing": "lâ'ə",
+    "english": "hook",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17264,
+   "awing": "la'nə̌",
+   "english": "promise, say that one will do something",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_091"
+  },
+  "remove": [
+   {
+    "line": 3098,
+    "awing": "la'nə̂",
+    "english": "promise, say that one will do something",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 13964,
+   "awing": "mí'tə",
+   "english": "stutter",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_098"
+  },
+  "remove": [
+   {
+    "line": 3156,
+    "awing": "mí'tə",
+    "english": "stutter",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 12682,
+    "awing": "mî'tə",
+    "english": "stutter",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24665,
+   "awing": "naŋə",
+   "english": "look at, look for",
+   "category": "actions",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_099"
+  },
+  "remove": [
+   {
+    "line": 3163,
+    "awing": "náŋə",
+    "english": "look at; look for",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18345,
+   "awing": "pí'kə̌",
+   "english": "twist, treat cunningly, handle cunningly",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_125"
+  },
+  "remove": [
+   {
+    "line": 3223,
+    "awing": "pí'kə",
+    "english": "twist, treat cunningly, handle cunningly",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23757,
+   "awing": "sá'ə",
+   "english": "snatch",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_125"
+  },
+  "remove": [
+   {
+    "line": 3242,
+    "awing": "sa'ə",
+    "english": "snatch",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 12304,
+    "awing": "sa'ə",
+    "english": "snatch",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23820,
+   "awing": "twí'ə",
+   "english": "delay, stay for long",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_132"
+  },
+  "remove": [
+   {
+    "line": 3336,
+    "awing": "twi'ə",
+    "english": "delay, stay for long",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24311,
+   "awing": "tsó' mbó",
+   "english": "drop (tr), let go",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "let go', category: 'things', difficulty: 1),  // v2:page_134"
+  },
+  "remove": [
+   {
+    "line": 3370,
+    "awing": "tsó' mbô",
+    "english": "drop (tr), let go",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": "let go', category: 'actions', tonePattern: 'falling', difficulty: 2),"
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18698,
+   "awing": "wê'ə̌",
+   "english": "curse away, purge something",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_137"
+  },
+  "remove": [
+   {
+    "line": 3385,
+    "awing": "wé'ə",
+    "english": "curse away, purge something",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18807,
+   "awing": "alêtələ̌",
+   "english": "A sharp and alert person (colloquial)",
+   "category": "family",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_031"
+  },
+  "remove": [
+   {
+    "line": 3461,
+    "awing": "alêtələ",
+    "english": "sharp and alert person (colloquial)",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 10912,
+    "awing": "alêtələ",
+    "english": "person, sharp and alert",
+    "category": "family",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15396,
+   "awing": "alaŋə̌",
+   "english": "a stick used to hold together two ends of a rope",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_032"
+  },
+  "remove": [
+   {
+    "line": 3462,
+    "awing": "alaŋə",
+    "english": "stick used to hold together two ends of a rope",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20091,
+   "awing": "kibu'lə̌kibu'lə",
+   "english": "sound of movement by a fat person",
+   "category": "family",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_082"
+  },
+  "remove": [
+   {
+    "line": 3519,
+    "awing": "kibu'ləkibu'lə",
+    "english": "sound of movement by a fat person",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23814,
+   "awing": "tú'mandzəŋə",
+   "english": "secret group for men of same age group",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_132"
+  },
+  "remove": [
+   {
+    "line": 3567,
+    "awing": "tû'mândzəŋə",
+    "english": "a secret group for men of same age group",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14928,
+   "awing": "acha'tə̌",
+   "english": "greetings",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_015"
+  },
+  "remove": [
+   {
+    "line": 3576,
+    "awing": "acha'tə",
+    "english": "greetings",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14934,
+   "awing": "achwí'nə̌",
+   "english": "unity, togetherness",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_017"
+  },
+  "remove": [
+   {
+    "line": 3584,
+    "awing": "achwí'nə",
+    "english": "unity, togetherness",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14937,
+   "awing": "afa'ə̌",
+   "english": "work",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_017"
+  },
+  "remove": [
+   {
+    "line": 3586,
+    "awing": "afa'ə",
+    "english": "work",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14938,
+   "awing": "afa'ə apimnə",
+   "english": "partnership work",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_017"
+  },
+  "remove": [
+   {
+    "line": 3587,
+    "awing": "afa'ə apímnə",
+    "english": "partnership work",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 13745,
+    "awing": "afa'ə apîmnə",
+    "english": "work, of partnership",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14951,
+   "awing": "afúə ndí'ə̌",
+   "english": "antidote, anti-poison",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_019"
+  },
+  "remove": [
+   {
+    "line": 3603,
+    "awing": "afúə ndí'ə",
+    "english": "antidote, anti-poison",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15404,
+   "awing": "ali' yîə",
+   "english": "there (here actually meaning 'that place')",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_032"
+  },
+  "remove": [
+   {
+    "line": 3729,
+    "awing": "ali' yîə",
+    "english": "there (that place)",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 12926,
+    "awing": "alì' yîə",
+    "english": "there (dem.)",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20752,
+   "awing": "ambó'ə",
+   "english": "elephantiasis",
+   "category": "animals",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_032"
+  },
+  "remove": [
+   {
+    "line": 3762,
+    "awing": "ambo'ə",
+    "english": "elephantiasis",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 8237,
+    "awing": "ambó'ə",
+    "english": "elephantiasis",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20760,
+   "awing": "andó",
+   "english": "approximately, like, as",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_033"
+  },
+  "remove": [
+   {
+    "line": 3764,
+    "awing": "ándó",
+    "english": "approximately; like, as",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15408,
+   "awing": "anuəngi'tə",
+   "english": "something urgent",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_036"
+  },
+  "remove": [
+   {
+    "line": 3776,
+    "awing": "anüəngi'tə",
+    "english": "something urgent",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24452,
+   "awing": "ashwenuə",
+   "english": "failure, a missed opportunity",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_038"
+  },
+  "remove": [
+   {
+    "line": 3835,
+    "awing": "ashwěnuə",
+    "english": "a failure, a missed opportunity",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21233,
+   "awing": "awü'nə",
+   "english": "covering for anything",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_045"
+  },
+  "remove": [
+   {
+    "line": 3903,
+    "awing": "awǔ'nə",
+    "english": "covering for anything",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21313,
+   "awing": "ə'ə",
+   "english": "no",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_057"
+  },
+  "remove": [
+   {
+    "line": 3962,
+    "awing": "ə̂'ə",
+    "english": "no",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16287,
+   "awing": "əfo Nkâ'fo",
+   "english": "the seventh fon of Awing",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_061"
+  },
+  "remove": [
+   {
+    "line": 3991,
+    "awing": "Əfo Nká'fo",
+    "english": "the seventh fon of Awing",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 19657,
+   "awing": "fu' mbêlə",
+   "english": "dung beetle",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_072"
+  },
+  "remove": [
+   {
+    "line": 4088,
+    "awing": "fu' mbélə",
+    "english": "dung beetle",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 8161,
+    "awing": "fu' mbélə",
+    "english": "dung beetle",
+    "category": "animals",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16929,
+   "awing": "kə̌lo'",
+   "english": "sound that describes or intensifies the manner in which something falls",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_081"
+  },
+  "remove": [
+   {
+    "line": 4109,
+    "awing": "kəlo'",
+    "english": "sound that describes or intensifies the manner in which something falls",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22252,
+   "awing": "kə́'",
+   "english": "word that intensifies the hardness of something",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_083"
+  },
+  "remove": [
+   {
+    "line": 4128,
+    "awing": "kə'",
+    "english": "word that intensifies the hardness of something",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22785,
+   "awing": "nchwa'ə",
+   "english": "subscription, tontine",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_100"
+  },
+  "remove": [
+   {
+    "line": 4257,
+    "awing": "nchwá'ə",
+    "english": "subscription, tontine",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20534,
+   "awing": "nəchwí'ə̌",
+   "english": "turf, of grass",
+   "category": "nature",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_106"
+  },
+  "remove": [
+   {
+    "line": 4296,
+    "awing": "nəchwi'ə́",
+    "english": "turf, of grass",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23246,
+   "awing": "nəpó'ə",
+   "english": "bundle",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_107"
+  },
+  "remove": [
+   {
+    "line": 4356,
+    "awing": "nəpo'ə́",
+    "english": "bundle",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17953,
+   "awing": "nətûə̌",
+   "english": "summit, highest point, tip; chief, headman",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_111"
+  },
+  "remove": [
+   {
+    "line": 4372,
+    "awing": "nətûə",
+    "english": "summit, highest point, tip, chief, headman",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14270,
+   "awing": "ní'ə",
+   "english": "a sort of pointed weed, usually pierces into the feet of farmers when they are weeding",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_113"
+  },
+  "remove": [
+   {
+    "line": 4422,
+    "awing": "ni'ə́",
+    "english": "a sort of pointed weed, usually pierces into the feet of farmers when they are weeding",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23290,
+   "awing": "njí'ə",
+   "english": "egussi",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_113"
+  },
+  "remove": [
+   {
+    "line": 4426,
+    "awing": "nji'ə́",
+    "english": "egussi",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 8215,
+    "awing": "njî'ə",
+    "english": "egussi",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14286,
+   "awing": "nka'ə̌",
+   "english": "leprosy",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_113"
+  },
+  "remove": [
+   {
+    "line": 4434,
+    "awing": "nka'ə",
+    "english": "leprosy",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24207,
+   "awing": "ntsá'ə",
+   "english": "hoof",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_117"
+  },
+  "remove": [
+   {
+    "line": 4483,
+    "awing": "ntsa'ə",
+    "english": "hoof",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 9425,
+    "awing": "ntsâ'ə",
+    "english": "hoof",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18331,
+   "awing": "pá'mạgheemə̌",
+   "english": "flea",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_122"
+  },
+  "remove": [
+   {
+    "line": 4506,
+    "awing": "pá'mághéemə́",
+    "english": "flea",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24251,
+   "awing": "pó'mambéŋə",
+   "english": "hyena",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_124"
+  },
+  "remove": [
+   {
+    "line": 4535,
+    "awing": "pó'mâmbéŋə",
+    "english": "hyena",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14410,
+   "awing": "shwa'ə̌",
+   "english": "razor blade",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_128"
+  },
+  "remove": [
+   {
+    "line": 4562,
+    "awing": "shwa'ə",
+    "english": "razor blade",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14419,
+   "awing": "tâ afa'ə",
+   "english": "master",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_128"
+  },
+  "remove": [
+   {
+    "line": 4564,
+    "awing": "tä afa'ə",
+    "english": "master",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 10262,
+    "awing": "tâ afa'ə",
+    "english": "master",
+    "category": "family",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18699,
+   "awing": "wélə̌",
+   "english": "no weight",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_137"
+  },
+  "remove": [
+   {
+    "line": 4605,
+    "awing": "welə",
+    "english": "weight",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23287,
+   "awing": "nji' nəsagə",
+   "english": "clitoris",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_113"
+  },
+  "remove": [
+   {
+    "line": 4783,
+    "awing": "nji' nəságə",
+    "english": "clitoris",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17265,
+   "awing": "lá'nə̌",
+   "english": "get glued together, of two things or more (intr)",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_091"
+  },
+  "remove": [
+   {
+    "line": 4960,
+    "awing": "lá'nə",
+    "english": "get glued together, of two things or more (intr)",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17603,
+   "awing": "mə̌",
+   "english": "that",
+   "category": "food",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_096"
+  },
+  "remove": [
+   {
+    "line": 4981,
+    "awing": "mə̂",
+    "english": "that",
+    "category": "numbers",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23736,
+   "awing": "pésé",
+   "english": "demon, evil spirit",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_122"
+  },
+  "remove": [
+   {
+    "line": 5052,
+    "awing": "pêsê",
+    "english": "demon; evil spirit",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18344,
+   "awing": "píkə̌",
+   "english": "give birth, by many pregnant women of many children by one pregnant woman",
+   "category": "family",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_125"
+  },
+  "remove": [
+   {
+    "line": 5060,
+    "awing": "pikə",
+    "english": "give birth, by many pregnant women or many children by one pregnant woman",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20697,
+   "awing": "akwáŋə̌",
+   "english": "interest, concern",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_025"
+  },
+  "remove": [
+   {
+    "line": 5165,
+    "awing": "akwaŋə",
+    "english": "interest; concern",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18808,
+   "awing": "alêtələ̌",
+   "english": "A difficult task or job",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_031"
+  },
+  "remove": [
+   {
+    "line": 5188,
+    "awing": "alêtələ",
+    "english": "difficult task or job",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20753,
+   "awing": "ambó'ə",
+   "english": "rheumatism",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_032"
+  },
+  "remove": [
+   {
+    "line": 5196,
+    "awing": "ambo'ə",
+    "english": "rheumatism",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 19243,
+   "awing": "chú'ə̌",
+   "english": "lit up or light up (eg a lamp or fire)",
+   "category": "nature",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_056"
+  },
+  "remove": [
+   {
+    "line": 5330,
+    "awing": "chú'ə",
+    "english": "lit up or light up (eg a lamp or fire)",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21320,
+   "awing": "əfédndé",
+   "english": "unique, different",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_058"
+  },
+  "remove": [
+   {
+    "line": 5359,
+    "awing": "əfédndê",
+    "english": "unique; different",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22281,
+   "awing": "kwaŋə",
+   "english": "clean the furrows of a farm bed thoroughly",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_085"
+  },
+  "remove": [
+   {
+    "line": 5596,
+    "awing": "kwáŋə̂",
+    "english": "clean, of the furrows of a farm bed thoroughly (also done with the purpose of enlarging the beds)",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17275,
+   "awing": "léelə̌",
+   "english": "be slow; delay",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_091"
+  },
+  "remove": [
+   {
+    "line": 5655,
+    "awing": "léelə",
+    "english": "be slow; be delay",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14537,
+   "awing": "mbí'ə",
+   "english": "hem",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_093"
+  },
+  "remove": [
+   {
+    "line": 5700,
+    "awing": "mbi'ə",
+    "english": "hem",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14538,
+   "awing": "mbí'ə",
+   "english": "a sort of disease that causes pains at the level of the hips",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_093"
+  },
+  "remove": [
+   {
+    "line": 5702,
+    "awing": "mbi'ə",
+    "english": "a sort of disease that causes pains at the level of the hips",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22818,
+   "awing": "nəka'ə",
+   "english": "together",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_105"
+  },
+  "remove": [
+   {
+    "line": 5800,
+    "awing": "nəká'ə",
+    "english": "together",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23708,
+   "awing": "nka'ə",
+   "english": "butcher, somebody who cuts",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_114"
+  },
+  "remove": [
+   {
+    "line": 5869,
+    "awing": "nká'ə",
+    "english": "butcher, somebody who cuts",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14590,
+   "awing": "nya'ə̌",
+   "english": "a little",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_118"
+  },
+  "remove": [
+   {
+    "line": 5903,
+    "awing": "nyá'ə",
+    "english": "a little",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 10044,
+    "awing": "nyá'ə",
+    "english": "little",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18330,
+   "awing": "pa'ə̌",
+   "english": "cause rain not to fall (using magical powers)",
+   "category": "nature",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_122"
+  },
+  "remove": [
+   {
+    "line": 5923,
+    "awing": "pa'ə",
+    "english": "cause rain not to fall (using magical powers)",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   },
+   {
+    "line": 11416,
+    "awing": "pa'ə",
+    "english": "rain, cause it not to fall",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20756,
+   "awing": "amú'ə̌",
+   "english": "banana",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_033"
+  },
+  "remove": [
+   {
+    "line": 6550,
+    "awing": "amú'ə",
+    "english": "banana",
+    "category": "food",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14539,
+   "awing": "mbimə",
+   "english": "believe",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_093  // CORRECT Session 63 reconcile 2026-07-22: was awing:'mbims' (invalid consonant ending — Awing words en"
+  },
+  "remove": [
+   {
+    "line": 6708,
+    "awing": "mbímə",
+    "english": "believe in",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22301,
+   "awing": "kwü'tə",
+   "english": "bend of many people",
+   "category": "family",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_087"
+  },
+  "remove": [
+   {
+    "line": 6726,
+    "awing": "kwú'tə",
+    "english": "bend, of many people",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14697,
+   "awing": "kə̌'ə",
+   "english": "1) blow, of wind (in a sense the wind is said to rise)",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_083"
+  },
+  "remove": [
+   {
+    "line": 6844,
+    "awing": "kə́'ə",
+    "english": "blow, of wind",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21315,
+   "awing": "əfaga atíə",
+   "english": "branch of tree",
+   "category": "nature",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_057"
+  },
+  "remove": [
+   {
+    "line": 6912,
+    "awing": "əfaga atìə",
+    "english": "branch, of tree",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20527,
+   "awing": "mətwê'ə",
+   "english": "caterpillar",
+   "category": "animals",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_099"
+  },
+  "remove": [
+   {
+    "line": 7132,
+    "awing": "mətwé'ə",
+    "english": "caterpillar",
+    "category": "animals",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17605,
+   "awing": "machîna tazə̌'ə",
+   "english": "celibacy",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_096"
+  },
+  "remove": [
+   {
+    "line": 7150,
+    "awing": "machina tazə'ə",
+    "english": "celibacy",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22257,
+   "awing": "kə'ə",
+   "english": "climb",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_083"
+  },
+  "remove": [
+   {
+    "line": 7295,
+    "awing": "kə́'ə",
+    "english": "climb",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15375,
+   "awing": "akwû'ə",
+   "english": "cocoyam",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_029"
+  },
+  "remove": [
+   {
+    "line": 7341,
+    "awing": "akwu'ə",
+    "english": "cocoyam",
+    "category": "food",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18320,
+   "awing": "ŋwuna alə'ə̌",
+   "english": "cripple",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_122"
+  },
+  "remove": [
+   {
+    "line": 7585,
+    "awing": "ŋwuna alə'ə",
+    "english": "cripple",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21263,
+   "awing": "chí ndzaŋ yi nda'ə",
+   "english": "be different",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_050"
+  },
+  "remove": [
+   {
+    "line": 7956,
+    "awing": "chî ndzaŋ yi nda'ə",
+    "english": "different",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16902,
+   "awing": "ghoolə̌",
+   "english": "dowry",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_076"
+  },
+  "remove": [
+   {
+    "line": 8097,
+    "awing": "ghoolə",
+    "english": "dowry (v)",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 26594,
+   "awing": "njíə",
+   "english": "manner of eating",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_115"
+  },
+  "remove": [
+   {
+    "line": 8199,
+    "awing": "njîə",
+    "english": "eating, manner of",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14583,
+   "awing": "ntsəb mə̌'ə",
+   "english": "eleven (11)",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_118"
+  },
+  "remove": [
+   {
+    "line": 8243,
+    "awing": "ntsəb mə̂'ə",
+    "english": "eleven (11)",
+    "category": "numbers",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 26714,
+   "awing": "ajúblə̌",
+   "english": "foolish excitement",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_022"
+  },
+  "remove": [
+   {
+    "line": 8358,
+    "awing": "ajùblə",
+    "english": "excitement, foolish",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21238,
+   "awing": "azaŋkəmbəəmə̌",
+   "english": "physical exercise",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_045"
+  },
+  "remove": [
+   {
+    "line": 8364,
+    "awing": "azáŋkəmbəəmə",
+    "english": "exercise, physical",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21266,
+   "awing": "chí nə apə́gə",
+   "english": "be in fear",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_050"
+  },
+  "remove": [
+   {
+    "line": 8501,
+    "awing": "chî nə apə̂gə",
+    "english": "fear, be in ~",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22198,
+   "awing": "gha'ə",
+   "english": "frugal",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_073"
+  },
+  "remove": [
+   {
+    "line": 8829,
+    "awing": "ghá'ə",
+    "english": "frugal",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15428,
+   "awing": "aŋɔ'tə̌",
+   "english": "frugality",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_036"
+  },
+  "remove": [
+   {
+    "line": 8837,
+    "awing": "aŋɔ'tə",
+    "english": "frugality",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15168,
+   "awing": "akə̌'ə̌",
+   "english": "generation",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_026"
+  },
+  "remove": [
+   {
+    "line": 8905,
+    "awing": "akə̂'ə",
+    "english": "generation",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21756,
+   "awing": "apúməgə̌",
+   "english": "looking glasses",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_063"
+  },
+  "remove": [
+   {
+    "line": 8967,
+    "awing": "apúməgə",
+    "english": "glasses, looking",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 20744,
+   "awing": "alu'ə̌",
+   "english": "goose",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_032"
+  },
+  "remove": [
+   {
+    "line": 9019,
+    "awing": "alú'ə",
+    "english": "goose",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22256,
+   "awing": "kə'ə",
+   "english": "grow, of plants",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_083"
+  },
+  "remove": [
+   {
+    "line": 9134,
+    "awing": "kə̂'ə",
+    "english": "grow, of plants",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 18809,
+   "awing": "aloəbə̌",
+   "english": "growth on the neck",
+   "category": "body",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_031"
+  },
+  "remove": [
+   {
+    "line": 9142,
+    "awing": "aloəbə",
+    "english": "growth, on the neck",
+    "category": "body",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 23760,
+   "awing": "sa'ə",
+   "english": "gush out, of a spring",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_125"
+  },
+  "remove": [
+   {
+    "line": 9174,
+    "awing": "sá'ə",
+    "english": "gush out, of a spring",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17599,
+   "awing": "melə̌",
+   "english": "become a habit",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_096"
+  },
+  "remove": [
+   {
+    "line": 9180,
+    "awing": "melə",
+    "english": "habit, become a",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24244,
+   "awing": "pó' nə ndúə",
+   "english": "hit with a hammer",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_124"
+  },
+  "remove": [
+   {
+    "line": 9395,
+    "awing": "pó' nə̂ nduə",
+    "english": "hit, with hammer",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16308,
+   "awing": "ali' pípə̌ lum nə̌",
+   "english": "hot weather",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_064"
+  },
+  "remove": [
+   {
+    "line": 9449,
+    "awing": "alì' pìpə lum nə̌",
+    "english": "hot weather",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16915,
+   "awing": "já'kə̌",
+   "english": "initiate",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_076"
+  },
+  "remove": [
+   {
+    "line": 9621,
+    "awing": "já'kə",
+    "english": "initiate",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16004,
+   "awing": "chwaalə afa'ə̌",
+   "english": "look for a job",
+   "category": "actions",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_057"
+  },
+  "remove": [
+   {
+    "line": 9785,
+    "awing": "chwaalə afa'ə",
+    "english": "job, look for a",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22260,
+   "awing": "kə́'ə",
+   "english": "ladder",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_083"
+  },
+  "remove": [
+   {
+    "line": 9883,
+    "awing": "kə̌'ə",
+    "english": "ladder",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14108,
+   "awing": "kə́' nəsoŋə",
+   "english": "laugh in a wild manner",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_078"
+  },
+  "remove": [
+   {
+    "line": 9921,
+    "awing": "kə̂' nəsoŋə",
+    "english": "laugh in a wild manner",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17596,
+   "awing": "mé ngə̌' naghə̌",
+   "english": "lower grinding stone",
+   "category": "nature",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_096"
+  },
+  "remove": [
+   {
+    "line": 10123,
+    "awing": "mê ngə̂' naghə̌",
+    "english": "lower grinding stone",
+    "category": "nature",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 26789,
+   "awing": "alu'ə",
+   "english": "lumbago",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_034"
+  },
+  "remove": [
+   {
+    "line": 10131,
+    "awing": "alú'ə",
+    "english": "lumbago (an illness)",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 17955,
+   "awing": "natsa'ə̌",
+   "english": "marsh",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_111"
+  },
+  "remove": [
+   {
+    "line": 10250,
+    "awing": "natsa'ə",
+    "english": "marsh",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21792,
+   "awing": "fí'ə",
+   "english": "measure of distance or height",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_068"
+  },
+  "remove": [
+   {
+    "line": 10284,
+    "awing": "fi'ə",
+    "english": "measure, of distance or height",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22227,
+   "awing": "kə́'ə",
+   "english": "measure (v), of quantity",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "of quantity', category: 'things', difficulty: 2),  // v2:page_078"
+  },
+  "remove": [
+   {
+    "line": 10286,
+    "awing": "kə̂'ə",
+    "english": "measure, of quantity",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15161,
+   "awing": "akɔ̀'na nkeelə̌",
+   "english": "medium sized drum",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_026"
+  },
+  "remove": [
+   {
+    "line": 10298,
+    "awing": "akɔ'na nkeelə",
+    "english": "medium sized drum",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 15135,
+   "awing": "ajîə mə̌ ghóg nə̌",
+   "english": "be myopic",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_021"
+  },
+  "remove": [
+   {
+    "line": 10488,
+    "awing": "ajîə mə́ ghóg nə̌",
+    "english": "myopic",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14485,
+   "awing": "chí ya fíə",
+   "english": "be new",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_051"
+  },
+  "remove": [
+   {
+    "line": 10564,
+    "awing": "chî ya fìə",
+    "english": "new",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 26056,
+   "awing": "məkə'nə",
+   "english": "north",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_097"
+  },
+  "remove": [
+   {
+    "line": 10608,
+    "awing": "məkə'nə̌",
+    "english": "north",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16612,
+   "awing": "fógə̌",
+   "english": "pick",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_071"
+  },
+  "remove": [
+   {
+    "line": 10935,
+    "awing": "fógə",
+    "english": "pick (tr)",
+    "category": "actions",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14942,
+   "awing": "afêlə̌",
+   "english": "physically powerless",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_017"
+  },
+  "remove": [
+   {
+    "line": 11216,
+    "awing": "afélə",
+    "english": "powerless, physically",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14413,
+   "awing": "shwa'ə̌",
+   "english": "reduce in intensity (eg of water current)",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_128"
+  },
+  "remove": [
+   {
+    "line": 11481,
+    "awing": "shwa'ə",
+    "english": "reduce in intensity",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14939,
+   "awing": "afa'ə əse",
+   "english": "religious ministry",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_017"
+  },
+  "remove": [
+   {
+    "line": 11521,
+    "awing": "afa'ə Əsê",
+    "english": "religious ministry",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21795,
+   "awing": "fíə",
+   "english": "be resemble",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_068"
+  },
+  "remove": [
+   {
+    "line": 11601,
+    "awing": "fìə",
+    "english": "resemble",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16609,
+   "awing": "fí'ə̌",
+   "english": "running, of stomach",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_071"
+  },
+  "remove": [
+   {
+    "line": 11768,
+    "awing": "fî'ə",
+    "english": "running, of stomach",
+    "category": "body",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21755,
+   "awing": "apúmáfa'ə",
+   "english": "scaffolding",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_063"
+  },
+  "remove": [
+   {
+    "line": 11838,
+    "awing": "apûmáfa'ə",
+    "english": "scaffolding",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16933,
+   "awing": "kə̌mkə̌",
+   "english": "be short",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_081"
+  },
+  "remove": [
+   {
+    "line": 12080,
+    "awing": "kəmkə",
+    "english": "short",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16903,
+   "awing": "ghoonə̌",
+   "english": "1) be sick (be ill)",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_076"
+  },
+  "remove": [
+   {
+    "line": 12122,
+    "awing": "ghoonə",
+    "english": "sick",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 16912,
+   "awing": "já'ə̌",
+   "english": "skip through",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_076"
+  },
+  "remove": [
+   {
+    "line": 12200,
+    "awing": "já'ə",
+    "english": "skip through",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21809,
+   "awing": "ghaglə",
+   "english": "be smart",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_072"
+  },
+  "remove": [
+   {
+    "line": 12264,
+    "awing": "gháglə",
+    "english": "smart",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22215,
+   "awing": "ká'ə",
+   "english": "solidify (eg",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_077"
+  },
+  "remove": [
+   {
+    "line": 12334,
+    "awing": "kâ'ə",
+    "english": "solidify",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24670,
+   "awing": "nchíə",
+   "english": "son-in-law",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_099"
+  },
+  "remove": [
+   {
+    "line": 12374,
+    "awing": "nchìə",
+    "english": "son in-law",
+    "category": "family",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 22300,
+   "awing": "kwü'na",
+   "english": "stoop",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_087"
+  },
+  "remove": [
+   {
+    "line": 12611,
+    "awing": "kwù'na",
+    "english": "stoop",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 21278,
+   "awing": "chiga ndelə̌",
+   "english": "the right time",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_051"
+  },
+  "remove": [
+   {
+    "line": 13050,
+    "awing": "chiga ndelə",
+    "english": "time, the right",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 24255,
+   "awing": "pə̌",
+   "english": "us, we",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_124"
+  },
+  "remove": [
+   {
+    "line": 13544,
+    "awing": "pə",
+    "english": "we",
+    "category": "things",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "keep": {
+   "line": 14403,
+   "awing": "shamnə̂",
+   "english": "be wide",
+   "category": "things",
+   "rank": 3,
+   "src": "dictionary page",
+   "note": "// v2:page_128"
+  },
+  "remove": [
+   {
+    "line": 13662,
+    "awing": "shamnə",
+    "english": "wide",
+    "category": "descriptive",
+    "rank": 0,
+    "src": "unsourced",
+    "note": ""
+   }
+  ]
+ }
+]
