@@ -1,0 +1,6557 @@
+[
+ {
+  "awing": "sáŋə",
+  "keep": "month",
+  "merge": [
+   "moon/month"
+  ],
+  "keys": [
+   "sange__month",
+   "sange__moon_month"
+  ]
+ },
+ {
+  "awing": "əfê",
+  "keep": "here, this place",
+  "merge": [
+   "this compound, this place, here (nominal)",
+   "in this compound, this place, here (nominal)"
+  ],
+  "keys": [
+   "efe__here_this_place",
+   "efe__this_compound_this_place_here_no",
+   "efe__in_this_compound_this_place_here"
+  ]
+ },
+ {
+  "awing": "apô",
+  "keep": "hand",
+  "merge": [
+   "(fore) arm, hand"
+  ],
+  "keys": [
+   "apo__hand",
+   "apo__fore_arm_hand"
+  ]
+ },
+ {
+  "awing": "atûə",
+  "keep": "head",
+  "merge": [
+   "head; hair, only used when one is saying something concerning the hair"
+  ],
+  "keys": [
+   "atue__head",
+   "atue__head_hair_only_used_when_one_is"
+  ]
+ },
+ {
+  "awing": "amiə",
+  "keep": "neck (body part)",
+  "merge": [
+   "neck"
+  ],
+  "keys": [
+   "amie__neck_body_part",
+   "amie__neck"
+  ]
+ },
+ {
+  "awing": "nəsoŋə",
+  "keep": "tooth",
+  "merge": [
+   "tooth; fang",
+   "fang"
+  ],
+  "keys": [
+   "nesonge__tooth",
+   "nesonge__tooth_fang",
+   "nesonge__fang"
+  ]
+ },
+ {
+  "awing": "nəpəmə",
+  "keep": "stomach",
+  "merge": [
+   "abdomen (external), stomach"
+  ],
+  "keys": [
+   "nepeme__stomach",
+   "nepeme__abdomen_external_stomach"
+  ]
+ },
+ {
+  "awing": "nəpəmə",
+  "keep": "stomachache, upset stomach",
+  "merge": [
+   "stomachache"
+  ],
+  "keys": [
+   "nepeme__stomachache_upset_stomach",
+   "nepeme__stomachache"
+  ]
+ },
+ {
+  "awing": "alu'ə",
+  "keep": "lumbago, muscular pain of the lumbar regions, of an illness",
+  "merge": [
+   "lumbago"
+  ],
+  "keys": [
+   "alue__lumbago_muscular_pain_of_the_lum",
+   "alue__lumbago"
+  ]
+ },
+ {
+  "awing": "ajwiə",
+  "keep": "soul/spirit",
+  "merge": [
+   "breath; soul; spirit (of living person)",
+   "breath"
+  ],
+  "keys": [
+   "ajwie__soul_spirit",
+   "ajwie__breath_soul_spirit_of_living_per",
+   "ajwie__breath"
+  ]
+ },
+ {
+  "awing": "əfəblə",
+  "keep": "lung",
+  "merge": [
+   "lungs, especially of animals"
+  ],
+  "keys": [
+   "efeble__lung",
+   "efeble__lungs_especially_of_animals"
+  ]
+ },
+ {
+  "awing": "mbéŋə",
+  "keep": "a short stick used for shooting",
+  "merge": [
+   "stick used for shooting"
+  ],
+  "keys": [
+   "mbenge__a_short_stick_used_for_shooting",
+   "mbenge__stick_used_for_shooting"
+  ]
+ },
+ {
+  "awing": "kwúneemə",
+  "keep": "pig",
+  "merge": [
+   "pig, considered to be a very dirty and gluttonous animal"
+  ],
+  "keys": [
+   "kwuneeme__pig",
+   "kwuneeme__pig_considered_to_be_a_very_dirt"
+  ]
+ },
+ {
+  "awing": "njakásə",
+  "keep": "donkey",
+  "merge": [
+   "from English: donkey"
+  ],
+  "keys": [
+   "njakase__donkey",
+   "njakase__from_english_donkey"
+  ]
+ },
+ {
+  "awing": "njá",
+  "keep": "shrimp",
+  "merge": [
+   "from Pidgin English: shrimp"
+  ],
+  "keys": [
+   "nja__shrimp",
+   "nja__from_pidgin_english_shrimp"
+  ]
+ },
+ {
+  "awing": "aŋkə'á",
+  "keep": "rooster",
+  "merge": [
+   "rooster; cock"
+  ],
+  "keys": [
+   "angkea__rooster",
+   "angkea__rooster_cock"
+  ]
+ },
+ {
+  "awing": "mbaŋə",
+  "keep": "cane, walking stick, club, cudgel",
+  "merge": [
+   "cane",
+   "walking stick, club, cudgel"
+  ],
+  "keys": [
+   "mbange__cane_walking_stick_club_cudgel",
+   "mbange__cane",
+   "mbange__walking_stick_club_cudgel"
+  ]
+ },
+ {
+  "awing": "ndo",
+  "keep": "valley",
+  "merge": [
+   "deep valley, often containing many trees, a palm bush and mostly a flowing stream"
+  ],
+  "keys": [
+   "ndo__valley",
+   "ndo__deep_valley_often_containing_man"
+  ]
+ },
+ {
+  "awing": "afoonə",
+  "keep": "hunting",
+  "merge": [
+   "hunting; field, farm"
+  ],
+  "keys": [
+   "afoone__hunting",
+   "afoone__hunting_field_farm"
+  ]
+ },
+ {
+  "awing": "ndzəmə",
+  "keep": "rich and powerful relations (are said to come to one's aid in times of difficulty)",
+  "merge": [
+   "difficulty"
+  ],
+  "keys": [
+   "ndzeme__rich_and_powerful_relations_are",
+   "ndzeme__difficulty"
+  ]
+ },
+ {
+  "awing": "neemə",
+  "keep": "meat",
+  "merge": [
+   "animal; meat",
+   "animal"
+  ],
+  "keys": [
+   "neeme__meat",
+   "neeme__animal_meat",
+   "neeme__animal"
+  ]
+ },
+ {
+  "awing": "ngéemə",
+  "keep": "bunch of banana",
+  "merge": [
+   "bunch of banana, bunch of plantain"
+  ],
+  "keys": [
+   "ngeeme__bunch_of_banana",
+   "ngeeme__bunch_of_banana_bunch_of_plantai"
+  ]
+ },
+ {
+  "awing": "achú'ə",
+  "keep": "pounded cocoyam",
+  "merge": [
+   "cocoyams pounded and eaten with red soup, meat and vegetables",
+   "pounded cocoyams",
+   "cocoyams that are pounded and eaten with red soup, meat and"
+  ],
+  "keys": [
+   "achue__pounded_cocoyam",
+   "achue__cocoyams_pounded_and_eaten_with",
+   "achue__pounded_cocoyams",
+   "achue__cocoyams_that_are_pounded_and_ea"
+  ]
+ },
+ {
+  "awing": "ngwáŋə",
+  "keep": "salt (local)",
+  "merge": [
+   "salt"
+  ],
+  "keys": [
+   "ngwange__salt_local",
+   "ngwange__salt"
+  ]
+ },
+ {
+  "awing": "fê",
+  "keep": "give",
+  "merge": [
+   "give, hand over",
+   "hand over"
+  ],
+  "keys": [
+   "fe__give",
+   "fe__give_hand_over",
+   "fe__hand_over"
+  ]
+ },
+ {
+  "awing": "pímə",
+  "keep": "believe; accept",
+  "merge": [
+   "accept",
+   "believe"
+  ],
+  "keys": [
+   "pime__believe_accept",
+   "pime__accept",
+   "pime__believe"
+  ]
+ },
+ {
+  "awing": "túmə",
+  "keep": "send",
+  "merge": [
+   "send, delegate"
+  ],
+  "keys": [
+   "tume__send",
+   "tume__send_delegate"
+  ]
+ },
+ {
+  "awing": "túmə",
+  "keep": "cross, traverse",
+  "merge": [
+   "cross",
+   "traverse"
+  ],
+  "keys": [
+   "tume__cross_traverse",
+   "tume__cross",
+   "tume__traverse"
+  ]
+ },
+ {
+  "awing": "kwúnə",
+  "keep": "enter",
+  "merge": [
+   "enter, go in, come in"
+  ],
+  "keys": [
+   "kwune__enter",
+   "kwune__enter_go_in_come_in"
+  ]
+ },
+ {
+  "awing": "kəənə̂",
+  "keep": "run",
+  "merge": [
+   "run to many places or directions"
+  ],
+  "keys": [
+   "keene__run",
+   "keene__run_to_many_places_or_directions"
+  ]
+ },
+ {
+  "awing": "lê",
+  "keep": "sleep",
+  "merge": [
+   "be sleepy; sleep",
+   "sleepy"
+  ],
+  "keys": [
+   "le__sleep",
+   "le__be_sleepy_sleep",
+   "le__sleepy"
+  ]
+ },
+ {
+  "awing": "lê",
+  "keep": "this way, so",
+  "merge": [
+   "this way"
+  ],
+  "keys": [
+   "le__this_way_so",
+   "le__this_way"
+  ]
+ },
+ {
+  "awing": "kóolə",
+  "keep": "catch/harvest",
+  "merge": [
+   "catch"
+  ],
+  "keys": [
+   "koole__catch_harvest",
+   "koole__catch"
+  ]
+ },
+ {
+  "awing": "kóolə",
+  "keep": "grasp, take hold, catch (a trap has caught an antelope)",
+  "merge": [
+   "grasp",
+   "take hold"
+  ],
+  "keys": [
+   "koole__grasp_take_hold_catch_a_trap_has",
+   "koole__grasp",
+   "koole__take_hold"
+  ]
+ },
+ {
+  "awing": "sónə",
+  "keep": "say/speak",
+  "merge": [
+   "say"
+  ],
+  "keys": [
+   "sone__say_speak",
+   "sone__say"
+  ]
+ },
+ {
+  "awing": "wiŋə",
+  "keep": "laugh",
+  "merge": [
+   "laugh; smile",
+   "smile"
+  ],
+  "keys": [
+   "winge__laugh",
+   "winge__laugh_smile",
+   "winge__smile"
+  ]
+ },
+ {
+  "awing": "wiŋə",
+  "keep": "big; great",
+  "merge": [
+   "big",
+   "great"
+  ],
+  "keys": [
+   "winge__big_great",
+   "winge__big",
+   "winge__great"
+  ]
+ },
+ {
+  "awing": "kyéŋə",
+  "keep": "cry/weep",
+  "merge": [
+   "cry"
+  ],
+  "keys": [
+   "kyenge__cry_weep",
+   "kyenge__cry"
+  ]
+ },
+ {
+  "awing": "léelə",
+  "keep": "prepare",
+  "merge": [
+   "prepare, be ready, make preparations"
+  ],
+  "keys": [
+   "leele__prepare",
+   "leele__prepare_be_ready_make_preparatio"
+  ]
+ },
+ {
+  "awing": "fyáalə",
+  "keep": "nip in the bud (eg a bad idea)",
+  "merge": [
+   "nip in the bud"
+  ],
+  "keys": [
+   "fyaale__nip_in_the_bud_eg_a_bad_idea",
+   "fyaale__nip_in_the_bud"
+  ]
+ },
+ {
+  "awing": "fìə",
+  "keep": "new; resemble",
+  "merge": [
+   "resemble"
+  ],
+  "keys": [
+   "fie__new_resemble",
+   "fie__resemble"
+  ]
+ },
+ {
+  "awing": "pá'ə",
+  "keep": "braid/plait",
+  "merge": [
+   "plait",
+   "1) plait, braid (eg hair)"
+  ],
+  "keys": [
+   "pae__braid_plait",
+   "pae__plait",
+   "pae__1_plait_braid_eg_hair"
+  ]
+ },
+ {
+  "awing": "pá'ə",
+  "keep": "break (tr)",
+  "merge": [
+   "break, harvest, of maize"
+  ],
+  "keys": [
+   "pae__break_tr",
+   "pae__break_harvest_of_maize"
+  ]
+ },
+ {
+  "awing": "kyê",
+  "keep": "pluck",
+  "merge": [
+   "pluck fruit(s)"
+  ],
+  "keys": [
+   "kye__pluck",
+   "kye__pluck_fruit_s"
+  ]
+ },
+ {
+  "awing": "kyê",
+  "keep": "abandon sth because it has been desecrated or misused",
+  "merge": [
+   "abandon something because it has been desecrated or misused"
+  ],
+  "keys": [
+   "kye__abandon_sth_because_it_has_been",
+   "kye__abandon_something_because_it_has"
+  ]
+ },
+ {
+  "awing": "kəŋtə̂",
+  "keep": "shut a little; shut many",
+  "merge": [
+   "shut a little; shut many, eg of doors"
+  ],
+  "keys": [
+   "kengte__shut_a_little_shut_many",
+   "kengte__shut_a_little_shut_many_eg_of_do"
+  ]
+ },
+ {
+  "awing": "ghabnə",
+  "keep": "share/divide",
+  "merge": [
+   "divide",
+   "share",
+   "divide, separate, share"
+  ],
+  "keys": [
+   "ghabne__share_divide",
+   "ghabne__divide",
+   "ghabne__share",
+   "ghabne__divide_separate_share"
+  ]
+ },
+ {
+  "awing": "tóŋə",
+  "keep": "crow, of rooster; blow, of horn",
+  "merge": [
+   "crow, of rooster"
+  ],
+  "keys": [
+   "tonge__crow_of_rooster_blow_of_horn",
+   "tonge__crow_of_rooster"
+  ]
+ },
+ {
+  "awing": "túga",
+  "keep": "have",
+  "merge": [
+   "have, hold"
+  ],
+  "keys": [
+   "tuga__have",
+   "tuga__have_hold"
+  ]
+ },
+ {
+  "awing": "zó'ə",
+  "keep": "hear; feel",
+  "merge": [
+   "hear"
+  ],
+  "keys": [
+   "zoe__hear_feel",
+   "zoe__hear"
+  ]
+ },
+ {
+  "awing": "nóŋkə",
+  "keep": "nurse",
+  "merge": [
+   "suckle, nurse, suckle (baby) (tr)"
+  ],
+  "keys": [
+   "nongke__nurse",
+   "nongke__suckle_nurse_suckle_baby_tr"
+  ]
+ },
+ {
+  "awing": "kwáalə",
+  "keep": "get; plunder",
+  "merge": [
+   "get",
+   "plunder"
+  ],
+  "keys": [
+   "kwaale__get_plunder",
+   "kwaale__get",
+   "kwaale__plunder"
+  ]
+ },
+ {
+  "awing": "kəŋə̂",
+  "keep": "shut",
+  "merge": [
+   "shut (transitive), of a door"
+  ],
+  "keys": [
+   "kenge__shut",
+   "kenge__shut_transitive_of_a_door"
+  ]
+ },
+ {
+  "awing": "ajúmə",
+  "keep": "thing",
+  "merge": [
+   "thing, something; everything",
+   "thing, something"
+  ],
+  "keys": [
+   "ajume__thing",
+   "ajume__thing_something_everything",
+   "ajume__thing_something"
+  ]
+ },
+ {
+  "awing": "apeemə",
+  "keep": "bag",
+  "merge": [
+   "bag, sort of"
+  ],
+  "keys": [
+   "apeeme__bag",
+   "apeeme__bag_sort_of"
+  ]
+ },
+ {
+  "awing": "mbê",
+  "keep": "knife",
+  "merge": [
+   "a knife used for tapping raffia palm",
+   "knife, for tapping",
+   "knife for tapping raffia palm"
+  ],
+  "keys": [
+   "mbe__knife",
+   "mbe__a_knife_used_for_tapping_raffia",
+   "mbe__knife_for_tapping",
+   "mbe__knife_for_tapping_raffia_palm"
+  ]
+ },
+ {
+  "awing": "alóŋə",
+  "keep": "dance group",
+  "merge": [
+   "dress of the same pattern used to identify people of the same group eg a dance group",
+   "dress of the same pattern"
+  ],
+  "keys": [
+   "alonge__dance_group",
+   "alonge__dress_of_the_same_pattern_used_t",
+   "alonge__dress_of_the_same_pattern"
+  ]
+ },
+ {
+  "awing": "ntaŋə",
+  "keep": "drum musical instrument",
+  "merge": [
+   "drum"
+  ],
+  "keys": [
+   "ntange__drum_musical_instrument",
+   "ntange__drum"
+  ]
+ },
+ {
+  "awing": "aŋwa'lə",
+  "keep": "book/school",
+  "merge": [
+   "school",
+   "book, knowledge, school",
+   "book",
+   "school, knowledge"
+  ],
+  "keys": [
+   "angwale__book_school",
+   "angwale__school",
+   "angwale__book_knowledge_school",
+   "angwale__book",
+   "angwale__school_knowledge"
+  ]
+ },
+ {
+  "awing": "mógə",
+  "keep": "fire/burn",
+  "merge": [
+   "burn",
+   "fire"
+  ],
+  "keys": [
+   "moge__fire_burn",
+   "moge__burn",
+   "moge__fire"
+  ]
+ },
+ {
+  "awing": "atso",
+  "keep": "musical instrument",
+  "merge": [
+   "musical instrument made from a horn"
+  ],
+  "keys": [
+   "atso__musical_instrument",
+   "atso__musical_instrument_made_from_a_h"
+  ]
+ },
+ {
+  "awing": "azoobə",
+  "keep": "song",
+  "merge": [
+   "song, singing"
+  ],
+  "keys": [
+   "azoobe__song",
+   "azoobe__song_singing"
+  ]
+ },
+ {
+  "awing": "ŋwíŋə",
+  "keep": "machete/cutlass",
+  "merge": [
+   "machete"
+  ],
+  "keys": [
+   "ngwinge__machete_cutlass",
+   "ngwinge__machete"
+  ]
+ },
+ {
+  "awing": "nká'ə",
+  "keep": "fence",
+  "merge": [
+   "fence, den"
+  ],
+  "keys": [
+   "nkae__fence",
+   "nkae__fence_den"
+  ]
+ },
+ {
+  "awing": "akwelə",
+  "keep": "herd",
+  "merge": [
+   "herd (of cattle, sheep); heap, pile",
+   "heap",
+   "pile"
+  ],
+  "keys": [
+   "akwele__herd",
+   "akwele__herd_of_cattle_sheep_heap_pile",
+   "akwele__heap",
+   "akwele__pile"
+  ]
+ },
+ {
+  "awing": "akwelə",
+  "keep": "prostitute, whore",
+  "merge": [
+   "prostitute (n)"
+  ],
+  "keys": [
+   "akwele__prostitute_whore",
+   "akwele__prostitute_n"
+  ]
+ },
+ {
+  "awing": "nkéebə",
+  "keep": "main market day in Awing; the seventh day of the week in Awing",
+  "merge": [
+   "day of the week, the 7th",
+   "market day, main",
+   "main market day in Awing"
+  ],
+  "keys": [
+   "nkeebe__main_market_day_in_awing_the_sev",
+   "nkeebe__day_of_the_week_the_7th",
+   "nkeebe__market_day_main",
+   "nkeebe__main_market_day_in_awing"
+  ]
+ },
+ {
+  "awing": "ajwa'áli'ó",
+  "keep": "noise",
+  "merge": [
+   "noise, sound, disturbance"
+  ],
+  "keys": [
+   "ajwaalio__noise",
+   "ajwaalio__noise_sound_disturbance"
+  ]
+ },
+ {
+  "awing": "ndenə",
+  "keep": "number",
+  "merge": [
+   "price, cost; number, amount",
+   "amount",
+   "price, cost"
+  ],
+  "keys": [
+   "ndene__number",
+   "ndene__price_cost_number_amount",
+   "ndene__amount",
+   "ndene__price_cost"
+  ]
+ },
+ {
+  "awing": "náanə",
+  "keep": "sea",
+  "merge": [
+   "ocean; sea, any large body of water"
+  ],
+  "keys": [
+   "naane__sea",
+   "naane__ocean_sea_any_large_body_of_wate"
+  ]
+ },
+ {
+  "awing": "ntse mbia",
+  "keep": "elder, respected person",
+  "merge": [
+   "elder"
+  ],
+  "keys": [
+   "ntsembia__elder_respected_person",
+   "ntsembia__elder"
+  ]
+ },
+ {
+  "awing": "alá'ə",
+  "keep": "village",
+  "merge": [
+   "tribe, village",
+   "tribe",
+   "home, village; tribe"
+  ],
+  "keys": [
+   "alae__village",
+   "alae__tribe_village",
+   "alae__tribe",
+   "alae__home_village_tribe"
+  ]
+ },
+ {
+  "awing": "alá'ə",
+  "keep": "much, a lot",
+  "merge": [
+   "a lot",
+   "much"
+  ],
+  "keys": [
+   "alae__much_a_lot",
+   "alae__a_lot",
+   "alae__much"
+  ]
+ },
+ {
+  "awing": "ndúmə",
+  "keep": "husband",
+  "merge": [
+   "husband; groom"
+  ],
+  "keys": [
+   "ndume__husband",
+   "ndume__husband_groom"
+  ]
+ },
+ {
+  "awing": "ndúmə",
+  "keep": "road; towards, direction of",
+  "merge": [
+   "direction of",
+   "towards"
+  ],
+  "keys": [
+   "ndume__road_towards_direction_of",
+   "ndume__direction_of",
+   "ndume__towards"
+  ]
+ },
+ {
+  "awing": "mangyè",
+  "keep": "wife",
+  "merge": [
+   "1) female (sex), woman, wife"
+  ],
+  "keys": [
+   "mangye__wife",
+   "mangye__1_female_sex_woman_wife"
+  ]
+ },
+ {
+  "awing": "əfo",
+  "keep": "fon; highest ruler in a land",
+  "merge": [
+   "fon",
+   "highest ruler"
+  ],
+  "keys": [
+   "efo__fon_highest_ruler_in_a_land",
+   "efo__fon",
+   "efo__highest_ruler"
+  ]
+ },
+ {
+  "awing": "ŋwunə",
+  "keep": "person",
+  "merge": [
+   "human being; person",
+   "being, human"
+  ],
+  "keys": [
+   "ngwune__person",
+   "ngwune__human_being_person",
+   "ngwune__being_human"
+  ]
+ },
+ {
+  "awing": "mó mbyâŋnə",
+  "keep": "boy/son",
+  "merge": [
+   "son, little boy; boy"
+  ],
+  "keys": [
+   "mombyangne__boy_son",
+   "mombyangne__son_little_boy_boy"
+  ]
+ },
+ {
+  "awing": "atúmə",
+  "keep": "country/land",
+  "merge": [
+   "country"
+  ],
+  "keys": [
+   "atume__country_land",
+   "atume__country"
+  ]
+ },
+ {
+  "awing": "atúmə",
+  "keep": "country, ethnic area",
+  "merge": [
+   "ethnic area"
+  ],
+  "keys": [
+   "atume__country_ethnic_area",
+   "atume__ethnic_area"
+  ]
+ },
+ {
+  "awing": "nchîndê",
+  "keep": "compound",
+  "merge": [
+   "compound, residence"
+  ],
+  "keys": [
+   "nchinde__compound",
+   "nchinde__compound_residence"
+  ]
+ },
+ {
+  "awing": "chɔ́sə",
+  "keep": "church",
+  "merge": [
+   "church; denomination"
+  ],
+  "keys": [
+   "chose__church",
+   "chose__church_denomination"
+  ]
+ },
+ {
+  "awing": "kwa",
+  "keep": "four",
+  "merge": [
+   "four (see nəkwa)"
+  ],
+  "keys": [
+   "kwa__four",
+   "kwa__four_see_n_kwa"
+  ]
+ },
+ {
+  "awing": "tênə",
+  "keep": "five",
+  "merge": [
+   "five (alternate form)"
+  ],
+  "keys": [
+   "tene__five",
+   "tene__five_alternate_form"
+  ]
+ },
+ {
+  "awing": "nəpu'ə́",
+  "keep": "nine",
+  "merge": [
+   "nine (9)"
+  ],
+  "keys": [
+   "nepue__nine",
+   "nepue__nine_9"
+  ]
+ },
+ {
+  "awing": "shîəə",
+  "keep": "be deep",
+  "merge": [
+   "deep"
+  ],
+  "keys": [
+   "shiee__be_deep",
+   "shiee__deep"
+  ]
+ },
+ {
+  "awing": "kwúbtə",
+  "keep": "close",
+  "merge": [
+   "close eg palm, eyes, mouth"
+  ],
+  "keys": [
+   "kwubte__close",
+   "kwubte__close_eg_palm_eyes_mouth"
+  ]
+ },
+ {
+  "awing": "nəchwélə",
+  "keep": "hearth",
+  "merge": [
+   "fireside stone, hearth stone"
+  ],
+  "keys": [
+   "nechwele__hearth",
+   "nechwele__fireside_stone_hearth_stone"
+  ]
+ },
+ {
+  "awing": "ntúmkə",
+  "keep": "entrance hut",
+  "merge": [
+   "entrance"
+  ],
+  "keys": [
+   "ntumke__entrance_hut",
+   "ntumke__entrance"
+  ]
+ },
+ {
+  "awing": "atsáŋə",
+  "keep": "punishment",
+  "merge": [
+   "prison; penalty, punishment"
+  ],
+  "keys": [
+   "atsange__punishment",
+   "atsange__prison_penalty_punishment"
+  ]
+ },
+ {
+  "awing": "sénə",
+  "keep": "blue/green/dark",
+  "merge": [
+   "be black, blue, green, dark",
+   "black"
+  ],
+  "keys": [
+   "sene__blue_green_dark",
+   "sene__be_black_blue_green_dark",
+   "sene__black"
+  ]
+ },
+ {
+  "awing": "məfóomə",
+  "keep": "fat/thick",
+  "merge": [
+   "fat"
+  ],
+  "keys": [
+   "mefoome__fat_thick",
+   "mefoome__fat"
+  ]
+ },
+ {
+  "awing": "ashwánə",
+  "keep": "thin",
+  "merge": [
+   "thin, lanky"
+  ],
+  "keys": [
+   "ashwane__thin",
+   "ashwane__thin_lanky"
+  ]
+ },
+ {
+  "awing": "nwâ",
+  "keep": "cold",
+  "merge": [
+   "be cold"
+  ],
+  "keys": [
+   "nwa__cold",
+   "nwa__be_cold"
+  ]
+ },
+ {
+  "awing": "mboŋə",
+  "keep": "many/much",
+  "merge": [
+   "many"
+  ],
+  "keys": [
+   "mbonge__many_much",
+   "mbonge__many"
+  ]
+ },
+ {
+  "awing": "zá",
+  "keep": "often/usually",
+  "merge": [
+   "usually, often"
+  ],
+  "keys": [
+   "za__often_usually",
+   "za__usually_often"
+  ]
+ },
+ {
+  "awing": "chigə",
+  "keep": "truly/really",
+  "merge": [
+   "really"
+  ],
+  "keys": [
+   "chige__truly_really",
+   "chige__really"
+  ]
+ },
+ {
+  "awing": "chigə",
+  "keep": "real, true; important",
+  "merge": [
+   "important",
+   "true"
+  ],
+  "keys": [
+   "chige__real_true_important",
+   "chige__important",
+   "chige__true"
+  ]
+ },
+ {
+  "awing": "ataŋə",
+  "keep": "full",
+  "merge": [
+   "half full, not full (liquids and uncountables like rice, beans etc.)"
+  ],
+  "keys": [
+   "atange__full",
+   "atange__half_full_not_full_liquids_and_u"
+  ]
+ },
+ {
+  "awing": "akó'kə",
+  "keep": "steep or sloping place eg a hill",
+  "merge": [
+   "steep or sloping place"
+  ],
+  "keys": [
+   "akoke__steep_or_sloping_place_eg_a_hill",
+   "akoke__steep_or_sloping_place"
+  ]
+ },
+ {
+  "awing": "nyaanə",
+  "keep": "slow/careful",
+  "merge": [
+   "slow"
+  ],
+  "keys": [
+   "nyaane__slow_careful",
+   "nyaane__slow"
+  ]
+ },
+ {
+  "awing": "nyaanə",
+  "keep": "sluggish",
+  "merge": [
+   "sluggish, slow"
+  ],
+  "keys": [
+   "nyaane__sluggish",
+   "nyaane__sluggish_slow"
+  ]
+ },
+ {
+  "awing": "ləmkə̂",
+  "keep": "sweet/tasty",
+  "merge": [
+   "be tasty, (be) sweet"
+  ],
+  "keys": [
+   "lemke__sweet_tasty",
+   "lemke__be_tasty_be_sweet"
+  ]
+ },
+ {
+  "awing": "ndaŋə",
+  "keep": "same",
+  "merge": [
+   "same, the same",
+   "the same"
+  ],
+  "keys": [
+   "ndange__same",
+   "ndange__same_the_same",
+   "ndange__the_same"
+  ]
+ },
+ {
+  "awing": "kwúbkə",
+  "keep": "drink hastily",
+  "merge": [
+   "drink (eg water, wine, medicine) hastily"
+  ],
+  "keys": [
+   "kwubke__drink_hastily",
+   "kwubke__drink_eg_water_wine_medicine_has"
+  ]
+ },
+ {
+  "awing": "jimnə̂",
+  "keep": "wake up",
+  "merge": [
+   "wake up (intransitive)"
+  ],
+  "keys": [
+   "jimne__wake_up",
+   "jimne__wake_up_intransitive"
+  ]
+ },
+ {
+  "awing": "chámtə",
+  "keep": "whisper",
+  "merge": [
+   "whisper, speak quietly"
+  ],
+  "keys": [
+   "chamte__whisper",
+   "chamte__whisper_speak_quietly"
+  ]
+ },
+ {
+  "awing": "zeebə",
+  "keep": "ceiling",
+  "merge": [
+   "A bamboo ceiling in kitchens used for drying maize, beans, potatoes"
+  ],
+  "keys": [
+   "zeebe__ceiling",
+   "zeebe__a_bamboo_ceiling_in_kitchens_use"
+  ]
+ },
+ {
+  "awing": "atsê",
+  "keep": "one palm leave",
+  "merge": [
+   "palm leave, of one"
+  ],
+  "keys": [
+   "atse__one_palm_leave",
+   "atse__palm_leave_of_one"
+  ]
+ },
+ {
+  "awing": "cha'ə",
+  "keep": "of the eyes, bear a white substance especially early in the morning from bed",
+  "merge": [
+   "bear a white substance especially early in the morning from bed"
+  ],
+  "keys": [
+   "chae__of_the_eyes_bear_a_white_substan",
+   "chae__bear_a_white_substance_especiall"
+  ]
+ },
+ {
+  "awing": "féekə",
+  "keep": "expose teeth especially in laughter (colloquial)",
+  "merge": [
+   "expose, of teeth"
+  ],
+  "keys": [
+   "feeke__expose_teeth_especially_in_laugh",
+   "feeke__expose_of_teeth"
+  ]
+ },
+ {
+  "awing": "nəghagə",
+  "keep": "cheek, jaw",
+  "merge": [
+   "jaw"
+  ],
+  "keys": [
+   "neghage__cheek_jaw",
+   "neghage__jaw"
+  ]
+ },
+ {
+  "awing": "shágə",
+  "keep": "steal palm wine from another person's palm bush",
+  "merge": [
+   "steal palm wine from anothers palm bush"
+  ],
+  "keys": [
+   "shage__steal_palm_wine_from_another_per",
+   "shage__steal_palm_wine_from_anothers_pa"
+  ]
+ },
+ {
+  "awing": "achíkə ŋwunə",
+  "keep": "of a person, cold and irresponsive to bodily emotions",
+  "merge": [
+   "a person, old and irresponsive to bodily emotions",
+   "a person old and irresponsive"
+  ],
+  "keys": [
+   "achikengwune__of_a_person_cold_and_irresponsiv",
+   "achikengwune__a_person_old_and_irresponsive_to",
+   "achikengwune__a_person_old_and_irresponsive"
+  ]
+ },
+ {
+  "awing": "asoŋə",
+  "keep": "mystical power used by one to enrich himself by dragging away another person's wealth",
+  "merge": [
+   "power, mystical"
+  ],
+  "keys": [
+   "asonge__mystical_power_used_by_one_to_en",
+   "asonge__power_mystical"
+  ]
+ },
+ {
+  "awing": "mbóŋə",
+  "keep": "poor man, needy",
+  "merge": [
+   "needy"
+  ],
+  "keys": [
+   "mbonge__poor_man_needy",
+   "mbonge__needy"
+  ]
+ },
+ {
+  "awing": "ngaŋnaghéenə",
+  "keep": "guest, visitor; stranger",
+  "merge": [
+   "guest, visitor",
+   "guest"
+  ],
+  "keys": [
+   "ngangnagheene__guest_visitor_stranger",
+   "ngangnagheene__guest_visitor",
+   "ngangnagheene__guest"
+  ]
+ },
+ {
+  "awing": "ngwulə",
+  "keep": "clan, family; descendant",
+  "merge": [
+   "descendant",
+   "clan, family, descendant, generation"
+  ],
+  "keys": [
+   "ngwule__clan_family_descendant",
+   "ngwule__descendant",
+   "ngwule__clan_family_descendant_generatio"
+  ]
+ },
+ {
+  "awing": "konə",
+  "keep": "owl, a bird with deep eyes that cries in the night (associated with bad omens)",
+  "merge": [
+   "owl"
+  ],
+  "keys": [
+   "kone__owl_a_bird_with_deep_eyes_that_c",
+   "kone__owl"
+  ]
+ },
+ {
+  "awing": "nəmaŋnə",
+  "keep": "wild cat",
+  "merge": [
+   "cat, wild"
+  ],
+  "keys": [
+   "nemangne__wild_cat",
+   "nemangne__cat_wild"
+  ]
+ },
+ {
+  "awing": "achi'lə",
+  "keep": "turf of grass",
+  "merge": [
+   "turf"
+  ],
+  "keys": [
+   "achile__turf_of_grass",
+   "achile__turf"
+  ]
+ },
+ {
+  "awing": "afédngónə",
+  "keep": "third day of the week and minor market day",
+  "merge": [
+   "day of the week, the 3rd"
+  ],
+  "keys": [
+   "afedngone__third_day_of_the_week_and_minor",
+   "afedngone__day_of_the_week_the_3rd"
+  ]
+ },
+ {
+  "awing": "akô'ka",
+  "keep": "hill",
+  "merge": [
+   "steep or sloping place (eg a hill)"
+  ],
+  "keys": [
+   "akoka__hill",
+   "akoka__steep_or_sloping_place_eg_a_hill"
+  ]
+ },
+ {
+  "awing": "ambuə",
+  "keep": "medicinal plant that produces a sticky substance used as gum",
+  "merge": [
+   "medicinal plant"
+  ],
+  "keys": [
+   "ambue__medicinal_plant_that_produces_a",
+   "ambue__medicinal_plant"
+  ]
+ },
+ {
+  "awing": "chwaglə",
+  "keep": "bath oneself or wash something in an improper way",
+  "merge": [
+   "bath in an improper way",
+   "wash in an improper way"
+  ],
+  "keys": [
+   "chwagle__bath_oneself_or_wash_something_i",
+   "chwagle__bath_in_an_improper_way",
+   "chwagle__wash_in_an_improper_way"
+  ]
+ },
+ {
+  "awing": "féŋtə",
+  "keep": "get well, recover from illness",
+  "merge": [
+   "get well",
+   "recover from illness"
+  ],
+  "keys": [
+   "fengte__get_well_recover_from_illness",
+   "fengte__get_well",
+   "fengte__recover_from_illness"
+  ]
+ },
+ {
+  "awing": "mba' mbaŋə",
+  "keep": "rain maker or somebody who makes rain not to fall with the use of magical powers",
+  "merge": [
+   "rain maker"
+  ],
+  "keys": [
+   "mbambange__rain_maker_or_somebody_who_makes",
+   "mbambange__rain_maker"
+  ]
+ },
+ {
+  "awing": "mba'ə",
+  "keep": "rain maker or somebody who makes rain not to fall with the use of magical powers",
+  "merge": [
+   "rain maker"
+  ],
+  "keys": [
+   "mbae__rain_maker_or_somebody_who_makes",
+   "mbae__rain_maker"
+  ]
+ },
+ {
+  "awing": "mbeelə",
+  "keep": "furrow between farm beds",
+  "merge": [
+   "furrow"
+  ],
+  "keys": [
+   "mbeele__furrow_between_farm_beds",
+   "mbeele__furrow"
+  ]
+ },
+ {
+  "awing": "mbiə",
+  "keep": "front, forward",
+  "merge": [
+   "forward",
+   "front"
+  ],
+  "keys": [
+   "mbie__front_forward",
+   "mbie__forward",
+   "mbie__front"
+  ]
+ },
+ {
+  "awing": "nchwelə",
+  "keep": "the sixth day of the week",
+  "merge": [
+   "day of the week, the 6th"
+  ],
+  "keys": [
+   "nchwele__the_sixth_day_of_the_week",
+   "nchwele__day_of_the_week_the_6th"
+  ]
+ },
+ {
+  "awing": "nkəŋə",
+  "keep": "Traditional peace plant, planted in places of worship and used in ceremonies of peace",
+  "merge": [
+   "peace plant"
+  ],
+  "keys": [
+   "nkenge__traditional_peace_plant_planted",
+   "nkenge__peace_plant"
+  ]
+ },
+ {
+  "awing": "nkəŋə",
+  "keep": "steep place",
+  "merge": [
+   "steep place, of alk'ə"
+  ],
+  "keys": [
+   "nkenge__steep_place",
+   "nkenge__steep_place_of_alk"
+  ]
+ },
+ {
+  "awing": "nkweelə",
+  "keep": "the second day of the week and minor market day",
+  "merge": [
+   "day of the week, the 2nd"
+  ],
+  "keys": [
+   "nkweele__the_second_day_of_the_week_and_m",
+   "nkweele__day_of_the_week_the_2nd"
+  ]
+ },
+ {
+  "awing": "péŋə",
+  "keep": "be lost; someone missing in the forest",
+  "merge": [
+   "be lost"
+  ],
+  "keys": [
+   "penge__be_lost_someone_missing_in_the_f",
+   "penge__be_lost"
+  ]
+ },
+ {
+  "awing": "póokə",
+  "keep": "wither eg a plant",
+  "merge": [
+   "wither(v)"
+  ],
+  "keys": [
+   "pooke__wither_eg_a_plant",
+   "pooke__wither_v"
+  ]
+ },
+ {
+  "awing": "túmkə",
+  "keep": "come forcefully, flow out forcefully eg of water from a burst pipe",
+  "merge": [
+   "come out forcefully",
+   "come out forcefully, flow out forcefully"
+  ],
+  "keys": [
+   "tumke__come_forcefully_flow_out_forcefu",
+   "tumke__come_out_forcefully",
+   "tumke__come_out_forcefully_flow_out_for"
+  ]
+ },
+ {
+  "awing": "yagə",
+  "keep": "scare away by shouting eg of animals or birds in a farm",
+  "merge": [
+   "scare away by shouting",
+   "scare away shouting eg of animals or birds in a farm; yell out curses eg to a thief"
+  ],
+  "keys": [
+   "yage__scare_away_by_shouting_eg_of_ani",
+   "yage__scare_away_by_shouting",
+   "yage__scare_away_shouting_eg_of_animal"
+  ]
+ },
+ {
+  "awing": "akwâ",
+  "keep": "pounded Irish potato and banana",
+  "merge": [
+   "pounded irish and banana"
+  ],
+  "keys": [
+   "akwa__pounded_irish_potato_and_banana",
+   "akwa__pounded_irish_and_banana"
+  ]
+ },
+ {
+  "awing": "amú'áchú'ə",
+  "keep": "banana used for preparing achu",
+  "merge": [
+   "banana, for preparing achu"
+  ],
+  "keys": [
+   "amuachue__banana_used_for_preparing_achu",
+   "amuachue__banana_for_preparing_achu"
+  ]
+ },
+ {
+  "awing": "atsá'ə",
+  "keep": "the different divisions of a banana bunch",
+  "merge": [
+   "divisions of a banana bunch"
+  ],
+  "keys": [
+   "atsae__the_different_divisions_of_a_ban",
+   "atsae__divisions_of_a_banana_bunch"
+  ]
+ },
+ {
+  "awing": "awa'ə",
+  "keep": "a container for achu soup",
+  "merge": [
+   "container for achu soup"
+  ],
+  "keys": [
+   "awae__a_container_for_achu_soup",
+   "awae__container_for_achu_soup"
+  ]
+ },
+ {
+  "awing": "awa'ə",
+  "keep": "group; crowd",
+  "merge": [
+   "crowd",
+   "group"
+  ],
+  "keys": [
+   "awae__group_crowd",
+   "awae__crowd",
+   "awae__group"
+  ]
+ },
+ {
+  "awing": "koshamə",
+  "keep": "curdled milk; cottage cheese",
+  "merge": [
+   "cottage cheese",
+   "curdled milk"
+  ],
+  "keys": [
+   "koshame__curdled_milk_cottage_cheese",
+   "koshame__cottage_cheese",
+   "koshame__curdled_milk"
+  ]
+ },
+ {
+  "awing": "kyéŋtə",
+  "keep": "Cut off undesirable ends of vegetable",
+  "merge": [
+   "cut off with"
+  ],
+  "keys": [
+   "kyengte__cut_off_undesirable_ends_of_vege",
+   "kyengte__cut_off_with"
+  ]
+ },
+ {
+  "awing": "lúmnə",
+  "keep": "eat food with little or no soup",
+  "merge": [
+   "eat food with less soup"
+  ],
+  "keys": [
+   "lumne__eat_food_with_little_or_no_soup",
+   "lumne__eat_food_with_less_soup"
+  ]
+ },
+ {
+  "awing": "məsaŋə",
+  "keep": "the flower on the stalk of maize (any sort of maize)",
+  "merge": [
+   "flower on maize stalk"
+  ],
+  "keys": [
+   "mesange__the_flower_on_the_stalk_of_maize",
+   "mesange__flower_on_maize_stalk"
+  ]
+ },
+ {
+  "awing": "nkagə",
+  "keep": "a 20 litres container for measuring eg coffee measurement",
+  "merge": [
+   "container, of 20 litre",
+   "a 20 litres container"
+  ],
+  "keys": [
+   "nkage__a_20_litres_container_for_measur",
+   "nkage__container_of_20_litre",
+   "nkage__a_20_litres_container"
+  ]
+ },
+ {
+  "awing": "tyáala",
+  "keep": "to strain food or anything using water",
+  "merge": [
+   "strain, to"
+  ],
+  "keys": [
+   "tyaala__to_strain_food_or_anything_using",
+   "tyaala__strain_to"
+  ]
+ },
+ {
+  "awing": "chaakâ",
+  "keep": "accompany, lead away; send through or pass something across",
+  "merge": [
+   "accompany, lead away"
+  ],
+  "keys": [
+   "chaaka__accompany_lead_away_send_through",
+   "chaaka__accompany_lead_away"
+  ]
+ },
+ {
+  "awing": "chágə",
+  "keep": "make a place dirty by throwing bits of dirt",
+  "merge": [
+   "dirty, of a place"
+  ],
+  "keys": [
+   "chage__make_a_place_dirty_by_throwing_b",
+   "chage__dirty_of_a_place"
+  ]
+ },
+ {
+  "awing": "chánə",
+  "keep": "turn away from someone in disgust; talk impolitely",
+  "merge": [
+   "turn away in disgust"
+  ],
+  "keys": [
+   "chane__turn_away_from_someone_in_disgus",
+   "chane__turn_away_in_disgust"
+  ]
+ },
+ {
+  "awing": "chî kətaŋə",
+  "keep": "be empty",
+  "merge": [
+   "empty"
+  ],
+  "keys": [
+   "chiketange__be_empty",
+   "chiketange__empty"
+  ]
+ },
+ {
+  "awing": "chǐ mə́'á",
+  "keep": "be alone; be single, be without companion",
+  "merge": [
+   "be single, be without companion"
+  ],
+  "keys": [
+   "chimea__be_alone_be_single_be_without_co",
+   "chimea__be_single_be_without_companion"
+  ]
+ },
+ {
+  "awing": "chî ndzaŋ yi nda'ə",
+  "keep": "be different, be contrary to expectations",
+  "merge": [
+   "different"
+  ],
+  "keys": [
+   "chindzangyindae__be_different_be_contrary_to_expe",
+   "chindzangyindae__different"
+  ]
+ },
+ {
+  "awing": "chɨə",
+  "keep": "push; support",
+  "merge": [
+   "push"
+  ],
+  "keys": [
+   "chie__push_support",
+   "chie__push"
+  ]
+ },
+ {
+  "awing": "chîə ashamnə ashamnə",
+  "keep": "be scattered or disorganised; live apart, not together (of people)",
+  "merge": [
+   "be scattered or disorganised"
+  ],
+  "keys": [
+   "chieashamneashamne__be_scattered_or_disorganised_liv",
+   "chieashamneashamne__be_scattered_or_disorganised"
+  ]
+ },
+ {
+  "awing": "chínə",
+  "keep": "be hefty, huge in build; important",
+  "merge": [
+   "be hefty, huge in build"
+  ],
+  "keys": [
+   "chine__be_hefty_huge_in_build_important",
+   "chine__be_hefty_huge_in_build"
+  ]
+ },
+ {
+  "awing": "chítázɔ́'ə",
+  "keep": "be celibate",
+  "merge": [
+   "celibate"
+  ],
+  "keys": [
+   "chitazoe__be_celibate",
+   "chitazoe__celibate"
+  ]
+ },
+ {
+  "awing": "chú' mógə",
+  "keep": "light (fire)",
+  "merge": [
+   "light, of fire",
+   "light"
+  ],
+  "keys": [
+   "chumoge__light_fire",
+   "chumoge__light_of_fire",
+   "chumoge__light"
+  ]
+ },
+ {
+  "awing": "chúbnə",
+  "keep": "less important; uninfluential",
+  "merge": [
+   "uninfluential"
+  ],
+  "keys": [
+   "chubne__less_important_uninfluential",
+   "chubne__uninfluential"
+  ]
+ },
+ {
+  "awing": "chú'ə",
+  "keep": "lit up or light up (eg a lamp or fire)",
+  "merge": [
+   "light (v)"
+  ],
+  "keys": [
+   "chue__lit_up_or_light_up_eg_a_lamp_or",
+   "chue__light_v"
+  ]
+ },
+ {
+  "awing": "chú'tə",
+  "keep": "pound many times, smash many times",
+  "merge": [
+   "pound",
+   "pound many times"
+  ],
+  "keys": [
+   "chute__pound_many_times_smash_many_time",
+   "chute__pound",
+   "chute__pound_many_times"
+  ]
+ },
+ {
+  "awing": "chwâ",
+  "keep": "to clear (a field)",
+  "merge": [
+   "clear (a field)",
+   "1) be clear (a field)"
+  ],
+  "keys": [
+   "chwa__to_clear_a_field",
+   "chwa__clear_a_field",
+   "chwa__1_be_clear_a_field"
+  ]
+ },
+ {
+  "awing": "chwádkə",
+  "keep": "save, deliver from danger",
+  "merge": [
+   "deliver from danger",
+   "save"
+  ],
+  "keys": [
+   "chwadke__save_deliver_from_danger",
+   "chwadke__deliver_from_danger",
+   "chwadke__save"
+  ]
+ },
+ {
+  "awing": "chwántə",
+  "keep": "cut many spots or many things",
+  "merge": [
+   "cut many places or things"
+  ],
+  "keys": [
+   "chwante__cut_many_spots_or_many_things",
+   "chwante__cut_many_places_or_things"
+  ]
+ },
+ {
+  "awing": "chwíəə",
+  "keep": "give a name",
+  "merge": [
+   "name"
+  ],
+  "keys": [
+   "chwiee__give_a_name",
+   "chwiee__name"
+  ]
+ },
+ {
+  "awing": "chwigtə",
+  "keep": "spy many times; spy a little",
+  "merge": [
+   "spy many times"
+  ],
+  "keys": [
+   "chwigte__spy_many_times_spy_a_little",
+   "chwigte__spy_many_times"
+  ]
+ },
+ {
+  "awing": "chwí'nə",
+  "keep": "get tight together; unite",
+  "merge": [
+   "unite"
+  ],
+  "keys": [
+   "chwine__get_tight_together_unite",
+   "chwine__unite"
+  ]
+ },
+ {
+  "awing": "chwí'tə",
+  "keep": "accumulate, pack",
+  "merge": [
+   "accumulate",
+   "pack"
+  ],
+  "keys": [
+   "chwite__accumulate_pack",
+   "chwite__accumulate",
+   "chwite__pack"
+  ]
+ },
+ {
+  "awing": "chwí'tə",
+  "keep": "feel weak and sickly, of one's body",
+  "merge": [
+   "feel sickly, of body"
+  ],
+  "keys": [
+   "chwite__feel_weak_and_sickly_of_one_s_bo",
+   "chwite__feel_sickly_of_body"
+  ]
+ },
+ {
+  "awing": "chwí'tə",
+  "keep": "prepare (one's self, one's things)",
+  "merge": [
+   "prepare, of one's self"
+  ],
+  "keys": [
+   "chwite__prepare_one_s_self_one_s_things",
+   "chwite__prepare_of_one_s_self"
+  ]
+ },
+ {
+  "awing": "fádtə",
+  "keep": "stuff or force in many things",
+  "merge": [
+   "force in many things"
+  ],
+  "keys": [
+   "fadte__stuff_or_force_in_many_things",
+   "fadte__force_in_many_things"
+  ]
+ },
+ {
+  "awing": "fankə",
+  "keep": "be wrong",
+  "merge": [
+   "wrong"
+  ],
+  "keys": [
+   "fanke__be_wrong",
+   "fanke__wrong"
+  ]
+ },
+ {
+  "awing": "fáŋkə",
+  "keep": "1) be fat (of many things)",
+  "merge": [
+   "fat",
+   "fat, of many things"
+  ],
+  "keys": [
+   "fangke__1_be_fat_of_many_things",
+   "fangke__fat",
+   "fangke__fat_of_many_things"
+  ]
+ },
+ {
+  "awing": "féelə",
+  "keep": "force or stuff in something, fasten eg a fence",
+  "merge": [
+   "fasten"
+  ],
+  "keys": [
+   "feele__force_or_stuff_in_something_fast",
+   "feele__fasten"
+  ]
+ },
+ {
+  "awing": "fágtə",
+  "keep": "blow (many times), blow a little",
+  "merge": [
+   "blow a little",
+   "blow many times"
+  ],
+  "keys": [
+   "fagte__blow_many_times_blow_a_little",
+   "fagte__blow_a_little",
+   "fagte__blow_many_times"
+  ]
+ },
+ {
+  "awing": "fəmə",
+  "keep": "deep",
+  "merge": [
+   "deep one's hands, head, feet, etc into sth eg water"
+  ],
+  "keys": [
+   "feme__deep",
+   "feme__deep_one_s_hands_head_feet_etc_i"
+  ]
+ },
+ {
+  "awing": "fəmkə",
+  "keep": "war drown enemies in water as a way of punishing them",
+  "merge": [
+   "drown(tr); in war people drown their enemies in water as a way of punishing them"
+  ],
+  "keys": [
+   "femke__war_drown_enemies_in_water_as_a",
+   "femke__drown_tr_in_war_people_drown_the"
+  ]
+ },
+ {
+  "awing": "filə",
+  "keep": "blame",
+  "merge": [
+   "blame; a lazy person always blames his tool for a job badly done"
+  ],
+  "keys": [
+   "file__blame",
+   "file__blame_a_lazy_person_always_blame"
+  ]
+ },
+ {
+  "awing": "fídkə",
+  "keep": "exile, expel",
+  "merge": [
+   "expel"
+  ],
+  "keys": [
+   "fidke__exile_expel",
+   "fidke__expel"
+  ]
+ },
+ {
+  "awing": "fógə",
+  "keep": "pick; choose",
+  "merge": [
+   "choose",
+   "pick (tr)"
+  ],
+  "keys": [
+   "foge__pick_choose",
+   "foge__choose",
+   "foge__pick_tr"
+  ]
+ },
+ {
+  "awing": "fógə",
+  "keep": "be white",
+  "merge": [
+   "white"
+  ],
+  "keys": [
+   "foge__be_white",
+   "foge__white"
+  ]
+ },
+ {
+  "awing": "fu'ô",
+  "keep": "bubble up, boil",
+  "merge": [
+   "bubble up, boil (eg water)"
+  ],
+  "keys": [
+   "fuo__bubble_up_boil",
+   "fuo__bubble_up_boil_eg_water"
+  ]
+ },
+ {
+  "awing": "fwo'â",
+  "keep": "hollow out",
+  "merge": [
+   "hollow out (eg a log)"
+  ],
+  "keys": [
+   "fwoa__hollow_out",
+   "fwoa__hollow_out_eg_a_log"
+  ]
+ },
+ {
+  "awing": "fwonə̂",
+  "keep": "imprison; lock or key eg a door",
+  "merge": [
+   "imprison"
+  ],
+  "keys": [
+   "fwone__imprison_lock_or_key_eg_a_door",
+   "fwone__imprison"
+  ]
+ },
+ {
+  "awing": "fwontə̂",
+  "keep": "lock (many doors); imprison, of many people",
+  "merge": [
+   "1) lock (many doors)"
+  ],
+  "keys": [
+   "fwonte__lock_many_doors_imprison_of_many",
+   "fwonte__1_lock_many_doors"
+  ]
+ },
+ {
+  "awing": "fwoolâ",
+  "keep": "shave, as with a blade; peel off",
+  "merge": [
+   "shave, as with a blade"
+  ],
+  "keys": [
+   "fwoola__shave_as_with_a_blade_peel_off",
+   "fwoola__shave_as_with_a_blade"
+  ]
+ },
+ {
+  "awing": "fyádtə",
+  "keep": "chase (many things); insist many things",
+  "merge": [
+   "insist many things"
+  ],
+  "keys": [
+   "fyadte__chase_many_things_insist_many_th",
+   "fyadte__insist_many_things"
+  ]
+ },
+ {
+  "awing": "fyádtə",
+  "keep": "nip in the bud (eg a bad idea or many bad ideas)",
+  "merge": [
+   "nip in the bud"
+  ],
+  "keys": [
+   "fyadte__nip_in_the_bud_eg_a_bad_idea_or",
+   "fyadte__nip_in_the_bud"
+  ]
+ },
+ {
+  "awing": "gómə",
+  "keep": "clue",
+  "merge": [
+   "gum, clue, something especially of liquid which is used to clue two or more things together",
+   "gum, clue"
+  ],
+  "keys": [
+   "gome__clue",
+   "gome__gum_clue_something_especially_of",
+   "gome__gum_clue"
+  ]
+ },
+ {
+  "awing": "ghá'ə",
+  "keep": "be big",
+  "merge": [
+   "big"
+  ],
+  "keys": [
+   "ghae__be_big",
+   "ghae__big"
+  ]
+ },
+ {
+  "awing": "ghánkə",
+  "keep": "stagger, make somebody to stagger (tr)",
+  "merge": [
+   "make somebody stagger"
+  ],
+  "keys": [
+   "ghanke__stagger_make_somebody_to_stagger",
+   "ghanke__make_somebody_stagger"
+  ]
+ },
+ {
+  "awing": "ghó'kə",
+  "keep": "respect, honour, praise; worship",
+  "merge": [
+   "worship",
+   "worship, praise",
+   "respect, honour, praise; honour God on the first day of the week; worship, praise"
+  ],
+  "keys": [
+   "ghoke__respect_honour_praise_worship",
+   "ghoke__worship",
+   "ghoke__worship_praise",
+   "ghoke__respect_honour_praise_honour_god"
+  ]
+ },
+ {
+  "awing": "já'ə",
+  "keep": "skip through, leap over",
+  "merge": [
+   "skip through"
+  ],
+  "keys": [
+   "jae__skip_through_leap_over",
+   "jae__skip_through"
+  ]
+ },
+ {
+  "awing": "júmə",
+  "keep": "dry up; lose weight",
+  "merge": [
+   "lose weight"
+  ],
+  "keys": [
+   "jume__dry_up_lose_weight",
+   "jume__lose_weight"
+  ]
+ },
+ {
+  "awing": "júnə",
+  "keep": "buy; corrupt",
+  "merge": [
+   "buy",
+   "corrupt"
+  ],
+  "keys": [
+   "june__buy_corrupt",
+   "june__buy",
+   "june__corrupt"
+  ]
+ },
+ {
+  "awing": "jwábtə",
+  "keep": "provoke many times, taunt continously",
+  "merge": [
+   "provoke many times"
+  ],
+  "keys": [
+   "jwabte__provoke_many_times_taunt_contino",
+   "jwabte__provoke_many_times"
+  ]
+ },
+ {
+  "awing": "jwa'ə",
+  "keep": "annoy, disturb",
+  "merge": [
+   "annoy",
+   "disturb"
+  ],
+  "keys": [
+   "jwae__annoy_disturb",
+   "jwae__annoy",
+   "jwae__disturb"
+  ]
+ },
+ {
+  "awing": "jwánə",
+  "keep": "befit; suit",
+  "merge": [
+   "befit",
+   "suit"
+  ],
+  "keys": [
+   "jwane__befit_suit",
+   "jwane__befit",
+   "jwane__suit"
+  ]
+ },
+ {
+  "awing": "jwiəə",
+  "keep": "breathe; open the window to let air in",
+  "merge": [
+   "breathe"
+  ],
+  "keys": [
+   "jwiee__breathe_open_the_window_to_let_a",
+   "jwiee__breathe"
+  ]
+ },
+ {
+  "awing": "jwikə",
+  "keep": "pant; ventilate",
+  "merge": [
+   "ventilate"
+  ],
+  "keys": [
+   "jwike__pant_ventilate",
+   "jwike__ventilate"
+  ]
+ },
+ {
+  "awing": "kádtə",
+  "keep": "coil rope, rap many things",
+  "merge": [
+   "coil many things"
+  ],
+  "keys": [
+   "kadte__coil_rope_rap_many_things",
+   "kadte__coil_many_things"
+  ]
+ },
+ {
+  "awing": "ká'ə",
+  "keep": "clot (as blood)",
+  "merge": [
+   "clot"
+  ],
+  "keys": [
+   "kae__clot_as_blood",
+   "kae__clot"
+  ]
+ },
+ {
+  "awing": "ká'ə",
+  "keep": "solidify (eg oil)",
+  "merge": [
+   "solidify (eg"
+  ],
+  "keys": [
+   "kae__solidify_eg_oil",
+   "kae__solidify_eg"
+  ]
+ },
+ {
+  "awing": "ká'ə",
+  "keep": "measure (eg of quantity)",
+  "merge": [
+   "measure (v), of quantity"
+  ],
+  "keys": [
+   "kae__measure_eg_of_quantity",
+   "kae__measure_v_of_quantity"
+  ]
+ },
+ {
+  "awing": "ká'ə",
+  "keep": "cut",
+  "merge": [
+   "cut; I have cut my hand"
+  ],
+  "keys": [
+   "kae__cut",
+   "kae__cut_i_have_cut_my_hand"
+  ]
+ },
+ {
+  "awing": "kéelə",
+  "keep": "wrap up, coil (rope)",
+  "merge": [
+   "coil (tr)",
+   "wrap up"
+  ],
+  "keys": [
+   "keele__wrap_up_coil_rope",
+   "keele__coil_tr",
+   "keele__wrap_up"
+  ]
+ },
+ {
+  "awing": "kéelə",
+  "keep": "attack by holding tight to the dresses of the opponent",
+  "merge": [
+   "attack by holding tight on the dresses of the opponent",
+   "attack by holding tight"
+  ],
+  "keys": [
+   "keele__attack_by_holding_tight_to_the_d",
+   "keele__attack_by_holding_tight_on_the_d",
+   "keele__attack_by_holding_tight"
+  ]
+ },
+ {
+  "awing": "kéenə",
+  "keep": "be tired",
+  "merge": [
+   "tired",
+   "be tired; you work a lot you get tired"
+  ],
+  "keys": [
+   "keene__be_tired",
+   "keene__tired",
+   "keene__be_tired_you_work_a_lot_you_get"
+  ]
+ },
+ {
+  "awing": "kédkə",
+  "keep": "burn in many places",
+  "merge": [
+   "burn in many places; he fell in fire and got seriously burnt on many spots"
+  ],
+  "keys": [
+   "kedke__burn_in_many_places",
+   "kedke__burn_in_many_places_he_fell_in_f"
+  ]
+ },
+ {
+  "awing": "kélə",
+  "keep": "burn",
+  "merge": [
+   "burn; fire is burning on dry savana"
+  ],
+  "keys": [
+   "kele__burn",
+   "kele__burn_fire_is_burning_on_dry_sava"
+  ]
+ },
+ {
+  "awing": "kəŋkə",
+  "keep": "avoid, alienate",
+  "merge": [
+   "alienate"
+  ],
+  "keys": [
+   "kengke__avoid_alienate",
+   "kengke__alienate"
+  ]
+ },
+ {
+  "awing": "kíbtə",
+  "keep": "shell a little",
+  "merge": [
+   "shell a little, eg of groundnuts"
+  ],
+  "keys": [
+   "kibte__shell_a_little",
+   "kibte__shell_a_little_eg_of_groundnuts"
+  ]
+ },
+ {
+  "awing": "kogə",
+  "keep": "be blunt",
+  "merge": [
+   "be blunt, eg of a knife"
+  ],
+  "keys": [
+   "koge__be_blunt",
+   "koge__be_blunt_eg_of_a_knife"
+  ]
+ },
+ {
+  "awing": "kóŋkə",
+  "keep": "cause to be carried away by water current",
+  "merge": [
+   "cause to be carried away"
+  ],
+  "keys": [
+   "kongke__cause_to_be_carried_away_by_wate",
+   "kongke__cause_to_be_carried_away"
+  ]
+ },
+ {
+  "awing": "kóotə",
+  "keep": "grasp, take hold, catch",
+  "merge": [
+   "grasp, hold"
+  ],
+  "keys": [
+   "koote__grasp_take_hold_catch",
+   "koote__grasp_hold"
+  ]
+ },
+ {
+  "awing": "kwa'ə",
+  "keep": "play, make jokes",
+  "merge": [
+   "play"
+  ],
+  "keys": [
+   "kwae__play_make_jokes",
+   "kwae__play"
+  ]
+ },
+ {
+  "awing": "kwíŋkə",
+  "keep": "bring up , raise",
+  "merge": [
+   "bring up (eg a child), raise"
+  ],
+  "keys": [
+   "kwingke__bring_up_raise",
+   "kwingke__bring_up_eg_a_child_raise"
+  ]
+ },
+ {
+  "awing": "kwú'tə",
+  "keep": "stoop, of many people; bend, of many people",
+  "merge": [
+   "bend, of many people"
+  ],
+  "keys": [
+   "kwute__stoop_of_many_people_bend_of_man",
+   "kwute__bend_of_many_people"
+  ]
+ },
+ {
+  "awing": "kyáamə",
+  "keep": "wring out, squeeze",
+  "merge": [
+   "squeeze",
+   "wring out"
+  ],
+  "keys": [
+   "kyaame__wring_out_squeeze",
+   "kyaame__squeeze",
+   "kyaame__wring_out"
+  ]
+ },
+ {
+  "awing": "kyáglə",
+  "keep": "Dirty, with marks caused by sweat, water or cosmetics",
+  "merge": [
+   "dirty",
+   "Dirty, with marks"
+  ],
+  "keys": [
+   "kyagle__dirty_with_marks_caused_by_sweat",
+   "kyagle__dirty",
+   "kyagle__dirty_with_marks"
+  ]
+ },
+ {
+  "awing": "kyagtə",
+  "keep": "untie many things eg bags",
+  "merge": [
+   "untie many things"
+  ],
+  "keys": [
+   "kyagte__untie_many_things_eg_bags",
+   "kyagte__untie_many_things"
+  ]
+ },
+ {
+  "awing": "kyámtə",
+  "keep": "wring out water (just a little) from sth",
+  "merge": [
+   "wring out water (a little)"
+  ],
+  "keys": [
+   "kyamte__wring_out_water_just_a_little_fr",
+   "kyamte__wring_out_water_a_little"
+  ]
+ },
+ {
+  "awing": "lá'ə",
+  "keep": "far future tense marker",
+  "merge": [
+   "far future tense marker — used with another future marker",
+   "marker for future tense"
+  ],
+  "keys": [
+   "lae__far_future_tense_marker",
+   "lae__far_future_tense_marker_used_wit",
+   "lae__marker_for_future_tense"
+  ]
+ },
+ {
+  "awing": "lá'ə",
+  "keep": "1) announce (especially of a birth) 2) say (colloquial)",
+  "merge": [
+   "announce especially of a birth"
+  ],
+  "keys": [
+   "lae__1_announce_especially_of_a_birth",
+   "lae__announce_especially_of_a_birth"
+  ]
+ },
+ {
+  "awing": "la'â",
+  "keep": "announce (especially of a birth); say (colloquial)",
+  "merge": [
+   "1) announce (especially of a birth)"
+  ],
+  "keys": [
+   "laa__announce_especially_of_a_birth_s",
+   "laa__1_announce_especially_of_a_birth"
+  ]
+ },
+ {
+  "awing": "lagə",
+  "keep": "fetch, of firewood; gather or assemble, of objects",
+  "merge": [
+   "fetch, of firewood",
+   "gather or assemble, of objects",
+   "fetch, of firewood, gather"
+  ],
+  "keys": [
+   "lage__fetch_of_firewood_gather_or_asse",
+   "lage__fetch_of_firewood",
+   "lage__gather_or_assemble_of_objects",
+   "lage__fetch_of_firewood_gather"
+  ]
+ },
+ {
+  "awing": "lá'kə",
+  "keep": "thank or give thanks",
+  "merge": [
+   "thank"
+  ],
+  "keys": [
+   "lake__thank_or_give_thanks",
+   "lake__thank"
+  ]
+ },
+ {
+  "awing": "lá'kə",
+  "keep": "make something to get hooked",
+  "merge": [
+   "make something to get"
+  ],
+  "keys": [
+   "lake__make_something_to_get_hooked",
+   "lake__make_something_to_get"
+  ]
+ },
+ {
+  "awing": "leŋkə",
+  "keep": "notice or put a mark on something so as to give it identity",
+  "merge": [
+   "notice"
+  ],
+  "keys": [
+   "lengke__notice_or_put_a_mark_on_somethin",
+   "lengke__notice"
+  ]
+ },
+ {
+  "awing": "lenə",
+  "keep": "be old (not young, not new)",
+  "merge": [
+   "old"
+  ],
+  "keys": [
+   "lene__be_old_not_young_not_new",
+   "lene__old"
+  ]
+ },
+ {
+  "awing": "lógə",
+  "keep": "cut (tr); decide, put an end",
+  "merge": [
+   "decide, put an end",
+   "cut (tr)"
+  ],
+  "keys": [
+   "loge__cut_tr_decide_put_an_end",
+   "loge__decide_put_an_end",
+   "loge__cut_tr"
+  ]
+ },
+ {
+  "awing": "ləmə",
+  "keep": "stink (bad or offensive); smell (intransitive verb)",
+  "merge": [
+   "1) stink (bad or offensive)"
+  ],
+  "keys": [
+   "leme__stink_bad_or_offensive_smell_int",
+   "leme__1_stink_bad_or_offensive"
+  ]
+ },
+ {
+  "awing": "líbkə",
+  "keep": "make or cause something to go round",
+  "merge": [
+   "make go round"
+  ],
+  "keys": [
+   "libke__make_or_cause_something_to_go_ro",
+   "libke__make_go_round"
+  ]
+ },
+ {
+  "awing": "líblə",
+  "keep": "go round, surround",
+  "merge": [
+   "go round",
+   "surround"
+  ],
+  "keys": [
+   "lible__go_round_surround",
+   "lible__go_round",
+   "lible__surround"
+  ]
+ },
+ {
+  "awing": "lí'ə",
+  "keep": "cultivate, hoe (v)",
+  "merge": [
+   "cultivate"
+  ],
+  "keys": [
+   "lie__cultivate_hoe_v",
+   "lie__cultivate"
+  ]
+ },
+ {
+  "awing": "lîə",
+  "keep": "jump, leap",
+  "merge": [
+   "jump",
+   "leap"
+  ],
+  "keys": [
+   "lie__jump_leap",
+   "lie__jump",
+   "lie__leap"
+  ]
+ },
+ {
+  "awing": "lúnkə",
+  "keep": "fill, of solids and liquids",
+  "merge": [
+   "fill"
+  ],
+  "keys": [
+   "lunke__fill_of_solids_and_liquids",
+   "lunke__fill"
+  ]
+ },
+ {
+  "awing": "lwénkə",
+  "keep": "fill; be full",
+  "merge": [
+   "fill",
+   "full"
+  ],
+  "keys": [
+   "lwenke__fill_be_full",
+   "lwenke__fill",
+   "lwenke__full"
+  ]
+ },
+ {
+  "awing": "lwénkə nəŋkə",
+  "keep": "fulfill the law, obey law",
+  "merge": [
+   "fulfill the law"
+  ],
+  "keys": [
+   "lwenkenengke__fulfill_the_law_obey_law",
+   "lwenkenengke__fulfill_the_law"
+  ]
+ },
+ {
+  "awing": "máma",
+  "keep": "name used for old women; prefix used before the names of old women",
+  "merge": [
+   "name used for old women"
+  ],
+  "keys": [
+   "mama__name_used_for_old_women_prefix_u",
+   "mama__name_used_for_old_women"
+  ]
+ },
+ {
+  "awing": "mêe",
+  "keep": "be used up",
+  "merge": [
+   "used up"
+  ],
+  "keys": [
+   "mee__be_used_up",
+   "mee__used_up"
+  ]
+ },
+ {
+  "awing": "nâ",
+  "keep": "insist, press",
+  "merge": [
+   "insist",
+   "press on"
+  ],
+  "keys": [
+   "na__insist_press",
+   "na__insist",
+   "na__press_on"
+  ]
+ },
+ {
+  "awing": "néŋə",
+  "keep": "put; place",
+  "merge": [
+   "place",
+   "put, place, load, pour"
+  ],
+  "keys": [
+   "nenge__put_place",
+   "nenge__place",
+   "nenge__put_place_load_pour"
+  ]
+ },
+ {
+  "awing": "nəələ",
+  "keep": "show, explain; demonstrate",
+  "merge": [
+   "show, explain"
+  ],
+  "keys": [
+   "neele__show_explain_demonstrate",
+   "neele__show_explain"
+  ]
+ },
+ {
+  "awing": "nyá'ə",
+  "keep": "a little",
+  "merge": [
+   "little"
+  ],
+  "keys": [
+   "nyae__a_little",
+   "nyae__little"
+  ]
+ },
+ {
+  "awing": "ŋédtə",
+  "keep": "be crooked",
+  "merge": [
+   "be crooked, eg of road"
+  ],
+  "keys": [
+   "ngedte__be_crooked",
+   "ngedte__be_crooked_eg_of_road"
+  ]
+ },
+ {
+  "awing": "ŋwédlə",
+  "keep": "be too excited",
+  "merge": [
+   "excited, the too ~"
+  ],
+  "keys": [
+   "ngwedle__be_too_excited",
+   "ngwedle__excited_the_too"
+  ]
+ },
+ {
+  "awing": "pábtə",
+  "keep": "make something a little warm; roast a bit",
+  "merge": [
+   "warm a little"
+  ],
+  "keys": [
+   "pabte__make_something_a_little_warm_roa",
+   "pabte__warm_a_little"
+  ]
+ },
+ {
+  "awing": "pa'ə",
+  "keep": "plait, braid , weave",
+  "merge": [
+   "plait, braid (eg hair), weave"
+  ],
+  "keys": [
+   "pae__plait_braid_weave",
+   "pae__plait_braid_eg_hair_weave"
+  ]
+ },
+ {
+  "awing": "pa'ə",
+  "keep": "scrub out, peel off something",
+  "merge": [
+   "peel off something",
+   "scrub out"
+  ],
+  "keys": [
+   "pae__scrub_out_peel_off_something",
+   "pae__peel_off_something",
+   "pae__scrub_out"
+  ]
+ },
+ {
+  "awing": "pa'ə",
+  "keep": "cause rain not to fall (using magical powers)",
+  "merge": [
+   "rain, cause it not to fall"
+  ],
+  "keys": [
+   "pae__cause_rain_not_to_fall_using_mag",
+   "pae__rain_cause_it_not_to_fall"
+  ]
+ },
+ {
+  "awing": "págə",
+  "keep": "ferment",
+  "merge": [
+   "ferment, eg of food"
+  ],
+  "keys": [
+   "page__ferment",
+   "page__ferment_eg_of_food"
+  ]
+ },
+ {
+  "awing": "paŋə",
+  "keep": "be red",
+  "merge": [
+   "red"
+  ],
+  "keys": [
+   "pange__be_red",
+   "pange__red"
+  ]
+ },
+ {
+  "awing": "pegə",
+  "keep": "enlarge; widen",
+  "merge": [
+   "widen"
+  ],
+  "keys": [
+   "pege__enlarge_widen",
+   "pege__widen"
+  ]
+ },
+ {
+  "awing": "pó'ə",
+  "keep": "beat up eg somebody who offends one; ring, of bell",
+  "merge": [
+   "ring, of bell"
+  ],
+  "keys": [
+   "poe__beat_up_eg_somebody_who_offends",
+   "poe__ring_of_bell"
+  ]
+ },
+ {
+  "awing": "pí'kə",
+  "keep": "twist, treat cunningly, handle cunningly",
+  "merge": [
+   "handle cunningly, treat cunningly"
+  ],
+  "keys": [
+   "pike__twist_treat_cunningly_handle_cun",
+   "pike__handle_cunningly_treat_cunningly"
+  ]
+ },
+ {
+  "awing": "pítə",
+  "keep": "ask, request",
+  "merge": [
+   "request"
+  ],
+  "keys": [
+   "pite__ask_request",
+   "pite__request"
+  ]
+ },
+ {
+  "awing": "pó' mbeebə",
+  "keep": "flap wings",
+  "merge": [
+   "flap, of wings"
+  ],
+  "keys": [
+   "pombeebe__flap_wings",
+   "pombeebe__flap_of_wings"
+  ]
+ },
+ {
+  "awing": "pó'nə",
+  "keep": "fight, fight each other",
+  "merge": [
+   "fight",
+   "fight each other"
+  ],
+  "keys": [
+   "pone__fight_fight_each_other",
+   "pone__fight",
+   "pone__fight_each_other"
+  ]
+ },
+ {
+  "awing": "pwódnə",
+  "keep": "be kind or gentle, of people; be soft, of objects",
+  "merge": [
+   "be kind or gentle"
+  ],
+  "keys": [
+   "pwodne__be_kind_or_gentle_of_people_be_s",
+   "pwodne__be_kind_or_gentle"
+  ]
+ },
+ {
+  "awing": "pyáatə",
+  "keep": "examine closely (with care, love and diligence), explain diligently",
+  "merge": [
+   "explain diligently"
+  ],
+  "keys": [
+   "pyaate__examine_closely_with_care_love_a",
+   "pyaate__explain_diligently"
+  ]
+ },
+ {
+  "awing": "pyábtə",
+  "keep": "guide many things or people; guide a little",
+  "merge": [
+   "guide a little",
+   "guide many things"
+  ],
+  "keys": [
+   "pyabte__guide_many_things_or_people_guid",
+   "pyabte__guide_a_little",
+   "pyabte__guide_many_things"
+  ]
+ },
+ {
+  "awing": "sa'ə",
+  "keep": "order, send to do something, judge, rule, admonish",
+  "merge": [
+   "order, send"
+  ],
+  "keys": [
+   "sae__order_send_to_do_something_judge",
+   "sae__order_send"
+  ]
+ },
+ {
+  "awing": "sá'kə",
+  "keep": "burst out, of many things",
+  "merge": [
+   "burst out, of many"
+  ],
+  "keys": [
+   "sake__burst_out_of_many_things",
+   "sake__burst_out_of_many"
+  ]
+ },
+ {
+  "awing": "sá'kə",
+  "keep": "explode, of many things",
+  "merge": [
+   "explode, of many"
+  ],
+  "keys": [
+   "sake__explode_of_many_things",
+   "sake__explode_of_many"
+  ]
+ },
+ {
+  "awing": "sántə",
+  "keep": "cut or break into many pieces",
+  "merge": [
+   "cut into many pieces"
+  ],
+  "keys": [
+   "sante__cut_or_break_into_many_pieces",
+   "sante__cut_into_many_pieces"
+  ]
+ },
+ {
+  "awing": "séenə",
+  "keep": "saw , cut open",
+  "merge": [
+   "saw (eg wood), cut open",
+   "cut open"
+  ],
+  "keys": [
+   "seene__saw_cut_open",
+   "seene__saw_eg_wood_cut_open",
+   "seene__cut_open"
+  ]
+ },
+ {
+  "awing": "sedkô",
+  "keep": "curve, bend (tr), make it go round; make something go round",
+  "merge": [
+   "make something go round"
+  ],
+  "keys": [
+   "sedko__curve_bend_tr_make_it_go_round_m",
+   "sedko__make_something_go_round"
+  ]
+ },
+ {
+  "awing": "séekə",
+  "keep": "blaze, of light; shine intensely, of light (tr)",
+  "merge": [
+   "blaze, of light",
+   "shine intensely, of light"
+  ],
+  "keys": [
+   "seeke__blaze_of_light_shine_intensely_o",
+   "seeke__blaze_of_light",
+   "seeke__shine_intensely_of_light"
+  ]
+ },
+ {
+  "awing": "shwə'á",
+  "keep": "reduce in intensity",
+  "merge": [
+   "reduce in intensity (eg of water current)"
+  ],
+  "keys": [
+   "shwea__reduce_in_intensity",
+   "shwea__reduce_in_intensity_eg_of_water"
+  ]
+ },
+ {
+  "awing": "tágə",
+  "keep": "harvest, collect (honey from hive)",
+  "merge": [
+   "collect (of honey)"
+  ],
+  "keys": [
+   "tage__harvest_collect_honey_from_hive",
+   "tage__collect_of_honey"
+  ]
+ },
+ {
+  "awing": "táta",
+  "keep": "address, to an old man",
+  "merge": [
+   "voc address to an old man"
+  ],
+  "keys": [
+   "tata__address_to_an_old_man",
+   "tata__voc_address_to_an_old_man"
+  ]
+ },
+ {
+  "awing": "téekə",
+  "keep": "meet, catch up with; join",
+  "merge": [
+   "catch up with",
+   "join",
+   "meet"
+  ],
+  "keys": [
+   "teeke__meet_catch_up_with_join",
+   "teeke__catch_up_with",
+   "teeke__join",
+   "teeke__meet"
+  ]
+ },
+ {
+  "awing": "téemə",
+  "keep": "set a trap; net, of fish",
+  "merge": [
+   "set a trap"
+  ],
+  "keys": [
+   "teeme__set_a_trap_net_of_fish",
+   "teeme__set_a_trap"
+  ]
+ },
+ {
+  "awing": "tégə",
+  "keep": "meet, catch up with; join",
+  "merge": [
+   "catch up with",
+   "meet, catch up with"
+  ],
+  "keys": [
+   "tege__meet_catch_up_with_join",
+   "tege__catch_up_with",
+   "tege__meet_catch_up_with"
+  ]
+ },
+ {
+  "awing": "tegnə",
+  "keep": "already left (gone), just left (gone)",
+  "merge": [
+   "already left (gone)",
+   "just left (gone)"
+  ],
+  "keys": [
+   "tegne__already_left_gone_just_left_gone",
+   "tegne__already_left_gone",
+   "tegne__just_left_gone"
+  ]
+ },
+ {
+  "awing": "tê",
+  "keep": "hot, of pepper",
+  "merge": [
+   "be hot, of pepper"
+  ],
+  "keys": [
+   "te__hot_of_pepper",
+   "te__be_hot_of_pepper"
+  ]
+ },
+ {
+  "awing": "tê",
+  "keep": "sting or strike, of snake or any insect",
+  "merge": [
+   "strike, of insect or snake",
+   "sting or strike (snake, insect)"
+  ],
+  "keys": [
+   "te__sting_or_strike_of_snake_or_any",
+   "te__strike_of_insect_or_snake",
+   "te__sting_or_strike_snake_insect"
+  ]
+ },
+ {
+  "awing": "tê",
+  "keep": "have sex with, (colloquial usage)",
+  "merge": [
+   "have sex with"
+  ],
+  "keys": [
+   "te__have_sex_with_colloquial_usage",
+   "te__have_sex_with"
+  ]
+ },
+ {
+  "awing": "tê ndê",
+  "keep": "leave the house very early in the mourning hours, especially at mourning twilight (colloquial usage)",
+  "merge": [
+   "leave very early"
+  ],
+  "keys": [
+   "tende__leave_the_house_very_early_in_th",
+   "tende__leave_very_early"
+  ]
+ },
+ {
+  "awing": "tágtə",
+  "keep": "advise on many issues, advise",
+  "merge": [
+   "advise on many issues"
+  ],
+  "keys": [
+   "tagte__advise_on_many_issues_advise",
+   "tagte__advise_on_many_issues"
+  ]
+ },
+ {
+  "awing": "támə",
+  "keep": "kick, shoot",
+  "merge": [
+   "kick"
+  ],
+  "keys": [
+   "tame__kick_shoot",
+   "tame__kick"
+  ]
+ },
+ {
+  "awing": "toonô",
+  "keep": "singe; roast",
+  "merge": [
+   "singe"
+  ],
+  "keys": [
+   "toono__singe_roast",
+   "toono__singe"
+  ]
+ },
+ {
+  "awing": "túgə",
+  "keep": "have, hold; look after, care for",
+  "merge": [
+   "look after"
+  ],
+  "keys": [
+   "tuge__have_hold_look_after_care_for",
+   "tuge__look_after"
+  ]
+ },
+ {
+  "awing": "twáamə",
+  "keep": "lift up; carry",
+  "merge": [
+   "carry",
+   "lift up"
+  ],
+  "keys": [
+   "twaame__lift_up_carry",
+   "twaame__carry",
+   "twaame__lift_up"
+  ]
+ },
+ {
+  "awing": "twéetə atwêŋə",
+  "keep": "gird up, of one's loins; get ready for action",
+  "merge": [
+   "loins, gird up"
+  ],
+  "keys": [
+   "tweeteatwenge__gird_up_of_one_s_loins_get_ready",
+   "tweeteatwenge__loins_gird_up"
+  ]
+ },
+ {
+  "awing": "tyagə",
+  "keep": "lift, of sth sticky",
+  "merge": [
+   "lift sth sticky"
+  ],
+  "keys": [
+   "tyage__lift_of_sth_sticky",
+   "tyage__lift_sth_sticky"
+  ]
+ },
+ {
+  "awing": "tyantə",
+  "keep": "strong",
+  "merge": [
+   "be hard, strong, difficult"
+  ],
+  "keys": [
+   "tyante__strong",
+   "tyante__be_hard_strong_difficult"
+  ]
+ },
+ {
+  "awing": "tsámtə",
+  "keep": "chew many things; chew a little",
+  "merge": [
+   "chew a little",
+   "chew many things"
+  ],
+  "keys": [
+   "tsamte__chew_many_things_chew_a_little",
+   "tsamte__chew_a_little",
+   "tsamte__chew_many_things"
+  ]
+ },
+ {
+  "awing": "tséebə",
+  "keep": "speak, talk",
+  "merge": [
+   "speak",
+   "talk"
+  ],
+  "keys": [
+   "tseebe__speak_talk",
+   "tseebe__speak",
+   "tseebe__talk"
+  ]
+ },
+ {
+  "awing": "tsédndzəmə",
+  "keep": "last, finalise, end",
+  "merge": [
+   "end",
+   "finalise",
+   "last"
+  ],
+  "keys": [
+   "tsedndzeme__last_finalise_end",
+   "tsedndzeme__end",
+   "tsedndzeme__finalise",
+   "tsedndzeme__last"
+  ]
+ },
+ {
+  "awing": "tsentə",
+  "keep": "assemble, meet, heap up, join, put together, gather",
+  "merge": [
+   "assemble",
+   "gather",
+   "heap up",
+   "join",
+   "meet",
+   "put together",
+   "assemble, meet, heap up"
+  ],
+  "keys": [
+   "tsente__assemble_meet_heap_up_join_put_t",
+   "tsente__assemble",
+   "tsente__gather",
+   "tsente__heap_up",
+   "tsente__join",
+   "tsente__meet",
+   "tsente__put_together",
+   "tsente__assemble_meet_heap_up"
+  ]
+ },
+ {
+  "awing": "tsó'ə",
+  "keep": "heal (tr), cure",
+  "merge": [
+   "cure"
+  ],
+  "keys": [
+   "tsoe__heal_tr_cure",
+   "tsoe__cure"
+  ]
+ },
+ {
+  "awing": "tsó'ə",
+  "keep": "extract, of milk from a cow or goat",
+  "merge": [
+   "extract of milk from a cow"
+  ],
+  "keys": [
+   "tsoe__extract_of_milk_from_a_cow_or_go",
+   "tsoe__extract_of_milk_from_a_cow"
+  ]
+ },
+ {
+  "awing": "tsonkə",
+  "keep": "create, make; manufacture",
+  "merge": [
+   "manufacture",
+   "create, make, manufacture, repair, mend, put in order, arrange"
+  ],
+  "keys": [
+   "tsonke__create_make_manufacture",
+   "tsonke__manufacture",
+   "tsonke__create_make_manufacture_repair_m"
+  ]
+ },
+ {
+  "awing": "tsóŋə",
+  "keep": "make a knot, tie a knot",
+  "merge": [
+   "make a knot",
+   "tie a knot"
+  ],
+  "keys": [
+   "tsonge__make_a_knot_tie_a_knot",
+   "tsonge__make_a_knot",
+   "tsonge__tie_a_knot"
+  ]
+ },
+ {
+  "awing": "tsóŋə",
+  "keep": "cluster tightly together eg of fruit on a tree",
+  "merge": [
+   "cluster tightly together"
+  ],
+  "keys": [
+   "tsonge__cluster_tightly_together_eg_of_f",
+   "tsonge__cluster_tightly_together"
+  ]
+ },
+ {
+  "awing": "tsóŋtə",
+  "keep": "make many knots, tie knots",
+  "merge": [
+   "make knots",
+   "tie knots"
+  ],
+  "keys": [
+   "tsongte__make_many_knots_tie_knots",
+   "tsongte__make_knots",
+   "tsongte__tie_knots"
+  ]
+ },
+ {
+  "awing": "tsóŋtə",
+  "keep": "tightly clustered together, of many things eg fruits on a tree",
+  "merge": [
+   "clustered tightly (many things)",
+   "tightly clustered together"
+  ],
+  "keys": [
+   "tsongte__tightly_clustered_together_of_ma",
+   "tsongte__clustered_tightly_many_things",
+   "tsongte__tightly_clustered_together"
+  ]
+ },
+ {
+  "awing": "tsóolə",
+  "keep": "descend, go down",
+  "merge": [
+   "go down"
+  ],
+  "keys": [
+   "tsoole__descend_go_down",
+   "tsoole__go_down"
+  ]
+ },
+ {
+  "awing": "waamə",
+  "keep": "hold, catch (fish), seize",
+  "merge": [
+   "catch, seize",
+   "hold"
+  ],
+  "keys": [
+   "waame__hold_catch_fish_seize",
+   "waame__catch_seize",
+   "waame__hold"
+  ]
+ },
+ {
+  "awing": "wam mbəəmə",
+  "keep": "be patient; calm one's self",
+  "merge": [
+   "calm one's self",
+   "patient"
+  ],
+  "keys": [
+   "wammbeeme__be_patient_calm_one_s_self",
+   "wammbeeme__calm_one_s_self",
+   "wammbeeme__patient"
+  ]
+ },
+ {
+  "awing": "wénə",
+  "keep": "draw pictures; make incisions",
+  "merge": [
+   "make incisions"
+  ],
+  "keys": [
+   "wene__draw_pictures_make_incisions",
+   "wene__make_incisions"
+  ]
+ },
+ {
+  "awing": "wénə",
+  "keep": "slash or whip, beat up",
+  "merge": [
+   "beat up"
+  ],
+  "keys": [
+   "wene__slash_or_whip_beat_up",
+   "wene__beat_up"
+  ]
+ },
+ {
+  "awing": "wénnə",
+  "keep": "be worried, be impatient",
+  "merge": [
+   "impatient"
+  ],
+  "keys": [
+   "wenne__be_worried_be_impatient",
+   "wenne__impatient"
+  ]
+ },
+ {
+  "awing": "wu'nə nkwumə",
+  "keep": "close a box; close a coffin",
+  "merge": [
+   "close a box",
+   "close a coffin"
+  ],
+  "keys": [
+   "wunenkwume__close_a_box_close_a_coffin",
+   "wunenkwume__close_a_box",
+   "wunenkwume__close_a_coffin"
+  ]
+ },
+ {
+  "awing": "yáŋə",
+  "keep": "be wise",
+  "merge": [
+   "wise"
+  ],
+  "keys": [
+   "yange__be_wise",
+   "yange__wise"
+  ]
+ },
+ {
+  "awing": "yéelə",
+  "keep": "loose the mind; be mad (used colloquially)",
+  "merge": [
+   "loose the mind",
+   "mad"
+  ],
+  "keys": [
+   "yeele__loose_the_mind_be_mad_used_collo",
+   "yeele__loose_the_mind",
+   "yeele__mad"
+  ]
+ },
+ {
+  "awing": "zá'kə",
+  "keep": "lend, give on credit",
+  "merge": [
+   "give on credit",
+   "lend"
+  ],
+  "keys": [
+   "zake__lend_give_on_credit",
+   "zake__give_on_credit",
+   "zake__lend"
+  ]
+ },
+ {
+  "awing": "zo'kə",
+  "keep": "make less tight",
+  "merge": [
+   "make less tight, eg of one's grip on sth or of a rope tied on something"
+  ],
+  "keys": [
+   "zoke__make_less_tight",
+   "zoke__make_less_tight_eg_of_one_s_grip"
+  ]
+ },
+ {
+  "awing": "afélə",
+  "keep": "uninfluential; physically powerless",
+  "merge": [
+   "powerless, physically",
+   "uninfluential"
+  ],
+  "keys": [
+   "afele__uninfluential_physically_powerle",
+   "afele__powerless_physically",
+   "afele__uninfluential"
+  ]
+ },
+ {
+  "awing": "akíbnə",
+  "keep": "high (of forehead)",
+  "merge": [
+   "forehead (high in appearance)"
+  ],
+  "keys": [
+   "akibne__high_of_forehead",
+   "akibne__forehead_high_in_appearance"
+  ]
+ },
+ {
+  "awing": "alêtələ",
+  "keep": "sharp and alert person (colloquial)",
+  "merge": [
+   "person, sharp and alert"
+  ],
+  "keys": [
+   "aletele__sharp_and_alert_person_colloquia",
+   "aletele__person_sharp_and_alert"
+  ]
+ },
+ {
+  "awing": "alêtələ",
+  "keep": "difficult task or job",
+  "merge": [
+   "task, difficult"
+  ],
+  "keys": [
+   "aletele__difficult_task_or_job",
+   "aletele__task_difficult"
+  ]
+ },
+ {
+  "awing": "alaŋə",
+  "keep": "chair; throne; high office",
+  "merge": [
+   "high office",
+   "throne"
+  ],
+  "keys": [
+   "alange__chair_throne_high_office",
+   "alange__high_office",
+   "alange__throne"
+  ]
+ },
+ {
+  "awing": "alaŋə",
+  "keep": "path",
+  "merge": [
+   "path; road"
+  ],
+  "keys": [
+   "alange__path",
+   "alange__path_road"
+  ]
+ },
+ {
+  "awing": "apa'ə",
+  "keep": "a flat covering (of door, window, hut etc.)",
+  "merge": [
+   "flat covering",
+   "flat covering of door, window, hut",
+   "flat covering of door, window"
+  ],
+  "keys": [
+   "apae__a_flat_covering_of_door_window_h",
+   "apae__flat_covering",
+   "apae__flat_covering_of_door_window_hut",
+   "apae__flat_covering_of_door_window"
+  ]
+ },
+ {
+  "awing": "asəglə",
+  "keep": "important, great, powerful, influential",
+  "merge": [
+   "important"
+  ],
+  "keys": [
+   "asegle__important_great_powerful_influen",
+   "asegle__important"
+  ]
+ },
+ {
+  "awing": "asəglə",
+  "keep": "thick, fleshy",
+  "merge": [
+   "thick"
+  ],
+  "keys": [
+   "asegle__thick_fleshy",
+   "asegle__thick"
+  ]
+ },
+ {
+  "awing": "káyé",
+  "keep": "little, small",
+  "merge": [
+   "little"
+  ],
+  "keys": [
+   "kaye__little_small",
+   "kaye__little"
+  ]
+ },
+ {
+  "awing": "mé asóolə",
+  "keep": "big hoe",
+  "merge": [
+   "big hoe; important"
+  ],
+  "keys": [
+   "measoole__big_hoe",
+   "measoole__big_hoe_important"
+  ]
+ },
+ {
+  "awing": "nkya'ə",
+  "keep": "light; electricity",
+  "merge": [
+   "electricity",
+   "light"
+  ],
+  "keys": [
+   "nkyae__light_electricity",
+   "nkyae__electricity",
+   "nkyae__light"
+  ]
+ },
+ {
+  "awing": "sagə",
+  "keep": "far; be long",
+  "merge": [
+   "far"
+  ],
+  "keys": [
+   "sage__far_be_long",
+   "sage__far"
+  ]
+ },
+ {
+  "awing": "tsənkeelə",
+  "keep": "round; globe shaped, spherical",
+  "merge": [
+   "globe shaped",
+   "round",
+   "spherical",
+   "globe shaped, spherical"
+  ],
+  "keys": [
+   "tsenkeele__round_globe_shaped_spherical",
+   "tsenkeele__globe_shaped",
+   "tsenkeele__round",
+   "tsenkeele__spherical",
+   "tsenkeele__globe_shaped_spherical"
+  ]
+ },
+ {
+  "awing": "a",
+  "keep": "he, she (personal pronoun)",
+  "merge": [
+   "the personal pronoun 'he'; the personal pronoun 'she'"
+  ],
+  "keys": [
+   "a__he_she_personal_pronoun",
+   "a__the_personal_pronoun_he_the_pers"
+  ]
+ },
+ {
+  "awing": "afa'ə",
+  "keep": "work",
+  "merge": [
+   "work (n)"
+  ],
+  "keys": [
+   "afae__work",
+   "afae__work_n"
+  ]
+ },
+ {
+  "awing": "afa'ə Əsê",
+  "keep": "religious ministry, work for God",
+  "merge": [
+   "religious ministry"
+  ],
+  "keys": [
+   "afaeese__religious_ministry_work_for_god",
+   "afaeese__religious_ministry"
+  ]
+ },
+ {
+  "awing": "afanə",
+  "keep": "terrible thing; taboo",
+  "merge": [
+   "taboo"
+  ],
+  "keys": [
+   "afane__terrible_thing_taboo",
+   "afane__taboo"
+  ]
+ },
+ {
+  "awing": "afəələ",
+  "keep": "water tube used for letting water into the bowels",
+  "merge": [
+   "water tube"
+  ],
+  "keys": [
+   "afeele__water_tube_used_for_letting_wate",
+   "afeele__water_tube"
+  ]
+ },
+ {
+  "awing": "afìə",
+  "keep": "resemblance, look very much alike",
+  "merge": [
+   "resemblance"
+  ],
+  "keys": [
+   "afie__resemblance_look_very_much_alike",
+   "afie__resemblance"
+  ]
+ },
+ {
+  "awing": "afo'ə",
+  "keep": "material gain or riches",
+  "merge": [
+   "riches, of material"
+  ],
+  "keys": [
+   "afoe__material_gain_or_riches",
+   "afoe__riches_of_material"
+  ]
+ },
+ {
+  "awing": "aghognə",
+  "keep": "shock, trembling; fear",
+  "merge": [
+   "shock"
+  ],
+  "keys": [
+   "aghogne__shock_trembling_fear",
+   "aghogne__shock"
+  ]
+ },
+ {
+  "awing": "aji'tə",
+  "keep": "frugality, selfishness",
+  "merge": [
+   "frugality",
+   "selfishness"
+  ],
+  "keys": [
+   "ajite__frugality_selfishness",
+   "ajite__frugality",
+   "ajite__selfishness"
+  ]
+ },
+ {
+  "awing": "ajuba",
+  "keep": "replica, carbon copy",
+  "merge": [
+   "replica"
+  ],
+  "keys": [
+   "ajuba__replica_carbon_copy",
+   "ajuba__replica"
+  ]
+ },
+ {
+  "awing": "ajúmə əzələ",
+  "keep": "stolen goods",
+  "merge": [
+   "goods, of stolen goods"
+  ],
+  "keys": [
+   "ajumeezele__stolen_goods",
+   "ajumeezele__goods_of_stolen_goods"
+  ]
+ },
+ {
+  "awing": "ajúmətsə'ə",
+  "keep": "handkerchief, piece of cloth",
+  "merge": [
+   "handkerchief"
+  ],
+  "keys": [
+   "ajumetsee__handkerchief_piece_of_cloth",
+   "ajumetsee__handkerchief"
+  ]
+ },
+ {
+  "awing": "ajwelə",
+  "keep": "influenza; cold (disease)",
+  "merge": [
+   "cold, of a disease",
+   "influenza"
+  ],
+  "keys": [
+   "ajwele__influenza_cold_disease",
+   "ajwele__cold_of_a_disease",
+   "ajwele__influenza"
+  ]
+ },
+ {
+  "awing": "ajwiŋə",
+  "keep": "link; something that links two things",
+  "merge": [
+   "link",
+   "something that links"
+  ],
+  "keys": [
+   "ajwinge__link_something_that_links_two_th",
+   "ajwinge__link",
+   "ajwinge__something_that_links"
+  ]
+ },
+ {
+  "awing": "akéenə",
+  "keep": "tiredness, fatigue",
+  "merge": [
+   "tiredness"
+  ],
+  "keys": [
+   "akeene__tiredness_fatigue",
+   "akeene__tiredness"
+  ]
+ },
+ {
+  "awing": "akəmə",
+  "keep": "piece, half (of liquids, objects etc.)",
+  "merge": [
+   "half"
+  ],
+  "keys": [
+   "akeme__piece_half_of_liquids_objects_et",
+   "akeme__half"
+  ]
+ },
+ {
+  "awing": "akəmə ajúmə",
+  "keep": "splinter, sliver",
+  "merge": [
+   "splinter, sliver, sub"
+  ],
+  "keys": [
+   "akemeajume__splinter_sliver",
+   "akemeajume__splinter_sliver_sub"
+  ]
+ },
+ {
+  "awing": "akəmtə",
+  "keep": "stage, phase; round; chapter (of a book)",
+  "merge": [
+   "chapter of a book"
+  ],
+  "keys": [
+   "akemte__stage_phase_round_chapter_of_a_b",
+   "akemte__chapter_of_a_book"
+  ]
+ },
+ {
+  "awing": "akəŋə",
+  "keep": "covering of door, cupboard, car; something that screens",
+  "merge": [
+   "something that screens"
+  ],
+  "keys": [
+   "akenge__covering_of_door_cupboard_car_so",
+   "akenge__something_that_screens"
+  ]
+ },
+ {
+  "awing": "akəpu'ə",
+  "keep": "fit; fainting fit",
+  "merge": [
+   "fit (n)",
+   "faint, fainting fit"
+  ],
+  "keys": [
+   "akepue__fit_fainting_fit",
+   "akepue__fit_n",
+   "akepue__faint_fainting_fit"
+  ]
+ },
+ {
+  "awing": "akoŋə",
+  "keep": "stem, stalk (of maize, millet etc.)",
+  "merge": [
+   "stalk (of maize, millet, etc.)",
+   "stem",
+   "stem, stalk of maize, millet",
+   "stem, stalk of maize"
+  ],
+  "keys": [
+   "akonge__stem_stalk_of_maize_millet_etc",
+   "akonge__stalk_of_maize_millet_etc",
+   "akonge__stem",
+   "akonge__stem_stalk_of_maize_millet",
+   "akonge__stem_stalk_of_maize"
+  ]
+ },
+ {
+  "awing": "akwa'lə",
+  "keep": "question; temptation; criticism; interview",
+  "merge": [
+   "criticism",
+   "interview",
+   "question",
+   "temptation",
+   "question, temptation, criticism"
+  ],
+  "keys": [
+   "akwale__question_temptation_criticism_in",
+   "akwale__criticism",
+   "akwale__interview",
+   "akwale__question",
+   "akwale__temptation",
+   "akwale__question_temptation_criticism"
+  ]
+ },
+ {
+  "awing": "akwaŋə",
+  "keep": "idea; thought; pensiveness (especially negative)",
+  "merge": [
+   "idea",
+   "thought"
+  ],
+  "keys": [
+   "akwange__idea_thought_pensiveness_especia",
+   "akwange__idea",
+   "akwange__thought"
+  ]
+ },
+ {
+  "awing": "akwaŋə",
+  "keep": "interest; concern",
+  "merge": [
+   "concern"
+  ],
+  "keys": [
+   "akwange__interest_concern",
+   "akwange__concern"
+  ]
+ },
+ {
+  "awing": "akwubə",
+  "keep": "crust, skin (of fruit)",
+  "merge": [
+   "crust",
+   "fruit",
+   "skin (of fruit)"
+  ],
+  "keys": [
+   "akwube__crust_skin_of_fruit",
+   "akwube__crust",
+   "akwube__fruit",
+   "akwube__skin_of_fruit"
+  ]
+ },
+ {
+  "awing": "akwúblə",
+  "keep": "equivalence; something to exchange or replace with; replacement",
+  "merge": [
+   "equivalence"
+  ],
+  "keys": [
+   "akwuble__equivalence_something_to_exchang",
+   "akwuble__equivalence"
+  ]
+ },
+ {
+  "awing": "akwu'ló",
+  "keep": "log",
+  "merge": [
+   "log, eg of wood"
+  ],
+  "keys": [
+   "akwulo__log",
+   "akwulo__log_eg_of_wood"
+  ]
+ },
+ {
+  "awing": "akyé",
+  "keep": "jungle dweller (wicked); men living in forest attacking passers-by for money",
+  "merge": [
+   "Jungle dweller"
+  ],
+  "keys": [
+   "akye__jungle_dweller_wicked_men_living",
+   "akye__jungle_dweller"
+  ]
+ },
+ {
+  "awing": "alá'əmátíə",
+  "keep": "name of a quarter in Awing",
+  "merge": [
+   "the name of a quarter in Mbɨ̌iwiŋə in Awing"
+  ],
+  "keys": [
+   "alaematie__name_of_a_quarter_in_awing",
+   "alaematie__the_name_of_a_quarter_in_mb_iwi"
+  ]
+ },
+ {
+  "awing": "aleemə",
+  "keep": "sticky substance",
+  "merge": [
+   "a sort of sticky substance"
+  ],
+  "keys": [
+   "aleeme__sticky_substance",
+   "aleeme__a_sort_of_sticky_substance"
+  ]
+ },
+ {
+  "awing": "aleŋkə",
+  "keep": "mark of identification; ritual scar",
+  "merge": [
+   "mark of identification",
+   "scar, of a ritual"
+  ],
+  "keys": [
+   "alengke__mark_of_identification_ritual_sc",
+   "alengke__mark_of_identification",
+   "alengke__scar_of_a_ritual"
+  ]
+ },
+ {
+  "awing": "ali' yîə",
+  "keep": "there (that place)",
+  "merge": [
+   "there (here actually meaning 'that place')"
+  ],
+  "keys": [
+   "aliyie__there_that_place",
+   "aliyie__there_here_actually_meaning_that"
+  ]
+ },
+ {
+  "awing": "ali'əsê",
+  "keep": "a place thought to host a god tree or cave",
+  "merge": [
+   "place, of a god, n"
+  ],
+  "keys": [
+   "aliese__a_place_thought_to_host_a_god_tr",
+   "aliese__place_of_a_god_n"
+  ]
+ },
+ {
+  "awing": "anuə",
+  "keep": "something; concern",
+  "merge": [
+   "concern",
+   "something",
+   "something, truth, idea, concern, worry"
+  ],
+  "keys": [
+   "anue__something_concern",
+   "anue__concern",
+   "anue__something",
+   "anue__something_truth_idea_concern_wor"
+  ]
+ },
+ {
+  "awing": "anuə nəfoonə",
+  "keep": "kingdom of",
+  "merge": [
+   "kingdom of, Kingdom of God"
+  ],
+  "keys": [
+   "anuenefoone__kingdom_of",
+   "anuenefoone__kingdom_of_kingdom_of_god"
+  ]
+ },
+ {
+  "awing": "ape'ə",
+  "keep": "load, burden, belongings",
+  "merge": [
+   "belongings",
+   "burden"
+  ],
+  "keys": [
+   "apee__load_burden_belongings",
+   "apee__belongings",
+   "apee__burden"
+  ]
+ },
+ {
+  "awing": "apélə",
+  "keep": "mad person, madness",
+  "merge": [
+   "mad person",
+   "madness"
+  ],
+  "keys": [
+   "apele__mad_person_madness",
+   "apele__mad_person",
+   "apele__madness"
+  ]
+ },
+ {
+  "awing": "apu'ə",
+  "keep": "remnant, remainder",
+  "merge": [
+   "remainder",
+   "remnant"
+  ],
+  "keys": [
+   "apue__remnant_remainder",
+   "apue__remainder",
+   "apue__remnant"
+  ]
+ },
+ {
+  "awing": "ashwadkə",
+  "keep": "exageration, giving of false value",
+  "merge": [
+   "exaggeration, giving of false value"
+  ],
+  "keys": [
+   "ashwadke__exageration_giving_of_false_valu",
+   "ashwadke__exaggeration_giving_of_false_val"
+  ]
+ },
+ {
+  "awing": "atálə",
+  "keep": "a courtyard in the palace where the fon sits with his subjects to debate issues",
+  "merge": [
+   "courtyard in the palace",
+   "courtyard in the palace where the fon sits with his"
+  ],
+  "keys": [
+   "atale__a_courtyard_in_the_palace_where",
+   "atale__courtyard_in_the_palace",
+   "atale__courtyard_in_the_palace_where_th"
+  ]
+ },
+ {
+  "awing": "atáŋkə mbəəmə",
+  "keep": "wrinkle (on skin); wrinkled skin",
+  "merge": [
+   "wrinkled skin"
+  ],
+  "keys": [
+   "atangkembeeme__wrinkle_on_skin_wrinkled_skin",
+   "atangkembeeme__wrinkled_skin"
+  ]
+ },
+ {
+  "awing": "atómtə",
+  "keep": "reason; justification",
+  "merge": [
+   "reason"
+  ],
+  "keys": [
+   "atomte__reason_justification",
+   "atomte__reason"
+  ]
+ },
+ {
+  "awing": "atséebə",
+  "keep": "language; word",
+  "merge": [
+   "language",
+   "word"
+  ],
+  "keys": [
+   "atseebe__language_word",
+   "atseebe__language",
+   "atseebe__word"
+  ]
+ },
+ {
+  "awing": "atséebánámú'á",
+  "keep": "parable; proverb",
+  "merge": [
+   "parable"
+  ],
+  "keys": [
+   "atseebanamua__parable_proverb",
+   "atseebanamua__parable"
+  ]
+ },
+ {
+  "awing": "atséebásê",
+  "keep": "gospel; word of God",
+  "merge": [
+   "word of God"
+  ],
+  "keys": [
+   "atseebase__gospel_word_of_god",
+   "atseebase__word_of_god"
+  ]
+ },
+ {
+  "awing": "azəŋə",
+  "keep": "argument, disunity",
+  "merge": [
+   "disunity"
+  ],
+  "keys": [
+   "azenge__argument_disunity",
+   "azenge__disunity"
+  ]
+ },
+ {
+  "awing": "əfó'ə",
+  "keep": "gutter, deep place or thing",
+  "merge": [
+   "deep place or thing",
+   "gutter",
+   "gutter, deep place"
+  ],
+  "keys": [
+   "efoe__gutter_deep_place_or_thing",
+   "efoe__deep_place_or_thing",
+   "efoe__gutter",
+   "efoe__gutter_deep_place"
+  ]
+ },
+ {
+  "awing": "əfó'ə",
+  "keep": "deep valley, often containing many trees, a palm bush and mostly a flowing stream",
+  "merge": [
+   "deep valley with palm bush"
+  ],
+  "keys": [
+   "efoe__deep_valley_often_containing_man",
+   "efoe__deep_valley_with_palm_bush"
+  ]
+ },
+ {
+  "awing": "əkəəbə",
+  "keep": "indian bamboo ropes",
+  "merge": [
+   "cain; indian bamboo ropes"
+  ],
+  "keys": [
+   "ekeebe__indian_bamboo_ropes",
+   "ekeebe__cain_indian_bamboo_ropes"
+  ]
+ },
+ {
+  "awing": "əsê",
+  "keep": "god; fetish (spirit)",
+  "merge": [
+   "fetish spirit"
+  ],
+  "keys": [
+   "ese__god_fetish_spirit",
+   "ese__fetish_spirit"
+  ]
+ },
+ {
+  "awing": "Əsê nəpóolə",
+  "keep": "God (the one who has created everything on earth); supreme being",
+  "merge": [
+   "God, the one who created everything on earth; supreme being"
+  ],
+  "keys": [
+   "esenepoole__god_the_one_who_has_created_ever",
+   "esenepoole__god_the_one_who_created_everythi"
+  ]
+ },
+ {
+  "awing": "fágəndi'ə",
+  "keep": "antidote, anti-poison",
+  "merge": [
+   "antidote",
+   "anti-poison"
+  ],
+  "keys": [
+   "fagendie__antidote_anti_poison",
+   "fagendie__antidote",
+   "fagendie__anti_poison"
+  ]
+ },
+ {
+  "awing": "Fəlénchə",
+  "keep": "French",
+  "merge": [
+   "French; people who live in Douala speak French"
+  ],
+  "keys": [
+   "felenche__french",
+   "felenche__french_people_who_live_in_douala"
+  ]
+ },
+ {
+  "awing": "fəŋ",
+  "keep": "sound (word) reinforcing an act of acceptance that is done without any thought or interest",
+  "merge": [
+   "sound or word reinforcing an act of acceptance"
+  ],
+  "keys": [
+   "feng__sound_word_reinforcing_an_act_of",
+   "feng__sound_or_word_reinforcing_an_act"
+  ]
+ },
+ {
+  "awing": "kəənə",
+  "keep": "whether, if",
+  "merge": [
+   "whether",
+   "whether, if; I do not know wether he will come"
+  ],
+  "keys": [
+   "keene__whether_if",
+   "keene__whether",
+   "keene__whether_if_i_do_not_know_wether"
+  ]
+ },
+ {
+  "awing": "kwá mbiə",
+  "keep": "lead; be first",
+  "merge": [
+   "first",
+   "lead"
+  ],
+  "keys": [
+   "kwambie__lead_be_first",
+   "kwambie__first",
+   "kwambie__lead"
+  ]
+ },
+ {
+  "awing": "mbi ndê",
+  "keep": "plaster; wall",
+  "merge": [
+   "wall"
+  ],
+  "keys": [
+   "mbinde__plaster_wall",
+   "mbinde__wall"
+  ]
+ },
+ {
+  "awing": "mbo'ə",
+  "keep": "circumcision (male)",
+  "merge": [
+   "circumcision"
+  ],
+  "keys": [
+   "mboe__circumcision_male",
+   "mboe__circumcision"
+  ]
+ },
+ {
+  "awing": "méd mánumə",
+  "keep": "west; sunset",
+  "merge": [
+   "sunset",
+   "west"
+  ],
+  "keys": [
+   "medmanume__west_sunset",
+   "medmanume__sunset",
+   "medmanume__west"
+  ]
+ },
+ {
+  "awing": "məfênə",
+  "keep": "giving; offering",
+  "merge": [
+   "giving"
+  ],
+  "keys": [
+   "mefene__giving_offering",
+   "mefene__giving"
+  ]
+ },
+ {
+  "awing": "ndadkándadka",
+  "keep": "continously, non-stop",
+  "merge": [
+   "non-stop"
+  ],
+  "keys": [
+   "ndadkandadka__continously_non_stop",
+   "ndadkandadka__non_stop"
+  ]
+ },
+ {
+  "awing": "ndzaŋə",
+  "keep": "color, kind, pattern",
+  "merge": [
+   "color",
+   "pattern"
+  ],
+  "keys": [
+   "ndzange__color_kind_pattern",
+   "ndzange__color",
+   "ndzange__pattern"
+  ]
+ },
+ {
+  "awing": "ndzəəmə",
+  "keep": "dream; vision (supernatural)",
+  "merge": [
+   "dream",
+   "vision"
+  ],
+  "keys": [
+   "ndzeeme__dream_vision_supernatural",
+   "ndzeeme__dream",
+   "ndzeeme__vision"
+  ]
+ },
+ {
+  "awing": "nəpíəmbéŋə",
+  "keep": "quiny; The fruit of a quiny tree is used as medicine",
+  "merge": [
+   "quiny"
+  ],
+  "keys": [
+   "nepiembenge__quiny_the_fruit_of_a_quiny_tree",
+   "nepiembenge__quiny"
+  ]
+ },
+ {
+  "awing": "nəsednə",
+  "keep": "bend, curve, corner",
+  "merge": [
+   "corner",
+   "curve"
+  ],
+  "keys": [
+   "nesedne__bend_curve_corner",
+   "nesedne__corner",
+   "nesedne__curve"
+  ]
+ },
+ {
+  "awing": "nəshugnə",
+  "keep": "camp, encampment",
+  "merge": [
+   "camp",
+   "encampment"
+  ],
+  "keys": [
+   "neshugne__camp_encampment",
+   "neshugne__camp",
+   "neshugne__encampment"
+  ]
+ },
+ {
+  "awing": "ngedtəpəŋə",
+  "keep": "sinner, evil doer",
+  "merge": [
+   "sinner"
+  ],
+  "keys": [
+   "ngedtepenge__sinner_evil_doer",
+   "ngedtepenge__sinner"
+  ]
+ },
+ {
+  "awing": "ngá'ə",
+  "keep": "hardship, distress",
+  "merge": [
+   "hardship"
+  ],
+  "keys": [
+   "ngae__hardship_distress",
+   "ngae__hardship"
+  ]
+ },
+ {
+  "awing": "ngoolə",
+  "keep": "swear, a statement that is considered as the truth, oath",
+  "merge": [
+   "oath",
+   "swear"
+  ],
+  "keys": [
+   "ngoole__swear_a_statement_that_is_consid",
+   "ngoole__oath",
+   "ngoole__swear"
+  ]
+ },
+ {
+  "awing": "ngwubə",
+  "keep": "shoe; hide of any animal",
+  "merge": [
+   "hide of any animal"
+  ],
+  "keys": [
+   "ngwube__shoe_hide_of_any_animal",
+   "ngwube__hide_of_any_animal"
+  ]
+ },
+ {
+  "awing": "nkaŋə",
+  "keep": "biblical verse",
+  "merge": [
+   "verse, especially biblical"
+  ],
+  "keys": [
+   "nkange__biblical_verse",
+   "nkange__verse_especially_biblical"
+  ]
+ },
+ {
+  "awing": "nkaŋə",
+  "keep": "traditional wedding ceremony",
+  "merge": [
+   "wedding ceremony, traditional"
+  ],
+  "keys": [
+   "nkange__traditional_wedding_ceremony",
+   "nkange__wedding_ceremony_traditional"
+  ]
+ },
+ {
+  "awing": "nkəənə",
+  "keep": "news, message",
+  "merge": [
+   "message",
+   "news"
+  ],
+  "keys": [
+   "nkeene__news_message",
+   "nkeene__message",
+   "nkeene__news"
+  ]
+ },
+ {
+  "awing": "nkyeetə",
+  "keep": "meeting, assembly",
+  "merge": [
+   "meeting"
+  ],
+  "keys": [
+   "nkyeete__meeting_assembly",
+   "nkyeete__meeting"
+  ]
+ },
+ {
+  "awing": "ntəmə",
+  "keep": "a skirt-like dress worn by men",
+  "merge": [
+   "skirt-like dress for men"
+  ],
+  "keys": [
+   "nteme__a_skirt_like_dress_worn_by_men",
+   "nteme__skirt_like_dress_for_men"
+  ]
+ },
+ {
+  "awing": "ntsentə",
+  "keep": "meeting, grouping",
+  "merge": [
+   "grouping",
+   "meeting"
+  ],
+  "keys": [
+   "ntsente__meeting_grouping",
+   "ntsente__grouping",
+   "ntsente__meeting"
+  ]
+ },
+ {
+  "awing": "pó' mbô",
+  "keep": "clap (hands), beg",
+  "merge": [
+   "clap (hands)"
+  ],
+  "keys": [
+   "pombo__clap_hands_beg",
+   "pombo__clap_hands"
+  ]
+ },
+ {
+  "awing": "pyádnə",
+  "keep": "really, truly; very well",
+  "merge": [
+   "really",
+   "truly",
+   "very well"
+  ],
+  "keys": [
+   "pyadne__really_truly_very_well",
+   "pyadne__really",
+   "pyadne__truly",
+   "pyadne__very_well"
+  ]
+ },
+ {
+  "awing": "pyádnə",
+  "keep": "take good care of, show love and concern",
+  "merge": [
+   "show love and concern",
+   "take good care of"
+  ],
+  "keys": [
+   "pyadne__take_good_care_of_show_love_and",
+   "pyadne__show_love_and_concern",
+   "pyadne__take_good_care_of"
+  ]
+ },
+ {
+  "awing": "sá ndedtə",
+  "keep": "peg out (of boundary)",
+  "merge": [
+   "mark out, peg out (of boundary)"
+  ],
+  "keys": [
+   "sandedte__peg_out_of_boundary",
+   "sandedte__mark_out_peg_out_of_boundary"
+  ]
+ },
+ {
+  "awing": "tə",
+  "keep": "\"us\", excluding other people; \"we\" excluding other people",
+  "merge": [
+   "\"us\", excluding other people"
+  ],
+  "keys": [
+   "te__us_excluding_other_people_we_exc",
+   "te__us_excluding_other_people"
+  ]
+ },
+ {
+  "awing": "túg ntáəmə",
+  "keep": "be courageous; be brave",
+  "merge": [
+   "courageous"
+  ],
+  "keys": [
+   "tugntaeme__be_courageous_be_brave",
+   "tugntaeme__courageous"
+  ]
+ },
+ {
+  "awing": "zá'ə",
+  "keep": "before (contrasted with afterwards)",
+  "merge": [
+   "before"
+  ],
+  "keys": [
+   "zae__before_contrasted_with_afterward",
+   "zae__before"
+  ]
+ },
+ {
+  "awing": "azoŋkə",
+  "keep": "second, second place",
+  "merge": [
+   "second"
+  ],
+  "keys": [
+   "azongke__second_second_place",
+   "azongke__second"
+  ]
+ },
+ {
+  "awing": "agheemə",
+  "keep": "sorcery, fortune telling, spiritism",
+  "merge": [
+   "sorcery"
+  ],
+  "keys": [
+   "agheeme__sorcery_fortune_telling_spiritis",
+   "agheeme__sorcery"
+  ]
+ },
+ {
+  "awing": "já'kə",
+  "keep": "initiate (into secret society such as kwifon)",
+  "merge": [
+   "initiate"
+  ],
+  "keys": [
+   "jake__initiate_into_secret_society_suc",
+   "jake__initiate"
+  ]
+ },
+ {
+  "awing": "já'kə",
+  "keep": "help somebody cross an elevated place (eg a child through the threshold)",
+  "merge": [
+   "help sb cross elevated place"
+  ],
+  "keys": [
+   "jake__help_somebody_cross_an_elevated",
+   "jake__help_sb_cross_elevated_place"
+  ]
+ },
+ {
+  "awing": "ngaŋnəkaŋə",
+  "keep": "sorcerer; magic practitioner",
+  "merge": [
+   "magic practitioner"
+  ],
+  "keys": [
+   "ngangnekange__sorcerer_magic_practitioner",
+   "ngangnekange__magic_practitioner"
+  ]
+ },
+ {
+  "awing": "á",
+  "keep": "at (preposition - point in time)",
+  "merge": [
+   "preposition 'at'",
+   "preposition 'at' used to indicate a point in time"
+  ],
+  "keys": [
+   "a__at_preposition_point_in_time",
+   "a__preposition_at",
+   "a__preposition_at_used_to_indicate"
+  ]
+ },
+ {
+  "awing": "á",
+  "keep": "to, in the direction of (preposition)",
+  "merge": [
+   "preposition 'to', meaning 'in the direction of' or fitting or being a part of"
+  ],
+  "keys": [
+   "a__to_in_the_direction_of_prepositi",
+   "a__preposition_to_meaning_in_the_di"
+  ]
+ },
+ {
+  "awing": "á",
+  "keep": "from, starting source (preposition)",
+  "merge": [
+   "preposition 'from', used to show a starting point or source"
+  ],
+  "keys": [
+   "a__from_starting_source_preposition",
+   "a__preposition_from_used_to_show_a"
+  ]
+ },
+ {
+  "awing": "á",
+  "keep": "it (impersonal/animal pronoun)",
+  "merge": [
+   "the impersonal or animal pronoun 'it'"
+  ],
+  "keys": [
+   "a__it_impersonal_animal_pronoun",
+   "a__the_impersonal_or_animal_pronoun"
+  ]
+ },
+ {
+  "awing": "akwáalə",
+  "keep": "donations; handouts; support",
+  "merge": [
+   "handouts"
+  ],
+  "keys": [
+   "akwaale__donations_handouts_support",
+   "akwaale__handouts"
+  ]
+ },
+ {
+  "awing": "akwe",
+  "keep": "response, answer",
+  "merge": [
+   "answer"
+  ],
+  "keys": [
+   "akwe__response_answer",
+   "akwe__answer"
+  ]
+ },
+ {
+  "awing": "akwê",
+  "keep": "terrible lie; lie (colloquial, pejorative)",
+  "merge": [
+   "terrible lie"
+  ],
+  "keys": [
+   "akwe__terrible_lie_lie_colloquial_pejo",
+   "akwe__terrible_lie"
+  ]
+ },
+ {
+  "awing": "ala'ə",
+  "keep": "illness that attacks the skin, itches and blackens the spot",
+  "merge": [
+   "illness, of the skin"
+  ],
+  "keys": [
+   "alae__illness_that_attacks_the_skin_it",
+   "alae__illness_of_the_skin"
+  ]
+ },
+ {
+  "awing": "féŋə",
+  "keep": "be cold; be wet",
+  "merge": [
+   "wet"
+  ],
+  "keys": [
+   "fenge__be_cold_be_wet",
+   "fenge__wet"
+  ]
+ },
+ {
+  "awing": "fyáamə",
+  "keep": "daub eg paint, liquid, soft substance etc on a surface",
+  "merge": [
+   "daub"
+  ],
+  "keys": [
+   "fyaame__daub_eg_paint_liquid_soft_substa",
+   "fyaame__daub"
+  ]
+ },
+ {
+  "awing": "gho",
+  "keep": "the singular pronoun 'you'",
+  "merge": [
+   "the singular pronoun 'you'; am telling you"
+  ],
+  "keys": [
+   "gho__the_singular_pronoun_you",
+   "gho__the_singular_pronoun_you_am_tell"
+  ]
+ },
+ {
+  "awing": "káŋtə",
+  "keep": "fry, of many things; fry, of little things",
+  "merge": [
+   "fry, of little things",
+   "fry, of many things",
+   "fry many things"
+  ],
+  "keys": [
+   "kangte__fry_of_many_things_fry_of_little",
+   "kangte__fry_of_little_things",
+   "kangte__fry_of_many_things",
+   "kangte__fry_many_things"
+  ]
+ },
+ {
+  "awing": "kóŋə",
+  "keep": "crawl",
+  "merge": [
+   "Crawl; slither, eg of snakes",
+   "slither, eg of snakes"
+  ],
+  "keys": [
+   "konge__crawl",
+   "konge__crawl_slither_eg_of_snakes",
+   "konge__slither_eg_of_snakes"
+  ]
+ },
+ {
+  "awing": "kóŋə",
+  "keep": "carried away by current",
+  "merge": [
+   "Cause to be carried away by water current"
+  ],
+  "keys": [
+   "konge__carried_away_by_current",
+   "konge__cause_to_be_carried_away_by_wate"
+  ]
+ },
+ {
+  "awing": "kónə",
+  "keep": "be carried away by water current",
+  "merge": [
+   "be carried away by water"
+  ],
+  "keys": [
+   "kone__be_carried_away_by_water_current",
+   "kone__be_carried_away_by_water"
+  ]
+ },
+ {
+  "awing": "koolə",
+  "keep": "shave, as with blade",
+  "merge": [
+   "shave"
+  ],
+  "keys": [
+   "koole__shave_as_with_blade",
+   "koole__shave"
+  ]
+ },
+ {
+  "awing": "kógə",
+  "keep": "scrub, rub or dash, usually accidentally, causing slight injury or pain",
+  "merge": [
+   "scrub, rub or dash"
+  ],
+  "keys": [
+   "koge__scrub_rub_or_dash_usually_accide",
+   "koge__scrub_rub_or_dash"
+  ]
+ },
+ {
+  "awing": "kwíŋə",
+  "keep": "1) grow up (mentally and physically), especially of human beings and to some extent animals",
+  "merge": [
+   "grow up"
+  ],
+  "keys": [
+   "kwinge__1_grow_up_mentally_and_physicall",
+   "kwinge__grow_up"
+  ]
+ },
+ {
+  "awing": "lə̂",
+  "keep": "be rotten",
+  "merge": [
+   "rotten"
+  ],
+  "keys": [
+   "le__be_rotten",
+   "le__rotten"
+  ]
+ },
+ {
+  "awing": "lə̂",
+  "keep": "that way, that direction",
+  "merge": [
+   "that direction",
+   "that way"
+  ],
+  "keys": [
+   "le__that_way_that_direction",
+   "le__that_direction",
+   "le__that_way"
+  ]
+ },
+ {
+  "awing": "lumə",
+  "keep": "be hot; be passionate",
+  "merge": [
+   "hot",
+   "passionate"
+  ],
+  "keys": [
+   "lume__be_hot_be_passionate",
+   "lume__hot",
+   "lume__passionate"
+  ]
+ },
+ {
+  "awing": "mbáŋə",
+  "keep": "large maggot-like insect that grows in rotting raffia palm",
+  "merge": [
+   "maggot-like insect in raffia palm"
+  ],
+  "keys": [
+   "mbange__large_maggot_like_insect_that_gr",
+   "mbange__maggot_like_insect_in_raffia_pal"
+  ]
+ },
+ {
+  "awing": "ndumə",
+  "keep": "top, on top",
+  "merge": [
+   "on top",
+   "top"
+  ],
+  "keys": [
+   "ndume__top_on_top",
+   "ndume__on_top",
+   "ndume__top"
+  ]
+ },
+ {
+  "awing": "nəpó'ə",
+  "keep": "playing stick",
+  "merge": [
+   "playing stick (used for hitting drums, xylophones, etc)"
+  ],
+  "keys": [
+   "nepoe__playing_stick",
+   "nepoe__playing_stick_used_for_hitting_d"
+  ]
+ },
+ {
+  "awing": "ngwaalə",
+  "keep": "kerosene lighter",
+  "merge": [
+   "lighter, kerosene"
+  ],
+  "keys": [
+   "ngwaale__kerosene_lighter",
+   "ngwaale__lighter_kerosene"
+  ]
+ },
+ {
+  "awing": "ngwaŋə",
+  "keep": "path for wild animals",
+  "merge": [
+   "path, for animals"
+  ],
+  "keys": [
+   "ngwange__path_for_wild_animals",
+   "ngwange__path_for_animals"
+  ]
+ },
+ {
+  "awing": "njíə",
+  "keep": "the manner of eating (the quality of food, where one eats etc)",
+  "merge": [
+   "manner of eating"
+  ],
+  "keys": [
+   "njie__the_manner_of_eating_the_quality",
+   "njie__manner_of_eating"
+  ]
+ },
+ {
+  "awing": "nkaŋ nkíə",
+  "keep": "river bank; sea shore",
+  "merge": [
+   "river bank, sea shore, beach"
+  ],
+  "keys": [
+   "nkangnkie__river_bank_sea_shore",
+   "nkangnkie__river_bank_sea_shore_beach"
+  ]
+ },
+ {
+  "awing": "pəənə",
+  "keep": "go back; return",
+  "merge": [
+   "go back"
+  ],
+  "keys": [
+   "peene__go_back_return",
+   "peene__go_back"
+  ]
+ },
+ {
+  "awing": "pîə",
+  "keep": "be ready to be served, of food",
+  "merge": [
+   "be ready, of food"
+  ],
+  "keys": [
+   "pie__be_ready_to_be_served_of_food",
+   "pie__be_ready_of_food"
+  ]
+ },
+ {
+  "awing": "sá'ə",
+  "keep": "gush out, of a spring; germinate",
+  "merge": [
+   "gush out, of a spring"
+  ],
+  "keys": [
+   "sae__gush_out_of_a_spring_germinate",
+   "sae__gush_out_of_a_spring"
+  ]
+ },
+ {
+  "awing": "sá'ə",
+  "keep": "announce publicly, particularly in the market square",
+  "merge": [
+   "announce publicly"
+  ],
+  "keys": [
+   "sae__announce_publicly_particularly_i",
+   "sae__announce_publicly"
+  ]
+ },
+ {
+  "awing": "tâ",
+  "keep": "five (See: tênə)",
+  "merge": [
+   "see tênə̌; five"
+  ],
+  "keys": [
+   "ta__five_see_ten",
+   "ta__see_ten_five"
+  ]
+ },
+ {
+  "awing": "tô",
+  "keep": "Toe or hit with the leg",
+  "merge": [
+   "toe"
+  ],
+  "keys": [
+   "to__toe_or_hit_with_the_leg",
+   "to__toe"
+  ]
+ },
+ {
+  "awing": "apéenə",
+  "keep": "flour, fufu corn",
+  "merge": [
+   "flour"
+  ],
+  "keys": [
+   "apeene__flour_fufu_corn",
+   "apeene__flour"
+  ]
+ },
+ {
+  "awing": "chwíŋtə",
+  "keep": "pour liquid into a container",
+  "merge": [
+   "pour, of liquid"
+  ],
+  "keys": [
+   "chwingte__pour_liquid_into_a_container",
+   "chwingte__pour_of_liquid"
+  ]
+ },
+ {
+  "awing": "jîə",
+  "keep": "inherit (eg a throne)",
+  "merge": [
+   "1) inherit (eg, a throne)"
+  ],
+  "keys": [
+   "jie__inherit_eg_a_throne",
+   "jie__1_inherit_eg_a_throne"
+  ]
+ },
+ {
+  "awing": "kí'tə",
+  "keep": "Obstruct many people, things or places",
+  "merge": [
+   "defend (Many people, things or places)"
+  ],
+  "keys": [
+   "kite__obstruct_many_people_things_or_p",
+   "kite__defend_many_people_things_or_pla"
+  ]
+ },
+ {
+  "awing": "ŋwu Əsê",
+  "keep": "priest; pastor",
+  "merge": [
+   "priest"
+  ],
+  "keys": [
+   "ngwuese__priest_pastor",
+   "ngwuese__priest"
+  ]
+ },
+ {
+  "awing": "ghelə",
+  "keep": "act",
+  "merge": [
+   "act, do; he has done something"
+  ],
+  "keys": [
+   "ghele__act",
+   "ghele__act_do_he_has_done_something"
+  ]
+ },
+ {
+  "awing": "ghedtə",
+  "keep": "act a little",
+  "merge": [
+   "do a little",
+   "act, do, make a little; he has done a little thing"
+  ],
+  "keys": [
+   "ghedte__act_a_little",
+   "ghedte__do_a_little",
+   "ghedte__act_do_make_a_little_he_has_done"
+  ]
+ },
+ {
+  "awing": "ka'ə",
+  "keep": "appear",
+  "merge": [
+   "appear, show a sign, threaten",
+   "appear, threaten"
+  ],
+  "keys": [
+   "kae__appear",
+   "kae__appear_show_a_sign_threaten",
+   "kae__appear_threaten"
+  ]
+ },
+ {
+  "awing": "fi'ə",
+  "keep": "attempt",
+  "merge": [
+   "try, attempt (used as a warning not to try a dangerous thing or test sb's patience)"
+  ],
+  "keys": [
+   "fie__attempt",
+   "fie__try_attempt_used_as_a_warning_no"
+  ]
+ },
+ {
+  "awing": "ngo'kə",
+  "keep": "reverence",
+  "merge": [
+   "reverence, praise"
+  ],
+  "keys": [
+   "ngoke__reverence",
+   "ngoke__reverence_praise"
+  ]
+ },
+ {
+  "awing": "alílsəmə",
+  "keep": "bat",
+  "merge": [
+   "fruit bat"
+  ],
+  "keys": [
+   "alilseme__bat",
+   "alilseme__fruit_bat"
+  ]
+ },
+ {
+  "awing": "pəŋə",
+  "keep": "before",
+  "merge": [
+   "before (contrasted with) ŋgyí magə afa'ə ma pəŋə ghə̌nə"
+  ],
+  "keys": [
+   "penge__before",
+   "penge__before_contrasted_with_gyi_mag_a"
+  ]
+ },
+ {
+  "awing": "atsenə",
+  "keep": "body",
+  "merge": [
+   "body part"
+  ],
+  "keys": [
+   "atsene__body",
+   "atsene__body_part"
+  ]
+ },
+ {
+  "awing": "ndedtə",
+  "keep": "boundary",
+  "merge": [
+   "mark out, peg out of boundary",
+   "mark out, peg out boundary"
+  ],
+  "keys": [
+   "ndedte__boundary",
+   "ndedte__mark_out_peg_out_of_boundary",
+   "ndedte__mark_out_peg_out_boundary"
+  ]
+ },
+ {
+  "awing": "mɔ́ mbyâŋnə",
+  "keep": "boy",
+  "merge": [
+   "little boy"
+  ],
+  "keys": [
+   "mombyangne__boy",
+   "mombyangne__little_boy"
+  ]
+ },
+ {
+  "awing": "kwumtə",
+  "keep": "caress",
+  "merge": [
+   "touch many times, bundle, caress"
+  ],
+  "keys": [
+   "kwumte__caress",
+   "kwumte__touch_many_times_bundle_caress"
+  ]
+ },
+ {
+  "awing": "kə̂mtə",
+  "keep": "Scratch",
+  "merge": [
+   "Scratch a little"
+  ],
+  "keys": [
+   "kemte__scratch",
+   "kemte__scratch_a_little"
+  ]
+ },
+ {
+  "awing": "ladkə",
+  "keep": "connect",
+  "merge": [
+   "continuously, non-stop; connect, link"
+  ],
+  "keys": [
+   "ladke__connect",
+   "ladke__continuously_non_stop_connect_li"
+  ]
+ },
+ {
+  "awing": "ghen nə mbiə",
+  "keep": "continue",
+  "merge": [
+   "continue; go ahead with your good work"
+  ],
+  "keys": [
+   "ghennembie__continue",
+   "ghennembie__continue_go_ahead_with_your_good"
+  ]
+ },
+ {
+  "awing": "ko'nə",
+  "keep": "correct",
+  "merge": [
+   "right, be correct",
+   "be right"
+  ],
+  "keys": [
+   "kone__correct",
+   "kone__right_be_correct",
+   "kone__be_right"
+  ]
+ },
+ {
+  "awing": "chiga neemə",
+  "keep": "cruel",
+  "merge": [
+   "cruel, poorly behaved"
+  ],
+  "keys": [
+   "chiganeeme__cruel",
+   "chiganeeme__cruel_poorly_behaved"
+  ]
+ },
+ {
+  "awing": "kyaŋə",
+  "keep": "cut a big slice",
+  "merge": [
+   "cut a big slice eg of flesh or meat"
+  ],
+  "keys": [
+   "kyange__cut_a_big_slice",
+   "kyange__cut_a_big_slice_eg_of_flesh_or_m"
+  ]
+ },
+ {
+  "awing": "kyaŋtə",
+  "keep": "cut big slices",
+  "merge": [
+   "cut big slices eg of flesh or meat"
+  ],
+  "keys": [
+   "kyangte__cut_big_slices",
+   "kyangte__cut_big_slices_eg_of_flesh_or_me"
+  ]
+ },
+ {
+  "awing": "ghabtə",
+  "keep": "divide",
+  "merge": [
+   "divide, separate"
+  ],
+  "keys": [
+   "ghabte__divide",
+   "ghabte__divide_separate"
+  ]
+ },
+ {
+  "awing": "gheebə",
+  "keep": "divide (tr)",
+  "merge": [
+   "divide, share (tr.)"
+  ],
+  "keys": [
+   "gheebe__divide_tr",
+   "gheebe__divide_share_tr"
+  ]
+ },
+ {
+  "awing": "tsoəbə",
+  "keep": "do imperfectly",
+  "merge": [
+   "imperfectly done"
+  ],
+  "keys": [
+   "tsoebe__do_imperfectly",
+   "tsoebe__imperfectly_done"
+  ]
+ },
+ {
+  "awing": "aghaŋə̌",
+  "keep": "edge of a hollow vessel",
+  "merge": [
+   "lip; edge of a hollow vessel"
+  ],
+  "keys": [
+   "aghange__edge_of_a_hollow_vessel",
+   "aghange__lip_edge_of_a_hollow_vessel"
+  ]
+ },
+ {
+  "awing": "wukə",
+  "keep": "fall",
+  "merge": [
+   "fall many times",
+   "fall many times; fall, of many people"
+  ],
+  "keys": [
+   "wuke__fall",
+   "wuke__fall_many_times",
+   "wuke__fall_many_times_fall_of_many_peo"
+  ]
+ },
+ {
+  "awing": "chwí əlena",
+  "keep": "give a name",
+  "merge": [
+   "name"
+  ],
+  "keys": [
+   "chwielena__give_a_name",
+   "chwielena__name"
+  ]
+ },
+ {
+  "awing": "atúə",
+  "keep": "hair",
+  "merge": [
+   "hair, worshipped periodically"
+  ],
+  "keys": [
+   "atue__hair",
+   "atue__hair_worshipped_periodically"
+  ]
+ },
+ {
+  "awing": "ghabkə",
+  "keep": "half done",
+  "merge": [
+   "half done on pose"
+  ],
+  "keys": [
+   "ghabke__half_done",
+   "ghabke__half_done_on_pose"
+  ]
+ },
+ {
+  "awing": "panə",
+  "keep": "ripen, become ripe, of many things",
+  "merge": [
+   "ripen, become ripe"
+  ],
+  "keys": [
+   "pane__ripen_become_ripe_of_many_things",
+   "pane__ripen_become_ripe"
+  ]
+ },
+ {
+  "awing": "akəŋnə",
+  "keep": "happiness",
+  "merge": [
+   "love, happiness, bliss of wedded couples",
+   "love, happiness"
+  ],
+  "keys": [
+   "akengne__happiness",
+   "akengne__love_happiness_bliss_of_wedded_c",
+   "akengne__love_happiness"
+  ]
+ },
+ {
+  "awing": "kəŋtə",
+  "keep": "happy",
+  "merge": [
+   "be happy"
+  ],
+  "keys": [
+   "kengte__happy",
+   "kengte__be_happy"
+  ]
+ },
+ {
+  "awing": "tagə",
+  "keep": "harvest, of honey",
+  "merge": [
+   "harvest, collect honey"
+  ],
+  "keys": [
+   "tage__harvest_of_honey",
+   "tage__harvest_collect_honey"
+  ]
+ },
+ {
+  "awing": "ghô'kə",
+  "keep": "honour, praise",
+  "merge": [
+   "praise"
+  ],
+  "keys": [
+   "ghoke__honour_praise",
+   "ghoke__praise"
+  ]
+ },
+ {
+  "awing": "tənə",
+  "keep": "hot",
+  "merge": [
+   "be hot"
+  ],
+  "keys": [
+   "tene__hot",
+   "tene__be_hot"
+  ]
+ },
+ {
+  "awing": "kweekə",
+  "keep": "Influence against",
+  "merge": [
+   "Influence a person or an animal against another"
+  ],
+  "keys": [
+   "kweeke__influence_against",
+   "kweeke__influence_a_person_or_an_animal"
+  ]
+ },
+ {
+  "awing": "ɔ́",
+  "keep": "it, thing refered to",
+  "merge": [
+   "they, things refered to"
+  ],
+  "keys": [
+   "o__it_thing_refered_to",
+   "o__they_things_refered_to"
+  ]
+ },
+ {
+  "awing": "túga akəŋnə",
+  "keep": "joyful",
+  "merge": [
+   "be happy with each other, be joyful with each other, love each other"
+  ],
+  "keys": [
+   "tugaakengne__joyful",
+   "tugaakengne__be_happy_with_each_other_be_joyf"
+  ]
+ },
+ {
+  "awing": "tsid ntsoolə",
+  "keep": "lie",
+  "merge": [
+   "tell a lie"
+  ],
+  "keys": [
+   "tsidntsoole__lie",
+   "tsidntsoole__tell_a_lie"
+  ]
+ },
+ {
+  "awing": "kyaalə",
+  "keep": "Lift uth soft or rotten with a hoe or spade",
+  "merge": [
+   "Lift uth soft or rotten"
+  ],
+  "keys": [
+   "kyaale__lift_uth_soft_or_rotten_with_a_h",
+   "kyaale__lift_uth_soft_or_rotten"
+  ]
+ },
+ {
+  "awing": "nâŋə",
+  "keep": "look at",
+  "merge": [
+   "look for"
+  ],
+  "keys": [
+   "nange__look_at",
+   "nange__look_for"
+  ]
+ },
+ {
+  "awing": "apúntéelə",
+  "keep": "Lord's Supper articles",
+  "merge": [
+   "Lords Supper article",
+   "Lords supper"
+  ],
+  "keys": [
+   "apunteele__lord_s_supper_articles",
+   "apunteele__lords_supper_article",
+   "apunteele__lords_supper"
+  ]
+ },
+ {
+  "awing": "ghagtə",
+  "keep": "make poorly, of furniture",
+  "merge": [
+   "make poorly"
+  ],
+  "keys": [
+   "ghagte__make_poorly_of_furniture",
+   "ghagte__make_poorly"
+  ]
+ },
+ {
+  "awing": "ghaŋkə",
+  "keep": "make somebody to stagger",
+  "merge": [
+   "stagger (tr)"
+  ],
+  "keys": [
+   "ghangke__make_somebody_to_stagger",
+   "ghangke__stagger_tr"
+  ]
+ },
+ {
+  "awing": "ndzə'ə",
+  "keep": "wedding ceremony, modern",
+  "merge": [
+   "wedding ceremony"
+  ],
+  "keys": [
+   "ndzee__wedding_ceremony_modern",
+   "ndzee__wedding_ceremony"
+  ]
+ },
+ {
+  "awing": "ngəmə",
+  "keep": "mother-in-law",
+  "merge": [
+   "mother-in-law to groom"
+  ],
+  "keys": [
+   "ngeme__mother_in_law",
+   "ngeme__mother_in_law_to_groom"
+  ]
+ },
+ {
+  "awing": "apábpéebə",
+  "keep": "multicoloured",
+  "merge": [
+   "multicoloured, spotted"
+  ],
+  "keys": [
+   "apabpeebe__multicoloured",
+   "apabpeebe__multicoloured_spotted"
+  ]
+ },
+ {
+  "awing": "ngwê mbéŋə",
+  "keep": "nanny goat",
+  "merge": [
+   "she-goat"
+  ],
+  "keys": [
+   "ngwembenge__nanny_goat",
+   "ngwembenge__she_goat"
+  ]
+ },
+ {
+  "awing": "ntsəb napu'ə",
+  "keep": "nineteen (19)",
+  "merge": [
+   "nineteen"
+  ],
+  "keys": [
+   "ntsebnapue__nineteen_19",
+   "ntsebnapue__nineteen"
+  ]
+ },
+ {
+  "awing": "akəfəŋantsoolə",
+  "keep": "obscene",
+  "merge": [
+   "obscene person"
+  ],
+  "keys": [
+   "akefengantsoole__obscene",
+   "akefengantsoole__obscene_person"
+  ]
+ },
+ {
+  "awing": "shwaalə",
+  "keep": "odd",
+  "merge": [
+   "be odd"
+  ],
+  "keys": [
+   "shwaale__odd",
+   "shwaale__be_odd"
+  ]
+ },
+ {
+  "awing": "kagə",
+  "keep": "peel, of raffia fruit",
+  "merge": [
+   "raffia fruit"
+  ],
+  "keys": [
+   "kage__peel_of_raffia_fruit",
+   "kage__raffia_fruit"
+  ]
+ },
+ {
+  "awing": "mbə̂kə",
+  "keep": "people of what",
+  "merge": [
+   "people of where"
+  ],
+  "keys": [
+   "mbeke__people_of_what",
+   "mbeke__people_of_where"
+  ]
+ },
+ {
+  "awing": "shí səntə",
+  "keep": "pepper (black)",
+  "merge": [
+   "green pepper, black pepper"
+  ],
+  "keys": [
+   "shisente__pepper_black",
+   "shisente__green_pepper_black_pepper"
+  ]
+ },
+ {
+  "awing": "alúmtə",
+  "keep": "plant, red and medicinal",
+  "merge": [
+   "a red medicinal plant"
+  ],
+  "keys": [
+   "alumte__plant_red_and_medicinal",
+   "alumte__a_red_medicinal_plant"
+  ]
+ },
+ {
+  "awing": "kwum afeemə",
+  "keep": "punish by brutal killing",
+  "merge": [
+   "punish by brutal killing, usually by driving a very big nail into the forehead"
+  ],
+  "keys": [
+   "kwumafeeme__punish_by_brutal_killing",
+   "kwumafeeme__punish_by_brutal_killing_usually"
+  ]
+ },
+ {
+  "awing": "napləmbéŋə",
+  "keep": "quiny",
+  "merge": [
+   "quiny tree"
+  ],
+  "keys": [
+   "naplembenge__quiny",
+   "naplembenge__quiny_tree"
+  ]
+ },
+ {
+  "awing": "ndə̌",
+  "keep": "race, of running contest",
+  "merge": [
+   "running"
+  ],
+  "keys": [
+   "nde__race_of_running_contest",
+   "nde__running"
+  ]
+ },
+ {
+  "awing": "pookə",
+  "keep": "say goodbye",
+  "merge": [
+   "say goodbye, take leave of"
+  ],
+  "keys": [
+   "pooke__say_goodbye",
+   "pooke__say_goodbye_take_leave_of"
+  ]
+ },
+ {
+  "awing": "tsəgə",
+  "keep": "be expensive",
+  "merge": [
+   "be expensive, be sour, be wicked"
+  ],
+  "keys": [
+   "tsege__be_expensive",
+   "tsege__be_expensive_be_sour_be_wicked"
+  ]
+ },
+ {
+  "awing": "akye'ə",
+  "keep": "sign",
+  "merge": [
+   "A small sign or indication (usually of sth bigger to come)"
+  ],
+  "keys": [
+   "akyee__sign",
+   "akyee__a_small_sign_or_indication_usual"
+  ]
+ },
+ {
+  "awing": "pəbnə",
+  "keep": "sit (on bear ground)",
+  "merge": [
+   "squat, sit (on bear ground)"
+  ],
+  "keys": [
+   "pebne__sit_on_bear_ground",
+   "pebne__squat_sit_on_bear_ground"
+  ]
+ },
+ {
+  "awing": "chagə",
+  "keep": "smash or step on something",
+  "merge": [
+   "colloquial smash or step on something"
+  ],
+  "keys": [
+   "chage__smash_or_step_on_something",
+   "chage__colloquial_smash_or_step_on_some"
+  ]
+ },
+ {
+  "awing": "tashunə",
+  "keep": "so much",
+  "merge": [
+   "too much"
+  ],
+  "keys": [
+   "tashune__so_much",
+   "tashune__too_much"
+  ]
+ },
+ {
+  "awing": "ngaŋnakaŋə",
+  "keep": "sorcerer",
+  "merge": [
+   "sorcerer, magic practitioner"
+  ],
+  "keys": [
+   "ngangnakange__sorcerer",
+   "ngangnakange__sorcerer_magic_practitioner"
+  ]
+ },
+ {
+  "awing": "nkamə",
+  "keep": "sub-chief",
+  "merge": [
+   "title of sub-chief"
+  ],
+  "keys": [
+   "nkame__sub_chief",
+   "nkame__title_of_sub_chief"
+  ]
+ },
+ {
+  "awing": "tśəndzəmə",
+  "keep": "supporter",
+  "merge": [
+   "supporter with a limited role"
+  ],
+  "keys": [
+   "tsendzeme__supporter",
+   "tsendzeme__supporter_with_a_limited_role"
+  ]
+ },
+ {
+  "awing": "aŋga'ə",
+  "keep": "tree, sort of",
+  "merge": [
+   "sort of tree like a fig, having large leaves"
+  ],
+  "keys": [
+   "anggae__tree_sort_of",
+   "anggae__sort_of_tree_like_a_fig_having_l"
+  ]
+ },
+ {
+  "awing": "ataŋamóonə",
+  "keep": "a disease that makes babies to grow malnutrition",
+  "merge": [
+   "a disease that makes babies grow pale"
+  ],
+  "keys": [
+   "atangamoone__a_disease_that_makes_babies_to_g",
+   "atangamoone__a_disease_that_makes_babies_grow"
+  ]
+ },
+ {
+  "awing": "ajú yə pə́ nə̌",
+  "keep": "wickerwork, basket for drying wet pepper",
+  "merge": [
+   "wickerwork"
+  ],
+  "keys": [
+   "ajuyepene__wickerwork_basket_for_drying_wet",
+   "ajuyepene__wickerwork"
+  ]
+ },
+ {
+  "awing": "ajúmə nakwə̌'a",
+  "keep": "play instrument, toy",
+  "merge": [
+   "play instrument"
+  ],
+  "keys": [
+   "ajumenakwea__play_instrument_toy",
+   "ajumenakwea__play_instrument"
+  ]
+ },
+ {
+  "awing": "akwálkə̌",
+  "keep": "inflammables, something that keeps fire burning",
+  "merge": [
+   "inflammables"
+  ],
+  "keys": [
+   "akwalke__inflammables_something_that_keep",
+   "akwalke__inflammables"
+  ]
+ },
+ {
+  "awing": "akwaŋə yə̌ ashí'nə̌",
+  "keep": "confidence, good thoughts",
+  "merge": [
+   "confidence"
+  ],
+  "keys": [
+   "akwangeyeashine__confidence_good_thoughts",
+   "akwangeyeashine__confidence"
+  ]
+ },
+ {
+  "awing": "alá'ə pəgwiŋə",
+  "keep": "spirit world, world of the gods",
+  "merge": [
+   "spirit world"
+  ],
+  "keys": [
+   "alaepegwinge__spirit_world_world_of_the_gods",
+   "alaepegwinge__spirit_world"
+  ]
+ },
+ {
+  "awing": "alá'skalə̌",
+  "keep": "world of the dead, Europe or America",
+  "merge": [
+   "world of the dead"
+  ],
+  "keys": [
+   "alaskale__world_of_the_dead_europe_or_amer",
+   "alaskale__world_of_the_dead"
+  ]
+ },
+ {
+  "awing": "alaŋmakálə",
+  "keep": "motorable road, paved road",
+  "merge": [
+   "motorable road"
+  ],
+  "keys": [
+   "alangmakale__motorable_road_paved_road",
+   "alangmakale__motorable_road"
+  ]
+ },
+ {
+  "awing": "alaŋnkyíə",
+  "keep": "channel, channels used in some places for sea transport",
+  "merge": [
+   "channel"
+  ],
+  "keys": [
+   "alangnkyie__channel_channels_used_in_some_pl",
+   "alangnkyie__channel"
+  ]
+ },
+ {
+  "awing": "alíləməə",
+  "keep": "bat, fruit bat",
+  "merge": [
+   "bat"
+  ],
+  "keys": [
+   "alilemee__bat_fruit_bat",
+   "alilemee__bat"
+  ]
+ },
+ {
+  "awing": "alə'tə̌",
+  "keep": "curse, disability, handicap",
+  "merge": [
+   "curse, disability"
+  ],
+  "keys": [
+   "alete__curse_disability_handicap",
+   "alete__curse_disability"
+  ]
+ },
+ {
+  "awing": "amə'ə̌",
+  "keep": "gift, especially to a customer to encourage him",
+  "merge": [
+   "gift, especially to encourage customer"
+  ],
+  "keys": [
+   "amee__gift_especially_to_a_customer_to",
+   "amee__gift_especially_to_encourage_cus"
+  ]
+ },
+ {
+  "awing": "apanə̌",
+  "keep": "an open bamboo cupboard attached to the wall of the house used for putting kitchen utensils",
+  "merge": [
+   "an open bamboo cupboard"
+  ],
+  "keys": [
+   "apane__an_open_bamboo_cupboard_attached",
+   "apane__an_open_bamboo_cupboard"
+  ]
+ },
+ {
+  "awing": "atúəsə̌",
+  "keep": "bag containing a dead close relations belongings",
+  "merge": [
+   "bag containing dead close relations belongings"
+  ],
+  "keys": [
+   "atuese__bag_containing_a_dead_close_rela",
+   "atuese__bag_containing_dead_close_relati"
+  ]
+ },
+ {
+  "awing": "chí nə əlíma",
+  "keep": "have many blood relations who are caring",
+  "merge": [
+   "have many blood relations"
+  ],
+  "keys": [
+   "chineelima__have_many_blood_relations_who_ar",
+   "chineelima__have_many_blood_relations"
+  ]
+ },
+ {
+  "awing": "chí nə móonə",
+  "keep": "be pregnant, be with child",
+  "merge": [
+   "be pregnant"
+  ],
+  "keys": [
+   "chinemoone__be_pregnant_be_with_child",
+   "chinemoone__be_pregnant"
+  ]
+ },
+ {
+  "awing": "chí nə napamə",
+  "keep": "be pregnant, be with child",
+  "merge": [
+   "be pregnant"
+  ],
+  "keys": [
+   "chinenapame__be_pregnant_be_with_child",
+   "chinenapame__be_pregnant"
+  ]
+ },
+ {
+  "awing": "chí nə ngə'ə",
+  "keep": "be in difficulty, live in hardship",
+  "merge": [
+   "be in difficulty"
+  ],
+  "keys": [
+   "chinengee__be_in_difficulty_live_in_hardshi",
+   "chinengee__be_in_difficulty"
+  ]
+ },
+ {
+  "awing": "chí'kə",
+  "keep": "stay of many people or many places, inhabit many places",
+  "merge": [
+   "stay of many people"
+  ],
+  "keys": [
+   "chike__stay_of_many_people_or_many_plac",
+   "chike__stay_of_many_people"
+  ]
+ },
+ {
+  "awing": "chwítə ngəgə",
+  "keep": "cooperate, share ideas",
+  "merge": [
+   "cooperate"
+  ],
+  "keys": [
+   "chwitengege__cooperate_share_ideas",
+   "chwitengege__cooperate"
+  ]
+ },
+ {
+  "awing": "əsá'mónumə",
+  "keep": "east",
+  "merge": [
+   "east; sunrise"
+  ],
+  "keys": [
+   "esamonume__east",
+   "esamonume__east_sunrise"
+  ]
+ },
+ {
+  "awing": "fíə",
+  "keep": "be resemble",
+  "merge": [
+   "resemble; every child mostly resembles the mother"
+  ],
+  "keys": [
+   "fie__be_resemble",
+   "fie__resemble_every_child_mostly_rese"
+  ]
+ },
+ {
+  "awing": "gəlumáŋə",
+  "keep": "a sort of coffee branch usually cut and thrown for soaking all the water",
+  "merge": [
+   "coffee branch"
+  ],
+  "keys": [
+   "gelumange__a_sort_of_coffee_branch_usually",
+   "gelumange__coffee_branch"
+  ]
+ },
+ {
+  "awing": "káneedə",
+  "keep": "women dance group based in Tata Alotas compound",
+  "merge": [
+   "women dance group"
+  ],
+  "keys": [
+   "kaneede__women_dance_group_based_in_tata",
+   "kaneede__women_dance_group"
+  ]
+ },
+ {
+  "awing": "kwüo akalə",
+  "keep": "dress smartly, dress in nice fitting attires",
+  "merge": [
+   "dress smartly"
+  ],
+  "keys": [
+   "kwuoakale__dress_smartly_dress_in_nice_fitt",
+   "kwuoakale__dress_smartly"
+  ]
+ },
+ {
+  "awing": "kyantə",
+  "keep": "Do a little cleaning eg of mess",
+  "merge": [
+   "Do a little cleaning"
+  ],
+  "keys": [
+   "kyante__do_a_little_cleaning_eg_of_mess",
+   "kyante__do_a_little_cleaning"
+  ]
+ },
+ {
+  "awing": "mbé",
+  "keep": "a name used only for the fon or village chief",
+  "merge": [
+   "name used only for fon or village chief"
+  ],
+  "keys": [
+   "mbe__a_name_used_only_for_the_fon_or",
+   "mbe__name_used_only_for_fon_or_villag"
+  ]
+ },
+ {
+  "awing": "mbam ngasənə",
+  "keep": "grain of corn, maize",
+  "merge": [
+   "grain of corn"
+  ],
+  "keys": [
+   "mbamngasene__grain_of_corn_maize",
+   "mbamngasene__grain_of_corn"
+  ]
+ },
+ {
+  "awing": "mbəəma akoolə",
+  "keep": "footprint of man or animal",
+  "merge": [
+   "footprint"
+  ],
+  "keys": [
+   "mbeemaakoole__footprint_of_man_or_animal",
+   "mbeemaakoole__footprint"
+  ]
+ },
+ {
+  "awing": "nchwíə",
+  "keep": "the fourth day of the week",
+  "merge": [
+   "fourth day of the week"
+  ],
+  "keys": [
+   "nchwie__the_fourth_day_of_the_week",
+   "nchwie__fourth_day_of_the_week"
+  ]
+ },
+ {
+  "awing": "nəŋyínə",
+  "keep": "journey, movement, travel",
+  "merge": [
+   "journey, movement"
+  ],
+  "keys": [
+   "nengyine__journey_movement_travel",
+   "nengyine__journey_movement"
+  ]
+ },
+ {
+  "awing": "naŋ",
+  "keep": "step on, stamp on feet",
+  "merge": [
+   "step on feet"
+  ],
+  "keys": [
+   "nang__step_on_stamp_on_feet",
+   "nang__step_on_feet"
+  ]
+ },
+ {
+  "awing": "nganafüə",
+  "keep": "medicine man, traditional healer",
+  "merge": [
+   "medicine man"
+  ],
+  "keys": [
+   "nganafue__medicine_man_traditional_healer",
+   "nganafue__medicine_man"
+  ]
+ },
+ {
+  "awing": "ngaŋmaŋéemə",
+  "keep": "fortune, fortune teller",
+  "merge": [
+   "fortune teller"
+  ],
+  "keys": [
+   "ngangmangeeme__fortune_fortune_teller",
+   "ngangmangeeme__fortune_teller"
+  ]
+ },
+ {
+  "awing": "ní'ə",
+  "keep": "earache, used eg, a sort of pointed weed that pierces farmers feet",
+  "merge": [
+   "earache"
+  ],
+  "keys": [
+   "nie__earache_used_eg_a_sort_of_pointe",
+   "nie__earache"
+  ]
+ },
+ {
+  "awing": "njubtə",
+  "keep": "njubt — dry corn",
+  "merge": [
+   "dry corn"
+  ],
+  "keys": [
+   "njubte__njubt_dry_corn",
+   "njubte__dry_corn"
+  ]
+ },
+ {
+  "awing": "nwí'a",
+  "keep": "use plant of seeds too close to each other",
+  "merge": [
+   "use plant seeds too close to each other"
+  ],
+  "keys": [
+   "nwia__use_plant_of_seeds_too_close_to",
+   "nwia__use_plant_seeds_too_close_to_eac"
+  ]
+ },
+ {
+  "awing": "sa'ə moŋyə̌",
+  "keep": "marry by taking the fiancee by trickery or by physical force",
+  "merge": [
+   "marry by physical force"
+  ],
+  "keys": [
+   "saemongye__marry_by_taking_the_fiancee_by_t",
+   "saemongye__marry_by_physical_force"
+  ]
+ },
+ {
+  "awing": "ta'ə",
+  "keep": "search, especially through piles of things",
+  "merge": [
+   "search piles of things"
+  ],
+  "keys": [
+   "tae__search_especially_through_piles",
+   "tae__search_piles_of_things"
+  ]
+ },
+ {
+  "awing": "pánkə",
+  "keep": "something that accompanies a bigger one",
+  "merge": [
+   "something accompanying a bigger one"
+  ],
+  "keys": [
+   "panke__something_that_accompanies_a_big",
+   "panke__something_accompanying_a_bigger"
+  ]
+ },
+ {
+  "awing": "pó'spa'ə",
+  "keep": "abstain, avoid, stay away from",
+  "merge": [
+   "abstain, avoid"
+  ],
+  "keys": [
+   "pospae__abstain_avoid_stay_away_from",
+   "pospae__abstain_avoid"
+  ]
+ },
+ {
+  "awing": "tsəgchweŋə",
+  "keep": "something very sour eg fruit",
+  "merge": [
+   "very sour fruit"
+  ],
+  "keys": [
+   "tsegchwenge__something_very_sour_eg_fruit",
+   "tsegchwenge__very_sour_fruit"
+  ]
+ },
+ {
+  "awing": "tsə'ə",
+  "keep": "extract, of milk from a cow or goat",
+  "merge": [
+   "extract milk"
+  ],
+  "keys": [
+   "tsee__extract_of_milk_from_a_cow_or_go",
+   "tsee__extract_milk"
+  ]
+ },
+ {
+  "awing": "tsə'átə̌",
+  "keep": "very sweet",
+  "merge": [
+   "very sweet palm wine"
+  ],
+  "keys": [
+   "tseate__very_sweet",
+   "tseate__very_sweet_palm_wine"
+  ]
+ },
+ {
+  "awing": "tsəə",
+  "keep": "taste poorly, not flavoured",
+  "merge": [
+   "taste poorly"
+  ],
+  "keys": [
+   "tsee__taste_poorly_not_flavoured",
+   "tsee__taste_poorly"
+  ]
+ },
+ {
+  "awing": "achí ya ashí'na",
+  "keep": "Good sign, happening when blood twitches somebodys eye in a particular spot",
+  "merge": [
+   "good sign blood twitches eye"
+  ],
+  "keys": [
+   "achiyaashina__good_sign_happening_when_blood_t",
+   "achiyaashina__good_sign_blood_twitches_eye"
+  ]
+ }
+]
