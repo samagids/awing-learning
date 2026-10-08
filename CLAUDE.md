@@ -13329,3 +13329,113 @@ apostrophes in strings and multi-line constructors. A check that cries wolf
 gets ignored. It is a fast pre-filter, not a replacement for analyze.
 
 Confirmed clean: `No issues found! (ran in 429.3s)`.
+
+---
+
+## Session 66v — the real cause of the white-people cards (2026-10-08)
+
+Dr. Sama reported white people in the generated images on five separate
+occasions, and every fix before this one was downstream of the cause.
+
+**The cause.** `get_ai_prompt("shave", "things", "koole")` returned:
+
+```
+a shave, shave clearly visible in the picture, simple flat cartoon
+clipart, bright colors, single object centered, plain white background
+```
+
+The prompt named **nobody**. SDXL was asked to draw an action with no
+actor, so it invented one, and its default actor is a white man. Likewise
+`a she` -> a blonde white woman, `a partnership work` -> an office of
+white workers. A negative prompt cannot delete a person the prompt's
+MEANING requires, and raising the guidance scale only makes the model
+follow a prompt that says nothing more faithfully.
+
+**Why it survived three rounds of fixes.** `get_ai_prompt()` already had a
+last-resort branch that gives a verb an actor. It was guarded by
+`_is_verbish()`, which tested the gloss head against a 90-word
+hand-written whitelist containing none of *shave, borrow, curse, clear,
+announce*. The branch was dead code in practice. The `category` field
+could not rescue it either: **5,392 of 8,227 rows carry
+`category: 'things'` because that is what the dictionary import defaulted
+to.** `shave` is `things`. `she` is `things`. `fwoolâ / shave, as with a
+blade` is `numbers`.
+
+**RULE: the `category` field in `awing_vocabulary.dart` is an import
+default, not a classification. Never branch on it to decide whether a
+gloss is an action, a person or an object. Decide from the gloss.**
+
+**RULE: before claiming an image problem is fixed, print the prompt.**
+`python3 -c "...; print(m.get_ai_prompt(gloss, cat, awing_key))"` runs on
+CPU in a second — torch is imported lazily, so the module loads without a
+GPU. Five minutes of this would have saved five rounds. Run it from
+`scripts/` so `awing_key` imports.
+
+**What changed (commit `5c9c03d2`).**
+
+- `_VERB_HEADS`: +361 unambiguous verbs, taken from the gloss heads
+  actually present in the data. Lemmas that are *also* concrete nouns
+  (work, trap, dress, fight, cross, curse, trip) are deliberately left
+  out — routing one of those to the person path would put a person on a
+  card whose subject is an object, which is exactly the mistake the
+  retired `_SKIN_CLAUSE` made. A verb-only lemma cannot be an object, so
+  the direction is safe.
+- `_HUMAN_NOUN_RE`: +80 role nouns. Found by listing every gloss whose
+  head is a person role and checking whether `africanize_people()` fired;
+  15 did not, so `a priest` and `a slaughterer` reached SDXL with no tone.
+- Pronouns: **`she` had no override at all.** he/she/her/him/you/i and the
+  compound dictionary forms now name a Cameroonian child with very dark
+  brown skin and a bold arrow pointing at them. The old `he` override drew
+  a woven hat on a stool, which is not what the word means.
+- `body` category: a verb filed under `body` was wrapped in a close-up
+  frame — `close-up of the shave one's self improperly of a Cameroonian
+  teenage girl`. Verbs now take the action path.
+- `_ADULT_ENTRY`: +clitoris, testicle, scrotum, semen, sperm, concubine,
+  anus. `close-up of the clitoris of a Cameroonian young boy` is what the
+  `body` path would otherwise have built.
+
+**Measured over the 4,600 active rows, old module vs new, in-process:**
+
+| | before | after |
+|---|---|---|
+| verb glosses whose prompt names nobody | 397 | 150 |
+| final prompts depicting a person with no African tone | 18 | 4 |
+| prompts changed | — | 375 |
+| …of which gained a named dark-skinned person | — | 286 |
+
+The 150 remaining are overrides that deliberately show an object or an
+animal (a bird's wing, a sunset, a glass breaking). The 4 remaining are
+`divorce` (two rings, no people) and `who/whom` (a faceless silhouette).
+
+**The reshoot is 375 images, not 5,117.** `scripts/_reshoot_66v.txt` holds
+exactly the keys whose prompt changed:
+
+```powershell
+.\venv\Scripts\python.exe scripts\generate_images.py generate `
+    --keys-file scripts\_reshoot_66v.txt --format webp --quality 82
+```
+
+## Session 66v — human emoji in the app UI
+
+The avatar picker ("New Profile -> Choose your avatar") offered 12 faces,
+nine of them bare emoji with no skin-tone modifier. A bare `U+1F9D2`
+renders yellow on most platforms and light-skinned on a few. Dr. Sama's
+rule — *any human in any image must be black or brown* — applies to the
+Flutter UI, not only to SDXL output.
+
+- All nine human avatars now carry `U+1F3FE` or `U+1F3FF`; the tiger is
+  unchanged. `U+1F46A` (family) has no skin-tone form in Unicode and is
+  left as is.
+- `darkenHumanAvatar()` in `lib/models/user_model.dart` appends `U+1F3FE`
+  to a toneable human base that carries no modifier. It is applied in
+  `fromJson`, not in a startup migration, so local load, cloud restore and
+  an older device's write coming back down are all covered — the same
+  reasoning as the PIN-hash upgrade. Profiles that already stored a bare
+  emoji are upgraded on read.
+- Six more untoned human emoji elsewhere in `lib/` (record picker, student
+  exam, expert quiz, stories) were toned in the same pass.
+
+**RULE: a new human emoji written anywhere in `lib/` carries a `U+1F3FE`
+or `U+1F3FF` modifier.** The sweep that found these is in the session log;
+it walks `lib/**/*.dart` and flags any emoji in the human-capable
+codepoint ranges that is not followed by a modifier.
