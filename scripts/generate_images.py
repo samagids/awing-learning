@@ -1684,6 +1684,125 @@ PROMPT_OVERRIDES = {
         "cartoon green plantains for preparing achu"),
     "metal used for cleaning an achu": (
         "a cartoon flat metal scraper for cleaning a wooden achu mortar"),
+
+    # ----------------------------------------------------------------
+    # ABSTRACT WORDS GET A SCENE, NOT THE WORD
+    # ----------------------------------------------------------------
+    # Dr. Sama, 2026-10-08: "celibate suppose to be a single girl or boy.
+    # seems you are overthinking this. generate pictures based on english
+    # meaning!!!!!"
+    #
+    # He is right and I had it wrong twice over. I reported 244 entries as
+    # having "no visual referent" and proposed leaving them blank. But an
+    # illustrator does not draw the NOUN, they draw the SITUATION the noun
+    # names, and every one of these has one: celibate is a single person
+    # standing alone with no ring; frugality is a coin going into a savings
+    # tin; literacy is a child reading aloud and pointing at the words. The
+    # abstraction was in my prompt, not in the meaning.
+    #
+    # 88 keys below, covering the whole no_visual_referent list. Written as
+    # scenes with concrete objects and actions - a thing a child can look at
+    # and name. No skin or nationality is stated here on purpose:
+    # africanize_people() inserts "Cameroonian <skin>" before the first
+    # human noun at build time, so these stay one sentence about what is
+    # happening.
+    #
+    # Two written deliberately rather than literally. "deformity" is a bent
+    # tree, not a person - a children's vocabulary card is not the place to
+    # caricature a body. "disability" is a smiling child in a wheelchair
+    # playing with friends, because the respectful depiction is the accurate
+    # one.
+
+    "a sort of sticky substance": "a blob of sticky golden tree sap stretching between two fingers",
+    "bad reputation": "a boy walking past while other children whisper behind their hands and point",
+    "be celibate": "a single unmarried young man standing alone and smiling, no wedding ring, a married couple holding hands in the distance",
+    "be impatient": "a child tapping one foot and frowning up at a wall clock",
+    "be myopic": "a child squinting at a book held very close to the face",
+    "bitterness": "a child pulling a sour puckered face after biting a bitter green leaf",
+    "build a fence": "a man planting wooden posts to build a fence around a compound",
+    "bury": "a mound of fresh earth with flowers laid on it and a carved wooden marker",
+    "carelessness": "a child dropping a clay bowl, water spilling across the floor",
+    "celibacy": "a single unmarried young woman standing alone and smiling, no wedding ring, a married couple holding hands in the distance",
+    "celibate": "a single unmarried young person standing alone and smiling, no wedding ring, a married couple holding hands in the distance",
+    "cleanliness": "a child washing hands with white soap bubbles at a basin",
+    "confidence": "a child standing tall with hands on hips and a big proud smile",
+    "corruption": "a hand passing banknotes under a table to another waiting hand",
+    "criticism": "a child frowning and pointing at another child's drawing",
+    "deformity": "a bent and twisted tree trunk growing crookedly",
+    "destiny": "a winding path leading away to one bright shining star",
+    "disability": "a smiling child in a wheelchair playing ball with friends",
+    "distruction that springs from jealousy, envy": "a child angrily knocking over another child's tower of blocks",
+    "disturbance": "a noisy classroom with children shouting and loose papers flying",
+    "disunity": "a thick rope snapped in two, children pulling away in opposite directions",
+    "electricity": "a yellow lightning bolt beside a glowing light bulb",
+    "emotional instability": "a face split down the middle, laughing on one side and crying on the other",
+    "emptiness": "an empty clay pot lying on its side with nothing inside it",
+    "equivalence": "a balance scale with equal weights on both pans, perfectly level",
+    "express sadness": "a child crying with tears running down both cheeks",
+    "false witness": "a child pointing accusingly at another child, nose growing long",
+    "fastidiousness": "a child carefully lining up pencils in a perfectly straight row",
+    "foolish excitement": "a child jumping and waving both arms wildly with a silly open-mouthed grin",
+    "foolishness": "a child wearing a cooking pot on the head like a hat",
+    "form a relationship": "two children shaking hands and smiling at each other",
+    "friendship": "two children with their arms around each other's shoulders, laughing",
+    "frugality": "a child carefully dropping a coin into a savings tin, counting the few coins left",
+    "good friendship": "two children happily sharing one plate of food between them",
+    "good reputation": "a child receiving a prize while the other children clap",
+    "goodness": "a child helping an elder carry a heavy basket on a village path",
+    "greed": "a child hugging a huge pile of food with bulging cheeks while others have empty plates",
+    "greediness": "a child hugging a huge pile of food with bulging cheeks",
+    "harvest with impunity": "a child picking fruit from another person's tree, glancing over the shoulder",
+    "holiness": "a white dove flying in a glowing halo of golden light",
+    "humility": "a child bowing with lowered head and hands folded in front",
+    "impatience": "a child tapping one foot and frowning up at a wall clock",
+    "importance": "a gold trophy standing on a tall pedestal",
+    "inheritance": "an elder handing a carved wooden stool to a young man",
+    "integrity": "a child returning a found purse of coins to its owner",
+    "intelligence": "a child solving a puzzle with a glowing light bulb above the head",
+    "knowledge": "a child reading an open book with a glowing light bulb above the head",
+    "lack patience": "a child tapping one foot and frowning up at a wall clock",
+    "lance": "a long wooden spear with a pointed metal tip",
+    "laziness": "a child asleep in a hammock while a hoe lies unused in the grass",
+    "lie": "a child speaking with a long growing wooden nose",
+    "literacy": "a child reading a book aloud and pointing at the words on the page",
+    "luck": "a four leaf clover with golden sparkles around it",
+    "lumbago": "an elder holding the lower back with a pained face",
+    "man of integrity": "a respected elder standing tall with a kind steady face, villagers greeting him",
+    "myopic": "a child squinting at a book held very close to the face",
+    "nobleship": "a village chief wearing a beaded crown and an embroidered toghu robe",
+    "partnership": "two traders shaking hands across a market stall",
+    "pass through": "a child walking through an open doorway in a wall",
+    "pensiveness": "a child sitting with chin resting on one hand, thinking quietly",
+    "personality": "a child's smiling face surrounded by a small star, a heart and a music note",
+    "pity": "a child kneeling to comfort a smaller crying child",
+    "place of worship": "a small village church with a cross on the roof and an open door",
+    "recover from illness": "a child sitting up in bed smiling, holding a bowl of hot soup",
+    "redness": "a bright red hibiscus flower",
+    "reduce in intensity": "a bright fire burning down to a few small glowing embers",
+    "relationship": "two children standing side by side holding hands",
+    "remembrance": "a child looking at an old photograph and smiling softly",
+    "repentance": "a child kneeling with head bowed and hands pressed together",
+    "reputation": "a child walking tall while villagers smile and nod at him",
+    "resemblance": "two children with the very same face standing side by side",
+    "residence": "a family house with a wooden door, a yard and a cooking fire",
+    "reverence": "a child bowing low before a seated village elder",
+    "righteousness": "a child standing straight beside a balance scale that is perfectly level",
+    "sadness": "a child with tears on both cheeks and a downturned mouth",
+    "sanctuary": "the quiet inside of a village church with a cross and lit candles",
+    "satedness": "a child leaning back with a round full tummy beside an empty plate",
+    "selfishness": "a child turning away hugging all the food while another child holds an empty bowl",
+    "shortsighted": "a child squinting at a book held very close to the face",
+    "shortsightedness": "a child squinting at a book held very close to the face",
+    "sorrow": "a child crying with the head buried in both hands",
+    "start a relationship": "two children meeting and shaking hands with big smiles",
+    "sticky substance": "a blob of sticky golden tree sap stretching between two fingers",
+    "stupidity": "a child trying to carry water in a woven basket, the water pouring out",
+    "tiredness": "a child yawning widely and rubbing sleepy eyes",
+    "togetherness": "a circle of children holding hands together in a ring",
+    "unity": "a circle of children holding hands together in a ring",
+    "wakefulness": "a child wide awake with big open eyes at night beside a small oil lamp",
+    "working relationship": "two farmers hoeing one field side by side",
+    "worship": "a group of people singing with raised hands inside a village church",
 }
 
 
@@ -2363,6 +2482,10 @@ def concrete_gloss_for_prompt(english_word: str, max_words: int = 12) -> str:
 
     raw = _POS_PREFIX.sub("", raw).strip()
     raw = _INTERJ_PREFIX.sub("", raw).strip()
+    # Dictionary shorthand. "wake sb from sleep" asks SDXL to draw an "sb".
+    raw = re.sub(r"\bsb\b", "somebody", raw)
+    raw = re.sub(r"\bsth\b", "something", raw)
+    raw = re.sub(r"\bs\.?o\.?\b", "somebody", raw)
     # A cross-reference points at another entry; it does not describe this one.
     raw = _XREF_SPLIT.split(raw, maxsplit=1)[0].strip()
     # Keep what is inside the parentheses - in this dictionary it is almost
@@ -2600,6 +2723,31 @@ def _is_abstract_noun(phrase: str) -> bool:
     """"friendship", "hunger" - a noun, not an adjective."""
     w = phrase.split()[0].lower().strip(",.;:") if phrase.split() else ""
     return bool(w) and (w in _MASS_NOUNS or bool(_MASS_SUFFIX.search(w)))
+
+
+def _focus_phrase(phrase: str, max_words: int = 5) -> str:
+    """The head noun phrase of the English meaning, for the presence clause.
+
+    Dr. Sama: "simply use the english meaning and ensure the object is in the
+    picture." Naming the subject once at the front is not enough - SDXL
+    drops it when the rest of the prompt is longer, which is how "a piece of
+    rough iron used for making knives" came back as a workshop with no iron
+    in it. Saying it again, at the end, as a requirement, is the one lever
+    that works at 4 steps.
+    """
+    toks = []
+    for t in phrase.split():
+        c = t.strip(",.;:'\"")
+        if not c:
+            continue
+        if not toks and c.lower() in _FUNCTION_WORDS:
+            continue                    # skip a leading article
+        toks.append(c)
+        if len(toks) >= max_words:
+            break
+    while toks and toks[-1].lower() in _FUNCTION_WORDS:
+        toks.pop()
+    return " ".join(toks)
 
 
 def _has_own_subject(phrase: str) -> bool:
@@ -2914,7 +3062,23 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
     }
     base = category_prompts.get(category, subject_np)
     body = africanize_people(base, seed_key)
-    return f"{body}, {_style_suffix_for(body, category)}"
+
+    # Say the thing again, as a requirement. This is the general rule Dr.
+    # Sama asked for - "simply use the english meaning and ensure the object
+    # is in the picture" - and it applies to every word that reaches this
+    # path, not to a hand-picked list. Skipped when the phrase is already
+    # the whole body (nothing to reinforce) so a one-word gloss does not
+    # become "a hump, hump clearly visible".
+    focus = _focus_phrase(clean_word)
+    suffix = _style_suffix_for(body, category)
+    if (focus and focus.lower() != body.strip().lower()
+            and len(body.split()) >= 2
+            # The clause sits at the end, so it is the first thing CLIP drops
+            # when a prompt runs past 77 tokens. Past this length it would be
+            # truncated anyway, and the tokens are better spent on the body.
+            and len(body.split()) + len(suffix.split()) + 6 <= 48):
+        body = f"{body}, {focus} clearly visible in the picture"
+    return f"{body}, {suffix}"
 
 
 # ============================================================
