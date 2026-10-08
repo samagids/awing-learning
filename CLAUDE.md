@@ -13126,3 +13126,88 @@ Hump (66u): theorised from category names instead of printing a prompt.
 Celibate (66u): declared 244 words undrawable instead of asking what the
 word looks like. **Each time Dr. Sama was right and the evidence was one
 command away.** Try the thing before explaining why it cannot work.
+
+### 66u part three — the duplicate merge, and a standing rule for ties
+
+Dr. Sama, on the regenerated sample: *"it do reveal still lots of
+duplicates"*. 41 files were about twelve words.
+
+Cause: **one image key is one GLOSS, not one word**
+(`audioKey + '__' + englishSlug`), and the import made a row per gloss.
+`tsentə` — one dictionary entry — became eight cards.
+
+**Vocabulary went 8,227 → 7,727 image keys. 663 rows commented out, none
+deleted.**
+
+#### Tier A — identical spelling (`fb1a98cc`, 487 rows)
+
+Three guards, and the middle one matters most:
+
+1. **Identical Awing spelling**, tone marks included.
+2. **Same head word required.** Content-set containment alone merged
+   `stomach` into `stomachache, upset stomach` — a body part swallowed by
+   an illness. This guard costs 227 merges. Under-merging is the right
+   error here.
+3. **Keeper is the shortest gloss.** The head word is identical by
+   construction, so longer variants carry dictionary commentary, not a
+   second meaning: *"pig, considered to be a very dirty and gluttonous
+   animal"* → `pig`. Better card, and a one-noun gloss draws a better
+   picture. Unmerged senses keep their cards — `fang` survives beside
+   `tooth`.
+
+#### Tier B — spelling differs by tone (`0b78f465`, 176 rows)
+
+**STANDING RULE, from Dr. Sama 2026-10-08:** *"if two or more words or
+sentences have the same english meaning ... but are from different sources,
+keep the word that come from the dictionary. Or even if the word is not in
+the dictionary then use your discretion and keep one that you can verify
+the source."*
+
+This is decidable from the file, because the trailing comment records
+provenance. Of 8,123 live rows:
+
+| source | rows |
+|---|---|
+| cites a dictionary page (`v2:page_NNN`, `dict PDF pNNN`, `dict Mistral pNNN`, `dict says`) | 1,973 |
+| session audit, no page | 94 |
+| nothing | 6,056 |
+
+228 groups share base letters + meaning and differ only in tone. 152 have
+exactly one row at the top source rank → decided. **76 left alone**
+(`contributions/tier_b_tied_on_source.json`): either several rows each cite
+a dictionary page but disagree on tone (`mbi'ə` L159 vs `mbí'ə` L14536,
+both "kidney" — two passes, or two words), or no row has any source at all
+(`zé'ə` / `zê'ə`, "learn").
+
+**Do NOT extend this to rows whose BASE LETTERS differ**, even when the
+English matches. `amiə` and `ndě` both gloss "neck", and the file says at
+the row itself *"dict synonym per Dr. Sama — both amiə and ndě mean neck"*.
+Those are synonyms. Collapsing them deletes Awing rather than deduplicating
+it.
+
+#### What the safety check caught
+
+Progress (`progress_service.dart:287`), study sets
+(`study_set_editor_screen.dart:989`) and audio all key off the **Awing
+spelling**, and `audio_key()` strips tone, so `alu'ə` and `alú'ə` both
+resolve to `alue` — no recording lost. But:
+
+**`cmd_prune` did not honour `contributions/contributed_images.json`**, and
+`apply_contributions.py` installs one contributor's photo under **every**
+gloss of a spelling. So `prune --yes` after this merge would have deleted a
+native speaker's photos to reclaim a few hundred KB. Fixed — prune now
+filters protected keys and reports the count. **Never run prune without
+checking that filter is still there.**
+
+Also: `build_and_run.sh` never rebuilt `assets/image_manifest.json`, which
+is what `hasImageSync()` reads to decide whether a word has a picture.
+`.bat` always did. Same omission class as the missing `--format webp`.
+
+#### Open
+
+- **136 keeper rows sit in the wrong category** (`atûə` "head" in
+  `numbers`, `ngwáŋə` "salt" in `things`) —
+  `contributions/category_mismatches.json`. Recategorising changes which
+  lesson a word appears in, so it is not deduplication and was not applied.
+- 76 undecided Tier B groups.
+- ~500 orphan image files; `prune` is the broom, and it is now safe.
