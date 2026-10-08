@@ -3904,6 +3904,13 @@ _NEGATIVE_COMMON = (
     # kids."
     "nude, naked, nudity, topless, bare chest, bare breasts, underwear, "
     "lingerie, undressed, exposed body, suggestive, sexual, "
+    # Found while reviewing the pack: ajwigotapenge "bad company" came back
+    # as a man holding a pistol, and nothing in that prompt asked for one
+    # ("a smiling man with one hand held behind his back hiding a stone").
+    # A diffusion model adds props the prompt never mentioned, so the ones
+    # that must never appear are named here rather than hoped against.
+    "gun, pistol, rifle, weapon, knife held as a weapon, blood, violence, "
+    "cigarette, alcohol bottle, "
     "caucasian, white person, white man, white woman, white child, "
     "pale skin, light skin, fair skin, tan skin, peach skin, olive skin, "
     "light brown skin, beige skin, european features, "
