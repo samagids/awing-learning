@@ -13211,3 +13211,89 @@ is what `hasImageSync()` reads to decide whether a word has a picture.
   lesson a word appears in, so it is not deduplication and was not applied.
 - 76 undecided Tier B groups.
 - ~500 orphan image files; `prune` is the broom, and it is now safe.
+
+### 66u part four — the dedup rule, and why detection kept failing
+
+Final state of a long day. Vocabulary **8,227 image keys -> 5,445**,
+sentences **616 -> 591**, cards sharing a picture **3,387 -> 1,347**.
+
+#### The dedup rule, as Dr. Sama stated it
+
+> "if two words or sentences have the same english meaning and the word
+> look similar in spelling, keep just one... keep the word that come from
+> the dictionary. Or even if the word is not in the dictionary then use
+> your discretion and keep one that you can verify the source."
+
+Implemented in `scripts/merge_similar_spellings.py` (dry-runs by default,
+`--apply` to write). **Run it to convergence** — the clustering is single
+pass, so collapsing one group exposes another: 2,284 → 253 → 21 → 3 → 1 → 0.
+
+Keeper order: cited dictionary page → Dr. Sama directly → session audit →
+unsourced; then the more-established spelling; then a **correctly spelled**
+gloss; then the shorter one.
+
+I got this wrong four times, and every failure was the same shape — a
+filter that was too narrow somewhere I had not looked:
+
+| what I checked | what it missed |
+|---|---|
+| glosses identical after normalising | `'trap (usually made of iron...)'` vs `'trap, made of metal or iron'` |
+| spellings must DIFFER | `sá'ə` 'announce publicly' vs `sá'ə` 'announce publicly, particularly...' |
+| `AwingWord` rows only | every `AwingSentence` — multi-line, and in `sentences_screen.dart` |
+| bucket by first two consonants | `tsənkeelə`/`ntsənkeelə̌`, `məŋwédnúə`/`magwédnuə` |
+| strip parentheticals before comparing | `'god; fetish (spirit)'` vs `'fetish spirit'` |
+
+**Still 1,299 cards legitimately share a picture** — different Awing words
+with one English gloss (five "calabash", seven "clean", fifteen "dance
+group"). Those need a distinguishing gloss from Dr. Sama, not a rule.
+`contributions/still_shared.json` holds the 48 that are still arguable.
+
+#### Skin: stop detecting, just always say it
+
+Three rounds of widening `_HUMAN_NOUN_RE` — runner, tailor, crier, then
+hands — and he found the next miss each time. **A rule that fails OPEN on
+a word I forgot is the wrong rule.** `_SKIN_CLAUSE` is now on every single
+prompt. The reason it was ever conditional (`"a cartoon emptiness, any
+people shown are Black African..."` drew a Black African) is handled by
+`_NEGATIVE_OBJECT`, which names person/people/child/face/crowd and is live
+at guidance 1.5.
+
+Two more that only showed up by **opening the files and looking**:
+
+- `"a cartoon dark brown skinned hand"` still came back **tan**. One
+  adjective does not survive 4 steps. Body parts now name the tone twice.
+- `"announce publicly"` never reached its override: `_safe_first_word()`
+  refuses the head word when a trailing token is a content word (right for
+  "sweet potato"), and "publicly" is an adverb. Any `-ly` word over four
+  letters now counts as manner.
+- The negative banned **pale** skin; both failures were **tan** and
+  **peach**.
+
+`scripts/check_skin_tones.py` exists but **does not work well enough to
+gate on** — the RGB skin rule matches sand and clay, so a camel scores 70%
+"skin" while a genuinely white image scores 2% light. Rough triage only.
+**The check that worked was staging the images and looking at them.** Do
+that.
+
+#### Open
+
+1. Full regeneration + `audit_images.py`, then `prune` (now safe — it
+   honours the contributed-image list).
+2. **1,184 gloss words still have one content word and no override**
+   (`contributions/thin_prompts.json`). 170 written so far; batch 1 is the
+   pattern to follow — the SITUATION the word names, concrete objects, no
+   negations, no contrast subjects.
+3. 136 rows in the wrong category (`category_mismatches.json`).
+4. 1,299 cards sharing a gloss — needs Dr. Sama.
+5. 12 commits unpushed; `device_bash` has no GitHub credential.
+
+#### The lesson of the whole day, four times over
+
+Firebase rules: read the console timeline, not the rule text. Hump:
+theorised from category names without printing a prompt. Celibate:
+declared 244 words undrawable without asking what the word looks like.
+Skin: asserted the prompts were fixed without opening a single image.
+
+**Print the artefact. Open the file. Look at the picture.** Every time I
+skipped that, Dr. Sama found the answer first, and the evidence was one
+command away.
