@@ -34,7 +34,7 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // v1.24.5 — App Review rejected 1.24.4 under
+                    // v1.24.4 build 149 — App Review rejected build 148 under
                     // Guideline 4 (Sign in with Apple), reporting that the
                     // app "required users to provide their name after using
                     // Sign in with Apple". The reviewer had signed in with
@@ -49,6 +49,10 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
                     // matched against the Apple account. The account's name
                     // and email come from Authentication Services and are
                     // never asked for again.
+                    //
+                    // A profile also belongs to the LOGIN, not to the
+                    // handset: one parent account, one profile per child,
+                    // restored onto any device that signs in with it.
                     //
                     // Nothing about the flow changed; the words did. Say on
                     // the dialog itself whose name this is and what it is
