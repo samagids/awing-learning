@@ -311,9 +311,14 @@ _HUMAN_REF_RE = re.compile(
 # Already carries a skin descriptor (PEOPLE_STYLE itself, or an override we
 # hand-wrote). Keeps the function idempotent, which matters because the
 # category prompts already start with PEOPLE_STYLE.
+# "Cameroonian" is NOT a skin tone and must not count as one. It used to be
+# in this list, so any override that said "a Cameroonian boy" satisfied the
+# test, africanize_people() skipped the insertion, and the prompt went to
+# SDXL naming a nationality and no colour at all. That is how a tan hand got
+# onto the `finger` card after three rounds of strengthening the wording.
 _SKIN_DESCRIBED_RE = re.compile(
     r"(?:dark|deep|rich|warm)\s+(?:brown\s+)?skin"
-    r"|dark[- ]skinned|Black African|Cameroonian",
+    r"|dark[- ]skinned|Black African",
     re.I,
 )
 
@@ -601,12 +606,12 @@ PROMPT_OVERRIDES = {
     # matter what africanize_people() prepends.
     "cheek": "a cartoon child with round full cheeks",
     "chin": "a cartoon face pointing at chin",
-    "elbow": "a cartoon arm bent at the elbow",
-    "finger": "a cartoon hand with one finger pointing up",
+    "elbow": "a boy holding up his bent arm, pointing at his elbow",
+    "finger": "a boy holding up one hand with the index finger raised",
     "jaw": "a cartoon dinosaur with a big jaw",
     "forehead": "a cartoon child thinking with hand on forehead",
     "rib": "a cartoon rib bones",
-    "palm": "a cartoon open palm hand",
+    "palm": "a girl holding up one open hand, palm facing the viewer",
     "throat": "a cartoon child singing loudly",
     "skin": "a cartoon child with smooth dark brown skin smiling",
     "waist": "a Cameroonian woman in a full-length wrapper dress, a wide cloth belt tied at the waist",
@@ -727,7 +732,7 @@ PROMPT_OVERRIDES = {
     "run": "a cartoon child running fast",
     "jump": "a cartoon child jumping with joy",
     "dance": "a cartoon child dancing to music",
-    "swim": "a Cameroonian boy in a full swimming costume swimming in a river, water up to his shoulders",
+    "swim": "a boy in a full swimming costume swimming in a river, water up to his shoulders",
     "climb": "a cartoon child climbing a tree",
     "fall": "a cartoon leaf falling from a tree",
     "fight": "two cartoon kids play-wrestling and laughing",
@@ -890,7 +895,7 @@ PROMPT_OVERRIDES = {
     "two": "cartoon number 2 with two bananas",
     "three": "cartoon number 3 with three stars",
     "four": "cartoon number 4 with four flowers",
-    "five": "cartoon number 5 with five fingers",
+    "five": "a child holding up one hand with all five fingers spread",
     "six": "cartoon number 6 with six butterflies",
     "seven": "cartoon number 7 with seven birds",
     "eight": "cartoon number 8 with eight balls",
@@ -953,7 +958,7 @@ PROMPT_OVERRIDES = {
 
     # Pronouns & question words
     "he/she": "a cartoon boy and girl standing side by side waving",
-    "you (singular)": "a cartoon finger pointing at the viewer friendly",
+    "you (singular)": "a child pointing straight at the viewer, friendly smile",
     "and": "a cartoon plus sign connecting two happy friends",
 
     # Body parts (additional)
@@ -966,8 +971,8 @@ PROMPT_OVERRIDES = {
     "nape of neck": "a cartoon showing the back of a childs head and neck",
     "palate": "a cartoon open mouth showing the roof of the mouth",
     "fist": "a cartoon raised fist bump",
-    "knuckle, joint": "a cartoon hand making a fist showing knuckles",
-    "joint": "a cartoon knee joint bending",
+    "knuckle, joint": "a boy holding up a closed fist, knuckles facing the viewer",
+    "joint": "a boy bending his knee, hands resting on it",
     "lung": "a cartoon pair of happy pink lungs breathing",
     "lungs, especially of animals": "a cartoon pair of lungs with air bubbles",
     "kidney": "a cartoon friendly kidney organ with a smile",
@@ -979,25 +984,24 @@ PROMPT_OVERRIDES = {
     "vein. 2) root": "a cartoon tree with visible roots",
     "womb": "a cartoon stork carrying a baby bundle",
     "bile, gall": "a cartoon green gallbladder organ",
-    "flesh, of living person": "a cartoon strong arm flexing muscle",
-
+    "flesh, of living person": "a man flexing his upper arm muscle",
     # Medical & health
     "hernia": "a cartoon doctor examining a patient",
-    "pus": "a cartoon small bandage on a scraped knee",
+    "pus": "a child with a small bandage on a scraped knee",
     "mucus": "a cartoon child with a runny nose and tissue",
     "nasal mucus": "a cartoon child blowing nose into tissue",
     "cough": "a cartoon child coughing into elbow",
     "sneeze": "a cartoon child sneezing with tissue",
     "illness": "a cartoon child in bed feeling unwell",
-    "illness, of the skin": "a cartoon arm with red spots and itching",
-    "exzema": "a cartoon arm with red itchy patches",
+    "illness, of the skin": "a child showing a forearm with red spots",
+    "exzema": "a child showing a forearm with red itchy patches",
     "conjunctivitis": "a cartoon eye that looks red and irritated",
-    "swelling": "a cartoon swollen finger with ice pack",
+    "swelling": "a child holding out one hand with a swollen finger, ice pack on it",
     "rheumatism": "a cartoon elderly person rubbing sore knee",
     "whooping cough": "a cartoon child coughing hard",
     "ringworm": "a cartoon circular red rash on skin",
-    "scar": "a cartoon arm with a small healed scar",
-    "bruise": "a cartoon knee with a purple bruise mark",
+    "scar": "a boy showing a small healed scar on his forearm",
+    "bruise": "a girl pointing at a purple bruise on her knee",
     "hiccough": "a cartoon child hiccupping with surprise",
     "frontal headache": "a cartoon child holding forehead in pain",
     "side pain": "a cartoon child holding their side",
@@ -1036,7 +1040,7 @@ PROMPT_OVERRIDES = {
     "palm tree": "a cartoon tropical palm tree",
     "palm fruit": "a cartoon bunch of red palm fruits",
     "palm branch": "a cartoon green palm leaf branch",
-    "palm (of hand)": "a cartoon open palm of a hand",
+    "palm (of hand)": "a girl holding up one open hand, palm facing the viewer",
     "palm oil": "a cartoon bottle of red palm oil",
     "dance group": "cartoon children in colorful costumes dancing together",
     "latrine": "a cartoon small outdoor toilet hut",
@@ -1258,7 +1262,7 @@ PROMPT_OVERRIDES = {
     "heal": "a cartoon wound with a bandage getting better with sparkles",
     "hear": "a cartoon child cupping ear to listen",
     "hide": "a cartoon child hiding behind a tree playing",
-    "hit, strike (with hand)": "a cartoon hand hitting a drum",
+    "hit, strike (with hand)": "a boy striking a drum with the flat of his hand",
     "hunt": "a cartoon archer aiming at a target",
     "imitate": "a cartoon child copying a monkey pose",
     "insult": "a cartoon angry speech bubble with scribbles",
@@ -1292,12 +1296,12 @@ PROMPT_OVERRIDES = {
     "pour": "a cartoon child pouring water from a pitcher",
     "praise": "a cartoon child clapping and cheering",
     "pray": "a cartoon child with hands together praying",
-    "press": "a cartoon hand pressing a big red button",
+    "press": "a child pressing a big red button with one finger",
     "protect": "a cartoon shield protecting a small animal",
     "quarrel": "two cartoon children arguing with speech bubbles",
     "read": "a cartoon child reading a book under a tree",
     "refuse": "a cartoon child shaking head no with crossed arms",
-    "reject": "a cartoon hand pushing something away",
+    "reject": "a child pushing a bowl away with one hand",
     "remember, remind": "a cartoon child with lightbulb above head remembering",
     "remove": "a cartoon child removing items from a box",
     "repent": "a cartoon child looking sorry with head down",
@@ -1326,7 +1330,7 @@ PROMPT_OVERRIDES = {
     "speak, talk": "a cartoon child talking to a friend with speech bubbles",
     "spit": "a cartoon child spitting out yucky food",
     "spoil": "a cartoon broken toy on the floor",
-    "squeeze": "a cartoon hand squeezing a lemon",
+    "squeeze": "a girl squeezing a lemon in one hand",
     "stab": "a cartoon fork poking into food",
     "stagger": "a cartoon dizzy person wobbling",
     "startle, surprise": "a cartoon child jumping in surprise",
@@ -1465,7 +1469,7 @@ PROMPT_OVERRIDES = {
     "profit": "a cartoon graph going up with money symbols",
     "wealth": "a cartoon treasure chest overflowing with gold",
     "wealth, property": "a cartoon house with garden and car",
-    "payment": "a cartoon hand giving coins to another hand",
+    "payment": "a trader handing coins to a customer",
     "subscription": "a cartoon magazine arriving in mailbox",
     "market": "a cartoon busy colorful outdoor market",
     "market stall": "a cartoon market stall with fruits and vegetables",
