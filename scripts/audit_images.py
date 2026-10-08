@@ -72,6 +72,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import random
 import sys
 
@@ -138,20 +139,32 @@ def structural(entries, gi, verbose=True):
     """Duplicate clusters and template risk. Returns a dict keyed by image."""
     flags = {}
 
-    # --- template risk ----------------------------------------------------
-    # The categories whose prompt leads with a described person. For these,
-    # a word with no override competes against eighty words of girl.
-    person_categories = {'body', 'actions', 'family', 'descriptive'}
+    # --- thin prompt ------------------------------------------------------
+    # This flag used to be "template_risk": the four categories whose prompt
+    # LED with a described person, where one word of subject competed with
+    # twenty of girl. v1.24.5 moved the subject to the front and cut the
+    # persona to subject + skin, so that specific risk is gone.
+    #
+    # What is left is the real one: a prompt whose body carries a single
+    # content word and no curated override. "a hump" is all SDXL is given;
+    # it is correct English and it is still a coin toss. These are the
+    # entries that want either a PROMPT_OVERRIDES line or a photo from a
+    # native speaker.
     at_risk = 0
     for key, meta in entries.items():
-        cat = meta.get('category', '')
-        if cat not in person_categories:
-            continue
         english = meta.get('english', '')
-        clean = gi.shorten_english_for_prompt(english)
-        if clean in gi.PROMPT_OVERRIDES or english in gi.PROMPT_OVERRIDES:
+        cat = meta.get('category', '')
+        if cat in ('phrase', 'sentence', 'story'):
             continue
-        flags.setdefault(key, []).append('template_risk')
+        short = gi.shorten_english_for_prompt(english)
+        clean = re.sub(r'\s*\(.*?\)', '', short).strip()
+        if (short in gi.PROMPT_OVERRIDES or english in gi.PROMPT_OVERRIDES
+                or clean in gi.PROMPT_OVERRIDES):
+            continue
+        body = gi.concrete_gloss_for_prompt(english)
+        if len(gi._content_tokens(body)) > 1:
+            continue
+        flags.setdefault(key, []).append('thin_prompt')
         at_risk += 1
 
     # --- near-duplicate clusters -----------------------------------------
@@ -205,7 +218,7 @@ def structural(entries, gi, verbose=True):
 
     if verbose:
         print(f'  images on disk:            {len(hashes)}')
-        print(f'  person-template, no override: {at_risk}')
+        print(f'  thin prompt (one content word, no override): {at_risk}')
         print(f'  non-synonym duplicate clusters: {len(clusters)}'
               f'  ({sum(len(c) for c in clusters)} images)')
         for grp in sorted(clusters, key=len, reverse=True)[:6]:

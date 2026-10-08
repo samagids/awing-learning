@@ -379,11 +379,35 @@ STYLE_SUFFIX_SCENE = (
 # illustration FOR CHILDREN ... FRIENDLY AND CHEERFUL", which is a direct
 # instruction to draw a happy child. For an object prompt that phrasing was
 # actively causing the bug.
-STYLE_SUFFIX_PLAIN = (
-    f"{_SKIN_CLAUSE}, "
+_PLAIN_BODY = (
     "simple flat cartoon clipart, bright colors, "
     "single object centered, plain white background"
 )
+
+# WITH the skin clause - kept for any caller that wants the old string.
+STYLE_SUFFIX_PLAIN = f"{_SKIN_CLAUSE}, {_PLAIN_BODY}"
+
+# WITHOUT it, and this is what an object prompt gets now.
+#
+# "any people shown are Black African with dark brown skin" was on the object
+# suffix too, on the reasoning above. The cost was not visible until the
+# contact sheets: for a gloss with no concrete noun of its own the clause is
+# the ONLY noun phrase in the prompt, so it stops being a qualifier and
+# becomes the subject.
+#
+#   "a cartoon emptiness, any people shown are Black African with dark
+#    brown skin, simple flat cartoon clipart, ..."
+#
+# SDXL drew a Black African. 665 of the 1,485 worst-ranked images were
+# category `things` for exactly this reason - the template contains no person,
+# so the suffix supplied one.
+#
+# Dropping it is safe because the protection does not depend on it:
+# _NEGATIVE_COMMON opens with "caucasian, pale skin, light skin, european
+# features" and is on EVERY prompt, and at GUIDANCE_SCALE 1.5 negatives are
+# active. So a gloss that pulls in a person despite the object negative still
+# does not get a white one.
+STYLE_SUFFIX_OBJECT = _PLAIN_BODY
 
 # Back-compat alias for anything importing the old name.
 STYLE_SUFFIX = STYLE_SUFFIX_SCENE
@@ -402,9 +426,13 @@ def _is_person_prompt(prompt: str, category: str) -> bool:
 
 
 def _style_suffix_for(prompt: str, category: str) -> str:
-    """Scene backdrop for people and landscapes, plain for objects."""
+    """Scene backdrop for people and landscapes, plain for objects.
+
+    An object prompt gets STYLE_SUFFIX_OBJECT, which carries no skin clause -
+    see the comment on it.
+    """
     return (STYLE_SUFFIX_SCENE if _is_person_prompt(prompt, category)
-            else STYLE_SUFFIX_PLAIN)
+            else STYLE_SUFFIX_OBJECT)
 
 # ============================================================
 # PROMPT OVERRIDES
@@ -2236,6 +2264,351 @@ def shorten_english_for_prompt(english_word: str) -> str:
     return s or english_word.strip().lower()
 
 
+# --------------------------------------------------------------------------
+# THE PICTURE GETS THE WHOLE MEANING, NOT THE HEADWORD
+# --------------------------------------------------------------------------
+# Dr. Sama: "if you already know what a word is in english why will you
+# generate a picture without the things in it?"
+#
+# He is right, and shorten_english_for_prompt() was the reason. It exists to
+# distil a gloss down to a single headword so that PROMPT_OVERRIDES can be
+# looked up by headword - 1,108 overrides are keyed that way. That is correct
+# for the LOOKUP and wrong for the PICTURE, because the thing it throws away
+# is the only concrete part of the entry:
+#
+#   "crunch eg soft bone; a dog crunching a bone"  ->  "crunch"
+#   "a piece of rough iron used for making knives" ->  "a piece of rough
+#                                                       iron used"
+#
+# "crunch" is not a picture of anything. "a dog crunching a bone" is, and the
+# dictionary already wrote it down. "a piece of rough iron used" asks for a
+# relationship whose object was cut off, and the model fills the gap itself.
+#
+# So the two jobs are now split: shorten_english_for_prompt() still feeds the
+# override lookup unchanged, and this feeds the prompt body.
+_EXAMPLE_SPLIT = re.compile(
+    r"\b(?:e\.?\s?g\.?|for example|such as)\b[.,:;]?\s*", re.I)
+
+_DETERMINER_RE = re.compile(
+    r"^(?:a|an|the|some|one|two|three|four|five|his|her|their|its|"
+    r"this|that|these|those)\b", re.I)
+
+_XREF_SPLIT = re.compile(
+    r"\bv\.\s*s\b|\bn\.\s*s\b|\bsee\b|\bcf\b|\bsyn\b|\bant\b", re.I)
+
+_POS_PREFIX = re.compile(
+    r"^(?:n\.p|v\.p|n\.|v\.|adj\.|adv\.|pron\.|prep\.|conj\.|"
+    r"interj\.|num\.|ideo\.|c\.n)\s+", re.I)
+
+_INTERJ_PREFIX = re.compile(r"^(?:ya|oh|well|hey|ah|er|um|hmm)[,.\s]+", re.I)
+
+_GRAMMAR_PAREN = re.compile(
+    r"\s*\(\s*(?:intr|tr|intrans|trans|intransitive|transitive|n|v|adj|adv|"
+    r"pron|prep|conj|interj|num|pl|sg|sing|plural|singular|sth|sb|"
+    r"someone|something|lit|fig|idiom|idiomatic|arch|obs|dial|"
+    r"nominal|verbal|stative|causative|reciprocal|reflexive)\s*\.?\s*\)",
+    re.I)
+
+# "cloth, piece of" -> "piece of cloth". The quantifier is part of the
+# picture, so it is put back in front.
+_INVERTED_GLOSS = re.compile(
+    r"^(.+?),\s*(?:a|an)?\s*(piece|part|pair|group|bunch|heap|bundle|"
+    r"handful|drop|grain)\s+of$", re.I)
+
+# "disease, sort of" -> "disease". "sort of" / "manner of" / "kind of" is a
+# lexicographer's hedge, not something that can appear in a drawing, and as
+# the leading tokens of the prompt it was stealing weight from the only word
+# that could be drawn.
+_LEADING_HEDGE = re.compile(
+    r"^(?:a|an|the)?\s*(?:sort|kind|type|manner|way)\s+of\s+", re.I)
+
+_HEDGE_INVERTED = re.compile(
+    r"^(.+?),\s*(?:a|an)?\s*(?:kind|sort|type|manner|way|habit|method|"
+    r"state|act|sign)\s+of$", re.I)
+
+
+def _content_tokens(phrase: str):
+    toks = [t.strip(",.;:'\"") for t in phrase.split()]
+    return [t for t in toks if t and t.lower() not in _FUNCTION_WORDS]
+
+
+def _trim_to_phrase(s: str, max_words: int) -> str:
+    """Cut to at most `max_words`, never ending on a function word.
+
+    Step 9 of shorten_english_for_prompt() cut at a word count, which is how
+    256 glosses reached SDXL as "a sort of white substance from". Same idea
+    here, applied to a longer budget.
+    """
+    words = s.split()
+    if len(words) <= max_words:
+        return s
+    kept = words[:max_words]
+    while kept and kept[-1].strip(",.;:'\"\u2018\u2019").lower() in _FUNCTION_WORDS:
+        kept.pop()
+    return " ".join(kept) if kept else " ".join(words[:max_words])
+
+
+def concrete_gloss_for_prompt(english_word: str, max_words: int = 12) -> str:
+    """The most DRAWABLE rendering of an English gloss.
+
+    Picks the clause of the entry that names actual things, keeps the
+    parenthetical disambiguator, and cuts at a phrase boundary rather than a
+    word count. 12 words is ~16 CLIP tokens; with the template and
+    STYLE_SUFFIX_OBJECT the prompt lands near 35 of the 77 available.
+    """
+    raw = (english_word or "").strip().lower()
+    if not raw:
+        return ""
+    _SYNONYM_HEADS = set()
+
+    raw = _POS_PREFIX.sub("", raw).strip()
+    raw = _INTERJ_PREFIX.sub("", raw).strip()
+    # A cross-reference points at another entry; it does not describe this one.
+    raw = _XREF_SPLIT.split(raw, maxsplit=1)[0].strip()
+    # Keep what is inside the parentheses - in this dictionary it is almost
+    # always the disambiguator ("hump (on the back)", "plant (cocoyams)").
+    # EXCEPT when it is a grammar tag: "break in little pieces (intr)" was
+    # reaching SDXL as "breaking in little pieces intr".
+    raw = _GRAMMAR_PAREN.sub(" ", raw)
+    raw = re.sub(r"\s*\(([^)]*)\)", r" \1", raw)
+    raw = re.sub(r"\s+", " ", raw).strip()
+
+    # Candidate clauses: every semicolon / sentence clause, and each side of
+    # an "eg" marker.
+    clauses = []
+    for chunk in re.split(r"[;.]\s*", raw):
+        chunk = chunk.strip().strip(",;:. ")
+        if not chunk:
+            continue
+        for part in _EXAMPLE_SPLIT.split(chunk):
+            part = part.strip().strip(",;:. ")
+            if part:
+                clauses.append(part)
+                # Many entries gloss a word as two alternatives: "take good
+                # care of, show love and concern". Drawn literally that is
+                # two pictures competing for one card, so the first clause
+                # is offered as a candidate too - but only when it stands on
+                # its own (2+ content words). "gizzard, considered to
+                # belong to elders" has a one-word head and keeps its
+                # qualifier.
+                if "," in part:
+                    head = part.split(",", 1)[0].strip()
+                    if len(_content_tokens(head)) >= 2:
+                        _SYNONYM_HEADS.add(head)
+                        clauses.append(head)
+    if not clauses:
+        clauses = [raw]
+
+    def _score(phrase: str):
+        n = len(_content_tokens(phrase))
+        bonus = 0
+        # Its own subject ("a dog ...") beats a bare verb ("crunch").
+        if _DETERMINER_RE.match(phrase):
+            bonus += 2
+        # A participle means something is happening in it.
+        if re.search(r"\b\w{3,}ing\b", phrase):
+            bonus += 1
+        if phrase in _SYNONYM_HEADS:
+            bonus += 3
+        # Prefer a clause that fits the budget over one that must be cut,
+        # then the SHORTER of two equally concrete clauses - fewer competing
+        # nouns is a cleaner picture.
+        return (n + bonus,
+                -max(0, len(phrase.split()) - max_words),
+                -len(phrase.split()))
+
+    best = max(clauses, key=_score)
+    best = _trim_to_phrase(best.strip(",.;:'\" "), max_words)
+
+    # This dictionary inverts a lot of glosses so the headword files first:
+    #   "cloth, piece of"      "disease, sort of"      "chewing, manner of"
+    # Read straight through, those end on a dangling "of" - a prompt asking
+    # for a relationship whose object is missing. Turn them back round.
+    # "a sort of white substance from the eye" -> "white substance from the
+    # eye". Same hedge as _HEDGE_INVERTED, written the normal way round.
+    best = _LEADING_HEDGE.sub("", best).strip()
+
+    m = _INVERTED_GLOSS.match(best)
+    if m:
+        best = f"{m.group(2)} of {m.group(1)}".strip()
+    else:
+        m = _HEDGE_INVERTED.match(best)
+        if m:
+            best = m.group(1).strip()
+
+    # Trim trailing function words UNCONDITIONALLY. The same trim in
+    # shorten_english_for_prompt() only runs when the gloss exceeded the word
+    # cap, so "care for", "direction of" and "deaf in" went to SDXL with the
+    # preposition still dangling.
+    toks = best.split()
+    while toks and toks[-1].strip(",.;:'\"").lower() in _FUNCTION_WORDS:
+        toks.pop()
+    best = " ".join(toks).strip(",.;:'\" ")
+
+    # After that trim a stranded one-word tail is left over:
+    #   "association, start an" -> "association, start" -> "association"
+    best = re.sub(r",\s*\S+$", "", best) if re.search(r",\s*\S+$", best) and \
+        len(best.split(",")[-1].split()) == 1 else best
+    best = best.replace("~", " ")
+    best = re.sub(r"\s+", " ", best).strip(",.;:'\" ")
+
+    # All function words -> nothing was gained; fall back to the headword so
+    # behaviour never gets WORSE than before this function existed.
+    if not _content_tokens(best):
+        return shorten_english_for_prompt(english_word)
+    return best
+
+
+_IRREGULAR_ING = {
+    "be": "being", "have": "having", "go": "going", "do": "doing",
+    "lie": "lying", "die": "dying", "tie": "tying", "see": "seeing",
+    "run": "running", "sit": "sitting", "put": "putting", "cut": "cutting",
+    "get": "getting", "set": "setting", "let": "letting", "shut": "shutting",
+    "swim": "swimming", "begin": "beginning", "win": "winning",
+    "dig": "digging", "hit": "hitting", "forget": "forgetting",
+    "prefer": "preferring", "occur": "occurring", "travel": "travelling",
+}
+
+
+def _as_gerund(phrase: str) -> str:
+    """"crunch" -> "crunching".
+
+    "a Cameroonian boy ... doing crunch" was the old actions template. It is
+    not English, and a prompt the model cannot parse is a prompt it ignores
+    in favour of the 20 tokens of persona in front of it.
+    """
+    toks = phrase.split()
+    if not toks:
+        return phrase
+    v = toks[0].lower().strip(",.;:")
+    if v.endswith("ing"):
+        return phrase
+    if v in _IRREGULAR_ING:
+        g = _IRREGULAR_ING[v]
+    elif v.endswith("ie"):
+        g = v[:-2] + "ying"
+    elif v.endswith("e") and not v.endswith(("ee", "ye", "oe")):
+        g = v[:-1] + "ing"
+    elif len(v) <= 4 and re.search(r"[^aeiou][aeiou][bcdfgklmnprstvz]$", v):
+        g = v + v[-1] + "ing"          # CVC doubling: stop -> stopping
+    else:
+        g = v + "ing"
+    return " ".join([g] + toks[1:])
+
+
+# An uncountable noun takes no article. "an emptiness" and "a hunger" are
+# not English, and a prompt the model has to repair is a prompt it rewrites.
+_MASS_SUFFIX = re.compile(
+    r"(?:ness|ity|hood|ship|ism|ance|ence|ment|dom|tude|ery)$", re.I)
+
+_MASS_NOUNS = {
+    "water", "dust", "sand", "salt", "sugar", "rice", "maize", "corn",
+    "oil", "milk", "blood", "smoke", "mud", "rain", "wind", "fire", "food",
+    "meat", "wood", "grass", "hair", "money", "work", "music", "sleep",
+    "death", "life", "love", "hunger", "thirst", "fear", "joy", "peace",
+    "dirt", "soil", "ash", "flour", "honey", "soup", "beer", "wine", "air",
+    "light", "time", "truth", "noise", "advice", "news", "weather",
+    "vomit", "saliva", "sweat", "urine", "dung", "smoke", "steam",
+    # Materials - mass in the sense the dictionary uses them.
+    "iron", "metal", "clay", "cotton", "leather", "rubber", "bamboo",
+    "charcoal", "firewood", "palm", "raffia",
+}
+
+_ORDINAL_RE = re.compile(
+    r"^(?:first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|"
+    r"tenth|last|next|\d+(?:st|nd|rd|th))\b", re.I)
+
+
+# A gloss that opens with a bare verb is not a noun phrase, and "a have
+# sexual relations with" is what prepending an article to one looks like.
+_VERB_HEADS = {
+    "have", "has", "had", "make", "makes", "take", "takes", "give", "gives",
+    "go", "goes", "come", "comes", "get", "gets", "put", "puts", "let",
+    "do", "does", "be", "been", "help", "care", "look", "see", "hear",
+    "feel", "keep", "hold", "bring", "send", "find", "leave", "move",
+    "turn", "start", "stop", "open", "close", "carry", "throw", "catch",
+    "cut", "break", "build", "buy", "sell", "pay", "eat", "drink", "sleep",
+    "walk", "run", "sit", "stand", "speak", "talk", "say", "tell", "ask",
+    "answer", "work", "play", "wash", "clean", "cook", "plant", "harvest",
+    "abstain", "avoid", "refuse", "accept", "allow", "cause", "become",
+    "belong", "remain", "stay", "wait", "try", "want", "need", "like",
+    "love", "hate", "know", "think", "believe", "remember", "forget",
+    "beat", "push", "pull", "lift", "drop", "pour", "fill", "empty",
+    "tie", "untie", "wear", "remove", "hide", "show", "point", "touch",
+    "scrub", "rub", "dash", "peel", "scratch", "imply", "mean", "means",
+    "squeeze", "stir", "pound", "grind", "sweep", "scrape", "bend",
+}
+
+
+def _as_noun_phrase(phrase: str) -> str:
+    """Grammatical noun phrase - an article only when there is not one.
+
+    "a cartoon a piece of rough iron used" came from unconditionally
+    prepending "a cartoon" to a phrase that already had its determiner.
+    """
+    p = phrase.strip()
+    if not p or _DETERMINER_RE.match(p):
+        return p
+    if _ORDINAL_RE.match(p):
+        return f"the {p}"               # "third day of the week"
+    first = p.split()[0].lower().strip(",.;:")
+    if first.endswith("ing") or first in _VERB_HEADS:
+        return p
+    # "scrub out", "throw away", "cut off" - a verb plus its particle, not a
+    # noun phrase.
+    toks = p.split()
+    if (len(toks) >= 2
+            and toks[-1].lower() in {"out", "up", "off", "away",
+                                     "down", "over", "apart", "back"}):
+        return p
+    # An adverb is not a noun: "a quickly", "a scrub accidentally".
+    if toks[0].lower().endswith("ly") or toks[-1].lower().endswith("ly"):
+        return p
+    # A participle is not a noun: "a trapped in evil".
+    if len(first) >= 5 and first.endswith(("ed", "en")):
+        return p
+    # Past 3 words the article buys nothing and the risk of fronting a verb
+    # ("a scrub, rub or dash, usually accidentally, causing ...") is real.
+    if len(toks) > 3:
+        return p
+    if first.endswith("s") and not first.endswith(("ss", "us", "is")):
+        return p                        # plural takes no article
+    # Only for a bare noun: "dust" stays "dust", but "dust cloud" is
+    # countable and still wants "a".
+    if len(p.split()) == 1 and (first in _MASS_NOUNS
+                                or _MASS_SUFFIX.search(first)):
+        return p
+    return f"{'an' if p[0] in 'aeiou' else 'a'} {p}"
+
+
+_PARTICLES = {"out", "up", "off", "away", "down", "over", "apart", "back",
+              "together", "through", "across", "along"}
+
+
+def _is_verbish(phrase: str) -> bool:
+    """Is this gloss an action rather than a quality or a thing?"""
+    toks = phrase.split()
+    if not toks:
+        return False
+    first = toks[0].lower().strip(",.;:")
+    if first.endswith("ing") or first in _VERB_HEADS:
+        return True
+    return len(toks) >= 2 and toks[-1].lower().strip(",.;:") in _PARTICLES
+
+
+def _is_abstract_noun(phrase: str) -> bool:
+    """"friendship", "hunger" - a noun, not an adjective."""
+    w = phrase.split()[0].lower().strip(",.;:") if phrase.split() else ""
+    return bool(w) and (w in _MASS_NOUNS or bool(_MASS_SUFFIX.search(w)))
+
+
+def _has_own_subject(phrase: str) -> bool:
+    """Does the gloss already say who or what is doing it?"""
+    if _DETERMINER_RE.match(phrase.strip()):
+        return True
+    return bool(_HUMAN_NOUN_RE.search(phrase))
+
+
 # Tokens that do not change what is being depicted, so the head word's
 # override still describes the whole gloss.
 _PROMPT_STOPWORDS = {
@@ -2475,29 +2848,71 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
             body = africanize_people(PROMPT_OVERRIDES[w], seed_key)
             return f"{body}, {_style_suffix_for(body, category)}"
 
-    # Default: build a prompt from the category
-    # v1.24.0: the four categories that depict PEOPLE lead with
-    # PEOPLE_STYLE. body/actions/family always show a person; descriptive
-    # usually does (happy, tired, strong...). animals, nature, things,
-    # numbers and food do not, so they keep a clean prompt and get the
-    # regional framing from STYLE_SUFFIX instead.
-    people = people_style(seed_key)
+    # No override. Build the prompt from the gloss's OWN content.
+    #
+    # v1.24.5. Two things changed here, both of them answers to "why is the
+    # picture of hump a child".
+    #
+    # 1. THE SUBJECT GOES FIRST AND THE PERSONA GOES LAST. The old templates
+    #    opened with people_style(), which is ~20 tokens of child:
+    #
+    #      "a Cameroonian little boy with dark brown skin, a neatly shaved
+    #       head, wearing a plain school uniform, showing their hump"
+    #
+    #    CLIP weights early tokens most. The prompt was 90% a description of
+    #    a boy and 1 word of subject, so SDXL drew the boy faithfully and
+    #    dropped the hump - and that is the picture Dr. Sama saw on his
+    #    phone. Hair and clothes are gone from the generated templates
+    #    (they were decoration, and they were crowding out the word);
+    #    persona and skin stay, because the NACDA request was about skin.
+    #
+    # 2. THE GLOSS IS USED WHOLE. clean_word is now the concrete clause of
+    #    the entry, not the headword - see concrete_gloss_for_prompt(). When
+    #    that clause already names its own subject ("a dog crunching a
+    #    bone") no persona is added at all: the dictionary said what is in
+    #    the picture, so the picture is that.
+    clean_word = concrete_gloss_for_prompt(english_word)
+    _hair, skin, _clothes, persona = _persona_bits(seed_key)
+    who = f"a Cameroonian {persona} with {skin}"
+    subject_np = _as_noun_phrase(clean_word)
+    owns_subject = _has_own_subject(clean_word)
+
     category_prompts = {
-        "body": f"{people}showing their {clean_word}",
-        "animals": f"a cute cartoon {clean_word} animal",
-        "nature": f"a cartoon {clean_word} nature scene",
-        "food": f"a cartoon {clean_word}, West African food",
-        "actions": f"{people}doing {clean_word}",
-        "things": f"a cartoon {clean_word}",
-        "family": f"{people}{clean_word}, Cameroonian family",
-        "descriptive": f"{people}showing the feeling of {clean_word}",
+        # Body part first, close-up, person as the context it hangs on -
+        # but only when the gloss IS a short body-part phrase. 337 `body`
+        # entries are whole descriptions ("a sort of white substance from
+        # the eye that comes out usually after sleep"), and wrapping one in
+        # "close-up of the ... of a Cameroonian girl" produced "close-up of
+        # the a sort of white substance ... of a Cameroonian teenage girl".
+        "body": (f"close-up of the {clean_word} of {who}"
+                 if (len(clean_word.split()) <= 4 and not owns_subject)
+                 else f"{clean_word}, {who}"),
+        "animals": f"{subject_np}, animal",
+        "nature": f"{subject_np}, nature scene",
+        "food": f"{subject_np}, West African food",
+        "actions": (clean_word if owns_subject
+                    else f"{_as_gerund(clean_word)}, done by {who}"),
+        "things": subject_np,
+        "family": (clean_word if owns_subject
+                   else f"{clean_word}, a Cameroonian family with {skin}"),
+        # An adjective is something a person LOOKS; an abstract noun is
+        # something a person SHOWS. "a Cameroonian girl ..., friendship" let
+        # the noun float free of the subject.
+        "descriptive": (
+            clean_word if owns_subject
+            else f"{_as_gerund(clean_word)}, done by {who}"
+            if _is_verbish(clean_word)              # "connect together"
+            else f"{who} showing {clean_word}"
+            if (_is_abstract_noun(clean_word)
+                or len(clean_word.split()) > 1)     # "bad company"
+            else f"{who} looking {clean_word}"),    # "sour", "tired"
         # Reached only for entries the data files under `numbers` that are
         # NOT numerals ("road, of dusty one", "prepare one's self") - real
         # numerals never get here, they are composed by
         # generate_counting_image() instead.
-        "numbers": f"a cartoon {clean_word}",
+        "numbers": subject_np,
     }
-    base = category_prompts.get(category, f"a cartoon illustration of {clean_word}")
+    base = category_prompts.get(category, subject_np)
     body = africanize_people(base, seed_key)
     return f"{body}, {_style_suffix_for(body, category)}"
 
