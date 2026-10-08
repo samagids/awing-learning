@@ -1903,6 +1903,194 @@ PROMPT_OVERRIDES = {
     "metal bar": "a heavy grey bar of raw iron metal lying on a workbench, rough unpolished surface",
     "slight injury or pain": "a small scrape on a child's knee with a plaster on it",
     "unhygienic environment": "a dirty village yard with scattered rubbish, a pool of dirty standing water and flies buzzing",
+
+    # ----------------------------------------------------------------
+    # BATCH 1 of the thin-prompt list (2026-10-08)
+    # ----------------------------------------------------------------
+    # 1,367 gloss words carry only ONE content word and no curated prompt,
+    # covering 2,087 cards. "a curse", "a plan", "stoop" - correct English,
+    # whole meaning, and nothing for a 4-step model to hold on to.
+    #
+    # These are written the way an illustrator would: the SITUATION the word
+    # names, with objects in it. No negations and no contrast subjects - a
+    # positive prompt renders every noun it is given, which is how "no
+    # wedding ring, a married couple in the distance" produced a couple.
+    #
+    # Concrete nouns are deliberately NOT in here. "mushroom", "eagle",
+    # "camel", "ankle", "gold" already draw correctly from the gloss alone;
+    # an override would add nothing and would be one more string to keep
+    # true.
+
+    "accuse": "a man pointing a finger at another man across a seated gathering",
+    "adult": "a grown man standing tall beside a small child for height comparison",
+    "again": "a circular arrow looping back to its own starting point",
+    "age-group": "a row of children of exactly the same height standing shoulder to shoulder",
+    "alter": "a tailor taking in the seam of a shirt with pins along the edge",
+    "announce": "a town crier walking through the village beating a gong, mouth open calling",
+    "another": "one hand setting a second identical cup beside the first",
+    "answer": "a child with a raised hand standing beside a blackboard",
+    "antidote": "a small glass bottle with a green leaf beside it and a snake coiled at a distance",
+    "argument": "two people facing each other mid-gesture, mouths open, hands up",
+    "arrive": "a traveller with a bundle stepping through a village gate",
+    "assorted": "a tray holding many different fruits and vegetables side by side",
+    "avoid": "a person stepping wide around a puddle on a path",
+    "be alive": "a child running and laughing across a sunlit field",
+    "be dreaming": "a sleeping child with a cloud above holding a flying bird",
+    "be in fear": "a child crouching with both hands over the eyes",
+    "be innocent": "a child with open empty hands held out, shoulders raised",
+    "be proud": "a person standing tall with chest out and hands on hips",
+    "be sated": "a person leaning back with a round full belly beside a cleared plate",
+    "be unconscious": "a person lying flat on a mat with eyes closed and arms limp",
+    "begging": "a seated person holding out both cupped hands to a passer-by",
+    "bless": "an elder's open hand resting on a kneeling child's head",
+    "borrow": "one hand passing a hoe to another hand, the lender still reaching after it",
+    "boyfriend": "a young man and a young woman walking side by side holding hands",
+    "bribe": "folded banknotes being slid across a table into a waiting hand",
+    "bump": "two people colliding shoulder to shoulder on a narrow path",
+    "caress": "a hand gently stroking a child's cheek",
+    "certain": "a child nodding firmly with one thumb raised, standing beside a ticked list",
+    "choke": "a person with both hands at their own throat, coughing",
+    "clan": "a large extended family grouped together outside their compound",
+    "classifier": "a set of wooden blocks sorted into three labelled boxes by shape",
+    "climbing": "a boy halfway up a palm tree trunk, arms and legs gripping",
+    "clue": "a magnifying glass held over a single footprint in soft earth",
+    "competition": "two children running towards a finish line side by side",
+    "completely": "a bowl filled right to its brim with water",
+    "condole": "a hand resting on the shoulder of a seated person with bowed head",
+    "confess": "a child standing before an elder with head lowered and hands open",
+    "confession": "a child standing before an elder with head lowered and hands open",
+    "continuously": "a stream of water pouring unbroken from a gourd into a basin",
+    "cooperate": "four people lifting one heavy log together, all hands under it",
+    "create": "two hands shaping a clay pot on a turning wheel",
+    "cross": "a person stepping over a low wall from one side to the other",
+    "cunning": "a fox crouching low behind a bush, watching a hen with narrowed eyes",
+    "curse": "an angry elder pointing a carved stick at the ground, dark storm cloud gathering above",
+    "deaf": "a person turning an ear forward and cupping it with one hand",
+    "debt": "an open ledger with a long list of figures and a hand pointing at a total",
+    "deceit": "a smiling man with one hand held behind his back hiding a stone",
+    "deceive": "a smiling man with one hand held behind his back hiding a stone",
+    "deception": "a smiling man with one hand held behind his back hiding a stone",
+    "decide": "a path splitting in two, a child standing at the fork pointing down one way",
+    "dedication": "a lit candle placed on a cloth-covered table with hands resting beside it",
+    "delay": "a sand timer almost run through, a person waiting beside it on a bench",
+    "description": "a hand drawing the outline of an object on paper while the object sits beside it",
+    "destruction": "a collapsed mud wall with broken pieces scattered on the ground",
+    "dip": "a hand lowering a piece of fufu into a bowl of soup",
+    "disgrace": "a man walking away with his head down as others turn their backs",
+    "disturb": "a child shaking the shoulder of another child who is trying to sleep",
+    "diviner": "a seated elder casting cowrie shells onto a mat",
+    "divorce": "a torn paper with two wedding rings lying apart on either half",
+    "east": "a sun rising over low hills, long shadows pointing away from it",
+    "enlarge": "a small circle beside a much bigger circle of the same shape",
+    "entertain": "a drummer and a dancer performing while seated villagers clap",
+    "everywhere": "one small symbol repeated across a whole village scene, on every roof",
+    "exactly": "a balance scale perfectly level with one weight on each pan",
+    "exclamation": "a child with mouth open wide and both hands up in surprise",
+    "exile": "a lone figure walking down a road away from a village gate, bundle on his back",
+    "exorcise": "a diviner shaking a rattle over a seated person, smoke rising from a bowl",
+    "farmer": "a man with a hoe over his shoulder standing in a cultivated field",
+    "fasten": "two hands tying a rope tightly around a bundle of firewood",
+    "ferment": "a covered clay pot with bubbles rising through the liquid inside",
+    "fine": "a hand paying coins across a table to an official with a ledger",
+    "follower": "three people walking in single file along a narrow path, one leading",
+    "fool": "a child wearing a cooking pot as a hat, grinning",
+    "forgive": "two people embracing, one patting the other's back",
+    "french": "a blue white and red flag on a pole beside an open school book",
+    "frugal": "a careful hand dropping one coin into a clay savings pot",
+    "galore": "a basket overflowing with maize cobs, more spilling onto the ground",
+    "giant": "a very tall man standing beside a normal sized hut, his head above the roof",
+    "girlfriend": "a young woman and a young man walking side by side holding hands",
+    "god": "a bright beam of golden light breaking through clouds onto open ground",
+    "grace": "two open hands held out together offering a small gift",
+    "granddaughter": "a small girl sitting on her grandmother's knee",
+    "grandson": "a small boy sitting on his grandfather's knee",
+    "greetings": "two people clasping hands warmly, each with the free hand on the other's shoulder",
+    "grunt": "a pig standing in mud with its mouth open",
+    "hatch": "a chick breaking out of a cracked eggshell in a nest",
+    "hem": "a needle and thread stitching along the folded edge of a cloth",
+    "his/hers": "two hands each holding a different bag, one on the left and one on the right",
+    "imitation": "a child copying the exact pose of the child in front of him",
+    "inhabitant": "a woman standing in the doorway of her own house, looking out",
+    "insist": "a person standing firm with arms folded, chin up",
+    "introduction": "one person presenting a second person to a third with an open hand",
+    "islam": "a crescent moon and a star above a domed building with a tall tower",
+    "joke": "two children laughing together, one covering his mouth",
+    "joyful": "a child leaping with both arms thrown up, mouth wide open laughing",
+    "junior": "a small child standing beside a much taller older child",
+    "justify": "a man speaking with both palms open, a balance scale beside him level",
+    "lend": "one hand passing a hoe to another hand, the lender still reaching after it",
+    "meet": "two people walking from opposite sides and shaking hands where the paths cross",
+    "move": "two people carrying a wooden chest together across a yard",
+    "much": "a tall heap of groundnuts piled high on a mat",
+    "namesake": "two people shaking hands, both wearing the same name tag",
+    "nobody": "an empty wooden chair in an empty swept courtyard",
+    "noon": "the sun directly overhead with very short shadows beneath a tree",
+    "noun": "a wooden flashcard with a picture of a house on it held up by a teacher",
+    "oath": "a hand raised flat with the palm forward, the other hand on a carved staff",
+    "pain": "a child wincing with one hand pressed to a bandaged arm",
+    "pant": "a runner bent over with hands on knees, mouth open, breathing hard",
+    "paradise": "a bright garden of fruit trees and clear water under a blue sky",
+    "pass": "one hand handing a calabash sideways to another hand",
+    "people": "a crowd of villagers standing together in a market square",
+    "plan": "a hand drawing a simple map on paper with arrows and a marked destination",
+    "polygamy": "a man seated with three wives beside him outside a compound",
+    "pretend": "a child holding a painted mask in front of his own face",
+    "prisoner": "a man seated behind vertical bars with his hands on them",
+    "promise": "two little fingers hooked together in a pinky promise",
+    "property": "a fenced compound with a house, a goat and a stack of baskets inside",
+    "prophecy": "an elder holding a staff and pointing at the horizon, listeners behind",
+    "punish": "a child standing facing the wall with arms folded behind",
+    "put": "a hand setting a clay bowl down onto a wooden table",
+    "question": "a child with one hand raised and a large question mark above",
+    "real": "a solid round stone held in an open palm",
+    "reasoning": "two people seated facing each other, one counting points on his fingers",
+    "rebuke": "an elder wagging one finger at a child who looks down",
+    "reduce": "a tall pile of grain beside a much smaller pile of the same grain",
+    "rejoicing": "a group of villagers dancing in a circle with raised arms",
+    "religion": "an open book on a wooden stand with a lit candle beside it",
+    "resurrection": "an empty stone tomb with the round stone rolled aside and light streaming in",
+    "reward": "an open hand holding out a small cloth bag of coins to a smiling child",
+    "salvation": "a hand reaching down to pull another hand up out of a deep hole",
+    "saw": "a hand saw cutting through a wooden plank, sawdust falling",
+    "saying": "an elder seated on a stool speaking, a listening child beside him",
+    "secretary": "a person at a desk writing in a large notebook beside a telephone",
+    "shake": "two hands gripping a basket and shaking it, beans jumping inside",
+    "shepherd": "a man with a long staff walking behind a small flock of sheep",
+    "sign": "a painted wooden signboard on a post beside a village path, an arrow on it",
+    "slander": "two people whispering behind a hand while a third walks past",
+    "slice": "a knife cutting a tomato into even round slices on a board",
+    "slip": "a person's foot sliding out from under them on wet ground, arms flying up",
+    "soldier": "a uniformed man standing at attention with a cap and boots",
+    "some": "a bowl holding a small handful of beans while a larger sack sits closed beside it",
+    "something": "a cloth-covered lump on a table with the cloth half lifted",
+    "sound": "a drum being struck, curved sound waves rippling outward from the drumskin",
+    "south": "a compass lying on a wooden table, its needle pointing down the page",
+    "sovereign": "a village chief seated on a carved wooden throne holding a staff",
+    "sprinkle": "a hand scattering white powder over a bowl of food",
+    "sprout": "a small green shoot pushing up through dark soil",
+    "statement": "a person standing and speaking, one hand flat and forward",
+    "stir": "a wooden spoon turning thick soup in a cooking pot",
+    "stoop": "a woman bending forward at the waist to pick a gourd off the ground",
+    "straddle": "a child sitting astride a low wooden bench, one leg each side",
+    "suckle": "a calf feeding at its mother cow's udder",
+    "supplication": "two cupped hands raised together, head bowed",
+    "swear": "a hand raised flat with the palm forward, the other hand on a carved staff",
+    "taboo": "a bundle of leaves tied to a stick planted in front of a closed doorway",
+    "tempt": "a hand holding a ripe mango out towards a hesitating child",
+    "test": "a person tapping a clay pot with one knuckle and listening",
+    "this day": "a wall calendar with today's square circled in red",
+    "thought": "a child looking up with a thought bubble holding a question mark",
+    "traitor": "a man slipping away behind a hut while others sit talking at the fire",
+    "traverse": "a person walking across a log bridge over a stream, halfway over",
+    "treasurer": "a person at a table counting coins into neat stacks beside a ledger",
+    "trickle": "a thin thread of water running down a rock face",
+    "true": "a child holding up a mirror that shows exactly the same face",
+    "wail": "a seated woman with her head thrown back and mouth open, tears on her face",
+    "weed": "a hand pulling weeds out from between rows of young maize",
+    "whichever": "two identical mangoes side by side with a hand hovering between them",
+    "whole": "one complete round orange, uncut, beside a knife laid down",
+    "worry": "a child sitting with hands on cheeks, forehead creased, looking at the ground",
+    "youngster": "a lively child of about eight running with a stick and hoop",
 }
 
 
@@ -3024,6 +3212,10 @@ def _contributed_keys():
         return set()
 
 
+_ADULT_ENTRY = re.compile(
+    r"\b(prostitut\w*|adultery|pudenda|sexual\w*|penis|vagina|genital\w*|"
+    r"brothel|fornicat\w*|copulat\w*|incest\w*|rape|have sex)\b", re.I)
+
 _UNILLUSTRATABLE_MARKERS = re.compile(
     r"\b(preposition|pronoun|conjunction|interjection|particle|auxiliary|"
     r"determiner|demonstrative|article|ideophone|intensifier|"
@@ -3085,6 +3277,18 @@ def is_illustratable(english_word: str, category: str) -> bool:
 
     raw = (english_word or "").strip().lower()
     if not raw:
+        return False
+    # Adult entries are left with NO picture, whatever the prompt would be.
+    # The dictionary is a complete record of an adult language and rightly
+    # includes these; a vocabulary card in a children's app is not the place
+    # to illustrate them, and an SDXL attempt at any of them is worse than a
+    # blank. hasImageSync() already filters an image-less word out of games
+    # and quizzes, so the gap is safe. 32 entries; listed in
+    # contributions/adult_entries.json. Dr. Sama can overrule any of these
+    # with a PROMPT_OVERRIDES line or an approved photo - both run ahead of
+    # this gate for a contributed image, and neither is something a script
+    # should decide on its own.
+    if _ADULT_ENTRY.search(raw):
         return False
     if _UNILLUSTRATABLE_MARKERS.search(raw):
         return False
