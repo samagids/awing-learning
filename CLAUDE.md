@@ -13297,3 +13297,35 @@ Skin: asserted the prompts were fixed without opening a single image.
 **Print the artefact. Open the file. Look at the picture.** Every time I
 skipped that, Dr. Sama found the answer first, and the evidence was one
 command away.
+
+### 66u part five — `flutter analyze` is the gate, and why
+
+The similar-spelling merge broke the build and I did not catch it. Two rows
+were the **last element of their list** and carried its terminator:
+
+```dart
+AwingWord(awing: 'əfê', english: 'here, this place', ...difficulty: 1)];
+```
+
+Commenting those out took the `]` with them. `bodyParts` and `numbers` were
+never closed, and every reference to either became an undefined name — 29
+errors, in `awing_vocabulary.dart` and all three numbers screens.
+
+**After every pass I had verified "every changed line is a pure
+comment-out". That was TRUE and insufficient.** A line can be correctly
+commented and still carry a bracket away with it. I was checking the edit,
+not the artifact — the same mistake as the rest of the day, one level up.
+
+**RULE: after any scripted edit to a `.dart` data file, run
+`flutter analyze` and wait for "No issues found" before claiming it is safe
+— and before pushing, regenerating or building.** It takes ~7 minutes on
+this machine. It is cheaper than what it catches.
+
+`scripts/merge_similar_spellings.py` now restores `];` itself when the row
+it comments ends in `)];`. `scripts/check_dart_lists.py` checks that one
+thing in a second — deliberately ONE check, because an earlier version also
+counted brackets and matched list declarations and threw false alarms on
+apostrophes in strings and multi-line constructors. A check that cries wolf
+gets ignored. It is a fast pre-filter, not a replacement for analyze.
+
+Confirmed clean: `No issues found! (ran in 429.3s)`.
