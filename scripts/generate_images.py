@@ -1707,6 +1707,15 @@ PROMPT_OVERRIDES = {
     # human noun at build time, so these stay one sentence about what is
     # happening.
     #
+    # A POSITIVE PROMPT CANNOT SAY "NOT". The first version of the celibate
+    # three read "...standing alone and smiling, no wedding ring, a married
+    # couple holding hands in the distance". SDXL has no way to render "no"
+    # and it renders every noun it is given, so the card came back as a
+    # couple holding hands - the one thing the word means the absence of.
+    # Same reason "emptiness" said "nothing inside it" and drew a full pot.
+    # Describe only what should be ON the card: one person, by themselves,
+    # in an empty courtyard.
+    #
     # Two written deliberately rather than literally. "deformity" is a bent
     # tree, not a person - a children's vocabulary card is not the place to
     # caricature a body. "disability" is a smiling child in a wheelchair
@@ -1715,15 +1724,15 @@ PROMPT_OVERRIDES = {
 
     "a sort of sticky substance": "a blob of sticky golden tree sap stretching between two fingers",
     "bad reputation": "a boy walking past while other children whisper behind their hands and point",
-    "be celibate": "a single unmarried young man standing alone and smiling, no wedding ring, a married couple holding hands in the distance",
+    "be celibate": "one young man standing by himself in an empty village courtyard, hands at his sides, alone",
     "be impatient": "a child tapping one foot and frowning up at a wall clock",
     "be myopic": "a child squinting at a book held very close to the face",
     "bitterness": "a child pulling a sour puckered face after biting a bitter green leaf",
     "build a fence": "a man planting wooden posts to build a fence around a compound",
     "bury": "a mound of fresh earth with flowers laid on it and a carved wooden marker",
     "carelessness": "a child dropping a clay bowl, water spilling across the floor",
-    "celibacy": "a single unmarried young woman standing alone and smiling, no wedding ring, a married couple holding hands in the distance",
-    "celibate": "a single unmarried young person standing alone and smiling, no wedding ring, a married couple holding hands in the distance",
+    "celibacy": "one young woman standing by herself in an empty village courtyard, hands at her sides, alone",
+    "celibate": "one young person standing by themselves in an empty village courtyard, hands at their sides, alone",
     "cleanliness": "a child washing hands with white soap bubbles at a basin",
     "confidence": "a child standing tall with hands on hips and a big proud smile",
     "corruption": "a hand passing banknotes under a table to another waiting hand",
@@ -1736,7 +1745,7 @@ PROMPT_OVERRIDES = {
     "disunity": "a thick rope snapped in two, children pulling away in opposite directions",
     "electricity": "a yellow lightning bolt beside a glowing light bulb",
     "emotional instability": "a face split down the middle, laughing on one side and crying on the other",
-    "emptiness": "an empty clay pot lying on its side with nothing inside it",
+    "emptiness": "a clay pot lying on its side, tipped over, open mouth facing the viewer",
     "equivalence": "a balance scale with equal weights on both pans, perfectly level",
     "express sadness": "a child crying with tears running down both cheeks",
     "false witness": "a child pointing accusingly at another child, nose growing long",
