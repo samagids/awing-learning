@@ -286,6 +286,15 @@ if ! python3 scripts/generate_images.py --output-dir "$PAD_IMAGES" generate \
     exit 1
 fi
 echo "        Vocabulary images generated."
+
+# The manifest is what hasImageSync() reads to decide whether a word has a
+# picture at all. Stale manifest = words filtered out of games that do have
+# an image, or offered with one that is gone. build_and_run.bat has always
+# rebuilt it here; this script did not.
+if ! python3 scripts/build_image_manifest.py; then
+    echo "        WARNING: image manifest not rebuilt — hasImageSync() may"
+    echo "        disagree with what is on disk. Non-fatal."
+fi
 echo
 
 # ---- Step 6: flutter pub get -----------------------------------------

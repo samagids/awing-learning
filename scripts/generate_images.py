@@ -4145,7 +4145,22 @@ def cmd_prune(args):
     for f in files:
         by_stem.setdefault(f.stem, []).append(f)
 
-    orphans = {st for st in by_stem if st not in keys}
+    # A photo a native speaker submitted and Dr. Sama approved is NEVER
+    # deleted by this command, even when its key has gone out of the
+    # vocabulary. The generate loop has honoured this list since v1.24.5
+    # (protected_keys, below in cmd_generate) but prune did not, and prune
+    # is the destructive one.
+    #
+    # It matters most right after a duplicate merge: apply_contributions.py
+    # installs one contributor's photo under EVERY gloss of that spelling,
+    # so collapsing eight `tsentə` rows into one turns seven contributed
+    # copies into orphans. Deleting them would throw away a person's work
+    # to reclaim a few hundred KB.
+    _protected = _contributed_keys()
+    orphans = {st for st in by_stem
+               if st not in keys and _strip_ext(st) not in _protected}
+    _kept_contributed = sum(1 for st in by_stem
+                            if st not in keys and _strip_ext(st) in _protected)
     blanks = {st for st in by_stem
               if st in keys
               and not is_illustratable(keys[st]["english"], keys[st]["category"])}
@@ -4159,6 +4174,8 @@ def cmd_prune(args):
     print(f"Expected  : {len(keys)} keys across words/phrases/sentences/stories")
     print()
     print(f"  orphans (no entry at all)        {len(orphans):5}")
+    if _kept_contributed:
+        print(f"  contributed, protected from prune{_kept_contributed:5}")
     print(f"  blanks  (entry now unillustratable) {len(blanks):5}")
     print(f"  ----------------------------------------")
     print(f"  to delete                        {len(doomed_files):5} files, "

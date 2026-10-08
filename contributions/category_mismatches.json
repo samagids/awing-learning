@@ -1,0 +1,818 @@
+[
+ {
+  "awing": "ngwáŋə",
+  "english": "salt",
+  "current": "things",
+  "suggested": "food"
+ },
+ {
+  "awing": "pímə",
+  "english": "believe",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lê",
+  "english": "sleepy",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kóolə",
+  "english": "catch",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kóolə",
+  "english": "grasp",
+  "current": "things",
+  "suggested": "animals"
+ },
+ {
+  "awing": "wiŋə",
+  "english": "big",
+  "current": "family",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "kyéŋə",
+  "english": "cry",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "fyáalə",
+  "english": "nip in the bud",
+  "current": "things",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "ghabnə",
+  "english": "share",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "zó'ə",
+  "english": "hear",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "alóŋə",
+  "english": "dress of the same pattern",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "mógə",
+  "english": "fire",
+  "current": "nature",
+  "suggested": "things"
+ },
+ {
+  "awing": "nkéebə",
+  "english": "main market day in Awing",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "ndenə",
+  "english": "price, cost",
+  "current": "food",
+  "suggested": "things"
+ },
+ {
+  "awing": "ŋwunə",
+  "english": "being, human",
+  "current": "things",
+  "suggested": "family"
+ },
+ {
+  "awing": "atúmə",
+  "english": "country",
+  "current": "things",
+  "suggested": "family"
+ },
+ {
+  "awing": "shîəə",
+  "english": "deep",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "sénə",
+  "english": "black",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "ndaŋə",
+  "english": "same",
+  "current": "descriptive",
+  "suggested": "things"
+ },
+ {
+  "awing": "féekə",
+  "english": "expose, of teeth",
+  "current": "things",
+  "suggested": "body"
+ },
+ {
+  "awing": "shágə",
+  "english": "steal palm wine from anothers palm bush",
+  "current": "things",
+  "suggested": "body"
+ },
+ {
+  "awing": "konə",
+  "english": "owl",
+  "current": "things",
+  "suggested": "animals"
+ },
+ {
+  "awing": "achi'lə",
+  "english": "turf",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "ambuə",
+  "english": "medicinal plant",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "chwaglə",
+  "english": "bath in an improper way",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "féŋtə",
+  "english": "get well",
+  "current": "actions",
+  "suggested": "nature"
+ },
+ {
+  "awing": "mbeelə",
+  "english": "furrow",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "péŋə",
+  "english": "be lost",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "póokə",
+  "english": "wither(v)",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "yagə",
+  "english": "scare away by shouting",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "awa'ə",
+  "english": "group",
+  "current": "things",
+  "suggested": "family"
+ },
+ {
+  "awing": "kyéŋtə",
+  "english": "cut off with",
+  "current": "actions",
+  "suggested": "food"
+ },
+ {
+  "awing": "məsaŋə",
+  "english": "flower on maize stalk",
+  "current": "nature",
+  "suggested": "food"
+ },
+ {
+  "awing": "nkagə",
+  "english": "a 20 litres container",
+  "current": "things",
+  "suggested": "food"
+ },
+ {
+  "awing": "tyáala",
+  "english": "strain, to",
+  "current": "things",
+  "suggested": "food"
+ },
+ {
+  "awing": "chaakâ",
+  "english": "accompany, lead away",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chî kətaŋə",
+  "english": "empty",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chî ndzaŋ yi nda'ə",
+  "english": "different",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chɨə",
+  "english": "push",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chîə ashamnə ashamnə",
+  "english": "be scattered or disorganised",
+  "current": "family",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chínə",
+  "english": "be hefty, huge in build",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chítázɔ́'ə",
+  "english": "celibate",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chú' mógə",
+  "english": "light",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chú'tə",
+  "english": "pound",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chwâ",
+  "english": "clear (a field)",
+  "current": "nature",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chwádkə",
+  "english": "save",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chwí'tə",
+  "english": "accumulate",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "chwí'tə",
+  "english": "feel sickly, of body",
+  "current": "actions",
+  "suggested": "numbers"
+ },
+ {
+  "awing": "chwí'tə",
+  "english": "prepare ones food",
+  "current": "food",
+  "suggested": "numbers"
+ },
+ {
+  "awing": "fankə",
+  "english": "wrong",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "fógə",
+  "english": "white",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "fwonə̂",
+  "english": "imprison",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "fwontə̂",
+  "english": "1) lock (many doors)",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "fwoolâ",
+  "english": "shave, as with a blade",
+  "current": "numbers",
+  "suggested": "actions"
+ },
+ {
+  "awing": "fyádtə",
+  "english": "nip in the bud",
+  "current": "things",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "gómə",
+  "english": "gum, clue",
+  "current": "things",
+  "suggested": "numbers"
+ },
+ {
+  "awing": "ghá'ə",
+  "english": "big",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "já'ə",
+  "english": "skip through",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "júnə",
+  "english": "buy",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "jwábtə",
+  "english": "provoke many times",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "jwánə",
+  "english": "befit",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kádtə",
+  "english": "coil many things",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "ká'ə",
+  "english": "clot",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "ká'ə",
+  "english": "solidify (eg",
+  "current": "things",
+  "suggested": "food"
+ },
+ {
+  "awing": "kéelə",
+  "english": "wrap up",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kóŋkə",
+  "english": "cause to be carried away",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kóotə",
+  "english": "grasp, hold",
+  "current": "things",
+  "suggested": "animals"
+ },
+ {
+  "awing": "kwa'ə",
+  "english": "play",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kyáamə",
+  "english": "wring out",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kyáglə",
+  "english": "dirty",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kyagtə",
+  "english": "untie many things",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "kyámtə",
+  "english": "wring out water (a little)",
+  "current": "nature",
+  "suggested": "actions"
+ },
+ {
+  "awing": "la'â",
+  "english": "1) announce (especially of a birth)",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lagə",
+  "english": "fetch, of firewood",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lá'kə",
+  "english": "thank",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "leŋkə",
+  "english": "notice",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lenə",
+  "english": "old",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "ləmə",
+  "english": "1) stink (bad or offensive)",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lí'ə",
+  "english": "cultivate",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lîə",
+  "english": "jump",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lúnkə",
+  "english": "fill",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lwénkə",
+  "english": "fill",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "lwénkə nəŋkə",
+  "english": "fulfill the law",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "máma",
+  "english": "name used for old women",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "mêe",
+  "english": "used up",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "nâ",
+  "english": "insist",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "nəələ",
+  "english": "show, explain",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "nyá'ə",
+  "english": "little",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "paŋə",
+  "english": "red",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "pó'nə",
+  "english": "fight",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "pwódnə",
+  "english": "be kind or gentle",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "sá'kə",
+  "english": "burst out, of many",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "sá'kə",
+  "english": "explode, of many",
+  "current": "things",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "séekə",
+  "english": "blaze, of light",
+  "current": "nature",
+  "suggested": "actions"
+ },
+ {
+  "awing": "téekə",
+  "english": "meet",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "téemə",
+  "english": "set a trap",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "tégə",
+  "english": "meet, catch up with",
+  "current": "animals",
+  "suggested": "actions"
+ },
+ {
+  "awing": "tegnə",
+  "english": "already left (gone)",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "tágtə",
+  "english": "advise on many issues",
+  "current": "actions",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "támə",
+  "english": "kick",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "toonô",
+  "english": "singe",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "twáamə",
+  "english": "lift up",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "tyagə",
+  "english": "lift sth sticky",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "tséebə",
+  "english": "speak",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "tsédndzəmə",
+  "english": "last",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "tsóŋə",
+  "english": "cluster tightly together",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "tsóŋtə",
+  "english": "tightly clustered together",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "waamə",
+  "english": "hold",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "wam mbəəmə",
+  "english": "patient",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "yáŋə",
+  "english": "wise",
+  "current": "descriptive",
+  "suggested": "actions"
+ },
+ {
+  "awing": "yéelə",
+  "english": "loose the mind",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "zá'kə",
+  "english": "lend",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "afélə",
+  "english": "uninfluential",
+  "current": "things",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "káyé",
+  "english": "little",
+  "current": "family",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "nkya'ə",
+  "english": "light",
+  "current": "nature",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "afəələ",
+  "english": "water tube",
+  "current": "nature",
+  "suggested": "things"
+ },
+ {
+  "awing": "ajwelə",
+  "english": "influenza",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "əfó'ə",
+  "english": "deep valley with palm bush",
+  "current": "things",
+  "suggested": "body"
+ },
+ {
+  "awing": "Əsê nəpóolə",
+  "english": "God, the one who created everything on earth; supreme being",
+  "current": "body",
+  "suggested": "things"
+ },
+ {
+  "awing": "nəpíəmbéŋə",
+  "english": "quiny",
+  "current": "nature",
+  "suggested": "things"
+ },
+ {
+  "awing": "tə",
+  "english": "\"us\", excluding other people",
+  "current": "family",
+  "suggested": "things"
+ },
+ {
+  "awing": "já'kə",
+  "english": "initiate",
+  "current": "things",
+  "suggested": "family"
+ },
+ {
+  "awing": "fyáamə",
+  "english": "daub",
+  "current": "things",
+  "suggested": "actions"
+ },
+ {
+  "awing": "káŋtə",
+  "english": "fry many things",
+  "current": "things",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "kwíŋə",
+  "english": "grow up",
+  "current": "actions",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "njíə",
+  "english": "manner of eating",
+  "current": "things",
+  "suggested": "food"
+ },
+ {
+  "awing": "sá'ə",
+  "english": "announce publicly",
+  "current": "things",
+  "suggested": "descriptive"
+ },
+ {
+  "awing": "apéenə",
+  "english": "flour",
+  "current": "things",
+  "suggested": "food"
+ },
+ {
+  "awing": "ka'ə",
+  "english": "appear",
+  "current": "actions",
+  "suggested": "body"
+ },
+ {
+  "awing": "ko'nə",
+  "english": "right",
+  "current": "descriptive",
+  "suggested": "things"
+ },
+ {
+  "awing": "akwálkə̌",
+  "english": "inflammables",
+  "current": "things",
+  "suggested": "nature"
+ },
+ {
+  "awing": "alíləməə",
+  "english": "bat",
+  "current": "animals",
+  "suggested": "food"
+ },
+ {
+  "awing": "alə'tə̌",
+  "english": "curse, disability",
+  "current": "things",
+  "suggested": "body"
+ },
+ {
+  "awing": "chí nə móonə",
+  "english": "be pregnant",
+  "current": "things",
+  "suggested": "family"
+ },
+ {
+  "awing": "chí nə napamə",
+  "english": "be pregnant",
+  "current": "things",
+  "suggested": "family"
+ },
+ {
+  "awing": "tsə'ə",
+  "english": "extract milk",
+  "current": "food",
+  "suggested": "animals"
+ }
+]

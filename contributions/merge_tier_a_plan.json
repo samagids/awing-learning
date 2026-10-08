@@ -1,0 +1,6415 @@
+[
+ {
+  "awing": "əfê",
+  "keep_key": "efe__this_compound_this_place_here_no",
+  "keep_english": "this compound, this place, here (nominal)",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "efe__in_this_compound_this_place_here",
+    "english": "in this compound, this place, here (nominal)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atûə",
+  "keep_key": "atue__head",
+  "keep_english": "head",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "atue__head_hair_only_used_when_one_is",
+    "english": "head; hair, only used when one is saying something concerning the hair",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "amiə",
+  "keep_key": "amie__neck",
+  "keep_english": "neck",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "amie__neck_body_part",
+    "english": "neck (body part)",
+    "category": "body"
+   },
+   {
+    "key": "amie__neck_synonym_of_nde",
+    "english": "neck (synonym of ndě)",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "nəsoŋə",
+  "keep_key": "nesonge__tooth",
+  "keep_english": "tooth",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "nesonge__tooth_fang",
+    "english": "tooth; fang",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "nəpəmə",
+  "keep_key": "nepeme__stomachache",
+  "keep_english": "stomachache",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nepeme__stomachache_upset_stomach",
+    "english": "stomachache, upset stomach",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "alu'ə",
+  "keep_key": "alue__lumbago",
+  "keep_english": "lumbago",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "alue__lumbago_muscular_pain_of_the_lum",
+    "english": "lumbago, muscular pain of the lumbar regions, of an illness",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ajwiə",
+  "keep_key": "ajwie__breath",
+  "keep_english": "breath",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajwie__breath_soul_spirit_of_living_per",
+    "english": "breath; soul; spirit (of living person)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "əfəblə",
+  "keep_key": "efeble__lung",
+  "keep_english": "lung",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "efeble__lungs_especially_of_animals",
+    "english": "lungs, especially of animals",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kwúneemə",
+  "keep_key": "kwuneeme__pig",
+  "keep_english": "pig",
+  "keep_category_was": "animals",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "kwuneeme__pig_considered_to_be_a_very_dirt",
+    "english": "pig, considered to be a very dirty and gluttonous animal",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "aŋkə'á",
+  "keep_key": "angkea__rooster",
+  "keep_english": "rooster",
+  "keep_category_was": "animals",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "angkea__rooster_cock",
+    "english": "rooster; cock",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "mbaŋə",
+  "keep_key": "mbange__cane",
+  "keep_english": "cane",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "mbange__cane_walking_stick_club_cudgel",
+    "english": "cane, walking stick, club, cudgel",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ndo",
+  "keep_key": "ndo__valley",
+  "keep_english": "valley",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "ndo__valley_sort_of_deep",
+    "english": "valley, sort of deep",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "afoonə",
+  "keep_key": "afoone__hunting",
+  "keep_english": "hunting",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "afoone__hunting_field_farm",
+    "english": "hunting; field, farm",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "ndzəmə",
+  "keep_key": "ndzeme__back_place",
+  "keep_english": "back (place)",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "ndzeme__back_behind_backward",
+    "english": "back; behind, backward",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "neemə",
+  "keep_key": "neeme__animal",
+  "keep_english": "animal",
+  "keep_category_was": "animals",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "neeme__animal_meat",
+    "english": "animal; meat",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "ngéemə",
+  "keep_key": "ngeeme__bunch_of_banana",
+  "keep_english": "bunch of banana",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "ngeeme__bunch_of_banana_bunch_of_plantai",
+    "english": "bunch of banana, bunch of plantain",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "achú'ə",
+  "keep_key": "achue__pounded_cocoyam",
+  "keep_english": "pounded cocoyam",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "achue__pounded_cocoyams",
+    "english": "pounded cocoyams",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "achú'ə",
+  "keep_key": "achue__cocoyams_that_are_pounded_and_ea",
+  "keep_english": "cocoyams that are pounded and eaten with red soup, meat and",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "achue__cocoyams_pounded_and_eaten_with",
+    "english": "cocoyams pounded and eaten with red soup, meat and vegetables",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "ngwáŋə",
+  "keep_key": "ngwange__salt",
+  "keep_english": "salt",
+  "keep_category_was": "things",
+  "category": "food",
+  "remove": [
+   {
+    "key": "ngwange__salt_local",
+    "english": "salt (local)",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "fê",
+  "keep_key": "fe__give",
+  "keep_english": "give",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fe__give_hand_over",
+    "english": "give, hand over",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "pímə",
+  "keep_key": "pime__believe",
+  "keep_english": "believe",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pime__believe_accept",
+    "english": "believe; accept",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "túmə",
+  "keep_key": "tume__send",
+  "keep_english": "send",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tume__send_delegate",
+    "english": "send, delegate",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "túmə",
+  "keep_key": "tume__cross",
+  "keep_english": "cross",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "tume__cross_traverse",
+    "english": "cross, traverse",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kwúnə",
+  "keep_key": "kwune__enter",
+  "keep_english": "enter",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kwune__enter_go_in_come_in",
+    "english": "enter, go in, come in",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kəənə̂",
+  "keep_key": "keene__run",
+  "keep_english": "run",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "keene__run_to_many_places_or_directions",
+    "english": "run to many places or directions",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lê",
+  "keep_key": "le__sleepy",
+  "keep_english": "sleepy",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "le__be_sleepy_sleep",
+    "english": "be sleepy; sleep",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lê",
+  "keep_key": "le__this_way",
+  "keep_english": "this way",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "le__this_way_so",
+    "english": "this way, so",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kóolə",
+  "keep_key": "koole__catch",
+  "keep_english": "catch",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "koole__catch_harvest",
+    "english": "catch/harvest",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kóolə",
+  "keep_key": "koole__grasp",
+  "keep_english": "grasp",
+  "keep_category_was": "things",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "koole__grasp_take_hold_catch_a_trap_has",
+    "english": "grasp, take hold, catch (a trap has caught an antelope)",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "sónə",
+  "keep_key": "sone__say",
+  "keep_english": "say",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "sone__say_speak",
+    "english": "say/speak",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "wiŋə",
+  "keep_key": "winge__laugh",
+  "keep_english": "laugh",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "winge__laugh_smile",
+    "english": "laugh; smile",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "wiŋə",
+  "keep_key": "winge__big",
+  "keep_english": "big",
+  "keep_category_was": "family",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "winge__big_great",
+    "english": "big; great",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "kyéŋə",
+  "keep_key": "kyenge__cry",
+  "keep_english": "cry",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kyenge__cry_weep",
+    "english": "cry/weep",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "léelə",
+  "keep_key": "leele__prepare",
+  "keep_english": "prepare",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "leele__prepare_be_ready_make_preparatio",
+    "english": "prepare, be ready, make preparations",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "fyáalə",
+  "keep_key": "fyaale__nip_in_the_bud",
+  "keep_english": "nip in the bud",
+  "keep_category_was": "things",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "fyaale__nip_in_the_bud_eg_a_bad_idea",
+    "english": "nip in the bud (eg a bad idea)",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "pá'ə",
+  "keep_key": "pae__break_tr",
+  "keep_english": "break (tr)",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pae__break_harvest_of_maize",
+    "english": "break, harvest, of maize",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "pá'ə",
+  "keep_key": "pae__plait",
+  "keep_english": "plait",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "pae__1_plait_braid_eg_hair",
+    "english": "1) plait, braid (eg hair)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kyê",
+  "keep_key": "kye__pluck",
+  "keep_english": "pluck",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kye__pluck_fruit_s",
+    "english": "pluck fruit(s)",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "kəŋtə̂",
+  "keep_key": "kengte__shut_a_little_shut_many",
+  "keep_english": "shut a little; shut many",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kengte__shut_a_little_shut_many_eg_of_do",
+    "english": "shut a little; shut many, eg of doors",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "ghabnə",
+  "keep_key": "ghabne__share",
+  "keep_english": "share",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "ghabne__share_divide",
+    "english": "share/divide",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ghabnə",
+  "keep_key": "ghabne__divide",
+  "keep_english": "divide",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ghabne__divide_separate_share",
+    "english": "divide, separate, share",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tóŋə",
+  "keep_key": "tonge__crow_of_rooster",
+  "keep_english": "crow, of rooster",
+  "keep_category_was": "animals",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "tonge__crow_of_rooster_blow_of_horn",
+    "english": "crow, of rooster; blow, of horn",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "túga",
+  "keep_key": "tuga__have",
+  "keep_english": "have",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tuga__have_hold",
+    "english": "have, hold",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "zó'ə",
+  "keep_key": "zoe__hear",
+  "keep_english": "hear",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "zoe__hear_feel",
+    "english": "hear; feel",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kwáalə",
+  "keep_key": "kwaale__get",
+  "keep_english": "get",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kwaale__get_plunder",
+    "english": "get; plunder",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kəŋə̂",
+  "keep_key": "kenge__shut",
+  "keep_english": "shut",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kenge__shut_transitive_of_a_door",
+    "english": "shut (transitive), of a door",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ajúmə",
+  "keep_key": "ajume__thing",
+  "keep_english": "thing",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajume__thing_something_everything",
+    "english": "thing, something; everything",
+    "category": "things"
+   },
+   {
+    "key": "ajume__thing_something",
+    "english": "thing, something",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "apeemə",
+  "keep_key": "apeeme__bag",
+  "keep_english": "bag",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "apeeme__bag_sort_of",
+    "english": "bag, sort of",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "mbê",
+  "keep_key": "mbe__knife",
+  "keep_english": "knife",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "mbe__a_knife_used_for_tapping_raffia",
+    "english": "a knife used for tapping raffia palm",
+    "category": "body"
+   },
+   {
+    "key": "mbe__knife_for_tapping",
+    "english": "knife, for tapping",
+    "category": "things"
+   },
+   {
+    "key": "mbe__knife_for_tapping_raffia_palm",
+    "english": "knife for tapping raffia palm",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "alóŋə",
+  "keep_key": "alonge__dress_of_the_same_pattern",
+  "keep_english": "dress of the same pattern",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "alonge__dress_of_the_same_pattern_used_t",
+    "english": "dress of the same pattern used to identify people of the same group eg a dance group",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ntaŋə",
+  "keep_key": "ntange__drum",
+  "keep_english": "drum",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ntange__drum_musical_instrument",
+    "english": "drum musical instrument",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "aŋwa'lə",
+  "keep_key": "angwale__book",
+  "keep_english": "book",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "angwale__book_school",
+    "english": "book/school",
+    "category": "things"
+   },
+   {
+    "key": "angwale__book_knowledge_school",
+    "english": "book, knowledge, school",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "aŋwa'lə",
+  "keep_key": "angwale__school",
+  "keep_english": "school",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "angwale__school_knowledge",
+    "english": "school, knowledge",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "mógə",
+  "keep_key": "moge__fire",
+  "keep_english": "fire",
+  "keep_category_was": "nature",
+  "category": "things",
+  "remove": [
+   {
+    "key": "moge__fire_burn",
+    "english": "fire/burn",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atso",
+  "keep_key": "atso__musical_instrument",
+  "keep_english": "musical instrument",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "atso__musical_instrument_made_from_a_h",
+    "english": "musical instrument made from a horn",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "azoobə",
+  "keep_key": "azoobe__song",
+  "keep_english": "song",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "azoobe__song_singing",
+    "english": "song, singing",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ŋwíŋə",
+  "keep_key": "ngwinge__machete",
+  "keep_english": "machete",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ngwinge__machete_cutlass",
+    "english": "machete/cutlass",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nká'ə",
+  "keep_key": "nkae__fence",
+  "keep_english": "fence",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nkae__fence_den",
+    "english": "fence, den",
+    "category": "things"
+   },
+   {
+    "key": "nkae__fence_dyke",
+    "english": "fence, dyke",
+    "category": "things"
+   },
+   {
+    "key": "nkae__fence_pen",
+    "english": "fence, pen",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akwelə",
+  "keep_key": "akwele__herd",
+  "keep_english": "herd",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwele__herd_of_cattle_sheep_heap_pile",
+    "english": "herd (of cattle, sheep); heap, pile",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "akwelə",
+  "keep_key": "akwele__prostitute_n",
+  "keep_english": "prostitute (n)",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwele__prostitute_whore",
+    "english": "prostitute, whore",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nkéebə",
+  "keep_key": "nkeebe__main_market_day_in_awing",
+  "keep_english": "main market day in Awing",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "nkeebe__main_market_day_in_awing_the_sev",
+    "english": "main market day in Awing; the seventh day of the week in Awing",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "ajwa'áli'ó",
+  "keep_key": "ajwaalio__noise",
+  "keep_english": "noise",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajwaalio__noise_sound_disturbance",
+    "english": "noise, sound, disturbance",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ndenə",
+  "keep_key": "ndene__price_cost",
+  "keep_english": "price, cost",
+  "keep_category_was": "food",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ndene__price_cost_number_amount",
+    "english": "price, cost; number, amount",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ntse mbia",
+  "keep_key": "ntsembia__elder",
+  "keep_english": "elder",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "ntsembia__elder_respected_person",
+    "english": "elder, respected person",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "alá'ə",
+  "keep_key": "alae__much",
+  "keep_english": "much",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "alae__much_a_lot",
+    "english": "much, a lot",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "alá'ə",
+  "keep_key": "alae__tribe",
+  "keep_english": "tribe",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "alae__tribe_village",
+    "english": "tribe, village",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "ndúmə",
+  "keep_key": "ndume__husband",
+  "keep_english": "husband",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "ndume__husband_groom",
+    "english": "husband; groom",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "əfo",
+  "keep_key": "efo__fon",
+  "keep_english": "fon",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "efo__fon_highest_ruler_in_a_land",
+    "english": "fon; highest ruler in a land",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ŋwunə",
+  "keep_key": "ngwune__being_human",
+  "keep_english": "being, human",
+  "keep_category_was": "things",
+  "category": "family",
+  "remove": [
+   {
+    "key": "ngwune__human_being_person",
+    "english": "human being; person",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "atúmə",
+  "keep_key": "atume__country",
+  "keep_english": "country",
+  "keep_category_was": "things",
+  "category": "family",
+  "remove": [
+   {
+    "key": "atume__country_land",
+    "english": "country/land",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "nchîndê",
+  "keep_key": "nchinde__compound",
+  "keep_english": "compound",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "nchinde__compound_residence",
+    "english": "compound, residence",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "chɔ́sə",
+  "keep_key": "chose__church",
+  "keep_english": "church",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "chose__church_denomination",
+    "english": "church; denomination",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kwa",
+  "keep_key": "kwa__four",
+  "keep_english": "four",
+  "keep_category_was": "numbers",
+  "category": "numbers",
+  "remove": [
+   {
+    "key": "kwa__four_see_n_kwa",
+    "english": "four (see nəkwa)",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "tênə",
+  "keep_key": "tene__five",
+  "keep_english": "five",
+  "keep_category_was": "numbers",
+  "category": "numbers",
+  "remove": [
+   {
+    "key": "tene__five_alternate_form",
+    "english": "five (alternate form)",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "nəpu'ə́",
+  "keep_key": "nepue__nine",
+  "keep_english": "nine",
+  "keep_category_was": "numbers",
+  "category": "numbers",
+  "remove": [
+   {
+    "key": "nepue__nine_9",
+    "english": "nine (9)",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "shîəə",
+  "keep_key": "shiee__deep",
+  "keep_english": "deep",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "shiee__be_deep",
+    "english": "be deep",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kwúbtə",
+  "keep_key": "kwubte__close",
+  "keep_english": "close",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kwubte__close_eg_palm_eyes_mouth",
+    "english": "close eg palm, eyes, mouth",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ntúmkə",
+  "keep_key": "ntumke__entrance",
+  "keep_english": "entrance",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ntumke__entrance_hut",
+    "english": "entrance hut",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "sénə",
+  "keep_key": "sene__black",
+  "keep_english": "black",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "sene__be_black_blue_green_dark",
+    "english": "be black, blue, green, dark",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "məfóomə",
+  "keep_key": "mefoome__fat",
+  "keep_english": "fat",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "mefoome__fat_thick",
+    "english": "fat/thick",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "ashwánə",
+  "keep_key": "ashwane__thin",
+  "keep_english": "thin",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "ashwane__thin_lanky",
+    "english": "thin, lanky",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "nwâ",
+  "keep_key": "nwa__cold",
+  "keep_english": "cold",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "nwa__be_cold",
+    "english": "be cold",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "mboŋə",
+  "keep_key": "mbonge__many",
+  "keep_english": "many",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "mbonge__many_much",
+    "english": "many/much",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "akó'kə",
+  "keep_key": "akoke__steep_or_sloping_place",
+  "keep_english": "steep or sloping place",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akoke__steep_or_sloping_place_eg_a_hill",
+    "english": "steep or sloping place eg a hill",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nyaanə",
+  "keep_key": "nyaane__slow",
+  "keep_english": "slow",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "nyaane__slow_careful",
+    "english": "slow/careful",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "nyaanə",
+  "keep_key": "nyaane__sluggish",
+  "keep_english": "sluggish",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nyaane__sluggish_slow",
+    "english": "sluggish, slow",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ndaŋə",
+  "keep_key": "ndange__same",
+  "keep_english": "same",
+  "keep_category_was": "descriptive",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ndange__same_the_same",
+    "english": "same, the same",
+    "category": "things"
+   },
+   {
+    "key": "ndange__the_same",
+    "english": "the same",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kwúbkə",
+  "keep_key": "kwubke__drink_hastily",
+  "keep_english": "drink hastily",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kwubke__drink_eg_water_wine_medicine_has",
+    "english": "drink (eg water, wine, medicine) hastily",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "jimnə̂",
+  "keep_key": "jimne__wake_up",
+  "keep_english": "wake up",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "jimne__wake_up_intransitive",
+    "english": "wake up (intransitive)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chámtə",
+  "keep_key": "chamte__whisper",
+  "keep_english": "whisper",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chamte__whisper_speak_quietly",
+    "english": "whisper, speak quietly",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "féekə",
+  "keep_key": "feeke__expose_of_teeth",
+  "keep_english": "expose, of teeth",
+  "keep_category_was": "things",
+  "category": "body",
+  "remove": [
+   {
+    "key": "feeke__expose_teeth_especially_in_laugh",
+    "english": "expose teeth especially in laughter (colloquial)",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "shágə",
+  "keep_key": "shage__steal_palm_wine_from_anothers_pa",
+  "keep_english": "steal palm wine from anothers palm bush",
+  "keep_category_was": "things",
+  "category": "body",
+  "remove": [
+   {
+    "key": "shage__steal_palm_wine_from_another_per",
+    "english": "steal palm wine from another person's palm bush",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "achíkə ŋwunə",
+  "keep_key": "achikengwune__a_person_old_and_irresponsive",
+  "keep_english": "a person old and irresponsive",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "achikengwune__a_person_old_and_irresponsive_to",
+    "english": "a person, old and irresponsive to bodily emotions",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "ngaŋnaghéenə",
+  "keep_key": "ngangnagheene__guest",
+  "keep_english": "guest",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "ngangnagheene__guest_visitor_stranger",
+    "english": "guest, visitor; stranger",
+    "category": "family"
+   },
+   {
+    "key": "ngangnagheene__guest_visitor",
+    "english": "guest, visitor",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "ngwulə",
+  "keep_key": "ngwule__clan_family_descendant",
+  "keep_english": "clan, family; descendant",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "ngwule__clan_family_descendant_generatio",
+    "english": "clan, family, descendant, generation",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "konə",
+  "keep_key": "kone__owl",
+  "keep_english": "owl",
+  "keep_category_was": "things",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "kone__owl_a_bird_with_deep_eyes_that_c",
+    "english": "owl, a bird with deep eyes that cries in the night (associated with bad omens)",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "achi'lə",
+  "keep_key": "achile__turf",
+  "keep_english": "turf",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "achile__turf_of_grass",
+    "english": "turf of grass",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "ambuə",
+  "keep_key": "ambue__medicinal_plant",
+  "keep_english": "medicinal plant",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "ambue__medicinal_plant_that_produces_a",
+    "english": "medicinal plant that produces a sticky substance used as gum",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "chwaglə",
+  "keep_key": "chwagle__bath_in_an_improper_way",
+  "keep_english": "bath in an improper way",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "chwagle__bath_oneself_or_wash_something_i",
+    "english": "bath oneself or wash something in an improper way",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "féŋtə",
+  "keep_key": "fengte__get_well",
+  "keep_english": "get well",
+  "keep_category_was": "actions",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "fengte__get_well_recover_from_illness",
+    "english": "get well, recover from illness",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "mba' mbaŋə",
+  "keep_key": "mbambange__rain_maker",
+  "keep_english": "rain maker",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "mbambange__rain_maker_or_somebody_who_makes",
+    "english": "rain maker or somebody who makes rain not to fall with the use of magical powers",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "mba'ə",
+  "keep_key": "mbae__rain_maker",
+  "keep_english": "rain maker",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "mbae__rain_maker_or_somebody_who_makes",
+    "english": "rain maker or somebody who makes rain not to fall with the use of magical powers",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "mbeelə",
+  "keep_key": "mbeele__furrow",
+  "keep_english": "furrow",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "mbeele__furrow_between_farm_beds",
+    "english": "furrow between farm beds",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "mbiə",
+  "keep_key": "mbie__front",
+  "keep_english": "front",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "mbie__front_forward",
+    "english": "front, forward",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nkəŋə",
+  "keep_key": "nkenge__steep_place",
+  "keep_english": "steep place",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nkenge__steep_place_of_alk",
+    "english": "steep place, of alk'ə",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "péŋə",
+  "keep_key": "penge__be_lost",
+  "keep_english": "be lost",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "penge__be_lost_someone_missing_in_the_f",
+    "english": "be lost; someone missing in the forest",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "póokə",
+  "keep_key": "pooke__wither_v",
+  "keep_english": "wither(v)",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "pooke__wither_eg_a_plant",
+    "english": "wither eg a plant",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "túmkə",
+  "keep_key": "tumke__come_out_forcefully",
+  "keep_english": "come out forcefully",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tumke__come_forcefully_flow_out_forcefu",
+    "english": "come forcefully, flow out forcefully eg of water from a burst pipe",
+    "category": "actions"
+   },
+   {
+    "key": "tumke__come_out_forcefully_flow_out_for",
+    "english": "come out forcefully, flow out forcefully",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "yagə",
+  "keep_key": "yage__scare_away_by_shouting",
+  "keep_english": "scare away by shouting",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "yage__scare_away_by_shouting_eg_of_ani",
+    "english": "scare away by shouting eg of animals or birds in a farm",
+    "category": "nature"
+   },
+   {
+    "key": "yage__scare_away_shouting_eg_of_animal",
+    "english": "scare away shouting eg of animals or birds in a farm; yell out curses eg to a thief",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "akwâ",
+  "keep_key": "akwa__pounded_irish_and_banana",
+  "keep_english": "pounded irish and banana",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "akwa__pounded_irish_potato_and_banana",
+    "english": "pounded Irish potato and banana",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "amú'áchú'ə",
+  "keep_key": "amuachue__banana_for_preparing_achu",
+  "keep_english": "banana, for preparing achu",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "amuachue__banana_used_for_preparing_achu",
+    "english": "banana used for preparing achu",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "awa'ə",
+  "keep_key": "awae__container_for_achu_soup",
+  "keep_english": "container for achu soup",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "awae__a_container_for_achu_soup",
+    "english": "a container for achu soup",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "awa'ə",
+  "keep_key": "awae__group",
+  "keep_english": "group",
+  "keep_category_was": "things",
+  "category": "family",
+  "remove": [
+   {
+    "key": "awae__group_crowd",
+    "english": "group; crowd",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "koshamə",
+  "keep_key": "koshame__curdled_milk",
+  "keep_english": "curdled milk",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "koshame__curdled_milk_cottage_cheese",
+    "english": "curdled milk; cottage cheese",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "kyéŋtə",
+  "keep_key": "kyengte__cut_off_with",
+  "keep_english": "cut off with",
+  "keep_category_was": "actions",
+  "category": "food",
+  "remove": [
+   {
+    "key": "kyengte__cut_off_undesirable_ends_of_vege",
+    "english": "Cut off undesirable ends of vegetable",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "məsaŋə",
+  "keep_key": "mesange__flower_on_maize_stalk",
+  "keep_english": "flower on maize stalk",
+  "keep_category_was": "nature",
+  "category": "food",
+  "remove": [
+   {
+    "key": "mesange__the_flower_on_the_stalk_of_maize",
+    "english": "the flower on the stalk of maize (any sort of maize)",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "nkagə",
+  "keep_key": "nkage__a_20_litres_container",
+  "keep_english": "a 20 litres container",
+  "keep_category_was": "things",
+  "category": "food",
+  "remove": [
+   {
+    "key": "nkage__a_20_litres_container_for_measur",
+    "english": "a 20 litres container for measuring eg coffee measurement",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "tyáala",
+  "keep_key": "tyaala__strain_to",
+  "keep_english": "strain, to",
+  "keep_category_was": "things",
+  "category": "food",
+  "remove": [
+   {
+    "key": "tyaala__to_strain_food_or_anything_using",
+    "english": "to strain food or anything using water",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "chaakâ",
+  "keep_key": "chaaka__accompany_lead_away",
+  "keep_english": "accompany, lead away",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chaaka__accompany_lead_away_send_through",
+    "english": "accompany, lead away; send through or pass something across",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chánə",
+  "keep_key": "chane__turn_away_in_disgust",
+  "keep_english": "turn away in disgust",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chane__turn_away_from_someone_in_disgus",
+    "english": "turn away from someone in disgust; talk impolitely",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chî kətaŋə",
+  "keep_key": "chiketange__empty",
+  "keep_english": "empty",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chiketange__be_empty",
+    "english": "be empty",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chî ndzaŋ yi nda'ə",
+  "keep_key": "chindzangyindae__different",
+  "keep_english": "different",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chindzangyindae__be_different_be_contrary_to_expe",
+    "english": "be different, be contrary to expectations",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chɨə",
+  "keep_key": "chie__push",
+  "keep_english": "push",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chie__push_support",
+    "english": "push; support",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chîə ashamnə ashamnə",
+  "keep_key": "chieashamneashamne__be_scattered_or_disorganised",
+  "keep_english": "be scattered or disorganised",
+  "keep_category_was": "family",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chieashamneashamne__be_scattered_or_disorganised_liv",
+    "english": "be scattered or disorganised; live apart, not together (of people)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chínə",
+  "keep_key": "chine__be_hefty_huge_in_build",
+  "keep_english": "be hefty, huge in build",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chine__be_hefty_huge_in_build_important",
+    "english": "be hefty, huge in build; important",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chítázɔ́'ə",
+  "keep_key": "chitazoe__celibate",
+  "keep_english": "celibate",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chitazoe__be_celibate",
+    "english": "be celibate",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chú' mógə",
+  "keep_key": "chumoge__light",
+  "keep_english": "light",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chumoge__light_fire",
+    "english": "light (fire)",
+    "category": "actions"
+   },
+   {
+    "key": "chumoge__light_of_fire",
+    "english": "light, of fire",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "chú'tə",
+  "keep_key": "chute__pound",
+  "keep_english": "pound",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chute__pound_many_times_smash_many_time",
+    "english": "pound many times, smash many times",
+    "category": "actions"
+   },
+   {
+    "key": "chute__pound_many_times",
+    "english": "pound many times",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "chwâ",
+  "keep_key": "chwa__clear_a_field",
+  "keep_english": "clear (a field)",
+  "keep_category_was": "nature",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chwa__to_clear_a_field",
+    "english": "to clear (a field)",
+    "category": "actions"
+   },
+   {
+    "key": "chwa__1_be_clear_a_field",
+    "english": "1) be clear (a field)",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "chwádkə",
+  "keep_key": "chwadke__save",
+  "keep_english": "save",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chwadke__save_deliver_from_danger",
+    "english": "save, deliver from danger",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chwigtə",
+  "keep_key": "chwigte__spy_many_times",
+  "keep_english": "spy many times",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "chwigte__spy_many_times_spy_a_little",
+    "english": "spy many times; spy a little",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "chwí'tə",
+  "keep_key": "chwite__accumulate",
+  "keep_english": "accumulate",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "chwite__accumulate_pack",
+    "english": "accumulate, pack",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "chwí'tə",
+  "keep_key": "chwite__feel_sickly_of_body",
+  "keep_english": "feel sickly, of body",
+  "keep_category_was": "actions",
+  "category": "numbers",
+  "remove": [
+   {
+    "key": "chwite__feel_weak_and_sickly_of_one_s_bo",
+    "english": "feel weak and sickly, of one's body",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "chwí'tə",
+  "keep_key": "chwite__prepare_ones_food",
+  "keep_english": "prepare ones food",
+  "keep_category_was": "food",
+  "category": "numbers",
+  "remove": [
+   {
+    "key": "chwite__prepare_one_s_self_one_s_things",
+    "english": "prepare (one's self, one's things)",
+    "category": "numbers"
+   },
+   {
+    "key": "chwite__prepare_of_one_s_self",
+    "english": "prepare, of one's self",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "fankə",
+  "keep_key": "fanke__wrong",
+  "keep_english": "wrong",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fanke__be_wrong",
+    "english": "be wrong",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "fáŋkə",
+  "keep_key": "fangke__fat",
+  "keep_english": "fat",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "fangke__1_be_fat_of_many_things",
+    "english": "1) be fat (of many things)",
+    "category": "actions"
+   },
+   {
+    "key": "fangke__fat_of_many_things",
+    "english": "fat, of many things",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "fágtə",
+  "keep_key": "fagte__blow_a_little",
+  "keep_english": "blow a little",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fagte__blow_many_times_blow_a_little",
+    "english": "blow (many times), blow a little",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "fəmə",
+  "keep_key": "feme__deep",
+  "keep_english": "deep",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "feme__deep_one_s_hands_head_feet_etc_i",
+    "english": "deep one's hands, head, feet, etc into sth eg water",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "fəmkə",
+  "keep_key": "femke__drown_transitive",
+  "keep_english": "drown (transitive)",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "femke__drown_tr_in_war_people_drown_the",
+    "english": "drown(tr); in war people drown their enemies in water as a way of punishing them",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "fəmnə",
+  "keep_key": "femne__drown_intransitive",
+  "keep_english": "drown (intransitive)",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "femne__drown_intr_humans_drown_under_wa",
+    "english": "drown (intr); humans drown under water, while fish do not",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "filə",
+  "keep_key": "file__blame",
+  "keep_english": "blame",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "file__blame_a_lazy_person_always_blame",
+    "english": "blame; a lazy person always blames his tool for a job badly done",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "fógə",
+  "keep_key": "foge__pick_tr",
+  "keep_english": "pick (tr)",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "foge__pick_choose",
+    "english": "pick; choose",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "fógə",
+  "keep_key": "foge__white",
+  "keep_english": "white",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "foge__be_white",
+    "english": "be white",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "fu'ô",
+  "keep_key": "fuo__bubble_up_boil",
+  "keep_english": "bubble up, boil",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fuo__bubble_up_boil_eg_water",
+    "english": "bubble up, boil (eg water)",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "fwo'â",
+  "keep_key": "fwoa__hollow_out",
+  "keep_english": "hollow out",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fwoa__hollow_out_eg_a_log",
+    "english": "hollow out (eg a log)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "fwonə̂",
+  "keep_key": "fwone__imprison",
+  "keep_english": "imprison",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fwone__imprison_lock_or_key_eg_a_door",
+    "english": "imprison; lock or key eg a door",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "fwontə̂",
+  "keep_key": "fwonte__1_lock_many_doors",
+  "keep_english": "1) lock (many doors)",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fwonte__lock_many_doors_imprison_of_many",
+    "english": "lock (many doors); imprison, of many people",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "fwoolâ",
+  "keep_key": "fwoola__shave_as_with_a_blade",
+  "keep_english": "shave, as with a blade",
+  "keep_category_was": "numbers",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fwoola__shave_as_with_a_blade_peel_off",
+    "english": "shave, as with a blade; peel off",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "fyádtə",
+  "keep_key": "fyadte__nip_in_the_bud",
+  "keep_english": "nip in the bud",
+  "keep_category_was": "things",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "fyadte__nip_in_the_bud_eg_a_bad_idea_or",
+    "english": "nip in the bud (eg a bad idea or many bad ideas)",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "gómə",
+  "keep_key": "gome__clue",
+  "keep_english": "clue",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "gome__clue_fortune",
+    "english": "clue, fortune",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "gómə",
+  "keep_key": "gome__gum_clue",
+  "keep_english": "gum, clue",
+  "keep_category_was": "things",
+  "category": "numbers",
+  "remove": [
+   {
+    "key": "gome__gum_clue_something_especially_of",
+    "english": "gum, clue, something especially of liquid which is used to clue two or more things together",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "ghá'ə",
+  "keep_key": "ghae__big",
+  "keep_english": "big",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "ghae__be_big",
+    "english": "be big",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ghó'kə",
+  "keep_key": "ghoke__respect_honour_praise_worship",
+  "keep_english": "respect, honour, praise; worship",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "ghoke__respect_honour_praise_honour_god",
+    "english": "respect, honour, praise; honour God on the first day of the week; worship, praise",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ghó'kə",
+  "keep_key": "ghoke__worship",
+  "keep_english": "worship",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ghoke__worship_praise",
+    "english": "worship, praise",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "já'ə",
+  "keep_key": "jae__skip_through",
+  "keep_english": "skip through",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "jae__skip_through_leap_over",
+    "english": "skip through, leap over",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "júnə",
+  "keep_key": "june__buy",
+  "keep_english": "buy",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "june__buy_corrupt",
+    "english": "buy; corrupt",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "jwábtə",
+  "keep_key": "jwabte__provoke_many_times",
+  "keep_english": "provoke many times",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "jwabte__provoke_many_times_taunt_contino",
+    "english": "provoke many times, taunt continously",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "jwa'ə",
+  "keep_key": "jwae__annoy",
+  "keep_english": "annoy",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "jwae__annoy_disturb",
+    "english": "annoy, disturb",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "jwánə",
+  "keep_key": "jwane__befit",
+  "keep_english": "befit",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "jwane__befit_suit",
+    "english": "befit; suit",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "jwiəə",
+  "keep_key": "jwiee__breathe",
+  "keep_english": "breathe",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "jwiee__breathe_open_the_window_to_let_a",
+    "english": "breathe; open the window to let air in",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kádtə",
+  "keep_key": "kadte__coil_many_things",
+  "keep_english": "coil many things",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kadte__coil_rope_rap_many_things",
+    "english": "coil rope, rap many things",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ká'ə",
+  "keep_key": "kae__clot",
+  "keep_english": "clot",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kae__clot_as_blood",
+    "english": "clot (as blood)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ká'ə",
+  "keep_key": "kae__solidify_eg",
+  "keep_english": "solidify (eg",
+  "keep_category_was": "things",
+  "category": "food",
+  "remove": [
+   {
+    "key": "kae__solidify_eg_oil",
+    "english": "solidify (eg oil)",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "ká'ə",
+  "keep_key": "kae__measure_eg_of_quantity",
+  "keep_english": "measure (eg of quantity)",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kae__measure_v_of_quantity",
+    "english": "measure (v), of quantity",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ká'ə",
+  "keep_key": "kae__cut",
+  "keep_english": "cut",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kae__cut_i_have_cut_my_hand",
+    "english": "cut; I have cut my hand",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "kéelə",
+  "keep_key": "keele__wrap_up",
+  "keep_english": "wrap up",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "keele__wrap_up_coil_rope",
+    "english": "wrap up, coil (rope)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kéelə",
+  "keep_key": "keele__attack_by_holding_tight",
+  "keep_english": "attack by holding tight",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "keele__attack_by_holding_tight_to_the_d",
+    "english": "attack by holding tight to the dresses of the opponent",
+    "category": "things"
+   },
+   {
+    "key": "keele__attack_by_holding_tight_on_the_d",
+    "english": "attack by holding tight on the dresses of the opponent",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kéenə",
+  "keep_key": "keene__tired",
+  "keep_english": "tired",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "keene__be_tired",
+    "english": "be tired",
+    "category": "actions"
+   },
+   {
+    "key": "keene__be_tired_you_work_a_lot_you_get",
+    "english": "be tired; you work a lot you get tired",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kédkə",
+  "keep_key": "kedke__burn_in_many_places",
+  "keep_english": "burn in many places",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kedke__burn_in_many_places_he_fell_in_f",
+    "english": "burn in many places; he fell in fire and got seriously burnt on many spots",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "kélə",
+  "keep_key": "kele__burn",
+  "keep_english": "burn",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kele__burn_fire_is_burning_on_dry_sava",
+    "english": "burn; fire is burning on dry savana",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "kíbtə",
+  "keep_key": "kibte__shell_a_little",
+  "keep_english": "shell a little",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kibte__shell_a_little_eg_of_groundnuts",
+    "english": "shell a little, eg of groundnuts",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "kogə",
+  "keep_key": "koge__be_blunt",
+  "keep_english": "be blunt",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "koge__be_blunt_eg_of_a_knife",
+    "english": "be blunt, eg of a knife",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kóŋkə",
+  "keep_key": "kongke__cause_to_be_carried_away",
+  "keep_english": "cause to be carried away",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kongke__cause_to_be_carried_away_by_wate",
+    "english": "cause to be carried away by water current",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kóotə",
+  "keep_key": "koote__grasp_hold",
+  "keep_english": "grasp, hold",
+  "keep_category_was": "things",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "koote__grasp_take_hold_catch",
+    "english": "grasp, take hold, catch",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "kwa'ə",
+  "keep_key": "kwae__play",
+  "keep_english": "play",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kwae__play_make_jokes",
+    "english": "play, make jokes",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kwíŋkə",
+  "keep_key": "kwingke__bring_up_raise",
+  "keep_english": "bring up , raise",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kwingke__bring_up_eg_a_child_raise",
+    "english": "bring up (eg a child), raise",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kyáamə",
+  "keep_key": "kyaame__wring_out",
+  "keep_english": "wring out",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kyaame__wring_out_squeeze",
+    "english": "wring out, squeeze",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kyáglə",
+  "keep_key": "kyagle__dirty",
+  "keep_english": "dirty",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kyagle__dirty_with_marks_caused_by_sweat",
+    "english": "Dirty, with marks caused by sweat, water or cosmetics",
+    "category": "actions"
+   },
+   {
+    "key": "kyagle__dirty_with_marks",
+    "english": "Dirty, with marks",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kyagtə",
+  "keep_key": "kyagte__untie_many_things",
+  "keep_english": "untie many things",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kyagte__untie_many_things_eg_bags",
+    "english": "untie many things eg bags",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "kyámtə",
+  "keep_key": "kyamte__wring_out_water_a_little",
+  "keep_english": "wring out water (a little)",
+  "keep_category_was": "nature",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kyamte__wring_out_water_just_a_little_fr",
+    "english": "wring out water (just a little) from sth",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lá'ə",
+  "keep_key": "lae__far_future_tense_marker",
+  "keep_english": "far future tense marker",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "lae__far_future_tense_marker_used_wit",
+    "english": "far future tense marker — used with another future marker",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "la'â",
+  "keep_key": "laa__1_announce_especially_of_a_birth",
+  "keep_english": "1) announce (especially of a birth)",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "laa__announce_especially_of_a_birth_s",
+    "english": "announce (especially of a birth); say (colloquial)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lagə",
+  "keep_key": "lage__fetch_of_firewood",
+  "keep_english": "fetch, of firewood",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lage__fetch_of_firewood_gather_or_asse",
+    "english": "fetch, of firewood; gather or assemble, of objects",
+    "category": "actions"
+   },
+   {
+    "key": "lage__fetch_of_firewood_gather",
+    "english": "fetch, of firewood, gather",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "lá'kə",
+  "keep_key": "lake__thank",
+  "keep_english": "thank",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lake__thank_or_give_thanks",
+    "english": "thank or give thanks",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lá'kə",
+  "keep_key": "lake__make_something_to_get",
+  "keep_english": "make something to get",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lake__make_something_to_get_hooked",
+    "english": "make something to get hooked",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "leŋkə",
+  "keep_key": "lengke__notice",
+  "keep_english": "notice",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lengke__notice_or_put_a_mark_on_somethin",
+    "english": "notice or put a mark on something so as to give it identity",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lenə",
+  "keep_key": "lene__old",
+  "keep_english": "old",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lene__be_old_not_young_not_new",
+    "english": "be old (not young, not new)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lógə",
+  "keep_key": "loge__cut_tr",
+  "keep_english": "cut (tr)",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "loge__cut_tr_decide_put_an_end",
+    "english": "cut (tr); decide, put an end",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ləmə",
+  "keep_key": "leme__1_stink_bad_or_offensive",
+  "keep_english": "1) stink (bad or offensive)",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "leme__stink_bad_or_offensive_smell_int",
+    "english": "stink (bad or offensive); smell (intransitive verb)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "líbkə",
+  "keep_key": "libke__make_go_round",
+  "keep_english": "make go round",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "libke__make_or_cause_something_to_go_ro",
+    "english": "make or cause something to go round",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "líblə",
+  "keep_key": "lible__go_round",
+  "keep_english": "go round",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lible__go_round_surround",
+    "english": "go round, surround",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lí'ə",
+  "keep_key": "lie__cultivate",
+  "keep_english": "cultivate",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lie__cultivate_hoe_v",
+    "english": "cultivate, hoe (v)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lîə",
+  "keep_key": "lie__jump",
+  "keep_english": "jump",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lie__jump_leap",
+    "english": "jump, leap",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lúnkə",
+  "keep_key": "lunke__fill",
+  "keep_english": "fill",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lunke__fill_of_solids_and_liquids",
+    "english": "fill, of solids and liquids",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lwénkə",
+  "keep_key": "lwenke__fill",
+  "keep_english": "fill",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lwenke__fill_be_full",
+    "english": "fill; be full",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "lwénkə nəŋkə",
+  "keep_key": "lwenkenengke__fulfill_the_law",
+  "keep_english": "fulfill the law",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "lwenkenengke__fulfill_the_law_obey_law",
+    "english": "fulfill the law, obey law",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "máma",
+  "keep_key": "mama__name_used_for_old_women",
+  "keep_english": "name used for old women",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "mama__name_used_for_old_women_prefix_u",
+    "english": "name used for old women; prefix used before the names of old women",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "mêe",
+  "keep_key": "mee__used_up",
+  "keep_english": "used up",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "mee__be_used_up",
+    "english": "be used up",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "nâ",
+  "keep_key": "na__insist",
+  "keep_english": "insist",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "na__insist_press",
+    "english": "insist, press",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "néŋə",
+  "keep_key": "nenge__put_place",
+  "keep_english": "put; place",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "nenge__put_place_load_pour",
+    "english": "put, place, load, pour",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nəələ",
+  "keep_key": "neele__show_explain",
+  "keep_english": "show, explain",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "neele__show_explain_demonstrate",
+    "english": "show, explain; demonstrate",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "nyá'ə",
+  "keep_key": "nyae__little",
+  "keep_english": "little",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "nyae__a_little",
+    "english": "a little",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ŋédtə",
+  "keep_key": "ngedte__be_crooked",
+  "keep_english": "be crooked",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "ngedte__be_crooked_eg_of_road",
+    "english": "be crooked, eg of road",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ŋwédlə",
+  "keep_key": "ngwedle__be_too_excited",
+  "keep_english": "be too excited",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "ngwedle__excited_the_too",
+    "english": "excited, the too ~",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "pa'ə",
+  "keep_key": "pae__plait_braid_weave",
+  "keep_english": "plait, braid , weave",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pae__plait_braid_eg_hair_weave",
+    "english": "plait, braid (eg hair), weave",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "pa'ə",
+  "keep_key": "pae__scrub_out",
+  "keep_english": "scrub out",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "pae__scrub_out_peel_off_something",
+    "english": "scrub out, peel off something",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "págə",
+  "keep_key": "page__ferment",
+  "keep_english": "ferment",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "page__ferment_eg_of_food",
+    "english": "ferment, eg of food",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "paŋə",
+  "keep_key": "pange__red",
+  "keep_english": "red",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pange__be_red",
+    "english": "be red",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "pó'ə",
+  "keep_key": "poe__cross_fertilize_of_a_pig",
+  "keep_english": "cross, fertilize (of a pig)",
+  "keep_category_was": "animals",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "poe__cross_fertilize_of_a_plant",
+    "english": "cross, fertilize (of a plant)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "pó' mbeebə",
+  "keep_key": "pombeebe__flap_wings",
+  "keep_english": "flap wings",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pombeebe__flap_of_wings",
+    "english": "flap, of wings",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "pó'nə",
+  "keep_key": "pone__fight",
+  "keep_english": "fight",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pone__fight_fight_each_other",
+    "english": "fight, fight each other",
+    "category": "actions"
+   },
+   {
+    "key": "pone__fight_each_other",
+    "english": "fight each other",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "pwódnə",
+  "keep_key": "pwodne__be_kind_or_gentle",
+  "keep_english": "be kind or gentle",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pwodne__be_kind_or_gentle_of_people_be_s",
+    "english": "be kind or gentle, of people; be soft, of objects",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "pyábtə",
+  "keep_key": "pyabte__guide_a_little",
+  "keep_english": "guide a little",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "pyabte__guide_many_things_or_people_guid",
+    "english": "guide many things or people; guide a little",
+    "category": "actions"
+   },
+   {
+    "key": "pyabte__guide_many_things",
+    "english": "guide many things",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "sa'ə",
+  "keep_key": "sae__order_send",
+  "keep_english": "order, send",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "sae__order_send_to_do_something_judge",
+    "english": "order, send to do something, judge, rule, admonish",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "sá'kə",
+  "keep_key": "sake__burst_out_of_many",
+  "keep_english": "burst out, of many",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "sake__burst_out_of_many_things",
+    "english": "burst out, of many things",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "sá'kə",
+  "keep_key": "sake__explode_of_many",
+  "keep_english": "explode, of many",
+  "keep_category_was": "things",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "sake__explode_of_many_things",
+    "english": "explode, of many things",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "sántə",
+  "keep_key": "sante__cut_into_many_pieces",
+  "keep_english": "cut into many pieces",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "sante__cut_or_break_into_many_pieces",
+    "english": "cut or break into many pieces",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "séenə",
+  "keep_key": "seene__saw_cut_open",
+  "keep_english": "saw , cut open",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "seene__saw_eg_wood_cut_open",
+    "english": "saw (eg wood), cut open",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "séekə",
+  "keep_key": "seeke__blaze_of_light",
+  "keep_english": "blaze, of light",
+  "keep_category_was": "nature",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "seeke__blaze_of_light_shine_intensely_o",
+    "english": "blaze, of light; shine intensely, of light (tr)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "shwə'á",
+  "keep_key": "shwea__reduce_in_intensity",
+  "keep_english": "reduce in intensity",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "shwea__reduce_in_intensity_eg_of_water",
+    "english": "reduce in intensity (eg of water current)",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "táta",
+  "keep_key": "tata__voc",
+  "keep_english": "voc",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "tata__voc_address_to_an_old_man",
+    "english": "voc address to an old man",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "téekə",
+  "keep_key": "teeke__meet",
+  "keep_english": "meet",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "teeke__meet_catch_up_with_join",
+    "english": "meet, catch up with; join",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "téemə",
+  "keep_key": "teeme__set_a_trap",
+  "keep_english": "set a trap",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "teeme__set_a_trap_net_of_fish",
+    "english": "set a trap; net, of fish",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tégə",
+  "keep_key": "tege__meet_catch_up_with",
+  "keep_english": "meet, catch up with",
+  "keep_category_was": "animals",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tege__meet_catch_up_with_join",
+    "english": "meet, catch up with; join",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tegnə",
+  "keep_key": "tegne__already_left_gone",
+  "keep_english": "already left (gone)",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tegne__already_left_gone_just_left_gone",
+    "english": "already left (gone), just left (gone)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tê",
+  "keep_key": "te__hot_of_pepper",
+  "keep_english": "hot, of pepper",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "te__be_hot_of_pepper",
+    "english": "be hot, of pepper",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tê",
+  "keep_key": "te__sting_or_strike_snake_insect",
+  "keep_english": "sting or strike (snake, insect)",
+  "keep_category_was": "animals",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "te__sting_or_strike_of_snake_or_any",
+    "english": "sting or strike, of snake or any insect",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "tê",
+  "keep_key": "te__have_sex_with",
+  "keep_english": "have sex with",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "te__have_sex_with_colloquial_usage",
+    "english": "have sex with, (colloquial usage)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tê ndê",
+  "keep_key": "tende__leave_very_early",
+  "keep_english": "leave very early",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tende__leave_the_house_very_early_in_th",
+    "english": "leave the house very early in the mourning hours, especially at mourning twilight (colloquial usage)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tágtə",
+  "keep_key": "tagte__advise_on_many_issues",
+  "keep_english": "advise on many issues",
+  "keep_category_was": "actions",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "tagte__advise_on_many_issues_advise",
+    "english": "advise on many issues, advise",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "támə",
+  "keep_key": "tame__kick",
+  "keep_english": "kick",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tame__kick_shoot",
+    "english": "kick, shoot",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "toonô",
+  "keep_key": "toono__singe",
+  "keep_english": "singe",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "toono__singe_roast",
+    "english": "singe; roast",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "twáamə",
+  "keep_key": "twaame__lift_up",
+  "keep_english": "lift up",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "twaame__lift_up_carry",
+    "english": "lift up; carry",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tyagə",
+  "keep_key": "tyage__lift_sth_sticky",
+  "keep_english": "lift sth sticky",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tyage__lift_of_sth_sticky",
+    "english": "lift, of sth sticky",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tsámtə",
+  "keep_key": "tsamte__chew_a_little",
+  "keep_english": "chew a little",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tsamte__chew_many_things_chew_a_little",
+    "english": "chew many things; chew a little",
+    "category": "actions"
+   },
+   {
+    "key": "tsamte__chew_many_things",
+    "english": "chew many things",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tséebə",
+  "keep_key": "tseebe__speak",
+  "keep_english": "speak",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tseebe__speak_talk",
+    "english": "speak, talk",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tsédndzəmə",
+  "keep_key": "tsedndzeme__last",
+  "keep_english": "last",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tsedndzeme__last_finalise_end",
+    "english": "last, finalise, end",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tsentə",
+  "keep_key": "tsente__assemble",
+  "keep_english": "assemble",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tsente__assemble_meet_heap_up_join_put_t",
+    "english": "assemble, meet, heap up, join, put together, gather",
+    "category": "actions"
+   },
+   {
+    "key": "tsente__assemble_meet_heap_up",
+    "english": "assemble, meet, heap up",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tsó'ə",
+  "keep_key": "tsoe__extract_of_milk_from_a_cow",
+  "keep_english": "extract of milk from a cow",
+  "keep_category_was": "animals",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "tsoe__extract_of_milk_from_a_cow_or_go",
+    "english": "extract, of milk from a cow or goat",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "tsonkə",
+  "keep_key": "tsonke__create_make_manufacture",
+  "keep_english": "create, make; manufacture",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tsonke__create_make_manufacture_repair_m",
+    "english": "create, make, manufacture, repair, mend, put in order, arrange",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tsóŋə",
+  "keep_key": "tsonge__make_a_knot",
+  "keep_english": "make a knot",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tsonge__make_a_knot_tie_a_knot",
+    "english": "make a knot, tie a knot",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tsóŋə",
+  "keep_key": "tsonge__cluster_tightly_together",
+  "keep_english": "cluster tightly together",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "tsonge__cluster_tightly_together_eg_of_f",
+    "english": "cluster tightly together eg of fruit on a tree",
+    "category": "nature"
+   },
+   {
+    "key": "tsonge__cluster_tightly_many_things",
+    "english": "cluster tightly (many things)",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "tsóŋtə",
+  "keep_key": "tsongte__make_knots",
+  "keep_english": "make knots",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tsongte__make_many_knots_tie_knots",
+    "english": "make many knots, tie knots",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tsóŋtə",
+  "keep_key": "tsongte__tightly_clustered_together",
+  "keep_english": "tightly clustered together",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "tsongte__tightly_clustered_together_of_ma",
+    "english": "tightly clustered together, of many things eg fruits on a tree",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "waamə",
+  "keep_key": "waame__hold",
+  "keep_english": "hold",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "waame__hold_catch_fish_seize",
+    "english": "hold, catch (fish), seize",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "wam mbəəmə",
+  "keep_key": "wammbeeme__patient",
+  "keep_english": "patient",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "wammbeeme__be_patient_calm_one_s_self",
+    "english": "be patient; calm one's self",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "wu'nə nkwumə",
+  "keep_key": "wunenkwume__close_a_box",
+  "keep_english": "close a box",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "wunenkwume__close_a_box_close_a_coffin",
+    "english": "close a box; close a coffin",
+    "category": "actions"
+   },
+   {
+    "key": "wunenkwume__close_a_coffin",
+    "english": "close a coffin",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "yáŋə",
+  "keep_key": "yange__wise",
+  "keep_english": "wise",
+  "keep_category_was": "descriptive",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "yange__be_wise",
+    "english": "be wise",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "yéelə",
+  "keep_key": "yeele__loose_the_mind",
+  "keep_english": "loose the mind",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "yeele__loose_the_mind_be_mad_used_collo",
+    "english": "loose the mind; be mad (used colloquially)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "zá'kə",
+  "keep_key": "zake__lend",
+  "keep_english": "lend",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "zake__lend_give_on_credit",
+    "english": "lend, give on credit",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "zo'kə",
+  "keep_key": "zoke__make_less_tight",
+  "keep_english": "make less tight",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "zoke__make_less_tight_eg_of_one_s_grip",
+    "english": "make less tight, eg of one's grip on sth or of a rope tied on something",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "afélə",
+  "keep_key": "afele__uninfluential",
+  "keep_english": "uninfluential",
+  "keep_category_was": "things",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "afele__uninfluential_physically_powerle",
+    "english": "uninfluential; physically powerless",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "alaŋə",
+  "keep_key": "alange__path",
+  "keep_english": "path",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "alange__path_road",
+    "english": "path; road",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "apa'ə",
+  "keep_key": "apae__flat_covering",
+  "keep_english": "flat covering",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "apae__a_flat_covering_of_door_window_h",
+    "english": "a flat covering (of door, window, hut etc.)",
+    "category": "descriptive"
+   },
+   {
+    "key": "apae__flat_covering_of_door_window_hut",
+    "english": "flat covering of door, window, hut",
+    "category": "things"
+   },
+   {
+    "key": "apae__flat_covering_of_door_window",
+    "english": "flat covering of door, window",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "asəglə",
+  "keep_key": "asegle__important",
+  "keep_english": "important",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "asegle__important_great_powerful_influen",
+    "english": "important, great, powerful, influential",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "asəglə",
+  "keep_key": "asegle__thick",
+  "keep_english": "thick",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "asegle__thick_fleshy",
+    "english": "thick, fleshy",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "káyé",
+  "keep_key": "kaye__little",
+  "keep_english": "little",
+  "keep_category_was": "family",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "kaye__little_small",
+    "english": "little, small",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "mé asóolə",
+  "keep_key": "measoole__big_hoe",
+  "keep_english": "big hoe",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "measoole__big_hoe_important",
+    "english": "big hoe; important",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nkya'ə",
+  "keep_key": "nkyae__light",
+  "keep_english": "light",
+  "keep_category_was": "nature",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "nkyae__light_electricity",
+    "english": "light; electricity",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "sagə",
+  "keep_key": "sage__far",
+  "keep_english": "far",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "sage__far_be_long",
+    "english": "far; be long",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "tsənkeelə",
+  "keep_key": "tsenkeele__round",
+  "keep_english": "round",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "tsenkeele__round_globe_shaped_spherical",
+    "english": "round; globe shaped, spherical",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "tsənkeelə",
+  "keep_key": "tsenkeele__globe_shaped",
+  "keep_english": "globe shaped",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "tsenkeele__globe_shaped_spherical",
+    "english": "globe shaped, spherical",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "afa'ə",
+  "keep_key": "afae__work",
+  "keep_english": "work",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "afae__work_n",
+    "english": "work (n)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "afa'ə Əsê",
+  "keep_key": "afaeese__religious_ministry",
+  "keep_english": "religious ministry",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "afaeese__religious_ministry_work_for_god",
+    "english": "religious ministry, work for God",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "afəələ",
+  "keep_key": "afeele__water_tube",
+  "keep_english": "water tube",
+  "keep_category_was": "nature",
+  "category": "things",
+  "remove": [
+   {
+    "key": "afeele__water_tube_used_for_letting_wate",
+    "english": "water tube used for letting water into the bowels",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "afìə",
+  "keep_key": "afie__resemblance",
+  "keep_english": "resemblance",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "afie__resemblance_look_very_much_alike",
+    "english": "resemblance, look very much alike",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "aghognə",
+  "keep_key": "aghogne__shock",
+  "keep_english": "shock",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "aghogne__shock_trembling_fear",
+    "english": "shock, trembling; fear",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "aji'tə",
+  "keep_key": "ajite__frugality",
+  "keep_english": "frugality",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajite__frugality_selfishness",
+    "english": "frugality, selfishness",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ajuba",
+  "keep_key": "ajuba__replica",
+  "keep_english": "replica",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajuba__replica_carbon_copy",
+    "english": "replica, carbon copy",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ajúmətsə'ə",
+  "keep_key": "ajumetsee__handkerchief",
+  "keep_english": "handkerchief",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajumetsee__handkerchief_piece_of_cloth",
+    "english": "handkerchief, piece of cloth",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ajwelə",
+  "keep_key": "ajwele__influenza",
+  "keep_english": "influenza",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "ajwele__influenza_cold_disease",
+    "english": "influenza; cold (disease)",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "ajwiŋə",
+  "keep_key": "ajwinge__link",
+  "keep_english": "link",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajwinge__link_something_that_links_two_th",
+    "english": "link; something that links two things",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akéenə",
+  "keep_key": "akeene__tiredness",
+  "keep_english": "tiredness",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akeene__tiredness_fatigue",
+    "english": "tiredness, fatigue",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akəmə ajúmə",
+  "keep_key": "akemeajume__splinter_sliver",
+  "keep_english": "splinter, sliver",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akemeajume__splinter_sliver_sub",
+    "english": "splinter, sliver, sub",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akəpu'ə",
+  "keep_key": "akepue__fit_n",
+  "keep_english": "fit (n)",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akepue__fit_fainting_fit",
+    "english": "fit; fainting fit",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akoŋə",
+  "keep_key": "akonge__stem",
+  "keep_english": "stem",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akonge__stem_stalk_of_maize_millet_etc",
+    "english": "stem, stalk (of maize, millet etc.)",
+    "category": "things"
+   },
+   {
+    "key": "akonge__stem_stalk_of_maize_millet",
+    "english": "stem, stalk of maize, millet",
+    "category": "things"
+   },
+   {
+    "key": "akonge__stem_stalk_of_maize",
+    "english": "stem, stalk of maize",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akwa'lə",
+  "keep_key": "akwale__question",
+  "keep_english": "question",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwale__question_temptation_criticism_in",
+    "english": "question; temptation; criticism; interview",
+    "category": "things"
+   },
+   {
+    "key": "akwale__question_temptation_criticism",
+    "english": "question, temptation, criticism",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akwaŋə",
+  "keep_key": "akwange__idea",
+  "keep_english": "idea",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwange__idea_thought_pensiveness_especia",
+    "english": "idea; thought; pensiveness (especially negative)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akwubə",
+  "keep_key": "akwube__crust",
+  "keep_english": "crust",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwube__crust_skin_of_fruit",
+    "english": "crust, skin (of fruit)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akwúblə",
+  "keep_key": "akwuble__equivalence",
+  "keep_english": "equivalence",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwuble__equivalence_something_to_exchang",
+    "english": "equivalence; something to exchange or replace with; replacement",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akwu'ló",
+  "keep_key": "akwulo__log",
+  "keep_english": "log",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwulo__log_eg_of_wood",
+    "english": "log, eg of wood",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "akyé",
+  "keep_key": "akye__jungle_dweller",
+  "keep_english": "Jungle dweller",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akye__jungle_dweller_wicked_men_living",
+    "english": "jungle dweller (wicked); men living in forest attacking passers-by for money",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "alá'əmátíə",
+  "keep_key": "alaematie__name_of_a_quarter_in_awing",
+  "keep_english": "name of a quarter in Awing",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "alaematie__the_name_of_a_quarter_in_mb_iwi",
+    "english": "the name of a quarter in Mbɨ̌iwiŋə in Awing",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "aleŋkə",
+  "keep_key": "alengke__mark_of_identification",
+  "keep_english": "mark of identification",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "alengke__mark_of_identification_ritual_sc",
+    "english": "mark of identification; ritual scar",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ali'əsê",
+  "keep_key": "aliese__place_of_a_god_n",
+  "keep_english": "place, of a god, n",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "aliese__a_place_thought_to_host_a_god_tr",
+    "english": "a place thought to host a god tree or cave",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "anuə",
+  "keep_key": "anue__something",
+  "keep_english": "something",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "anue__something_concern",
+    "english": "something; concern",
+    "category": "things"
+   },
+   {
+    "key": "anue__something_truth_idea_concern_wor",
+    "english": "something, truth, idea, concern, worry",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "anuə nəfoonə",
+  "keep_key": "anuenefoone__kingdom_of",
+  "keep_english": "kingdom of",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "anuenefoone__kingdom_of_kingdom_of_god",
+    "english": "kingdom of, Kingdom of God",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "apélə",
+  "keep_key": "apele__mad_person",
+  "keep_english": "mad person",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "apele__mad_person_madness",
+    "english": "mad person, madness",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "apu'ə",
+  "keep_key": "apue__remnant",
+  "keep_english": "remnant",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "apue__remnant_remainder",
+    "english": "remnant, remainder",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atálə",
+  "keep_key": "atale__courtyard_in_the_palace",
+  "keep_english": "courtyard in the palace",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "atale__a_courtyard_in_the_palace_where",
+    "english": "a courtyard in the palace where the fon sits with his subjects to debate issues",
+    "category": "things"
+   },
+   {
+    "key": "atale__courtyard_in_the_palace_where_th",
+    "english": "courtyard in the palace where the fon sits with his",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atəənə",
+  "keep_key": "ateene__iron_trap_of_any_sort",
+  "keep_english": "iron; trap of any sort",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ateene__iron_trap_usually_made_of_iron_o",
+    "english": "iron; trap (usually made of iron or metal)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atómtə",
+  "keep_key": "atomte__reason",
+  "keep_english": "reason",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "atomte__reason_justification",
+    "english": "reason; justification",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atséebə",
+  "keep_key": "atseebe__language",
+  "keep_english": "language",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "atseebe__language_word",
+    "english": "language; word",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atséebánámú'á",
+  "keep_key": "atseebanamua__parable",
+  "keep_english": "parable",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "atseebanamua__parable_proverb",
+    "english": "parable; proverb",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "əfó'ə",
+  "keep_key": "efoe__gutter",
+  "keep_english": "gutter",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "efoe__gutter_deep_place_or_thing",
+    "english": "gutter, deep place or thing",
+    "category": "things"
+   },
+   {
+    "key": "efoe__gutter_deep_place",
+    "english": "gutter, deep place",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "əfó'ə",
+  "keep_key": "efoe__deep_valley_with_palm_bush",
+  "keep_english": "deep valley with palm bush",
+  "keep_category_was": "things",
+  "category": "body",
+  "remove": [
+   {
+    "key": "efoe__deep_valley_often_containing_man",
+    "english": "deep valley, often containing many trees, a palm bush and mostly a flowing stream",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "Əsê nəpóolə",
+  "keep_key": "esenepoole__god_the_one_who_created_everythi",
+  "keep_english": "God, the one who created everything on earth; supreme being",
+  "keep_category_was": "body",
+  "category": "things",
+  "remove": [
+   {
+    "key": "esenepoole__god_the_one_who_has_created_ever",
+    "english": "God (the one who has created everything on earth); supreme being",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "fágəndi'ə",
+  "keep_key": "fagendie__antidote",
+  "keep_english": "antidote",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "fagendie__antidote_anti_poison",
+    "english": "antidote, anti-poison",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "Fəlénchə",
+  "keep_key": "felenche__french",
+  "keep_english": "French",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "felenche__french_people_who_live_in_douala",
+    "english": "French; people who live in Douala speak French",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "kəənə",
+  "keep_key": "keene__whether",
+  "keep_english": "whether",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "keene__whether_if",
+    "english": "whether, if",
+    "category": "things"
+   },
+   {
+    "key": "keene__whether_if_i_do_not_know_wether",
+    "english": "whether, if; I do not know wether he will come",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kwá mbiə",
+  "keep_key": "kwambie__lead",
+  "keep_english": "lead",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kwambie__lead_be_first",
+    "english": "lead; be first",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "mbo'ə",
+  "keep_key": "mboe__circumcision",
+  "keep_english": "circumcision",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "mboe__circumcision_male",
+    "english": "circumcision (male)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "méd mánumə",
+  "keep_key": "medmanume__west",
+  "keep_english": "west",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "medmanume__west_sunset",
+    "english": "west; sunset",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "məfênə",
+  "keep_key": "mefene__giving",
+  "keep_english": "giving",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "mefene__giving_offering",
+    "english": "giving; offering",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ndzaŋə",
+  "keep_key": "ndzange__color",
+  "keep_english": "color",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ndzange__color_kind_pattern",
+    "english": "color, kind, pattern",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ndzəəmə",
+  "keep_key": "ndzeeme__dream",
+  "keep_english": "dream",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ndzeeme__dream_vision_supernatural",
+    "english": "dream; vision (supernatural)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nəpíəmbéŋə",
+  "keep_key": "nepiembenge__quiny",
+  "keep_english": "quiny",
+  "keep_category_was": "nature",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nepiembenge__quiny_the_fruit_of_a_quiny_tree",
+    "english": "quiny; The fruit of a quiny tree is used as medicine",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nəshugnə",
+  "keep_key": "neshugne__camp",
+  "keep_english": "camp",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "neshugne__camp_encampment",
+    "english": "camp, encampment",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ngedtəpəŋə",
+  "keep_key": "ngedtepenge__sinner",
+  "keep_english": "sinner",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ngedtepenge__sinner_evil_doer",
+    "english": "sinner, evil doer",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ngá'ə",
+  "keep_key": "ngae__hardship",
+  "keep_english": "hardship",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ngae__hardship_distress",
+    "english": "hardship, distress",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ngoolə",
+  "keep_key": "ngoole__swear",
+  "keep_english": "swear",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ngoole__swear_a_statement_that_is_consid",
+    "english": "swear, a statement that is considered as the truth, oath",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nkəənə",
+  "keep_key": "nkeene__news",
+  "keep_english": "news",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nkeene__news_message",
+    "english": "news, message",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nkyeetə",
+  "keep_key": "nkyeete__meeting",
+  "keep_english": "meeting",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nkyeete__meeting_assembly",
+    "english": "meeting, assembly",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ntəmə",
+  "keep_key": "nteme__skirt_like_dress_for_men",
+  "keep_english": "skirt-like dress for men",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nteme__a_skirt_like_dress_worn_by_men",
+    "english": "a skirt-like dress worn by men",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ntsentə",
+  "keep_key": "ntsente__meeting",
+  "keep_english": "meeting",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ntsente__meeting_grouping",
+    "english": "meeting, grouping",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "pó' mbô",
+  "keep_key": "pombo__clap_hands",
+  "keep_english": "clap (hands)",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "pombo__clap_hands_beg",
+    "english": "clap (hands), beg",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "pyádnə",
+  "keep_key": "pyadne__really",
+  "keep_english": "really",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "pyadne__really_truly_very_well",
+    "english": "really, truly; very well",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "pyádnə",
+  "keep_key": "pyadne__take_good_care_of",
+  "keep_english": "take good care of",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pyadne__take_good_care_of_show_love_and",
+    "english": "take good care of, show love and concern",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tə",
+  "keep_key": "te__us_excluding_other_people",
+  "keep_english": "\"us\", excluding other people",
+  "keep_category_was": "family",
+  "category": "things",
+  "remove": [
+   {
+    "key": "te__us_excluding_other_people_we_exc",
+    "english": "\"us\", excluding other people; \"we\" excluding other people",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "túg ntáəmə",
+  "keep_key": "tugntaeme__courageous",
+  "keep_english": "courageous",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "tugntaeme__be_courageous_be_brave",
+    "english": "be courageous; be brave",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "zá'ə",
+  "keep_key": "zae__before",
+  "keep_english": "before",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "zae__before_contrasted_with_afterward",
+    "english": "before (contrasted with afterwards)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "azoŋkə",
+  "keep_key": "azongke__second",
+  "keep_english": "second",
+  "keep_category_was": "numbers",
+  "category": "numbers",
+  "remove": [
+   {
+    "key": "azongke__second_second_place",
+    "english": "second, second place",
+    "category": "numbers"
+   }
+  ]
+ },
+ {
+  "awing": "agheemə",
+  "keep_key": "agheeme__sorcery",
+  "keep_english": "sorcery",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "agheeme__sorcery_fortune_telling_spiritis",
+    "english": "sorcery, fortune telling, spiritism",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "já'kə",
+  "keep_key": "jake__initiate",
+  "keep_english": "initiate",
+  "keep_category_was": "things",
+  "category": "family",
+  "remove": [
+   {
+    "key": "jake__initiate_into_secret_society_suc",
+    "english": "initiate (into secret society such as kwifon)",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "já'kə",
+  "keep_key": "jake__help_sb_cross_elevated_place",
+  "keep_english": "help sb cross elevated place",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "jake__help_somebody_cross_an_elevated",
+    "english": "help somebody cross an elevated place (eg a child through the threshold)",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "á",
+  "keep_key": "a__preposition_at",
+  "keep_english": "preposition 'at'",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "a__preposition_at_used_to_indicate",
+    "english": "preposition 'at' used to indicate a point in time",
+    "category": "animals"
+   },
+   {
+    "key": "a__preposition_to_meaning_in_the_di",
+    "english": "preposition 'to', meaning 'in the direction of' or fitting or being a part of",
+    "category": "things"
+   },
+   {
+    "key": "a__preposition_from_used_to_show_a",
+    "english": "preposition 'from', used to show a starting point or source",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akwê",
+  "keep_key": "akwe__terrible_lie",
+  "keep_english": "terrible lie",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwe__terrible_lie_lie_colloquial_pejo",
+    "english": "terrible lie; lie (colloquial, pejorative)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ala'ə",
+  "keep_key": "alae__illness_of_the_skin",
+  "keep_english": "illness, of the skin",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "alae__illness_that_attacks_the_skin_it",
+    "english": "illness that attacks the skin, itches and blackens the spot",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "fyáamə",
+  "keep_key": "fyaame__daub",
+  "keep_english": "daub",
+  "keep_category_was": "things",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "fyaame__daub_eg_paint_liquid_soft_substa",
+    "english": "daub eg paint, liquid, soft substance etc on a surface",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "gho",
+  "keep_key": "gho__the_singular_pronoun_you",
+  "keep_english": "the singular pronoun 'you'",
+  "keep_category_was": "pronouns",
+  "category": "pronouns",
+  "remove": [
+   {
+    "key": "gho__the_singular_pronoun_you_am_tell",
+    "english": "the singular pronoun 'you'; am telling you",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "káŋtə",
+  "keep_key": "kangte__fry_many_things",
+  "keep_english": "fry many things",
+  "keep_category_was": "things",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "kangte__fry_of_many_things_fry_of_little",
+    "english": "fry, of many things; fry, of little things",
+    "category": "numbers"
+   },
+   {
+    "key": "kangte__fry_of_little_things",
+    "english": "fry, of little things",
+    "category": "descriptive"
+   },
+   {
+    "key": "kangte__fry_of_many_things",
+    "english": "fry, of many things",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "kóŋə",
+  "keep_key": "konge__crawl",
+  "keep_english": "crawl",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "konge__crawl_slither_eg_of_snakes",
+    "english": "Crawl; slither, eg of snakes",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kónə",
+  "keep_key": "kone__be_carried_away_by_water",
+  "keep_english": "be carried away by water",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kone__be_carried_away_by_water_current",
+    "english": "be carried away by water current",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "koolə",
+  "keep_key": "koole__shave",
+  "keep_english": "shave",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "koole__shave_as_with_blade",
+    "english": "shave, as with blade",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kógə",
+  "keep_key": "koge__scrub_rub_or_dash",
+  "keep_english": "scrub, rub or dash",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "koge__scrub_rub_or_dash_usually_accide",
+    "english": "scrub, rub or dash, usually accidentally, causing slight injury or pain",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kwíŋə",
+  "keep_key": "kwinge__grow_up",
+  "keep_english": "grow up",
+  "keep_category_was": "actions",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "kwinge__1_grow_up_mentally_and_physicall",
+    "english": "1) grow up (mentally and physically), especially of human beings and to some extent animals",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "lə̂",
+  "keep_key": "le__rotten",
+  "keep_english": "rotten",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "le__be_rotten",
+    "english": "be rotten",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "lə̂",
+  "keep_key": "le__that_way",
+  "keep_english": "that way",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "le__that_way_that_direction",
+    "english": "that way, that direction",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "lumə",
+  "keep_key": "lume__hot",
+  "keep_english": "hot",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "lume__be_hot_be_passionate",
+    "english": "be hot; be passionate",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "ndumə",
+  "keep_key": "ndume__top",
+  "keep_english": "top",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ndume__top_on_top",
+    "english": "top, on top",
+    "category": "things"
+   },
+   {
+    "key": "ndume__on_top",
+    "english": "on top",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nəpó'ə",
+  "keep_key": "nepoe__playing_stick",
+  "keep_english": "playing stick",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nepoe__playing_stick_used_for_hitting_d",
+    "english": "playing stick (used for hitting drums, xylophones, etc)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ngwaŋə",
+  "keep_key": "ngwange__path_for_animals",
+  "keep_english": "path, for animals",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "ngwange__path_for_wild_animals",
+    "english": "path for wild animals",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "njíə",
+  "keep_key": "njie__manner_of_eating",
+  "keep_english": "manner of eating",
+  "keep_category_was": "things",
+  "category": "food",
+  "remove": [
+   {
+    "key": "njie__the_manner_of_eating_the_quality",
+    "english": "the manner of eating (the quality of food, where one eats etc)",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "nkaŋ nkíə",
+  "keep_key": "nkangnkie__river_bank_sea_shore",
+  "keep_english": "river bank; sea shore",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "nkangnkie__river_bank_sea_shore_beach",
+    "english": "river bank, sea shore, beach",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "pəənə",
+  "keep_key": "peene__go_back",
+  "keep_english": "go back",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "peene__go_back_return",
+    "english": "go back; return",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "pîə",
+  "keep_key": "pie__be_ready_of_food",
+  "keep_english": "be ready, of food",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "pie__be_ready_to_be_served_of_food",
+    "english": "be ready to be served, of food",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "sá'ə",
+  "keep_key": "sae__gush_out_of_a_spring",
+  "keep_english": "gush out, of a spring",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "sae__gush_out_of_a_spring_germinate",
+    "english": "gush out, of a spring; germinate",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "sá'ə",
+  "keep_key": "sae__announce_publicly",
+  "keep_english": "announce publicly",
+  "keep_category_was": "things",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "sae__announce_publicly_particularly_i",
+    "english": "announce publicly, particularly in the market square",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "tô",
+  "keep_key": "to__toe",
+  "keep_english": "toe",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "to__toe_or_hit_with_the_leg",
+    "english": "Toe or hit with the leg",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "apéenə",
+  "keep_key": "apeene__flour",
+  "keep_english": "flour",
+  "keep_category_was": "things",
+  "category": "food",
+  "remove": [
+   {
+    "key": "apeene__flour_fufu_corn",
+    "english": "flour, fufu corn",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "chwíŋtə",
+  "keep_key": "chwingte__pour_of_liquid",
+  "keep_english": "pour, of liquid",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "chwingte__pour_liquid_into_a_container",
+    "english": "pour liquid into a container",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "jîə",
+  "keep_key": "jie__inherit_eg_a_throne",
+  "keep_english": "inherit (eg a throne)",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "jie__1_inherit_eg_a_throne",
+    "english": "1) inherit (eg, a throne)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kí'tə",
+  "keep_key": "kite__defend",
+  "keep_english": "defend",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kite__defend_many_people_things_or_pla",
+    "english": "defend (Many people, things or places)",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "ŋwu Əsê",
+  "keep_key": "ngwuese__priest",
+  "keep_english": "priest",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ngwuese__priest_pastor",
+    "english": "priest; pastor",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ghelə",
+  "keep_key": "ghele__act",
+  "keep_english": "act",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ghele__act_do_he_has_done_something",
+    "english": "act, do; he has done something",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ghedtə",
+  "keep_key": "ghedte__act_a_little",
+  "keep_english": "act a little",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "ghedte__act_do_make_a_little_he_has_done",
+    "english": "act, do, make a little; he has done a little thing",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ka'ə",
+  "keep_key": "kae__appear",
+  "keep_english": "appear",
+  "keep_category_was": "actions",
+  "category": "body",
+  "remove": [
+   {
+    "key": "kae__appear_show_a_sign_threaten",
+    "english": "appear, show a sign, threaten",
+    "category": "body"
+   },
+   {
+    "key": "kae__appear_threaten",
+    "english": "appear, threaten",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "fi'ə",
+  "keep_key": "fie__try",
+  "keep_english": "try",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "fie__try_attempt_used_as_a_warning_no",
+    "english": "try, attempt (used as a warning not to try a dangerous thing or test sb's patience)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ngo'kə",
+  "keep_key": "ngoke__reverence",
+  "keep_english": "reverence",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ngoke__reverence_praise",
+    "english": "reverence, praise",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "pəŋə",
+  "keep_key": "penge__before",
+  "keep_english": "before",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "penge__before_contrasted_with_gyi_mag_a",
+    "english": "before (contrasted with) ŋgyí magə afa'ə ma pəŋə ghə̌nə",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atsenə",
+  "keep_key": "atsene__body",
+  "keep_english": "body",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "atsene__body_part",
+    "english": "body part",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ndedtə",
+  "keep_key": "ndedte__mark_out_peg_out_boundary",
+  "keep_english": "mark out, peg out boundary",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ndedte__mark_out_peg_out_of_boundary",
+    "english": "mark out, peg out of boundary",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kwumtə",
+  "keep_key": "kwumte__touch_many_times",
+  "keep_english": "touch, many times",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "kwumte__touch_many_times_bundle_caress",
+    "english": "touch many times, bundle, caress",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kə̂mtə",
+  "keep_key": "kemte__scratch",
+  "keep_english": "Scratch",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kemte__scratch_a_little",
+    "english": "Scratch a little",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "ladkə",
+  "keep_key": "ladke__continuously",
+  "keep_english": "continuously",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ladke__continuously_non_stop_connect_li",
+    "english": "continuously, non-stop; connect, link",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ghen nə mbiə",
+  "keep_key": "ghennembie__continue",
+  "keep_english": "continue",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ghennembie__continue_go_ahead_with_your_good",
+    "english": "continue; go ahead with your good work",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "ko'nə",
+  "keep_key": "kone__right",
+  "keep_english": "right",
+  "keep_category_was": "descriptive",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kone__right_be_correct",
+    "english": "right, be correct",
+    "category": "things"
+   },
+   {
+    "key": "kone__be_right",
+    "english": "be right",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "chiga neemə",
+  "keep_key": "chiganeeme__cruel",
+  "keep_english": "cruel",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "chiganeeme__cruel_poorly_behaved",
+    "english": "cruel, poorly behaved",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kyaŋə",
+  "keep_key": "kyange__cut_a_big_slice",
+  "keep_english": "cut a big slice",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kyange__cut_a_big_slice_eg_of_flesh_or_m",
+    "english": "cut a big slice eg of flesh or meat",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "kyaŋtə",
+  "keep_key": "kyangte__cut_big_slices",
+  "keep_english": "cut big slices",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kyangte__cut_big_slices_eg_of_flesh_or_me",
+    "english": "cut big slices eg of flesh or meat",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "ghabtə",
+  "keep_key": "ghabte__divide",
+  "keep_english": "divide",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ghabte__divide_separate",
+    "english": "divide, separate",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "gheebə",
+  "keep_key": "gheebe__divide_tr",
+  "keep_english": "divide (tr)",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "gheebe__divide_share_tr",
+    "english": "divide, share (tr.)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tsoəbə",
+  "keep_key": "tsoebe__do_imperfectly",
+  "keep_english": "do imperfectly",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "tsoebe__imperfectly_done",
+    "english": "imperfectly done",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "wukə",
+  "keep_key": "wuke__fall",
+  "keep_english": "fall",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "wuke__fall_many_times",
+    "english": "fall many times",
+    "category": "actions"
+   },
+   {
+    "key": "wuke__fall_many_times_fall_of_many_peo",
+    "english": "fall many times; fall, of many people",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "atúə",
+  "keep_key": "atue__hair",
+  "keep_english": "hair",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "atue__hair_worshipped_periodically",
+    "english": "hair, worshipped periodically",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "ghabkə",
+  "keep_key": "ghabke__half_done",
+  "keep_english": "half done",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ghabke__half_done_on_pose",
+    "english": "half done on pose",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "panə",
+  "keep_key": "pane__ripen_become_ripe",
+  "keep_english": "ripen, become ripe",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "pane__ripen_become_ripe_of_many_things",
+    "english": "ripen, become ripe, of many things",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akəŋnə",
+  "keep_key": "akengne__love",
+  "keep_english": "love",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akengne__love_happiness_bliss_of_wedded_c",
+    "english": "love, happiness, bliss of wedded couples",
+    "category": "things"
+   },
+   {
+    "key": "akengne__love_happiness",
+    "english": "love, happiness",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kəŋtə",
+  "keep_key": "kengte__happy",
+  "keep_english": "happy",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "kengte__be_happy",
+    "english": "be happy",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tagə",
+  "keep_key": "tage__harvest_of_honey",
+  "keep_english": "harvest, of honey",
+  "keep_category_was": "food",
+  "category": "food",
+  "remove": [
+   {
+    "key": "tage__harvest_collect_honey",
+    "english": "harvest, collect honey",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "tənə",
+  "keep_key": "tene__hot",
+  "keep_english": "hot",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "tene__be_hot",
+    "english": "be hot",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kweekə",
+  "keep_key": "kweeke__influence_against",
+  "keep_english": "Influence against",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kweeke__influence_a_person_or_an_animal",
+    "english": "Influence a person or an animal against another",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "ɔ́",
+  "keep_key": "o__it_thing_refered_to",
+  "keep_english": "it, thing refered to",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "o__they_things_refered_to",
+    "english": "they, things refered to",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kyaalə",
+  "keep_key": "kyaale__lift_uth_soft_or_rotten",
+  "keep_english": "Lift uth soft or rotten",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kyaale__lift_uth_soft_or_rotten_with_a_h",
+    "english": "Lift uth soft or rotten with a hoe or spade",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nâŋə",
+  "keep_key": "nange__look_at",
+  "keep_english": "look at",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "nange__look_for",
+    "english": "look for",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "apúntéelə",
+  "keep_key": "apunteele__lords_supper",
+  "keep_english": "Lords supper",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "apunteele__lord_s_supper_articles",
+    "english": "Lord's Supper articles",
+    "category": "things"
+   },
+   {
+    "key": "apunteele__lords_supper_article",
+    "english": "Lords Supper article",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ghagtə",
+  "keep_key": "ghagte__make_poorly",
+  "keep_english": "make poorly",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "ghagte__make_poorly_of_furniture",
+    "english": "make poorly, of furniture",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "ndzə'ə",
+  "keep_key": "ndzee__wedding_ceremony",
+  "keep_english": "wedding ceremony",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ndzee__wedding_ceremony_modern",
+    "english": "wedding ceremony, modern",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ngəmə",
+  "keep_key": "ngeme__mother_in_law",
+  "keep_english": "mother-in-law",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "ngeme__mother_in_law_to_groom",
+    "english": "mother-in-law to groom",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "apábpéebə",
+  "keep_key": "apabpeebe__multicoloured",
+  "keep_english": "multicoloured",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "apabpeebe__multicoloured_spotted",
+    "english": "multicoloured, spotted",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ntsəb napu'ə",
+  "keep_key": "ntsebnapue__nineteen",
+  "keep_english": "nineteen",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ntsebnapue__nineteen_19",
+    "english": "nineteen (19)",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akəfəŋantsoolə",
+  "keep_key": "akefengantsoole__obscene",
+  "keep_english": "obscene",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akefengantsoole__obscene_person",
+    "english": "obscene person",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "shwaalə",
+  "keep_key": "shwaale__odd",
+  "keep_english": "odd",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "shwaale__be_odd",
+    "english": "be odd",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "mbə̂kə",
+  "keep_key": "mbeke__people_of_what",
+  "keep_english": "people of what",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "mbeke__people_of_where",
+    "english": "people of where",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "kwum afeemə",
+  "keep_key": "kwumafeeme__punish_by_brutal_killing",
+  "keep_english": "punish by brutal killing",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kwumafeeme__punish_by_brutal_killing_usually",
+    "english": "punish by brutal killing, usually by driving a very big nail into the forehead",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "napləmbéŋə",
+  "keep_key": "naplembenge__quiny",
+  "keep_english": "quiny",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "naplembenge__quiny_tree",
+    "english": "quiny tree",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "pookə",
+  "keep_key": "pooke__say_goodbye",
+  "keep_english": "say goodbye",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "pooke__say_goodbye_take_leave_of",
+    "english": "say goodbye, take leave of",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "tsəgə",
+  "keep_key": "tsege__be_expensive",
+  "keep_english": "be expensive",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "tsege__be_expensive_be_sour_be_wicked",
+    "english": "be expensive, be sour, be wicked",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tashunə",
+  "keep_key": "tashune__so_much",
+  "keep_english": "so much",
+  "keep_category_was": "descriptive",
+  "category": "descriptive",
+  "remove": [
+   {
+    "key": "tashune__too_much",
+    "english": "too much",
+    "category": "descriptive"
+   }
+  ]
+ },
+ {
+  "awing": "ngaŋnakaŋə",
+  "keep_key": "ngangnakange__sorcerer",
+  "keep_english": "sorcerer",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ngangnakange__sorcerer_magic_practitioner",
+    "english": "sorcerer, magic practitioner",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tśəndzəmə",
+  "keep_key": "tsendzeme__supporter",
+  "keep_english": "supporter",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "tsendzeme__supporter_with_a_limited_role",
+    "english": "supporter with a limited role",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ajú yə pə́ nə̌",
+  "keep_key": "ajuyepene__wickerwork",
+  "keep_english": "wickerwork",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajuyepene__wickerwork_basket_for_drying_wet",
+    "english": "wickerwork, basket for drying wet pepper",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ajúmə nakwə̌'a",
+  "keep_key": "ajumenakwea__play_instrument",
+  "keep_english": "play instrument",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ajumenakwea__play_instrument_toy",
+    "english": "play instrument, toy",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "akwálkə̌",
+  "keep_key": "akwalke__inflammables",
+  "keep_english": "inflammables",
+  "keep_category_was": "things",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "akwalke__inflammables_something_that_keep",
+    "english": "inflammables, something that keeps fire burning",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "akwaŋə yə̌ ashí'nə̌",
+  "keep_key": "akwangeyeashine__confidence",
+  "keep_english": "confidence",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "akwangeyeashine__confidence_good_thoughts",
+    "english": "confidence, good thoughts",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "alá'ə pəgwiŋə",
+  "keep_key": "alaepegwinge__spirit_world",
+  "keep_english": "spirit world",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "alaepegwinge__spirit_world_world_of_the_gods",
+    "english": "spirit world, world of the gods",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "alá'skalə̌",
+  "keep_key": "alaskale__world_of_the_dead",
+  "keep_english": "world of the dead",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "alaskale__world_of_the_dead_europe_or_amer",
+    "english": "world of the dead, Europe or America",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "alaŋmakálə",
+  "keep_key": "alangmakale__motorable_road",
+  "keep_english": "motorable road",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "alangmakale__motorable_road_paved_road",
+    "english": "motorable road, paved road",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "alaŋnkyíə",
+  "keep_key": "alangnkyie__channel",
+  "keep_english": "channel",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "alangnkyie__channel_channels_used_in_some_pl",
+    "english": "channel, channels used in some places for sea transport",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "alíləməə",
+  "keep_key": "alilemee__bat",
+  "keep_english": "bat",
+  "keep_category_was": "animals",
+  "category": "food",
+  "remove": [
+   {
+    "key": "alilemee__bat_fruit_bat",
+    "english": "bat, fruit bat",
+    "category": "food"
+   }
+  ]
+ },
+ {
+  "awing": "alə'tə̌",
+  "keep_key": "alete__curse_disability",
+  "keep_english": "curse, disability",
+  "keep_category_was": "things",
+  "category": "body",
+  "remove": [
+   {
+    "key": "alete__curse_disability_handicap",
+    "english": "curse, disability, handicap",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "amə'ə̌",
+  "keep_key": "amee__gift_especially_to_encourage_cus",
+  "keep_english": "gift, especially to encourage customer",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "amee__gift_especially_to_a_customer_to",
+    "english": "gift, especially to a customer to encourage him",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "apanə̌",
+  "keep_key": "apane__an_open_bamboo_cupboard",
+  "keep_english": "an open bamboo cupboard",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "apane__an_open_bamboo_cupboard_attached",
+    "english": "an open bamboo cupboard attached to the wall of the house used for putting kitchen utensils",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "atúəsə̌",
+  "keep_key": "atuese__bag_containing_dead_close_relati",
+  "keep_english": "bag containing dead close relations belongings",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "atuese__bag_containing_a_dead_close_rela",
+    "english": "bag containing a dead close relations belongings",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "chí nə əlíma",
+  "keep_key": "chineelima__have_many_blood_relations",
+  "keep_english": "have many blood relations",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "chineelima__have_many_blood_relations_who_ar",
+    "english": "have many blood relations who are caring",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "chí nə móonə",
+  "keep_key": "chinemoone__be_pregnant",
+  "keep_english": "be pregnant",
+  "keep_category_was": "things",
+  "category": "family",
+  "remove": [
+   {
+    "key": "chinemoone__be_pregnant_be_with_child",
+    "english": "be pregnant, be with child",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "chí nə napamə",
+  "keep_key": "chinenapame__be_pregnant",
+  "keep_english": "be pregnant",
+  "keep_category_was": "things",
+  "category": "family",
+  "remove": [
+   {
+    "key": "chinenapame__be_pregnant_be_with_child",
+    "english": "be pregnant, be with child",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "chí nə ngə'ə",
+  "keep_key": "chinengee__be_in_difficulty",
+  "keep_english": "be in difficulty",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "chinengee__be_in_difficulty_live_in_hardshi",
+    "english": "be in difficulty, live in hardship",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "chí'kə",
+  "keep_key": "chike__stay_of_many_people",
+  "keep_english": "stay of many people",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "chike__stay_of_many_people_or_many_plac",
+    "english": "stay of many people or many places, inhabit many places",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "chwítə ngəgə",
+  "keep_key": "chwitengege__cooperate",
+  "keep_english": "cooperate",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "chwitengege__cooperate_share_ideas",
+    "english": "cooperate, share ideas",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "əsá'mónumə",
+  "keep_key": "esamonume__east",
+  "keep_english": "east",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "esamonume__east_sunrise",
+    "english": "east; sunrise",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "fíə",
+  "keep_key": "fie__be_resemble",
+  "keep_english": "be resemble",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "fie__resemble_every_child_mostly_rese",
+    "english": "resemble; every child mostly resembles the mother",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "káneedə",
+  "keep_key": "kaneede__women_dance_group",
+  "keep_english": "women dance group",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kaneede__women_dance_group_based_in_tata",
+    "english": "women dance group based in Tata Alotas compound",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kwüo akalə",
+  "keep_key": "kwuoakale__dress_smartly",
+  "keep_english": "dress smartly",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "kwuoakale__dress_smartly_dress_in_nice_fitt",
+    "english": "dress smartly, dress in nice fitting attires",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "kyantə",
+  "keep_key": "kyante__do_a_little_cleaning",
+  "keep_english": "Do a little cleaning",
+  "keep_category_was": "actions",
+  "category": "actions",
+  "remove": [
+   {
+    "key": "kyante__do_a_little_cleaning_eg_of_mess",
+    "english": "Do a little cleaning eg of mess",
+    "category": "actions"
+   }
+  ]
+ },
+ {
+  "awing": "mbé",
+  "keep_key": "mbe__name_used_only_for_fon_or_villag",
+  "keep_english": "name used only for fon or village chief",
+  "keep_category_was": "family",
+  "category": "family",
+  "remove": [
+   {
+    "key": "mbe__a_name_used_only_for_the_fon_or",
+    "english": "a name used only for the fon or village chief",
+    "category": "family"
+   }
+  ]
+ },
+ {
+  "awing": "mbam ngasənə",
+  "keep_key": "mbamngasene__grain_of_corn",
+  "keep_english": "grain of corn",
+  "keep_category_was": "nature",
+  "category": "nature",
+  "remove": [
+   {
+    "key": "mbamngasene__grain_of_corn_maize",
+    "english": "grain of corn, maize",
+    "category": "nature"
+   }
+  ]
+ },
+ {
+  "awing": "mbəəma akoolə",
+  "keep_key": "mbeemaakoole__footprint",
+  "keep_english": "footprint",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "mbeemaakoole__footprint_of_man_or_animal",
+    "english": "footprint of man or animal",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "nchwíə",
+  "keep_key": "nchwie__fourth_day_of_the_week",
+  "keep_english": "fourth day of the week",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nchwie__the_fourth_day_of_the_week",
+    "english": "the fourth day of the week",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nəŋyínə",
+  "keep_key": "nengyine__journey_movement",
+  "keep_english": "journey, movement",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nengyine__journey_movement_travel",
+    "english": "journey, movement, travel",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "naŋ",
+  "keep_key": "nang__step_on_feet",
+  "keep_english": "step on feet",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nang__step_on_stamp_on_feet",
+    "english": "step on, stamp on feet",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "nganafüə",
+  "keep_key": "nganafue__medicine_man",
+  "keep_english": "medicine man",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nganafue__medicine_man_traditional_healer",
+    "english": "medicine man, traditional healer",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ngaŋmaŋéemə",
+  "keep_key": "ngangmangeeme__fortune_teller",
+  "keep_english": "fortune teller",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "ngangmangeeme__fortune_fortune_teller",
+    "english": "fortune, fortune teller",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ní'ə",
+  "keep_key": "nie__earache",
+  "keep_english": "earache",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "nie__earache_used_eg_a_sort_of_pointe",
+    "english": "earache, used eg, a sort of pointed weed that pierces farmers feet",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "nwí'a",
+  "keep_key": "nwia__use_plant_seeds_too_close_to_eac",
+  "keep_english": "use plant seeds too close to each other",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "nwia__use_plant_of_seeds_too_close_to",
+    "english": "use plant of seeds too close to each other",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "sa'ə moŋyə̌",
+  "keep_key": "saemongye__marry_by_physical_force",
+  "keep_english": "marry by physical force",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "saemongye__marry_by_taking_the_fiancee_by_t",
+    "english": "marry by taking the fiancee by trickery or by physical force",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "ta'ə",
+  "keep_key": "tae__search_piles_of_things",
+  "keep_english": "search piles of things",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "tae__search_especially_through_piles",
+    "english": "search, especially through piles of things",
+    "category": "body"
+   }
+  ]
+ },
+ {
+  "awing": "pó'spa'ə",
+  "keep_key": "pospae__abstain_avoid",
+  "keep_english": "abstain, avoid",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "pospae__abstain_avoid_stay_away_from",
+    "english": "abstain, avoid, stay away from",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tsə'ə",
+  "keep_key": "tsee__extract_milk",
+  "keep_english": "extract milk",
+  "keep_category_was": "food",
+  "category": "animals",
+  "remove": [
+   {
+    "key": "tsee__extract_of_milk_from_a_cow_or_go",
+    "english": "extract, of milk from a cow or goat",
+    "category": "animals"
+   }
+  ]
+ },
+ {
+  "awing": "tsə'átə̌",
+  "keep_key": "tseate__very_sweet",
+  "keep_english": "very sweet",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "tseate__very_sweet_palm_wine",
+    "english": "very sweet palm wine",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "tsəə",
+  "keep_key": "tsee__taste_poorly",
+  "keep_english": "taste poorly",
+  "keep_category_was": "things",
+  "category": "things",
+  "remove": [
+   {
+    "key": "tsee__taste_poorly_not_flavoured",
+    "english": "taste poorly, not flavoured",
+    "category": "things"
+   }
+  ]
+ },
+ {
+  "awing": "achí ya ashí'na",
+  "keep_key": "achiyaashina__good_sign_blood_twitches_eye",
+  "keep_english": "good sign blood twitches eye",
+  "keep_category_was": "body",
+  "category": "body",
+  "remove": [
+   {
+    "key": "achiyaashina__good_sign_happening_when_blood_t",
+    "english": "Good sign, happening when blood twitches somebodys eye in a particular spot",
+    "category": "body"
+   }
+  ]
+ }
+]
