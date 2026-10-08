@@ -2257,7 +2257,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: 'atɨə kokonólə', english: 'coconut palm', category: 'body', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L15681 (atîə kɔkonə̌lə̌), which cites the dictionary; this spelling is unsourced
   AwingWord(awing: 'atɨə maghólə', english: 'oil palm', category: 'body', tonePattern: 'high', difficulty: 2),
   // AwingWord(awing: 'atɨə nətəənə', english: 'palm tree', category: 'body', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L546 (atía nɔ́taɔna), kept because it is unsourced; this one is unsourced
-  AwingWord(awing: 'atóŋnəntsoolə', english: 'long mouth (used as insult)', category: 'body', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'atóŋnəntsoolə', english: 'long mouth (used as insult)', category: 'body', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L9647 (atóŋantsoolə), kept because it is unsourced; this one is unsourced
   // DROP Session 63 reconcile 2026-07-22: no Mistral hit; over-specific gloss
   // AwingWord(awing: 'atoŋə', english: 'pointed mouth of a bottle or calabash', category: 'body', difficulty: 1),
   AwingWord(awing: "atúəmbe'tə", english: 'shoulder blade', category: 'body', tonePattern: 'high', difficulty: 2),
@@ -2405,7 +2405,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'mó má yi mangyè', english: 'granddaughter', category: 'family', tonePattern: 'high', difficulty: 2),
   // AwingWord(awing: 'mó nkə', english: 'child', category: 'family', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L590 (mɔ́ŋkə), kept because it is unsourced; this one is unsourced
 
-  AwingWord(awing: 'mó yi mangyè', english: 'daughter, girl child', category: 'family', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'mó yi mangyè', english: 'daughter, girl child', category: 'family', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L8943 (mɔ́ má mangyé), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'nden mangyè', english: 'old woman', category: 'family', tonePattern: 'low', difficulty: 2),
   AwingWord(awing: 'nden ŋwunə', english: 'old man', category: 'family', difficulty: 2),
   AwingWord(awing: "ndí' məjíə", english: 'farmer', category: 'family', tonePattern: 'high', difficulty: 2),
@@ -2461,7 +2461,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'mbéŋ ndzelə', english: 'sheep', category: 'animals', tonePattern: 'high', difficulty: 2),
   // AwingWord(awing: "mbi təŋkə̂'ə", english: "elephant's trunk", category: 'animals', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L22737 (mbi təŋká'ə), kept because it is dictionary page; this one is unsourced
   AwingWord(awing: 'mé sáŋə́', english: 'ostrich', category: 'animals', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: "məlámchú'ə́", english: 'sort of bee that produces a stench or smell; something that smells excessively', category: 'animals', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: "məlámchú'ə́", english: 'sort of bee that produces a stench or smell; something that smells excessively', category: 'animals', tonePattern: 'high', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L12280 (məlamchú'a), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'məŋwédnúə', english: 'bee', category: 'animals', tonePattern: 'high', difficulty: 1),
   // AwingWord(awing: 'mó fóolə́', english: 'mouse', category: 'animals', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L22762 (mə̌ fóola), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: 'mó mbéŋ ndzelə', english: 'lamb', category: 'animals', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L22765 (mə̌ mbeŋ ndzelə), which cites the dictionary; this spelling is unsourced
@@ -2664,7 +2664,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "tasa' móga", english: 'spark of fire', category: 'nature', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'tú nkǐə', english: 'cross river', category: 'nature', tonePattern: 'rising', difficulty: 2),
   // AwingWord(awing: 'túmkə', english: 'make or help someone or something cross through a difficult place eg river', category: 'nature', tonePattern: 'high', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L23815 (túmkə), kept because it is dictionary page; this one is unsourced
-  AwingWord(awing: 'wəg ŋgênə', english: 'carry away by the force of wind', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'wəg ŋgênə', english: 'carry away by the force of wind', category: 'nature', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L3125 (lóg ŋgenə), kept because it is unsourced; this one is unsourced
   // AwingWord(awing: 'wəg ńkwelə', english: 'pour down something using the force of wind', category: 'nature', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L18706 (wəg ǐkwelə̌), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: 'yagə', english: 'scare away by shouting eg of animals or birds in a farm', category: 'nature', difficulty: 3),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L11850
 
@@ -2906,7 +2906,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: "fi'nə̂", english: 'imitate', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u Tier B: same meaning as L21799 (fí'nə), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: "fi'tə̂", english: 'tell', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u Tier B: same meaning as L16608 (fí'tə̌), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: 'fídkə', english: 'exile, expel', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L8374 (fídkə), kept because it is unsourced; this one is unsourced
-  AwingWord(awing: 'figə̂', english: 'decieve', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'figə̂', english: 'decieve', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L7817 (fígə), kept because it is unsourced; this one is unsourced
   // DROP Session 63 reconcile 2026-07-22
   // AwingWord(awing: 'figtə̂', english: 'decieve (many people); decieve many times', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // AwingWord(awing: "fo'â", english: 'be rich', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L16611 (fə̌), which cites the dictionary; this spelling is unsourced
@@ -2925,7 +2925,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'fyádtə', english: 'chase (many things); insist many things', category: 'actions', tonePattern: 'high', difficulty: 1),
   // AwingWord(awing: "fya'â", english: 'rebuke; quarrel', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L11376 (fya'ə), kept because it is unsourced; this one is unsourced
   // AwingWord(awing: "fya'ə̂", english: 'water', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L13524 (fya'ə), kept because it is unsourced; this one is unsourced
-  AwingWord(awing: 'fyagə̂', english: 'dislodge something from another', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'fyagə̂', english: 'dislodge something from another', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L8018 (fyagə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'fyagtə̂', english: 'separate two things from each other', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'fyamtə̂', english: 'of things hanging or suspended, remove them', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: "fya'sê", english: 'sacrifice to the dead', category: 'actions', tonePattern: 'falling', difficulty: 3),
@@ -3003,7 +3003,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: 'kəələ̂', english: 'run away, flee, escape', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L14115 (kaalə̂), which cites the dictionary; this spelling is unsourced
   AwingWord(awing: 'kəətə̂', english: 'run a little or make an effort to run', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'kəmə̂', english: 'drive away', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'kəmtə̂', english: 'sprinkle a little (powder, ground etc) on something', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'kəmtə̂', english: 'sprinkle a little (powder, ground etc) on something', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L12503 (kəmtə), kept because it is unsourced; this one is unsourced
   // AwingWord(awing: 'kəŋkə', english: 'avoid, alienate', category: 'actions', tonePattern: 'falling', difficulty: 1),  // Session 66p: respelt 'kəŋkə̂' -> dictionary form (3 hits)  // REMOVED Session 66u similar-spelling: same meaning as L20078 (kəŋkə), kept because it is dictionary page; this one is session audit
   // AwingWord(awing: 'kəŋtə̂', english: 'shut a little; shut many', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L20079 (kəntə), kept because it is dictionary page; this one is unsourced
   AwingWord(awing: 'kápkə nkwumə', english: 'close a box', category: 'actions', tonePattern: 'high', difficulty: 2),
@@ -3056,7 +3056,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: 'kwêe', english: 'answer; reply', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L22284 (kweə), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: 'kweekô', english: 'Influence a person or an animal against another', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L5600 (kweekô), kept because it is session audit; this one is unsourced
   AwingWord(awing: 'kwê', english: 'tell a lie', category: 'actions', tonePattern: 'falling', difficulty: 3),
-  AwingWord(awing: 'kwénkə', english: 'Help somebody or something go in', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'kwénkə', english: 'Help somebody or something go in', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L9325 (kwenkə), kept because it is unsourced; this one is unsourced
   // DROP Session 63 reconcile 2026-07-22
   // AwingWord(awing: 'kwəələ̂', english: 'Ask many annoying questions', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: "kwá'tə", english: 'kneel', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -3140,7 +3140,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: 'máma', english: 'name used for old women; prefix used before the names of old women', category: 'actions', tonePattern: 'high', difficulty: 3),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L10510
   // AwingWord(awing: 'mêe', english: 'be used up', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L13396
   // AwingWord(awing: "megtə acha'tə", english: 'wave a greeting', category: 'actions', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L22744 (məgtə achə'tə), which cites the dictionary; this spelling is unsourced
-  AwingWord(awing: 'medkâ', english: 'make something to become habitual', category: 'actions', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'medkâ', english: 'make something to become habitual', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L9182 (medkə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'médkə', english: 'immerse somebody or something in water (tr)', category: 'actions', tonePattern: 'high', difficulty: 1),
   // AwingWord(awing: 'medtô', english: 'allow, permit; cease, stop, leave', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L17598 (medtə̌), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: 'melô', english: 'become a habit', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L17599 (melə̌), which cites the dictionary; this spelling is unsourced
@@ -3149,7 +3149,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'mág mimá sén nə', english: 'be dizzy', category: 'actions', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'məgtə̂', english: 'finish', category: 'actions', tonePattern: 'falling', difficulty: 1),
   AwingWord(awing: 'məghábnə apô', english: 'be generous', category: 'actions', tonePattern: 'falling', difficulty: 2),
-  AwingWord(awing: 'məjûmnánə nəwûə', english: 'ressurrection', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'məjûmnánə nəwûə', english: 'ressurrection', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L26053 (májíumnəna nawüə), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: 'məlêlənə̂', english: 'be dim', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L26060 (məléləanə), which cites the dictionary; this spelling is unsourced
   AwingWord(awing: 'məmtə̂', english: 'feel something through a physical touch (active voice)', category: 'actions', tonePattern: 'falling', difficulty: 2),
   // AwingWord(awing: 'məpêŋnə ajwíə', english: 'be unconscious', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L20510 (mapéenə ajwiə), kept because it is dictionary page; this one is unsourced
@@ -3190,10 +3190,10 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'ŋáŋkə', english: 'lift', category: 'actions', tonePattern: 'high'),
   AwingWord(awing: 'ŋédtə', english: 'be crooked', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "ŋwa'ô", english: 'clean, clear; holy', category: 'actions', tonePattern: 'falling', difficulty: 1),
-  AwingWord(awing: 'ŋwaŋkô', english: 'flash, of something bright eg of lightening; shine', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ŋwaŋkô', english: 'flash, of something bright eg of lightening; shine', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L8631 (ŋwaŋkə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'ŋwéetə', english: 'be jealous, be envious', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ŋwédlə', english: 'be too excited', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: "ŋwú'kə", english: 'make something stoop', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: "ŋwú'kə", english: 'make something stoop', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L12615 (ŋwù'kə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: "ŋwú'nə", english: 'bow, as in greeting; stoop', category: 'actions', tonePattern: 'high', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   // AwingWord(awing: 'páatə', english: 'approach; make narrow', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L10522 (páata), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'pábtə', english: 'make something a little warm; roast a bit', category: 'actions', tonePattern: 'high', difficulty: 1),
@@ -3217,7 +3217,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "pó'ə", english: 'break (tr)', category: 'actions', tonePattern: 'high', difficulty: 1),
   // AwingWord(awing: 'páəmə', english: 'hunt', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L23742 (páamə), which cites the dictionary; this spelling is unsourced
   AwingWord(awing: 'pəglə', english: 'put in disorder, scatter', category: 'actions', difficulty: 1),
-  AwingWord(awing: 'péŋnə ńgwûə', english: 'capsize, tip over and fall', category: 'actions', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'péŋnə ńgwûə', english: 'capsize, tip over and fall', category: 'actions', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L7065 (pəgnə ŋgwùə), kept because it is unsourced; this one is unsourced
   // AwingWord(awing: 'pəŋtô', english: 'contradict', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L7473 (paŋtə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: "pí'ə", english: 'hem', category: 'actions', tonePattern: 'high', difficulty: 1),
   // AwingWord(awing: "pí'kə", english: 'twist, treat cunningly, handle cunningly', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u Tier B: same meaning as L18345 (pí'kə̌), which cites the dictionary; this spelling is unsourced
@@ -3399,7 +3399,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: 'yáŋə', english: 'be wise', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L13702
   // AwingWord(awing: 'yantə', english: 'protrude, of stomach', category: 'actions', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L27753 (yaŋtə), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: 'yénta', english: 'half-eat something (leaving teeth marks) eg as is usually done by a cat or rat', category: 'actions', tonePattern: 'high', difficulty: 3),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L27754 (yéŋtə), which cites the dictionary; this spelling is unsourced
-  AwingWord(awing: 'yéeka', english: 'disturb or annoy somebody or something', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'yéeka', english: 'disturb or annoy somebody or something', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L6399 (yéekə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: "yéeka əli'á", english: 'disturb or annoy', category: 'actions', tonePattern: 'high', difficulty: 2),
   // AwingWord(awing: 'yéelə', english: 'loose the mind; be mad (used colloquially)', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L6133
   // AwingWord(awing: 'yîəə', english: 'come, approach', category: 'actions', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L324 (yíəə), kept because it is dictionary page; this one is unsourced
@@ -3410,7 +3410,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'zag náanə', english: 'alight', category: 'actions', tonePattern: 'high', difficulty: 2),
   // AwingWord(awing: "zá'kə", english: 'lend, give on credit', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L9963
   AwingWord(awing: 'zámkə', english: 'put (of something) on another', category: 'actions', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'zámnə', english: 'sit on something high or uplifted eg on a powerful throne', category: 'actions', tonePattern: 'high', difficulty: 3),
+  // AwingWord(awing: 'zámnə', english: 'sit on something high or uplifted eg on a powerful throne', category: 'actions', tonePattern: 'high', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L12180 (zámnə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'záŋ ndê', english: 'be angry', category: 'actions', tonePattern: 'falling', difficulty: 2),
   AwingWord(awing: 'záŋə', english: 'give pain, hurt', category: 'actions', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'zaŋkə', english: 'be light (not heavy)', category: 'actions', difficulty: 1),
@@ -3463,7 +3463,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: "ali' yə noŋnə nə", english: 'open place, clearing', category: 'descriptive', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L15403 (ali' ya nɔŋnə̌ nə̌), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: "anüənda'ə", english: 'false thing', category: 'descriptive'),  // REMOVED Session 66u similar-spelling: same meaning as L20773 (anəndaə), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: 'anuyələnə', english: 'old fashioned practice', category: 'descriptive', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L15413 (anuyalenə), which cites the dictionary; this spelling is unsourced
-  AwingWord(awing: 'anyádlə', english: 'digusting, dirty', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'anyádlə', english: 'digusting, dirty', category: 'descriptive', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L15414 (anyádlə), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: "apa'ə", english: 'a flat covering (of door, window, hut etc.)', category: 'descriptive', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L8633
   // AwingWord(awing: 'apáŋə', english: 'an open bamboo cupboard attached to the wall of the house used for putting kitchen utensils', category: 'descriptive', tonePattern: 'high', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L24928 (apanə̌), kept because it is dictionary page; this one is unsourced
   AwingWord(awing: 'apuməŋkwúnə', english: 'small pox', category: 'descriptive', tonePattern: 'high', difficulty: 1),
@@ -3579,7 +3579,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'achəkelə', english: 'sieve', category: 'things', difficulty: 1),
   // AwingWord(awing: 'achibamátéenə', english: 'cheap and undesirable products or goods', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L13984 (achíbamətéenə̌), which cites the dictionary; this spelling is unsourced
   AwingWord(awing: 'achíalúmə', english: 'name of a quarter in Awing', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: "achiətazó'ə", english: 'celibate, unmarried for religious reasons', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: "achiətazó'ə", english: 'celibate, unmarried for religious reasons', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L13987 (achíatazə̌'ə), kept because it is dictionary page; this one is unsourced
   AwingWord(awing: 'achílə ajúmə', english: 'stopper; plug', category: 'things', tonePattern: 'high', difficulty: 2),
   // AwingWord(awing: "achwí'nə", english: 'unity, togetherness', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u Tier B: same meaning as L14934 (achwí'nə̌), which cites the dictionary; this spelling is unsourced
   AwingWord(awing: 'afablə', english: 'fastidiousness', category: 'things', difficulty: 1),
@@ -3880,7 +3880,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: 'atseŋə', english: 'bladder', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L6795 (atsenə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'atselə', english: 'peg', category: 'things', difficulty: 1),
   // AwingWord(awing: "atsa'á mako'ná", english: 'shirt', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L21221 (atsa'ə makə́nə), which cites the dictionary; this spelling is unsourced
-  AwingWord(awing: "atsə'kə", english: 'criticism, the act of deminishing the value of something, the act of making something appear less important', category: 'things', difficulty: 3),
+  // AwingWord(awing: "atsə'kə", english: 'criticism, the act of deminishing the value of something, the act of making something appear less important', category: 'things', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L14213 (atsa'kə̌), kept because it is dictionary page; this one is unsourced
   AwingWord(awing: 'atsəmə', english: 'whichever', category: 'things', difficulty: 1),
   AwingWord(awing: 'atsəmətsəmə', english: 'total', category: 'things', difficulty: 2),
   // AwingWord(awing: 'atsóobə', english: 'fine or levy for commiting a crime', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L15708 (atsóobə̌), kept because it is dictionary page; this one is unsourced
@@ -3960,7 +3960,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'élə', english: 'aids', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: 'ə́', english: 'they, it, thing in question or talked about', category: 'things', tonePattern: 'high', difficulty: 1),
   // AwingWord(awing: "ə̂'ə", english: 'no', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u Tier B: same meaning as L21313 (ə'ə), which cites the dictionary; this spelling is unsourced
-  AwingWord(awing: 'əfag ndúmə', english: 'fork (in path)', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'əfag ndúmə', english: 'fork (in path)', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L21314 (əfaŋ ndúmə), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: 'əfeŋ', english: 'in this compound, this place, here (nominal)', category: 'things', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L14088 (əfênə̌), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: "əfeŋ məlá'ə", english: 'roofer of thatched houses', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L21317 (əfeŋ malə́ə), which cites the dictionary; this spelling is unsourced
   AwingWord(awing: 'əfeŋə', english: 'roofer of thatched houses', category: 'things', difficulty: 1),
@@ -4051,10 +4051,10 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "əsa'ə", english: 'shoot', category: 'things', difficulty: 3),
   // AwingWord(awing: "əsá'mánumə", english: 'east; sunrise', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L21761 (əsá'mónumə), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: "əsəpó'á", english: 'something that is cheap or free of charge', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L21763 (əsapó'ə), which cites the dictionary; this spelling is unsourced
-  AwingWord(awing: 'əsê', english: 'god; fetish (spirit)', category: 'things', tonePattern: 'falling', difficulty: 3),
+  // AwingWord(awing: 'əsê', english: 'god; fetish (spirit)', category: 'things', tonePattern: 'falling', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L21764 (əsê), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: 'Əsê nəpóolə', english: 'God (the one who has created everything on earth); supreme being', category: 'things', tonePattern: 'falling', difficulty: 3),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L27428
   AwingWord(awing: 'əséenə', english: 'crevice', category: 'things', tonePattern: 'high', difficulty: 1),
-  AwingWord(awing: 'əsenə́', english: 'venom (of snake), stinger', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'əsenə́', english: 'venom (of snake), stinger', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L21766 (əsenə), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: 'əsóomə', english: 'destruction that springs from jealousy, envy, or simply an evil heart, ill-will', category: 'things', tonePattern: 'high', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L9529 (asóəmə), kept because it is unsourced; this one is unsourced
   // AwingWord(awing: 'əsoŋ nkadtə', english: 'spine, backbone', category: 'things', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L6533 (asɔŋ nkadtə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'əshîə', english: 'appearance', category: 'things', tonePattern: 'falling', difficulty: 1),
@@ -4195,7 +4195,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: "məfu'ə", english: 'foam', category: 'things', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L17610 (mafu'ə̌), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: 'mág mó əfo', english: 'somebody who investigates issues and report to the fon', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L17611 (mə̌g mə̌ afo), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: 'məgtə azonə̂', english: 'settle dispute', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L17613 (məgtə̌ azɔŋə), which cites the dictionary; this spelling is unsourced
-  AwingWord(awing: 'mâghaba', english: 'adultry', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'mâghaba', english: 'adultry', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L17614 (məghabə̌), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: 'məghám mém mbê nə nəkwa', english: 'twenty-four (24)', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L651 ('məghə́m mém mbê nə́ nəkwa')
   // AwingWord(awing: "məghám mém mbê nə tá'ə", english: 'twenty-one (21)', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L26046 (məghəm mém mbé nə̌ tá'ə), which cites the dictionary; this spelling is unsourced
   // AwingWord(awing: "məghó'kənə", english: 'worship; worshipping', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L26050 (maghó'kanə), which cites the dictionary; this spelling is unsourced
@@ -4222,7 +4222,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'manoŋ má mbéŋa', english: 'wool', category: 'things', tonePattern: 'high', difficulty: 2),
   AwingWord(awing: 'manoŋ má ndě má neemə', english: 'mane', category: 'things', tonePattern: 'rising', difficulty: 2),
   AwingWord(awing: 'manoŋ má neemə', english: 'fur', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'məntalása', english: 'matress', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'məntalása', english: 'matress', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L10266 (məntalása), kept because it is unsourced; this one is unsourced
   // AwingWord(awing: 'mankálə', english: 'pap; mushy food', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L20508 (məŋkálə̌), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: "manwâ'na", english: 'cleanliness; holiness', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L9413 (maŋwâ'na), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'mápə́ŋə́ fláwa', english: 'bud', category: 'things', tonePattern: 'high', difficulty: 2),
@@ -4384,7 +4384,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: 'nəzóobá', english: 'theirs', category: 'things', tonePattern: 'high', difficulty: 3),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L23258 (nəzəobə), which cites the dictionary; this spelling is unsourced
   AwingWord(awing: 'ngá', english: 'no', category: 'things', tonePattern: 'high', difficulty: 1),
   AwingWord(awing: "ngá mə'ə́", english: 'once, one time', category: 'things', tonePattern: 'high', difficulty: 2),
-  AwingWord(awing: 'ngá yitsə̂', english: 'again, once more', category: 'things', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'ngá yitsə̂', english: 'again, once more', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L10704 (ŋ ngá yîtsə), kept because it is unsourced; this one is unsourced
   AwingWord(awing: 'ngagə', english: 'fist', category: 'things', difficulty: 1),
   // AwingWord(awing: "ngaŋəfa'ə", english: 'servant', category: 'things', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L626 (ngaŋəfa'ə), kept because it is dictionary page; this one is unsourced
   // AwingWord(awing: 'ngaŋəfúə', english: 'medicine man, traditional healer', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L26576 (nganafüə), kept because it is dictionary page; this one is unsourced
@@ -5445,7 +5445,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.69
   // AwingWord(awing: "fi'â", english: 'running, of stomach', category: 'body', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L16609 (fí'ə̌), which cites the dictionary; this spelling is unsourced
   // dict:p.69
-  AwingWord(awing: 'figtə̂', english: 'decieve many times', category: 'family', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'figtə̂', english: 'decieve many times', category: 'family', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L7821 (fígtə), kept because it is unsourced; this one is unsourced
   // dict:p.69
   // AwingWord(awing: 'fógə', english: 'be white', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L13642
   // dict:p.70
@@ -5768,7 +5768,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.101-107
   // AwingWord(awing: 'ndzəmə', english: 'back; behind, backward', category: 'body', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L242
   // dict:p.101-107
-  AwingWord(awing: 'ndzəmə', english: "rich and powerful relations (are said to come to one's aid in times of difficulty)", category: 'numbers', difficulty: 3),
+  // AwingWord(awing: 'ndzəmə', english: "rich and powerful relations (are said to come to one's aid in times of difficulty)", category: 'numbers', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L22796 (ndzəmə), kept because it is dictionary page; this one is unsourced
   // dict:p.101-107
   // AwingWord(awing: 'ndzɔ', english: 'trouble (colloquial usage)', category: 'things', difficulty: 2),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L22799 (ndzə̌), which cites the dictionary; this spelling is unsourced
   // dict:p.101-107
@@ -5988,7 +5988,7 @@ const List<AwingWord> dictionaryEntries = [
   // dict:p.122-128
   // AwingWord(awing: "sá'kə", english: 'explode, of many things', category: 'descriptive', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L27128
   // dict:p.122-128
-  AwingWord(awing: "sá'kə", english: 'make something to explode', category: 'actions', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: "sá'kə", english: 'make something to explode', category: 'actions', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L10199 (sá'kə), kept because it is unsourced; this one is unsourced
   // dict:p.122-128
   AwingWord(awing: 'sánə', english: 'sign', category: 'things', tonePattern: 'high', difficulty: 1),
   // dict:p.122-128
@@ -6262,7 +6262,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.143
   AwingWord(awing: "sá'ə", english: 'admonish', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.143
-  AwingWord(awing: 'tátə', english: 'adress, to an old man', category: 'family', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'tátə', english: 'adress, to an old man', category: 'family', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L3295 (táta), kept because it is unsourced; this one is unsourced
   // index:p.143
   // AwingWord(awing: "tákɔ' nwunə", english: 'adult', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L2438 (táko' ŋwunə), kept because it is unsourced; this one is unsourced
   // index:p.143
@@ -6326,7 +6326,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.144
   AwingWord(awing: 'medtə', english: 'ally', category: 'things', difficulty: 1),
   // index:p.144
-  AwingWord(awing: 'tʃondzamə', english: 'ally', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'tʃondzamə', english: 'ally', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L23807 (tóondzəmə), kept because it is dictionary page; this one is unsourced
   // index:p.144
   AwingWord(awing: 'afoopafo', english: 'almighty', category: 'things', difficulty: 1),
   // index:p.144
@@ -6450,7 +6450,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.144
   AwingWord(awing: 'yiəə', english: 'approach', category: 'actions', difficulty: 1),
   // index:p.144
-  AwingWord(awing: 'àndó', english: 'aproximately', category: 'things', tonePattern: 'high-low', difficulty: 1),
+  // AwingWord(awing: 'àndó', english: 'aproximately', category: 'things', tonePattern: 'high-low', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L20760 (andó), kept because it is dictionary page; this one is unsourced
   // index:p.144
   // AwingWord(awing: 'azənə', english: 'argument', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L3922 (azəŋə), kept because it is unsourced; this one is unsourced
   // index:p.144
@@ -6619,7 +6619,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   // AwingWord(awing: 'ndzə', english: 'beans', category: 'food', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L453 (ndzɔ), which cites the dictionary; this spelling is unsourced
   // index:p.146
-  AwingWord(awing: 'pî pənteemə', english: 'bear fruit', category: 'nature', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: 'pî pənteemə', english: 'bear fruit', category: 'nature', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L2746 (pi nənteemə́), kept because it is unsourced; this one is unsourced
   // index:p.146
   // AwingWord(awing: 'piə', english: 'bear, of child', category: 'family', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L5056 (pîə), kept because it is unsourced; this one is unsourced
   // index:p.146
@@ -6657,7 +6657,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.146
   // AwingWord(awing: 'atóga akwunə', english: 'bedroom', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L3856 (atógə əkwunə), kept because it is unsourced; this one is unsourced
   // index:p.146
-  AwingWord(awing: 'magwédnuə', english: 'bee', category: 'animals', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'magwédnuə', english: 'bee', category: 'animals', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L2465 (məŋwédnúə), kept because it is unsourced; this one is unsourced
   // index:p.146
   AwingWord(awing: 'kifəmə', english: 'bee, sort of', category: 'animals', difficulty: 1),
   // index:p.146
@@ -7037,7 +7037,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.149
   AwingWord(awing: 'akoaba', english: 'cain', category: 'things', difficulty: 1),
   // index:p.149
-  AwingWord(awing: 'atóəmə', english: 'calabash', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'atóəmə', english: 'calabash', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L14024 (atóəmə), kept because it is dictionary page; this one is unsourced
   // index:p.149
   // index:p.149
   AwingWord(awing: 'mɔ́ nə mbelólə', english: 'calf', category: 'body', tonePattern: 'high', difficulty: 2),
@@ -7048,7 +7048,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.149
   AwingWord(awing: 'tóŋə', english: 'call', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.149
-  AwingWord(awing: 'pwə̂dkə', english: 'calm down sth or sb', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'pwə̂dkə', english: 'calm down sth or sb', category: 'descriptive', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L5975 (pwódkə), kept because it is unsourced; this one is unsourced
   // index:p.149
   // AwingWord(awing: 'wam mbəəmə', english: "calm one's self", category: 'numbers', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L18693 (wam mbəəmə̌), kept because it is dictionary page; this one is unsourced
   // index:p.149
@@ -7391,7 +7391,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "cha'tə̂ nawùə", english: 'comfort', category: 'things', tonePattern: 'falling', difficulty: 2),
   // index:p.151
   // index:p.151
-  AwingWord(awing: 'ńgə̂', english: 'commplement', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'ńgə̂', english: 'commplement', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L4399 (ńgə́), kept because it is unsourced; this one is unsourced
   // index:p.151
   // AwingWord(awing: 'atséəbantsoolə', english: 'communication by mouth', category: 'body', tonePattern: 'high', difficulty: 2),  // Session 66p: dropped, kept 'atséebántsoolə' (dictionary, single occurrence)
   // index:p.151
@@ -8033,7 +8033,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.156
   // AwingWord(awing: "yéeka ali'ə", english: 'disturb or annoy', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L3403 (yéeka əli'á), kept because it is unsourced; this one is unsourced
   // index:p.156
-  AwingWord(awing: 'yéekə', english: 'disturb sb or sth', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'yéekə', english: 'disturb sb or sth', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L6399 (yéekə), kept because it is unsourced; this one is unsourced
   // index:p.156
   // AwingWord(awing: "ayéekáli'ə", english: 'disturbance', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L21236 (ayéekálí'a), kept because it is dictionary page; this one is unsourced
   // index:p.156
@@ -8238,7 +8238,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.157
   // AwingWord(awing: "mbi tə̂ŋka'ə", english: "elephant's trunk", category: 'animals', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L22737 (mbi təŋká'ə), kept because it is dictionary page; this one is unsourced
   // index:p.157
-  AwingWord(awing: "asoŋ nə̂ tə̂ŋka'ə", english: "elephant's tusk", category: 'animals', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: "asoŋ nə̂ tə̂ŋka'ə", english: "elephant's tusk", category: 'animals', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L14151 (nəsoŋ nə̌ təŋkə̌'ə), kept because it is dictionary page; this one is unsourced
   // index:p.157
   // AwingWord(awing: "ntsəb mə̂'ə", english: 'eleven (11)', category: 'numbers', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u Tier B: same meaning as L14583 (ntsəb mə̌'ə), which cites the dictionary; this spelling is unsourced
   // index:p.157
@@ -8632,7 +8632,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.160
   AwingWord(awing: "apa'ə", english: 'flat covering', category: 'descriptive', difficulty: 1),
   // index:p.160
-  AwingWord(awing: "pa'nə̂ ghéemə", english: 'flea', category: 'animals', tonePattern: 'falling', difficulty: 2),
+  // AwingWord(awing: "pa'nə̂ ghéemə", english: 'flea', category: 'animals', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L18331 (pá'mạgheemə̌), kept because it is dictionary page; this one is unsourced
   // index:p.160
   // AwingWord(awing: 'kaalə', english: 'flee, escape', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L14115 (kaalə̂), kept because it is dictionary page; this one is unsourced
   // index:p.160
@@ -8656,7 +8656,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.160
   // AwingWord(awing: 'apéenə', english: 'flour', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L21164 (apenə), kept because it is dictionary page; this one is unsourced
   // index:p.160
-  AwingWord(awing: 'foŋə', english: 'flourish, of plants', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'foŋə', english: 'flourish, of plants', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L16614 (fəŋə̌), kept because it is dictionary page; this one is unsourced
   // index:p.160
   AwingWord(awing: 'kógə', english: 'flow', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.160
@@ -8776,7 +8776,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.161
   // AwingWord(awing: 'lagnə', english: 'forgive', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L8773 (lagnə), kept because it is unsourced; this one is unsourced
   // index:p.161
-  AwingWord(awing: 'məg ndúmə', english: 'fork, in a path', category: 'nature', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: 'məg ndúmə', english: 'fork, in a path', category: 'nature', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L21314 (əfaŋ ndúmə), kept because it is dictionary page; this one is unsourced
   // index:p.161
   // AwingWord(awing: 'ngaŋmõŋgéemə', english: 'fortune-teller', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L26577 (ngaŋmaŋéemə), kept because it is dictionary page; this one is unsourced
   // index:p.161
@@ -8876,7 +8876,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.162
   // AwingWord(awing: 'apə̂dpə̂lə', english: 'furrowed', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L14661 (apêdpêlə), kept because it is dictionary page; this one is unsourced
   // index:p.162
-  AwingWord(awing: 'akeelə', english: 'gabbage dump (idiomatic)', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'akeelə', english: 'gabbage dump (idiomatic)', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L5151 (akeelə), kept because it is unsourced; this one is unsourced
   // index:p.162
   // AwingWord(awing: 'akyáamə', english: 'gall', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L15379 (akyamə̌), kept because it is dictionary page; this one is unsourced
   // index:p.162
@@ -9538,7 +9538,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.167
   AwingWord(awing: 'mêlkə', english: 'immerse sb or sth (tr)', category: 'things', tonePattern: 'falling', difficulty: 1),
   // index:p.167
-  AwingWord(awing: "afî'nánkaŋə", english: 'immitation', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: "afî'nánkaŋə", english: 'immitation', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L3597 (afi'nónkaŋə), kept because it is unsourced; this one is unsourced
   // index:p.167
   AwingWord(awing: 'atóəmə', english: 'impatience', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.167
@@ -10194,7 +10194,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.172
   AwingWord(awing: "kə̂'kə", english: 'make sth climb', category: 'actions', tonePattern: 'falling', difficulty: 1),
   // index:p.172
-  AwingWord(awing: 'sədkə', english: 'make sth go round', category: 'actions', difficulty: 1),
+  // AwingWord(awing: 'sədkə', english: 'make sth go round', category: 'actions', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L3252 (sedkô), kept because it is unsourced; this one is unsourced
   // index:p.172
   AwingWord(awing: "sá'kə", english: 'make sth to explode', category: 'actions', tonePattern: 'high', difficulty: 1),
   // index:p.172
@@ -10269,7 +10269,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.172
   // AwingWord(awing: 'aghá yîtsa', english: 'maybe', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L5373 (əghâ yitsə̌), kept because it is unsourced; this one is unsourced
   // index:p.172
-  AwingWord(awing: 'akəgbə', english: 'mbecile', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'akəgbə', english: 'mbecile', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L9531 (akəgbə), kept because it is unsourced; this one is unsourced
   // index:p.172
   // AwingWord(awing: 'nid ŋgə̂', english: 'mean that', category: 'things', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L14271 (nid ŋga), kept because it is dictionary page; this one is unsourced
   // index:p.172
@@ -10469,7 +10469,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.174
   // AwingWord(awing: "atsa'əmbəəmə", english: 'muscle', category: 'body', difficulty: 1),  // REMOVED Session 66u OCR-variant: same meaning and same consonants as L21205 (atsa'mbəəmə̌), which cites the dictionary; this spelling is unsourced
   // index:p.174
-  AwingWord(awing: "aghô'ə", english: 'mushoom, sort of', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: "aghô'ə", english: 'mushoom, sort of', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L3493 (əghó'ə), kept because it is unsourced; this one is unsourced
   // index:p.174
   // AwingWord(awing: "pə'ə", english: 'mushroom', category: 'food', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L24257 (pə'ə), kept because it is dictionary page; this one is unsourced
   // index:p.174
@@ -10685,7 +10685,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.175
   AwingWord(awing: 'lenə', english: 'old', category: 'descriptive', difficulty: 1),
   // index:p.175
-  AwingWord(awing: 'ŋ nden ŋwuna', english: 'old man', category: 'family', difficulty: 2),
+  // AwingWord(awing: 'ŋ nden ŋwuna', english: 'old man', category: 'family', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L2410 (nden ŋwunə), kept because it is unsourced; this one is unsourced
   // index:p.175
   // AwingWord(awing: 'aka yi lena', english: 'old testament', category: 'descriptive', difficulty: 2),  // REMOVED Session 61 Phase1: OCR clone, kept L3377 ('əka yi lenə')
   // index:p.175
@@ -10926,7 +10926,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'akamtə', english: 'phase', category: 'things', difficulty: 1),
   // index:p.177
-  AwingWord(awing: 'akwagə', english: 'phleme', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'akwagə', english: 'phleme', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L20692 (akwágə), kept because it is dictionary page; this one is unsourced
   // index:p.177
   AwingWord(awing: 'ŋ nəə̌ fútə', english: 'photographer', category: 'things', tonePattern: 'rising', difficulty: 2),
   // index:p.177
@@ -10954,7 +10954,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.177
   AwingWord(awing: 'səbtə', english: 'pierce continuously', category: 'things', difficulty: 1),
   // index:p.177
-  AwingWord(awing: 'tə̂ga', english: 'pierce, of ears', category: 'things', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tə̂ga', english: 'pierce, of ears', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L3322 (tógə), kept because it is unsourced; this one is unsourced
   // index:p.177
   // AwingWord(awing: 'kwuneemə', english: 'pig', category: 'animals', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L182 ('kwúneemə')
   // index:p.177
@@ -11554,7 +11554,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.182
   AwingWord(awing: "ntsə'a afa'ə", english: 'remuneration', category: 'things', difficulty: 2),
   // index:p.182
-  AwingWord(awing: 'fəŋkə', english: 'render sth cold', category: 'nature', difficulty: 1),
+  // AwingWord(awing: 'fəŋkə', english: 'render sth cold', category: 'nature', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L5416 (féŋkə), kept because it is unsourced; this one is unsourced
   // index:p.182
   // AwingWord(awing: 'tsoŋkə', english: 'repair', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L27174 (tsonkə), kept because it is dictionary page; this one is unsourced
   // index:p.182
@@ -11729,7 +11729,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.183
   // AwingWord(awing: 'kakə', english: 'rough', category: 'descriptive', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L2991 (kakə̂), kept because it is unsourced; this one is unsourced
   // index:p.183
-  AwingWord(awing: 'tsənkeelə', english: 'round', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'tsənkeelə', english: 'round', category: 'descriptive', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L14581 (ntsənkeelə̌), kept because it is dictionary page; this one is unsourced
   // index:p.183
   // AwingWord(awing: 'akamta', english: 'round', category: 'descriptive', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L10927 (akamtə), kept because it is unsourced; this one is unsourced
   // index:p.183
@@ -11879,7 +11879,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.184
   // AwingWord(awing: 'chútáŋoŋə', english: 'scream', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L19246 (chútóŋgoŋə̌), kept because it is dictionary page; this one is unsourced
   // index:p.184
-  AwingWord(awing: 'kaŋə', english: 'screen sth from view', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'kaŋə', english: 'screen sth from view', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L14180 (akəŋə), kept because it is dictionary page; this one is unsourced
   // index:p.184
   // AwingWord(awing: "aŋwa'lə̂sé", english: 'scripture', category: 'things', tonePattern: 'falling', difficulty: 3),  // REMOVED Session 66u similar-spelling: same meaning as L3789 (aŋwa'lósê), kept because it is unsourced; this one is unsourced
   // index:p.184
@@ -12267,7 +12267,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.187
   // AwingWord(awing: 'chagtə', english: 'smash many times', category: 'descriptive', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L2771 (chagtə̂), kept because it is unsourced; this one is unsourced
   // index:p.187
-  AwingWord(awing: 'chagə', english: 'smash sth (tr)', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'chagə', english: 'smash sth (tr)', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L13853 (chagə), kept because it is dictionary page; this one is unsourced
   // index:p.187
   AwingWord(awing: 'zegə', english: 'smear a surface with sth sticky', category: 'things', difficulty: 1),
   // index:p.187
@@ -12653,7 +12653,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'ndaalə', english: 'stretch', category: 'things', difficulty: 1),
   // index:p.189
-  AwingWord(awing: 'tê', english: 'strike, of insect or snake', category: 'animals', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: 'tê', english: 'strike, of insect or snake', category: 'animals', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L27154 (tê), kept because it is dictionary page; this one is unsourced
   // index:p.189
   // AwingWord(awing: 'konə', english: 'strike (with hand)', category: 'body', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L17239 (kɔnə̌), kept because it is dictionary page; this one is unsourced
   // index:p.189
@@ -12677,7 +12677,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.189
   AwingWord(awing: 'ghoakə', english: 'stupidity', category: 'things', difficulty: 1),
   // index:p.189
-  AwingWord(awing: 'ghoakə', english: 'stupify', category: 'things', difficulty: 1),
+  // AwingWord(awing: 'ghoakə', english: 'stupify', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L14346 (ghəakə̌), kept because it is dictionary page; this one is unsourced
   // index:p.189
   // AwingWord(awing: "mî'tə", english: 'stutter', category: 'things', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u Tier B: same meaning as L13964 (mí'tə), which cites the dictionary; this spelling is unsourced
   // index:p.189
@@ -12734,7 +12734,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   AwingWord(awing: 'tśəndzəmə', english: 'support of limited value', category: 'things', tonePattern: 'high', difficulty: 1),
   // index:p.190
-  AwingWord(awing: 'tśəndzəmə', english: 'supporter', category: 'things', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'tśəndzəmə', english: 'supporter', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L23807 (tóondzəmə), kept because it is dictionary page; this one is unsourced
   // index:p.190
   // AwingWord(awing: 'tśəndzəmə', english: 'supporter with a limited role', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L12737
   // index:p.190
@@ -12770,7 +12770,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   // AwingWord(awing: "tsɔ́'ə̂tə'ə", english: 'sweet palm wine, very', category: 'body', tonePattern: 'falling', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L2340 (tsó'óto'ə), kept because it is unsourced; this one is unsourced
   // index:p.190
-  AwingWord(awing: "natô'ə", english: 'sweet potatoe', category: 'descriptive', tonePattern: 'falling', difficulty: 1),
+  // AwingWord(awing: "natô'ə", english: 'sweet potatoe', category: 'descriptive', tonePattern: 'falling', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L550 (nətó'ə), kept because it is dictionary page; this one is unsourced
   // index:p.190
   AwingWord(awing: "kɔ'ə", english: 'swell (eg a dead animal)', category: 'animals', difficulty: 3),  // Session 61: bumped to expert (inappropriate for beginner)
   // index:p.190
@@ -12784,7 +12784,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.190
   // AwingWord(awing: 'anaalə', english: 'symptom', category: 'things', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L5200 (anəələ), kept because it is unsourced; this one is unsourced
   // index:p.190
-  AwingWord(awing: 'anaalə ghoonə', english: 'symtom of disease', category: 'things', difficulty: 2),
+  // AwingWord(awing: 'anaalə ghoonə', english: 'symtom of disease', category: 'things', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L3767 (anəəlághoonə), kept because it is unsourced; this one is unsourced
   // index:p.190
   // AwingWord(awing: 'afʉə mambəmə', english: 'tablets', category: 'things', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L3602 (afúə məmbəmə), kept because it is unsourced; this one is unsourced
   // index:p.190
@@ -13039,7 +13039,7 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.192
   // AwingWord(awing: 'ndelə', english: 'time', category: 'things', difficulty: 1),  // REMOVED Session 61 Phase1: OCR clone, kept L4146 ('ndelə̂')
   // index:p.192
-  AwingWord(awing: "aghá ndá'ə", english: 'time, anothern', category: 'things', tonePattern: 'high', difficulty: 2),
+  // AwingWord(awing: "aghá ndá'ə", english: 'time, anothern', category: 'things', tonePattern: 'high', difficulty: 2),  // REMOVED Session 66u similar-spelling: same meaning as L21733 (agha nda'ə), kept because it is dictionary page; this one is unsourced
   // index:p.192
   // AwingWord(awing: 'ngə̌', english: 'time (countable)', category: 'things', tonePattern: 'rising', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L23259 (nga), kept because it is dictionary page; this one is unsourced
   // index:p.192
@@ -13431,9 +13431,9 @@ const List<AwingWord> dictionaryEntries = [
   // index:p.195
   AwingWord(awing: "lwichwí'ə", english: 'very bitter, sth', category: 'descriptive', tonePattern: 'high', difficulty: 1),
   // index:p.195
-  AwingWord(awing: 'ntsəgchwéŋə', english: 'very sour, sth', category: 'descriptive', tonePattern: 'high', difficulty: 1),
+  // AwingWord(awing: 'ntsəgchwéŋə', english: 'very sour, sth', category: 'descriptive', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L24294 (tsəgchweŋə), kept because it is dictionary page; this one is unsourced
   // index:p.195
-  AwingWord(awing: 'ateekɔŋə', english: 'very strong, sth', category: 'descriptive', difficulty: 1),
+  // AwingWord(awing: 'ateekɔŋə', english: 'very strong, sth', category: 'descriptive', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L14022 (ateekə̌nə), kept because it is dictionary page; this one is unsourced
   // index:p.195
   // AwingWord(awing: 'pyádnə', english: 'very well', category: 'things', tonePattern: 'high', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L23754 (pyádnə), kept because it is dictionary page; this one is unsourced
   // index:p.195
@@ -13934,7 +13934,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'fámnə', english: 'drown (intr)', category: 'things', difficulty: 2),  // v2:page_068
   // AwingWord(awing: 'fəmtə̌', english: 'walk as if one is not seeing or blind', category: 'things', difficulty: 2),  // v2:page_068  // REMOVED Session 66u similar-spelling: same meaning as L27454 (fəmtə), kept because it is dictionary page; this one is dictionary page
   AwingWord(awing: 'fəmtafəmtə', english: 'word that describes the movement of somebody who is not seeing his path', category: 'body', difficulty: 3),  // v2:page_068
-  AwingWord(awing: 'faŋ', english: 'sound (word) reinforcing an act of acceptance that is done without thought or interest', category: 'things', difficulty: 3),  // v2:page_068
+  // AwingWord(awing: 'faŋ', english: 'sound (word) reinforcing an act of acceptance that is done without thought or interest', category: 'things', difficulty: 3),  // v2:page_068  // REMOVED Session 66u similar-spelling: same meaning as L21791 (fəŋ), kept because it is dictionary page; this one is dictionary page
   AwingWord(awing: "fi'ə", english: 'measure (of distance or height)', category: 'things', difficulty: 1),  // v2:page_068
   AwingWord(awing: "fi'ə", english: 'unearth', category: 'body', difficulty: 1),  // v2:page_068
   // AwingWord(awing: "fi'ə", english: "try, attempt (used as a warning not to try a dangerous thing or test sb's patience)", category: 'things', difficulty: 3),  // v2:page_068  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L13265
@@ -14169,7 +14169,7 @@ const List<AwingWord> dictionaryEntries = [
   // v2:page_018
   // v2:page_018
   AwingWord(awing: "akakə'ə̌", english: 'a kind of basket weaved using the soft interior of raffia bamboo', category: 'things', difficulty: 3),  // v2:page_025
-  AwingWord(awing: 'akakógə̌ atséebə', english: 'foolish or obscene talk', category: 'things', difficulty: 3),  // v2:page_025
+  // AwingWord(awing: 'akakógə̌ atséebə', english: 'foolish or obscene talk', category: 'things', difficulty: 3),  // v2:page_025  // REMOVED Session 66u similar-spelling: same meaning as L18762 (akɔgə̌ atséeba), kept because it is dictionary page; this one is dictionary page
   AwingWord(awing: "ako'lə̌", english: 'triangular hedge used to constrain it', category: 'nature', difficulty: 1),  // v2:page_025
   // AwingWord(awing: 'akəmə ajúmə', english: 'splinter, sliver, sub', category: 'things', difficulty: 1),  // v2:page_025  // REMOVED Session 66u: duplicate gloss of the same spelling, kept L3650
   AwingWord(awing: "akəmə aŋwa'lə̌", english: 'a piece of writing', category: 'things', difficulty: 1),  // v2:page_025
@@ -17266,7 +17266,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: 'laŋkə̌ ndelə̌', english: 'entertain, amuse', category: 'things', difficulty: 2),  // v2:page_091
   // AwingWord(awing: 'lə', english: 'hook many times', category: 'things', difficulty: 2),  // v2:page_091  // REMOVED Session 66u similar-spelling: same meaning as L13874 (lá'ə), kept because it is dictionary page; this one is dictionary page
   AwingWord(awing: 'lə̀', english: 'be sleepy', category: 'things', difficulty: 2),  // v2:page_091
-  AwingWord(awing: 'lə̀', english: "look at somebody's food with a watery mouth (lust for anything)", category: 'body', difficulty: 3),  // v2:page_091
+  // AwingWord(awing: 'lə̀', english: "look at somebody's food with a watery mouth (lust for anything)", category: 'body', difficulty: 3),  // v2:page_091  // REMOVED Session 66u similar-spelling: same meaning as L13925 (alə), kept because it is dictionary page; this one is dictionary page
   // AwingWord(awing: 'lə̌gə̌ á ndu mbumə̌', english: 'incubate, set on eggs', category: 'food', difficulty: 2),  // v2:page_091  // Session 66p: dropped, kept 'légə á ndu mbumá' (NO source evidence - kept the established app form (used 1x); dedup only, not an orthography ruling)
   AwingWord(awing: 'leŋə̌', english: 'spot, speckle', category: 'things', difficulty: 2),  // v2:page_091
   AwingWord(awing: 'leŋə̌', english: 'lurk', category: 'things', difficulty: 1),  // v2:page_091
@@ -21222,7 +21222,7 @@ const List<AwingWord> dictionaryEntries = [
   AwingWord(awing: "atsa'sfəgə̌", english: 'warm clothing', category: 'body', difficulty: 1),  // v2:page_043
   AwingWord(awing: 'atsagə', english: 'bitterness, fierceness', category: 'things', difficulty: 1),  // v2:page_043
   // AwingWord(awing: 'atságəntəmə', english: 'ill temper', category: 'things', difficulty: 1),  // v2:page_043  // REMOVED Session 66u similar-spelling: same meaning as L14212 (atsógántəəmə̌), kept because it is dictionary page; this one is dictionary page
-  AwingWord(awing: "atsá'kə", english: 'criticism, the act of demishing the value of something', category: 'things', difficulty: 1),  // v2:page_043
+  // AwingWord(awing: "atsá'kə", english: 'criticism, the act of demishing the value of something', category: 'things', difficulty: 1),  // v2:page_043  // REMOVED Session 66u similar-spelling: same meaning as L14213 (atsa'kə̌), kept because it is dictionary page; this one is dictionary page
   AwingWord(awing: 'awelə', english: 'owela', category: 'things', difficulty: 1),  // v2:page_045
   AwingWord(awing: 'awelə́welə', english: 'assorted, varied', category: 'things', difficulty: 1),  // v2:page_045
   AwingWord(awing: 'awénkíə', english: 'women dance group in Akuhle quarter, based in Tata Mofolos compound', category: 'things', difficulty: 3),  // v2:page_045
@@ -27327,7 +27327,7 @@ const List<AwingWord> dictionaryEntries = [
   // AwingWord(awing: 'ateekɔ́ŋə', english: 'something very strong', category: 'things', difficulty: 1),  // v2:page_040  // REMOVED Session 66u similar-spelling: same meaning as L14022 (ateekə̌nə), kept because it is dictionary page; this one is dictionary page
   AwingWord(awing: 'atə̀rə', english: 'abdomen; buttock', category: 'things', difficulty: 1),  // v2:page_040
   AwingWord(awing: 'atə̀səmə', english: 'calabash', category: 'things', difficulty: 1),  // v2:page_040
-  AwingWord(awing: 'atə̀səməndólá', english: 'prostitute', category: 'things', difficulty: 1),  // v2:page_040
+  // AwingWord(awing: 'atə̀səməndólá', english: 'prostitute', category: 'things', difficulty: 1),  // v2:page_040  // REMOVED Session 66u similar-spelling: same meaning as L24459 (atəəmandələ), kept because it is dictionary page; this one is dictionary page
   // v2:page_041
   // v2:page_041
   // v2:page_041

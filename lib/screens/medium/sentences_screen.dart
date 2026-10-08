@@ -1007,21 +1007,21 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p16 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Pá chú'ə achú' ló əlè ɛtsəmə alá' Mbɨwɨŋə.",
-    english: 'Achu is prepared daily in Awing.',
-    difficulty: 2,
-    words: [
-      AwingWord('Pá', '_'),
-      AwingWord('chú\'ə', '_'),
-      AwingWord('achú\'', '_'),
-      AwingWord('ló', '_'),
-      AwingWord('əlè', '_'),
-      AwingWord('ɛtsəmə', '_'),
-      AwingWord('alá\'', '_'),
-      AwingWord('Mbɨwɨŋə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Pá chú'ə achú' ló əlè ɛtsəmə alá' Mbɨwɨŋə.",
+  // english: 'Achu is prepared daily in Awing.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Pá', '_'),
+  // AwingWord('chú\'ə', '_'),
+  // AwingWord('achú\'', '_'),
+  // AwingWord('ló', '_'),
+  // AwingWord('əlè', '_'),
+  // AwingWord('ɛtsəmə', '_'),
+  // AwingWord('alá\'', '_'),
+  // AwingWord('Mbɨwɨŋə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 484 (Pá chú'ə achú' ló əlè ɛtsəmə a)
 
   // DICT p16 — added Session 63 Part H batch 2
   AwingSentence(
@@ -1038,39 +1038,39 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p16 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Pí pá kwéŋə ló pá' achwí'nə á chí ná á təti pó.",
-    english: 'People prosper when there is unity amongst them.',
-    difficulty: 3,
-    words: [
-      AwingWord('Pí', '_'),
-      AwingWord('pá', '_'),
-      AwingWord('kwéŋə', '_'),
-      AwingWord('ló', '_'),
-      AwingWord('pá\'', '_'),
-      AwingWord('achwí\'nə', '_'),
-      AwingWord('á', '_'),
-      AwingWord('chí', '_'),
-      AwingWord('ná', '_'),
-      AwingWord('á', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Pí pá kwéŋə ló pá' achwí'nə á chí ná á təti pó.",
+  // english: 'People prosper when there is unity amongst them.',
+  // difficulty: 3,
+  // words: [
+  // AwingWord('Pí', '_'),
+  // AwingWord('pá', '_'),
+  // AwingWord('kwéŋə', '_'),
+  // AwingWord('ló', '_'),
+  // AwingWord('pá\'', '_'),
+  // AwingWord('achwí\'nə', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('chí', '_'),
+  // AwingWord('ná', '_'),
+  // AwingWord('á', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 501 (Pí pá kwéŋə ló pá' achwí'nə á )
 
   // DICT p16 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Á pɔŋə mə fa' nə afa'ə ɔsè.",
-    english: 'It pays to work for God.',
-    difficulty: 2,
-    words: [
-      AwingWord('Á', '_'),
-      AwingWord('pɔŋə', '_'),
-      AwingWord('mə', '_'),
-      AwingWord('fa\'', '_'),
-      AwingWord('nə', '_'),
-      AwingWord('afa\'ə', '_'),
-      AwingWord('ɔsè', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Á pɔŋə mə fa' nə afa'ə ɔsè.",
+  // english: 'It pays to work for God.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Á', '_'),
+  // AwingWord('pɔŋə', '_'),
+  // AwingWord('mə', '_'),
+  // AwingWord('fa\'', '_'),
+  // AwingWord('nə', '_'),
+  // AwingWord('afa\'ə', '_'),
+  // AwingWord('ɔsè', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 520 (Á pɔŋə mə fa' nə afa'ə ɔsè.)
 
   // DICT p16 — added Session 63 Part H batch 2
   AwingSentence(
@@ -1092,36 +1092,36 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p16 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Lá tɔ'ə nda' ɔsè mbɔ'ə a fógə afankónuə á məm mbɨə.",
-    english: 'Only God alone can rid the world of errors.',
-    difficulty: 3,
-    words: [
-      AwingWord('Lá', '_'),
-      AwingWord('tɔ\'ə', '_'),
-      AwingWord('nda\'', '_'),
-      AwingWord('ɔsè', '_'),
-      AwingWord('mbɔ\'ə', '_'),
-      AwingWord('a', '_'),
-      AwingWord('fógə', '_'),
-      AwingWord('afankónuə', '_'),
-      AwingWord('á', '_'),
-      AwingWord('məm', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Lá tɔ'ə nda' ɔsè mbɔ'ə a fógə afankónuə á məm mbɨə.",
+  // english: 'Only God alone can rid the world of errors.',
+  // difficulty: 3,
+  // words: [
+  // AwingWord('Lá', '_'),
+  // AwingWord('tɔ\'ə', '_'),
+  // AwingWord('nda\'', '_'),
+  // AwingWord('ɔsè', '_'),
+  // AwingWord('mbɔ\'ə', '_'),
+  // AwingWord('a', '_'),
+  // AwingWord('fógə', '_'),
+  // AwingWord('afankónuə', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('məm', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 536 (Lá tɔ'ə nda' ɔsè mbɔ'ə a fógə )
 
   // DICT p16 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Afeelákwú'ə neemə á ləmkə.",
-    english: 'The small of back of a cow is very tasty.',
-    difficulty: 1,
-    words: [
-      AwingWord('Afeelákwú\'ə', '_'),
-      AwingWord('neemə', '_'),
-      AwingWord('á', '_'),
-      AwingWord('ləmkə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Afeelákwú'ə neemə á ləmkə.",
+  // english: 'The small of back of a cow is very tasty.',
+  // difficulty: 1,
+  // words: [
+  // AwingWord('Afeelákwú\'ə', '_'),
+  // AwingWord('neemə', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('ləmkə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 555 (Afeelákwú'ə neemə á ləmkə.)
 
   // DICT p16 — added Session 63 Part H batch 2
   AwingSentence(
@@ -1266,23 +1266,23 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p17 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Pá zó'ə məngyè lá pó ndú əyí əfɛlə afoonə ndzɔ'ə.",
-    english: 'When a man gets a new bride, both of them go through the shaving ceremony.',
-    difficulty: 2,
-    words: [
-      AwingWord('Pá', '_'),
-      AwingWord('zó\'ə', '_'),
-      AwingWord('məngyè', '_'),
-      AwingWord('lá', '_'),
-      AwingWord('pó', '_'),
-      AwingWord('ndú', '_'),
-      AwingWord('əyí', '_'),
-      AwingWord('əfɛlə', '_'),
-      AwingWord('afoonə', '_'),
-      AwingWord('ndzɔ\'ə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Pá zó'ə məngyè lá pó ndú əyí əfɛlə afoonə ndzɔ'ə.",
+  // english: 'When a man gets a new bride, both of them go through the shaving ceremony.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Pá', '_'),
+  // AwingWord('zó\'ə', '_'),
+  // AwingWord('məngyè', '_'),
+  // AwingWord('lá', '_'),
+  // AwingWord('pó', '_'),
+  // AwingWord('ndú', '_'),
+  // AwingWord('əyí', '_'),
+  // AwingWord('əfɛlə', '_'),
+  // AwingWord('afoonə', '_'),
+  // AwingWord('ndzɔ\'ə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 581 (Pá zó'ə məngyè lá pó ndú əyí ə)
 
   // DICT p17 — added Session 63 Part H batch 2
   AwingSentence(
@@ -1562,21 +1562,21 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p23 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Nchindê ntsəmə alá' Mbíiwíŋ á túgə akeelə kwúneemə.",
-    english: 'Every compound in Awing has a pig sty.',
-    difficulty: 2,
-    words: [
-      AwingWord('Nchindê', '_'),
-      AwingWord('ntsəmə', '_'),
-      AwingWord('alá\'', '_'),
-      AwingWord('Mbíiwíŋ', '_'),
-      AwingWord('á', '_'),
-      AwingWord('túgə', '_'),
-      AwingWord('akeelə', '_'),
-      AwingWord('kwúneemə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Nchindê ntsəmə alá' Mbíiwíŋ á túgə akeelə kwúneemə.",
+  // english: 'Every compound in Awing has a pig sty.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Nchindê', '_'),
+  // AwingWord('ntsəmə', '_'),
+  // AwingWord('alá\'', '_'),
+  // AwingWord('Mbíiwíŋ', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('túgə', '_'),
+  // AwingWord('akeelə', '_'),
+  // AwingWord('kwúneemə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 687 (Nchindê ntsəmə alá' Mbíiwíŋ á )
 
   // DICT p23 — added Session 63 Part H batch 2
   AwingSentence(
@@ -1628,19 +1628,19 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p23 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Ná'ə akəghan ə pəŋ nə ngaalə.",
-    english: 'Okro soup is good for garri.',
-    difficulty: 2,
-    words: [
-      AwingWord('Ná\'ə', '_'),
-      AwingWord('akəghan', '_'),
-      AwingWord('ə', '_'),
-      AwingWord('pəŋ', '_'),
-      AwingWord('nə', '_'),
-      AwingWord('ngaalə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Ná'ə akəghan ə pəŋ nə ngaalə.",
+  // english: 'Okro soup is good for garri.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Ná\'ə', '_'),
+  // AwingWord('akəghan', '_'),
+  // AwingWord('ə', '_'),
+  // AwingWord('pəŋ', '_'),
+  // AwingWord('nə', '_'),
+  // AwingWord('ngaalə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 719 (Ná'ə akəghan ə pəŋ nə ngaalə.)
 
   // DICT p23 — added Session 63 Part H batch 2
   AwingSentence(
@@ -1680,21 +1680,21 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p24 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Mbɨwɨŋ zá mbá' əkəká' ló aghá akyé akəfɛ.",
-    english: 'Awing people usually weave baskets during the coffee harvesting period.',
-    difficulty: 2,
-    words: [
-      AwingWord('Mbɨwɨŋ', '_'),
-      AwingWord('zá', '_'),
-      AwingWord('mbá\'', '_'),
-      AwingWord('əkəká\'', '_'),
-      AwingWord('ló', '_'),
-      AwingWord('aghá', '_'),
-      AwingWord('akyé', '_'),
-      AwingWord('akəfɛ', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Mbɨwɨŋ zá mbá' əkəká' ló aghá akyé akəfɛ.",
+  // english: 'Awing people usually weave baskets during the coffee harvesting period.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Mbɨwɨŋ', '_'),
+  // AwingWord('zá', '_'),
+  // AwingWord('mbá\'', '_'),
+  // AwingWord('əkəká\'', '_'),
+  // AwingWord('ló', '_'),
+  // AwingWord('aghá', '_'),
+  // AwingWord('akyé', '_'),
+  // AwingWord('akəfɛ', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 750 (Mbɨwɨŋ zá mbá' əkəká' ló aghá )
 
   // DICT p24 — added Session 63 Part H batch 2
   AwingSentence(
@@ -1716,23 +1716,23 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p24 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "Akəmátɔgɨə ló ŋwu pá' a kɛ nɛ ɨlɨ' tɔ ndzó'ə pɔ.",
-    english: 'A deaf is a person who does not hear.',
-    difficulty: 3,
-    words: [
-      AwingWord('Akəmátɔgɨə', '_'),
-      AwingWord('ló', '_'),
-      AwingWord('ŋwu', '_'),
-      AwingWord('pá\'', '_'),
-      AwingWord('a', '_'),
-      AwingWord('kɛ', '_'),
-      AwingWord('nɛ', '_'),
-      AwingWord('ɨlɨ\'', '_'),
-      AwingWord('tɔ', '_'),
-      AwingWord('ndzó\'ə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Akəmátɔgɨə ló ŋwu pá' a kɛ nɛ ɨlɨ' tɔ ndzó'ə pɔ.",
+  // english: 'A deaf is a person who does not hear.',
+  // difficulty: 3,
+  // words: [
+  // AwingWord('Akəmátɔgɨə', '_'),
+  // AwingWord('ló', '_'),
+  // AwingWord('ŋwu', '_'),
+  // AwingWord('pá\'', '_'),
+  // AwingWord('a', '_'),
+  // AwingWord('kɛ', '_'),
+  // AwingWord('nɛ', '_'),
+  // AwingWord('ɨlɨ\'', '_'),
+  // AwingWord('tɔ', '_'),
+  // AwingWord('ndzó\'ə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 839 (Akəmátɔgɨə ló ŋwu pá' a kɛ nɛ )
 
   // DICT p25 — added Session 63 Part H batch 2
   AwingSentence(
@@ -1750,20 +1750,20 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT p26 — added Session 63 Part H batch 2
-  AwingSentence(
-    awing: "A fɛ ɔkwa'lɔ pɛn pɛ nɔ maŋɔ.",
-    english: 'He gave me two questions.',
-    difficulty: 2,
-    words: [
-      AwingWord('A', '_'),
-      AwingWord('fɛ', '_'),
-      AwingWord('ɔkwa\'lɔ', '_'),
-      AwingWord('pɛn', '_'),
-      AwingWord('pɛ', '_'),
-      AwingWord('nɔ', '_'),
-      AwingWord('maŋɔ', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "A fɛ ɔkwa'lɔ pɛn pɛ nɔ maŋɔ.",
+  // english: 'He gave me two questions.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('A', '_'),
+  // AwingWord('fɛ', '_'),
+  // AwingWord('ɔkwa\'lɔ', '_'),
+  // AwingWord('pɛn', '_'),
+  // AwingWord('pɛ', '_'),
+  // AwingWord('nɔ', '_'),
+  // AwingWord('maŋɔ', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 875 (A fɛ ɔkwa'lɔ pɛn pɛ nɔ maŋɔ.)
 
   // DICT p27 — added Session 63 Part H batch 2
   AwingSentence(
@@ -2243,57 +2243,57 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT batch 3 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Ndɔŋ mó nkə a laŋə aŋwa'lə lá tso'ə aghabnə.",
-    english: 'A lazy child succeeds only averagely in school.',
-    difficulty: 2,
-    words: [
-      AwingWord('Ndɔŋ', '_'),
-      AwingWord('mó', '_'),
-      AwingWord('nkə', '_'),
-      AwingWord('a', '_'),
-      AwingWord('laŋə', '_'),
-      AwingWord('aŋwa\'lə', '_'),
-      AwingWord('lá', '_'),
-      AwingWord('tso\'ə', '_'),
-      AwingWord('aghabnə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Ndɔŋ mó nkə a laŋə aŋwa'lə lá tso'ə aghabnə.",
+  // english: 'A lazy child succeeds only averagely in school.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Ndɔŋ', '_'),
+  // AwingWord('mó', '_'),
+  // AwingWord('nkə', '_'),
+  // AwingWord('a', '_'),
+  // AwingWord('laŋə', '_'),
+  // AwingWord('aŋwa\'lə', '_'),
+  // AwingWord('lá', '_'),
+  // AwingWord('tso\'ə', '_'),
+  // AwingWord('aghabnə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 601 (Ndɔŋ mó nkə a laŋə aŋwa'lə lá )
 
   // DICT batch 3 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Máchisə mée lá pá mya'ə aghaglə.",
-    english: 'When match gets finished the empty box is thrown away.',
-    difficulty: 2,
-    words: [
-      AwingWord('Máchisə', '_'),
-      AwingWord('mée', '_'),
-      AwingWord('lá', '_'),
-      AwingWord('pá', '_'),
-      AwingWord('mya\'ə', '_'),
-      AwingWord('aghaglə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Máchisə mée lá pá mya'ə aghaglə.",
+  // english: 'When match gets finished the empty box is thrown away.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Máchisə', '_'),
+  // AwingWord('mée', '_'),
+  // AwingWord('lá', '_'),
+  // AwingWord('pá', '_'),
+  // AwingWord('mya\'ə', '_'),
+  // AwingWord('aghaglə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 619 (Máchisə mée lá pá mya'ə aghagl)
 
   // DICT batch 3 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Mbɔ' ŋwunə ghenə asəg ntso a kə aghaglətúə ŋwu pón pó.",
-    english: 'One can never lack a human skull on a battle field.',
-    difficulty: 3,
-    words: [
-      AwingWord('Mbɔ\'', '_'),
-      AwingWord('ŋwunə', '_'),
-      AwingWord('ghenə', '_'),
-      AwingWord('asəg', '_'),
-      AwingWord('ntso', '_'),
-      AwingWord('a', '_'),
-      AwingWord('kə', '_'),
-      AwingWord('aghaglətúə', '_'),
-      AwingWord('ŋwu', '_'),
-      AwingWord('pón', '_'),
-      AwingWord('pó', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Mbɔ' ŋwunə ghenə asəg ntso a kə aghaglətúə ŋwu pón pó.",
+  // english: 'One can never lack a human skull on a battle field.',
+  // difficulty: 3,
+  // words: [
+  // AwingWord('Mbɔ\'', '_'),
+  // AwingWord('ŋwunə', '_'),
+  // AwingWord('ghenə', '_'),
+  // AwingWord('asəg', '_'),
+  // AwingWord('ntso', '_'),
+  // AwingWord('a', '_'),
+  // AwingWord('kə', '_'),
+  // AwingWord('aghaglətúə', '_'),
+  // AwingWord('ŋwu', '_'),
+  // AwingWord('pón', '_'),
+  // AwingWord('pó', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 634 (Mbɔ' ŋwunə ghenə asəg ntso a k)
 
   // DICT batch 3 — added Session 63 Part H (fresh Mistral OCR)
   AwingSentence(
@@ -2763,18 +2763,18 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT batch 3 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Akwa'lɔ sɔtɔnɔ ɔ nɔ tɔshɔnɔ.",
-    english: 'Satan\'s temptation is so much.',
-    difficulty: 1,
-    words: [
-      AwingWord('Akwa\'lɔ', '_'),
-      AwingWord('sɔtɔnɔ', '_'),
-      AwingWord('ɔ', '_'),
-      AwingWord('nɔ', '_'),
-      AwingWord('tɔshɔnɔ', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Akwa'lɔ sɔtɔnɔ ɔ nɔ tɔshɔnɔ.",
+  // english: 'Satan\'s temptation is so much.',
+  // difficulty: 1,
+  // words: [
+  // AwingWord('Akwa\'lɔ', '_'),
+  // AwingWord('sɔtɔnɔ', '_'),
+  // AwingWord('ɔ', '_'),
+  // AwingWord('nɔ', '_'),
+  // AwingWord('tɔshɔnɔ', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 891 (Akwa'lɔ sɔtɔnɔ ɔ nɔ tɔshɔnɔ.)
 
   // DICT batch 3 — added Session 63 Part H (fresh Mistral OCR)
   AwingSentence(
@@ -3187,23 +3187,23 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT batch 3 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Ali'átsəmə á ndu mbi ló ali' mbɔ' ŋwunə kwéŋ ówá.",
-    english: 'One can prosper anywhere in the world.',
-    difficulty: 2,
-    words: [
-      AwingWord('Ali\'átsəmə', '_'),
-      AwingWord('á', '_'),
-      AwingWord('ndu', '_'),
-      AwingWord('mbi', '_'),
-      AwingWord('ló', '_'),
-      AwingWord('ali\'', '_'),
-      AwingWord('mbɔ\'', '_'),
-      AwingWord('ŋwunə', '_'),
-      AwingWord('kwéŋ', '_'),
-      AwingWord('ówá', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Ali'átsəmə á ndu mbi ló ali' mbɔ' ŋwunə kwéŋ ówá.",
+  // english: 'One can prosper anywhere in the world.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Ali\'átsəmə', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('ndu', '_'),
+  // AwingWord('mbi', '_'),
+  // AwingWord('ló', '_'),
+  // AwingWord('ali\'', '_'),
+  // AwingWord('mbɔ\'', '_'),
+  // AwingWord('ŋwunə', '_'),
+  // AwingWord('kwéŋ', '_'),
+  // AwingWord('ówá', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 921 (Ali'átsəmə á ndu mbi ló ali' m)
 
   // DICT batch 3 — added Session 63 Part H (fresh Mistral OCR)
   AwingSentence(
@@ -5574,23 +5574,23 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Mbɔ' tɔ tɔŋə anu o peg fɛ akəmə atsáb ntɛ.",
-    english: 'If you want to say anything, first give an introduction.',
-    difficulty: 2,
-    words: [
-      AwingWord('Mbɔ\'', '_'),
-      AwingWord('tɔ', '_'),
-      AwingWord('tɔŋə', '_'),
-      AwingWord('anu', '_'),
-      AwingWord('o', '_'),
-      AwingWord('peg', '_'),
-      AwingWord('fɛ', '_'),
-      AwingWord('akəmə', '_'),
-      AwingWord('atsáb', '_'),
-      AwingWord('ntɛ', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Mbɔ' tɔ tɔŋə anu o peg fɛ akəmə atsáb ntɛ.",
+  // english: 'If you want to say anything, first give an introduction.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Mbɔ\'', '_'),
+  // AwingWord('tɔ', '_'),
+  // AwingWord('tɔŋə', '_'),
+  // AwingWord('anu', '_'),
+  // AwingWord('o', '_'),
+  // AwingWord('peg', '_'),
+  // AwingWord('fɛ', '_'),
+  // AwingWord('akəmə', '_'),
+  // AwingWord('atsáb', '_'),
+  // AwingWord('ntɛ', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 802 (Mbɔ' tɔ tɔŋə anu o peg fɛ akəm)
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
   AwingSentence(
@@ -8792,17 +8792,17 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Yis á ndzəŋ mənumə.",
-    english: 'Come in the afternoon.',
-    difficulty: 1,
-    words: [
-      AwingWord('Yis', '_'),
-      AwingWord('á', '_'),
-      AwingWord('ndzəŋ', '_'),
-      AwingWord('mənumə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Yis á ndzəŋ mənumə.",
+  // english: 'Come in the afternoon.',
+  // difficulty: 1,
+  // words: [
+  // AwingWord('Yis', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('ndzəŋ', '_'),
+  // AwingWord('mənumə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 257 (Yîə á ndzəŋ mənumə.)
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
   AwingSentence(
@@ -9648,17 +9648,17 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "A tá ńgenə afoona.",
-    english: 'He is going to the farm.',
-    difficulty: 1,
-    words: [
-      AwingWord('A', '_'),
-      AwingWord('tá', '_'),
-      AwingWord('ńgenə', '_'),
-      AwingWord('afoona', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "A tá ńgenə afoona.",
+  // english: 'He is going to the farm.',
+  // difficulty: 1,
+  // words: [
+  // AwingWord('A', '_'),
+  // AwingWord('tá', '_'),
+  // AwingWord('ńgenə', '_'),
+  // AwingWord('afoona', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 144 (A tə́ ńgenə afoonə.)
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
   AwingSentence(
@@ -9697,38 +9697,38 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Ayənə á toonə atsə'ə mə.",
-    english: 'The iron has singed my dress.',
-    difficulty: 1,
-    words: [
-      AwingWord('Ayənə', '_'),
-      AwingWord('á', '_'),
-      AwingWord('toonə', '_'),
-      AwingWord('atsə\'ə', '_'),
-      AwingWord('mə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Ayənə á toonə atsə'ə mə.",
+  // english: 'The iron has singed my dress.',
+  // difficulty: 1,
+  // words: [
+  // AwingWord('Ayənə', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('toonə', '_'),
+  // AwingWord('atsə\'ə', '_'),
+  // AwingWord('mə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 222 (Ayonə á toonô atsa'á ma.)
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Á kə pəŋə mə túg nə wələ á ní téshú pō.",
-    english: 'It is not good to carry a lot of weight.',
-    difficulty: 3,
-    words: [
-      AwingWord('Á', '_'),
-      AwingWord('kə', '_'),
-      AwingWord('pəŋə', '_'),
-      AwingWord('mə', '_'),
-      AwingWord('túg', '_'),
-      AwingWord('nə', '_'),
-      AwingWord('wələ', '_'),
-      AwingWord('á', '_'),
-      AwingWord('ní', '_'),
-      AwingWord('téshú', '_'),
-      AwingWord('pō', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Á kə pəŋə mə túg nə wələ á ní téshú pō.",
+  // english: 'It is not good to carry a lot of weight.',
+  // difficulty: 3,
+  // words: [
+  // AwingWord('Á', '_'),
+  // AwingWord('kə', '_'),
+  // AwingWord('pəŋə', '_'),
+  // AwingWord('mə', '_'),
+  // AwingWord('túg', '_'),
+  // AwingWord('nə', '_'),
+  // AwingWord('wələ', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('ní', '_'),
+  // AwingWord('téshú', '_'),
+  // AwingWord('pō', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 381 (Á kè poŋə mə́ túg ná wélə á ńi)
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
   AwingSentence(
@@ -9763,69 +9763,69 @@ const List<AwingSentence> awingSentences = [
   ),
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Pi pə wiŋ pó chīə á Ndəwálə nǝənə.",
-    english: 'There are many great people in Douala.',
-    difficulty: 2,
-    words: [
-      AwingWord('Pi', '_'),
-      AwingWord('pə', '_'),
-      AwingWord('wiŋ', '_'),
-      AwingWord('pó', '_'),
-      AwingWord('chīə', '_'),
-      AwingWord('á', '_'),
-      AwingWord('Ndəwálə', '_'),
-      AwingWord('nǝənə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Pi pə wiŋ pó chīə á Ndəwálə nǝənə.",
+  // english: 'There are many great people in Douala.',
+  // difficulty: 2,
+  // words: [
+  // AwingWord('Pi', '_'),
+  // AwingWord('pə', '_'),
+  // AwingWord('wiŋ', '_'),
+  // AwingWord('pó', '_'),
+  // AwingWord('chīə', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('Ndəwálə', '_'),
+  // AwingWord('nǝənə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 331 (Pi pə́ wiŋ pó chîə á Ndəwálə̌ )
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Dwu yi lā tā mə.",
-    english: 'That man is my father.',
-    difficulty: 1,
-    words: [
-      AwingWord('Dwu', '_'),
-      AwingWord('yi', '_'),
-      AwingWord('lā', '_'),
-      AwingWord('tā', '_'),
-      AwingWord('mə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Dwu yi lā tā mə.",
+  // english: 'That man is my father.',
+  // difficulty: 1,
+  // words: [
+  // AwingWord('Dwu', '_'),
+  // AwingWord('yi', '_'),
+  // AwingWord('lā', '_'),
+  // AwingWord('tā', '_'),
+  // AwingWord('mə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 168 (Ŋwu yî lə tä mə.)
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "O kə pe' pə sōŋ nə maŋ zá'ə a pəŋə yía.",
-    english: 'You were suppose to tell me before he comes.',
-    difficulty: 3,
-    words: [
-      AwingWord('O', '_'),
-      AwingWord('kə', '_'),
-      AwingWord('pe\'', '_'),
-      AwingWord('pə', '_'),
-      AwingWord('sōŋ', '_'),
-      AwingWord('nə', '_'),
-      AwingWord('maŋ', '_'),
-      AwingWord('zá\'ə', '_'),
-      AwingWord('a', '_'),
-      AwingWord('pəŋə', '_'),
-      AwingWord('yía', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "O kə pe' pə sōŋ nə maŋ zá'ə a pəŋə yía.",
+  // english: 'You were suppose to tell me before he comes.',
+  // difficulty: 3,
+  // words: [
+  // AwingWord('O', '_'),
+  // AwingWord('kə', '_'),
+  // AwingWord('pe\'', '_'),
+  // AwingWord('pə', '_'),
+  // AwingWord('sōŋ', '_'),
+  // AwingWord('nə', '_'),
+  // AwingWord('maŋ', '_'),
+  // AwingWord('zá\'ə', '_'),
+  // AwingWord('a', '_'),
+  // AwingWord('pəŋə', '_'),
+  // AwingWord('yía', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 399 (O kə pe' pə́ səŋ ná maŋ zá'ə a)
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
-  AwingSentence(
-    awing: "Ajú zə̃ á pə̃gə.",
-    english: 'That thing is spoilt.',
-    difficulty: 1,
-    words: [
-      AwingWord('Ajú', '_'),
-      AwingWord('zə', '_'),
-      AwingWord('á', '_'),
-      AwingWord('pə', '_'),
-      AwingWord('gə', '_'),
-    ],
-  ),
+  // AwingSentence(
+  // awing: "Ajú zə̃ á pə̃gə.",
+  // english: 'That thing is spoilt.',
+  // difficulty: 1,
+  // words: [
+  // AwingWord('Ajú', '_'),
+  // AwingWord('zə', '_'),
+  // AwingWord('á', '_'),
+  // AwingWord('pə', '_'),
+  // AwingWord('gə', '_'),
+  // ],
+  // ),  // REMOVED Session 66u similar-spelling: same English as the block at line 200 (Ajú zə̂ á pəgə.)
 
   // DICT batch 4 — added Session 63 Part H (fresh Mistral OCR)
   AwingSentence(
