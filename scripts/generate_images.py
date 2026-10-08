@@ -2396,7 +2396,6 @@ PROMPT_OVERRIDES = {
     'the like hard work but likes to enjoy the proceeds thereof': "a Cameroonian man with dark brown skin and a short afro sitting in the shade eating from a bowl while a full basket of harvested maize stands beside him and a hoe lies unused on the ground",
     'the like hard work but likes': "a Cameroonian man with dark brown skin and a short afro sitting in the shade eating from a bowl while a full basket of harvested maize stands beside him and a hoe lies unused on the ground",
     'marriage ceremony': "a Cameroonian bride with braided hair and a groom with a short afro, both with dark brown skin, standing under a decorated canopy while villagers clap",
-    'obscene behaviour': "a Cameroonian elder with dark brown skin and grey twists in a plain dark gown, frowning hard with his brows down and his mouth closed, turning his face away and holding one flat palm out to push something away",
     'growth, in the armpit': "a simple labelled outline diagram of a person wearing a t-shirt with one arm raised, a circle drawn around the underarm area",
     'growth, in the armpit as a sign that one has a wound': "a simple labelled outline diagram of a person wearing a t-shirt with one arm raised, a circle drawn around the underarm area",
     'masses': "a very large crowd of Cameroonian people with dark brown skin and natural hair filling a village square",
@@ -2440,7 +2439,6 @@ PROMPT_OVERRIDES = {
     'breath': "a Cameroonian child with dark brown skin and a short afro outdoors on a cold morning, a visible puff of white breath in front of their mouth",
     'the spirit of god': "a single white dove descending in a shaft of golden light over an open Grassfields landscape, no people",
     'generation': "three Cameroonian people with dark brown skin standing in a row - a grandmother with a head wrap, a mother with braids and a small child with a short afro",
-    'obscene behaviour, immoral behaviour': "a Cameroonian elder with dark brown skin and grey twists in a plain dark gown, frowning hard with his brows down and his mouth closed, turning his face away and holding one flat palm out to push something away",
     'new generation': "a group of young Cameroonian children with dark brown skin and natural afro hair running forward together across a field, an older generation watching from behind",
     'cain': "two carved wooden figures standing apart on a bare hill, one turned away from the other, long shadows between them",
     'foolish talk': "a Cameroonian man with dark brown skin and a short afro talking with a large empty speech bubble over his head while two listeners look away",
@@ -2473,7 +2471,6 @@ PROMPT_OVERRIDES = {
     'criticism, the act of diminishing the value of something, the act of making': "a Cameroonian man with dark brown skin and a short afro pointing dismissively at a well-made carved stool while the carver looks down",
     'english language': "an open book with the alphabet A B C written large on the page, a small Union flag in the corner",
     'parable': "a Cameroonian elder with dark brown skin and grey twists seated under a tree speaking, a small picture of a sower drawn in a thought bubble above",
-    'hair of a dead close relation': "a small tuft of short black curly African hair resting in the centre of a folded indigo cloth on a wooden table, a single white candle burning behind it",
     'masses, the': "a very large crowd of Cameroonian people with dark brown skin and natural hair filling a village square",
     'the habit of giving too many assignments or too much burden on other people': "a Cameroonian man with dark brown skin and a short afro standing with folded arms while piling a fourth basket onto the back of a bent, overloaded worker",
     'intelligence, high learning ability': "a Cameroonian girl with dark brown skin and cornrow braids at a desk solving a problem on a slate, a bright lamp drawn above her head",
@@ -3798,6 +3795,40 @@ _FUNCTION_WORDS = {
 }
 
 
+# Glosses that got three hand-written scenes each and came back wrong every
+# time. Left deliberately blank rather than shipping a fourth guess.
+#
+#   obscene behaviour, immoral behaviour
+#       1. "holding up one hand to stop a young man who is shouting"
+#          -> a grandfather and a boy exchanging a friendly high-five
+#       2. "...a bold red cross drawn in the air in front of him"
+#          -> the cross landed ON HIS SHIRT; a smiling Red Cross medic
+#       3. "frowning hard, turning his face away, one flat palm out"
+#          -> a smiling elder waving
+#       At 6 steps SDXL will not hold a negative facial expression against
+#       a friendly cartoon style. Three ways of saying "refuse" all read as
+#       "greet".
+#
+#   hair of a dead close relation
+#       1. "a lock of dark curly hair tied with a thin cord"
+#          -> "lock" became a PADLOCK on a chained mausoleum
+#       2. "a small bundle ... bound with red thread"
+#          -> red rope on a wooden cross, no hair
+#       3. "a tuft ... resting on folded indigo cloth, a candle behind it"
+#          -> hair growing out of the top of the candle
+#       A small amount of a material, detached from a body, is not
+#       something this model composes.
+#
+# hasImageSync() filters a word with no image out of the games and
+# quizzes, so a gap costs nothing. A wrong picture on a vocabulary card
+# teaches the wrong word, which costs more than a blank.
+_TRIED_AND_STOPPED = {
+    "obscene behaviour, immoral behaviour",
+    "obscene behaviour",
+    "hair of a dead close relation",
+}
+
+
 def is_illustratable(english_word: str, category: str) -> bool:
     """False when no honest picture of this entry exists.
 
@@ -3812,6 +3843,9 @@ def is_illustratable(english_word: str, category: str) -> bool:
     # producing a nude image as a single word, and more likely to, because
     # the whole sentence goes into the prompt.
     if _ADULT_ENTRY.search(fix_gloss_typos((english_word or "").lower())):
+        return False
+
+    if (english_word or "").strip().lower() in _TRIED_AND_STOPPED:
         return False
 
     if category in ("phrase", "sentence", "story"):
