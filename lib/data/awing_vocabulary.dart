@@ -86,6 +86,7 @@ const List<AwingWord> pdfVerifiedExtras = [
   // AwingWord(awing: 'əfó', english: 'where (interrogative)', category: 'pronouns', difficulty: 1),  // REMOVED Session 66u similar-spelling: same meaning as L16276 (əfó), kept because it is dictionary page; this one is unsourced
   AwingWord(awing: 'ma', english: 'not (negative particle)', category: 'descriptive', difficulty: 3),
   // AwingWord(awing: 'əfê', english: 'here, this place', category: 'descriptive', tonePattern: 'falling', difficulty: 1)];  // REMOVED Session 66u similar-spelling: same meaning as L9345 (əfê), kept because it is unsourced; this one is unsourced
+];
 
 // ============================================================
 // BEGINNER VOCABULARY (difficulty: 1) — simple, everyday words
@@ -628,6 +629,7 @@ const List<AwingWord> familyPeople = [
   AwingWord(awing: 'ndzɔ̂ŋɔ', english: 'country', category: 'family', difficulty: 1),
   // Session 52 gloss audit: was "place" — dict says 'where? (interrogative)'
   // AwingWord(awing: 'àfó', english: 'where?', category: 'descriptive', difficulty: 1)];  // REMOVED Session 66u similar-spelling: same meaning as L16276 (əfó), kept because it is dictionary page; this one is unsourced
+];
 
 /// Numbers and counting — Session 60+ audit against 2007 Awing English Dictionary
 /// Sources: p.96 (20), p.97 (30-90), p.106 (8, 10), p.108 (9), p.114/p.116 (100-500),

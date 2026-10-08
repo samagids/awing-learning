@@ -264,10 +264,20 @@ def main():
                 continue
             if f"'{r['awing']}'" not in l and f'"{r["awing"]}"' not in l:
                 continue
+            # A row that also CLOSES ITS LIST carries the "];" terminator:
+            #   AwingWord(awing: 'əfê', english: 'here, ...', difficulty: 1)];
+            # Commenting that line out takes the "]" with it and the Dart
+            # file stops compiling - "Expected to find ']'", and every
+            # later reference to the list becomes an undefined name. It
+            # happened twice (bodyParts and numbers) and flutter analyze
+            # caught it, not me. Put the terminator back on its own line.
+            closes_list = l.rstrip().endswith(")];")
             lines[i] = ("  // " + l.lstrip() +
                         f"  // REMOVED Session 66u similar-spelling: same meaning as "
                         f"L{k['line']} ({k['awing']}), kept because it is "
                         f"{k['src']}; this one is {r['src']}")
+            if closes_list:
+                lines[i] += "\n];"
             done += 1
     open(VOCAB, "w", encoding="utf-8").write("\n".join(lines))
     print("commented out:", done)
