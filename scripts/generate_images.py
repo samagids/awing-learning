@@ -3402,7 +3402,7 @@ _ADULT_ENTRY = re.compile(
     r"brothel|fornicat\w*|copulat\w*|incest\w*|rape|have sex|"
     r"naked|nakedness|nude|nudity|undress|strip off|"
     r"breast|breasts|nipple|buttock|buttocks|"
-    r"circumcis\w*|menstruat\w*|virgin|womb|puberty|"
+    r"circumcis\w*|menstruat\w*|menstrat\w*|mestruat\w*|virgin|womb|puberty|"
     r"private part\w*|groin|loin)\b", re.I)
 
 _UNILLUSTRATABLE_MARKERS = re.compile(
@@ -3468,7 +3468,7 @@ def is_illustratable(english_word: str, category: str) -> bool:
     # shaven of their private parts". A sentence is exactly as capable of
     # producing a nude image as a single word, and more likely to, because
     # the whole sentence goes into the prompt.
-    if _ADULT_ENTRY.search((english_word or "").lower()):
+    if _ADULT_ENTRY.search(fix_gloss_typos((english_word or "").lower())):
         return False
 
     if category in ("phrase", "sentence", "story"):
@@ -4518,6 +4518,32 @@ def cmd_generate(args):
         # The earlier call was to leave grammar words blank rather than show
         # a child in a field captioned "from"; --only-depictable restores
         # that if the drawings turn out worse than nothing.
+        # THE SAFETY GATE IS NOT OPTIONAL AND RUNS FIRST.
+        #
+        # Everything below used to sit behind --only-depictable, which has
+        # defaulted to OFF since Dr. Sama asked for every word to have an
+        # image. That made is_illustratable() dead code in a normal run -
+        # and _ADULT_ENTRY lives inside it. So the whole nudity gate I added
+        # today never executed once, and "be naked" was redrawn as a topless
+        # woman on the very next run after I reported it fixed.
+        #
+        # Whether a grammar word gets a picture is a preference, and keeps
+        # its flag. Whether a children's app draws a nude is not a
+        # preference. This check is unconditional.
+        # Run the gate on the TYPO-CORRECTED gloss. The dictionary spells it
+        # "menstration", which _ADULT_ENTRY's "menstruat\w*" does not match,
+        # so it sailed through on the very test that caught "be naked".
+        if _ADULT_ENTRY.search(fix_gloss_typos((english or "").lower())):
+            not_depictable += 1
+            stale = _existing_image(OUTPUT_DIR / key)
+            if stale is not None:
+                try:
+                    stale.unlink()
+                    print(f"  removed unsafe image for {english[:40]!r}")
+                except Exception as exc:
+                    print(f"  ! could not remove {stale.name}: {exc}")
+            continue
+
         if getattr(args, "only_depictable", False) and \
                 not is_illustratable(english, category):
             not_depictable += 1
