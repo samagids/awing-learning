@@ -12896,3 +12896,137 @@ queue.
 6. `build_bible_parallel.py` has a real undefined name — harmless, retired
    tooling, reported as a NOTE on every build.
 7. 13 dependabot alerts, all cf-worker dev deps.
+
+## Session 66u — why the hump card was a child, and the prompt mechanism
+
+Dr. Sama, on v1.24.4 on his phone: *"the image of hump is a child"*, then,
+after I called much of the dictionary not picturable: *"fix the mechanism
+because you are using the english meaning to generate the pictures i do not
+see why that is a problem... if you already know what a word is in english
+why will you generate a picture without the things in it?"*
+
+He was right and I was wrong. Printing the actual prompts — which I should
+have done before theorising — showed three mechanical defects, not
+impossibility. All three are fixed in `d0d09efa`.
+
+### 1. The persona WAS the prompt
+
+`body` / `actions` / `family` / `descriptive` opened with `people_style()`:
+
+```
+a Cameroonian little boy with dark brown skin, a neatly shaved head,
+wearing a plain school uniform, showing their hump
+```
+
+Twenty tokens of child, one word of subject, and CLIP weights early tokens
+most. SDXL drew the boy faithfully and dropped the hump. **That is the whole
+answer to "why is the picture of hump a child."** The subject now leads and
+the persona is cut to subject + skin. Hair and clothes are gone from the
+generated templates — they were decoration and they were crowding out the
+word. They remain on the `PROMPT_OVERRIDES` path, where the subject is
+hand-written and there is room.
+
+### 2. The gloss was thrown away before it reached the picture
+
+`shorten_english_for_prompt()` exists to distil an entry to a single
+headword so the 1,108 `PROMPT_OVERRIDES` can be looked up by headword. That
+is right for the lookup and wrong for the picture:
+
+| gloss | reached SDXL as |
+|---|---|
+| `crunch eg soft bone; a dog crunching a bone` | `crunch` |
+| `a piece of rough iron used for making knives` | `a piece of rough iron used` |
+
+"crunch" is not a picture of anything. "a dog crunching a bone" is, and the
+dictionary had already written it down.
+
+The two jobs are now split. The override lookup still uses
+`shorten_english_for_prompt()` unchanged (so no override match regresses).
+The prompt body comes from the new `concrete_gloss_for_prompt()`, which
+scores every clause of the entry and keeps the most drawable one:
+
+- keeps the parenthetical disambiguator (`hump (on the back)` ->
+  `hump on the back`) but drops grammar tags (`(intr)`, `(pl)`, `(sth)`)
+- unwinds this dictionary's inverted glosses: `cloth, piece of` ->
+  `piece of cloth`
+- drops the lexicographer's hedge: `disease, sort of` -> `disease`,
+  `a sort of white substance from the eye` -> `white substance from the eye`
+- picks one side of a synonym list: `take good care of, show love and
+  concern` -> `take good care`
+- cuts at 12 words **at a phrase boundary**, never mid-phrase, and trims a
+  dangling preposition unconditionally (`care for` -> `care`)
+
+### 3. The skin clause was the only noun in the prompt
+
+`_SKIN_CLAUSE` — "any people shown are Black African with dark brown skin" —
+was on the object suffix as well as the scene suffix. The reasoning (in the
+comment, which is kept) was sound: a gloss whose meaning needs a human but
+whose category is `things` got no skin guidance and SDXL drew a white
+person. The cost was invisible until the contact sheets. For a gloss with no
+concrete noun of its own the clause stops being a qualifier and becomes the
+subject:
+
+```
+a cartoon emptiness, any people shown are Black African with dark brown
+skin, simple flat cartoon clipart, ...
+```
+
+SDXL drew a Black African. **665 of the 1,485 worst-ranked images were
+category `things`, for exactly this reason** — the template contains no
+person, so the suffix supplied one.
+
+Object prompts now get `STYLE_SUFFIX_OBJECT`, which has no skin clause. The
+protection does not depend on it: `_NEGATIVE_COMMON` opens with "caucasian,
+pale skin, light skin, european features", is on **every** prompt, and at
+`GUIDANCE_SCALE = 1.5` negatives are active. The skin clause now appears on
+2,022 of the 6,882 changed prompts instead of all of them.
+
+### Articles and grammar
+
+`a cartoon a piece of rough iron used` came from prepending "a cartoon"
+unconditionally. `_as_noun_phrase()` adds an article only when there is not
+one already, and never in front of a mass noun (`emptiness`, `dust`), an
+adverb (`quickly`), a participle (`trapped in evil`), a verb (`have sexual
+relations`), a verb-particle phrase (`scrub out`), or an ordinal (`the third
+day of the week`). `_as_gerund()` turns `doing crunch` into `crunching`.
+
+### How it was verified
+
+Old module imported alongside new, every one of the 8,605 illustratable
+entries' prompt built both ways:
+
+- 6,882 prompts changed, 1,723 identical (the override path), **0 exceptions**
+- grammar screens (double article / dangling preposition / article before a
+  verb / stray comma): **75 hits -> 1**
+- prompt body length: max 25 words, mean 6.0 — well inside CLIP's 77 tokens
+
+**No image has been regenerated.** The mechanism is fixed; the run is
+separate, and `scripts/audit_images.py` should be re-run after it to confirm
+the ranking actually improved before anything ships.
+
+### What is genuinely left, honestly counted
+
+`audit_images.py`'s `template_risk` flag counted the four person-leading
+categories — the risk this commit removes — so it is replaced by
+`thin_prompt`: a prompt body with **one content word and no curated
+override**. `a hump` is correct English, carries the whole meaning, and is
+still a coin toss for a 4-step diffusion model.
+
+**2,485 entries.** Those want a `PROMPT_OVERRIDES` line or a photo from a
+native speaker. They do not want a cleverer template, and that is the
+boundary of what this mechanism can do.
+
+### Standing lesson
+
+I asserted "not picturable" from the category names without printing a
+single prompt. Dr. Sama pushed back twice before I looked. **Print the
+artefact before explaining why it cannot be better** — same mistake shape as
+the Firebase rules claim in session 66t, where I read the console timeline
+instead of the rule text.
+
+### Also noted, not acted on
+
+`have sexual relations with` and similar adult dictionary entries pass
+`is_illustratable()` and would be drawn by a full regeneration run. That is
+a content decision for Dr. Sama, not a mechanism bug — flagged, not
+filtered.
