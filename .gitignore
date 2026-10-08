@@ -291,3 +291,7 @@ contributions/phonetic_rules_candidates.csv
 # Public policy/support pages — their own repo (samagids/awing-legal).
 # See site_legal/PUSH_ME.txt.
 site_legal/
+
+# Session 66v contact sheets: 104MB of review scaffolding. flags.txt and
+# index.json ARE tracked (they are the review); the PNGs are rebuildable.
+contributions/_sheets/sheet_*.png
