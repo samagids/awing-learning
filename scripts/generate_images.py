@@ -253,7 +253,7 @@ _HUMAN_NOUN_RE = re.compile(
     r"brother|sister|brothers|sisters|twins|friend|friends|"
     r"teacher|student|pupil|farmer|hunter|fisherman|chief|elder|elders|"
     r"adult|adults|villager|villagers|crowd|mourners|dancer|drummer|"
-    r"king|queen|nurse|doctor|trader|"
+    r"king|queen|nurse|doctor|trader|traders|kings|queens|nurses|doctors|"
     # Added after round 2: these appeared in glosses, were not matched, and
     # so were rendered with SDXL's default (white) complexion.
     r"enemy|enemies|warrior|warriors|soldier|soldiers|swimmer|swimmers|"
@@ -262,7 +262,41 @@ _HUMAN_NOUN_RE = re.compile(
     r"singer|singers|rider|cook|seller|buyer|herder|weaver|potter|"
     r"blacksmith|carpenter|messenger|servant|slave|orphan|patient|"
     r"human|humans|person\'s|figure|figures|"
+    # Round 3, 2026-10-08. Dr. Sama on the newest batch: "with white people
+    # in them." These role nouns were in 124 prompts - most of them ones I
+    # had just written - and none of them matched here, so africanize_people()
+    # inserted nothing AND _is_person_prompt() said False, which meant the
+    # object suffix, which carries no skin clause. Nothing in the prompt said
+    # the person was African, so SDXL drew its default.
+    r"runner|runners|traveller|traveler|travellers|travelers|tailor|"
+    r"crier|passer-by|passerby|listener|listeners|lender|borrower|"
+    r"official|officials|diviner|diviners|shepherd|shepherds|prisoner|"
+    r"prisoners|secretary|treasurer|announcer|tailors|"
+    r"youngster|youngsters|tapper|carver|builder|carrier|sweeper|"
+    r"visitor|visitors|owner|master|helper|leader|speaker|writer|reader|"
+    r"driver|player|players|clan|follower|followers|inhabitant|"
     r"someone|somebody)\b",
+    re.I,
+)
+
+# BROADER than _HUMAN_NOUN_RE: anything that puts human SKIN on the card,
+# including a part of a person standing in for the whole.
+#
+# "a cartoon hand with one finger pointing up" has no person noun in it, so
+# it took the object path with no skin instruction - and a hand is skin. The
+# backdrop decision stays with _HUMAN_NOUN_RE, because "a hand pressing a
+# button" does not want a Grassfields landscape behind it; only the SKIN
+# decision uses this.
+_BODY_PART_RE = re.compile(
+    r"\b(hands|hand|palms|palm|fingers|finger|thumb|arms|arm|"
+    r"feet|foot|legs|leg|knees|knee|face|cheeks|cheek)\b", re.I)
+
+_HUMAN_REF_RE = re.compile(
+    _HUMAN_NOUN_RE.pattern[:-3]  # drop the trailing )\b
+    + r"|hand|hands|palm|palms|finger|fingers|thumb|arm|arms|elbow|wrist|"
+      r"foot|feet|leg|legs|knee|knees|toe|toes|shoulder|shoulders|"
+      r"face|faces|head|heads|cheek|cheeks|chin|neck|chest|back|"
+      r"eye|eyes|mouth|lips|ear|ears|nose|tongue|tooth|teeth|hair|skin)\b",
     re.I,
 )
 
@@ -306,6 +340,13 @@ def africanize_people(prompt: str, seed_key: str = "") -> str:
         return prompt
     m = _HUMAN_NOUN_RE.search(prompt)
     if not m:
+        # A body part with no person attached - "a hand squeezing a lemon".
+        # The trailing clause alone loses to the early tokens, so qualify the
+        # part itself.
+        mp = _BODY_PART_RE.search(prompt)
+        if mp:
+            return (prompt[:mp.start()] + "dark brown skinned "
+                    + prompt[mp.start():])
         return prompt
     _hair, skin, _clothes, _subject = _persona_bits(seed_key)
     noun = prompt[m.start() : m.end()].lower()
@@ -442,8 +483,14 @@ def _style_suffix_for(prompt: str, category: str) -> str:
     An object prompt gets STYLE_SUFFIX_OBJECT, which carries no skin clause -
     see the comment on it.
     """
-    return (STYLE_SUFFIX_SCENE if _is_person_prompt(prompt, category)
-            else STYLE_SUFFIX_OBJECT)
+    if _is_person_prompt(prompt, category):
+        return STYLE_SUFFIX_SCENE
+    # No whole person, but a hand or a face is still skin on the card, and
+    # skin with no instruction comes out white. Plain backdrop, skin clause
+    # kept.
+    if _HUMAN_REF_RE.search(prompt.replace(_SKIN_CLAUSE, "")):
+        return STYLE_SUFFIX_PLAIN
+    return STYLE_SUFFIX_OBJECT
 
 # ============================================================
 # PROMPT OVERRIDES
@@ -1926,7 +1973,7 @@ PROMPT_OVERRIDES = {
     "again": "a circular arrow looping back to its own starting point",
     "age-group": "a row of children of exactly the same height standing shoulder to shoulder",
     "alter": "a tailor taking in the seam of a shirt with pins along the edge",
-    "announce": "a town crier walking through the village beating a gong, mouth open calling",
+    "announce": "a village announcer walking through the village beating a gong, mouth open calling",
     "another": "one hand setting a second identical cup beside the first",
     "answer": "a child with a raised hand standing beside a blackboard",
     "antidote": "a small glass bottle with a green leaf beside it and a snake coiled at a distance",
