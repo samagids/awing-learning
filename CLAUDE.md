@@ -13060,3 +13060,69 @@ So the two runs are different jobs and both are needed:
 
 `--force` is the whole difference. A build will never apply a prompt change,
 by design.
+
+### 66u part two — "generate pictures based on english meaning!!!!!"
+
+Dr. Sama, on the celibate card: *"celibate suppose to be a single girl or
+boy. seems you are overthinking this."* Then, on my fix: *"this should be
+the same for all words. simply use the english meaning and ensure the object
+is in the picture."*
+
+I had just reported 244 entries as having "no visual referent" and proposed
+leaving them blank. **That was wrong, and it was the third time in this
+session I declared something undrawable before trying.** An illustrator does
+not draw the noun, they draw the situation the noun names:
+
+| gloss | what it looks like |
+|---|---|
+| celibate | a single person standing alone, no ring, a couple holding hands behind |
+| frugality | a coin going into a savings tin |
+| literacy | a child reading aloud, pointing at the words |
+| corruption | a hand passing banknotes under a table |
+| carelessness | a dropped bowl, water across the floor |
+
+The abstraction was in my prompt, not in the meaning. **90 overrides added
+(`3aac2dbe`)** covering the whole `no_visual_referent` list.
+
+But the second message is the one that mattered: this is a **rule**, not a
+list of 90 exceptions.
+
+#### The rule: name the thing twice
+
+Every generated prompt now states the subject at the front **and again at
+the end as a requirement**:
+
+```
+a piece of rough iron used for making knives,
+piece of rough iron used clearly visible in the picture
+```
+
+Naming it once is not enough. SDXL drops the subject when the rest of the
+prompt is longer — that is how a gloss about iron came back as a workshop
+with no iron in it. Repeating it as a requirement is the only lever that
+works at 4 steps.
+
+Applied generally, with two guards:
+
+- a body that already **is** the phrase gets nothing (no `a hump, hump
+  clearly visible` when the body is just `hump`)
+- skipped past 48 words, because the clause sits at the end and would be the
+  first thing CLIP truncates at 77 tokens
+
+3,785 of 8,605 prompts carry it.
+
+Also fixed: `sb` / `sth` are dictionary shorthand and `wake sb from sleep`
+was asking SDXL to draw an "sb"; and the sentence path still cut at word 15,
+so 14 scene prompts read `...machines do exist that can lift it in`
+(`f7bfd825`).
+
+**Whole corpus: 8,605 prompts, 0 exceptions, 3 grammar suspects (all
+dictionary data, not template), mean 31 words ≈ 41 of CLIP's 77 tokens.**
+
+#### Standing lesson, now three times over
+
+Firebase rules (66t): read the console timeline instead of the rule text.
+Hump (66u): theorised from category names instead of printing a prompt.
+Celibate (66u): declared 244 words undrawable instead of asking what the
+word looks like. **Each time Dr. Sama was right and the evidence was one
+command away.** Try the thing before explaining why it cannot work.
