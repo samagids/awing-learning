@@ -1301,7 +1301,7 @@ PROMPT_OVERRIDES = {
     "look for something": "a cartoon child searching under furniture for a lost toy",
     "love": "a cartoon big red heart with sparkles",
     "make": "a cartoon child making something with clay",
-    "marry": "a Cameroonian bride and groom with dark brown skin standing together in wedding dress, smiling",
+    "marry": "a Cameroonian bride with braided hair and a groom with a short natural afro, both with dark brown skin, standing together in wedding dress, smiling",
     "measure": "a cartoon child using a ruler to measure height",
     "melt": "a cartoon snowman melting in the sun",
     "mix": "a cartoon child stirring a bowl of colorful batter",
@@ -2314,8 +2314,8 @@ PROMPT_OVERRIDES = {
     "but": "an arrow travelling forward and bouncing back off a brick wall",
     "from": "an arrow curving out of an open clay pot towards a basket",
     "future tense marker": "a calendar with tomorrow circled in red and an arrow pointing forward to it",
-    "he": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
-    "he/him pronoun": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
+    "he": "a Cameroonian boy with very dark brown skin and a short natural afro standing alone on a mat, a bold arrow pointing at him",
+    "he/him pronoun": "a Cameroonian boy with very dark brown skin and a short natural afro standing alone on a mat, a bold arrow pointing at him",
     "here": "a bright X marked on the ground with a stone on it, close to the viewer",
     "hers": "a girl's bright headscarf folded on a basket of maize beside a stool",
     "his": "a boy's woven hat resting on a basket of maize beside a stool",
@@ -2361,32 +2361,51 @@ PROMPT_OVERRIDES = {
     "from starting source preposition": "an arrow curving out of an open clay pot towards a basket",
     "impersonal animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
     "it impersonal animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
-    "personal pronoun": "a Cameroonian boy and a Cameroonian girl, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
+    "personal pronoun": "a Cameroonian boy with a short natural afro and a Cameroonian girl with cornrow braids, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
     "plural marker": "one mango beside a heap of five mangoes, an arrow from the one to the heap",
     "preposition at": "a red map pin standing upright on a small drawn map",
     "question marker": "a large bold question mark beside a closed wooden box with its lid ajar",
     "singular pronoun you": "a basket of mangoes held out towards the viewer by two dark brown hands",
     "the impersonal or animal pronoun": "a goat standing alone on a mat with an arrow pointing at it",
-    "the personal pronoun": "a Cameroonian boy and a Cameroonian girl, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
+    "the personal pronoun": "a Cameroonian boy with a short natural afro and a Cameroonian girl with cornrow braids, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
     "the singular pronoun you": "a basket of mangoes held out towards the viewer by two dark brown hands",
     "verb complement": "a row of wooden blocks with one extra block fitted onto the end",
-    "she": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
-    "she/her pronoun": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
-    "her": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
-    "him": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
-    "the personal pronoun he": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
-    "the personal pronoun she": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
-    "he she personal pronoun": "a Cameroonian boy and a Cameroonian girl, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
-    "the personal pronoun he the personal pronoun she": "a Cameroonian boy and a Cameroonian girl, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
-    "personal pronoun he": "a Cameroonian boy with very dark brown skin standing alone on a mat, a bold arrow pointing at him",
-    "personal pronoun she": "a Cameroonian girl with very dark brown skin standing alone on a mat, a bold arrow pointing at her",
-    "personal pronoun them": "a group of Cameroonian children with very dark brown skin standing together, a bold arrow sweeping across all of them",
-    "you": "a Cameroonian child with very dark brown skin facing the viewer, a bold arrow pointing out of the picture at the viewer",
-    "the pronoun you": "a Cameroonian child with very dark brown skin facing the viewer, a bold arrow pointing out of the picture at the viewer",
-    "you plural": "a Cameroonian child with very dark brown skin facing the viewer, a bold arrow pointing out of the picture at the viewer",
-    "i": "a Cameroonian child with very dark brown skin pointing at their own chest with both hands",
-    "me": "a Cameroonian child with very dark brown skin pointing at their own chest with both hands",
-    "the pronoun i": "a Cameroonian child with very dark brown skin pointing at their own chest with both hands",
+    # ---- found by eye in the rendered pack, Session 66v ----
+    # Each of these was SAFE as a gloss and UNSAFE as a picture, which
+    # is why the gate never saw them. Only looking at the output finds
+    # this class.
+    #
+    # "muscle" -> a white bodybuilder in briefs.
+    "muscle": "a close-up of the upper arm of a Cameroonian farmer with dark brown skin in a short-sleeved shirt, the arm bent and the muscle raised",
+    "muscles": "a close-up of the upper arm of a Cameroonian farmer with dark brown skin in a short-sleeved shirt, the arm bent and the muscle raised",
+    # "growth in the armpit" -> a bare torso. A labelled diagram says
+    # the same thing with a t-shirt on.
+    "growth in the armpit": "a simple labelled outline diagram of a person wearing a t-shirt with one arm raised, a circle drawn around the underarm area",
+    "growth in the ampit": "a simple labelled outline diagram of a person wearing a t-shirt with one arm raised, a circle drawn around the underarm area",
+    # "sound that intensifies the sound" -> SDXL drew a REVOLVER, from
+    # the headword "bum" and the word "sound". A weapon on a card in a
+    # children's app. The negative prompt lists gun, pistol and rifle and
+    # it was drawn anyway, which is the whole argument for looking at
+    # the pictures rather than trusting the prompt.
+    "sound that intensifies the sound": "a Cameroonian talking drum with bold curved sound waves radiating out from it, the waves getting larger",
+    "sound that intensifies": "a Cameroonian talking drum with bold curved sound waves radiating out from it, the waves getting larger",
+    "she": "a Cameroonian girl with very dark brown skin and cornrow braids standing alone on a mat, a bold arrow pointing at her",
+    "she/her pronoun": "a Cameroonian girl with very dark brown skin and cornrow braids standing alone on a mat, a bold arrow pointing at her",
+    "her": "a Cameroonian girl with very dark brown skin and cornrow braids standing alone on a mat, a bold arrow pointing at her",
+    "him": "a Cameroonian boy with very dark brown skin and a short natural afro standing alone on a mat, a bold arrow pointing at him",
+    "the personal pronoun he": "a Cameroonian boy with very dark brown skin and a short natural afro standing alone on a mat, a bold arrow pointing at him",
+    "the personal pronoun she": "a Cameroonian girl with very dark brown skin and cornrow braids standing alone on a mat, a bold arrow pointing at her",
+    "he she personal pronoun": "a Cameroonian boy with a short natural afro and a Cameroonian girl with cornrow braids, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
+    "the personal pronoun he the personal pronoun she": "a Cameroonian boy with a short natural afro and a Cameroonian girl with cornrow braids, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
+    "personal pronoun he": "a Cameroonian boy with very dark brown skin and a short natural afro standing alone on a mat, a bold arrow pointing at him",
+    "personal pronoun she": "a Cameroonian girl with very dark brown skin and cornrow braids standing alone on a mat, a bold arrow pointing at her",
+    "personal pronoun them": "a group of Cameroonian children with very dark brown skin and natural afro hair standing together, a bold arrow sweeping across all of them",
+    "you": "a Cameroonian child with very dark brown skin and a short natural afro facing the viewer, a bold arrow pointing out of the picture at the viewer",
+    "the pronoun you": "a Cameroonian child with very dark brown skin and a short natural afro facing the viewer, a bold arrow pointing out of the picture at the viewer",
+    "you plural": "a Cameroonian child with very dark brown skin and a short natural afro facing the viewer, a bold arrow pointing out of the picture at the viewer",
+    "i": "a Cameroonian child with very dark brown skin and a short natural afro pointing at their own chest with both hands",
+    "me": "a Cameroonian child with very dark brown skin and a short natural afro pointing at their own chest with both hands",
+    "the pronoun i": "a Cameroonian child with very dark brown skin and a short natural afro pointing at their own chest with both hands",
 }
 
 
@@ -3608,7 +3627,9 @@ _ADULT_ENTRY = re.compile(
     # Session 66v: four more that slipped through. "close-up of the
     # clitoris of a Cameroonian young boy" is what the `body` category
     # path would otherwise have built.
-    r"clitoris|testicle\w*|scrotum|semen|sperm|concubine|anus)\b", re.I)
+    # Found by looking at the rendered pack, not by reading glosses:
+    # "lust (n), strong desire" came back as a white woman in a bikini.
+    r"clitoris|testicle\w*|scrotum|semen|sperm|concubine|anus|lust|lustful|seduc\w*|erotic\w*)\b", re.I)
 
 _UNILLUSTRATABLE_MARKERS = re.compile(
     r"\b(preposition|pronoun|conjunction|interjection|particle|auxiliary|"
@@ -3924,7 +3945,13 @@ def get_ai_prompt(english_word: str, category: str, seed_key: str = "") -> str:
             and _is_verbish(clean_word)
             and not _has_own_subject(clean_word)):
         _h, _skin, _c, _who = _persona_bits(seed_key)
-        body = f"a Cameroonian {_who} with {_skin} {_as_gerund(clean_word)}"
+        # Hair as well as skin. _persona_bits() always returned it; this
+        # branch threw it away, so the one path that INVENTS a person -
+        # the verbs, the largest group - described their colour and left
+        # their hair to the model. PERSONA_HAIR is all Black hair:
+        # afros, locs, twists, cornrows, head wraps.
+        body = (f"a Cameroonian {_who} with {_skin} and {_h} "
+                f"{_as_gerund(clean_word)}")
 
     focus = _focus_phrase(clean_word)
     suffix = _style_suffix_for(body, category)
@@ -4177,7 +4204,14 @@ _NEGATIVE_COMMON = (
     "caucasian, white person, white man, white woman, white child, "
     "pale skin, light skin, fair skin, tan skin, peach skin, olive skin, "
     "light brown skin, beige skin, european features, "
-    "blonde hair, red hair, "
+    # Session 66v, Dr. Sama: "ensuring the people or persons are black
+    # with black hair styles." Skin was only half of it. SDXL will
+    # happily give a dark-skinned child long straight blonde hair,
+    # which reads as wrong to every parent who will see this app.
+    "blonde hair, blond hair, red hair, ginger hair, light brown hair, "
+    "straight hair, long straight hair, silky straight hair, "
+    "wavy hair, flowing hair, ponytail, pigtails, bangs, fringe, "
+    "european hairstyle, caucasian hair, "
     "text, words, letters, numbers, watermark, signature, caption, "
     "blurry, deformed, extra limbs, extra fingers, ugly, "
     "photograph, photorealistic, 3d render"
