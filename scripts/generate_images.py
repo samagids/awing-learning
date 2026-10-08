@@ -2253,6 +2253,9 @@ PROMPT_OVERRIDES = {
     "tradition of bathing": "a tin bucket of water with a sponge and a bar of soap beside it",
     "bathe wash body": "a Cameroonian child in shorts washing their arms with a sponge beside a bucket of water",
     "swimming": "a Cameroonian boy in a full swimming costume swimming in a river, water up to his shoulders",
+    "gird up": "two hands tightening a cloth belt around a full-length robe",
+    "loincloth": "a folded length of patterned cloth laid out on a wooden bench",
+    "loincloth of some sort worn in the olden days": "a folded length of patterned cloth laid out on a wooden bench",
 }
 
 
@@ -3454,6 +3457,16 @@ def is_illustratable(english_word: str, category: str) -> bool:
     Phrases, sentences and stories are always illustratable - they describe
     a scene by construction.
     """
+    # THE SAFETY GATE RUNS FIRST, before the phrase/sentence shortcut.
+    # That shortcut used to return True immediately, so three sentences
+    # sailed past the adult filter - "A woman who has problems with her
+    # womb cannot give birth", "A ceremony in which the bride and groom are
+    # shaven of their private parts". A sentence is exactly as capable of
+    # producing a nude image as a single word, and more likely to, because
+    # the whole sentence goes into the prompt.
+    if _ADULT_ENTRY.search((english_word or "").lower()):
+        return False
+
     if category in ("phrase", "sentence", "story"):
         return True
 
