@@ -271,7 +271,14 @@ echo
 # ---- Step 5: Vocabulary images ---------------------------------------
 echo "[5/8] Generating vocabulary images (SDXL Turbo)..."
 echo "        Output: $PAD_IMAGES"
-if ! python3 scripts/generate_images.py --output-dir "$PAD_IMAGES" generate; then
+# --format webp is NOT optional. The generate skip-check compares against
+# _target_path(), i.e. the path in the CURRENT format, so without this flag
+# the script looks for 9,025 .png files, finds none next to the 9,025 .webp
+# that are actually there, and redraws the entire corpus on the GPU on every
+# build - then ships both sets. build_and_run.bat has always passed it; this
+# script did not.
+if ! python3 scripts/generate_images.py --output-dir "$PAD_IMAGES" generate \
+        --format webp --quality 82; then
     echo
     echo "        ERROR: Image generation failed. Build aborted."
     echo "        Common causes: diffusers/transformers/accelerate not installed,"
