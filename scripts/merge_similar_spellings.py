@@ -156,13 +156,26 @@ def build_plan(rows):
                     continue
                 if similar_spelling(rs[i], rs[j]) and same_meaning(rs[i], rs[j]):
                     cluster.append(rs[j])
-            if len(cluster) < 2 or len({x["awing"] for x in cluster}) < 2:
+            # IDENTICAL spellings count too. This used to require the
+            # spellings to DIFFER, on the reasoning that same-spelling rows
+            # were handled by an earlier pass - but that pass demanded the
+            # glosses share a head word AND overlap 80%, so sá'ə "announce
+            # publicly" and sá'ə "announce publicly, particularly in the
+            # market square" stayed as two cards with one picture. Same
+            # word, same page range of the same dictionary, same meaning.
+            # One rule covers both now.
+            if len(cluster) < 2:
                 continue
             for x in cluster:
                 seen.add(x["line"])
             top = max(x["rank"] for x in cluster)
             best = [x for x in cluster if x["rank"] == top]
-            keep = max(best, key=lambda x: (freq[x["awing"]], -x["line"]))
+            # Tie-break after source and established spelling: the SHORTER
+            # gloss. The head word is shared by construction, so the longer
+            # one carries dictionary commentary, not a second meaning, and
+            # "announce publicly" is the better card than "announce
+            # publicly, particularly in the market square".
+            keep = max(best, key=lambda x: (freq[x["awing"]], -len(x["english"]), -x["line"]))
             strip = lambda d: {k: v for k, v in d.items() if k != "ts"}
             plan.append({"keep": strip(keep),
                          "remove": [strip(x) for x in cluster
