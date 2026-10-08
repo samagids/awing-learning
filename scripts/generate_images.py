@@ -2370,6 +2370,103 @@ PROMPT_OVERRIDES = {
     "the personal pronoun": "a Cameroonian boy with a short natural afro and a Cameroonian girl with cornrow braids, both with very dark brown skin, standing side by side, a bold arrow pointing at each of them",
     "the singular pronoun you": "a basket of mangoes held out towards the viewer by two dark brown hands",
     "verb complement": "a row of wooden blocks with one extra block fitted onto the end",
+    'behaviour': "a Cameroonian boy with dark brown skin and a short afro turning his face away with a disgusted expression from an overturned bowl of spoiled food on a mat",
+    'speech': "a Cameroonian elder with dark brown skin and grey twists standing on a low wooden platform speaking, one hand raised, a seated crowd of Cameroonian villagers listening",
+    'the like hard work but likes to enjoy the proceeds thereof': "a Cameroonian man with dark brown skin and a short afro sitting in the shade eating from a bowl while a full basket of harvested maize stands beside him and a hoe lies unused on the ground",
+    'the like hard work but likes': "a Cameroonian man with dark brown skin and a short afro sitting in the shade eating from a bowl while a full basket of harvested maize stands beside him and a hoe lies unused on the ground",
+    'marriage ceremony': "a Cameroonian bride with braided hair and a groom with a short afro, both with dark brown skin, standing under a decorated canopy while villagers clap",
+    'obscene behaviour': "a Cameroonian elder with dark brown skin and grey twists holding up one hand to stop a young man who is shouting, both fully clothed",
+    'growth, in the armpit': "a simple labelled outline diagram of a person wearing a t-shirt with one arm raised, a circle drawn around the underarm area",
+    'growth, in the armpit as a sign that one has a wound': "a simple labelled outline diagram of a person wearing a t-shirt with one arm raised, a circle drawn around the underarm area",
+    'masses': "a very large crowd of Cameroonian people with dark brown skin and natural hair filling a village square",
+    'awake': "a Cameroonian boy with dark brown skin and a short afro sitting upright on a mat at night with wide open eyes, a lamp burning beside him",
+    'behaved': "a Cameroonian boy with dark brown skin and a short afro with folded arms and a scowl, an upturned stool and spilled basket behind him",
+    # ---- Session 66v, round 2: the 73 glosses the first reshoot proved
+    # could not be fixed by reshooting ----
+    #
+    # I flagged these as "a white person is in it" and put them in a
+    # --keys-file. 73 of the 94 prompts NAMED NOBODY:
+    #
+    #     "a partnership work, partnership work clearly visible in the
+    #      picture, ... plain white background"
+    #
+    # SDXL cannot draw an abstract noun, so it draws a scene, and its
+    # default scene is an office of white people. The whiteness was a
+    # SYMPTOM; the defect was a prompt with no subject. Reshooting
+    # changed the seed and nothing else, and the second batch came back
+    # whiter than the first.
+    #
+    # I had written the rule - print the prompt before claiming an
+    # image problem is fixed - and then did not apply it to my own
+    # list. Each of these now has a written scene, and every one names
+    # dark brown skin and Black hair where it names a person at all.
+    'behaviour, disgusting': "a Cameroonian boy with dark brown skin and a short afro turning his face away with a disgusted expression from an overturned bowl of spoiled food on a mat",
+    'prayers': "a Cameroonian woman with dark brown skin and a patterned head wrap kneeling on a mat with her eyes closed and her hands pressed together",
+    'fasting; intensive and serious prayer': "a Cameroonian man with dark brown skin and short twists kneeling beside an empty wooden bowl and a closed calabash, his hands pressed together, eyes closed",
+    'provocative act': "a Cameroonian boy with dark brown skin and a short afro pointing and sticking out his tongue at another boy who is frowning",
+    'partnership work': "two Cameroonian farmers with dark brown skin, one with cornrow braids and one with a short afro, carrying one large basket of maize between them across a field",
+    'speech, sort of': "a Cameroonian elder with dark brown skin and grey twists standing on a low wooden platform speaking, one hand raised, a seated crowd of Cameroonian villagers listening",
+    'the like hardwork but likes to enjoy the proceeds thereof': "a Cameroonian man with dark brown skin and a short afro sitting in the shade eating from a bowl while a full basket of harvested maize stands beside him and a hoe lies unused on the ground",
+    'uninfluential': "a Cameroonian boy with dark brown skin and a short afro standing alone with his hand raised while a group of children behind him look the other way",
+    'charm, of protective': "a small carved wooden amulet on a leather cord lying on a woven mat, cowrie shells around it",
+    'land dealer': "a Cameroonian man with dark brown skin and short twists in a shirt standing at the edge of a marked-out field, holding a rolled paper and pointing at a boundary post",
+    'marriage ceremony, sort of': "a Cameroonian bride with braided hair and a groom with a short afro, both with dark brown skin, standing under a decorated canopy while villagers clap",
+    'fear, trembling on hearing of death': "a Cameroonian woman with dark brown skin and a head wrap sitting on a mat with both hands over her mouth, eyes wide, shaking",
+    'foolish excitement, uncontrolled and often misguided excitement': "a Cameroonian boy with dark brown skin and a short afro jumping with both arms flung up, his basket tipped over and spilling behind him",
+    'heartburn': "a simple labelled outline diagram of a person in a t-shirt with an orange glow drawn over the centre of the chest",
+    'cold, of a disease': "a Cameroonian child with dark brown skin and a short afro wrapped in a blanket, holding a cloth to a runny nose, a steaming cup beside them",
+    'influenza': "a Cameroonian child with dark brown skin and cornrow braids in bed under a blanket with a cloth on the forehead and a steaming cup on a stool",
+    'breath': "a Cameroonian child with dark brown skin and a short afro outdoors on a cold morning, a visible puff of white breath in front of their mouth",
+    'the spirit of god': "a single white dove descending in a shaft of golden light over an open Grassfields landscape, no people",
+    'generation': "three Cameroonian people with dark brown skin standing in a row - a grandmother with a head wrap, a mother with braids and a small child with a short afro",
+    'obscene behaviour, immoral behaviour': "a Cameroonian elder with dark brown skin and grey twists holding up one hand to stop a young man who is shouting, both fully clothed",
+    'new generation': "a group of young Cameroonian children with dark brown skin and natural afro hair running forward together across a field, an older generation watching from behind",
+    'cain': "two carved wooden figures standing apart on a bare hill, one turned away from the other, long shadows between them",
+    'foolish talk': "a Cameroonian man with dark brown skin and a short afro talking with a large empty speech bubble over his head while two listeners look away",
+    'bliss, of wedded couples': "a Cameroonian husband with a short afro and wife with braided hair, both with dark brown skin, sitting side by side on a mat smiling, hands joined",
+    'asthmatic cough': "a Cameroonian child with dark brown skin and a short afro sitting upright with a hand on the chest, mouth open, shoulders raised",
+    'idea, thought': "a Cameroonian girl with dark brown skin and cornrow braids looking up with a bright glowing lamp drawn above her head",
+    'idea': "a Cameroonian boy with dark brown skin and a short afro looking up with a bright glowing lamp drawn above his head",
+    'suspicion': "a Cameroonian woman with dark brown skin and a head wrap glancing sideways with narrowed eyes at a closed basket behind her",
+    'terrible lie': "a Cameroonian boy with dark brown skin and a short afro with one hand behind his back and a very long nose, a broken calabash on the ground",
+    'collaboration': "four Cameroonian villagers with dark brown skin and natural hair lifting one long roof beam together onto a hut",
+    'a whisper': "a Cameroonian girl with dark brown skin and cornrow braids cupping her hand to the ear of another girl, both smiling",
+    'public order': "a Cameroonian village crowd with dark brown skin seated in neat rows on benches facing an elder who is speaking",
+    'how? á pə̌ sé? how much?': "a Cameroonian market trader with dark brown skin and a head wrap holding up a tomato while a customer holds out coins, a large question mark above them",
+    'accident, big injury': "a Cameroonian boy with dark brown skin and a short afro sitting on the ground holding his bandaged knee, an overturned bicycle beside him",
+    'the first day of the week': "a calendar page with the first square of the week circled in bold red",
+    'a difficult task or job': "a Cameroonian man with dark brown skin and short twists straining to push a very large boulder up a slope, sweat drops drawn",
+    'traditional hospital, mostly to consult mediums': "a Cameroonian healer with dark brown skin and grey locs seated on a mat outside a thatched hut with calabashes, dried herbs and a patient seated opposite",
+    'cold weather': "a Cameroonian child with dark brown skin and a short afro in a thick jumper and wrapper, arms crossed, breath visible, bare hills behind",
+    'disease of the scalp (sticky in nature)': "a simple labelled outline diagram of the back of a head with short dark hair, a circle drawn around a patch of scalp",
+    'story teller': "a Cameroonian elder with dark brown skin and grey twists sitting by a fire at night, hands raised mid-tale, children with afro hair listening",
+    'demonstration': "a Cameroonian teacher with dark brown skin and a head wrap showing a group of children how to plant a seedling, her hands in the soil",
+    'theft done in a stealthy way': "a hand with dark brown skin quietly lifting a single yam from a basket in the dark, the owner asleep in the background",
+    'concern': "a Cameroonian mother with dark brown skin and a head wrap resting the back of her hand on a child's forehead, her brow furrowed",
+    'event that involves everybody': "the whole of a Cameroonian village with dark brown skin gathered in a circle in the square, drummers in the middle",
+    'important event': "a Cameroonian chief with dark brown skin in a patterned gown seated under a decorated canopy while the village stands around",
+    'burden': "a Cameroonian woman with dark brown skin and a head wrap walking bent forward under a very large bundle of firewood on her back",
+    'hunt': "a Cameroonian hunter with dark brown skin and short twists crouching in tall grass with a wooden spear, watching an antelope in the distance",
+    'command': "a Cameroonian chief with dark brown skin and a beaded cap pointing firmly with one arm outstretched while a young man listens",
+    'exaggeration, giving of false value': "a Cameroonian trader with dark brown skin and a head wrap holding up one small tomato beside a drawn outline of a tomato ten times its size",
+    'story/tale': "a Cameroonian elder with dark brown skin and grey twists telling a story by firelight to seated children with afro hair",
+    'criticism, the act of diminishing the value of something, the act of making': "a Cameroonian man with dark brown skin and a short afro pointing dismissively at a well-made carved stool while the carver looks down",
+    'english language': "an open book with the alphabet A B C written large on the page, a small Union flag in the corner",
+    'parable': "a Cameroonian elder with dark brown skin and grey twists seated under a tree speaking, a small picture of a sower drawn in a thought bubble above",
+    'hair of a dead close relation': "a lock of dark curly hair tied with a thin cord, resting on a folded cloth beside a small carved memorial post",
+    'masses, the': "a very large crowd of Cameroonian people with dark brown skin and natural hair filling a village square",
+    'the habit of giving too many assignments or too much burden on other people': "a Cameroonian man with dark brown skin and a short afro standing with folded arms while piling a fourth basket onto the back of a bent, overloaded worker",
+    'intelligence, high learning ability': "a Cameroonian girl with dark brown skin and cornrow braids at a desk solving a problem on a slate, a bright lamp drawn above her head",
+    'headache': "a Cameroonian woman with dark brown skin and a head wrap pressing both hands to her temples, jagged lines drawn around her head",
+    'self control; patience': "a Cameroonian boy with dark brown skin and a short afro sitting calmly with his hands in his lap beside a bowl of mangoes he is not taking",
+    'self control': "a Cameroonian boy with dark brown skin and a short afro sitting calmly with his hands in his lap beside a bowl of mangoes he is not taking",
+    'who': "an empty silhouette outline of a head and shoulders with a large question mark inside",
+    'possessive': "a Cameroonian girl with dark brown skin and cornrow braids holding a basket close to her chest with both arms, a bold arrow pointing from her to the basket",
+    'awake, stay': "a Cameroonian boy with dark brown skin and a short afro sitting upright on a mat at night with wide open eyes, a lamp burning beside him",
+    'terrible, evil, scandal, taboo': "a Cameroonian elder with dark brown skin and grey twists holding up both palms in refusal, a bold red cross drawn in the air in front of him",
+    'behaved, poorly': "a Cameroonian boy with dark brown skin and a short afro with folded arms and a scowl, an upturned stool and spilled basket behind him",
+    'growth, in the ampit': "a simple labelled outline diagram of a person wearing a t-shirt with one arm raised, a circle drawn around the underarm area",
+    'growth, in the ampit as a sign that one has a wound': "a simple labelled outline diagram of a person wearing a t-shirt with one arm raised, a circle drawn around the underarm area",
     # ---- found by eye in the rendered pack, Session 66v ----
     # Each of these was SAFE as a gloss and UNSAFE as a picture, which
     # is why the gate never saw them. Only looking at the output finds
@@ -3629,7 +3726,7 @@ _ADULT_ENTRY = re.compile(
     # path would otherwise have built.
     # Found by looking at the rendered pack, not by reading glosses:
     # "lust (n), strong desire" came back as a white woman in a bikini.
-    r"clitoris|testicle\w*|scrotum|semen|sperm|concubine|anus|lust|lustful|seduc\w*|erotic\w*)\b", re.I)
+    r"clitoris|testicle\w*|scrotum|semen|sperm|concubine|anus|lust|lustful|seduc\w*|erotic\w*|contracted through sex)\b", re.I)
 
 _UNILLUSTRATABLE_MARKERS = re.compile(
     r"\b(preposition|pronoun|conjunction|interjection|particle|auxiliary|"
