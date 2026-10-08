@@ -29,16 +29,47 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
         return StatefulBuilder(
           builder: (ctx2, setDialogState) {
             return AlertDialog(
-              title: const Text('New Profile'),
+              title: const Text('Add a Learner'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // v1.24.5 — App Review rejected 1.24.4 under
+                    // Guideline 4 (Sign in with Apple), reporting that the
+                    // app "required users to provide their name after using
+                    // Sign in with Apple". The reviewer had signed in with
+                    // Hide My Email, landed here, opened this dialog and
+                    // read a required field labelled "Name" with the hint
+                    // "Enter your name" sitting under their relay address.
+                    // From outside the app that is indistinguishable from
+                    // being asked to finish setting up an account.
+                    //
+                    // It is not. It is a learner profile - one per child -
+                    // and it is never pre-filled from, written to, or
+                    // matched against the Apple account. The account's name
+                    // and email come from Authentication Services and are
+                    // never asked for again.
+                    //
+                    // Nothing about the flow changed; the words did. Say on
+                    // the dialog itself whose name this is and what it is
+                    // for, so no reader has to infer it.
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Add one profile for each child who uses this app. '
+                        'Their progress and lessons are kept separately.',
+                        style: TextStyle(fontSize: 13.5, height: 1.35),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
                     TextField(
                       controller: nameController,
+                      textCapitalization: TextCapitalization.words,
                       decoration: InputDecoration(
-                        labelText: 'Name',
-                        hintText: 'Enter your name',
+                        labelText: "Child's name or nickname",
+                        hintText: 'e.g. Ayafor',
+                        helperText: 'Shown on their card. Not your account name.',
+                        helperMaxLines: 2,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -46,7 +77,7 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'Choose your avatar:',
+                      'Choose a picture for them:',
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 8),
@@ -115,7 +146,7 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
                     backgroundColor: const Color(0xFF006432),
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('Create'),
+                  child: const Text('Create Profile'),
                 ),
               ],
             );
@@ -153,9 +184,15 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
+                  // "Signed in as" matters more than it looks. A bare
+                  // email address printed above a screen with a required
+                  // Name field reads as a half-finished account form - which
+                  // is how 1.24.4 was rejected. Labelled, it reads as what it
+                  // is: the account is already complete, this is who it is.
                   Center(
                     child: Text(
-                      email,
+                      'Signed in as $email',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey.shade600,
@@ -198,8 +235,8 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
                             // Only parents should create new profiles
                             final ok = await ParentalGate.verify(
                               context,
-                              title: 'Add Profile',
-                              message: 'Only a parent or guardian should create profiles.',
+                              title: 'Add a Learner',
+                              message: 'Only a parent or guardian should add a child profile.',
                             );
                             if (ok && context.mounted) {
                               _createProfile();
@@ -458,7 +495,7 @@ class _AddProfileCard extends StatelessWidget {
             Icon(Icons.add_circle_outline, size: 48, color: Colors.grey.shade400),
             const SizedBox(height: 12),
             Text(
-              'Add Profile',
+              'Add a Learner',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

@@ -252,7 +252,12 @@ class AuthService extends ChangeNotifier {
   /// Create a new user profile under the current account.
   String? createProfile(String displayName, String avatarEmoji) {
     if (_currentAccount == null) return 'Not logged in';
-    if (displayName.trim().isEmpty) return 'Name is required';
+    if (displayName.trim().isEmpty) {
+      // Said in full on purpose. Bare "Name is required",
+      // under an Apple relay address, is what App Review read
+      // as the app demanding the account holder's name.
+      return "Please enter a name for this learner";
+    }
 
     final profile = UserProfile(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
