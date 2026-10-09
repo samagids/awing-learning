@@ -4999,6 +4999,26 @@ def cmd_generate(args):
                     print(f"  ! could not remove {stale.name}: {exc}")
             continue
 
+        # SAME PLACE, SAME REASON. _TRIED_AND_STOPPED first went into
+        # is_illustratable(), four lines of comment below the note above
+        # explaining that is_illustratable() is dead code in a normal run.
+        # Both cards were regenerated on the very next build_and_run and
+        # went into the uploaded asset bundle.
+        #
+        # RULE: a check that must always happen goes HERE, in cmd_generate,
+        # beside the adult gate - never in is_illustratable(), which only
+        # runs under --only-depictable.
+        if (english or "").strip().lower() in _TRIED_AND_STOPPED:
+            not_depictable += 1
+            stale = _existing_image(OUTPUT_DIR / key)
+            if stale is not None:
+                try:
+                    stale.unlink()
+                    print(f"  left blank on purpose: {english[:40]!r}")
+                except Exception as exc:
+                    print(f"  ! could not remove {stale.name}: {exc}")
+            continue
+
         # ON BY DEFAULT since 2026-10-08. --draw-everything turns it off.
         #
         # This morning Dr. Sama asked for every word to have an image, so
