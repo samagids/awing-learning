@@ -207,13 +207,22 @@ class _RecordPickerScreenState extends State<RecordPickerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDev = context.watch<AuthService>().isDeveloper;
+    final auth = context.watch<AuthService>();
+    final isDev = auth.isDeveloper;
+    // isDeveloperEmail is true for the developer's account whether or not
+    // developer mode is currently unlocked. The distinction matters: dev
+    // mode needs 5 taps on the version in About plus the emailed code, and
+    // it EXPIRES AFTER 20 MINUTES. Without this branch the search bar just
+    // is not drawn, with nothing on screen to say why, and the feature
+    // looks broken rather than locked.
+    final isDevEmail = auth.isDeveloperEmail;
     final searching = isDev && _query.trim().isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildHeader(),
         if (isDev) _buildDevSearchBar(),
+        if (!isDev && isDevEmail) _buildDevLockedHint(),
         const Divider(height: 1),
         if (_loading)
           const Expanded(child: Center(child: CircularProgressIndicator()))
@@ -230,6 +239,29 @@ class _RecordPickerScreenState extends State<RecordPickerScreen> {
     );
   }
 
+  /// Shown to the developer's account when developer mode is not unlocked.
+  Widget _buildDevLockedHint() {
+    return Container(
+      color: Colors.amber.shade50,
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+      child: Row(
+        children: [
+          Icon(Icons.lock_outline, size: 17, color: Colors.amber.shade900),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'Developer re-record is locked. Open About and tap the version '
+              '5 times, then enter the emailed code. It stays unlocked for '
+              '20 minutes.',
+              style: TextStyle(
+                  fontSize: 12.5, height: 1.3, color: Colors.amber.shade900),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDevSearchBar() {
     return Container(
       color: Colors.amber.shade50,
@@ -242,7 +274,7 @@ class _RecordPickerScreenState extends State<RecordPickerScreen> {
               const Icon(Icons.build, size: 15, color: Color(0xFF8A6D00)),
               const SizedBox(width: 6),
               Text(
-                'Developer: re-record any word',
+                'Developer: re-record any word (sentences not yet)',
                 style: TextStyle(
                   fontSize: 12.5,
                   fontWeight: FontWeight.w700,
