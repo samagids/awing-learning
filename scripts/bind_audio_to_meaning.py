@@ -84,6 +84,14 @@ def provenance():
         for r in recs:
             if isinstance(r, dict) and r.get('key') and r.get('english'):
                 out[r['key']].add(str(r['english']).strip())
+    # Dr. Sama's own ear, collected on the Awing Clip Binding page and
+    # read back out of that artifact's store. The last word on any clip:
+    # written after the two automatic sources so it overrides them.
+    manual = os.path.join(ROOT, 'contributions', 'manual_clip_bindings.json')
+    manual_pairs = {}
+    if os.path.exists(manual):
+        manual_pairs = json.load(io.open(manual, encoding='utf-8'))
+
     for f in glob.glob(os.path.join(ROOT, 'contributions', 'applied',
                                     '*.json')):
         try:
@@ -100,6 +108,8 @@ def provenance():
             tw, em = it.get('targetWord'), it.get('englishMeaning')
             if tw and em:
                 out[audio_key(tw)].add(str(em).strip())
+    for k, en in manual_pairs.items():
+        out[k] = {str(en).strip()}          # replaces, never adds
     return out
 
 
