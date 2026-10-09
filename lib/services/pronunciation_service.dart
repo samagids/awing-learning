@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:awing_ai_learning/services/asset_pack_service.dart';
 import 'package:awing_ai_learning/services/image_service.dart'
     show ImageService;
+import 'package:awing_ai_learning/data/audio_clip_claims.dart';
 
 /// Pronunciation service for the Awing language.
 ///
@@ -495,13 +496,33 @@ class PronunciationService {
   /// unrecorded even when its clip is in the pack, because the auto key is
   /// derived from the text rather than the clip name.
   /// The clip names to try, most specific first. See [speakAwing].
+  ///
+  /// The bare key is DROPPED when kAudioClipClaims says that clip was
+  /// recorded for a different meaning. mbange.opus is one native
+  /// recording of ONE of rain / tumor / cane / walking stick / the raffia
+  /// palm insect; letting the other eight fall back to it is how 428
+  /// cards came to play the wrong word.
+  ///
+  /// The result is silence on those cards until each gets its own
+  /// recording. That is the right answer here. The app already treats
+  /// silence as valid - "there is no synthetic fallback any more" - and
+  /// on a vocabulary card for a child, hearing nothing is better than
+  /// hearing a different word and learning it.
+  ///
+  /// With no [english] there is nothing to compare, so the bare key is
+  /// kept and behaviour is exactly as before.
   List<String> _clipKeys(String awingWord, String? english) {
     final out = <String>[];
-    if (english != null && english.trim().isNotEmpty) {
-      out.add(ImageService.imageKey(awingWord, english));
+    final gloss = english?.trim() ?? '';
+    if (gloss.isNotEmpty) {
+      out.add(ImageService.imageKey(awingWord, gloss));
     }
     final bare = _audioKey(awingWord);
-    if (!out.contains(bare)) out.add(bare);
+    final claimedBy = kAudioClipClaims[bare];
+    final takenByAnother = gloss.isNotEmpty &&
+        claimedBy != null &&
+        claimedBy.toLowerCase() != gloss.toLowerCase();
+    if (!takenByAnother && !out.contains(bare)) out.add(bare);
     return out;
   }
 
