@@ -379,7 +379,8 @@ class _BeginnerPictureMatchState extends State<BeginnerPictureMatch> {
       onAcceptWithDetails: (details) => _onMatch(word.awing, details.data),
       builder: (context, candidateData, rejectedData) {
         return GestureDetector(
-          onTap: () => _pronunciation.speakAwing(word.awing),
+          onTap: () =>
+              _pronunciation.speakAwing(word.awing, english: word.english),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             decoration: BoxDecoration(

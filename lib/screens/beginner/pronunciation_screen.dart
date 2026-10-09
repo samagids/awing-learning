@@ -292,7 +292,8 @@ class _PronunciationScreenState extends State<PronunciationScreen>
   }
 
   Future<void> _hearReference() async {
-    await _pronunciation.speakAwing(_currentWord.awing);
+    await _pronunciation.speakAwing(_currentWord.awing,
+        english: _currentWord.english);
   }
 
   void _nextWord() {

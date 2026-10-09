@@ -206,7 +206,8 @@ class _NumbersScreenState extends State<NumbersScreen> {
     for (int i = 0; i < baseNumbers.length; i++) {
       if (!mounted) return;
       setState(() => _selectedIndex = i);
-      await _pronunciation.speakAwing(baseNumbers[i].awing);
+      await _pronunciation.speakAwing(baseNumbers[i].awing,
+          english: baseNumbers[i].english);
       await Future.delayed(const Duration(milliseconds: 1200));
     }
   }

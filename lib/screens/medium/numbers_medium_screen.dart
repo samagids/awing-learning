@@ -358,7 +358,8 @@ class _NumbersMediumScreenState extends State<NumbersMediumScreen>
     for (int i = 0; i < wordList.length; i++) {
       if (!mounted) return;
       setState(() => _selectedIndex = i);
-      await _pronunciation.speakAwing(wordList[i].awing);
+      await _pronunciation.speakAwing(wordList[i].awing,
+          english: wordList[i].english);
       await Future.delayed(const Duration(milliseconds: 1500));
     }
   }

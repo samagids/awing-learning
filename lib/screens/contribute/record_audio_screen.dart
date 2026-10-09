@@ -174,7 +174,8 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
 
   Future<void> _playReference() async {
     if (_selected == null) return;
-    await _pronunciation.speakAwing(_selected!.awing);
+    await _pronunciation.speakAwing(_selected!.awing,
+        english: _selected!.english);
   }
 
   void _deleteRecording() {
@@ -550,7 +551,8 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
                       alignment: Alignment.centerLeft,
                       child: OutlinedButton.icon(
                         onPressed: () => PronunciationService()
-                            .speakAwing(_selected!.awing),
+                            .speakAwing(_selected!.awing,
+                                english: _selected!.english),
                         icon: const Icon(Icons.volume_up, size: 18),
                         label: const Text('Play the current recording'),
                         style: OutlinedButton.styleFrom(

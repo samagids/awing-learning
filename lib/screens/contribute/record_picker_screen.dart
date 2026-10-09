@@ -402,7 +402,8 @@ class _RecordPickerScreenState extends State<RecordPickerScreen> {
                 IconButton(
                   icon: const Icon(Icons.volume_up, color: _kGreen),
                   tooltip: 'Play the current recording',
-                  onPressed: () => PronunciationService().speakAwing(w.awing),
+                  onPressed: () => PronunciationService()
+                      .speakAwing(w.awing, english: w.english),
                 ),
               IconButton(
                 icon: const Icon(Icons.mic, color: _kGreen),

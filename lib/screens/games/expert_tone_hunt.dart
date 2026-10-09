@@ -146,7 +146,8 @@ class _ExpertToneHuntState extends State<ExpertToneHunt> {
 
   void _playCurrent() {
     if (_roundIndex >= _rounds.length) return;
-    _pronunciation.speakAwing(_rounds[_roundIndex].awing);
+    _pronunciation.speakAwing(_rounds[_roundIndex].awing,
+        english: _rounds[_roundIndex].english);
   }
 
   void _selectTone(String tone) {

@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:awing_ai_learning/services/asset_pack_service.dart';
+import 'package:awing_ai_learning/services/image_service.dart'
+    show ImageService;
 
 /// Pronunciation service for the Awing language.
 ///
@@ -328,14 +330,35 @@ class PronunciationService {
   /// correct answer for a word nobody has recorded — ask
   /// [hasNativeAudio] first and offer the Record button instead of a
   /// speaker.
-  Future<void> speakAwing(String awingWord) async {
+  /// [english] disambiguates words that share an Awing spelling.
+  ///
+  /// Session 66w. A clip was keyed on the AWING SPELLING ALONE and
+  /// _audioKey() strips tone, so `mbaŋə` (rain) and `mbáŋə` (the maggot-like
+  /// insect in raffia palm) both resolved to `mbange.opus` - and so did
+  /// `mbaŋə` cane, walking stick, stomach disease and three more that are
+  /// spelled identically. 176 clips were answering for 604 cards, so 428
+  /// cards played a recording made for a different word. Dr. Sama, hearing
+  /// it: "seems you name both audios the same."
+  ///
+  /// The IMAGE key never had this problem - it is audioKey + '__' +
+  /// englishSlug, which is why `mbange__rain` and `mbange__tumor` are
+  /// different pictures. Audio now asks for that same key FIRST and falls
+  /// back to the bare key, so a clip that has not been renamed yet still
+  /// plays. That fallback is what makes the migration safe to do in
+  /// stages: at no point does a word go silent.
+  Future<void> speakAwing(String awingWord, {String? english}) async {
     await init();
 
-    final key = _audioKey(awingWord);
-
-    for (final category in ['vocabulary', 'alphabet', 'dictionary', 'sentences']) {
-      for (final path in _buildSearchPaths(key, category)) {
-        if (await _playAudioAsset(path)) return;
+    for (final key in _clipKeys(awingWord, english)) {
+      for (final category in [
+        'vocabulary',
+        'alphabet',
+        'dictionary',
+        'sentences'
+      ]) {
+        for (final path in _buildSearchPaths(key, category)) {
+          if (await _playAudioAsset(path)) return;
+        }
       }
     }
 
@@ -471,7 +494,19 @@ class PronunciationService {
   /// their own (the phrase book). Without it a phrase would be reported as
   /// unrecorded even when its clip is in the pack, because the auto key is
   /// derived from the text rather than the clip name.
-  Future<bool> hasNativeAudio(String awingWord, {String? clipKey}) async {
+  /// The clip names to try, most specific first. See [speakAwing].
+  List<String> _clipKeys(String awingWord, String? english) {
+    final out = <String>[];
+    if (english != null && english.trim().isNotEmpty) {
+      out.add(ImageService.imageKey(awingWord, english));
+    }
+    final bare = _audioKey(awingWord);
+    if (!out.contains(bare)) out.add(bare);
+    return out;
+  }
+
+  Future<bool> hasNativeAudio(String awingWord,
+      {String? clipKey, String? english}) async {
     await init();
     if (clipKey != null) {
       for (final asset in _buildSearchPaths(clipKey, 'sentences')) {
@@ -484,7 +519,7 @@ class PronunciationService {
         }
       }
     }
-    final key = _audioKey(awingWord);
+    for (final key in _clipKeys(awingWord, english))
     for (final category in [
       'vocabulary',
       'alphabet',

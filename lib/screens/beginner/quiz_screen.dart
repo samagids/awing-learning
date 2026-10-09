@@ -533,7 +533,8 @@ class _QuizPlayState extends State<_QuizPlay> {
                               ),
                               const SizedBox(height: 4),
                               GestureDetector(
-                                onTap: () => _pronunciation.speakAwing(word.awing),
+                                onTap: () => _pronunciation.speakAwing(word.awing,
+                                    english: word.english),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
