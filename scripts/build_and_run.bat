@@ -551,7 +551,8 @@ if !ERRORLEVEL! neq 0 (
     echo        method cutoff at EOF.
     exit /b 1
 )
-echo        Dart analyze clean.
+echo        No analyze ERRORS. Infos/warnings are non-fatal here --
+echo        if a "N issue(s) found" line appears above, read it.
 echo.
 
 REM ---- Step 6: Build AAB + APK ----

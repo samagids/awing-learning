@@ -540,20 +540,22 @@ class PronunciationService {
         }
       }
     }
-    for (final key in _clipKeys(awingWord, english))
-    for (final category in [
-      'vocabulary',
-      'alphabet',
-      'dictionary',
-      'sentences'
-    ]) {
-      for (final asset in _buildSearchPaths(key, category)) {
-        try {
-          if (await _assetPack.assetExists(asset.replaceFirst('assets/', ''))) {
-            return true;
+    for (final key in _clipKeys(awingWord, english)) {
+      for (final category in [
+        'vocabulary',
+        'alphabet',
+        'dictionary',
+        'sentences'
+      ]) {
+        for (final asset in _buildSearchPaths(key, category)) {
+          try {
+            if (await _assetPack
+                .assetExists(asset.replaceFirst('assets/', ''))) {
+              return true;
+            }
+          } catch (_) {
+            // Unreadable pack entry — treat as absent and keep looking.
           }
-        } catch (_) {
-          // Unreadable pack entry — treat as absent and keep looking.
         }
       }
     }
