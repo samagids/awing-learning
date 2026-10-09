@@ -13495,3 +13495,85 @@ Shooting the second group is how three earlier rounds were spent.
 .\venv\Scripts\python.exe scripts\audit_pack.py        # full, needs GPU
 python scripts\audit_pack.py --no-gpu                  # rule 1 + duplicates
 ```
+
+---
+
+## Session 66v — four rules the image work cost a day to learn (2026-10-08)
+
+All four came from the same place: **I checked my reasoning instead of
+checking the artifact.** Each one was caught by Dr. Sama or by a build,
+not by me.
+
+### 1. The RESHOOT / NEEDS-A-PROMPT split is decided by the prompt, never the picture
+
+I contact-sheeted 4,517 images, tagged 94 as "a white person is in it",
+and had them reshot. **They came back whiter.** Printing the prompts
+afterwards showed 73 of the 94 named nobody:
+
+```
+a partnership work, partnership work clearly visible in the picture,
+simple flat cartoon clipart, ... plain white background
+```
+
+SDXL cannot draw an abstract noun, so it draws a scene, and its default
+scene is an office of white people. The whiteness was a SYMPTOM; the
+defect was a prompt with no subject. A reshoot changes the seed and
+nothing else.
+
+**A picture tells you something is wrong. Only the prompt tells you
+whether shooting it again can fix it.** `scripts/verify_reshoot_prompts.py`
+is that check; run it over any keys-file before it reaches the GPU.
+
+### 2. A check that must ALWAYS run goes in `cmd_generate`, not `is_illustratable()`
+
+`cmd_generate` only calls `is_illustratable()` behind `--only-depictable`,
+which defaults to OFF. A rule put in that function does not execute.
+
+This bit twice in one day. The nudity gate first, then
+`_TRIED_AND_STOPPED` — which I wrote four lines below the comment
+explaining the nudity-gate version of the same bug. Both deliberately
+blank cards were redrawn by the next `build_and_run` and uploaded to the
+pad-assets release.
+
+`is_illustratable()` is for PREFERENCES. "This must never be drawn" goes
+beside the adult gate in `cmd_generate`.
+
+### 3. A parser for `awing_vocabulary.dart` matches BOTH quote styles on BOTH fields
+
+**293 glosses are double-quoted**, because they contain an apostrophe:
+`english: "God's will"`, `"Lord's Supper article"`, `"personal pronoun
+'them'"`. A single-quote-only pattern skips every one and reports them as
+"not in vocabulary". I fixed this in `check_image_coverage.py` for the
+`awing` field and then repeated it on the `english` field in three
+verification scripts the same afternoon.
+
+The working pattern:
+
+```python
+r"AwingWord\(\s*awing:\s*(?:'((?:[^'\\]|\\.)*?)'|\"([^\"]*?)\")\s*,"
+r"\s*english:\s*(?:'((?:[^'\\]|\\.)*?)'|\"([^\"]*?)\").*?category:\s*'(\w+)'"
+```
+
+Also: skip lines starting `//`. ~3,900 rows are commented out, and
+counting them turned a finished run into "4,005 missing".
+
+### 4. A symbol named in a prompt becomes an OBJECT IN THE PICTURE
+
+"a bold red cross drawn in the air in front of him" put a red cross **on
+his shirt** — a smiling Red Cross medic. "a lock of hair tied with a
+cord" drew a **padlock** on a chained mausoleum. Arrows, question marks
+and crosses get painted onto the nearest surface. If a face, a posture or
+a gesture can carry the meaning, use that.
+
+### And: judge skin at full size
+
+At 150px a brown-skinned elder with white hair reads as a white person. I
+nearly reshot two correct cards. Enlarge before flagging.
+
+### Knowing when to stop
+
+`obscene behaviour` and `hair of a dead close relation` each got three
+written scenes and failed three times. Both are now in
+`_TRIED_AND_STOPPED` and ship blank. `hasImageSync()` filters a word with
+no image out of the games, so a gap costs nothing; a wrong picture on a
+vocabulary card teaches the wrong word.
